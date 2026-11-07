@@ -76,6 +76,8 @@ nbRawHtml: """<style>
 body .scheda pre > code { font-size: 12.5px !important; }
 .scheda pre > code { white-space: pre-wrap !important; overflow-wrap: anywhere; }
 .scheda .tabella { margin: .4rem 0 0; }
+.scheda .affiancate { display: flex; flex-wrap: wrap; gap: 0 .6rem; justify-content: center; align-items: flex-start; }
+.scheda .affiancate .tabella { padding-left: 6px; padding-right: 6px; }
 .scheda .tabella table { font-size: 14px !important; }
 </style>"""
 
@@ -83,11 +85,23 @@ var schede: seq[string]
 
 template scheda(passo, titolo, abilita: string, body: untyped) =
   ## A card of the gallery: one step, what it lets you do, and the blocks `body` adds.
+  ## Tables that follow each other sit side by side.
   let first = nb.blocks.len
   block:
     body
   var inner = ""
-  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
+  var i = first
+  while i < nb.blocks.len:
+    var j = i
+    while j < nb.blocks.len and nb.blocks[j] of NbTable: inc j
+    if j - i >= 2:
+      inner.add "<div class=\"affiancate\">"
+      for k in i ..< j: inner.add nb.render(nb.blocks[k])
+      inner.add "</div>"
+      i = j
+    else:
+      inner.add nb.render(nb.blocks[i])
+      inc i
   nb.blocks.setLen(first)
   schede.add "<div class=\"scheda\"><div class=\"numero\">" & passo & " · {n} / {N}</div><h3>" & titolo &
     "</h3><p>" & abilita & "</p>" & inner & "</div>"
@@ -112,8 +126,10 @@ scheda "1 data", "Objects and CSV", "A seq of objects or named tuples is data to
   nbCode:
     let moons = @[(name: "Moon", planet: "Earth"), (name: "Phobos", planet: "Mars")]
     let fromCsv = parseCsv("planet,moons\nEarth,1\nMars,2")
-    nbTable tabella(moons)
-    nbTable tabella(fromCsv)
+    let t1 = tabella(moons)
+    let t2 = tabella(fromCsv)
+  nbTable t1
+  nbTable t2
 
 # 2. A table
 
