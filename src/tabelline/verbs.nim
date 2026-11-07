@@ -55,6 +55,60 @@ proc tabSpanner*(t: sink Tabella, label: Text, columns: ColSel, level = 1): Tabe
       raise newException(ValueError, "spanner " & label.s.escape & " overlaps spanner " & s.label.s.escape)
   result.spanners.add Spanner(label: label, columns: names, level: level)
 
+proc tabSpannerDelim*(t: sink Tabella, delim = ".", columns: ColSel = everything(), split = "last",
+                      limit = -1, reverse = false): Tabella =
+  ## Spanners and labels from column names: `"size.mass"` gets the label "mass" under a spanner
+  ## "size". Names with more parts get more levels; next to each other, the same parts make one
+  ## spanner. `limit` caps the splits, counted from the `split` side ("last" or "first");
+  ## `reverse` reads the parts the other way round.
+  result = t
+  let names = columns.resolve(result.data)
+  var paths: seq[(string, seq[string])]    # column, spanner parts from the top level down
+  for c in result.boxhead:
+    if c.name notin names or delim notin c.name: continue
+    var parts =
+      if limit < 0: c.name.split(delim)
+      elif split == "first": c.name.split(delim, limit)
+      else: c.name.rsplit(delim, limit)
+    if reverse: parts.reverse
+    for b in result.boxhead.mitems:
+      if b.name == c.name: b.label = toText(parts[^1])
+    paths.add (c.name, parts[0 ..< ^1])
+  # columns next to each other with the same top part share a depth: their top spanner sits
+  # highest, and part i of a name is at level depth - i
+  var depthOf = newSeq[int](paths.len)
+  var k = 0
+  while k < paths.len:
+    var j = k
+    var depth = 0
+    while j < paths.len and paths[j][1][0] == paths[k][1][0]:
+      depth = max(depth, paths[j][1].len)
+      inc j
+    for x in k ..< j: depthOf[x] = depth
+    k = j
+  var maxDepth = 0
+  for d in depthOf: maxDepth = max(maxDepth, d)
+  for level in 1 .. maxDepth:
+    var k = 0
+    while k < paths.len:
+      let i = depthOf[k] - level           # the part at this level
+      let p = paths[k][1]
+      if i < 0 or i >= p.len: (inc k; continue)
+      let key = p[0 .. i]
+      var run = @[paths[k][0]]
+      var j = k + 1
+      while j < paths.len and depthOf[j] == depthOf[k] and paths[j][1].len > i and
+            paths[j][1][0 .. i] == key:
+        run.add paths[j][0]
+        inc j
+      result = result.tabSpanner(toText(key[^1]), run, level)
+      k = j
+
+proc tabCaption*(t: sink Tabella, caption: Text): Tabella =
+  ## A caption for the table (an HTML `<caption>`), for screen readers and for figures.
+  result = t
+  result.caption = caption
+
 proc tabSourceNote*(t: sink Tabella, note: Text): Tabella =
   result = t
   result.sourceNotes.add note
@@ -66,6 +120,46 @@ proc tabRowGroup*(t: sink Tabella, label: Text, rows: RowSel, id = ""): Tabella 
   let gid = if id.len > 0: id else: label.s
   for i in rows.resolve(result.data): result.rowGroups[i] = gid
   if gid notin result.groupLabels: result.groupLabels[gid] = label
+
+proc rmHeader*(t: sink Tabella): Tabella =
+  ## Removes the title and the subtitle.
+  result = t
+  result.title = toText("")
+  result.subtitle = toText("")
+
+proc rmStubhead*(t: sink Tabella): Tabella =
+  result = t
+  result.stubhead = toText("")
+
+proc rmCaption*(t: sink Tabella): Tabella =
+  result = t
+  result.caption = toText("")
+
+proc rmSpanners*(t: sink Tabella, spanners: openArray[string] = [], levels: openArray[int] = []): Tabella =
+  ## Removes the spanners with these labels, or at these levels; with neither, every spanner.
+  result = t
+  let (labels, lvs) = (@spanners, @levels)
+  result.spanners.keepItIf(not ((labels.len == 0 or it.label.s in labels) and (lvs.len == 0 or it.level in lvs)))
+
+proc rmFootnotes*(t: sink Tabella, footnotes: openArray[int] = []): Tabella =
+  ## Removes the footnotes at these indices (0-based, in the order they were added), or all.
+  result = t
+  if footnotes.len == 0: result.footnotes = @[]
+  else:
+    var kept: seq[Footnote]
+    for k, f in result.footnotes:
+      if k notin footnotes: kept.add f
+    result.footnotes = kept
+
+proc rmSourceNotes*(t: sink Tabella, sourceNotes: openArray[int] = []): Tabella =
+  ## Removes the source notes at these indices (0-based), or all.
+  result = t
+  if sourceNotes.len == 0: result.sourceNotes = @[]
+  else:
+    var kept: seq[Text]
+    for k, n in result.sourceNotes:
+      if k notin sourceNotes: kept.add n
+    result.sourceNotes = kept
 
 # --------------------------------------------------------------------------------- locations
 
@@ -79,6 +173,14 @@ func rowGroups*(_: LocNs, groups: varargs[string]): Loc = Loc(kind: lkRowGroups,
 func body*(_: LocNs, cols: ColSel = everything(), rows = allRows()): Loc =
   Loc(kind: lkBody, cols: cols, rows: rows)
 func sourceNotes*(_: LocNs): Loc = Loc(kind: lkSourceNotes)
+func header*(_: LocNs): Loc = Loc(kind: lkHeader)
+  ## The title and the subtitle together.
+func columnHeader*(_: LocNs): Loc = Loc(kind: lkColumnHeader)
+  ## The stub head, the spanners and the column labels together.
+func footer*(_: LocNs): Loc = Loc(kind: lkFooter)
+  ## The footnotes and the source notes together.
+func spannerLabels*(_: LocNs, labels: varargs[string]): Loc = Loc(kind: lkSpanners, names: @labels)
+  ## The same as `loc.spanners`, by Great Tables' name.
 func footnotes*(_: LocNs): Loc = Loc(kind: lkFootnotes)
 
 proc resolve*(l: Loc, t: Tabella): Target =
@@ -110,6 +212,67 @@ proc tabFootnote*(t: sink Tabella, note: Text, locations: varargs[Loc]): Tabella
     result.footnotes.add Footnote(note: note, target: Target(kind: lkFootnotes))
   for l in locations:
     result.footnotes.add Footnote(note: note, target: l.resolve(result))
+
+# ------------------------------------------------------------------------------------- text
+
+proc mapLabels(t: var Tabella, l: Loc, fn: proc (s: string): string) =
+  ## Applies `fn` to the texts of a location that is not made of cells.
+  template change(x: var Text) = x.s = fn(x.s)
+  case l.kind
+  of lkTitle: change t.title
+  of lkSubtitle: change t.subtitle
+  of lkHeader: (change t.title; change t.subtitle)
+  of lkStubhead: change t.stubhead
+  of lkColumnLabels, lkColumnHeader:
+    let names = if l.kind == lkColumnLabels: l.cols.resolve(t.data) else: t.data.names
+    for c in t.boxhead.mitems:
+      if c.name in names: change c.label
+    if l.kind == lkColumnHeader:
+      change t.stubhead
+      for s in t.spanners.mitems: change s.label
+  of lkSpanners:
+    for s in t.spanners.mitems:
+      if l.names.len == 0 or s.label.s in l.names: change s.label
+  of lkRowGroups:
+    for k, v in t.groupLabels.mpairs:
+      if l.names.len == 0 or k in l.names: change v
+  of lkSourceNotes, lkFooter, lkFootnotes:
+    if l.kind != lkFootnotes:
+      for n in t.sourceNotes.mitems: change n
+    if l.kind != lkSourceNotes:
+      for f in t.footnotes.mitems: change f.note
+  of lkBody, lkStub: discard
+
+proc textTransform*(t: sink Tabella, fn: proc (s: string): string, locations: varargs[Loc]): Tabella =
+  ## Changes the shown text at `locations` (by default the body) with a proc: for cells the proc
+  ## gets the formatted text when the table is rendered (HTML in HTML), for labels and notes their
+  ## text now. `textTransform(toUpperAscii, loc.stub())`.
+  result = t
+  let ls = if locations.len == 0: @[loc.body()] else: @locations
+  for l in ls:
+    if l.kind in {lkBody, lkStub}: result.transforms.add TransformRule(target: l.resolve(result), fn: fn)
+    else: result.mapLabels(l, fn)
+
+proc textReplace*(t: sink Tabella, pattern, replacement: string, locations: varargs[Loc]): Tabella =
+  ## Replaces every `pattern` (plain text, not a regex) with `replacement`.
+  let (p, r) = (pattern, replacement)
+  textTransform(t, proc (s: string): string = s.replace(p, r), locations)
+
+proc textCaseMatch*(t: sink Tabella, cases: openArray[(string, string)], default = "",
+                    replace = "all", locations: varargs[Loc]): Tabella =
+  ## Changes texts by cases, `{"old": "new"}`: with `replace = "all"` a text equal to a case
+  ## becomes its new text (and any other `default`, when given); with `"partial"` each case is
+  ## replaced inside the text.
+  let cs = @cases
+  let (d, partial) = (default, replace == "partial")
+  textTransform(t, proc (s: string): string =
+    if partial:
+      result = s
+      for (a, b) in cs: result = result.replace(a, b)
+    else:
+      for (a, b) in cs:
+        if s == a: return b
+      result = if d.len > 0: d else: s, locations)
 
 # -------------------------------------------------------------------------------------- cols
 
@@ -167,12 +330,77 @@ proc colsMove*(t: sink Tabella, columns: ColSel, after: string): Tabella =
     if c.name == after: at = i + 1
   result.boxhead.insert(moving, at)
 
+proc colsLabelWith*(t: sink Tabella, columns: ColSel, fn: proc (s: string): string): Tabella =
+  ## Relabels columns with a proc over their labels: `colsLabelWith(everything(), capitalizeAscii)`.
+  result = t
+  let names = columns.resolve(result.data)
+  for c in result.boxhead.mitems:
+    if c.name in names: c.label.s = fn(c.label.s)
+
+proc colsLabelWith*(t: sink Tabella, fn: proc (s: string): string): Tabella =
+  ## Every column relabelled with `fn`.
+  colsLabelWith(t, everything(), fn)
+
+proc colsMoveToEnd*(t: sink Tabella, columns: ColSel): Tabella =
+  result = t
+  let names = columns.resolve(result.data)
+  let moving = names.mapIt(result.colInfo(it))
+  result.boxhead.keepItIf(it.name notin names)
+  result.boxhead.add moving
+
+proc colsReorder*(t: sink Tabella, columns: ColSel): Tabella =
+  ## Puts `columns` in the given order, in the places they hold: the other columns stay put.
+  result = t
+  let names = columns.resolve(result.data)
+  var k = 0
+  let infos = names.mapIt(result.colInfo(it))
+  for c in result.boxhead.mitems:
+    if c.name in names:
+      c = infos[k]
+      inc k
+
 proc colsMoveToStart*(t: sink Tabella, columns: ColSel): Tabella =
   result = t
   let names = columns.resolve(result.data)
   let moving = names.mapIt(result.colInfo(it))
   result.boxhead.keepItIf(it.name notin names)
   result.boxhead.insert(moving, 0)
+
+# -------------------------------------------------------------------------------------- rows
+
+func cmpValues(a, b: Value): int =
+  ## Missing values last; numbers before text.
+  if a.isNull or b.isNull: return cmp(a.isNull, b.isNull)
+  if a.isNumber and b.isNumber: return cmp(a.toFloat, b.toFloat)
+  if a.isNumber != b.isNumber: return cmp(b.isNumber, a.isNumber)
+  cmp($a, $b)
+
+proc rowOrder*(t: sink Tabella, columns: ColSel, reverse = false): Tabella =
+  ## Shows the rows sorted by `columns` (the first decides, the next break ties), within their
+  ## groups; `reverse` sorts from high to low. Missing values go last.
+  result = t
+  let names = columns.resolve(result.data)
+  let d = result.data
+  var ix = toSeq(0 ..< d.nrows)
+  ix.sort(proc (a, b: int): int =
+    for n in names:
+      let c = cmpValues(d[n, a], d[n, b])
+      if c != 0:
+        let missing = d[n, a].isNull or d[n, b].isNull
+        return (if reverse and not missing: -c else: c)
+    0)
+  result.rowOrder = ix
+
+proc rowGroupOrder*(t: sink Tabella, groups: openArray[string]): Tabella =
+  ## Shows the row groups in this order; groups not listed follow, as they were.
+  result = t
+  var labels: OrderedTable[string, Text]
+  for g in groups:
+    if g notin result.groupLabels: raise newException(KeyError, "no row group " & g.escape)
+    labels[g] = result.groupLabels[g]
+  for k, v in result.groupLabels:
+    if k notin labels: labels[k] = v
+  result.groupLabels = labels
 
 # ---------------------------------------------------------------------------------- dataColor
 
@@ -194,7 +422,7 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
   for n in names:
     for i in ix:
       let v = result.data[n, i]
-      if v.isNumber:
+      if numericCols and v.isNumber:
         let x = v.toFloat
         if lo.isNaN or x < lo: lo = x
         if hi.isNaN or x > hi: hi = x
@@ -301,3 +529,110 @@ proc optQuaderno*(t: sink Tabella, ink = "#1F4E99"): Tabella =
  .tb_title { color: """ & ink & """; font-family: 'Patrick Hand', 'Comic Neue', 'Chalkboard SE', 'Comic Sans MS', cursive; font-size: 150%; }
  .tb_col_heading, .tb_spanner { color: """ & ink & """; }
 """
+
+func px(x: float): string =
+  var s = formatFloat(x, ffDecimal, 1)
+  if s.endsWith(".0"): s.setLen(s.len - 2)
+  s & "px"
+
+proc optVerticalPadding*(t: sink Tabella, scale = 1.0): Tabella =
+  ## Scales the vertical padding of the heading, the column labels and the rows (gt: 0 to 3).
+  result = t
+  result.options.headingPadding = px(4 * scale)
+  result.options.columnLabelsPadding = px(5 * scale)
+  result.options.dataRowPadding = px(8 * scale)
+
+proc optHorizontalPadding*(t: sink Tabella, scale = 1.0): Tabella =
+  ## Scales the horizontal padding of the heading, the column labels and the rows (gt: 0 to 3).
+  result = t
+  result.options.headingPaddingHorizontal = px(5 * scale)
+  result.options.columnLabelsPaddingHorizontal = px(5 * scale)
+  result.options.dataRowPaddingHorizontal = px(5 * scale)
+
+proc optTableOutline*(t: sink Tabella, style = "solid", width = "3px", color = "#D3D3D3"): Tabella =
+  ## A line all around the table.
+  result = t
+  result.options.tableBorderTopStyle = style
+  result.options.tableBorderTopWidth = width
+  result.options.tableBorderTopColor = color
+  result.options.tableBorderBottomStyle = style
+  result.options.tableBorderBottomWidth = width
+  result.options.tableBorderBottomColor = color
+  result.options.tableBorderLeftStyle = style
+  result.options.tableBorderLeftWidth = width
+  result.options.tableBorderLeftColor = color
+  result.options.tableBorderRightStyle = style
+  result.options.tableBorderRightWidth = width
+  result.options.tableBorderRightColor = color
+
+proc optTableLines*(t: sink Tabella, extent = "default"): Tabella =
+  ## The table's lines: `"all"` adds vertical lines between cells, `"none"` takes every line away,
+  ## `"default"` brings back the defaults.
+  result = t
+  let d = TabOptions()
+  template set(field, value: untyped) = result.options.field = value
+  case extent
+  of "none":
+    for side in ["top", "bottom"]: discard side
+    set(tableBorderTopStyle, "none"); set(tableBorderBottomStyle, "none")
+    set(tableBorderLeftStyle, "none"); set(tableBorderRightStyle, "none")
+    set(headingBorderBottomColor, "transparent"); set(columnLabelsBorderBottomColor, "transparent")
+    set(rowGroupBorderColor, "transparent"); set(tableBodyHlinesColor, "transparent")
+    set(tableBodyVlinesColor, "")
+  of "all":
+    set(tableBorderTopStyle, "solid"); set(tableBorderBottomStyle, "solid")
+    set(tableBorderLeftStyle, "solid"); set(tableBorderRightStyle, "solid")
+    set(headingBorderBottomColor, d.headingBorderBottomColor)
+    set(columnLabelsBorderBottomColor, d.columnLabelsBorderBottomColor)
+    set(rowGroupBorderColor, d.rowGroupBorderColor); set(tableBodyHlinesColor, d.tableBodyHlinesColor)
+    set(tableBodyVlinesColor, "#D3D3D3")
+  else:
+    set(tableBorderTopStyle, d.tableBorderTopStyle); set(tableBorderBottomStyle, d.tableBorderBottomStyle)
+    set(tableBorderLeftStyle, d.tableBorderLeftStyle); set(tableBorderRightStyle, d.tableBorderRightStyle)
+    set(headingBorderBottomColor, d.headingBorderBottomColor)
+    set(columnLabelsBorderBottomColor, d.columnLabelsBorderBottomColor)
+    set(rowGroupBorderColor, d.rowGroupBorderColor); set(tableBodyHlinesColor, d.tableBodyHlinesColor)
+    set(tableBodyVlinesColor, d.tableBodyVlinesColor)
+
+proc optFootnoteMarks*(t: sink Tabella, marks: FootnoteMarks): Tabella =
+  result = t
+  result.options.footnotesMarks = marks
+  result.options.footnotesMarksCustom = @[]
+
+proc optFootnoteMarks*(t: sink Tabella, marks: string): Tabella =
+  ## By gt's names: "numbers", "letters", "LETTERS", "standard" (*, †, ‡, §) or "extended"
+  ## (with ‖, ¶).
+  let m = case marks
+          of "numbers": fmNumbers
+          of "letters": fmLetters
+          of "LETTERS": fmCapitals
+          of "standard": fmStandard
+          of "extended": fmExtended
+          else: raise newException(ValueError, "unknown footnote marks " & marks.escape)
+  optFootnoteMarks(t, m)
+
+proc optFootnoteMarks*(t: sink Tabella, marks: openArray[string]): Tabella =
+  ## Marks of your own, used in turn: `optFootnoteMarks(["🌑", "🌓", "🌕"])`.
+  result = t
+  result.options.footnotesMarksCustom = @marks
+
+proc optFootnoteSpec*(t: sink Tabella, specRef = "^", specFtr = "^"): Tabella =
+  ## How marks look, in the table (`specRef`) and in the footer (`specFtr`): "^" raised, "i"
+  ## italic, "b" bold, "(" or "[" around the mark: `optFootnoteSpec("^i", "(")`.
+  result = t
+  result.options.footnotesSpecRef = specRef
+  result.options.footnotesSpecFtr = specFtr
+
+proc optFootnoteOrder*(t: sink Tabella, order = "marks_first"): Tabella =
+  ## The order of the footnotes: marked ones first (the default), last ("marks_last"), or as
+  ## they were added ("preserve_order", which also numbers the marks in that order).
+  if order notin ["marks_first", "marks_last", "preserve_order"]:
+    raise newException(ValueError, "unknown footnote order " & order.escape)
+  result = t
+  result.options.footnotesOrder = order
+
+proc optCss*(t: sink Tabella, css: string, add = true): Tabella =
+  ## CSS for the table, scoped to it (rules that start with `#` are left as they are); `add = false`
+  ## replaces what was given before.
+  result = t
+  result.options.extraCss = (if add and result.options.extraCss.len > 0: result.options.extraCss & "\n" else: "") & css

@@ -29,6 +29,9 @@ proc tableCss*(id: string, o: TabOptions): string =
   let headingColor = if headingDark: "#FFFFFF" else: o.tableFontColor
   let labelsColor = if labelsDark: "#FFFFFF" else: o.tableFontColor
   let i = "#" & id
+  let vlines = if o.tableBodyVlinesColor.len == 0: ""
+               else: i & " .tb_row, " & i & " .tb_col_headings th { border-left: 1px solid " &
+                     o.tableBodyVlinesColor & "; border-right: 1px solid " & o.tableBodyVlinesColor & "; }\n"
   var css = fmt("""
 [i] { overflow-x: [o.containerOverflowX]; }
 [i] table, [i] thead, [i] tbody, [i] tfoot, [i] tr, [i] td, [i] th { border-style: none; }
@@ -36,17 +39,20 @@ proc tableCss*(id: string, o: TabOptions): string =
   margin-left: [o.tableMarginLeft]; margin-right: [o.tableMarginRight]; width: [o.tableWidth];
   color: [o.tableFontColor]; font-family: [o.tableFontNames]; font-size: [o.tableFontSize];
   background-color: [o.tableBackgroundColor];
-  border-top: [o.tableBorderTopWidth] solid [o.tableBorderTopColor];
-  border-bottom: [o.tableBorderBottomWidth] solid [o.tableBorderBottomColor]; }
+  border-top: [o.tableBorderTopWidth] [o.tableBorderTopStyle] [o.tableBorderTopColor];
+  border-bottom: [o.tableBorderBottomWidth] [o.tableBorderBottomStyle] [o.tableBorderBottomColor];
+  border-left: [o.tableBorderLeftWidth] [o.tableBorderLeftStyle] [o.tableBorderLeftColor];
+  border-right: [o.tableBorderRightWidth] [o.tableBorderRightStyle] [o.tableBorderRightColor]; }
+[i] .tb_caption { caption-side: top; padding: 4px 5px; color: [o.tableFontColor]; font-style: italic; }
 [i] .tb_heading { background-color: [headingBg]; text-align: [o.headingAlign]; color: [headingColor]; }
 [i] .tb_title { font-size: [o.headingTitleFontSize]; font-weight: [o.headingTitleFontWeight];
-  padding: 4px 5px 4px 5px; }
-[i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; padding: 0 5px 6px 5px; }
+  padding: [o.headingPadding] [o.headingPaddingHorizontal]; }
+[i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; font-weight: [o.headingSubtitleFontWeight]; padding: 0 [o.headingPaddingHorizontal] [o.headingPadding] [o.headingPaddingHorizontal]; }
 [i] .tb_heading_last { border-bottom: 2px solid [o.headingBorderBottomColor]; }
 [i] .tb_col_headings th { background-color: [labelsBg]; color: [labelsColor];
   font-size: [o.columnLabelsFontSize]; font-weight: [o.columnLabelsFontWeight];
   text-transform: [o.columnLabelsTextTransform]; vertical-align: bottom;
-  padding: 5px 5px 6px 5px; overflow-x: hidden; }
+  padding: [o.columnLabelsPadding] [o.columnLabelsPaddingHorizontal]; overflow-x: hidden; }
 [i] .tb_col_headings_last th { border-bottom: [o.columnLabelsBorderBottomWidth] solid [o.columnLabelsBorderBottomColor]; }
 [i] .tb_spanner { display: inline-block; width: 100%; padding-bottom: 4px;
   border-bottom: 2px solid [o.columnLabelsBorderBottomColor]; }
@@ -54,7 +60,7 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_group_heading { background-color: [groupBg]; font-weight: [o.rowGroupFontWeight];
   padding: 8px 5px; text-align: left; border-top: 2px solid [o.rowGroupBorderColor];
   border-bottom: 2px solid [o.rowGroupBorderColor]; }
-[i] .tb_row { padding: [o.dataRowPadding] 5px; margin: 10px;
+[i] .tb_row { padding: [o.dataRowPadding] [o.dataRowPaddingHorizontal]; margin: 10px;
   border-top: 1px solid [o.tableBodyHlinesColor]; vertical-align: middle; overflow-x: hidden; }
 [i] .tb_stub { background-color: [stubBg]; font-weight: [o.stubFontWeight]; text-align: left;
   border-right: 2px solid [o.tableBodyHlinesColor]; }
@@ -70,7 +76,7 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_bar_track { display: inline-block; height: 0.8em; }
 [i] .tb_bar_fill { display: block; height: 100%; border-radius: 2px; }
 [i] .tb_bar_label { min-width: 2.5em; text-align: right; }
-""", '[', ']')
+""", '[', ']') & vlines
   let extra = o.extraCss.strip
   if extra.len > 0:
     # scope each rule of extraCss to the table, unless it already names it
@@ -80,12 +86,12 @@ proc tableCss*(id: string, o: TabOptions): string =
       let parts = r.split('{', 1)
       if parts.len < 2: continue
       let sels = parts[0].split(',').mapIt(it.strip).mapIt(if it.startsWith("#"): it else: i & " " & it)
-      css.add sels.join(", ") & " {" & parts[1] & "}\n"
+      css.add sels.join(", ") & " { " & parts[1].strip & " }\n"
   css
 
 proc bodyHtml(t: Tabella, b: Built): string =
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
-  let m = t.options.footnotesMarks
+  let m = t.options
   var striped = false
   result.add "<tbody class=\"tb_table_body\">\n"
   for g in b.groups:
@@ -107,7 +113,7 @@ proc bodyHtml(t: Tabella, b: Built): string =
 
 proc columnLabelsHtml(t: Tabella, b: Built): string =
   let levels = t.spannerLevels(b.columns)
-  let m = t.options.footnotesMarks
+  let m = t.options
   func hasAnySpanner(c: ColInfo): bool =
     for lv in 1 .. levels:
       if t.spannerAt(c.name, lv) >= 0: return true
@@ -150,7 +156,7 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
 proc toHtml*(t: Tabella): string =
   ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`), ready to put in a page.
   let b = t.build(rcHtml)
-  let m = t.options.footnotesMarks
+  let m = t.options
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
   var head = ""
   if not t.title.isEmpty:
@@ -164,23 +170,24 @@ proc toHtml*(t: Tabella): string =
   if b.notes.len > 0 or b.plainNotes.len > 0 or t.sourceNotes.len > 0:
     # one <tfoot>: footnotes first, then source notes, as in gt
     foot.add "<tfoot>\n"
-    for k, n in b.notes:
-      foot.add &"""<tr class="tb_footnotes"><td class="tb_footnote" colspan="{ncols}"{b.styleAttr("footnotes")}><span class="tb_footnote_marks">{markText(k + 1, m)}</span> {n}</td></tr>""" & "\n"
-    for n in b.plainNotes:
-      foot.add &"""<tr class="tb_footnotes"><td class="tb_footnote" colspan="{ncols}"{b.styleAttr("footnotes")}>{n}</td></tr>""" & "\n"
+    for (k, n) in b.footer:
+      let mark = if k > 0: footMarkHtml(k, m) & " " else: ""
+      foot.add &"""<tr class="tb_footnotes"><td class="tb_footnote" colspan="{ncols}"{b.styleAttr("footnotes")}>{mark}{n}</td></tr>""" & "\n"
     for n in t.sourceNotes:
       foot.add &"""<tr class="tb_sourcenotes"><td class="tb_sourcenote" colspan="{ncols}"{b.styleAttr("source_notes")}>{n.renderText(rcHtml)}</td></tr>""" & "\n"
     foot.add "</tfoot>\n"
+  let caption = if t.caption.isEmpty: ""
+                else: &"""<caption class="tb_caption">{t.caption.renderText(rcHtml)}</caption>""" & "\n"
   # a stable id: the same table always gets the same id, so built pages do not churn
   let id = if t.id.len > 0: t.id
-           else: "tabella-" & toHex(hash(head & labels & body & foot & $t.options), 8).toLowerAscii
+           else: "tabella-" & toHex(hash(caption & head & labels & body & foot & $t.options), 8).toLowerAscii
   let aria = if t.title.isEmpty: "" else: &" aria-labelledby=\"{id}-title\""
   head = head.replace("class=\"tb_title", &"id=\"{id}-title\" class=\"tb_title")
   &"""<div id="{id}" class="tabella">
 <style>
 {tableCss(id, t.options)}</style>
 <table class="tb_table"{aria}>
-<thead>
+{caption}<thead>
 {head}{labels}</thead>
 {body}{foot}</table>
 </div>"""

@@ -342,6 +342,12 @@ func borders*(_: StyleNs, sides: set[Side] = {sTop, sRight, sBottom, sLeft}, col
   for s in sides:
     result.css.add ("border-" & $s, weight & " " & style & " " & color)
 
+func css*(_: StyleNs, declarations: string): CellStyle =
+  ## Any CSS, as declarations: `style.css("letter-spacing: 0.1em; font-variant: small-caps")`.
+  for d in declarations.split(';'):
+    let kv = d.split(':', 1)
+    if kv.len == 2 and kv[0].strip.len > 0: result.css.add (kv[0].strip, kv[1].strip)
+
 func toCss*(s: CellStyle): string = s.css.mapIt(it[0] & ": " & it[1]).join("; ")
 
 # ------------------------------------------------------------------------------------------- spec
@@ -382,7 +388,7 @@ type
 
   LocKind* = enum
     lkTitle, lkSubtitle, lkStubhead, lkSpanners, lkColumnLabels, lkStub, lkRowGroups, lkBody,
-    lkFootnotes, lkSourceNotes
+    lkFootnotes, lkSourceNotes, lkHeader, lkColumnHeader, lkFooter
 
   Target* = object
     ## A resolved location: `cells` for the body and the stub (row, column), `names` for
@@ -406,8 +412,13 @@ type
     note*: Text
     target*: Target
 
+  TransformRule* = object
+    ## A proc over the shown text of the cells at a location (`textTransform`).
+    target*: Target
+    fn*: proc (s: string): string
+
   FootnoteMarks* = enum
-    fmNumbers, fmLetters, fmCapitals, fmStandard
+    fmNumbers, fmLetters, fmCapitals, fmStandard, fmExtended
 
   TabOptions* = object
     ## Table-wide looks, like gt's `tab_options()`. Change any subset with
@@ -428,6 +439,7 @@ type
     headingTitleFontSize* = "125%"
     headingTitleFontWeight* = "initial"
     headingSubtitleFontSize* = "85%"
+    headingSubtitleFontWeight* = "normal"
     headingBorderBottomColor* = "#D3D3D3"
     columnLabelsBackgroundColor* = ""
     columnLabelsFontSize* = "100%"
@@ -440,12 +452,30 @@ type
     rowGroupBorderColor* = "#D3D3D3"
     stubBackgroundColor* = ""
     stubFontWeight* = "initial"
+    headingPadding* = "4px"
+    headingPaddingHorizontal* = "5px"
+    columnLabelsPadding* = "5px"
+    columnLabelsPaddingHorizontal* = "5px"
     dataRowPadding* = "8px"
+    dataRowPaddingHorizontal* = "5px"
+    tableBorderTopStyle* = "solid"
+    tableBorderBottomStyle* = "solid"
+    tableBorderLeftStyle* = "none"
+    tableBorderLeftWidth* = "2px"
+    tableBorderLeftColor* = "#D3D3D3"
+    tableBorderRightStyle* = "none"
+    tableBorderRightWidth* = "2px"
+    tableBorderRightColor* = "#D3D3D3"
+    tableBodyVlinesColor* = "" ## "" for no vertical lines
     tableBodyHlinesColor* = "#D3D3D3"
     rowStriping* = false
     rowStripingBackgroundColor* = "rgba(128,128,128,0.05)"
     footnotesFontSize* = "90%"
     footnotesMarks* = fmNumbers
+    footnotesMarksCustom*: seq[string]  ## marks of your own; when set, `footnotesMarks` is ignored
+    footnotesSpecRef* = "^"     ## how marks look in the table: ^ raised, i italic, b bold, ( or [ around
+    footnotesSpecFtr* = "^"     ## the same, in the footer
+    footnotesOrder* = "marks_first"  ## or "marks_last", "preserve_order"
     sourceNotesFontSize* = "90%"
     containerOverflowX* = "auto"
     extraCss* = ""          ## more CSS, scoped to the table when it starts with ` ` or `.`
@@ -455,14 +485,17 @@ type
     data*: TableData
     boxhead*: seq[ColInfo]
     title*, subtitle*: Text
+    caption*: Text
     stubhead*: Text
     rownameCol*, groupnameCol*: string
     groupLabels*: OrderedTable[string, Text]   ## group id -> label, in display order
     rowGroups*: seq[string]                    ## group id of each row ("" when ungrouped)
+    rowOrder*: seq[int]                        ## rows in display order (empty: as in the data)
     spanners*: seq[Spanner]
     formats*: seq[FormatRule]
     substitutions*: seq[FormatRule]
     styles*: seq[StyleRule]
+    transforms*: seq[TransformRule]
     footnotes*: seq[Footnote]
     sourceNotes*: seq[Text]
     options*: TabOptions

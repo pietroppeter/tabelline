@@ -80,6 +80,9 @@ Kept up to date as tabelline changes:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Designing tabelline 0.1](https://pietroppeter.github.io/tabelline/devlog/designing-0-1/)
+  (7 Nov 2026 F): the 24 small groups of gt in 0.1, how each became an OpenSpec change, R vs
+  Python vs Nim, and the Nim sugar.
 - [Three threads for every release](https://pietroppeter.github.io/tabelline/devlog/three-threads/)
   (7 Nov 2026 E): how tabelline will grow from 0.1 to 0.5, after nanuq: build it, use it on real
   data, port reference code, with Nim, Python and R in tabs.
