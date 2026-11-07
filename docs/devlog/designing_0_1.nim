@@ -767,8 +767,10 @@ the languages that have the example.
 
 ## The Nim sugar
 
-Nothing in 0.1 needed a new macro. What makes the verbs read well is Nim as it is: eight
-things, one card each, with code that runs and what it makes. Swipe sideways.
+tabelline has three macros, each where a proc could not do the job: `tabella(data):` with a
+body of verbs, `tableData:` for data written as columns, and `tabOptions` for options by name.
+The rest is Nim as it is. Eight things, one card each, with code that runs and what it makes.
+Swipe sideways.
 """
 
 var zuccheri: seq[string]
