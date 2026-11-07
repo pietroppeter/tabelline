@@ -91,8 +91,8 @@ proc resolve*(l: Loc, t: Tabella): Target =
     result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
   of lkStub:
     for i in l.rows.resolve(t.data): result.cells.add (i, t.rownameCol)
-  of lkBody:
-    let names = l.cols.resolve(t.data)
+  of lkBody:   # the data cells: the stub column is loc.stub, as in gt
+    let names = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
     for i in l.rows.resolve(t.data):
       for n in names: result.cells.add (i, n)
   else: discard

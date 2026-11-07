@@ -39,6 +39,10 @@ let living: seq[Living] = @[
    "as tabelline grows"),
   ("../specs/", "Specs", "How tabelline behaves today: requirements with examples that run, and the tables they make.",
    "on every push, from openspec/"),
+  ("../coverage/", "Coverage map", "Every feature group of gt and Great Tables, what tabelline has, and the releases that plan the rest.",
+   "when a status changes, from docs/coverage/gt.json"),
+  ("../roadmap/", "Roadmap", "The releases from 0.1 to 0.5, and the three threads that make each one: build it, use it, port the references.",
+   "when a thread starts or ships, from docs/piano.nim"),
 ]
 var docs = ""
 for d in living:

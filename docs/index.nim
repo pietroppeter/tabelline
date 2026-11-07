@@ -3,7 +3,7 @@
 import std/os
 import nimib except md
 import tabelline, tabelline/[datasets, nimib]
-import quaderno
+import quaderno, parti
 
 let docs = currentSourcePath().parentDir
 nbInit
@@ -32,7 +32,22 @@ nbCode:
     fmtBar "moons", color = "#A0C4FF", width = "4em"
     tabSourceNote "NASA Planetary Fact Sheet"
     optQuaderno()
+nbRawHtml: partsCss & """<button type="button" class="mostra-parti" aria-pressed="false">Show the parts</button><div class="vista-dati">"""
 nbTable t
+nbRawHtml: """</div><div class="vista-parti" hidden>"""
+nbTable showParts(t)
+nbRawHtml: partsLegend() & """<p>The six parts of every gt table, explained in the <a href="explainer/#the-parts-of-a-table">explainer</a>.</p></div>
+<script>
+(function () {
+  var b = document.querySelector('.mostra-parti'), d = document.querySelector('.vista-dati'), p = document.querySelector('.vista-parti');
+  b.addEventListener('click', function () {
+    var on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.textContent = on ? 'Show the data' : 'Show the parts';
+    d.hidden = on; p.hidden = !on;
+  });
+})();
+</script>"""
 
 nbText: """
 <div class="cards">

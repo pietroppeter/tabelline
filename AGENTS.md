@@ -57,11 +57,18 @@ working rules that are easy to miss.
 - In the Munari look, nothing that only decorates may look like something to press or drag (no
   dots, holes or knobs on cards). Its colours are six variables in `docs/munari.nim` (`--m-*`);
   mix new colours from them rather than adding fixed ones.
+- The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
+  completes a gt feature updates its row there (status, and `plan` while it is open), and a
+  release PR checks the whole file.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
+- `python3 tools/preview.py` copies the built pages to `../tabelline-preview` for an artifact
+  (folder links point to index.html). A link to the artifact ending in `#<page>` opens that
+  page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`. Give Pietro
+  the deep link to what changed.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.

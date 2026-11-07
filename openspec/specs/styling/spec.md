@@ -10,7 +10,8 @@ How a table looks: styles on locations, colours by value, and table-wide options
 with `style.fill(color)`, `style.text(...)` and `style.borders(...)` and joined with `&`.
 Locations SHALL be `loc.title()`, `loc.subtitle()`, `loc.stubhead()`, `loc.columnLabels(cols)`,
 `loc.spanners(labels)`, `loc.stub(rows)`, `loc.rowGroups(groups)`, `loc.body(cols, rows)`,
-`loc.footnotes()` and `loc.sourceNotes()`, as in Great Tables. A later style SHALL win over an
+`loc.footnotes()` and `loc.sourceNotes()`, as in Great Tables; `loc.body` SHALL target the data
+cells only, not the stub (that is `loc.stub`). A later style SHALL win over an
 earlier one for the same property.
 
 ```nim
