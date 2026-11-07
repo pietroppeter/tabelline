@@ -21,6 +21,12 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Formats
 
+- **Gaps from the month post** (S each, 0.1 use-it thread): an `html()` cell format (fmtMarkdown
+  escapes every tag but `<br>`, and turns `~` and `^` into sub/superscripts); Markdown in row
+  group labels; a TSV or `quote = ""` option for `readCsv` (a `"` inside a field is taken as
+  quoting and dropped); document that colours such as `fmtBar(color = "var(--x)")` can use the
+  page's CSS variables.
+
 - **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtDuration`,
   `fmtBytes`, `fmtFraction`, `fmtPartsper`, `fmtEngineering`, `fmtNumberSi`, `fmtDatetime`,
   `fmtTime`, `fmtUrl`, `fmtEmail`, `fmtIndex`, `fmtSpelledNum`.
@@ -80,6 +86,12 @@ Rough size: S (hours), M (a day or two), L (more).
 - **nimibook and nimiSlides** (S). Check that tables look right in their themes.
 
 ## Docs
+
+- **A skill for users** (M). `skill.md` and `llms.txt` written from the specs and their examples
+  while the pages are built, served from the site, as Great Docs does for Great Tables. From the
+  skills post (0.1 use-it thread).
+- **A small skill benchmark** (S). Five tasks with and without the user skill, graded by building
+  the result.
 
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.

@@ -80,6 +80,14 @@ Kept up to date as tabelline changes:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
+  (7 Nov 2026 H): what an agent skill is, where skills live in an open source project, who does
+  them well, how they work from the phone, how to test one, and what tabelline could do with them.
+- [Operetta, a first sketch](https://pietroppeter.github.io/tabelline/devlog/operetta/)
+  (7 Nov 2026 G): the way of working of the month as parts a project picks by kind and stage.
+- [A month of building, as an operetta](https://pietroppeter.github.io/tabelline/devlog/month-of-building/)
+  (7 Nov 2026 F): seven weeks of open source with Claude in seven acts, and the parts of a way
+  of working that grew; the first use of tabelline on real data.
 - [Three threads for every release](https://pietroppeter.github.io/tabelline/devlog/three-threads/)
   (7 Nov 2026 E): how tabelline will grow from 0.1 to 0.5, after nanuq: build it, use it on real
   data, port reference code, with Nim, Python and R in tabs.
