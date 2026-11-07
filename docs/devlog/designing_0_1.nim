@@ -189,11 +189,11 @@ scheda "3 parts", "Spanners from column names", "Data with names like <code>size
       tabSpannerDelim()
   nbTable t
 
-scheda "3 parts", "Footnotes", "A note at the bottom, and its mark wherever it applies: a cell, a label, the title.":
+scheda "3 parts", "Footnotes", "A note at the bottom, and its mark wherever it applies: a cell, a label, the title. Marks are numbered in reading order, top to bottom.":
   nbCode:
     let t = tabella(pianeti, rownameCol = "planet"):
-      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
       tabFootnote "Moons known in 2024.", loc.columnLabels("moons")
+      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
   nbTable t
 
 scheda "3 parts", "Removing parts", "One house-style table, and variants that drop what they do not need.":
@@ -431,8 +431,8 @@ scheda "8 options", "Padding, outline and lines", "Compact or roomy, boxed, with
 scheda "8 options", "Footnote marks, look and order", "Marks your way: symbols, letters or your own, raised or in brackets.":
   nbCode:
     let t = tabella(pianeti, rownameCol = "planet"):
-      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
       tabFootnote "Moons known in 2024.", loc.columnLabels("moons")
+      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
       optFootnoteMarks ["🌑", "🌓"]
       optFootnoteSpec "^", "("
   nbTable t
