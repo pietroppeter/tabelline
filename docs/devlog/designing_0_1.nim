@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | Twenty-four small groups of gt in one go: what 0.1 adds, how each became an OpenSpec change, where tabelline follows R's gt, where Python's Great Tables, and where Nim asked for something of its own.
+## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | Twenty-four small groups of gt in one go: what 0.1 adds, where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own, and how each became an OpenSpec change.
 ## A dated post: it tells how 0.1 was designed and built, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
@@ -40,13 +40,13 @@ block:
     groups: int
     enables: string
   let rows = @[
-    A(area: "Parts of a table", groups: 3, enables: "headers from `a.b` names, a caption, taking parts away"),
-    A(area: "Formats", groups: 10, enables: "kW and µg, ‰ and ppm, kB and GiB, A B C, *forty-two*, 2:35 PM, 2h 5m, ●○, links, 🇮🇹"),
-    A(area: "Substitutions and text", groups: 2, enables: "<0.01 for noise, n/a for −99, text changed as it is shown"),
     A(area: "Columns", groups: 2, enables: "labels from a proc, columns moved to the end or swapped in place"),
     A(area: "Rows", groups: 1, enables: "rows sorted and groups ordered, without touching the data"),
-    A(area: "Styles", groups: 2, enables: "any CSS, on the whole header, column header or footer"),
-    A(area: "Options", groups: 4, enables: "compact or roomy, boxed or bare, footnote marks your way, your own CSS"),
+    A(area: "Parts of a table", groups: 3, enables: "a caption, taking parts away, headers from `a.b` names"),
+    A(area: "Formats", groups: 10, enables: "●○, 🇮🇹, links, A B C, *forty-two*, ‰ and ppm, kB and GiB, kW and µg, 2:35 PM, 2h 5m"),
+    A(area: "Text", groups: 3, enables: "**bold** and HTML in labels, <0.01 for noise, n/a for −99, text changed as it is shown"),
+    A(area: "Options", groups: 3, enables: "compact or roomy, boxed or bare, footnote marks your way, your own CSS"),
+    A(area: "Styles", groups: 2, enables: "on the whole header, column header or footer, and any CSS"),
   ]
   let t = tabella(rows, rownameCol = "area"):
     tabHeader "0.1 in seven lines"
@@ -57,8 +57,9 @@ block:
   nbTable t
 
 nbText: """
-And one by one: a card for each group, with the smallest example that shows it. Swipe the
-cards sideways (or scroll them with a trackpad); every table is made by the code above it.
+And one by one: a card for each group, with the smallest example that shows it, from the
+simplest to the ones that ask a little more. Swipe the cards sideways (or scroll them with a
+trackpad); every table is made by the code above it.
 """
 
 nbRawHtml: """<style>
@@ -97,134 +98,6 @@ let pianeti {.used.} = tableData:
   moons: [0, 0, 1, 2]
   rings: [false, false, false, true]
 
-scheda "Spanners from column names", "Data with names like <code>size.mass</code> gets its headers for free.":
-  nbCode:
-    let d = tableData:
-      planet: ["Earth", "Mars"]
-      size.mass: [5.97, 0.64]
-      size.radius: [6371, 3390]
-    let t = tabella(d, rownameCol = "planet"):
-      tabSpannerDelim()
-  nbTable t
-
-scheda "Caption", "A table that names itself, for screen readers and for figures in a document.":
-  nbCode:
-    let t = tabella(pianeti):
-      tabCaption "Table 1. The rocky planets."
-  nbTable t
-
-scheda "Removing parts", "One house-style table, and variants that drop what they do not need.":
-  nbCode:
-    let base = tabella(pianeti):
-      tabHeader "Rocky planets", "and their moons"
-      tabSourceNote "NASA"
-    let t = base.rmHeader().rmSourceNotes()
-  nbTable t
-
-scheda "Engineering notation and SI prefixes", "Physics-sized numbers: powers of a thousand, or k, M, µ before a unit.":
-  nbCode:
-    let d = tableData:
-      plant: ["kettle", "wind turbine", "phone"]
-      power: [2000.0, 3.6e6, 0.005]
-    let t = tabella(d):
-      fmtNumberSi "power", unit = "W", decimals = 1
-  nbTable t
-
-scheda "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ for salt.":
-  nbCode:
-    let d = tableData:
-      year: [1850, 2025]
-      co2: [0.000285, 0.000425]
-    let t = tabella(d):
-      fmtPartsper "co2", toUnits = "ppm", decimals = 0
-      fmtInteger "year", useSeps = false
-  nbTable t
-
-scheda "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
-  nbCode:
-    let d = tableData:
-      file: ["notes.txt", "photo.jpg", "film.mkv"]
-      size: [512, 2_400_000, 3_200_000_000]
-    let t = tabella(d):
-      fmtBytes "size"
-  nbTable t
-
-scheda "Letters and spelled numbers", "Lists labelled a, b, c, and small numbers in words, as in prose.":
-  nbCode:
-    let d = tableData:
-      option: [1, 2, 3]
-      moons: [0, 1, 2]
-    let t = tabella(d):
-      fmtIndex "option", upper = false
-      fmtSpelledNum "moons"
-  nbTable t
-
-scheda "Times and datetimes", "Clock times and timestamps in the style of your readers.":
-  nbCode:
-    let d = tableData:
-      event: ["launch", "landing"]
-      utc: ["1969-07-16T13:32:00", "1969-07-20T20:17:40"]
-    let t = tabella(d):
-      fmtDatetime "utc", dateStyle = "day_m_year", timeStyle = "h_m_p"
-  nbTable t
-
-scheda "Durations", "A column of seconds becomes race times or run times.":
-  nbCode:
-    let d = tableData:
-      race: ["5 km", "half marathon", "marathon"]
-      seconds: [1145, 5400, 12_420]
-    let t = tabella(d):
-      fmtDuration "seconds"
-  nbTable t
-
-scheda "Booleans", "True and false as symbols or words, in colour if you like.":
-  nbCode:
-    let t = tabella(pianeti):
-      fmtTf "rings", tfStyle = "circles", colors = ["#B5446E", "#999999"]
-  nbTable t
-
-scheda "Links", "Addresses become links, or small buttons; Markdown links keep their label.":
-  nbCode:
-    let d = tableData:
-      project: ["Nim", "nimib"]
-      site: ["https://nim-lang.org", "[repo](https://github.com/pietroppeter/nimib)"]
-    let t = tabella(d):
-      fmtUrl "site"
-  nbTable t
-
-scheda "Flags", "Country codes as flags, with nothing to load.":
-  nbCode:
-    let d = tableData:
-      city: ["Roma", "Tokyo", "Paris"]
-      country: ["IT", "JP", "FR"]
-    let t = tabella(d):
-      fmtFlag "country"
-  nbTable t
-
-scheda "Value functions", "The same formats outside tables, for the sentence that talks about one.":
-  nbCode:
-    echo "the film is ", formatBytes(3.2e9), " and lasts ", formatDuration(8100)
-    echo "CO₂ went from ", formatPartsper(0.000285, "ppm", 0), " to ", formatPartsper(0.000425, "ppm", 0)
-
-scheda "Small, large and given values", "Hide noise below a threshold, cap huge numbers, mark sentinel values.":
-  nbCode:
-    let d = tableData:
-      sample: ["a", "b", "c"]
-      dose: [0.004, 2.5, -99.0]
-    let t = tabella(d):
-      fmtNumber "dose"
-      subSmallVals "dose"
-      subValues "dose", values = [-99], replacement = "n/a"
-  nbTable t
-
-scheda "Text transforms", "The last word on what a cell says: upper case, a word replaced, a code turned into a label.":
-  nbCode:
-    let t = tabella(pianeti, rownameCol = "planet"):
-      textTransform toUpperAscii, loc.stub()
-      fmtTf "rings", tfStyle = "yes-no"
-      textCaseMatch {"yes": "rings!", "no": ""}, locations = loc.body("rings")
-  nbTable t
-
 scheda "Labels from a proc", "Every label made from its name at once: capitals, units, translations.":
   nbCode:
     let t = tabella(pianeti):
@@ -247,17 +120,139 @@ scheda "Order of rows and groups", "Rows sorted and groups in your order, while 
       rowGroupOrder ["Gas giant"]
   nbTable t
 
-scheda "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
+scheda "Caption", "A table that names itself, for screen readers and for figures in a document.":
   nbCode:
     let t = tabella(pianeti):
-      tabStyle style.css("font-variant: small-caps; letter-spacing: .08em"), loc.body("planet")
+      tabCaption "Table 1. The rocky planets."
   nbTable t
 
-scheda "Whole parts as locations", "Style the whole header, column header or footer in one call.":
+scheda "Removing parts", "One house-style table, and variants that drop what they do not need.":
+  nbCode:
+    let base = tabella(pianeti):
+      tabHeader "Rocky planets", "and their moons"
+      tabSourceNote "NASA"
+    let t = base.rmHeader().rmSourceNotes()
+  nbTable t
+
+scheda "Spanners from column names", "Data with names like <code>size.mass</code> gets its headers for free.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars"]
+      size.mass: [5.97, 0.64]
+      size.radius: [6371, 3390]
+    let t = tabella(d, rownameCol = "planet"):
+      tabSpannerDelim()
+  nbTable t
+
+scheda "Booleans", "True and false as symbols or words, in colour if you like.":
   nbCode:
     let t = tabella(pianeti):
-      tabHeader "Rocky planets"
-      tabStyle style.fill("#F6E3EA"), loc.header(), loc.columnHeader()
+      fmtTf "rings", tfStyle = "circles", colors = ["#B5446E", "#999999"]
+  nbTable t
+
+scheda "Flags", "Country codes as flags, with nothing to load.":
+  nbCode:
+    let d = tableData:
+      city: ["Roma", "Tokyo", "Paris"]
+      country: ["IT", "JP", "FR"]
+    let t = tabella(d):
+      fmtFlag "country"
+  nbTable t
+
+scheda "Links", "Addresses become links, or small buttons; Markdown links keep their label.":
+  nbCode:
+    let d = tableData:
+      project: ["Nim", "nimib"]
+      site: ["https://nim-lang.org", "[repo](https://github.com/pietroppeter/nimib)"]
+    let t = tabella(d):
+      fmtUrl "site"
+  nbTable t
+
+scheda "Letters and spelled numbers", "Lists labelled a, b, c, and small numbers in words, as in prose.":
+  nbCode:
+    let d = tableData:
+      option: [1, 2, 3]
+      moons: [0, 1, 2]
+    let t = tabella(d):
+      fmtIndex "option", upper = false
+      fmtSpelledNum "moons"
+  nbTable t
+
+scheda "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ for salt.":
+  nbCode:
+    let d = tableData:
+      year: [1850, 2025]
+      co2: [0.000285, 0.000425]
+    let t = tabella(d):
+      fmtPartsper "co2", toUnits = "ppm", decimals = 0
+      fmtInteger "year", useSeps = false
+  nbTable t
+
+scheda "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
+  nbCode:
+    let d = tableData:
+      file: ["notes.txt", "photo.jpg", "film.mkv"]
+      size: [512, 2_400_000, 3_200_000_000]
+    let t = tabella(d):
+      fmtBytes "size"
+  nbTable t
+
+scheda "Engineering notation and SI prefixes", "Physics-sized numbers: powers of a thousand, or k, M, µ before a unit.":
+  nbCode:
+    let d = tableData:
+      plant: ["kettle", "wind turbine", "phone"]
+      power: [2000.0, 3.6e6, 0.005]
+    let t = tabella(d):
+      fmtNumberSi "power", unit = "W", decimals = 1
+  nbTable t
+
+scheda "Times and datetimes", "Clock times and timestamps in the style of your readers.":
+  nbCode:
+    let d = tableData:
+      event: ["launch", "landing"]
+      utc: ["1969-07-16T13:32:00", "1969-07-20T20:17:40"]
+    let t = tabella(d):
+      fmtDatetime "utc", dateStyle = "day_m_year", timeStyle = "h_m_p"
+  nbTable t
+
+scheda "Durations", "A column of seconds becomes race times or run times.":
+  nbCode:
+    let d = tableData:
+      race: ["5 km", "half marathon", "marathon"]
+      seconds: [1145, 5400, 12_420]
+    let t = tabella(d):
+      fmtDuration "seconds"
+  nbTable t
+
+scheda "Value functions", "The same formats outside tables, for the sentence that talks about one.":
+  nbCode:
+    echo "the film is ", formatBytes(3.2e9), " and lasts ", formatDuration(8100)
+    echo "CO₂ went from ", formatPartsper(0.000285, "ppm", 0), " to ", formatPartsper(0.000425, "ppm", 0)
+
+scheda "Markdown and HTML text", "Labels and notes with emphasis, code, sub- and superscripts, or raw HTML.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabHeader md("The **rocky** planets"), html("<i>and their moons</i>")
+      colsLabel {"moons": md("moons (*n*)")}
+  nbTable t
+
+scheda "Small, large and given values", "Hide noise below a threshold, cap huge numbers, mark sentinel values.":
+  nbCode:
+    let d = tableData:
+      sample: ["a", "b", "c"]
+      dose: [0.004, 2.5, -99.0]
+    let t = tabella(d):
+      fmtNumber "dose"
+      subSmallVals "dose"
+      subValues "dose", values = [-99], replacement = "n/a"
+  nbTable t
+
+scheda "Text transforms", "The last word on what a cell says: upper case, a word replaced, a code turned into a label.":
+  nbCode:
+    let t = tabella(pianeti, rownameCol = "planet"):
+      textTransform toUpperAscii, loc.stub()
+      fmtTf "rings", tfStyle = "yes-no"
+      textCaseMatch {"yes": "rings!", "no": ""}, locations = loc.body("rings")
   nbTable t
 
 scheda "Padding, outline and lines", "Compact or roomy, boxed, with or without lines between cells.":
@@ -283,57 +278,23 @@ scheda "Extra CSS", "A rule of your own, scoped to this table only.":
       optCss "td.tb_row:hover { background: #FFF3B0; }"
   nbTable t
 
-scheda "Markdown and HTML text", "Labels and notes with emphasis, code, sub- and superscripts, or raw HTML.":
+scheda "Whole parts as locations", "Style the whole header, column header or footer in one call.":
   nbCode:
     let t = tabella(pianeti):
-      tabHeader md("The **rocky** planets"), html("<i>and their moons</i>")
-      colsLabel {"moons": md("moons (*n*)")}
+      tabHeader "Rocky planets"
+      tabStyle style.fill("#F6E3EA"), loc.header(), loc.columnHeader()
+  nbTable t
+
+scheda "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabStyle style.css("font-variant: small-caps; letter-spacing: .08em"), loc.body("planet")
   nbTable t
 
 nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"the 24 groups: swipe or scroll sideways\">" &
   schede.join("") & "</div>"
 
 nbText: """
-## How they were built
-
-The coverage map was the backlog, and each of its rows became a change in `openspec/changes/`: a
-proposal (why, what, and the differences from gt and Great Tables), a requirement with a Nim
-example, and tasks. The example was written first, with its output left empty; then the code;
-then `nim r tools/specexamples.nim --update` wrote what the example prints, and that output was
-read line by line before it went into the spec. It is how the spelled numbers stopped at one
-hundred, and how `fmtIndex` showed that 42 is "PP" in gt's way of counting (A to Z, then AA, BB)
-and "AP" in a spreadsheet's (there is `indexAlgo = "excel"` for that).
-
-Most groups were a verb over machinery that was there: a format is a closure from a value to
-text, resolved against the data when the verb is called and run when the table is rendered; a
-substitution is the same closure that runs after the formats; a location is a list of keys
-(`"title"`, `"col:mass"`, `"cell:3:moons"`) that styles and footnotes attach to. Five groups
-needed something new:
-"""
-
-block:
-  type N = object
-    what, why: string
-  let rows = @[
-    N(what: "a **row order** in the spec (`rowOrder`)", why: "`rowOrder` sorts what is shown, not the data, so the formats and footnotes still point at the rows they were given"),
-    N(what: "**text transforms** that run last", why: "`textTransform` on cells gets the text after formats and substitutions, as in gt; on labels it changes the label when it is called"),
-    N(what: "a **footer** with an order", why: "the footer is a list of (mark, note) that `optFootnoteOrder` arranges: marked first, last, or as added"),
-    N(what: "**marks with a look**", why: "`optFootnoteSpec` reads gt's little language: `^` raised, `i` italic, `b` bold, `(` and `[` around"),
-    N(what: "**lines** as options", why: "left and right borders, border styles and vertical lines became options, so `optTableOutline` and `optTableLines` are presets like the others"),
-  ]
-  let t = tabella(rows):
-    tabHeader "What was new machinery"
-    colsLabel {"what": "", "why": ""}
-    fmtMarkdown everything()
-    colsWidth {"what": "34%"}
-    tabOptions(tableWidth = "100%", tableFontSize = "14px")
-  nbTable t
-
-nbText: """
-The others were small, and some found small bugs on the way: `tableData:` cut a quoted name
-like `` `size.mass` `` at the dot (now it reads `size.mass:` with no quotes at all, see below), and the "standard" footnote
-marks were six symbols where gt has four (the six are now `"extended"`, as in gt).
-
 ## R, Python or Nim?
 
 Where gt and Great Tables differ, tabelline mostly follows Great Tables, as the
@@ -352,12 +313,12 @@ block:
   let rows = @[
     V(side: "the same as both", choice: "Names", r: "tab_header", python: "tab_header", nim: "tabHeader"),
     V(side: "the same as both", choice: "Options", r: "\"letters\"", python: "\"letters\"", nim: "\"letters\""),
-    V(side: "with R", choice: "Proc or places first?", r: "proc", python: "places", nim: "proc"),
     V(side: "with Python", choice: "First row", r: "1", python: "0", nim: "0"),
-    V(side: "its own way", choice: "Replace text", r: "regex", python: "—", nim: "plain text"),
-    V(side: "its own way", choice: "Conditions", r: "formula", python: "—", nim: "proc"),
+    V(side: "with R", choice: "Proc or places first?", r: "proc", python: "places", nim: "proc"),
     V(side: "its own way", choice: "Flags", r: "SVG", python: "SVG", nim: "emoji"),
     V(side: "its own way", choice: "One value", r: "vec_fmt_", python: "vals.fmt_", nim: "formatX"),
+    V(side: "its own way", choice: "Replace text", r: "regex", python: "—", nim: "plain text"),
+    V(side: "its own way", choice: "Conditions", r: "formula", python: "—", nim: "proc"),
   ]
   let t = tabella(rows, rownameCol = "choice", groupnameCol = "side"):
     tabHeader "R, Python and tabelline", "eight choices, grouped by whom tabelline sides with"
@@ -404,54 +365,6 @@ tabHeader "Planets"
 **tabelline:** gt's names in camelCase, the Nim way. Inside `tabella(data):` there is one verb per line, with no `|>` and no dots.
 """
 
-scelta "Where the proc goes", "When a verb takes a function and places, which comes first?":
-  nbText: """
-🏴‍☠️ R
-```r
-text_transform(fn = toupper, locations = cells_stub())
-```
-🐍 Python
-```python
-.text_transform(locations=loc.stub(), fn=str.upper)
-```
-👑 Nim
-```nim
-textTransform toUpperAscii, loc.stub()
-```
-**tabelline:** the proc first, as in R. The places come last because there can be several (`loc.stub(), loc.body()`), and Nim takes such a list only at the end.
-"""
-
-scelta "Regular expressions", "How do you replace a piece of text in cells?":
-  nbText: """
-🏴‍☠️ R
-```r
-text_replace(pattern = "^Merc", replacement = "☿ ")
-```
-🐍 Python: not in Great Tables.
-
-👑 Nim
-```nim
-textReplace "Mercury", "☿ Mercury"
-```
-**tabelline:** plain text, not a regex. Nim's regex module needs the PCRE library, and the core of tabelline needs nothing but the standard library. For more, `textTransform` takes any proc.
-"""
-
-scelta "Conditions", "How do you change a text depending on its value?":
-  nbText: """
-🏴‍☠️ R
-```r
-text_case_when(x == "0" ~ "none", .default = "some")
-```
-🐍 Python: not in Great Tables.
-
-👑 Nim
-```nim
-textTransform proc (s: string): string =
-  if s == "0": "none" else: "some"
-```
-**tabelline:** no `textCaseWhen`. R needs formulas (`~`) for this; Nim already has `if` and `case`, so a small proc does it.
-"""
-
 scelta "Choices by name", "How do you pick one of a few options?":
   nbText: """
 🏴‍☠️ R
@@ -487,6 +400,23 @@ loc.body(rows = [0])
 **tabelline:** from 0, like Python and like everything else in Nim. R counts from 1.
 """
 
+scelta "Where the proc goes", "When a verb takes a function and places, which comes first?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_transform(fn = toupper, locations = cells_stub())
+```
+🐍 Python
+```python
+.text_transform(locations=loc.stub(), fn=str.upper)
+```
+👑 Nim
+```nim
+textTransform toUpperAscii, loc.stub()
+```
+**tabelline:** the proc first, as in R. The places come last because there can be several (`loc.stub(), loc.body()`), and Nim takes such a list only at the end.
+"""
+
 scelta "Flags", "How does a country code become a flag?":
   nbText: """
 🏴‍☠️ R
@@ -519,6 +449,37 @@ vals.fmt_bytes(3.2e9)
 formatBytes(3.2e9)
 ```
 **tabelline:** plain functions, one per format. Nim needs no namespace (`vals.`) or prefix (`vec_`) to tell them apart.
+"""
+
+scelta "Regular expressions", "How do you replace a piece of text in cells?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_replace(pattern = "^Merc", replacement = "☿ ")
+```
+🐍 Python: not in Great Tables.
+
+👑 Nim
+```nim
+textReplace "Mercury", "☿ Mercury"
+```
+**tabelline:** plain text, not a regex. Nim's regex module needs the PCRE library, and the core of tabelline needs nothing but the standard library. For more, `textTransform` takes any proc.
+"""
+
+scelta "Conditions", "How do you change a text depending on its value?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_case_when(x == "0" ~ "none", .default = "some")
+```
+🐍 Python: not in Great Tables.
+
+👑 Nim
+```nim
+textTransform proc (s: string): string =
+  if s == "0": "none" else: "some"
+```
+**tabelline:** no `textCaseWhen`. R needs formulas (`~`) for this; Nim already has `if` and `case`, so a small proc does it.
 """
 
 nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"eight choices: swipe or scroll sideways\">" &
@@ -567,6 +528,28 @@ gt(files, rowname_col = "file") |>
       fmtEngineering "signal"
   nbTable t1
 
+nbTabs(python = "", r = """
+library(gt)
+
+orbits <- data.frame(
+  planet = c("Earth", "Mars"),
+  size.diameter = c(12756, 6792),
+  orbit.period = c(365.2, 687),
+  orbit.distance = c(149.6, 228)
+)
+gt(orbits, rowname_col = "planet") |>
+  tab_spanner_delim(delim = ".")
+"""):
+  nbCode:
+    let orbits = tableData:
+      planet: ["Earth", "Mars"]
+      size.diameter: [12756, 6792]
+      orbit.period: [365.2, 687.0]
+      orbit.distance: [149.6, 228.0]
+    let t3 = tabella(orbits, rownameCol = "planet"):
+      tabSpannerDelim()
+  nbTable t3
+
 nbTabs(python = """
 from great_tables import GT, loc
 from great_tables.data import gtcars
@@ -590,30 +573,8 @@ gtcars |>
       fmtInteger "year", useSeps = false
   nbTable t2
 
-nbTabs(python = "", r = """
-library(gt)
-
-orbits <- data.frame(
-  planet = c("Earth", "Mars"),
-  size.diameter = c(12756, 6792),
-  orbit.period = c(365.2, 687),
-  orbit.distance = c(149.6, 228)
-)
-gt(orbits, rowname_col = "planet") |>
-  tab_spanner_delim(delim = ".")
-"""):
-  nbCode:
-    let orbits = tableData:
-      planet: ["Earth", "Mars"]
-      size.diameter: [12756, 6792]
-      orbit.period: [365.2, 687.0]
-      orbit.distance: [149.6, 228.0]
-    let t3 = tabella(orbits, rownameCol = "planet"):
-      tabSpannerDelim()
-  nbTable t3
-
 nbText: """
-The third has no Python tab: Great Tables has no `tab_spanner_delim`, and the tabs show only
+The second has no Python tab: Great Tables has no `tab_spanner_delim`, and the tabs show only
 the languages that have the example.
 
 ## The Nim sugar
@@ -644,14 +605,11 @@ zucchero "A verb per line", "Inside <code>tabella(data):</code> each line is a v
       fmtTf "rings", tfStyle = "yes-no"
   nbTable t
 
-zucchero "Loops and ifs in the body", "The body is Nim code: a <code>for</code> or an <code>if</code> can hold verbs too.":
+zucchero "Pairs in braces", "<code>{key: value}</code> is Nim's list of pairs: typed, in order, one argument.":
   nbCode:
-    let compact = true
     let t = tabella(pianeti):
-      for c in ["moons", "rings"]:
-        colsAlign alCenter, c
-      if compact:
-        optVerticalPadding 0.4
+      colsLabel {"planet": "Planet", "moons": "Moons", "rings": "Rings?"}
+      textCaseMatch {"true": "yes", "false": "no"}, locations = loc.body("rings")
   nbTable t
 
 zucchero "Objects straight in", "A seq of objects or named tuples is a table: one column per field.":
@@ -685,17 +643,20 @@ zucchero "Procs are values", "A proc from the standard library goes in as it is;
       textTransform proc (s: string): string = s & "!", loc.body("planet", rows = [2])
   nbTable t
 
+zucchero "Loops and ifs in the body", "The body is Nim code: a <code>for</code> or an <code>if</code> can hold verbs too.":
+  nbCode:
+    let compact = true
+    let t = tabella(pianeti):
+      for c in ["moons", "rings"]:
+        colsAlign alCenter, c
+      if compact:
+        optVerticalPadding 0.4
+  nbTable t
+
 zucchero "Rows by condition", "<code>where</code> takes any Nim condition over the row <code>it</code>.":
   nbCode:
     let t = tabella(pianeti):
       tabStyle style.fill("#FFF3B0"), loc.body(rows = where(it["moons"] > 0))
-  nbTable t
-
-zucchero "Pairs in braces", "<code>{key: value}</code> is Nim's list of pairs: typed, in order, one argument.":
-  nbCode:
-    let t = tabella(pianeti):
-      colsLabel {"planet": "Planet", "moons": "Moons", "rings": "Rings?"}
-      textCaseMatch {"true": "yes", "false": "no"}, locations = loc.body("rings")
   nbTable t
 
 zucchero "Options checked when compiling", "<code>tabOptions</code> sets any option by name; a misspelt name does not compile.":
@@ -707,6 +668,48 @@ zucchero "Options checked when compiling", "<code>tabOptions</code> sets any opt
 
 nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"Nim sugar: swipe or scroll sideways\">" &
   zuccheri.join("") & "</div>"
+
+nbText: """
+## How they were built
+
+The coverage map was the backlog, and each of its rows became a change in `openspec/changes/`: a
+proposal (why, what, and the differences from gt and Great Tables), a requirement with a Nim
+example, and tasks. The example was written first, with its output left empty; then the code;
+then `nim r tools/specexamples.nim --update` wrote what the example prints, and that output was
+read line by line before it went into the spec. It is how the spelled numbers stopped at one
+hundred, and how `fmtIndex` showed that 42 is "PP" in gt's way of counting (A to Z, then AA, BB)
+and "AP" in a spreadsheet's (there is `indexAlgo = "excel"` for that).
+
+Most groups were a verb over machinery that was there: a format is a closure from a value to
+text, resolved against the data when the verb is called and run when the table is rendered; a
+substitution is the same closure that runs after the formats; a location is a list of keys
+(`"title"`, `"col:mass"`, `"cell:3:moons"`) that styles and footnotes attach to. Five groups
+needed something new:
+"""
+
+block:
+  type N = object
+    what, why: string
+  let rows = @[
+    N(what: "**lines** as options", why: "left and right borders, border styles and vertical lines became options, so `optTableOutline` and `optTableLines` are presets like the others"),
+    N(what: "**marks with a look**", why: "`optFootnoteSpec` reads gt's little language: `^` raised, `i` italic, `b` bold, `(` and `[` around"),
+    N(what: "a **footer** with an order", why: "the footer is a list of (mark, note) that `optFootnoteOrder` arranges: marked first, last, or as added"),
+    N(what: "a **row order** in the spec (`rowOrder`)", why: "`rowOrder` sorts what is shown, not the data, so the formats and footnotes still point at the rows they were given"),
+    N(what: "**text transforms** that run last", why: "`textTransform` on cells gets the text after formats and substitutions, as in gt; on labels it changes the label when it is called"),
+  ]
+  let t = tabella(rows):
+    tabHeader "What was new machinery"
+    colsLabel {"what": "", "why": ""}
+    fmtMarkdown everything()
+    colsWidth {"what": "34%"}
+    tabOptions(tableWidth = "100%", tableFontSize = "14px")
+  nbTable t
+
+nbText: """
+The others were small, and some found small bugs on the way: `tableData:` cut a quoted name
+like `` `size.mass` `` at the dot (now it reads `size.mass:` with no quotes at all, as in the
+sugar above), and the "standard" footnote marks were six symbols where gt has four (the six are now `"extended"`, as in gt).
+"""
 
 nbNota("""
 **Still to do in this thread.** Open the release PR, which moves these lines of the changelog
