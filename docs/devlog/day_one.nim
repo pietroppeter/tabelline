@@ -83,7 +83,7 @@ The first table it drew is the one every Italian pupil knows:
 """
 
 nbCode:
-  echo tabella(tavolaPitagorica(5), rownameCol = "×").tabHeader("La tavola pitagorica")
+  echo tabella(tavolaPitagorica(5), rownameCol = "×").tabHeader("La tavola pitagorica").tabStubhead("×")
 
 nbText: """
 ## Specs that run

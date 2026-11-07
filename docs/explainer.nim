@@ -301,6 +301,18 @@ proc tabHeader*(t: sink Tabella, title: Text, subtitle: Text = toText("")): Tabe
 
 So `tabella(data).tabHeader("Title").fmtNumber("x")` reads like gt's pipe and Great Tables'
 method chain, and a table is never changed behind your back.
+"""
+
+nbNota("""
+**What is `sink`?** A note on the parameter `t: sink Tabella`. It tells Nim that the proc takes
+ownership of the table it is given. When the caller does not use that table again, as in a
+chain, where each step's result goes straight into the next, Nim *moves* it instead of copying
+it. When the caller does use it again, Nim makes a copy, so the code means the same either way:
+`sink` only makes chains cheaper. You never write it when you use tabelline; it shows up only in
+the signatures of the verbs. On this page it appears in this one signature.
+""")
+
+nbText: """
 
 ### Small types for small ideas
 
@@ -323,6 +335,39 @@ method chain, and a table is never changed behind your back.
   reads like a recipe, with `for` loops and `if`s allowed in between. The verbs stay plain procs:
   the macro only rewrites `verb(args)` into `t = verb(t, args)`.
 
+### R or Python?
+
+tabelline takes the names of its verbs from gt, which Great Tables shares (`tab_header`,
+`fmt_number`, `cols_label`, ...), written in camelCase. Where the two disagree, it mostly
+follows Great Tables, because a Python call with keyword arguments is closer to a Nim call than
+R's tidy evaluation. A few choices follow neither:
+"""
+
+nbCode:
+  type Choice = object
+    topic, gt, greatTables, tabelline, follows: string
+  let rOrPython = @[
+    Choice(topic: "make a table", gt: "gt(df, rowname_col = \"x\")", greatTables: "GT(df, rowname_col=\"x\")", tabelline: "tabella(df, rownameCol = \"x\")", follows: "both"),
+    Choice(topic: "chain verbs", gt: "the pipe |>", greatTables: "methods: .tab_header()", tabelline: "methods, or a tabella(df): block", follows: "Python, plus a block"),
+    Choice(topic: "locations", gt: "cells_body(columns, rows)", greatTables: "loc.body(columns, rows)", tabelline: "loc.body(cols, rows)", follows: "Python"),
+    Choice(topic: "styles", gt: "list(cell_fill(), cell_text())", greatTables: "[style.fill(), style.text()]", tabelline: "style.fill() & style.text()", follows: "Python, & for the list"),
+    Choice(topic: "row numbers", gt: "from 1", greatTables: "from 0", tabelline: "from 0", follows: "Python"),
+    Choice(topic: "rows by value", gt: "rows = mass > 1", greatTables: "pl.col(\"mass\") > 1", tabelline: "where(it[\"mass\"] > 1)", follows: "neither"),
+    Choice(topic: "column helpers", gt: "starts_with(), everything()", greatTables: "Polars selectors, lists", tabelline: "startsWith(), everything()", follows: "R"),
+    Choice(topic: "labels", gt: "cols_label(a = \"A\")", greatTables: "cols_label(a=\"A\") or a dict", tabelline: "colsLabel {\"a\": \"A\"}", follows: "Python's dict"),
+    Choice(topic: "options", gt: "tab_options(heading.title.font.size = ...)", greatTables: "tab_options(heading_title_font_size=...)", tabelline: "tabOptions(headingTitleFontSize = ...)", follows: "Python, in camelCase"),
+    Choice(topic: "formatters alone", gt: "vec_fmt_number()", greatTables: "vals.fmt_number()", tabelline: "formatNumber()", follows: "neither: plain procs"),
+  ]
+  let rOrPythonTable = tabella(rOrPython, rownameCol = "topic"):
+    tabHeader "R or Python?", "the same call in gt, Great Tables and tabelline"
+    colsLabel {"gt": "gt (R)", "greatTables": "Great Tables (Python)", "follows": "tabelline follows"}
+    colsMoveToStart "follows"
+    tabStyle style.text(font = "ui-monospace, Menlo, monospace", size = "85%"),
+      loc.body(cols = ["gt", "greatTables", "tabelline"])
+    optAllCaps()
+nbTable rOrPythonTable
+
+nbText: """
 ## A first table, step by step
 
 The planets of the Solar System, from NASA's fact sheet, come with tabelline. Printed as they are,
@@ -486,6 +531,7 @@ style per row of the times table, picking out the squares:
 nbCode:
   let squares = tabella(tavolaPitagorica(6), rownameCol = "×"):
     tabHeader "Squares on the diagonal"
+    tabStubhead "×"
     for i in 1 .. 6:
       tabStyle style.fill("#FFF3B0") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
     optQuaderno()
