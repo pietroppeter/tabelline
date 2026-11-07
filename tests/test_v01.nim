@@ -60,13 +60,13 @@ suite "0.1 verbs":
     check b.marks.len == 1 and "title" in b.marks
   test "spanner delim with a limit":
     let d = tableData:
-      `a.b.c`: [1]
+      a.b.c: [1]
     check tabella(d).tabSpannerDelim(limit = 1).spanners[0].label.s == "a.b"
     check tabella(d).tabSpannerDelim(limit = 1, split = "first").colInfo("a.b.c").label.s == "b.c"
   test "names with no delimiter keep their label":
     let d = tableData:
       plain: [1]
-      `x.y`: [2]
+      x.y: [2]
     let t = tabella(d).tabSpannerDelim()
     check t.colInfo("plain").label.s == "plain"
     check t.spanners.len == 1
@@ -97,3 +97,12 @@ suite "0.1 fixes from the book":
     let t = tabella(tavolaPitagorica(2)).tabHeader("T", "S")
       .tabStyle(style.fill("#111111"), loc.title()).tabStyle(style.fill("#222222"), loc.header())
     check t.build(rcHtml).styles["title"] == "background-color: #222222; background-color: #111111"
+
+suite "tableData names":
+  test "dotted, quoted and string names":
+    let d = tableData:
+      size.mass: [1]
+      orbit.period.days: [2]
+      `x.y`: [3]
+      "mass (kg)": [4]
+    check d.names == @["size.mass", "orbit.period.days", "x.y", "mass (kg)"]

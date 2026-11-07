@@ -172,11 +172,11 @@ parts the other way round.
 ```nim
 let d = tableData:
   planet: ["Earth", "Mars"]
-  `size.diameter`: [12756, 6792]
-  `size.mass`: [5.97, 0.642]
-  `orbit.period.days`: [365.2, 687.0]
-  `orbit.period.years`: [1.0, 1.88]
-  `orbit.distance`: [149.6, 228.0]
+  size.diameter: [12756, 6792]
+  size.mass: [5.97, 0.642]
+  orbit.period.days: [365.2, 687.0]
+  orbit.period.years: [1.0, 1.88]
+  orbit.distance: [149.6, 228.0]
 echo tabella(d, rownameCol = "planet").tabSpannerDelim()
 ```
 

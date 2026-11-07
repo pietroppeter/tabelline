@@ -100,8 +100,8 @@ scheda "Spanners from column names", "Data with names like <code>size.mass</code
   nbCode:
     let d = tableData:
       planet: ["Earth", "Mars"]
-      `size.mass`: [5.97, 0.64]
-      `size.radius`: [6371, 3390]
+      size.mass: [5.97, 0.64]
+      size.radius: [6371, 3390]
     let t = tabella(d, rownameCol = "planet"):
       tabSpannerDelim()
   nbTable t
@@ -330,7 +330,7 @@ block:
 
 nbText: """
 The others were small, and some found small bugs on the way: `tableData:` cut a quoted name
-like `` `size.mass` `` at the dot (it reads the whole name now), and the "standard" footnote
+like `` `size.mass` `` at the dot (now it reads `size.mass:` with no quotes at all, see below), and the "standard" footnote
 marks were six symbols where gt has four (the six are now `"extended"`, as in gt).
 
 ## R, Python or Nim?
@@ -450,9 +450,9 @@ gt(orbits, rowname_col = "planet") |>
   nbCode:
     let orbits = tableData:
       planet: ["Earth", "Mars"]
-      `size.diameter`: [12756, 6792]
-      `orbit.period`: [365.2, 687.0]
-      `orbit.distance`: [149.6, 228.0]
+      size.diameter: [12756, 6792]
+      orbit.period: [365.2, 687.0]
+      orbit.distance: [149.6, 228.0]
     let t3 = tabella(orbits, rownameCol = "planet"):
       tabSpannerDelim()
   nbTable t3
@@ -471,8 +471,9 @@ Nothing in 0.1 needed a new macro. What made the verbs read well was Nim as it i
   `toupper` and Python a `lambda`; an anonymous proc works as well.
 - **Table constructors.** `textCaseMatch({"yes": "rings!"})` and `colsLabel({"mass": "Mass"})`
   are Nim's `{key: value}` arrays of pairs, typed and in order.
-- **Quoted names.** `` `size.mass`: [...] `` in `tableData:` gives a column a name that is not an
-  identifier, which is what `tabSpannerDelim` reads.
+- **Dotted names, no quotes.** `tableData:` is a macro, so it sees the code before Nim checks
+  it: `size.mass: [...]` is a field access to Nim, and to the macro a column named "size.mass",
+  which is what `tabSpannerDelim` reads. Names with spaces go in quotes: `"mass (kg)": [...]`.
 - **Options checked when compiling.** `tabOptions(rowStriping = true)` is still the one macro
   for options: a typo in a field name does not compile.
 """

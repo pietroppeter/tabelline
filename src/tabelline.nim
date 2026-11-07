@@ -59,9 +59,18 @@ macro tabella*(args: varargs[untyped]): untyped =
   let it = genSym(nskVar, "tabella")
   result = newBlockStmt(newStmtList(newVarStmt(it, create), rewriteVerbs(args[^1], it), it))
 
+proc columnName(n: NimNode): string =
+  ## The name of a `tableData:` column: `mass`, `size.mass` (a dotted name, for `tabSpannerDelim`)
+  ## or anything quoted, `` `mass (kg)` ``.
+  case n.kind
+  of nnkIdent, nnkSym, nnkStrLit: n.strVal
+  of nnkAccQuoted: (var s = ""; (for p in n: s.add p.strVal); s)
+  of nnkDotExpr: columnName(n[0]) & "." & columnName(n[1])
+  else: (error("expected a column name", n); "")
+
 macro tableData*(body: untyped): TableData =
   ## Columns as `name: [values]` lines, each value converted on its own, so a column can mix
-  ## numbers with `nil` (missing):
+  ## numbers with `nil` (missing). A name can have dots, `size.mass: [...]`, or be quoted:
   ##
   ## ```nim
   ## let d = tableData:
@@ -73,10 +82,7 @@ macro tableData*(body: untyped): TableData =
   for line in body:
     if line.kind notin {nnkCall, nnkCommand} or line.len != 2:
       error("expected `name: [values]`", line)
-    var name = ""
-    if line[0].kind == nnkAccQuoted:   # `size.mass`: every part of the quoted name
-      for p in line[0]: name.add p.strVal
-    else: name = line[0].strVal
+    let name = columnName(line[0])
     var vals = line[1]
     if vals.kind == nnkStmtList: vals = vals[0]
     var vs = newNimNode(nnkBracket)

@@ -24,7 +24,7 @@ The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec chang
 - Fix: `dataColor` over number and text columns in one call no longer raises; the subtitle is not
   bold (`headingSubtitleFontWeight`); a style at a part wins over one at its whole part (found by
   the 0.1 port thread).
-- Fix: `tableData:` reads quoted names with dots (`` `size.mass` ``) whole.
+- `tableData:` reads dotted names without quotes (`size.mass: [...]`), and quoted names whole.
 - Docs: the devlog post *Designing tabelline 0.1*; the coverage map marks the 24 groups done.
 
 - Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
