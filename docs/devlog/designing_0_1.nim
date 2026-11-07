@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | Twenty-four small groups of gt in one go: what 0.1 adds, where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own, and how each became an OpenSpec change.
+## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it was built.
 ## A dated post: it tells how 0.1 was designed and built, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
@@ -16,79 +16,51 @@ nbText: """
 
 # Designing tabelline 0.1
 
-<p class="lede">Twenty-four small groups of gt in one go: what 0.1 adds, where tabelline
-follows R's gt, where Python's Great Tables and where Nim asked for something of its own, and how
-each became an OpenSpec change.</p>
+<p class="lede">tabelline 0.1 from zero: what a table needs, from the data to the last
+style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim
+asked for something of its own; and how it was built.</p>
 
-The [coverage map](../../coverage/) split gt and Great Tables into 85 feature groups and marked
-24 of them for 0.1: the ones that take hours, not days, because the machinery is already there.
-This is the first of the three threads of a release, as the post
-[Three threads for every release](../three-threads/) planned: build it, then write down how.
+What is the least a library of tables has to do? This post answers with 0.1 itself, built up one
+idea at a time: the data first, then a table that shows it as it is, then everything that
+changes what it looks like, each idea only after the ones it needs. Every step is a card with the
+smallest example that shows it.
 """
 
 nbIndice()
 
 nbText: """
-## Where 0.1 starts
+## 0.1 from zero
 
-0.1 is not only the 24 groups. They came on top of the first version (#1), which already made
-whole tables; this post is about what was added. Here is what was there, so the two together
-are all of 0.1:
-"""
-
-block:
-  type B = object
-    area, had: string
-  let rows = @[
-    B(area: "Data", had: "values in columns: `tableData:`, a seq of objects or tuples, CSV"),
-    B(area: "Parts", had: "gt's six: header, column labels and spanners, stub, row groups, body, footer with footnotes and source notes"),
-    B(area: "Columns", had: "labels, alignment, widths, hiding, moving to the start or after another"),
-    B(area: "Formats", had: "numbers, integers, percent, currency, scientific, dates, Roman, ✓ ✗, Markdown, bars, and your own proc"),
-    B(area: "Substitutions", had: "a text for missing values and for zeros"),
-    B(area: "Styles", had: "fill, text and borders at any location, and `dataColor` from the values"),
-    B(area: "Options", had: "every gt option by name in `tabOptions`, and presets (`optStylize`, `optQuaderno`, ...)"),
-    B(area: "Output", had: "HTML, text and Markdown, and `nbTable` for nimib"),
-  ]
-  let t = tabella(rows, rownameCol = "area"):
-    tabHeader "Before 0.1 work began", "the first version, in eight lines"
-    colsLabel {"had": "what was there"}
-    fmtMarkdown "had"
-    tabStubhead "area"
-    tabOptions(tableWidth = "100%", tableFontSize = "14px")
-  nbTable t
-
-nbText: """
-## What 0.1 adds
-
-Twenty-four groups, in seven areas. In short:
+Nine ideas, each built on the ones before it:
 """
 
 block:
   type A = object
-    area: string
-    groups: int
-    enables: string
+    step: int
+    idea, what: string
   let rows = @[
-    A(area: "Columns", groups: 2, enables: "labels from a proc, columns moved to the end or swapped in place"),
-    A(area: "Rows", groups: 1, enables: "rows sorted and groups ordered, without touching the data"),
-    A(area: "Parts of a table", groups: 3, enables: "a caption, taking parts away, headers from `a.b` names"),
-    A(area: "Formats", groups: 10, enables: "●○, 🇮🇹, links, A B C, *forty-two*, ‰ and ppm, kB and GiB, kW and µg, 2:35 PM, 2h 5m"),
-    A(area: "Text", groups: 3, enables: "**bold** and HTML in labels, <0.01 for noise, n/a for −99, text changed as it is shown"),
-    A(area: "Options", groups: 3, enables: "compact or roomy, boxed or bare, footnote marks your way, your own CSS"),
-    A(area: "Styles", groups: 2, enables: "on the whole header, column header or footer, and any CSS"),
+    A(step: 1, idea: "1 · Data", what: "columns of values: numbers, text, true or false, missing; from `tableData:`, objects or CSV"),
+    A(step: 2, idea: "2 · A table", what: "the data shown as it is, in HTML, text or Markdown"),
+    A(step: 3, idea: "3 · Parts", what: "title, notes and caption; a stub and row groups; spanners over columns; footnotes"),
+    A(step: 4, idea: "4 · Columns", what: "labels, alignment, widths; hidden, moved, reordered"),
+    A(step: 5, idea: "5 · Rows", what: "sorted and grouped, while the data stays as it is"),
+    A(step: 6, idea: "6 · Formats", what: "a value becomes text: 1,234.50, 25%, €3, ✓, 🇮🇹, links, ii, 2 kB, 5 kW, dates, 2h 5m, bars"),
+    A(step: 7, idea: "7 · Text", what: "**Markdown** and HTML; missing, zero, tiny or sentinel values replaced; the text changed last"),
+    A(step: 8, idea: "8 · Options", what: "the whole table at once: size, padding, lines, footnote marks, ready-made looks, your CSS"),
+    A(step: 9, idea: "9 · Styles", what: "one part at a time: a location (where) and a style (how), colours from the data"),
   ]
-  let t = tabella(rows, rownameCol = "area"):
-    tabHeader "0.1 in seven lines"
-    colsLabel {"groups": "groups", "enables": "what it lets you do"}
-    fmtMarkdown "enables"
-    tabStubhead "area"
+  let t = tabella(rows, rownameCol = "idea"):
+    tabHeader "0.1 in nine steps"
+    colsLabel {"what": "what it is"}
+    colsHide "step"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    fmtMarkdown "what"
     tabOptions(tableWidth = "100%", tableFontSize = "14px")
   nbTable t
 
 nbText: """
-And one by one: a card for each group, with the smallest example that shows it, from the
-simplest to the ones that ask a little more. Swipe the cards sideways (or scroll them with a
-trackpad); every table is made by the code above it.
+And one by one, simplest first. Swipe the cards sideways (or scroll them with a trackpad);
+every table is made by the code above it.
 """
 
 nbRawHtml: """<style>
@@ -108,18 +80,16 @@ body .scheda pre > code { font-size: 12.5px !important; }
 </style>"""
 
 var schede: seq[string]
-var numero = 0
 
-template scheda(titolo, abilita: string, body: untyped) =
-  ## A card of the gallery: what a group lets you do, and the blocks `body` adds (code and table).
-  inc numero
+template scheda(passo, titolo, abilita: string, body: untyped) =
+  ## A card of the gallery: one step, what it lets you do, and the blocks `body` adds.
   let first = nb.blocks.len
   block:
     body
   var inner = ""
   for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
   nb.blocks.setLen(first)
-  schede.add "<div class=\"scheda\"><div class=\"numero\">" & $numero & " / 24</div><h3>" & titolo &
+  schede.add "<div class=\"scheda\"><div class=\"numero\">" & passo & " · {n} / {N}</div><h3>" & titolo &
     "</h3><p>" & abilita & "</p>" & inner & "</div>"
 
 let pianeti {.used.} = tableData:
@@ -127,43 +97,73 @@ let pianeti {.used.} = tableData:
   moons: [0, 0, 1, 2]
   rings: [false, false, false, true]
 
-scheda "Labels from a proc", "Every label made from its name at once: capitals, units, translations.":
+# 1. Data
+
+scheda "1 data", "Columns of values", "The data is columns of the same length. Each value is a number, a text, true or false, or missing.":
+  nbCode:
+    let pianeti = tableData:
+      planet: ["Mercury", "Venus", "Earth", "Mars"]
+      moons: [0, 0, 1, 2]
+      rings: [false, false, false, true]
+    echo pianeti.names
+    echo pianeti.nrows, " rows"
+
+scheda "1 data", "Objects and CSV", "A seq of objects or named tuples is data too, one column per field; so is a CSV text or file.":
+  nbCode:
+    let moons = @[(name: "Moon", planet: "Earth"), (name: "Phobos", planet: "Mars")]
+    let fromCsv = parseCsv("planet,moons\nEarth,1\nMars,2")
+    nbTable tabella(moons)
+    nbTable tabella(fromCsv)
+
+# 2. A table
+
+scheda "2 table", "A table", "<code>tabella(data)</code> is the table: every value shown as it is, with the column names as labels.":
+  nbCode:
+    let t = tabella(pianeti)
+  nbTable t
+
+scheda "2 table", "Text and Markdown", "The same table also prints as text, for the terminal and for tests, or as Markdown.":
+  nbCode:
+    let t = tabella(pianeti)
+    echo t
+    echo t.toMarkdown
+
+# 3. Parts
+
+scheda "3 parts", "Title and notes", "A title and a subtitle above, a source note below.":
   nbCode:
     let t = tabella(pianeti):
-      colsLabelWith capitalizeAscii
+      tabHeader "Rocky planets", "and their moons"
+      tabSourceNote "Source: NASA."
   nbTable t
 
-scheda "Moving columns", "The key column at the end, two columns swapped in place.":
-  nbCode:
-    let t = tabella(pianeti):
-      colsMoveToEnd "planet"
-      colsReorder ["rings", "moons"]
-  nbTable t
-
-scheda "Order of rows and groups", "Rows sorted and groups in your order, while the data stays as it is.":
-  nbCode:
-    let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
-      colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance",
-                "orbital_period", "mean_temp", "rings"]
-      rowOrder "moons", reverse = true
-      rowGroupOrder ["Gas giant"]
-  nbTable t
-
-scheda "Caption", "A table that names itself, for screen readers and for figures in a document.":
+scheda "3 parts", "Caption", "A table that names itself, for screen readers and for figures in a document.":
   nbCode:
     let t = tabella(pianeti):
       tabCaption "Table 1. The rocky planets."
   nbTable t
 
-scheda "Removing parts", "One house-style table, and variants that drop what they do not need.":
+scheda "3 parts", "Stub and row groups", "A column that names the rows goes to the left, the stub; another groups them under a heading.":
   nbCode:
-    let base = tabella(pianeti):
-      tabHeader "Rocky planets", "and their moons"
-      tabSourceNote "NASA"
-    let t = base.rmHeader().rmSourceNotes()
+    let d = tableData:
+      planet: ["Earth", "Mars", "Jupiter", "Saturn"]
+      kind: ["rocky", "rocky", "giant", "giant"]
+      moons: [1, 2, 95, 146]
+    let t = tabella(d, rownameCol = "planet", groupnameCol = "kind"):
+      tabStubhead "planet"
   nbTable t
 
-scheda "Spanners from column names", "Data with names like <code>size.mass</code> gets its headers for free.":
+scheda "3 parts", "Spanners", "A label over some columns, at as many levels as you need.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars"]
+      mass: [5.97, 0.64]
+      radius: [6371, 3390]
+    let t = tabella(d, rownameCol = "planet"):
+      tabSpanner "size", ["mass", "radius"]
+  nbTable t
+
+scheda "3 parts", "Spanners from column names", "Data with names like <code>size.mass</code> gets its spanners for free.":
   nbCode:
     let d = tableData:
       planet: ["Earth", "Mars"]
@@ -173,13 +173,90 @@ scheda "Spanners from column names", "Data with names like <code>size.mass</code
       tabSpannerDelim()
   nbTable t
 
-scheda "Booleans", "True and false as symbols or words, in colour if you like.":
+scheda "3 parts", "Footnotes", "A note at the bottom, and its mark wherever it applies: a cell, a label, the title.":
+  nbCode:
+    let t = tabella(pianeti, rownameCol = "planet"):
+      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
+      tabFootnote "Moons known in 2024.", loc.columnLabels("moons")
+  nbTable t
+
+scheda "3 parts", "Removing parts", "One house-style table, and variants that drop what they do not need.":
+  nbCode:
+    let base = tabella(pianeti):
+      tabHeader "Rocky planets", "and their moons"
+      tabSourceNote "Source: NASA."
+    let t = base.rmHeader().rmSourceNotes()
+  nbTable t
+
+# 4. Columns
+
+scheda "4 columns", "Column labels", "Labels other than the names: one by one, or all at once from a proc.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsLabelWith capitalizeAscii
+      colsLabel {"rings": "Rings?"}
+  nbTable t
+
+scheda "4 columns", "Alignment, widths, hiding", "Where the text sits, how wide a column is, and which columns are not shown.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsAlign alCenter, "moons"
+      colsWidth {"planet": "8em"}
+      colsHide "rings"
+  nbTable t
+
+scheda "4 columns", "Moving columns", "To the start, after another, to the end, or swapped in place.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsMoveToStart "moons"
+      colsMoveToEnd "planet"
+      colsReorder ["rings", "moons"]
+  nbTable t
+
+# 5. Rows
+
+scheda "5 rows", "Order of rows and groups", "Rows sorted and groups in your order, while the data stays as it is.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars", "Jupiter", "Saturn"]
+      kind: ["rocky", "rocky", "giant", "giant"]
+      moons: [1, 2, 95, 146]
+    let t = tabella(d, rownameCol = "planet", groupnameCol = "kind"):
+      rowOrder "moons", reverse = true
+      rowGroupOrder ["giant"]
+  nbTable t
+
+# 6. Formats
+
+scheda "6 formats", "Numbers", "Decimals, digit grouping, a unit around the number, percentages.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars"]
+      distance: [149.6, 227.9]
+      water: [0.71, 0.0]
+    let t = tabella(d):
+      fmtNumber "distance", decimals = 1, pattern = "{x} Gm"
+      fmtPercent "water", decimals = 0
+  nbTable t
+
+scheda "6 formats", "Integers and currency", "Whole numbers with separators, and money with its sign.":
+  nbCode:
+    let d = tableData:
+      item: ["telescope", "eyepiece"]
+      sold: [12500, 840]
+      price: [349.0, 39.9]
+    let t = tabella(d):
+      fmtInteger "sold"
+      fmtCurrency "price", currency = "EUR"
+  nbTable t
+
+scheda "6 formats", "Booleans", "True and false as symbols or words, in colour if you like.":
   nbCode:
     let t = tabella(pianeti):
       fmtTf "rings", tfStyle = "circles", colors = ["#B5446E", "#999999"]
   nbTable t
 
-scheda "Flags", "Country codes as flags, with nothing to load.":
+scheda "6 formats", "Flags", "Country codes as flags, with nothing to load.":
   nbCode:
     let d = tableData:
       city: ["Roma", "Tokyo", "Paris"]
@@ -188,7 +265,7 @@ scheda "Flags", "Country codes as flags, with nothing to load.":
       fmtFlag "country"
   nbTable t
 
-scheda "Links", "Addresses become links, or small buttons; Markdown links keep their label.":
+scheda "6 formats", "Links", "Addresses become links, or small buttons; Markdown links keep their label.":
   nbCode:
     let d = tableData:
       project: ["Nim", "nimib"]
@@ -197,17 +274,19 @@ scheda "Links", "Addresses become links, or small buttons; Markdown links keep t
       fmtUrl "site"
   nbTable t
 
-scheda "Letters and spelled numbers", "Lists labelled a, b, c, and small numbers in words, as in prose.":
+scheda "6 formats", "Letters, Roman numerals, words", "Lists labelled a, b, c or i, ii, iii, and small numbers in words, as in prose.":
   nbCode:
     let d = tableData:
       option: [1, 2, 3]
+      chapter: [1, 2, 3]
       moons: [0, 1, 2]
     let t = tabella(d):
       fmtIndex "option", upper = false
+      fmtRoman "chapter", upper = false
       fmtSpelledNum "moons"
   nbTable t
 
-scheda "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ for salt.":
+scheda "6 formats", "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ for salt.":
   nbCode:
     let d = tableData:
       year: [1850, 2025]
@@ -217,7 +296,7 @@ scheda "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ f
       fmtInteger "year", useSeps = false
   nbTable t
 
-scheda "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
+scheda "6 formats", "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
   nbCode:
     let d = tableData:
       file: ["notes.txt", "photo.jpg", "film.mkv"]
@@ -226,25 +305,29 @@ scheda "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
       fmtBytes "size"
   nbTable t
 
-scheda "Engineering notation and SI prefixes", "Physics-sized numbers: powers of a thousand, or k, M, µ before a unit.":
+scheda "6 formats", "Scientific, engineering, SI", "Physics-sized numbers: powers of ten, powers of a thousand, or k, M, µ before a unit.":
   nbCode:
     let d = tableData:
-      plant: ["kettle", "wind turbine", "phone"]
+      what: ["kettle", "wind turbine", "phone"]
       power: [2000.0, 3.6e6, 0.005]
+      same: [2000.0, 3.6e6, 0.005]
     let t = tabella(d):
       fmtNumberSi "power", unit = "W", decimals = 1
+      fmtScientific "same", decimals = 1
   nbTable t
 
-scheda "Times and datetimes", "Clock times and timestamps in the style of your readers.":
+scheda "6 formats", "Dates and times", "Dates, clock times and timestamps in the style of your readers.":
   nbCode:
     let d = tableData:
       event: ["launch", "landing"]
+      day: ["1969-07-16", "1969-07-20"]
       utc: ["1969-07-16T13:32:00", "1969-07-20T20:17:40"]
     let t = tabella(d):
-      fmtDatetime "utc", dateStyle = "day_m_year", timeStyle = "h_m_p"
+      fmtDate "day", dateStyle = "day_m_year"
+      fmtDatetime "utc", dateStyle = "iso", timeStyle = "h_m_p"
   nbTable t
 
-scheda "Durations", "A column of seconds becomes race times or run times.":
+scheda "6 formats", "Durations", "A column of seconds becomes race times or run times.":
   nbCode:
     let d = tableData:
       race: ["5 km", "half marathon", "marathon"]
@@ -253,30 +336,51 @@ scheda "Durations", "A column of seconds becomes race times or run times.":
       fmtDuration "seconds"
   nbTable t
 
-scheda "Value functions", "The same formats outside tables, for the sentence that talks about one.":
+scheda "6 formats", "Bars", "A small bar beside each number, to compare them at a glance.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars", "Jupiter", "Saturn"]
+      moons: [1, 2, 95, 146]
+    let t = tabella(d):
+      fmtBar "moons"
+  nbTable t
+
+scheda "6 formats", "A format of your own", "Any proc from a value to a text is a format.":
+  nbCode:
+    let t = tabella(pianeti):
+      fmt "moons", proc (v: Value): string = repeat("🌑", v.i)
+  nbTable t
+
+scheda "6 formats", "Formats outside tables", "Every format is also a function, for the sentence that talks about one value.":
   nbCode:
     echo "the film is ", formatBytes(3.2e9), " and lasts ", formatDuration(8100)
     echo "CO₂ went from ", formatPartsper(0.000285, "ppm", 0), " to ", formatPartsper(0.000425, "ppm", 0)
 
-scheda "Markdown and HTML text", "Labels and notes with emphasis, code, sub- and superscripts, or raw HTML.":
-  nbCode:
-    let t = tabella(pianeti):
-      tabHeader md("The **rocky** planets"), html("<i>and their moons</i>")
-      colsLabel {"moons": md("moons (*n*)")}
-  nbTable t
+# 7. Text
 
-scheda "Small, large and given values", "Hide noise below a threshold, cap huge numbers, mark sentinel values.":
+scheda "7 text", "Markdown and HTML", "Cells, labels and notes with emphasis, code, sub- and superscripts, or raw HTML.":
   nbCode:
     let d = tableData:
-      sample: ["a", "b", "c"]
-      dose: [0.004, 2.5, -99.0]
+      gas: ["CO~2~", "CH~4~"]
+      note: ["the **main** one", "*shorter* lived"]
+    let t = tabella(d):
+      tabHeader md("Greenhouse **gases**"), html("<i>two of them</i>")
+      fmtMarkdown ["gas", "note"]
+  nbTable t
+
+scheda "7 text", "Missing, zero, tiny and given values", "A word for zero, a threshold for noise, n/a for a sentinel value; <code>subMissing</code> does the same for missing ones.":
+  nbCode:
+    let d = tableData:
+      sample: ["a", "b", "c", "d"]
+      dose: [0.004, 0.0, -99.0, 2.5]
     let t = tabella(d):
       fmtNumber "dose"
+      subZero "dose", zeroText = "none"
       subSmallVals "dose"
       subValues "dose", values = [-99], replacement = "n/a"
   nbTable t
 
-scheda "Text transforms", "The last word on what a cell says: upper case, a word replaced, a code turned into a label.":
+scheda "7 text", "Text transforms", "The last word on what a cell says: upper case, a word replaced, a code turned into a label.":
   nbCode:
     let t = tabella(pianeti, rownameCol = "planet"):
       textTransform toUpperAscii, loc.stub()
@@ -284,7 +388,23 @@ scheda "Text transforms", "The last word on what a cell says: upper case, a word
       textCaseMatch {"yes": "rings!", "no": ""}, locations = loc.body("rings")
   nbTable t
 
-scheda "Padding, outline and lines", "Compact or roomy, boxed, with or without lines between cells.":
+# 8. Options
+
+scheda "8 options", "Options by name", "Every option of gt by name, checked when compiling: sizes, colours, fonts, stripes.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabOptions(tableFontSize = "13px", rowStriping = true, headingBackgroundColor = "#F6E3EA")
+      tabHeader "Rocky planets"
+  nbTable t
+
+scheda "8 options", "Ready-made looks", "A preset sets many options at once.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabHeader "Rocky planets"
+      optStylize 3, "red"
+  nbTable t
+
+scheda "8 options", "Padding, outline and lines", "Compact or roomy, boxed, with or without lines between cells.":
   nbCode:
     let t = tabella(pianeti):
       optVerticalPadding 0.4
@@ -292,7 +412,7 @@ scheda "Padding, outline and lines", "Compact or roomy, boxed, with or without l
       optTableOutline color = "#555555", width = "2px"
   nbTable t
 
-scheda "Footnote marks, look and order", "Marks your way: symbols, letters or your own, raised or in brackets.":
+scheda "8 options", "Footnote marks, look and order", "Marks your way: symbols, letters or your own, raised or in brackets.":
   nbCode:
     let t = tabella(pianeti, rownameCol = "planet"):
       tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
@@ -301,27 +421,50 @@ scheda "Footnote marks, look and order", "Marks your way: symbols, letters or yo
       optFootnoteSpec "^", "("
   nbTable t
 
-scheda "Extra CSS", "A rule of your own, scoped to this table only.":
+scheda "8 options", "Extra CSS", "A rule of your own, scoped to this table only.":
   nbCode:
     let t = tabella(pianeti):
       optCss "td.tb_row:hover { background: #FFF3B0; }"
   nbTable t
 
-scheda "Whole parts as locations", "Style the whole header, column header or footer in one call.":
+# 9. Styles
+
+scheda "9 styles", "A style at a location", "Where (a location: cells, labels, title, ...) and how (a fill, the text, borders).":
+  nbCode:
+    let t = tabella(pianeti):
+      tabStyle style.fill("#FFF3B0"), loc.body(rows = [2])
+      tabStyle style.text(weight = "bold"), loc.columnLabels()
+      tabStyle style.borders({sBottom}, color = "#B5446E", weight = "2px"), loc.body("planet")
+  nbTable t
+
+scheda "9 styles", "Whole parts as locations", "Style the whole header, column header or footer in one call.":
   nbCode:
     let t = tabella(pianeti):
       tabHeader "Rocky planets"
       tabStyle style.fill("#F6E3EA"), loc.header(), loc.columnHeader()
   nbTable t
 
-scheda "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
+scheda "9 styles", "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
   nbCode:
     let t = tabella(pianeti):
       tabStyle style.css("font-variant: small-caps; letter-spacing: .08em"), loc.body("planet")
   nbTable t
 
-nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"the 24 groups: swipe or scroll sideways\">" &
-  schede.join("") & "</div>"
+scheda "9 styles", "Colours from the data", "Each cell coloured by its value, along a palette.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars", "Jupiter", "Saturn"]
+      moons: [1, 2, 95, 146]
+    let t = tabella(d):
+      dataColor "moons", palette = @["#FFF3B0", "#B5446E"]
+  nbTable t
+
+block:
+  var cards: seq[string]
+  for i, c in schede:
+    cards.add c.replace("{n}", $(i + 1)).replace("{N}", $schede.len)
+  nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"0.1 step by step: swipe or scroll sideways\">" &
+    cards.join("") & "</div>"
 
 nbText: """
 ## R, Python or Nim?
@@ -700,6 +843,11 @@ nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"Nim sugar: swipe
 
 nbText: """
 ## How they were built
+
+0.1 came in two steps. The first version (#1) had the data, the table and its parts, eleven
+formats and bars, styles at locations and the options: enough to make whole tables. Then the
+[coverage map](../../coverage/) split gt and Great Tables into 85 feature groups and marked 24
+of them as cheap, because the machinery was already there; they filled in the steps above.
 
 The coverage map was the backlog, and each of its rows became a change in `openspec/changes/`: a
 proposal (why, what, and the differences from gt and Great Tables), a requirement with a Nim
