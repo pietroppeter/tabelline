@@ -13,8 +13,8 @@ with their parts and their verbs (in camelCase), written in plain Nim, and fits 
 [specs](https://pietroppeter.github.io/tabelline/specs/) and the
 [devlog](https://pietroppeter.github.io/tabelline/devlog/).
 
-> **Status: a first version, a proof of concept.** It already makes tables worth showing; most of
-> gt is still ahead, and the API will change.
+> **Status: 0.1, a proof of concept.** It already makes tables worth showing; most of gt is still
+> ahead, and the API will change.
 
 ```nim
 import tabelline, tabelline/datasets
@@ -109,7 +109,7 @@ laptop. Dependencies are managed with [atlas](https://github.com/nim-lang/atlas)
 `docs` feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/`, and `nim.cfg`
 puts it on the path. AGENTS.md has how to change a dependency.
 
-The library itself needs only Nim (2.0 or later) and its standard library. CI
+The library itself needs only Nim (2.2 or later) and its standard library. CI
 (`.github/workflows/pages.yml`) runs the tests and the examples, builds the pages and deploys them
 to GitHub Pages from `main`.
 
