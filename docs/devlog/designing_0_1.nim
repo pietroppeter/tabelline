@@ -16,9 +16,9 @@ nbText: """
 
 # Designing tabelline 0.1
 
-<p class="lede">Twenty-four small groups of gt in one go: what 0.1 adds, how each became an
-OpenSpec change, where tabelline follows R's gt, where Python's Great Tables, and where Nim asked
-for something of its own.</p>
+<p class="lede">Twenty-four small groups of gt in one go: what 0.1 adds, where tabelline
+follows R's gt, where Python's Great Tables and where Nim asked for something of its own, and how
+each became an OpenSpec change.</p>
 
 The [coverage map](../../coverage/) split gt and Great Tables into 85 feature groups and marked
 24 of them for 0.1: the ones that take hours, not days, because the machinery is already there.
@@ -27,6 +27,35 @@ This is the first of the three threads of a release, as the post
 """
 
 nbIndice()
+
+nbText: """
+## Where 0.1 starts
+
+0.1 is not only the 24 groups. They came on top of the first version (#1), which already made
+whole tables; this post is about what was added. Here is what was there, so the two together
+are all of 0.1:
+"""
+
+block:
+  type B = object
+    area, had: string
+  let rows = @[
+    B(area: "Data", had: "values in columns: `tableData:`, a seq of objects or tuples, CSV"),
+    B(area: "Parts", had: "gt's six: header, column labels and spanners, stub, row groups, body, footer with footnotes and source notes"),
+    B(area: "Columns", had: "labels, alignment, widths, hiding, moving to the start or after another"),
+    B(area: "Formats", had: "numbers, integers, percent, currency, scientific, dates, Roman, ✓ ✗, Markdown, bars, and your own proc"),
+    B(area: "Substitutions", had: "a text for missing values and for zeros"),
+    B(area: "Styles", had: "fill, text and borders at any location, and `dataColor` from the values"),
+    B(area: "Options", had: "every gt option by name in `tabOptions`, and presets (`optStylize`, `optQuaderno`, ...)"),
+    B(area: "Output", had: "HTML, text and Markdown, and `nbTable` for nimib"),
+  ]
+  let t = tabella(rows, rownameCol = "area"):
+    tabHeader "Before 0.1 work began", "the first version, in eight lines"
+    colsLabel {"had": "what was there"}
+    fmtMarkdown "had"
+    tabStubhead "area"
+    tabOptions(tableWidth = "100%", tableFontSize = "14px")
+  nbTable t
 
 nbText: """
 ## What 0.1 adds
