@@ -47,7 +47,7 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_heading { background-color: [headingBg]; text-align: [o.headingAlign]; color: [headingColor]; }
 [i] .tb_title { font-size: [o.headingTitleFontSize]; font-weight: [o.headingTitleFontWeight];
   padding: [o.headingPadding] [o.headingPaddingHorizontal]; }
-[i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; padding: 0 [o.headingPaddingHorizontal] [o.headingPadding] [o.headingPaddingHorizontal]; }
+[i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; font-weight: [o.headingSubtitleFontWeight]; padding: 0 [o.headingPaddingHorizontal] [o.headingPadding] [o.headingPaddingHorizontal]; }
 [i] .tb_heading_last { border-bottom: 2px solid [o.headingBorderBottomColor]; }
 [i] .tb_col_headings th { background-color: [labelsBg]; color: [labelsColor];
   font-size: [o.columnLabelsFontSize]; font-weight: [o.columnLabelsFontWeight];

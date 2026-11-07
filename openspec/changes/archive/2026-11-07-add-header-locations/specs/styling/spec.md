@@ -9,7 +9,9 @@ with `&`. Locations SHALL be `loc.header()` (title and subtitle), `loc.title()`,
 `loc.rowGroups(groups)`, `loc.body(cols, rows)`, `loc.footer()` (footnotes and source notes),
 `loc.footnotes()` and `loc.sourceNotes()`, as in Great Tables; `loc.body` SHALL target the data
 cells only, not the stub (that is `loc.stub`). A later style SHALL win over an earlier one for the
-same property. A footnote at a whole part SHALL be marked on its first element.
+same property, but a style at one part SHALL win over a style at a whole part that holds it
+(header, column header, footer), as in Great Tables. A footnote at a whole part SHALL be marked on
+its first element.
 
 ```nim
 let t = tabella(tavolaPitagorica(3), rownameCol = "×")

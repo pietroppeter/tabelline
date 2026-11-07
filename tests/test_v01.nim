@@ -84,3 +84,16 @@ suite "0.1 verbs":
     expect ValueError: discard tabella(tavolaPitagorica(2)).optFootnoteOrder("random")
     expect ValueError: discard tabella(tavolaPitagorica(2)).fmtDuration("1", durationStyle = "long")
     expect KeyError: discard tabella(tavolaPitagorica(2)).rowGroupOrder(["none"])
+
+suite "0.1 fixes from the book":
+  test "dataColor over numbers and text at once":
+    let d = tableData:
+      n: [1, 2]
+      s: ["a", "b"]
+    check tabella(d).dataColor(everything()).styles.len == 4
+  test "the subtitle is not bold":
+    check "font-weight: normal" in tabella(tavolaPitagorica(2)).tabHeader("T", "S").toHtml
+  test "a part's style wins over its whole part's":
+    let t = tabella(tavolaPitagorica(2)).tabHeader("T", "S")
+      .tabStyle(style.fill("#111111"), loc.title()).tabStyle(style.fill("#222222"), loc.header())
+    check t.build(rcHtml).styles["title"] == "background-color: #222222; background-color: #111111"

@@ -422,7 +422,7 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
   for n in names:
     for i in ix:
       let v = result.data[n, i]
-      if v.isNumber:
+      if numericCols and v.isNumber:
         let x = v.toFloat
         if lo.isNaN or x < lo: lo = x
         if hi.isNaN or x > hi: hi = x

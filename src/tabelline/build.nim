@@ -176,7 +176,10 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
   else: result.footer = marked & plain
 
   # styles: later rules come later in the declaration list, so they win
-  for s in t.styles:
+  # a whole part (header, column header, footer) goes first, so its own parts' styles win, as in
+  # Great Tables
+  let composite = {lkHeader, lkColumnHeader, lkFooter}
+  for s in t.styles.filterIt(it.target.kind in composite) & t.styles.filterIt(it.target.kind notin composite):
     let ks = t.keysOf(s.target, result.columns)
     for key in ks:
       let css = s.style.toCss

@@ -79,3 +79,17 @@ Rough size: S (hours), M (a day or two), L (more).
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.
 - **A Table Contest entry** (M). For the next Posit Table Contest.
+
+## From the tabelline book (0.1 port thread, book/gaps.md in PR #11)
+
+- **Selectors** (S-M). Columns by position (also negative) and by a proc; combining rules
+  (`|`, `&`, exclude); `matches()`; negative row indices; `loc.body(mask = ...)`; `loc.stub` by row
+  label; `loc.rowGroups` by row index or condition.
+- **Stub and spanners** (S). A `tabStub` verb; `tabSpanner` gathering its columns in the given
+  order; the spanner's fill covering the whole cell.
+- **Colours** (S). All CSS colour names (only 17 today: `rebeccapurple`, `bisque` raise
+  ValueError); `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
+  `dataColor` defaults (palette, NA grey); white text on dark option backgrounds (stub, heading by
+  colour name).
+- **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
+- **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.

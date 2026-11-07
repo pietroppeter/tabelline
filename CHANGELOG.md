@@ -21,6 +21,9 @@ The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec chang
 - Fix: the standard footnote marks are gt's four (\*, †, ‡, §); the six are `"extended"`.
 - Fix: in Markdown, `~` and `^` make a subscript or superscript only when closed with no space
   inside, so "~50 PRs" stays as it is (found by the 0.1 use-it thread).
+- Fix: `dataColor` over number and text columns in one call no longer raises; the subtitle is not
+  bold (`headingSubtitleFontWeight`); a style at a part wins over one at its whole part (found by
+  the 0.1 port thread).
 - Fix: `tableData:` reads quoted names with dots (`` `size.mass` ``) whole.
 - Docs: the devlog post *Designing tabelline 0.1*; the coverage map marks the 24 groups done.
 

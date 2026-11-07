@@ -439,6 +439,7 @@ type
     headingTitleFontSize* = "125%"
     headingTitleFontWeight* = "initial"
     headingSubtitleFontSize* = "85%"
+    headingSubtitleFontWeight* = "normal"
     headingBorderBottomColor* = "#D3D3D3"
     columnLabelsBackgroundColor* = ""
     columnLabelsFontSize* = "100%"
