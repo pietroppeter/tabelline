@@ -1,6 +1,6 @@
 ## devlog: 07 Nov 2026 | Two looks: the quaderno and Munari | The pages get a second look, after Bruno Munari, the new default; the quaderno is one switch away in every header, and your choice is remembered.
 ## A dated post: it tells how the second look was made, and is not updated afterwards.
-import std/os
+import std/[os, sequtils]
 import nimib except md
 import tabelline, tabelline/nimib
 import ../quaderno
@@ -25,28 +25,65 @@ the top right, **Munari | quaderno**. Munari is the default from 0.1; the quader
 away. Try it now: the page changes in place, and the next page you open keeps the look you
 picked.
 
-## Why Munari
+## Who was Bruno Munari?
 
-[Bruno Munari](https://it.wikipedia.org/wiki/Bruno_Munari) (Milan, 1907-1998) was a painter,
-designer, writer and teacher who never kept those apart. He made *macchine inutili*, useless
-machines that hang and turn (from the 1930s); *libri illeggibili*, books with no words, only
-paper, colour and cuts (from 1949); children's books with holes and coloured pages, like
-*Nella notte buia* (1956); three small books on the three basic shapes, *La scoperta del
-quadrato* (1960), *del cerchio* (1964) and *del triangolo* (1976); and books on how design
-works, *Design e comunicazione visiva* (1968), *Fantasia* (1977), *Da cosa nasce cosa* (1981).
-He won the Compasso d'Oro in 1954, 1955 and 1979, and in 1977 opened the first workshop for
-children in a museum, at Brera.
+For readers outside Italy: [Bruno Munari](https://en.wikipedia.org/wiki/Bruno_Munari) (born in
+Milan in 1907, died there in 1998) is one of the people who made Italian design what it is, and
+one of the few who worked on everything at once. He started as a young painter among the
+Futurists, and went on to be a designer of objects, lamps and furniture, a graphic designer, an
+artist, a writer of books about design and seeing, a maker of children's books, and a teacher
+who cared most about how children learn by doing. He did not keep those apart: for him art,
+design and play were the same activity, aimed at different people.
 
-The quaderno is the school notebook; Munari is the other side of an Italian school: the
-workshop where children learn by cutting paper and laying shapes on each other. For a library
-named after the times tables, he is the right second teacher.
+Some of what he made, to give the range:
+"""
+
+block:  # the table only, not its code
+  type Work = object
+    year: int
+    title, english, what: string
+  let works = @[
+    Work(year: 1930, title: "Macchine inutili", english: "Useless machines", what: "light mobiles of card and wood that hang and turn in the air"),
+    Work(year: 1949, title: "Libri illeggibili", english: "Unreadable books", what: "books with no words: only paper, colour, cuts and holes, to be read with the eyes and hands"),
+    Work(year: 1956, title: "Nella notte buia", english: "In the Dark of the Night", what: "a children's book on black, translucent and rough papers, with holes to look through"),
+    Work(year: 1960, title: "La scoperta del quadrato", english: "The Discovery of the Square", what: "the first of three small books on the basic shapes; the circle followed in 1964, the triangle in 1976"),
+    Work(year: 1968, title: "Design e comunicazione visiva", english: "Design and Visual Communication", what: "his lessons on how images and objects say things"),
+    Work(year: 1971, title: "Abitacolo", english: "Habitacle", what: "a child's room in one steel grid: bed, shelves and desk that the child arranges"),
+    Work(year: 1977, title: "Laboratorio per bambini", english: "Workshop for children", what: "the first art workshop for children in a museum, at Brera in Milan"),
+    Work(year: 1981, title: "Da cosa nasce cosa", english: "One Thing Leads to Another", what: "his book on the method of design, from the problem to the simplest answer"),
+  ]
+  type Shown = object
+    year: int
+    work, what: string
+  let shown = works.mapIt(Shown(year: it.year, work: "*" & it.title & "*<br>" & it.english, what: it.what))
+  let worksTable = tabella(shown):
+    tabHeader "Bruno Munari in eight works", "1930 to 1981: art, books, objects, teaching"
+    colsLabel {"year": "", "work": "work (and in English)", "what": "what it is"}
+    fmtMarkdown "work"
+    colsWidth {"work": "36%"}
+    tabStyle style.text(weight = "bold"), loc.body(cols = "year")
+    tabSourceNote md("Dates from [Wikipedia](https://it.wikipedia.org/wiki/Bruno_Munari) (Italian and English). The useless machines date from the early 1930s. Munari won the Compasso d'Oro, Italy's design prize, in 1954, 1955 and 1979, and for his whole career in 1995.")
+    optQuaderno()
+  nbTable worksTable
+
+nbText: """
+Many of his books are still printed by [Corraini](https://www.corraini.com/), in Mantua, and
+his way of running art workshops for children is still taught.
+
+## Why Munari, for tabelline
+
+The quaderno is the school notebook. Munari is the other side of an Italian school: the workshop
+where children learn by cutting paper and laying shapes over each other. For a library named
+after the times tables, he is the right second teacher. And he is a good teacher for anyone who
+makes tables: his whole method was to remove what is not needed until what is left can be read
+at a glance, which is also what gt and Great Tables ask of a good table.
 
 ## What the Munari look takes from him
 
 Everything in it is a rule of the quaderno look, done again with less:
 """
 
-nbCode:
+block:  # the table only, not its code
   type Look = object
     part, quaderno, munari: string
   let looks = @[
@@ -65,7 +102,7 @@ nbCode:
     colsLabel {"quaderno": "quaderno", "munari": "Munari (default)"}
     colsWidth {"quaderno": "40%", "munari": "45%"}
     optQuaderno()
-nbTable lookTable
+  nbTable lookTable
 
 nbNota("""
 **The motto.** *Complicare è facile, semplificare è difficile*: to complicate is easy, to
