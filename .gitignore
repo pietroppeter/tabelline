@@ -1,0 +1,14 @@
+deps/
+nimcache/
+# every page is generated (docs/all.nim) and built by CI (.github/workflows/pages.yml)
+*.html
+!tests/data/*.html
+# compiled binaries
+tests/all
+tests/test_*
+!tests/test_*.nim
+docs/all
+docs/*/all
+tools/specrun
+tools/specview
+tools/specsuite_gen.nim

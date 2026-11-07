@@ -1,0 +1,91 @@
+# table-data Specification
+
+## Purpose
+The data a table shows: named columns of values, read once from Nim values, columns or CSV, and
+never changed by the table.
+
+## Requirements
+
+### Requirement: Values
+A cell SHALL hold a `Value`: missing (`vkNull`), a bool, an int, a float or a string. `toValue`
+SHALL convert Nim values, with `nil`, `none(T)` and a float NaN as missing. A `Value` SHALL compare
+with plain Nim numbers and strings, so row predicates read naturally.
+
+```nim
+echo toValue(3) == 3.0, " ", toValue(2.5) > 2, " ", toValue(none(int)).isNull
+```
+
+```text
+true true true
+```
+
+#### Scenario: A missing number
+- **WHEN** a column holds `1`, `nil` and `3`
+- **THEN** it is an int column whose second value is missing
+
+### Requirement: Data from Nim values
+`toTableData` (and `tabella` directly) SHALL take a sequence of objects or named tuples, one
+column per field in field order. `tableData:` SHALL take one `name: [values]` line per column,
+converting each value on its own. `parseCsv` and `readCsv` SHALL read a CSV text with a header,
+inferring ints, floats, bools and missing values (empty, `NA`), and a column mixing ints and
+floats SHALL be a float column.
+
+```nim
+type Pupil = object
+  name: string
+  stars: int
+echo tabella(@[Pupil(name: "Ada", stars: 3), Pupil(name: "Bruno", stars: 1)])
+let d = tableData:
+  subject: ["maths", "art"]
+  mark: [9, nil]
+echo tabella(d)
+echo tabella(parseCsv("a,b\n1,2.5\n2,3\n"))
+```
+
+```text
+┌───────┬───────┐
+│ name  │ stars │
+╞═══════╪═══════╡
+│ Ada   │     3 │
+│ Bruno │     1 │
+└───────┴───────┘
+┌─────────┬──────┐
+│ subject │ mark │
+╞═════════╪══════╡
+│ maths   │    9 │
+│ art     │      │
+└─────────┴──────┘
+┌───┬─────┐
+│ a │   b │
+╞═══╪═════╡
+│ 1 │ 2.5 │
+│ 2 │ 3.0 │
+└───┴─────┘
+```
+
+#### Scenario: No rows
+- **WHEN** an empty sequence of objects is given
+- **THEN** the data has the fields as columns and no rows
+
+#### Scenario: A misspelt column
+- **WHEN** a verb names a column that is not in the data
+- **THEN** it raises a `KeyError` that lists the columns there are
+
+### Requirement: Datasets
+`tabelline/datasets` SHALL provide `planets()` (NASA's planetary fact sheet), `exibble()` (gt's
+example table) and `tavolaPitagorica(n)` (the n×n times table), built into the module.
+
+```nim
+echo tabella(tavolaPitagorica(4), rownameCol = "×")
+```
+
+```text
+┌───┬───┬───┬────┬────┐
+│   │ 1 │ 2 │  3 │  4 │
+╞═══╪═══╪═══╪════╪════╡
+│ 1 │ 1 │ 2 │  3 │  4 │
+│ 2 │ 2 │ 4 │  6 │  8 │
+│ 3 │ 3 │ 6 │  9 │ 12 │
+│ 4 │ 4 │ 8 │ 12 │ 16 │
+└───┴───┴───┴────┴────┘
+```
