@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
+  plan for the next releases, as a living document (#8).
+
 - Docs: the Munari colours are named by role (`--m-cerchio`, `--m-quadrato`, `--m-triangolo`,
   `--m-quarto`), code highlighting follows the palette, and the palettes post is compact: a
   summary of what each colour does, a swipe gallery that picks the palette, the anatomy of a page

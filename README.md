@@ -71,6 +71,9 @@ Kept up to date as tabelline changes:
 - [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
   down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
   run against the code while the page is built.
+- [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+  and Great Tables, what tabelline has, and the releases that plan the rest (data in
+  `docs/coverage/gt.json`).
 - [Devlog](https://pietroppeter.github.io/tabelline/devlog/): the living documents, then the posts.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):

@@ -1,0 +1,749 @@
+{
+ "title": "gt coverage",
+ "updated": "2026-11-07",
+ "gt": "gt 1.4 (R) and Great Tables 0.17 (Python), by their reference indexes",
+ "release": {
+  "version": "0.1.0",
+  "tag": "v0.1.0 (to be tagged)",
+  "date": "2026-11-07"
+ },
+ "plans": [
+  {
+   "version": "0.1",
+   "title": "The basics",
+   "plan": "Every small verb that is cheap now: the S items marked 0.1."
+  },
+  {
+   "version": "0.2",
+   "title": "Rows and merges",
+   "plan": "Summary rows, merged columns, rows added, hidden and ordered, decimal alignment, more options."
+  },
+  {
+   "version": "0.3",
+   "title": "Every format, every locale",
+   "plan": "Units, fractions, dates and currencies in many languages (CLDR), interop with data frames."
+  },
+  {
+   "version": "0.4",
+   "title": "Pictures in cells",
+   "plan": "Images, icons and nanoplots, all inlined."
+  },
+  {
+   "version": "0.5",
+   "title": "Out of the browser",
+   "plan": "LaTeX, RTF and Word, images and PDF, groups of tables."
+  }
+ ],
+ "areas": [
+  {
+   "id": "create",
+   "title": "Creating a table",
+   "intro": "gt() and GT() take a data frame; tabelline takes any seq of objects or tuples, a TableData, or CSV.",
+   "rows": [
+    {
+     "feature": "A table from data",
+     "gt": "gt(), GT()",
+     "status": "done",
+     "note": "tabella(data): body, with rownameCol and groupnameCol; from seq of objects, tuples, tableData: or CSV."
+    },
+    {
+     "feature": "Preview of a big table",
+     "gt": "gt_preview()",
+     "status": "missing",
+     "note": "First and last rows with a gap row.",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Groups of tables, split tables",
+     "gt": "gt_group(), gt_split(), grp_*()",
+     "status": "missing",
+     "note": "Several tables that share options; a long table split in parts.",
+     "plan": "0.5",
+     "size": "M",
+     "where": "R"
+    },
+    {
+     "feature": "Table info",
+     "gt": "tab_info(), info_*()",
+     "status": "no",
+     "note": "Interactive help tables; the specs page and the explainer do this job.",
+     "where": "R"
+    }
+   ]
+  },
+  {
+   "id": "parts",
+   "title": "Parts of a table",
+   "intro": "The six parts of gt: header, column labels and spanners, stub and stub head, row groups, body, footer.",
+   "rows": [
+    {
+     "feature": "Title and subtitle",
+     "gt": "tab_header()",
+     "status": "done",
+     "note": "Text or md()."
+    },
+    {
+     "feature": "Spanners",
+     "gt": "tab_spanner()",
+     "status": "done",
+     "note": "Several levels."
+    },
+    {
+     "feature": "Spanners from column names",
+     "gt": "tab_spanner_delim()",
+     "status": "missing",
+     "note": "Split \"a.b\" names into a spanner and a label.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Stub and stub head",
+     "gt": "rowname_col, tab_stubhead()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Stub indent, multi-column stub",
+     "gt": "tab_stub_indent()",
+     "status": "missing",
+     "note": "Indent stub rows; several columns as the stub.",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Row groups",
+     "gt": "groupname_col, tab_row_group()",
+     "status": "done",
+     "note": "From a column or from a row selection."
+    },
+    {
+     "feature": "Footnotes",
+     "gt": "tab_footnote()",
+     "status": "done",
+     "note": "Marks at any location; numbers, letters, capitals or the standard asterisk and daggers (option footnotesMarks)."
+    },
+    {
+     "feature": "Source notes",
+     "gt": "tab_source_note()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Caption",
+     "gt": "tab_caption()",
+     "status": "missing",
+     "note": "A <caption> for the table, for screen readers and for figures in documents.",
+     "plan": "0.1",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Remove parts",
+     "gt": "rm_header(), rm_spanners(), rm_footnotes(), rm_source_notes(), rm_stubhead(), rm_caption()",
+     "status": "missing",
+     "note": "Undo a part, for tables built from a shared start.",
+     "plan": "0.1",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Summary rows",
+     "gt": "summary_rows(), grand_summary_rows()",
+     "status": "missing",
+     "note": "Subtotals per group and a grand total. Proposed: openspec change add-summary-rows.",
+     "plan": "0.2",
+     "size": "M"
+    },
+    {
+     "feature": "Summary columns",
+     "gt": "summary_columns()",
+     "status": "missing",
+     "note": "A column computed from others (new in gt).",
+     "plan": "0.3",
+     "size": "M",
+     "where": "R"
+    }
+   ]
+  },
+  {
+   "id": "formats",
+   "title": "Formats",
+   "intro": "fmt_* verbs format the body cells; formats resolve columns and rows when called and run at render time, so every renderer agrees.",
+   "rows": [
+    {
+     "feature": "Numbers and integers",
+     "gt": "fmt_number(), fmt_integer()",
+     "status": "done",
+     "note": "Decimals, separators, scale, compact suffixes (1.2K), pattern, sign, locale marks."
+    },
+    {
+     "feature": "Percent",
+     "gt": "fmt_percent()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Scientific",
+     "gt": "fmt_scientific()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Engineering, SI prefixes",
+     "gt": "fmt_engineering(), fmt_number_si()",
+     "status": "missing",
+     "note": "Exponents in steps of three; k, M, G prefixes with units.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Currency",
+     "gt": "fmt_currency()",
+     "status": "partial",
+     "note": "Symbols for common currencies; no full currency table or accounting style.",
+     "plan": "0.3",
+     "size": "S"
+    },
+    {
+     "feature": "Parts per",
+     "gt": "fmt_partsper()",
+     "status": "missing",
+     "note": "Per mille, ppm, ppb.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Fractions",
+     "gt": "fmt_fraction()",
+     "status": "missing",
+     "note": "1/3, 2 1/4, with an accuracy.",
+     "plan": "0.3",
+     "size": "M",
+     "where": "R"
+    },
+    {
+     "feature": "Bytes",
+     "gt": "fmt_bytes()",
+     "status": "missing",
+     "note": "kB, MB, KiB, MiB.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Roman numerals",
+     "gt": "fmt_roman()",
+     "status": "done",
+     "note": "Up to 3999."
+    },
+    {
+     "feature": "Index letters, spelled numbers",
+     "gt": "fmt_index(), fmt_spelled_num()",
+     "status": "missing",
+     "note": "a, b, c ... aa; \"one\" to \"one hundred\" (English).",
+     "plan": "0.1",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Dates",
+     "gt": "fmt_date()",
+     "status": "partial",
+     "note": "ISO dates in nine styles or a std/times pattern; month names in English only.",
+     "plan": "0.3",
+     "size": "M"
+    },
+    {
+     "feature": "Times and datetimes",
+     "gt": "fmt_time(), fmt_datetime()",
+     "status": "missing",
+     "note": "Same machinery as dates.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Durations",
+     "gt": "fmt_duration()",
+     "status": "missing",
+     "note": "\"2h 5m\", in several styles.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Booleans",
+     "gt": "fmt_tf()",
+     "status": "done",
+     "note": "Two symbols or words; an html option is still to come (BACKLOG).",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Markdown",
+     "gt": "fmt_markdown()",
+     "status": "done",
+     "note": "Inline Markdown."
+    },
+    {
+     "feature": "Units",
+     "gt": "fmt_units(), cols_units()",
+     "status": "missing",
+     "note": "gt's units syntax (m^2, kg/m^3) in cells and labels.",
+     "plan": "0.3",
+     "size": "M"
+    },
+    {
+     "feature": "Chemistry",
+     "gt": "fmt_chem()",
+     "status": "missing",
+     "note": "Chemical formulas with sub- and superscripts.",
+     "plan": "0.3",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "URLs and emails",
+     "gt": "fmt_url(), fmt_email()",
+     "status": "missing",
+     "note": "Links in cells, as text or buttons.",
+     "plan": "0.1",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Country names",
+     "gt": "fmt_country()",
+     "status": "missing",
+     "note": "Country codes to names; needs a names table.",
+     "plan": "0.3",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Flags",
+     "gt": "fmt_flag()",
+     "status": "missing",
+     "note": "As emoji (regional indicators): nothing to load, works in every renderer.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Icons",
+     "gt": "fmt_icon()",
+     "status": "missing",
+     "note": "Font Awesome in gt; here a small inlined SVG set, so pages stay standalone.",
+     "plan": "0.4",
+     "size": "M"
+    },
+    {
+     "feature": "Images",
+     "gt": "fmt_image(), local_image(), web_image()",
+     "status": "missing",
+     "note": "Inlined as data URLs.",
+     "plan": "0.4",
+     "size": "M"
+    },
+    {
+     "feature": "Plots in cells",
+     "gt": "fmt_nanoplot(), cols_nanoplot()",
+     "status": "partial",
+     "note": "fmtBar (a bar, not in gt) is the first step; nanoplots are lines, bars and boxes in SVG.",
+     "plan": "0.4",
+     "size": "L"
+    },
+    {
+     "feature": "Bins, auto format, passthrough",
+     "gt": "fmt_bins(), fmt_auto(), fmt_passthrough()",
+     "status": "missing",
+     "note": "Interval labels; a format chosen from the column type; no format.",
+     "plan": "0.3",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Any format",
+     "gt": "fmt()",
+     "status": "done",
+     "note": "A Nim proc, for text or for each renderer (RenderContext)."
+    },
+    {
+     "feature": "Formats for single values",
+     "gt": "vec_fmt_*(), vals.fmt_*()",
+     "status": "partial",
+     "note": "formatNumber, formatPercent, formatCurrency, formatScientific, formatRoman, formatDate, formatCompact; the others come with their fmt verb.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Locales",
+     "gt": "locale=, with_locale()",
+     "status": "partial",
+     "note": "Number marks for about 40 locales; no month or currency names yet (CLDR).",
+     "plan": "0.3",
+     "size": "M"
+    }
+   ]
+  },
+  {
+   "id": "subs",
+   "title": "Substitutions and text",
+   "intro": "Replace values or change the text of cells after formatting.",
+   "rows": [
+    {
+     "feature": "Missing values and zeros",
+     "gt": "sub_missing(), sub_zero()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Small, large and given values",
+     "gt": "sub_small_vals(), sub_large_vals(), sub_values()",
+     "status": "missing",
+     "note": "\"<0.01\", \">=1e6\", or any value to a text.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Text transforms",
+     "gt": "text_transform(), text_replace(), text_case_match(), text_case_when()",
+     "status": "missing",
+     "note": "A proc over the cell text, or a plain text replaced (no regex: the core stays free of PCRE).",
+     "plan": "0.1",
+     "size": "S"
+    }
+   ]
+  },
+  {
+   "id": "cols",
+   "title": "Columns",
+   "intro": "cols_* verbs act on whole columns.",
+   "rows": [
+    {
+     "feature": "Labels",
+     "gt": "cols_label()",
+     "status": "done",
+     "note": "Text or md()."
+    },
+    {
+     "feature": "Labels from a function",
+     "gt": "cols_label_with()",
+     "status": "missing",
+     "note": "A proc over every label.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Rotated labels",
+     "gt": "cols_label_rotate()",
+     "status": "missing",
+     "note": "Vertical labels for narrow columns.",
+     "plan": "0.3",
+     "size": "S",
+     "where": "Python"
+    },
+    {
+     "feature": "Align",
+     "gt": "cols_align()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Align on the decimal mark",
+     "gt": "cols_align_decimal()",
+     "status": "missing",
+     "note": "Pads numbers so the marks line up.",
+     "plan": "0.2",
+     "size": "S"
+    },
+    {
+     "feature": "Widths",
+     "gt": "cols_width()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Move",
+     "gt": "cols_move(), cols_move_to_start()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Move to end, reorder",
+     "gt": "cols_move_to_end(), cols_reorder()",
+     "status": "missing",
+     "note": "",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Hide and unhide",
+     "gt": "cols_hide(), cols_unhide()",
+     "status": "done",
+     "note": ""
+    },
+    {
+     "feature": "Merge columns",
+     "gt": "cols_merge(), cols_merge_uncert(), cols_merge_range(), cols_merge_n_pct()",
+     "status": "missing",
+     "note": "\"{1} ({2})\" patterns, value ± error, ranges, n (%).",
+     "plan": "0.2",
+     "size": "M"
+    },
+    {
+     "feature": "Add columns",
+     "gt": "cols_add()",
+     "status": "partial",
+     "note": "addColumn on the data; no verb with placement yet.",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    }
+   ]
+  },
+  {
+   "id": "rows",
+   "title": "Rows",
+   "intro": "Adding, ordering and hiding rows.",
+   "rows": [
+    {
+     "feature": "Add rows",
+     "gt": "rows_add()",
+     "status": "missing",
+     "note": "Rows given as values, with placement.",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Hide rows",
+     "gt": "rows_hide(), rows_unhide()",
+     "status": "missing",
+     "note": "",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "Order of rows and groups",
+     "gt": "row_order(), row_group_order()",
+     "status": "missing",
+     "note": "Groups show in the order they are made today.",
+     "plan": "0.1",
+     "size": "S",
+     "where": "R"
+    }
+   ]
+  },
+  {
+   "id": "style",
+   "title": "Styles and locations",
+   "intro": "Styles at locations: what gt calls cells_* and Great Tables loc.*; tabelline follows the loc. and style. names of Great Tables.",
+   "rows": [
+    {
+     "feature": "Styles",
+     "gt": "tab_style(), cell_fill(), cell_text(), cell_borders()",
+     "status": "done",
+     "note": "style.fill, style.text, style.borders."
+    },
+    {
+     "feature": "Any CSS",
+     "gt": "style.css()",
+     "status": "missing",
+     "note": "A raw CSS declaration at a location.",
+     "plan": "0.1",
+     "size": "S",
+     "where": "Python"
+    },
+    {
+     "feature": "Locations",
+     "gt": "cells_title(), cells_body(), cells_stub(), ...",
+     "status": "partial",
+     "note": "title, subtitle, stubhead, column labels, spanners, stub, row groups, body, source notes, footnotes; header and column header as a whole are missing, summary ones come with summary rows.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Colour by value",
+     "gt": "data_color()",
+     "status": "done",
+     "note": "Palettes (viridis, rdbu, ...), domain, reverse, text colour that stays readable, fill or text."
+    },
+    {
+     "feature": "Body styles from a column",
+     "gt": "tab_style_body(), from_column()",
+     "status": "missing",
+     "note": "Style values taken from another column.",
+     "plan": "0.2",
+     "size": "S"
+    }
+   ]
+  },
+  {
+   "id": "options",
+   "title": "Options",
+   "intro": "tab_options and the opt_* shortcuts.",
+   "rows": [
+    {
+     "feature": "Table options",
+     "gt": "tab_options()",
+     "status": "partial",
+     "note": "About 40 of gt's 200 options: fonts, widths, borders, heading, labels, groups, stub, padding, striping, footer.",
+     "plan": "0.2",
+     "size": "M"
+    },
+    {
+     "feature": "Presets",
+     "gt": "opt_stylize(), opt_row_striping(), opt_align_table_header(), opt_all_caps(), opt_table_font()",
+     "status": "done",
+     "note": "Plus optQuaderno, tabelline's own."
+    },
+    {
+     "feature": "Padding, outline, lines",
+     "gt": "opt_vertical_padding(), opt_horizontal_padding(), opt_table_outline(), opt_table_lines()",
+     "status": "missing",
+     "note": "Shortcuts over options that exist or are cheap.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Footnote marks",
+     "gt": "opt_footnote_marks(), opt_footnote_spec(), opt_footnote_order()",
+     "status": "partial",
+     "note": "Marks set by the footnotesMarks option; no verb, no spec of where the mark goes.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Extra CSS",
+     "gt": "opt_css()",
+     "status": "partial",
+     "note": "The extraCss option; no verb yet.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Fonts",
+     "gt": "google_font(), system_fonts(), default_fonts()",
+     "status": "partial",
+     "note": "Font stacks by name; Google fonts would load remote files, so not planned as such (inline a font instead)."
+    },
+    {
+     "feature": "Interactive tables",
+     "gt": "opt_interactive()",
+     "status": "no",
+     "note": "Sorting, filtering and paging: the parked Tabellone idea (a small grid for a few thousand rows)."
+    }
+   ]
+  },
+  {
+   "id": "output",
+   "title": "Output",
+   "intro": "Where a table goes.",
+   "rows": [
+    {
+     "feature": "HTML",
+     "gt": "as_raw_html(), write_raw_html()",
+     "status": "done",
+     "note": "Scoped CSS, standalone page with save()."
+    },
+    {
+     "feature": "Text and Markdown",
+     "gt": "(none)",
+     "status": "done",
+     "note": "Not in gt: echo prints a table as text; toMarkdown for READMEs."
+    },
+    {
+     "feature": "nimib",
+     "gt": "(Quarto, R Markdown, Jupyter)",
+     "status": "done",
+     "note": "nbTable, and the Markdown backend."
+    },
+    {
+     "feature": "Images and PDF",
+     "gt": "gtsave()",
+     "status": "missing",
+     "note": "Needs a browser to draw; maybe through Playwright, outside the core.",
+     "plan": "0.5",
+     "size": "M"
+    },
+    {
+     "feature": "LaTeX",
+     "gt": "as_latex()",
+     "status": "missing",
+     "note": "",
+     "plan": "0.5",
+     "size": "L"
+    },
+    {
+     "feature": "RTF and Word",
+     "gt": "as_rtf(), as_word()",
+     "status": "missing",
+     "note": "For clinical reports.",
+     "plan": "0.5",
+     "size": "L",
+     "where": "R"
+    },
+    {
+     "feature": "Extract",
+     "gt": "extract_body(), extract_cells(), extract_summary()",
+     "status": "missing",
+     "note": "The built table as data.",
+     "plan": "0.2",
+     "size": "S",
+     "where": "R"
+    },
+    {
+     "feature": "grid graphics, Shiny",
+     "gt": "as_gtable(), gt_output(), render_gt()",
+     "status": "no",
+     "note": "R-only machinery.",
+     "where": "R"
+    }
+   ]
+  },
+  {
+   "id": "helpers",
+   "title": "Helpers, data and interop",
+   "intro": "Small pieces around the table.",
+   "rows": [
+    {
+     "feature": "Text helpers",
+     "gt": "md(), html()",
+     "status": "partial",
+     "note": "md(); html() is missing.",
+     "plan": "0.1",
+     "size": "S"
+    },
+    {
+     "feature": "Column selectors",
+     "gt": "starts_with(), ends_with(), contains(), matches(), everything(), where()",
+     "status": "done",
+     "note": "Plus numeric() and textual()."
+    },
+    {
+     "feature": "Sizes",
+     "gt": "px(), pct()",
+     "status": "no",
+     "note": "Nim strings (\"12px\") do the job."
+    },
+    {
+     "feature": "Datasets",
+     "gt": "exibble, gtcars, countrypops, sza, towny, ...",
+     "status": "partial",
+     "note": "exibble and planets, plus tavolaPitagorica; more as examples need them.",
+     "plan": "0.2",
+     "size": "S"
+    },
+    {
+     "feature": "Data frames",
+     "gt": "(tibble, Pandas, Polars)",
+     "status": "missing",
+     "note": "Optional modules for nanuq (Polars) and datamancer.",
+     "plan": "0.3",
+     "size": "S"
+    }
+   ]
+  }
+ ]
+}

@@ -2,5 +2,5 @@
 ## A page is a nimib notebook in docs/ or docs/devlog/; each renders when its module is
 ## initialised, in import order.
 {.warning[UnusedImport]: off.}
-import index, explainer, specs
+import index, explainer, specs, coverage
 import devlog/[day_one, tabellone, two_looks, palettes, index as devlogIndex]

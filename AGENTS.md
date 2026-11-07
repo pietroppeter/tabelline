@@ -57,6 +57,9 @@ working rules that are easy to miss.
 - In the Munari look, nothing that only decorates may look like something to press or drag (no
   dots, holes or knobs on cards). Its colours are six variables in `docs/munari.nim` (`--m-*`);
   mix new colours from them rather than adding fixed ones.
+- The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
+  completes a gt feature updates its row there (status, and `plan` while it is open), and a
+  release PR checks the whole file.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 
