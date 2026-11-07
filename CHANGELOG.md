@@ -11,3 +11,7 @@
   `tavolaPitagorica`. (#1)
 - Repository setup: OpenSpec specs with runnable examples, the spec page, the explainer, the
   devlog, the quaderno theme and CI for tests, examples and pages. (#1)
+
+### Changed
+- Dependencies are managed with atlas (`atlas.lock`, `nim.cfg`, nimib as the `docs` feature) and
+  `tools/setup.sh` sets up a laptop, CI or a fresh coding-agent sandbox; `deps.sh` is gone.

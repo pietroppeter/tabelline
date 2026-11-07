@@ -32,29 +32,18 @@ jobs:
           nim-version: "2.2.4"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # libpcre3 for nimib's markdown (std/re); its .deb is cached
-      - uses: actions/cache@v4
-        with:
-          path: ~/debs
-          key: libpcre3-ubuntu-24.04
-      - run: |
-          if ! ls ~/debs/libpcre3_*.deb > /dev/null 2>&1; then
-            mkdir -p ~/debs && cd ~/debs
-            apt-get download libpcre3 || (sudo apt-get update && apt-get download libpcre3)
-          fi
-          sudo dpkg -i ~/debs/libpcre3_*.deb
-
-      # nimib and friends at the commits pinned in deps.sh
+      # the same setup as a laptop or a coding-agent sandbox: atlas (when the one shipped with Nim
+      # is too old), libpcre3 for nimib's markdown, and the dependencies pinned in atlas.lock
       - uses: actions/cache@v4
         with:
           path: deps
-          key: deps-${{ hashFiles('deps.sh') }}
-      - run: sh deps.sh
+          key: deps-${{ hashFiles('atlas.lock') }}
+      - run: sh tools/setup.sh
 
       - uses: actions/cache@v4
         with:
           path: ~/.cache/nim
-          key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'deps.sh') }}
+          key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'nim.cfg', 'atlas.lock') }}
           restore-keys: nimcache-2.2.4-
 
       - name: Tests
