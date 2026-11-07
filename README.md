@@ -76,8 +76,9 @@ Kept up to date as tabelline changes:
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
 - [Munari meets Japan: palettes for the second look](https://pietroppeter.github.io/tabelline/devlog/palettes/)
-  (7 Nov 2026 D): softer colours for the Munari look, from Japan's traditional colour names; six
-  palettes to compare and try on the page.
+  (7 Nov 2026 D): softer colours for the Munari look, from Japan's traditional colour names: what
+  each of its six colours does, six palettes to swipe through, the page part by part, and the
+  stories behind the names.
 - [Two looks: the quaderno and Munari](https://pietroppeter.github.io/tabelline/devlog/two-looks/)
   (7 Nov 2026 C): a second look for the pages, after Bruno Munari, one switch away in every header.
 - [Tabellone: when a table becomes a grid](https://pietroppeter.github.io/tabelline/devlog/tabellone/)

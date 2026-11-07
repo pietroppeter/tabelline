@@ -11,10 +11,13 @@
 ## notes in flat coloured paper; and a page that a child could take apart. Nothing that only
 ## decorates may look like something to press or drag (no dots, holes or knobs on cards).
 ##
-## The colours are six variables (`--m-carta` paper, `--m-inchiostro` ink, `--m-rosso`, `--m-blu`,
-## `--m-giallo`, `--m-verde`) and everything else is mixed from them, so a palette is six values:
-## the default is Japanese traditional colours close to Munari's primaries (see the devlog post
-## *Munari meets Japan*, which lets a reader try the others on the page).
+## The colours are six variables, named by where they go, not by their hue: `--m-carta` (paper),
+## `--m-inchiostro` (ink), `--m-cerchio`, `--m-quadrato` and `--m-triangolo` (the three shapes, and
+## what each colours on the page) and `--m-quarto` (a fourth, for the fourth note and the numbers
+## in code). Everything else is mixed from them (tints, rules, greys, and darker versions of the
+## colours used as text), so a palette is six values. The default is Japanese traditional colours
+## close to Munari's primaries; the devlog post *Munari meets Japan* lists what each colour does
+## and lets a reader try the other palettes on the page.
 ##
 ## Everything here is scoped by `html[data-tema="munari"]`, which a few lines in the `<head>` set
 ## before the page is drawn unless the reader picked the quaderno; the quaderno rules are untouched
@@ -89,20 +92,24 @@ html[data-tema="munari"] {
   /* the palette: Munari's primaries in Japanese traditional colours (nipponcolors.com) */
   --m-carta: #FCFAF2;      /* 白練 shironeri, white silk */
   --m-inchiostro: #1C1C1C; /* 墨 sumi, ink */
-  --m-rosso: #E83015;      /* 猩猩緋 shōjōhi, scarlet */
-  --m-blu: #005CAF;        /* 瑠璃 ruri, lapis lazuli */
-  --m-giallo: #F6C555;     /* 梔子 kuchinashi, gardenia */
-  --m-verde: #5DAC81;      /* 若竹 wakatake, young bamboo */
+  --m-cerchio: #E83015;    /* 猩猩緋 shōjōhi, scarlet */
+  --m-quadrato: #005CAF;   /* 瑠璃 ruri, lapis lazuli */
+  --m-triangolo: #F6C555;  /* 梔子 kuchinashi, gardenia */
+  --m-quarto: #5DAC81;     /* 若竹 wakatake, young bamboo */
+  /* the colours as text: a little ink in them, so that light ones stay readable */
+  --m-cerchio-testo: color-mix(in oklab, var(--m-cerchio) 82%, var(--m-inchiostro));
+  --m-quadrato-testo: color-mix(in oklab, var(--m-quadrato) 82%, var(--m-inchiostro));
+  --m-quarto-testo: color-mix(in oklab, var(--m-quarto) 62%, var(--m-inchiostro));
   --paper: var(--m-carta);
   --pencil: var(--m-inchiostro);
   --pen: var(--m-inchiostro);
-  --pen-red: var(--m-rosso);
-  --blu: var(--m-blu);
-  --giallo: var(--m-giallo);
+  --pen-red: var(--m-cerchio-testo);
+  --blu: var(--m-quadrato);
+  --giallo: var(--m-triangolo);
   --muted: color-mix(in srgb, var(--m-inchiostro) 62%, var(--m-carta));
   --card: color-mix(in srgb, #FFFFFF 60%, var(--m-carta));
-  --postit: color-mix(in srgb, var(--m-giallo) 38%, var(--m-carta));
-  --highlight: color-mix(in srgb, var(--m-giallo) 55%, transparent);
+  --postit: color-mix(in srgb, var(--m-triangolo) 38%, var(--m-carta));
+  --highlight: color-mix(in srgb, var(--m-triangolo) 55%, transparent);
   --rule: color-mix(in srgb, var(--m-inchiostro) 12%, var(--m-carta));
   --hand: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
   --text: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
@@ -115,7 +122,7 @@ html[data-tema="munari"] header { padding-top: .4rem; }
 /* the cover: the three shapes over each other, like sheets of coloured acetate */
 html[data-tema="munari"] .forme { display: block; position: absolute; top: 6.3rem; right: 0; width: 9.5rem; height: 8.5rem; pointer-events: none; }
 html[data-tema="munari"] .forme i { position: absolute; display: block; mix-blend-mode: multiply; }
-html[data-tema="munari"] .forme .cerchio { width: 6.2rem; height: 6.2rem; border-radius: 50%; background: var(--pen-red); right: 0; top: 0; }
+html[data-tema="munari"] .forme .cerchio { width: 6.2rem; height: 6.2rem; border-radius: 50%; background: var(--m-cerchio); right: 0; top: 0; }
 html[data-tema="munari"] .forme .quadrato { width: 4.6rem; height: 4.6rem; background: var(--blu); right: 3.6rem; top: 2.6rem; }
 html[data-tema="munari"] .forme .triangolo { width: 5.6rem; height: 4.9rem; background: var(--giallo); right: 1.2rem; top: 3.6rem;
   clip-path: polygon(50% 0, 100% 100%, 0 100%); }
@@ -145,7 +152,7 @@ html[data-tema="munari"] h1, html[data-tema="munari"] h2, html[data-tema="munari
 html[data-tema="munari"] h1 { font-size: 2.9rem; line-height: 1.05; }
 html[data-tema="munari"] h2 { font-size: 1.85rem; display: block; background: none; padding: 0 0 0 2.4rem; margin: 3rem 0 .9rem; position: relative; }
 html[data-tema="munari"] h2::before { content: ""; position: absolute; left: 0; top: .2em; width: 1.5rem; height: 1.5rem;
-  background: var(--pen-red); border-radius: 50%; }
+  background: var(--m-cerchio); border-radius: 50%; }
 html[data-tema="munari"] h2.forma-1::before { background: var(--blu); border-radius: 0; }
 html[data-tema="munari"] h2.forma-2::before { background: var(--giallo); border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 html[data-tema="munari"] h3 { font-size: 1.25rem; color: var(--pen-red); margin-top: 2rem; }
@@ -162,25 +169,30 @@ html[data-tema="munari"] pre > code { border: 2px solid var(--pencil); border-ra
 html[data-tema="munari"] pre.nb-output { background: var(--carta); border-radius: 0; box-shadow: none; color: var(--pencil); }
 html[data-tema="munari"] pre.nb-output::before { font: 700 .66rem/1.4 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--pen-red); }
 html[data-tema="munari"] :not(pre) > code { background: var(--carta); border-radius: 0; }
-html[data-tema="munari"] .hljs-keyword { color: var(--pen-red); } html[data-tema="munari"] .hljs-string { color: var(--blu); }
-html[data-tema="munari"] .hljs-number, html[data-tema="munari"] .hljs-literal { color: #A66F00; }
+/* code colours: keywords after the circle, strings after the square, numbers after the fourth */
+html[data-tema="munari"] .hljs-keyword { color: var(--m-cerchio-testo); font-weight: 700; }
+html[data-tema="munari"] .hljs-string { color: var(--m-quadrato-testo); }
+html[data-tema="munari"] .hljs-number, html[data-tema="munari"] .hljs-literal { color: var(--m-quarto-testo); }
 html[data-tema="munari"] .hljs-type { color: var(--pencil); font-weight: 700; }
+html[data-tema="munari"] .hljs-built_in { color: var(--m-cerchio-testo); }
+html[data-tema="munari"] .hljs-comment { color: var(--muted); font-style: italic; }
+html[data-tema="munari"] .hljs-meta { color: var(--muted); }
 
 /* tables: no tape, no squares; a black rule top and bottom, the top one starting in red */
 html[data-tema="munari"] .tabella { box-shadow: none; border-radius: 0; padding: 16px 0 10px; background: transparent; }
-html[data-tema="munari"] .tabella::before { width: 3rem; height: 3px; border-radius: 0; background: var(--pen-red);
+html[data-tema="munari"] .tabella::before { width: 3rem; height: 3px; border-radius: 0; background: var(--m-cerchio);
   top: 16px; left: 0; margin: 0; transform: none; box-shadow: none; z-index: 1; }
 html[data-tema="munari"] .tabella .tb_table { background-image: none !important; background-color: var(--card) !important;
   font-family: var(--text) !important; color: var(--pencil) !important;
   border-top: 3px solid var(--pencil) !important; border-bottom: 3px solid var(--pencil) !important; }
 html[data-tema="munari"] .tabella .tb_title { font-family: var(--text) !important; font-weight: 700 !important; color: var(--pencil) !important; letter-spacing: -.01em; }
-html[data-tema="munari"] .tabella .tb_heading_last { border-bottom-color: var(--pen-red) !important; }
+html[data-tema="munari"] .tabella .tb_heading_last { border-bottom-color: var(--m-cerchio) !important; }
 html[data-tema="munari"] .tabella .tb_col_heading, html[data-tema="munari"] .tabella .tb_spanner { color: var(--pencil) !important; }
 html[data-tema="munari"] .tabella .tb_col_headings_last th, html[data-tema="munari"] .tabella .tb_spanner { border-bottom-color: var(--pencil) !important; }
 html[data-tema="munari"] .tabella .tb_row { border-top-color: var(--rule) !important; }
 html[data-tema="munari"] .tabella .tb_stub { border-right-color: var(--rule) !important; }
 html[data-tema="munari"] .tabella .tb_group_heading { border-color: var(--pencil) !important;
-  background-color: color-mix(in srgb, var(--m-giallo) 22%, var(--m-carta)) !important; }
+  background-color: color-mix(in srgb, var(--m-triangolo) 22%, var(--m-carta)) !important; }
 html[data-tema="munari"] main table:not(.tb_table) th, html[data-tema="munari"] main table:not(.tb_table) td { border-color: var(--rule); }
 
 /* the indice: numbers on coloured shapes */
@@ -192,7 +204,7 @@ html[data-tema="munari"] .indice h2.indice-title::before { display: none; }
 html[data-tema="munari"] .indice > ol { list-style: none; padding: 0; counter-reset: voce; font: 500 1.08rem/1.5 var(--text); }
 html[data-tema="munari"] .indice > ol > li { counter-increment: voce; position: relative; padding-left: 2.3rem; margin: .35rem 0; }
 html[data-tema="munari"] .indice > ol > li::before { content: counter(voce); position: absolute; left: 0; top: .1rem; width: 1.5rem; height: 1.5rem;
-  border-radius: 50%; background: var(--pen-red); color: #fff; font: 700 .78rem/1.5rem var(--text); text-align: center; }
+  border-radius: 50%; background: var(--m-cerchio); color: #fff; font: 700 .78rem/1.5rem var(--text); text-align: center; }
 html[data-tema="munari"] .indice > ol > li:nth-child(3n+2)::before { background: var(--blu); border-radius: 0; }
 html[data-tema="munari"] .indice > ol > li:nth-child(3n)::before { background: var(--giallo); color: var(--pencil); border-radius: 0;
   width: 1.7rem; left: -.1rem; top: -.05rem; height: 1.6rem; line-height: 2.05rem; font-size: .7rem; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
@@ -202,10 +214,10 @@ html[data-tema="munari"] .indice a { color: var(--pencil); }
 
 /* notes: flat coloured paper, its colour in full along the top edge; nothing on it to press */
 html[data-tema="munari"] .nota { border-radius: 0; box-shadow: none; transform: none; padding: 1rem 1.2rem;
-  border-top: 5px solid var(--m-giallo); }
-html[data-tema="munari"] .nota.verde { background: color-mix(in srgb, var(--m-verde) 26%, var(--m-carta)); border-top-color: var(--m-verde); }
-html[data-tema="munari"] .nota.rosa { background: color-mix(in srgb, var(--m-rosso) 20%, var(--m-carta)); border-top-color: var(--m-rosso); }
-html[data-tema="munari"] .nota.azzurra { background: color-mix(in srgb, var(--m-blu) 20%, var(--m-carta)); border-top-color: var(--m-blu); }
+  border-top: 5px solid var(--m-triangolo); }
+html[data-tema="munari"] .nota.verde { background: color-mix(in srgb, var(--m-quarto) 26%, var(--m-carta)); border-top-color: var(--m-quarto); }
+html[data-tema="munari"] .nota.rosa { background: color-mix(in srgb, var(--m-cerchio) 20%, var(--m-carta)); border-top-color: var(--m-cerchio); }
+html[data-tema="munari"] .nota.azzurra { background: color-mix(in srgb, var(--m-quadrato) 20%, var(--m-carta)); border-top-color: var(--m-quadrato); }
 html[data-tema="munari"] .nota .titolo { font: 700 1.1rem var(--text); color: var(--pencil); }
 html[data-tema="munari"] .timbro { font: 700 .8rem/1.6 var(--text); letter-spacing: .12em; text-transform: uppercase; border-radius: 0; transform: none; }
 html[data-tema="munari"] .voto { font: 700 1.2rem/2.5rem var(--text); transform: none; }
