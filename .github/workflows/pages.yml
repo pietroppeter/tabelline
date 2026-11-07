@@ -1,0 +1,95 @@
+name: Pages
+
+# Runs the tests and the spec examples, builds every page (home, explainer, specs, devlog) and,
+# on main, deploys docs/ to GitHub Pages. The HTML is not committed: it is built here, so it always
+# matches the sources. Pages must use "GitHub Actions" as its source (Settings > Pages).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No committed HTML
+        run: |
+          html=$(git ls-files '*.html')
+          if [ -n "$html" ]; then
+            for f in $html; do echo "::error file=$f::generated page committed: CI builds it, remove it with git rm --cached $f"; done
+            exit 1
+          fi
+
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: "2.2.4"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # libpcre3 for nimib's markdown (std/re); its .deb is cached
+      - uses: actions/cache@v4
+        with:
+          path: ~/debs
+          key: libpcre3-ubuntu-24.04
+      - run: |
+          if ! ls ~/debs/libpcre3_*.deb > /dev/null 2>&1; then
+            mkdir -p ~/debs && cd ~/debs
+            apt-get download libpcre3 || (sudo apt-get update && apt-get download libpcre3)
+          fi
+          sudo dpkg -i ~/debs/libpcre3_*.deb
+
+      # nimib and friends at the commits pinned in deps.sh
+      - uses: actions/cache@v4
+        with:
+          path: deps
+          key: deps-${{ hashFiles('deps.sh') }}
+      - run: sh deps.sh
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/nim
+          key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'deps.sh') }}
+          restore-keys: nimcache-2.2.4-
+
+      - name: Tests
+        run: nim r tests/all.nim
+
+      - name: Spec examples
+        run: nim r tools/specexamples.nim
+
+      - name: Build the pages
+        run: nim r -d:release -d:nimibQuiet docs/all.nim
+
+      - name: Assemble site
+        run: |
+          mkdir _site
+          (cd docs && find . -name '*.html' | tar -c -T - | tar -x -C ../_site)
+          find _site -name '*.html' | sort
+          du -sh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

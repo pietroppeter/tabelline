@@ -1,0 +1,37 @@
+schema: spec-driven
+
+context: |
+  tabelline is a Nim library for display tables, after R's gt and Python's Great Tables: the data
+  (TableData, columns of Value) and the spec (Tabella: boxhead, parts, formats, styles, options),
+  verbs that take a Tabella and return a new one, and renderers (HTML with scoped CSS, text,
+  Markdown) that share one build step (src/tabelline/build.nim). The core needs only Nim's
+  standard library; nimib is needed only by src/tabelline/nimib.nim and the docs.
+  Every page is a nimib notebook in docs/ built by CI (docs/all.nim) and served by GitHub Pages;
+  the HTML is not committed. Pietro reviews on his phone: a change is first shown as a published
+  preview, nothing goes to main without his go, one clean PR per change.
+  Write specs and proposals in plain, short English sentences, like the devlog.
+
+rules:
+  proposal:
+    - Name where the change comes from (a BACKLOG.md entry, an issue, a project thread) and the PR that builds it
+    - Include a "Differences from gt and Great Tables" section, listing every difference in names and
+      behaviour from gt (R) and Great Tables (Python), or saying there are none
+    - Name verbs after gt in camelCase (tab_header is tabHeader); say why when a name differs
+  specs:
+    - Give every requirement that describes Nim API an example, as the way-of-working spec says: a
+      ```nim block after the requirement text, followed by a ```text block with what it prints.
+      `echo t` prints a table as text, so an example shows the table it makes
+    - Outputs are written by hand in a proposal and corrected with `nim r tools/specexamples.nim --update`
+      once the change is built
+  tasks:
+    - End with tasks to run `nim r tests/all.nim` and `nim r tools/specexamples.nim`, and to rebuild the docs
+
+operations:
+  apply:
+    guidance:
+      - Examples in openspec/specs must keep passing; the change's own examples should pass when it is done
+      - Show Pietro a preview of the pages before asking to merge
+  archive:
+    guidance:
+      - Remove the change's entry from BACKLOG.md and add a CHANGELOG.md line under Unreleased, with the PR number
+      - Add or update the devlog post that tells the change
