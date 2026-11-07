@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: a second look for the pages, after Bruno Munari, switched in every header and
+  remembered; the quaderno stays the default. Devlog post *Two looks*.
+
 ## 0.1.0 (7 Nov 2026)
 
 The first release: a proof of concept. The API will change.

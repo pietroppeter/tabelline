@@ -75,6 +75,8 @@ Kept up to date as tabelline changes:
 
 Posts, dated and not updated afterwards:
 
+- [Two looks: the quaderno and Munari](https://pietroppeter.github.io/tabelline/devlog/two-looks/)
+  (7 Nov 2026): a second look for the pages, after Bruno Munari, one switch away in every header.
 - [Tabellone: when a table becomes a grid](https://pietroppeter.github.io/tabelline/devlog/tabellone/)
   (7 Nov 2026): what a data grid is (AG Grid and friends), why gt and Great Tables are not
   grids, whether tabelline should have a big brother, and a small working sketch.
@@ -92,7 +94,7 @@ Posts, dated and not updated afterwards:
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
-- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/quaderno.nim` is the theme).
+- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/quaderno.nim` is the theme, `docs/munari.nim` the second look).
 - `openspec/`: specs and open changes; `openspec/config.yaml` has the rules. `BACKLOG.md`, `CHANGELOG.md`, `AGENTS.md`.
 
 ## Building

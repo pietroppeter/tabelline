@@ -9,12 +9,17 @@
 ## Hyperlegible for the text, both OFL) are inlined from `docs/assets/fonts`, and Nim code is
 ## highlighted at build time by nimib. So a page is one standalone HTML file.
 ##
+## A second look, *Munari* (`docs/munari.nim`), is one click away in the header of every page;
+## the quaderno is the default and the reader's choice is remembered.
+##
 ## Usage, right after `nbInit`:
 ##   nb.useQuaderno(nome = "tabelline", materia = "...", classe = "...", lede = "...")
 ##   nbIndice          # the table of contents of the `##` and `###` headings, where you put it
 
 import std/[json, os, strutils, strformat, base64, sequtils]
 import nimib
+import munari
+export munari
 
 const
   repoUrl* = "https://github.com/pietroppeter/tabelline"
@@ -268,16 +273,17 @@ func quadernoHeader(blk: JsonNode, nb: Nb): string =
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{v}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
+{temaSwitch}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
 func quadernoFooter(blk: JsonNode, nb: Nb): string =
   let source = nb.doc.context{"source_highlighted"}.getStr
-  "<footer>Written in Nim with <a href=\"https://github.com/pietroppeter/nimib\">nimib</a> 🐳 · tables by " &
+  "<footer>" & motto & "Written in Nim with <a href=\"https://github.com/pietroppeter/nimib\">nimib</a> 🐳 · tables by " &
     &"""<a href="{repoUrl}">tabelline</a> · the code on this page ran when it was built""" &
     (if source.len == 0: "" else:
       """<details class="source"><summary>show the source of this page</summary><pre><code class="nohighlight nim">""" &
-      source & "</code></pre></details>") & "</footer>"
+      source & "</code></pre></details>") & "</footer>" & temaBodyScript
 
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 
@@ -289,7 +295,7 @@ proc useQuaderno*(nb: var Nb, nome, materia = "", classe = "", title = "", descr
   nb.doc.context["title"] = %(if title.len > 0: title else: nome)
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n<style>\n" & fonts & quadernoCss & "</style>")
+    "\n" & temaHeadScript & "\n<style>\n" & fonts & munariFonts & quadernoCss & munariCss & "</style>")
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
