@@ -93,8 +93,8 @@
     {
      "feature": "Spanners from column names",
      "gt": "tab_spanner_delim()",
-     "status": "missing",
-     "note": "Split \"a.b\" names into a spanner and a label.",
+     "status": "done",
+     "note": "tabSpannerDelim(delim, columns, split, limit, reverse): \"a.b\" names become spanners and labels, on several levels.",
      "plan": "0.1",
      "size": "S"
     },
@@ -134,8 +134,8 @@
     {
      "feature": "Caption",
      "gt": "tab_caption()",
-     "status": "missing",
-     "note": "A <caption> for the table, for screen readers and for figures in documents.",
+     "status": "done",
+     "note": "tabCaption(text): an HTML <caption>, a first line in text, an italic line in Markdown.",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -143,8 +143,8 @@
     {
      "feature": "Remove parts",
      "gt": "rm_header(), rm_spanners(), rm_footnotes(), rm_source_notes(), rm_stubhead(), rm_caption()",
-     "status": "missing",
-     "note": "Undo a part, for tables built from a shared start.",
+     "status": "done",
+     "note": "rmHeader, rmSpanners(labels, levels), rmFootnotes(indices), rmSourceNotes(indices), rmStubhead, rmCaption.",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -194,8 +194,8 @@
     {
      "feature": "Engineering, SI prefixes",
      "gt": "fmt_engineering(), fmt_number_si()",
-     "status": "missing",
-     "note": "Exponents in steps of three; k, M, G prefixes with units.",
+     "status": "done",
+     "note": "fmtEngineering (× 10³ steps of three), fmtNumberSi(unit) from quecto to quetta.",
      "plan": "0.1",
      "size": "S"
     },
@@ -210,8 +210,8 @@
     {
      "feature": "Parts per",
      "gt": "fmt_partsper()",
-     "status": "missing",
-     "note": "Per mille, ppm, ppb.",
+     "status": "done",
+     "note": "fmtPartsper: ‰, ‱, pcm, ppm, ppb, ppt, ppq.",
      "plan": "0.1",
      "size": "S"
     },
@@ -227,8 +227,8 @@
     {
      "feature": "Bytes",
      "gt": "fmt_bytes()",
-     "status": "missing",
-     "note": "kB, MB, KiB, MiB.",
+     "status": "done",
+     "note": "fmtBytes: kB, MB (decimal) or KiB, MiB (binary).",
      "plan": "0.1",
      "size": "S"
     },
@@ -241,8 +241,8 @@
     {
      "feature": "Index letters, spelled numbers",
      "gt": "fmt_index(), fmt_spelled_num()",
-     "status": "missing",
-     "note": "a, b, c ... aa; \"one\" to \"one hundred\" (English).",
+     "status": "done",
+     "note": "fmtIndex (repeat or excel), fmtSpelledNum (English, zero to one hundred).",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -258,16 +258,16 @@
     {
      "feature": "Times and datetimes",
      "gt": "fmt_time(), fmt_datetime()",
-     "status": "missing",
-     "note": "Same machinery as dates.",
+     "status": "done",
+     "note": "fmtTime, fmtDatetime, with named time styles; no time zones.",
      "plan": "0.1",
      "size": "S"
     },
     {
      "feature": "Durations",
      "gt": "fmt_duration()",
-     "status": "missing",
-     "note": "\"2h 5m\", in several styles.",
+     "status": "done",
+     "note": "fmtDuration: narrow, wide, colon-sep and iso styles, from any input unit.",
      "plan": "0.1",
      "size": "S"
     },
@@ -275,7 +275,7 @@
      "feature": "Booleans",
      "gt": "fmt_tf()",
      "status": "done",
-     "note": "Two symbols or words; an html option is still to come (BACKLOG).",
+     "note": "fmtTf with gt's ten styles, naText, colors and html.",
      "plan": "0.1",
      "size": "S"
     },
@@ -305,8 +305,8 @@
     {
      "feature": "URLs and emails",
      "gt": "fmt_url(), fmt_email()",
-     "status": "missing",
-     "note": "Links in cells, as text or buttons.",
+     "status": "done",
+     "note": "fmtUrl, fmtEmail: links or buttons; Markdown links in cells are read.",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -323,8 +323,8 @@
     {
      "feature": "Flags",
      "gt": "fmt_flag()",
-     "status": "missing",
-     "note": "As emoji (regional indicators): nothing to load, works in every renderer.",
+     "status": "done",
+     "note": "fmtFlag: two-letter codes as emoji (regional indicators), nothing to load.",
      "plan": "0.1",
      "size": "S"
     },
@@ -370,8 +370,8 @@
     {
      "feature": "Formats for single values",
      "gt": "vec_fmt_*(), vals.fmt_*()",
-     "status": "partial",
-     "note": "formatNumber, formatPercent, formatCurrency, formatScientific, formatRoman, formatDate, formatCompact; the others come with their fmt verb.",
+     "status": "done",
+     "note": "A public formatX for every format: formatEngineering, formatBytes, formatDuration, formatFlag, ...",
      "plan": "0.1",
      "size": "S"
     },
@@ -399,16 +399,16 @@
     {
      "feature": "Small, large and given values",
      "gt": "sub_small_vals(), sub_large_vals(), sub_values()",
-     "status": "missing",
-     "note": "\"<0.01\", \">=1e6\", or any value to a text.",
+     "status": "done",
+     "note": "subSmallVals, subLargeVals, subValues(values or a proc).",
      "plan": "0.1",
      "size": "S"
     },
     {
      "feature": "Text transforms",
      "gt": "text_transform(), text_replace(), text_case_match(), text_case_when()",
-     "status": "missing",
-     "note": "A proc over the cell text, or a plain text replaced (no regex: the core stays free of PCRE).",
+     "status": "done",
+     "note": "textTransform(proc, locations), textReplace (plain text), textCaseMatch; textCaseWhen is a proc with case.",
      "plan": "0.1",
      "size": "S"
     }
@@ -428,8 +428,8 @@
     {
      "feature": "Labels from a function",
      "gt": "cols_label_with()",
-     "status": "missing",
-     "note": "A proc over every label.",
+     "status": "done",
+     "note": "colsLabelWith(columns, proc).",
      "plan": "0.1",
      "size": "S"
     },
@@ -471,8 +471,8 @@
     {
      "feature": "Move to end, reorder",
      "gt": "cols_move_to_end(), cols_reorder()",
-     "status": "missing",
-     "note": "",
+     "status": "done",
+     "note": "colsMoveToEnd; colsReorder sorts the given columns in their places.",
      "plan": "0.1",
      "size": "S"
     },
@@ -527,8 +527,8 @@
     {
      "feature": "Order of rows and groups",
      "gt": "row_order(), row_group_order()",
-     "status": "missing",
-     "note": "Groups show in the order they are made today.",
+     "status": "done",
+     "note": "rowOrder(columns, reverse), rowGroupOrder(groups).",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -549,8 +549,8 @@
     {
      "feature": "Any CSS",
      "gt": "style.css()",
-     "status": "missing",
-     "note": "A raw CSS declaration at a location.",
+     "status": "done",
+     "note": "style.css(\"declarations\").",
      "plan": "0.1",
      "size": "S",
      "where": "Python"
@@ -558,8 +558,8 @@
     {
      "feature": "Locations",
      "gt": "cells_title(), cells_body(), cells_stub(), ...",
-     "status": "partial",
-     "note": "title, subtitle, stubhead, column labels, spanners, stub, row groups, body, source notes, footnotes; header and column header as a whole are missing, summary ones come with summary rows.",
+     "status": "done",
+     "note": "Every location of Great Tables but the summary ones (with summary rows, 0.2): loc.header, loc.columnHeader, loc.footer are new.",
      "plan": "0.1",
      "size": "S"
     },
@@ -601,24 +601,24 @@
     {
      "feature": "Padding, outline, lines",
      "gt": "opt_vertical_padding(), opt_horizontal_padding(), opt_table_outline(), opt_table_lines()",
-     "status": "missing",
-     "note": "Shortcuts over options that exist or are cheap.",
+     "status": "done",
+     "note": "optVerticalPadding, optHorizontalPadding, optTableOutline, optTableLines.",
      "plan": "0.1",
      "size": "S"
     },
     {
      "feature": "Footnote marks",
      "gt": "opt_footnote_marks(), opt_footnote_spec(), opt_footnote_order()",
-     "status": "partial",
-     "note": "Marks set by the footnotesMarks option; no verb, no spec of where the mark goes.",
+     "status": "done",
+     "note": "optFootnoteMarks (names or your own), optFootnoteSpec, optFootnoteOrder.",
      "plan": "0.1",
      "size": "S"
     },
     {
      "feature": "Extra CSS",
      "gt": "opt_css()",
-     "status": "partial",
-     "note": "The extraCss option; no verb yet.",
+     "status": "done",
+     "note": "optCss(css, add), scoped to the table.",
      "plan": "0.1",
      "size": "S"
     },
@@ -710,8 +710,8 @@
     {
      "feature": "Text helpers",
      "gt": "md(), html()",
-     "status": "partial",
-     "note": "md(); html() is missing.",
+     "status": "done",
+     "note": "md() and html().",
      "plan": "0.1",
      "size": "S"
     },

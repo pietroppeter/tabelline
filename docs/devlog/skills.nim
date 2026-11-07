@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 H | Skills, from the beginning | What an agent skill is, how it differs from AGENTS.md and llms.txt, where skills live in an open source project, who does them well (Posit, Matt Pocock, Anthropic, planetis), how they work from the phone, how to tell whether one helps, and what tabelline and Operetta could do with them.
+## devlog: 07 Nov 2026 I | Skills, from the beginning | What an agent skill is, how it differs from AGENTS.md and llms.txt, where skills live in an open source project, who does them well (Posit, Matt Pocock, Anthropic, planetis), how they work from the phone, how to tell whether one helps, and what tabelline and Operetta could do with them.
 ## A dated post: an overview of skills as they were on 7 November 2026, written for tabelline 0.1.
 ## Sources are linked where they are used; pages that could not be read are said so.
 import std/[os, strutils, strformat, algorithm]
@@ -70,10 +70,10 @@ block:
   let rows = @[
     N(what: "**AGENTS.md**", isa: "the house rules of a repository", loaded: "always, at the start of every session",
       example: "tabelline's AGENTS.md: specs first, one PR per change, previews"),
-    N(what: "**skill**", isa: "a procedure or a body of knowledge, in a folder", loaded: "by the agent, when a task matches its description",
-      example: "openspec-propose: how to write a change"),
     N(what: "**slash command**", isa: "a prompt you call by name", loaded: "by you, when you type it",
       example: "/opsx:propose"),
+    N(what: "**skill**", isa: "a procedure or a body of knowledge, in a folder", loaded: "by the agent, when a task matches its description",
+      example: "openspec-propose: how to write a change"),
     N(what: "**llms.txt**", isa: "a library's docs, in one text file for any language model", loaded: "fetched when someone points the model at it",
       example: "Great Tables' llms.txt and llms-full.txt"),
     N(what: "**MCP server**", isa: "tools the agent can call: a program, not text", loaded: "always available, run when called",
@@ -99,10 +99,18 @@ twice.
 """
 
 block:
-  let t = tabella(installed, rownameCol = "name", groupnameCol = "kind"):
-    tabHeader "OpenSpec in this repository", ".claude/skills/ and .claude/commands/opsx/"
-    colsLabel {"kb": "size"}
-    fmtNumber "kb", decimals = 1, pattern = "{x} KB"
+  # the same six workflows, as a skill (the agent loads it) and as a command (you type it)
+  var rows: seq[tuple[workflow: string, skill, command: float]]
+  for x in installed:
+    if x.kind == "command":
+      var row = (workflow: x.name.replace("/opsx:", ""), skill: 0.0, command: x.kb)
+      for y in installed:
+        if y.kind == "skill" and y.name.startsWith("openspec-" & row.workflow): row.skill = y.kb
+      rows.add row
+  let t = tabella(rows, rownameCol = "workflow"):
+    tabHeader "OpenSpec in this repository", "each workflow twice: a skill and a command"
+    colsLabel {"skill": md("skill<br>`.claude/skills/`"), "command": md("command<br>`/opsx:…`")}
+    fmtNumber ["skill", "command"], decimals = 1, pattern = "{x} KB"
     tabSourceNote md("Read from disk when this page was built. Written by `openspec init` (OpenSpec 1.16), MIT.")
   nbTable t
 

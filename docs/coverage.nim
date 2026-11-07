@@ -100,10 +100,11 @@ block:
 nbText: """
 ### A bigger 0.1: the basics, while they are cheap
 
-0.1.0 is not tagged yet, so it can still grow. These are the groups that take hours each, most
-of them a verb over machinery that is already there (formats, substitutions, options, locations).
-With them, 0.1 has every basic of gt except the ones that need real work: summary rows and merged
-columns, which open 0.2.
+0.1.0 was not tagged yet, so it could still grow. These are the groups that took hours each, most
+of them a verb over machinery that was already there (formats, substitutions, options, locations),
+each one an OpenSpec change. With them, 0.1 has every basic of gt except the ones that need real
+work: summary rows and merged columns, which open 0.2. How they were built is in the devlog post
+[Designing tabelline 0.1](../devlog/designing-0-1/).
 """
 
 block:
@@ -112,7 +113,7 @@ block:
   let rows = items.filterIt(it.plan == "0.1").mapIt(Basic(area: it.area,
     feature: &"**{it.feature}**<br>`" & it.gt.replace(", ", "` `") & "`<br>" & it.note))
   let t = tabella(rows, groupnameCol = "area"):
-    tabHeader "Proposed for 0.1", &"{rows.len} small groups, each a few hours"
+    tabHeader "Built for 0.1", &"{rows.len} small groups, each a few hours"
     colsLabel {"feature": "group, gt names, what it is"}
     fmtMarkdown "feature"
     optQuaderno()
@@ -133,7 +134,8 @@ block:
     var feat = &"**{x.feature}**<br>`" & x.gt.replace(", ", "` `") & "`" & only
     if x.note.len > 0: feat.add "<br>" & x.note
     rows.add Row(area: x.area, feature: feat, now: labels[x.status],
-                 plan: (if x.plan.len > 0: x.plan & " · " & x.size else: ""))
+                 plan: (if x.plan.len > 0 and x.status != "done": x.plan & " · " & x.size
+                        elif x.plan.len > 0: "in " & x.plan else: ""))
   var t = tabella(rows, groupnameCol = "area"):
     tabHeader "gt and Great Tables, group by group", "and where tabelline stands"
     colsLabel {"feature": "feature group, gt names, notes", "now": "today", "plan": "planned"}

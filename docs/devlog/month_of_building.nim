@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 F | A month of building, as an operetta | Seven weeks of open source made with Claude, told in seven acts: what happened, one moment from each, and the parts of a way of working that grew along the way. The first use of tabelline on real data.
+## devlog: 07 Nov 2026 G | A month of building, as an operetta | Seven weeks of open source made with Claude, told in seven acts: what happened, one moment from each, and the parts of a way of working that grew along the way. The first use of tabelline on real data.
 ## A dated post: it tells the month as it was on 7 November 2026, and is not updated afterwards.
 ## The data and the selection are in docs/mese.nim; the raw pull requests in devlog/data/.
 import std/[os, strutils, strformat, tables]
@@ -194,7 +194,7 @@ block:
     Gap(what: "No count or group-by",
         how: "Expected: tabelline is not a data frame library. A `CountTable` did the job; with nanuq it would be one line."),
     Gap(what: "Small Markdown, no HTML",
-        how: "`fmtMarkdown` knows `<br>` but escapes any other tag (a `<small>` showed as text), and turns `~` and `^` into sub- and superscripts, so `~50 PRs` would surprise. An `html()` cell format would help."),
+        how: "`fmtMarkdown` knows `<br>` but escapes any other tag (a `<small>` showed as text); an `html()` cell format would help. It also turned `~` and `^` into sub- and superscripts even with a space inside: fixed in 0.1 (#10)."),
     Gap(what: "Markdown in a group label",
         how: "Row group labels come from the data as plain text; `fmtMarkdown` reaches cells, not groups, so act names stay plain."),
     Gap(what: "No nanoplot for single values",
@@ -208,5 +208,31 @@ block:
     fmtMarkdown "how"
     colsWidth {"what": "30%"}
   nbTable t
+
+nbText: """
+## How this post is built
+
+The page is a nimib notebook, `docs/devlog/month_of_building.nim`, built with the others by
+`nim r -d:release docs/all.nim`. Its data comes in three layers:
+
+- **The raw data** is `docs/devlog/data/month-prs.tsv`: one line per pull request or issue that
+  Pietro opened between 20 September and 7 November, with its date, repository, number, state
+  and title. It comes from GitHub's search API (`author:pietroppeter`, once with `is:pr` and
+  once with `is:issue`). Search also returns private repositories, so each repository's
+  visibility was checked and the private ones were dropped before the file was written.
+- **The selection** is `docs/mese.nim`, written by hand: the seven acts (name, dates, story, one
+  moment, the repositories that belong to it) and the nineteen parts (what each is, and the
+  pull request where it first appears). `actOf` puts every pull request in an act: by its
+  repository when that belongs to one act, by its date otherwise.
+- **The tables** are tabelline: each `tabella(rows, ...)` call takes a `seq` of Nim objects or
+  tuples, one field per column. `rownameCol` makes the stub, `groupnameCol` the row groups,
+  and `fmtMarkdown` turns `**bold**`, links and `<br>` in the cells into HTML. The bars are
+  `fmtBar`, coloured with the page's own CSS variables. `tabella` is a macro: it makes the table
+  with `initTabella`, then reads its indented body one line at a time, so that `tabHeader
+  "Title"` becomes `t = t.tabHeader("Title")`. The rest is plain Nim: the verbs are procs.
+
+Nothing is fetched while the page is built: the TSV is in the repository, so the page builds
+offline and the same way every time.
+"""
 
 nbSave

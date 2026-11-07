@@ -12,28 +12,22 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Summary rows** (M, *in progress*: `add-summary-rows`). `summaryRows`, `grandSummaryRows`.
 - **Column merges** (M). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
   (value ± error), `colsMergeRange`, `colsMergeNPct`.
-- **Text transforms** (S). `textTransform(loc, proc)`, `textCase`, `textReplace`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
 - **Stub indent and multi-column stubs** (S). `tabStubIndent`, `rownameCol` with several columns.
-- **Rows** (S). `rowsAdd`, `rowGroupOrder`, hidden rows.
+- **Rows** (S). `rowsAdd`, hidden rows.
 
 ## Formats
 
-- **Gaps from the month post** (S each, 0.1 use-it thread): an `html()` cell format (fmtMarkdown
-  escapes every tag but `<br>`, and turns `~` and `^` into sub/superscripts); Markdown in row
-  group labels; a TSV or `quote = ""` option for `readCsv` (a `"` inside a field is taken as
-  quoting and dropped); document that colours such as `fmtBar(color = "var(--x)")` can use the
-  page's CSS variables.
+- **Gaps from the month post** (S each, 0.1 use-it thread): an `html()` cell format
+  (`fmtMarkdown` escapes every tag but `<br>`); Markdown in row group labels; a TSV or
+  `quote = ""` option for `readCsv` (a `"` inside a field is taken as quoting and dropped);
+  document that colours such as `fmtBar(color = "var(--x)")` can use the page's CSS variables.
 
-- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtDuration`,
-  `fmtBytes`, `fmtFraction`, `fmtPartsper`, `fmtEngineering`, `fmtNumberSi`, `fmtDatetime`,
-  `fmtTime`, `fmtUrl`, `fmtEmail`, `fmtIndex`, `fmtSpelledNum`.
-- **Images, flags and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
-  `fmtFlag`, `fmtIcon`, without loading anything remote. Also `fmtTf(..., html = true)`:
-  `fmtTf` escapes its texts, so Isotype-style tables (an SVG symbol per boolean, as in
-  diagrammari's series part 2) need a custom `fmt` on `RenderContext` today.
+- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
+- **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
+  `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
 - **Locales** (M). Month and day names and number marks for more locales, from CLDR data
   generated into a Nim module at compile time.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
@@ -96,3 +90,17 @@ Rough size: S (hours), M (a day or two), L (more).
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.
 - **A Table Contest entry** (M). For the next Posit Table Contest.
+
+## From the tabelline book (0.1 port thread, book/gaps.md in PR #11)
+
+- **Selectors** (S-M). Columns by position (also negative) and by a proc; combining rules
+  (`|`, `&`, exclude); `matches()`; negative row indices; `loc.body(mask = ...)`; `loc.stub` by row
+  label; `loc.rowGroups` by row index or condition.
+- **Stub and spanners** (S). A `tabStub` verb; `tabSpanner` gathering its columns in the given
+  order; the spanner's fill covering the whole cell.
+- **Colours** (S). All CSS colour names (only 17 today: `rebeccapurple`, `bisque` raise
+  ValueError); `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
+  `dataColor` defaults (palette, NA grey); white text on dark option backgrounds (stub, heading by
+  colour name).
+- **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
+- **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.

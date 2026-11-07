@@ -26,7 +26,8 @@ true true true
 ### Requirement: Data from Nim values
 `toTableData` (and `tabella` directly) SHALL take a sequence of objects or named tuples, one
 column per field in field order. `tableData:` SHALL take one `name: [values]` line per column,
-converting each value on its own. `parseCsv` and `readCsv` SHALL read a CSV text with a header,
+converting each value on its own; a name MAY have dots (`size.mass: [...]`, read whole, as
+`tabSpannerDelim` wants) or be quoted (`` `mass kg` ``, `"mass (kg)"`). `parseCsv` and `readCsv` SHALL read a CSV text with a header,
 inferring ints, floats, bools and missing values (empty, `NA`), and a column mixing ints and
 floats SHALL be a float column.
 

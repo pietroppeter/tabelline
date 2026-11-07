@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 G | Operetta, a first sketch | A name for the way of working that grew in a month of building with Claude: parts a project picks by what it is and how far along it is, and adds to as it grows. Five groups, seven kinds of project, five stages, and what is still open.
+## devlog: 07 Nov 2026 H | Operetta, a first sketch | A name for the way of working that grew in a month of building with Claude: parts a project picks by what it is and how far along it is, and adds to as it grows. Five groups, seven kinds of project, five stages, and what is still open.
 ## A dated post: the first proposal of Operetta, as it was on 7 November 2026. Operetta may move
 ## to a repository of its own; this post stays as its first sketch.
 import std/[os, strutils, strformat]
@@ -20,10 +20,12 @@ nbText: """
 <p class="lede">A name for the way of working that grew in a month of building with Claude: parts
 that a project picks by what it is and how far along it is, and adds to as it grows.</p>
 
-The [previous post](../month-of-building/) found nineteen parts of a way of working, each born
-in one project and copied by hand into the next. Copying worked, but every copy drifted a
-little, and every new project started by asking *which of these do I need?* Giving the whole a
-name makes it something to pick from, and to improve in one place.
+Operetta is a way to make an open source library with an AI agent. It is not a tool and not a
+template: it is a list of parts (a setup script, an explainer, specs, a devlog, a coverage map,
+skills, ...), and a project uses the ones it needs. Each part is small, and each one was
+already made once, in a project of the last month (the [month post](../month-of-building/)
+says where). Until now they were copied by hand from one repo to the next, and every copy
+drifted a little; with a name they become something to pick from, and to improve in one place.
 
 The name is **Operetta**. It came with Opus 5.5, the model the month was built with: a small
 opus. And an operetta is a light, modular show, with songs between spoken parts; a company
@@ -90,7 +92,7 @@ grow, and the subject of the [third post](../skills/).
 ## Pick by kind of project
 
 Not every project needs every part. Here is what each kind of project from the month picked,
-and what it could skip:
+and what it could skip, from the one that needs least to the one that needs most:
 """
 
 block:
@@ -99,16 +101,16 @@ block:
   let rows = @[
     Kind(kind: "A sketch", examples: "the diagrams history, declarative dragging before zogyn",
          picks: "an artifact page: Prove only", skips: "everything else, until the idea holds"),
-    Kind(kind: "A small new library", examples: "zogyn, diagrammari",
-         picks: "Scena, an explainer, a devlog, specs with runnable examples", skips: "Repertorio: there is no reference to cover"),
-    Kind(kind: "A port of a reference", examples: "nanuq (Polars), tabelline (gt and Great Tables)",
-         picks: "everything: the coverage map and three threads per release carry it", skips: "nothing; benchmarks when speed is a claim"),
-    Kind(kind: "An app or a game", examples: "parloku, cadero",
-         picks: "Scena, an explainer, a look of its own, specs as scenarios that run (parloku's drags)", skips: "coverage, book, releases"),
     Kind(kind: "An experiment", examples: "cicak's hot code reloading, nanuqy",
          picks: "Scena, a devlog, benchmarks", skips: "specs, until it becomes a tool"),
+    Kind(kind: "An app or a game", examples: "parloku, cadero",
+         picks: "Scena, an explainer, a look of its own, specs as scenarios that run (parloku's drags)", skips: "coverage, book, releases"),
+    Kind(kind: "A small new library", examples: "zogyn, diagrammari",
+         picks: "Scena, an explainer, a devlog, specs with runnable examples", skips: "Repertorio: there is no reference to cover"),
     Kind(kind: "A talk", examples: "Sailing Seas of Scientific Nim",
          picks: "Scena, specs with a schema of its own (abstract, outline, islands), a talk log", skips: "releases, coverage"),
+    Kind(kind: "A port of a reference", examples: "nanuq (Polars), tabelline (gt and Great Tables)",
+         picks: "everything: the coverage map and three threads per release carry it", skips: "nothing; benchmarks when speed is a claim"),
     Kind(kind: "A library with users", examples: "nimib",
          picks: "what it has, plus the Suggeritore: skills and an llms.txt for its users", skips: "parts a mature project already does another way"),
   ]

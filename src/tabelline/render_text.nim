@@ -18,7 +18,7 @@ proc toText*(t: Tabella): string =
   ## The table drawn with box characters, like a dataframe printed at the console, but with the
   ## formats, the stub, the groups and the notes.
   let b = t.build(rcText)
-  let m = t.options.footnotesMarks
+  let m = t.options
   var headers: seq[string]
   var aligns: seq[Align]
   if t.hasStub:
@@ -66,6 +66,7 @@ proc toText*(t: Tabella): string =
   func rule(l, mid, r: string): string =
     l & widths.mapIt("─".repeat(it + 2)).join(mid) & r
   var lines: seq[string]
+  if not t.caption.isEmpty: lines.add t.caption.renderText(rcText)
   let title = t.title.renderText(rcText)
   if title.len > 0: lines.add pad(title & b.marksText("title", m), inner + 4, alCenter).strip(leading = false)
   let subtitle = t.subtitle.renderText(rcText)
@@ -88,8 +89,7 @@ proc toText*(t: Tabella): string =
       lines.add rule("├", "┼", "┤").replace("─", "┄")
     lines.add "│" & toSeq(0 ..< r.len).mapIt(" " & pad(r[it], widths[it], aligns[it]) & " ").join("│") & "│"
   lines.add rule("└", "┴", "┘")
-  for k, n in b.notes: lines.add markText(k + 1, m) & " " & n
-  for n in b.plainNotes: lines.add n
+  for (k, n) in b.footer: lines.add (if k > 0: footMarkText(k, m) & " " else: "") & n
   for n in t.sourceNotes: lines.add n.renderText(rcText)
   discard off
   lines.join("\n")
@@ -103,8 +103,9 @@ proc toMarkdown*(t: Tabella): string =
   ## A GitHub-flavoured Markdown table, with the title above and the notes below. Spanners and
   ## group headings, which pipe tables cannot hold, become a line of text.
   let b = t.build(rcText)
-  let m = t.options.footnotesMarks
+  let m = t.options
   var lines: seq[string]
+  if not t.caption.isEmpty: lines.add @["*" & t.caption.renderText(rcText) & "*", ""]
   let title = t.title.renderText(rcText)
   if title.len > 0: lines.add "**" & title & "**" & b.marksText("title", m)
   let subtitle = t.subtitle.renderText(rcText)
@@ -131,7 +132,6 @@ proc toMarkdown*(t: Tabella): string =
       for j, c in b.columns: cells.add mdEscape(r.cells[j] & b.marksText(cellKey(r.index, c.name), m))
       lines.add "| " & cells.join(" | ") & " |"
   if b.notes.len > 0 or b.plainNotes.len > 0 or t.sourceNotes.len > 0: lines.add ""
-  for k, n in b.notes: lines.add "<sup>" & markText(k + 1, m) & "</sup> " & n & "  "
-  for n in b.plainNotes: lines.add n & "  "
+  for (k, n) in b.footer: lines.add (if k > 0: "<sup>" & footMarkText(k, m) & "</sup> " else: "") & n & "  "
   for n in t.sourceNotes: lines.add n.renderText(rcText) & "  "
   lines.join("\n")
