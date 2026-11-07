@@ -553,8 +553,9 @@ nbTable t
 nbSave
 ```
 
-Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme (this
-page's theme, *quaderno*, is in the repository as `docs/quaderno.nim`). And because `echo` draws
+Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme. (This
+page has two looks, *Munari* and *quaderno*, in `docs/munari.nim` and `docs/quaderno.nim`; the
+Munari look dresses the tables made with `optQuaderno()` again, on purpose.) And because `echo` draws
 a text table, a table printed in `nbCode` shows up in the output, as above.
 
 ## What comes next

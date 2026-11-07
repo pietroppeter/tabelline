@@ -9,8 +9,8 @@
 ## Hyperlegible for the text, both OFL) are inlined from `docs/assets/fonts`, and Nim code is
 ## highlighted at build time by nimib. So a page is one standalone HTML file.
 ##
-## A second look, *Munari* (`docs/munari.nim`), is one click away in the header of every page;
-## the quaderno is the default and the reader's choice is remembered.
+## A second look, *Munari* (`docs/munari.nim`), is the default since 0.1; the quaderno is one click
+## away in the header of every page, and the reader's choice is remembered.
 ##
 ## Usage, right after `nbInit`:
 ##   nb.useQuaderno(nome = "tabelline", materia = "...", classe = "...", lede = "...")

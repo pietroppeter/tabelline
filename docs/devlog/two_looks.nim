@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 | Two looks: the quaderno and Munari | The pages get a second look, after Bruno Munari, one switch away in every header; the quaderno stays the default and your choice is remembered.
+## devlog: 07 Nov 2026 | Two looks: the quaderno and Munari | The pages get a second look, after Bruno Munari, the new default; the quaderno is one switch away in every header, and your choice is remembered.
 ## A dated post: it tells how the second look was made, and is not updated afterwards.
 import std/os
 import nimib except md
@@ -17,12 +17,13 @@ nbText: """
 # Two looks: the quaderno and Munari
 
 <p class="lede">The pages get a second look, after Bruno Munari, one switch away in every
-header; the quaderno stays the default and your choice is remembered.</p>
+header: Munari is the new default, and your choice is remembered.</p>
 
 The quaderno look (squared paper, a red margin, handwriting, tape and sticky notes) is fun, and
-not for everybody: a reader found it too much. So instead of replacing it, every page now has
-two looks, and a switch at the top right, **quaderno | Munari**. Try it now: the page changes in
-place, and the next page you open keeps the look you picked.
+not for everybody: a reader found it too much. So every page now has two looks, and a switch at
+the top right, **Munari | quaderno**. Munari is the default from 0.1; the quaderno is one tap
+away. Try it now: the page changes in place, and the next page you open keeps the look you
+picked.
 
 ## Why Munari
 
@@ -61,7 +62,7 @@ nbCode:
   ]
   let lookTable = tabella(looks, rownameCol = "part"):
     tabHeader "One page, two looks", "what each part of a page becomes"
-    colsLabel {"quaderno": "quaderno (default)", "munari": "Munari"}
+    colsLabel {"quaderno": "quaderno", "munari": "Munari (default)"}
     colsWidth {"quaderno": "40%", "munari": "45%"}
     optQuaderno()
 nbTable lookTable
@@ -77,13 +78,14 @@ nbText: """
 ## How it works
 
 - **Both looks are in every page.** The Munari rules live in `docs/munari.nim`, all under
-  `html[data-tema="munari"]`, so they change nothing until the switch is on. The fonts are inlined
+  `html[data-tema="munari"]`, laid over the quaderno rules. The fonts are inlined
   as before (Jost adds about 40 kB), so a page is still one standalone file that loads nothing.
 - **The choice is remembered** in the browser (`localStorage`, key `tabelline-tema`), and read by
   a few lines in the `<head>` before anything is drawn, so there is no flash of the other look.
 - **A link can pick the look:** `?tema=munari` or `?tema=quaderno` at the end of any page's
   address, for example to share a page in the Munari look. It is remembered as well.
-- **The quaderno is the default**: with nothing remembered, a page opens as a quaderno.
+- **Munari is the default**: with nothing remembered, a page opens in the Munari look. Without
+  JavaScript, it opens as a quaderno, the look the Munari rules are laid over.
 - **Tables made with `optQuaderno()`** are dressed again by the Munari look: no squares, black
   rules, the same font as the page. Today this overrides the table's own scoped CSS, which is a
   shortcut; the clean way is a table preset `optMunari()` in the library, with its spec, if the

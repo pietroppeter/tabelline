@@ -2,9 +2,6 @@
 
 ## Unreleased
 
-- Docs: a second look for the pages, after Bruno Munari, switched in every header and
-  remembered; the quaderno stays the default. Devlog post *Two looks*.
-
 ## 0.1.0 (7 Nov 2026)
 
 The first release: a proof of concept. The API will change.
@@ -22,3 +19,5 @@ The first release: a proof of concept. The API will change.
 - Docs: an "R or Python?" section and a note on `sink` in the explainer (#2); the devlog post
   *Tabellone: when a table becomes a grid* (#3); backlog ideas from using tabelline in
   diagrammari (#4).
+- Docs: a second look for the pages, after Bruno Munari, and the default; the quaderno is a
+  switch away in every header, and the choice is remembered. Devlog post *Two looks*. (#5)

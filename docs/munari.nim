@@ -1,6 +1,6 @@
 ## *Munari*: the second look of tabelline's pages, after Bruno Munari (1907-1998).
 ##
-## The quaderno stays the default. Munari is a switch away, in the header of every page, and the
+## Munari is the default look; the quaderno is a switch away, in the header of every page, and the
 ## choice is remembered (`localStorage`, key `tabelline-tema`); `?tema=munari` or `?tema=quaderno`
 ## in a link picks one too. Both looks are in every page, so a page is still one standalone file.
 ##
@@ -11,7 +11,9 @@
 ## notes in coloured paper with a round hole cut through, as in *Nella notte buia* (1956); and a
 ## page that a child could take apart.
 ##
-## Everything here is scoped by `html[data-tema="munari"]`; the quaderno rules are untouched.
+## Everything here is scoped by `html[data-tema="munari"]`, which a few lines in the `<head>` set
+## before the page is drawn unless the reader picked the quaderno; the quaderno rules are untouched
+## (without JavaScript a page shows as a quaderno).
 
 import std/[os, strformat, base64]
 
@@ -30,13 +32,14 @@ const temaHeadScript* = """<script>
   try {
     var q = new URLSearchParams(location.search).get('tema');
     if (q === 'munari' || q === 'quaderno') localStorage.setItem('tabelline-tema', q);
-    if ((q || localStorage.getItem('tabelline-tema')) === 'munari') document.documentElement.dataset.tema = 'munari';
-  } catch (e) {}
+    var t = q || localStorage.getItem('tabelline-tema');
+    document.documentElement.dataset.tema = (t === 'quaderno') ? 'quaderno' : 'munari';
+  } catch (e) { document.documentElement.dataset.tema = 'munari'; }
 })();
 </script>"""
 
 const temaSwitch* = """<div class="tema" role="group" aria-label="Look of the page">
-<button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button><button type="button" data-tema="munari" title="after Bruno Munari">Munari</button>
+<button type="button" data-tema="munari" title="after Bruno Munari">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
 </div>"""
 
 const forme* = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
@@ -54,7 +57,7 @@ const temaBodyScript* = """<script>
   }
   document.querySelectorAll('.tema button').forEach(function (b) {
     b.addEventListener('click', function () {
-      if (b.dataset.tema === 'munari') root.dataset.tema = 'munari'; else delete root.dataset.tema;
+      root.dataset.tema = b.dataset.tema;
       try { localStorage.setItem('tabelline-tema', b.dataset.tema); } catch (e) {}
       show();
     });
