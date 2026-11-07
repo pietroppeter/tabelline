@@ -253,6 +253,75 @@ func highlightNimFences(html: string): string =
     i = b + close.len
   result.add html[i .. ^1]
 
+
+const
+  pythonKeywords = ["and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else",
+    "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or",
+    "pass", "raise", "return", "try", "while", "with", "yield"]
+  rKeywords = ["if", "else", "for", "while", "repeat", "function", "return", "next", "break", "in",
+    "library", "require"]
+  otherLiterals = ["True", "False", "None", "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"]
+
+func highlightOther*(code, lang: string): string =
+  ## A small highlighter for the R and Python code that pages show but do not run: keywords,
+  ## strings, numbers, comments and function calls, with the same classes as the Nim code.
+  let keywords = if lang == "r": @rKeywords else: @pythonKeywords
+  func esc(s: string): string = s.multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"))
+  func span(cls, s: string): string = "<span class=\"hljs-" & cls & "\">" & esc(s) & "</span>"
+  var i = 0
+  while i < code.len:
+    let c = code[i]
+    if c == '#':
+      var j = i
+      while j < code.len and code[j] != '\n': inc j
+      result.add span("comment", code[i ..< j]); i = j
+    elif c in {'"', '\''}:
+      var j = i + 1
+      while j < code.len and code[j] != c and code[j] != '\n':
+        if code[j] == '\\': inc j
+        inc j
+      j = min(j + 1, code.len)
+      result.add span("string", code[i ..< j]); i = j
+    elif c in {'0'..'9'} and (i == 0 or code[i - 1] notin {'a'..'z', 'A'..'Z', '_', '.'}):
+      var j = i
+      while j < code.len and code[j] in {'0'..'9', '.', '_', 'e', 'E', 'x', 'L'}: inc j
+      result.add span("number", code[i ..< j]); i = j
+    elif c in {'a'..'z', 'A'..'Z', '_', '.'}:
+      var j = i
+      while j < code.len and code[j] in {'a'..'z', 'A'..'Z', '0'..'9', '_', '.'}: inc j
+      let w = code[i ..< j]
+      if w in keywords: result.add span("keyword", w)
+      elif w in otherLiterals: result.add span("literal", w)
+      elif j < code.len and code[j] == '(' and w.strip(chars = {'.'}).len > 0:
+        let lead = w.len - w.strip(leading = true, trailing = false, chars = {'.'}).len
+        result.add esc(w[0 ..< lead]) & span("built_in", w[lead .. ^1])
+      else: result.add esc(w)
+      i = j
+    elif c == '|' and i + 1 < code.len and code[i + 1] == '>':
+      result.add span("meta", "|>"); i += 2
+    else:
+      result.add esc($c); inc i
+
+func highlightOtherFences(html: string): string =
+  ## ```r and ```python fences in Markdown, highlighted with `highlightOther`.
+  result = html
+  for lang in ["r", "python"]:
+    let openTag = "<pre><code class=\"language-" & lang & "\">"
+    const close = "</code></pre>"
+    var res = ""
+    var i = 0
+    while true:
+      let a = result.find(openTag, i)
+      if a < 0: break
+      let b = result.find(close, a + openTag.len)
+      if b < 0: break
+      res.add result[i ..< a]
+      res.add "<pre><code class=\"nohighlight " & lang & "\">" &
+        highlightOther(unescapeHtml(result[a + openTag.len ..< b]).strip(leading = false, chars = {'\n'}), lang) & close
+      i = b + close.len
+    res.add result[i .. ^1]
+    result = res
+
 newNbBlock(NbIndice):
   title: string
   toHtml:
@@ -300,7 +369,7 @@ func tabsHtml*(panels: openArray[string]): string =
 
 func codeHtml*(code, lang: string): string =
   ## Code that is shown, not run (Python and R examples).
-  "<pre><code class=\"" & lang & "\">" & code.strip(chars = {'\n'}).multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;")) & "</code></pre>"
+  "<pre><code class=\"nohighlight " & lang & "\">" & highlightOther(code.strip(chars = {'\n'}), lang) & "</code></pre>"
 
 template nbTabs*(python, r: string, body: untyped) =
   ## The Nim blocks `body` adds (code that runs, and its output), in a 👑 Nim tab next to the
@@ -321,7 +390,7 @@ template nbNota*(text: string, color = "") =
 # ----------------------------------------------------------------------------------------- theme
 
 func quadernoText(blk: JsonNode, nb: Nb): string =
-  highlightNimFences(addHeadingIds(markdownToHtml(blk{"text"}.getStr)))
+  highlightOtherFences(highlightNimFences(addHeadingIds(markdownToHtml(blk{"text"}.getStr))))
 
 func quadernoHeader(blk: JsonNode, nb: Nb): string =
   let c = nb.doc.context

@@ -591,20 +591,95 @@ the languages that have the example.
 
 ## The Nim sugar
 
-Nothing in 0.1 needed a new macro. What made the verbs read well was Nim as it is:
-
-- **A verb per line.** Inside `tabella(data): body` each line is a verb applied to the table,
-  so `textTransform toUpperAscii, loc.stub()` needs no dots, no `|>` and no parentheses.
-- **Procs are values.** `toUpperAscii` from std/strutils is passed as it is, where R passes
-  `toupper` and Python a `lambda`; an anonymous proc works as well.
-- **Table constructors.** `textCaseMatch({"yes": "rings!"})` and `colsLabel({"mass": "Mass"})`
-  are Nim's `{key: value}` arrays of pairs, typed and in order.
-- **Dotted names, no quotes.** `tableData:` is a macro, so it sees the code before Nim checks
-  it: `size.mass: [...]` is a field access to Nim, and to the macro a column named "size.mass",
-  which is what `tabSpannerDelim` reads. Names with spaces go in quotes: `"mass (kg)": [...]`.
-- **Options checked when compiling.** `tabOptions(rowStriping = true)` is still the one macro
-  for options: a typo in a field name does not compile.
+Nothing in 0.1 needed a new macro. What makes the verbs read well is Nim as it is: eight
+things, one card each, with code that runs and what it makes. Swipe sideways.
 """
+
+var zuccheri: seq[string]
+var nZucchero = 0
+
+template zucchero(titolo, cosa: string, body: untyped) =
+  ## A card of the third gallery: one piece of Nim sugar, code that runs and what it makes.
+  inc nZucchero
+  let first = nb.blocks.len
+  block:
+    body
+  var inner = ""
+  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
+  nb.blocks.setLen(first)
+  zuccheri.add "<div class=\"scheda\"><div class=\"numero\">" & $nZucchero & " / 8</div><h3>" & titolo &
+    "</h3><p>" & cosa & "</p>" & inner & "</div>"
+
+zucchero "A verb per line", "Inside <code>tabella(data):</code> each line is a verb applied to the table: no dots, no <code>|&gt;</code>, no parentheses.":
+  nbCode:
+    let t = tabella(pianeti, rownameCol = "planet"):
+      tabHeader "Rocky planets"
+      fmtTf "rings", tfStyle = "yes-no"
+  nbTable t
+
+zucchero "Loops and ifs in the body", "The body is Nim code: a <code>for</code> or an <code>if</code> can hold verbs too.":
+  nbCode:
+    let compact = true
+    let t = tabella(pianeti):
+      for c in ["moons", "rings"]:
+        colsAlign alCenter, c
+      if compact:
+        optVerticalPadding 0.4
+  nbTable t
+
+zucchero "Objects straight in", "A seq of objects or named tuples is a table: one column per field.":
+  nbCode:
+    type Moon = object
+      name: string
+      km: float
+    let moons = @[
+      Moon(name: "Moon", km: 1737.4),
+      Moon(name: "Phobos", km: 11.3),
+      Moon(name: "Deimos", km: 6.2)]
+    let t = tabella(moons):
+      fmtNumber "km", decimals = 1
+  nbTable t
+
+zucchero "Dotted names, no quotes", "<code>tableData:</code> is a macro: it reads <code>size.mass</code> as a column name before Nim sees a field access.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars"]
+      size.mass: [5.97, 0.64]
+      size.radius: [6371, 3390]
+      "moons (n)": [1, 2]
+    let t = tabella(d, rownameCol = "planet"):
+      tabSpannerDelim()
+  nbTable t
+
+zucchero "Procs are values", "A proc from the standard library goes in as it is; an anonymous one works too.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsLabelWith capitalizeAscii
+      textTransform proc (s: string): string = s & "!", loc.body("planet", rows = [2])
+  nbTable t
+
+zucchero "Rows by condition", "<code>where</code> takes any Nim condition over the row <code>it</code>.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabStyle style.fill("#FFF3B0"), loc.body(rows = where(it["moons"] > 0))
+  nbTable t
+
+zucchero "Pairs in braces", "<code>{key: value}</code> is Nim's list of pairs: typed, in order, one argument.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsLabel {"planet": "Planet", "moons": "Moons", "rings": "Rings?"}
+      textCaseMatch {"true": "yes", "false": "no"}, locations = loc.body("rings")
+  nbTable t
+
+zucchero "Options checked when compiling", "<code>tabOptions</code> sets any option by name; a misspelt name does not compile.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabOptions(rowStriping = true)
+    echo compiles(t.tabOptions(rowStripping = true))
+  nbTable t
+
+nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"Nim sugar: swipe or scroll sideways\">" &
+  zuccheri.join("") & "</div>"
 
 nbNota("""
 **Still to do in this thread.** Open the release PR, which moves these lines of the changelog
