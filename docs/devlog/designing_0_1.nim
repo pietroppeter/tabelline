@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it was built.
+## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it is built.
 ## A dated post: it tells how 0.1 was designed and built, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
@@ -18,7 +18,7 @@ nbText: """
 
 <p class="lede">tabelline 0.1 from zero: what a table needs, from the data to the last
 style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim
-asked for something of its own; and how it was built.</p>
+asked for something of its own; and how it is built.</p>
 
 What is the least a library of tables has to do? This post answers with 0.1 itself, built up one
 idea at a time: the data first, then a table that shows it as it is, then everything that
@@ -767,8 +767,10 @@ the languages that have the example.
 
 ## The Nim sugar
 
-Nothing in 0.1 needed a new macro. What makes the verbs read well is Nim as it is: eight
-things, one card each, with code that runs and what it makes. Swipe sideways.
+tabelline has three macros, each where a proc could not do the job: `tabella(data):` with a
+body of verbs, `tableData:` for data written as columns, and `tabOptions` for options by name.
+The rest is Nim as it is. Eight things, one card each, with code that runs and what it makes.
+Swipe sideways.
 """
 
 var zuccheri: seq[string]
@@ -858,50 +860,71 @@ nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"Nim sugar: swipe
   zuccheri.join("") & "</div>"
 
 nbText: """
-## How they were built
+## How it is built
 
-0.1 came in two steps. The first version (#1) had the data, the table and its parts, eleven
-formats and bars, styles at locations and the options: enough to make whole tables. Then the
-[coverage map](../../coverage/) split gt and Great Tables into 85 feature groups and marked 24
-of them as cheap, because the machinery was already there; they filled in the steps above.
+The same nine steps, seen from inside. The whole core is plain Nim with only the standard
+library; nimib is needed only for `nbTable` and these pages.
 
-The coverage map was the backlog, and each of its rows became a change in `openspec/changes/`: a
-proposal (why, what, and the differences from gt and Great Tables), a requirement with a Nim
-example, and tasks. The example was written first, with its output left empty; then the code;
-then `nim r tools/specexamples.nim --update` wrote what the example prints, and that output was
-read line by line before it went into the spec. It is how the spelled numbers stopped at one
-hundred, and how `fmtIndex` showed that 42 is "PP" in gt's way of counting (A to Z, then AA, BB)
-and "AP" in a spreadsheet's (there is `indexAlgo = "excel"` for that).
+**1 · Data.** A `Value` is a variant object: missing, bool, int, float or string. A `TableData`
+is a list of named columns of values, all of the same length; it is a `ref`, so a table shares
+its data instead of copying it. `tableData:` is a macro that turns `name: [values]` lines into
+columns, and reads a name as Nim parses it: a plain word, `` `two words` ``, `"a string"`, or
+`size.mass`, which Nim sees as a field access and the macro joins back into one name. A seq of
+objects or tuples becomes columns with `fieldPairs`, at compile time; CSV is parsed by hand,
+quotes included.
 
-Most groups were a verb over machinery that was there: a format is a closure from a value to
-text, resolved against the data when the verb is called and run when the table is rendered; a
-substitution is the same closure that runs after the formats; a location is a list of keys
-(`"title"`, `"col:mass"`, `"cell:3:moons"`) that styles and footnotes attach to. Five groups
-needed something new:
-"""
+**2 · A table.** A `Tabella` is a plain value: the data and everything said about how to show
+it, kept as lists of rules (formats, substitutions, styles, transforms, footnotes). Every verb is
+a proc that takes the table as `sink` and returns the new one, so a chain of verbs moves one
+value along and copies nothing. `tabella(data): body` is a macro: it rewrites each line of the
+body that is a call into `t = verb(t, ...)`, and walks into `for`, `if` and `block`, so the
+body can hold any Nim. Nothing is computed until the table is rendered.
 
-block:
-  type N = object
-    what, why: string
-  let rows = @[
-    N(what: "**lines** as options", why: "left and right borders, border styles and vertical lines became options, so `optTableOutline` and `optTableLines` are presets like the others"),
-    N(what: "**marks with a look**", why: "`optFootnoteSpec` reads gt's little language: `^` raised, `i` italic, `b` bold, `(` and `[` around"),
-    N(what: "a **footer** with an order", why: "the footer is a list of (mark, note) that `optFootnoteOrder` arranges: marked first, last, or as added"),
-    N(what: "a **row order** in the spec (`rowOrder`)", why: "`rowOrder` sorts what is shown, not the data, so the formats and footnotes still point at the rows they were given"),
-    N(what: "**text transforms** that run last", why: "`textTransform` on cells gets the text after formats and substitutions, as in gt; on labels it changes the label when it is called"),
-  ]
-  let t = tabella(rows):
-    tabHeader "What was new machinery"
-    colsLabel {"what": "", "why": ""}
-    fmtMarkdown everything()
-    colsWidth {"what": "34%"}
-    tabOptions(tableWidth = "100%", tableFontSize = "14px")
-  nbTable t
+**3 · Parts.** The header, the stub, row groups, spanners and notes are fields of the table.
+Every place you can point at has a key: `"title"`, `"col:moons"`, `"spanner:size"`,
+`"group:giant"`, `"cell:3:rings"`. A footnote is a text and where it applies; at render time
+that becomes keys, and marks are numbered in the order the keys are read on the page.
 
-nbText: """
-The others were small, and some found small bugs on the way: `tableData:` cut a quoted name
-like `` `size.mass` `` at the dot (now it reads `size.mass:` with no quotes at all, as in the
-sugar above), and the "standard" footnote marks were six symbols where gt has four (the six are now `"extended"`, as in gt).
+**4 · Columns and 5 · Rows.** The boxhead is a list of columns in display order, each with its
+label, alignment, width and whether it is hidden: moving a column is moving an entry of that
+list. Rows are never moved in the data: `rowOrder` keeps the order in which rows are shown, so
+a format or a footnote that named row 3 still means the same row after sorting.
+
+**6 · Formats.** A format is a closure from a value to text (`FormatFn`), for some columns and
+rows. The verb resolves which columns and rows it covers when it is called, so a misspelt column
+fails right there; the closure runs only when the table is rendered, once for HTML and once for
+text, so every renderer shows the same numbers. The last format that covers a cell wins. The
+value functions (`formatBytes`, ...) are the same closures, called on one value.
+
+**7 · Text.** Substitutions are formats that run after the formats and see missing values too.
+Text transforms run after both, on the text, so they have the last word. Labels and notes are a
+`Text`: plain (escaped), `md()` (a small Markdown parser for inline marks, no dependency) or
+`html()` (used as it is).
+
+**8 · Options.** `TabOptions` is one object with a field for every gt option, each with gt's
+default. `tabOptions` is the third macro: it turns `rowStriping = true` into an assignment to
+that field, so a misspelt option does not compile. The `opt*` verbs are presets that set
+several fields at once.
+
+**9 · Styles.** A style is a list of CSS declarations at a location, which becomes a set of
+keys like the footnotes. Styles at a whole part (the header) are applied before styles at one
+of its parts (the title), so the more precise one wins. `dataColor` is a style per cell,
+computed from the values.
+
+**Rendering.** `build` turns a table into a `Built`: the visible columns, the groups with their
+rows in order, every cell already formatted, the marks, the footer and the CSS of each key.
+The HTML, text and Markdown renderers only lay a `Built` out, so they cannot disagree. The HTML
+gets an id from a hash of its content, and its CSS is scoped to that id, so two tables on one
+page never touch each other.
+
+**In phases.** 0.1 came in two steps. The first version (#1) built the core: data, the table,
+parts, eleven formats and bars, styles and options. Then the [coverage map](../../coverage/)
+split gt and Great Tables into 85 feature groups, and the 24 that the core made cheap became
+one OpenSpec change each (#10): a proposal with its differences from gt and Great Tables, a
+requirement with an example that runs, and its tasks. The example was written first and its
+output read line by line before it went into the spec; that is how the spelled numbers stopped
+at one hundred, and how `fmtIndex` showed that 42 is "PP" in gt's way of counting and "AP" in a
+spreadsheet's (`indexAlgo = "excel"`).
 """
 
 nbNota("""
