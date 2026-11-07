@@ -44,8 +44,12 @@ Rough size: S (hours), M (a day or two), L (more).
 
 - **LaTeX** (M). `toLatex`, booktabs style, as gt's `as_latex`.
 - **Images** (M). `saveImage` with headless Chromium.
-- **Interactive** (L). Sort, filter and paginate, compiled from Nim to JavaScript with
-  `nbJsFromCode`, like gt's `opt_interactive`.
+- **Tabellone** (L). A Tabella shown as a grid: `toGrid(t)` and `nbGrid`, with virtual rows,
+  sort, filter, sticky header and stub, spanners as column groups, and the table's header and
+  footer around the grid. In this repository as a module; rows served from Nim (a row model)
+  later, maybe in its own repository. See the devlog post
+  [Tabellone](https://pietroppeter.github.io/tabelline/devlog/tabellone/), which has a sketch.
+  Optional: `tabelline/aggrid`, AG Grid column definitions from a Tabella.
 - **RTF / Word** (L). For the pharma use case.
 
 ## nimib
