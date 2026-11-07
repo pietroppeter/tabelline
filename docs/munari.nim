@@ -15,8 +15,8 @@
 ## `--m-inchiostro` (ink), `--m-cerchio`, `--m-quadrato` and `--m-triangolo` (the three shapes, and
 ## what each colours on the page) and `--m-quarto` (a fourth, for the fourth note and the numbers
 ## in code). Everything else is mixed from them (tints, rules, greys, and darker versions of the
-## colours used as text), so a palette is six values. The default is Japanese traditional colours
-## close to Munari's primaries; the devlog post *Munari meets Japan* lists what each colour does
+## colours used as text), so a palette is six values. The default is Haru, spring: Japanese
+## traditional colours, gentler than Munari's primaries; the devlog post *Munari meets Japan* lists what each colour does
 ## and lets a reader try the other palettes on the page.
 ##
 ## Everything here is scoped by `html[data-tema="munari"]`, which a few lines in the `<head>` set
@@ -89,16 +89,16 @@ const munariCss* = """
 
 /* ------------------------------------------------------------------------------- Munari */
 html[data-tema="munari"] {
-  /* the palette: Munari's primaries in Japanese traditional colours (nipponcolors.com) */
+  /* the palette, Haru (spring): Japanese traditional colours (nipponcolors.com) */
   --m-carta: #FCFAF2;      /* 白練 shironeri, white silk */
   --m-inchiostro: #1C1C1C; /* 墨 sumi, ink */
-  --m-cerchio: #E83015;    /* 猩猩緋 shōjōhi, scarlet */
-  --m-quadrato: #005CAF;   /* 瑠璃 ruri, lapis lazuli */
-  --m-triangolo: #F6C555;  /* 梔子 kuchinashi, gardenia */
-  --m-quarto: #5DAC81;     /* 若竹 wakatake, young bamboo */
+  --m-cerchio: #E16B8C;    /* 紅梅 kōbai, red plum blossom */
+  --m-quadrato: #7DB9DE;   /* 勿忘草 wasurenagusa, forget-me-not */
+  --m-triangolo: #F7D94C;  /* 菜の花 nanohana, rapeseed flower */
+  --m-quarto: #86C166;     /* 苗 nae, seedling */
   /* the colours as text: a little ink in them, so that light ones stay readable */
-  --m-cerchio-testo: color-mix(in oklab, var(--m-cerchio) 82%, var(--m-inchiostro));
-  --m-quadrato-testo: color-mix(in oklab, var(--m-quadrato) 82%, var(--m-inchiostro));
+  --m-cerchio-testo: color-mix(in oklab, var(--m-cerchio) 75%, var(--m-inchiostro));
+  --m-quadrato-testo: color-mix(in oklab, var(--m-quadrato) 60%, var(--m-inchiostro));
   --m-quarto-testo: color-mix(in oklab, var(--m-quarto) 62%, var(--m-inchiostro));
   --paper: var(--m-carta);
   --pencil: var(--m-inchiostro);

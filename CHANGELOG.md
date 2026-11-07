@@ -5,7 +5,7 @@
 - Docs: the Munari colours are named by role (`--m-cerchio`, `--m-quadrato`, `--m-triangolo`,
   `--m-quarto`), code highlighting follows the palette, and the palettes post is compact: a
   summary of what each colour does, a swipe gallery that picks the palette, the anatomy of a page
-  and the stories of the names (#7).
+  and the stories of the names; Haru (spring) is the default palette (#7).
 
 - Docs: the Munari look takes a softer palette of Japanese traditional colours (six variables), and
   loses decorations that looked pressable; same-day devlog posts take a letter (A, B, C); a post

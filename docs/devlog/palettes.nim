@@ -32,19 +32,8 @@ let shironeri = c("白練", "shironeri", "white silk", "#FCFAF2",
 let sumi = c("墨", "sumi", "ink stick", "#1C1C1C",
   "the ink of calligraphy: a stick of soot and glue, ground with water on a stone. Its black is never flat.")
 let palettes = @[
-  Palette(key: "shojohi", title: "Shōjōhi, ruri, kuchinashi",
-    mood: "Munari's primaries in Japanese pigments: nearly the same red and blue, and a yellow that stays quiet. The default.",
-    colours: [shironeri, sumi,
-      c("猩猩緋", "shōjōhi", "scarlet", "#E83015",
-        "named after the shōjō, a red-haired spirit of the Noh stage who loves sake. It was the colour of the imported woollen cloth that warlords of the 1500s wore over their armour."),
-      c("瑠璃", "ruri", "lapis lazuli", "#005CAF",
-        "the blue stone, one of the seven treasures of the Buddhist sutras."),
-      c("梔子", "kuchinashi", "gardenia", "#F6C555",
-        "the gardenia, whose fruit gives a yellow dye (it still colours sweet chestnuts at New Year). The name can be read as \"no mouth\", because the ripe fruit never opens."),
-      c("若竹", "wakatake", "young bamboo", "#5DAC81",
-        "the green of bamboo in its first year, before it darkens.")]),
   Palette(key: "haru", title: "Haru, spring",
-    mood: "Plum blossom, forget-me-not and rapeseed: lighter and gentler, closer to a children's book.",
+    mood: "Plum blossom, forget-me-not and rapeseed: lighter and gentler, closer to a children's book. The default: Pietro's pick.",
     colours: [shironeri, sumi,
       c("紅梅", "kōbai", "red plum blossom", "#E16B8C",
         "plum trees flower in late winter, weeks before the cherries; at the old court it was a colour worn at the end of winter."),
@@ -54,6 +43,17 @@ let palettes = @[
         "the yellow of whole fields in spring; the buds are eaten too, briefly boiled."),
       c("苗", "nae", "seedling", "#86C166",
         "the green of rice seedlings, just before they are planted out in the flooded fields.")]),
+  Palette(key: "shojohi", title: "Shōjōhi, ruri, kuchinashi",
+    mood: "Munari's primaries in Japanese pigments: nearly the same red and blue, and a yellow that stays quiet. The first default, for a few hours.",
+    colours: [shironeri, sumi,
+      c("猩猩緋", "shōjōhi", "scarlet", "#E83015",
+        "named after the shōjō, a red-haired spirit of the Noh stage who loves sake. It was the colour of the imported woollen cloth that warlords of the 1500s wore over their armour."),
+      c("瑠璃", "ruri", "lapis lazuli", "#005CAF",
+        "the blue stone, one of the seven treasures of the Buddhist sutras."),
+      c("梔子", "kuchinashi", "gardenia", "#F6C555",
+        "the gardenia, whose fruit gives a yellow dye (it still colours sweet chestnuts at New Year). The name can be read as \"no mouth\", because the ripe fruit never opens."),
+      c("若竹", "wakatake", "young bamboo", "#5DAC81",
+        "the green of bamboo in its first year, before it darkens.")]),
   Palette(key: "wabi", title: "Wabi, earth",
     mood: "Red earth, indigo grey and mustard, with charcoal for ink: muted, like a print on handmade paper.",
     colours: [shironeri,
@@ -177,7 +177,7 @@ nbRawHtml: """<ul class="sei">
 <li><span class="tinta triangolo-t" style="background:var(--m-triangolo)"></span><span><strong>triangle</strong> <span class="nome" data-ruolo="4"></span></span><span class="usi">the big triangle (never text: too light); the plain note, table group headings, quotes, link hover</span></li>
 <li><span class="tinta" style="background:var(--m-quarto)"></span><span><strong>fourth</strong> <span class="nome" data-ruolo="5"></span></span><span class="usi">the fourth note (verde); numbers and literals in code</span></li>
 </ul>
-<p class="ora">Showing: <strong class="titolo-ora">1 · Shōjōhi, ruri, kuchinashi</strong>. In the quaderno look the page keeps its own colours; switch to Munari at the top to see a palette on the whole page.</p>"""
+<p class="ora">Showing: <strong class="titolo-ora">1 · Haru, spring</strong>. In the quaderno look the page keeps its own colours; switch to Munari at the top to see a palette on the whole page.</p>"""
 
 nbText: """
 ## Six palettes: swipe to choose
@@ -354,7 +354,7 @@ block:  # the table only, not its code
 nbRawHtml: "</details>"
 
 nbText: """
-Palette 1 is the default for now. Any of the others can take its place by changing six lines of
+Palette 1, Haru, is the default: the gentlest, and the one a children's book would pick. Any of the others can take its place by changing six lines of
 `docs/munari.nim`.
 """
 
