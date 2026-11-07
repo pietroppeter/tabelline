@@ -73,14 +73,17 @@ Kept up to date as tabelline changes:
   run against the code while the page is built.
 - [Devlog](https://pietroppeter.github.io/tabelline/devlog/): the living documents, then the posts.
 
-Posts, dated and not updated afterwards:
+Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Munari meets Japan: palettes for the second look](https://pietroppeter.github.io/tabelline/devlog/palettes/)
+  (7 Nov 2026 D): softer colours for the Munari look, from Japan's traditional colour names; six
+  palettes to compare and try on the page.
 - [Two looks: the quaderno and Munari](https://pietroppeter.github.io/tabelline/devlog/two-looks/)
-  (7 Nov 2026): a second look for the pages, after Bruno Munari, one switch away in every header.
+  (7 Nov 2026 C): a second look for the pages, after Bruno Munari, one switch away in every header.
 - [Tabellone: when a table becomes a grid](https://pietroppeter.github.io/tabelline/devlog/tabellone/)
-  (7 Nov 2026): what a data grid is (AG Grid and friends), why gt and Great Tables are not
+  (7 Nov 2026 B): what a data grid is (AG Grid and friends), why gt and Great Tables are not
   grids, whether tabelline should have a big brother, and a small working sketch.
-- [Day one: from gt to tabelline](https://pietroppeter.github.io/tabelline/devlog/day-one/) (7 Nov 2026):
+- [Day one: from gt to tabelline](https://pietroppeter.github.io/tabelline/devlog/day-one/) (7 Nov 2026 A):
   reading gt and Great Tables, deciding to write rather than wrap, and a first tabelline.
 
 ## Files

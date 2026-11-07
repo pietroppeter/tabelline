@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 | Tabellone: when a table becomes a grid | gt and Great Tables make tables to read; dashboards need grids to explore. What a grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.
+## devlog: 07 Nov 2026 B | Tabellone: when a table becomes a grid | gt and Great Tables make tables to read; dashboards need grids to explore. What a grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.
 ## A dated post: a piece of research, written once and not updated afterwards.
 import std/[os, json, strutils, math, sequtils, strformat]
 import nimib except md

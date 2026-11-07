@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Docs: the Munari look takes a softer palette of Japanese traditional colours (six variables), and
+  loses decorations that looked pressable; same-day devlog posts take a letter (A, B, C); a post
+  on the palettes, to compare and try them (#6).
+
 ## 0.1.0 (7 Nov 2026)
 
 The first release: a proof of concept. The API will change.
