@@ -9,8 +9,8 @@ import ../quaderno, ../mese
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "month-of-building" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "A month of building, as an operetta", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "A month of building, as an operetta", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 const bar = "var(--blu, var(--pen))"   # the square's blue in Munari, the pen in the quaderno
 let d = monthData()
@@ -19,7 +19,7 @@ for i in 0 ..< d.nrows: repos.inc $d["repo", i]
 let byAct = prsByAct()
 
 nbText: &"""
-<p class="kicker">Devlog · 7 November 2026</p>
+<p class="kicker">7 November 2026</p>
 
 # A month of building, as an operetta
 

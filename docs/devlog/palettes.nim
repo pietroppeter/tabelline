@@ -8,8 +8,8 @@ import ../quaderno
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "palettes" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "Munari meets Japan: palettes for the second look", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # ------------------------------------------------------------------------------------ palettes
 type
@@ -153,7 +153,7 @@ nbRawHtml: """<style>
 </style>"""
 
 nbText: """
-<p class="kicker">Devlog · 7 November 2026</p>
+<p class="kicker">7 November 2026</p>
 
 # Munari meets Japan: palettes for the second look
 

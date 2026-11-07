@@ -8,11 +8,11 @@ import ../quaderno
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "tabellone" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "Tabellone: when a table becomes a grid", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "Tabellone: when a table becomes a grid", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 nbText: """
-<p class="kicker">Devlog · 7 November 2026 · research</p>
+<p class="kicker">7 November 2026 · research</p>
 
 # Tabellone: when a table becomes a grid
 

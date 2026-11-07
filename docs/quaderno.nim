@@ -99,6 +99,7 @@ main { padding-left: 2.2rem; border-left: 3px double var(--margin); padding-bott
 .etichetta .riga span:first-child { font: 600 .72rem/1 var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-width: 5.2rem; }
 .etichetta .riga span:last-child { font: 1.55rem/1.25 var(--hand); color: var(--pen); }
 .etichetta .nome span:last-child { font-size: 2.3rem; }
+.etichetta .nome a { color: inherit; text-decoration: none; }
 .crumbs { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font: 1.05rem var(--hand); padding-top: .8rem; }
 .crumbs a { color: var(--pen); }
 .lede { font-size: 1.15rem; color: var(--pencil); margin: 0 0 1.2rem; }
@@ -395,12 +396,15 @@ func quadernoText(blk: JsonNode, nb: Nb): string =
 func quadernoHeader(blk: JsonNode, nb: Nb): string =
   let c = nb.doc.context
   let home = c{"home_href"}.getStr
-  let back = if home.len > 0: &"""<a href="{home}">← tabelline</a>""" else: "<span></span>"
+  let backLabel = c{"back_label"}.getStr("tabelline")
+  let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
   var rows = ""
   for (key, label, cls) in [("nome", "Nome", "nome"), ("materia", "Materia", ""), ("classe", "Classe", "")]:
     let v = c{key}.getStr
     if v.len > 0:
-      rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{v}</span></div>"""
+      let nameHref = c{"name_href"}.getStr
+      let shown = if key == "nome" and nameHref.len > 0: &"""<a href="{nameHref}">{v}</a>""" else: v
+      rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
 {temaSwitch}{forme}
@@ -418,8 +422,10 @@ func quadernoFooter(blk: JsonNode, nb: Nb): string =
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 
 proc useQuaderno*(nb: var Nb, nome, materia = "", classe = "", title = "", description = "",
-                  homeHref = "") =
-  ## The quaderno look. `nome`, `materia` and `classe` fill the cover label; `homeHref` links back.
+                  homeHref = "", backLabel = "tabelline", nameHref = "") =
+  ## The quaderno look. `nome`, `materia` and `classe` fill the cover label; `homeHref` links back,
+  ## with `backLabel` as its text (a devlog post links back to the devlog); `nameHref` makes the
+  ## name a link (a devlog post's name links to the home page).
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" &
                description.replace("\"", "&quot;") & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: nome)
@@ -433,6 +439,8 @@ proc useQuaderno*(nb: var Nb, nome, materia = "", classe = "", title = "", descr
   nb.doc.context["materia"] = %materia
   nb.doc.context["classe"] = %classe
   nb.doc.context["home_href"] = %homeHref
+  nb.doc.context["back_label"] = %backLabel
+  nb.doc.context["name_href"] = %nameHref
   nb.backend.partials["header"] = quadernoHeader
   nb.backend.partials["footer"] = quadernoFooter
   nb.backend.partials["nbText"] = quadernoText

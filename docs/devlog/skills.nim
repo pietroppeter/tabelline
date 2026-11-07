@@ -10,8 +10,8 @@ let docs = currentSourcePath().parentDir.parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "skills" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "Skills, from the beginning", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "Skills, from the beginning", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # the OpenSpec skills and commands in this repository, as they are on disk
 type Installed = object
@@ -28,7 +28,7 @@ installed.sort(proc (a, b: Installed): int = (if a.kind != b.kind: cmp(b.kind, a
 let skillHead = readFile(repo / ".claude" / "skills" / "openspec-propose" / "SKILL.md").splitLines[0 .. 10].join("\n")
 
 nbText: """
-<p class="kicker">Devlog · 7 November 2026</p>
+<p class="kicker">7 November 2026</p>
 
 # Skills, from the beginning
 
