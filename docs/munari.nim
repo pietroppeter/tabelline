@@ -191,7 +191,8 @@ html[data-tema="munari"] .tabella .tb_col_heading, html[data-tema="munari"] .tab
 html[data-tema="munari"] .tabella .tb_col_headings_last th, html[data-tema="munari"] .tabella .tb_spanner { border-bottom-color: var(--pencil) !important; }
 html[data-tema="munari"] .tabella .tb_row { border-top-color: var(--rule) !important; }
 html[data-tema="munari"] .tabella .tb_stub { border-right-color: var(--rule) !important; }
-html[data-tema="munari"] .tabella .tb_group_heading { border-color: var(--pencil) !important;
+html[data-tema="munari"] .tabella .tb_group_heading { border-color: var(--pencil) !important; }
+html[data-tema="munari"] .tabella .tb_group_heading:not([style*="background"]) {   /* a tabStyle fill wins */
   background-color: color-mix(in srgb, var(--m-triangolo) 22%, var(--m-carta)) !important; }
 html[data-tema="munari"] main table:not(.tb_table) th, html[data-tema="munari"] main table:not(.tb_table) td { border-color: var(--rule); }
 

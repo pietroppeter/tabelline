@@ -4,7 +4,7 @@
 import std/[os, strutils, sequtils, sugar]
 import nimib except md   # nimib's old `md` (deprecated) would clash with tabelline's
 import tabelline, tabelline/[datasets, nimib]
-import quaderno
+import quaderno, parti
 
 let root = currentSourcePath().parentDir
 nbInit
@@ -90,24 +90,23 @@ nbCode:
     colsHide ["density", "gravity", "day_length", "orbital_period", "mean_temp", "rings"]
     colsLabel {"mass": "column", "diameter": "labels", "distance": "…", "moons": "…"}
     tabSourceNote "Table footer: source notes and footnotes"
-    tabStyle style.fill("#FFF3B0"), loc.title(), loc.subtitle()
-    tabStyle style.fill("#A0C4FF"), loc.columnLabels(), loc.spanners()
-    tabStyle style.fill("#FFADAD"), loc.stubhead()
-    tabStyle style.fill("#FFD6A5"), loc.stub()
-    tabStyle style.fill("#E4C1F9"), loc.rowGroups()
-    tabStyle style.fill("#CAFFBF"), loc.body()
-    tabStyle style.fill("#9BF6FF"), loc.sourceNotes()
+    tabStyle style.fill("#FAECAC"), loc.title(), loc.subtitle()
+    tabStyle style.fill("#C7DFEA"), loc.columnLabels(), loc.spanners()
+    tabStyle style.fill("#F1BEC7"), loc.stubhead()
+    tabStyle style.fill("#FDDFC4"), loc.stub()
+    tabStyle style.fill("#CDC7DE"), loc.rowGroups()
+    tabStyle style.fill("#CAE2B7"), loc.body()
+    tabStyle style.fill("#D7EEEC"), loc.sourceNotes()
     fmtNumber "mass", decimals = 2
     fmtInteger "diameter"
 nbTable parts
 
+nbRawHtml: partsCss & partsLegend()
+
 nbText: """
-- the **table header** (yellow): a title and a subtitle;
-- the **column labels** (blue): one per column, with **spanner labels** over groups of columns;
-- the **stub head** (red): the top-left corner, a label for the stub;
-- the **stub** (orange): row labels, and the **row group** labels (violet) that split the rows;
-- the **table body** (green): the cells, where the data lives;
-- the **table footer** (cyan): footnotes, marked in the table, and source notes.
+The colours are light tints of Japanese traditional colours: those of Haru, the palette of these
+pages, and of its neighbours. The same parts can be shown on the [planets table](../) of the home
+page.
 
 ## What they offer
 

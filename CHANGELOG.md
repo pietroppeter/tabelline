@@ -4,6 +4,9 @@
 
 - Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
   plan for the next releases, as a living document (#8).
+- Fix: `loc.body()` targets the data cells only, not the stub, as in gt (#8).
+- Docs: the parts of a table in Haru colours, in the explainer and, with a "Show the parts"
+  button, on the home page's planets table (#8).
 
 - Docs: the Munari colours are named by role (`--m-cerchio`, `--m-quadrato`, `--m-triangolo`,
   `--m-quarto`), code highlighting follows the palette, and the palettes post is compact: a
