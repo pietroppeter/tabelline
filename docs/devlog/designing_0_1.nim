@@ -72,6 +72,7 @@ nbRawHtml: """<style>
 .scheda p { margin: 0 0 .5rem; font-size: .92rem; line-height: 1.45; }
 .scheda pre { margin: .4rem 0 !important; }
 body .scheda pre > code { font-size: 12.5px !important; }
+.scheda pre > code { white-space: pre-wrap !important; overflow-wrap: anywhere; }
 .scheda .tabella { margin: .4rem 0 0; }
 .scheda .tabella table { font-size: 14px !important; }
 </style>"""
@@ -337,37 +338,164 @@ marks were six symbols where gt has four (the six are now `"extended"`, as in gt
 
 Where gt and Great Tables differ, tabelline mostly follows Great Tables, as the
 [explainer](../../explainer/) says. 0.1 kept to that, and each proposal lists its differences.
-A few choices came up again and again:
+A few choices came up again and again.
 """
 
-block:
-  type C = object
-    choice, gt, tabelline: string
-  let rows = @[
-    C(choice: "Names", gt: "`tab_spanner_delim`, `fmt_number_si`, `opt_footnote_marks`",
-      tabelline: "the same in camelCase: `tabSpannerDelim`, `fmtNumberSi`, `optFootnoteMarks`"),
-    C(choice: "Where the proc goes", gt: "R: `text_transform(fn, locations)`; Python: `text_transform(locations, fn)`",
-      tabelline: "`textTransform(fn, locations)`: locations are `varargs`, and Nim wants them last"),
-    C(choice: "Regular expressions", gt: "`text_replace(pattern)`, `sub_values(pattern)` take a regex",
-      tabelline: "plain text, or a proc: the core needs only Nim's standard library, and std/re needs PCRE"),
-    C(choice: "Conditions", gt: "`text_case_when(x > 3 ~ \"big\")`, formulas",
-      tabelline: "no `textCaseWhen`: a proc with `if` or `case` is Nim's formula"),
-    C(choice: "Choices by name", gt: "strings: `marks = \"letters\"`, `extent = \"all\"`",
-      tabelline: "strings too, checked when the verb is called; marks also take an enum (`fmLetters`)"),
-    C(choice: "Counting", gt: "rows, footnotes, source notes from 1",
-      tabelline: "from 0, as everything else in Nim"),
-    C(choice: "Flags", gt: "SVG flags, two- and three-letter codes",
-      tabelline: "emoji from two letters: nothing to load, and they work in text too"),
-    C(choice: "Single values", gt: "R `vec_fmt_bytes(x)`, Python `vals.fmt_bytes(x)`",
-      tabelline: "plain functions: `formatBytes(x)`"),
-  ]
-  let t = tabella(rows, groupnameCol = "choice"):
-    tabHeader "Choices that came up again", "gt and Great Tables, and tabelline"
-    colsLabel {"gt": "gt / Great Tables", "tabelline": "tabelline"}
-    fmtMarkdown ["gt", "tabelline"]
-    colsWidth {"gt": "50%"}
-    tabOptions(tableWidth = "100%", tableFontSize = "14px")
-  nbTable t
+nbText: """
+Eight of them, one card each: the same thing written in R, in Python and in tabelline, and
+what tabelline chose. Swipe sideways.
+"""
+
+var scelte: seq[string]
+var nScelta = 0
+
+template scelta(titolo, domanda: string, body: untyped) =
+  ## A card of the second gallery: one choice, the code in three languages and the verdict.
+  inc nScelta
+  let first = nb.blocks.len
+  body
+  var inner = ""
+  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
+  nb.blocks.setLen(first)
+  scelte.add "<div class=\"scheda\"><div class=\"numero\">" & $nScelta & " / 8</div><h3>" & titolo &
+    "</h3><p>" & domanda & "</p>" & inner & "</div>"
+
+scelta "Names", "What is a verb called?":
+  nbText: """
+🏴‍☠️ R
+```r
+tab_header(title = "Planets")
+```
+🐍 Python
+```python
+.tab_header(title="Planets")
+```
+👑 Nim
+```nim
+tabHeader "Planets"
+```
+**tabelline:** gt's names in camelCase, the Nim way. Inside `tabella(data):` there is one verb per line, with no `|>` and no dots.
+"""
+
+scelta "Where the proc goes", "When a verb takes a function and places, which comes first?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_transform(fn = toupper, locations = cells_stub())
+```
+🐍 Python
+```python
+.text_transform(locations=loc.stub(), fn=str.upper)
+```
+👑 Nim
+```nim
+textTransform toUpperAscii, loc.stub()
+```
+**tabelline:** the proc first, as in R. The places come last because there can be several (`loc.stub(), loc.body()`), and Nim takes such a list only at the end.
+"""
+
+scelta "Regular expressions", "How do you replace a piece of text in cells?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_replace(pattern = "^Merc", replacement = "☿ ")
+```
+🐍 Python: not in Great Tables.
+
+👑 Nim
+```nim
+textReplace "Mercury", "☿ Mercury"
+```
+**tabelline:** plain text, not a regex. Nim's regex module needs the PCRE library, and the core of tabelline needs nothing but the standard library. For more, `textTransform` takes any proc.
+"""
+
+scelta "Conditions", "How do you change a text depending on its value?":
+  nbText: """
+🏴‍☠️ R
+```r
+text_case_when(x == "0" ~ "none", .default = "some")
+```
+🐍 Python: not in Great Tables.
+
+👑 Nim
+```nim
+textTransform proc (s: string): string =
+  if s == "0": "none" else: "some"
+```
+**tabelline:** no `textCaseWhen`. R needs formulas (`~`) for this; Nim already has `if` and `case`, so a small proc does it.
+"""
+
+scelta "Choices by name", "How do you pick one of a few options?":
+  nbText: """
+🏴‍☠️ R
+```r
+opt_footnote_marks(marks = "letters")
+```
+🐍 Python
+```python
+.opt_footnote_marks(marks="letters")
+```
+👑 Nim
+```nim
+optFootnoteMarks "letters"
+optFootnoteMarks fmLetters
+```
+**tabelline:** the same strings, checked when the verb is called, so a typo fails at once; marks also take an enum, which Nim checks when compiling.
+"""
+
+scelta "Counting", "Which row is the first?":
+  nbText: """
+🏴‍☠️ R
+```r
+cells_body(rows = 1)
+```
+🐍 Python
+```python
+loc.body(rows=[0])
+```
+👑 Nim
+```nim
+loc.body(rows = [0])
+```
+**tabelline:** from 0, like Python and like everything else in Nim. R counts from 1.
+"""
+
+scelta "Flags", "How does a country code become a flag?":
+  nbText: """
+🏴‍☠️ R
+```r
+fmt_flag(columns = country)
+```
+🐍 Python
+```python
+.fmt_flag(columns="country")
+```
+👑 Nim
+```nim
+fmtFlag "country"
+```
+**tabelline:** emoji (🇮🇹) instead of SVG pictures: nothing to load, and they show in text tables too. Some systems (Windows) draw them as two letters.
+"""
+
+scelta "Single values", "How do you format one number, outside a table?":
+  nbText: """
+🏴‍☠️ R
+```r
+vec_fmt_bytes(3.2e9)
+```
+🐍 Python
+```python
+vals.fmt_bytes(3.2e9)
+```
+👑 Nim
+```nim
+formatBytes(3.2e9)
+```
+**tabelline:** plain functions, one per format. Nim needs no namespace (`vals.`) or prefix (`vec_`) to tell them apart.
+"""
+
+nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"eight choices: swipe or scroll sideways\">" &
+  scelte.join("") & "</div>"
 
 nbText: """
 Two verbs have no twin. `colsReorder` puts some columns in a new order in the places they hold
