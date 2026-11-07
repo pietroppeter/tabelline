@@ -315,8 +315,8 @@ echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
 
 ### Requirement: Text helpers
 Labels and notes SHALL be plain text (escaped in HTML), `md(text)` (inline Markdown: `**bold**`,
-`*italic*`, `` `code` ``, links, `^sup^`, `~sub~`) or `html(text)` (used as is in HTML, its tags
-stripped in text and Markdown).
+`*italic*`, `` `code` ``, links, `^sup^` and `~sub~` when closed with no space inside, so "~50"
+stays as it is) or `html(text)` (used as is in HTML, its tags stripped in text and Markdown).
 
 ```nim
 let t = tabella(tavolaPitagorica(2))

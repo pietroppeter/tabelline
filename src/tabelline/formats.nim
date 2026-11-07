@@ -360,8 +360,12 @@ func inlineMarkdown*(s: string): string =
     if c == '\\' and i + 1 < s.len: (result.add escapeHtml($s[i + 1]); i += 2; continue)
     if c == '*' and i + 1 < s.len and s[i + 1] == '*': (toggle("strong"); i += 2; continue)
     if c == '*': (toggle("em"); inc i; continue)
-    if c == '~': (toggle("sub"); inc i; continue)
-    if c == '^': (toggle("sup"); inc i; continue)
+    if c in {'~', '^'}:   # H~2~O, 10^24^: only when closed with no space between, as in Pandoc
+      let tag = if c == '~': "sub" else: "sup"
+      if open.len > 0 and open[^1] == tag: (toggle(tag); inc i; continue)
+      let j = s.find(c, i + 1)
+      if j > i + 1 and not s[i + 1 ..< j].anyIt(it in Whitespace):
+        toggle(tag); inc i; continue
     if c == '`':
       let j = s.find('`', i + 1)
       if j > i:

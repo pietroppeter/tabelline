@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#9):
+The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#10):
 
 - Parts: `tabSpannerDelim` (spanners from `a.b` names), `tabCaption`, and `rmHeader`,
   `rmSpanners`, `rmFootnotes`, `rmSourceNotes`, `rmStubhead`, `rmCaption`.
@@ -19,6 +19,8 @@ The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec chang
   `optFootnoteMarks` (with `"extended"` marks and marks of your own), `optFootnoteSpec`,
   `optFootnoteOrder`, `optCss`; `md()` and `html()` have a spec.
 - Fix: the standard footnote marks are gt's four (\*, †, ‡, §); the six are `"extended"`.
+- Fix: in Markdown, `~` and `^` make a subscript or superscript only when closed with no space
+  inside, so "~50 PRs" stays as it is (found by the 0.1 use-it thread).
 - Fix: `tableData:` reads quoted names with dots (`` `size.mass` ``) whole.
 - Docs: the devlog post *Designing tabelline 0.1*; the coverage map marks the 24 groups done.
 

@@ -39,6 +39,10 @@ suite "0.1 formats":
     check formatFlag("ITA") == "ITA"
     expect ValueError: discard formatTf(true, "nope")
 
+  test "a lone ~ or ^ is text":
+    check inlineMarkdown("~50 PRs, 2^10 ways") == "~50 PRs, 2^10 ways"
+    check inlineMarkdown("H~2~O and 10^24^") == "H<sub>2</sub>O and 10<sup>24</sup>"
+
 suite "0.1 verbs":
   test "small values with sign":
     let d = tableData:

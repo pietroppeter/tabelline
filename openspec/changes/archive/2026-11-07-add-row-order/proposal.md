@@ -2,7 +2,7 @@
 
 Groups showed in the order they were made, rows in the order of the data. One of the 24 small groups of gt marked for 0.1 in the coverage map
 (`docs/coverage/gt.json`, gt: `row_order(), row_group_order()`), approved by Pietro on 7 Nov 2026 in the thread "Build
-tabelline 0.1"; built in PR #9.
+tabelline 0.1"; built in PR #10.
 
 ## What Changes
 
