@@ -75,6 +75,9 @@ Kept up to date as tabelline changes:
 
 Posts, dated and not updated afterwards:
 
+- [Tabellone: when a table becomes a grid](https://pietroppeter.github.io/tabelline/devlog/tabellone/)
+  (7 Nov 2026): what a data grid is (AG Grid and friends), why gt and Great Tables are not
+  grids, whether tabelline should have a big brother, and a small working sketch.
 - [Day one: from gt to tabelline](https://pietroppeter.github.io/tabelline/devlog/day-one/) (7 Nov 2026):
   reading gt and Great Tables, deciding to write rather than wrap, and a first tabelline.
 
