@@ -342,8 +342,35 @@ A few choices came up again and again.
 """
 
 nbText: """
-Eight of them, one card each: the same thing written in R, in Python and in tabelline, and
-what tabelline chose. Swipe sideways.
+Eight of them. In short: where gt and Great Tables agree, tabelline agrees too; where they
+differ, it sides with one of them; and in four places Nim offers a way of its own.
+"""
+
+block:
+  type V = object
+    side, choice, r, python, nim: string
+  let rows = @[
+    V(side: "the same as both", choice: "Names", r: "tab_header", python: "tab_header", nim: "tabHeader"),
+    V(side: "the same as both", choice: "Options", r: "\"letters\"", python: "\"letters\"", nim: "\"letters\""),
+    V(side: "with R", choice: "Proc or places first?", r: "proc", python: "places", nim: "proc"),
+    V(side: "with Python", choice: "First row", r: "1", python: "0", nim: "0"),
+    V(side: "its own way", choice: "Replace text", r: "regex", python: "—", nim: "plain text"),
+    V(side: "its own way", choice: "Conditions", r: "formula", python: "—", nim: "proc"),
+    V(side: "its own way", choice: "Flags", r: "SVG", python: "SVG", nim: "emoji"),
+    V(side: "its own way", choice: "One value", r: "vec_fmt_", python: "vals.fmt_", nim: "formatX"),
+  ]
+  let t = tabella(rows, rownameCol = "choice", groupnameCol = "side"):
+    tabHeader "R, Python and tabelline", "eight choices, grouped by whom tabelline sides with"
+    colsLabel {"r": "🏴‍☠️ R", "python": "🐍 Python", "nim": "👑 Nim"}
+    tabStyle style.text(weight = "bold"), loc.body("nim")
+    tabStyle style.fill("#F6E3EA"), loc.rowGroups()
+    tabSourceNote "— : not in Great Tables."
+    tabOptions(tableWidth = "100%", tableFontSize = "14px")
+  nbTable t
+
+nbText: """
+And one card for each: the same thing written in R, in Python and in tabelline, and why
+tabelline chose what it did. Swipe sideways.
 """
 
 var scelte: seq[string]
