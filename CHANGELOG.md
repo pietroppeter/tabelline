@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*
+  (Pietro's seven weeks of open source with Claude, from GitHub data), *Operetta, a first sketch*
+  and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#9).
+
 The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#10):
 
 - Parts: `tabSpannerDelim` (spanners from `a.b` names), `tabCaption`, and `rmHeader`,

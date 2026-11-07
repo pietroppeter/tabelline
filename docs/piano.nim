@@ -30,7 +30,7 @@ const releases*: seq[Release] = @[
       "post Designing tabelline 0.1; tag v0.1.0"),
     t("use", "Use it: a month of building with AI, and Operetta",
       "A simple, conceptual explainer of a month of open source work on GitHub with Claude (libraries, talks, explainers in claude-artifacts), and from it the first design of Operetta: a modular way to build AI-native libraries (living documents, devlog, OpenSpec, coverage, roadmap, book, skills), each part picked by a project's kind and maturity. Includes what skills are and where they live.",
-      "explainer post, 👑 🐍 🏴‍☠️ tabs"),
+      "three posts: the month, Operetta, skills; 👑 🐍 🏴‍☠️ tabs", "in review"),
     t("port", "Port the Great Tables guide, Get Started",
       "The first section of the Great Tables user guide (header and footer, stub, column labels, formats, styles, selections) and gt's Introduction to creating gt tables. Both MIT.",
       "tabelline book (nimibook, Edo), first chapters"),
