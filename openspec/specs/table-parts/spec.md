@@ -161,3 +161,178 @@ echo tabella(planets(), rownameCol = "planet")
 1 As of 2024.
 2 Hotter than Mercury.
 ```
+
+### Requirement: Spanners from column names
+`tabSpannerDelim(delim = ".", columns, split = "last", limit = -1, reverse = false)` SHALL split
+column names at `delim`: the last part SHALL become the label and the parts before it spanners,
+the first part highest. Next to each other, columns with the same parts SHALL share a spanner.
+`limit` SHALL cap the number of splits, counted from the `split` side; `reverse` SHALL read the
+parts the other way round.
+
+```nim
+let d = tableData:
+  planet: ["Earth", "Mars"]
+  `size.diameter`: [12756, 6792]
+  `size.mass`: [5.97, 0.642]
+  `orbit.period.days`: [365.2, 687.0]
+  `orbit.period.years`: [1.0, 1.88]
+  `orbit.distance`: [149.6, 228.0]
+echo tabella(d, rownameCol = "planet").tabSpannerDelim()
+```
+
+```text
+┌───────┬──────────┬───────┬───────┬───────┬──────────┐
+│       │                  │          orbit           │
+│       │       size       │    period     │          │
+│       │ diameter │  mass │  days │ years │ distance │
+╞═══════╪══════════╪═══════╪═══════╪═══════╪══════════╡
+│ Earth │    12756 │  5.97 │ 365.2 │   1.0 │    149.6 │
+│ Mars  │     6792 │ 0.642 │ 687.0 │  1.88 │    228.0 │
+└───────┴──────────┴───────┴───────┴───────┴──────────┘
+```
+
+#### Scenario: A name with no delimiter
+- **WHEN** a selected column has no `delim` in its name
+- **THEN** its label stays and it gets no spanner
+
+### Requirement: Caption
+`tabCaption(caption)` SHALL give the table a caption: an HTML `<caption>` above the table (for
+screen readers, and for figures in documents), a first line in text, an italic line in Markdown.
+`rmCaption()` SHALL take it away.
+
+```nim
+let t = tabella(tavolaPitagorica(2)).tabCaption("Table 1: the times table of 2")
+echo "<caption class=\"tb_caption\">Table 1: the times table of 2</caption>" in t.toHtml
+echo t
+```
+
+```text
+true
+Table 1: the times table of 2
+┌───┬───┬───┐
+│ × │ 1 │ 2 │
+╞═══╪═══╪═══╡
+│ 1 │ 1 │ 2 │
+│ 2 │ 2 │ 4 │
+└───┴───┴───┘
+```
+
+### Requirement: Removing parts
+`rmHeader()`, `rmStubhead()`, `rmCaption()`, `rmSpanners(spanners, levels)`, `rmFootnotes(indices)`
+and `rmSourceNotes(indices)` SHALL take parts away, so tables built from a shared start can drop
+what they do not need. With no arguments, `rmSpanners`, `rmFootnotes` and `rmSourceNotes` SHALL
+remove all of them; indices SHALL count from 0 in the order the parts were added.
+
+```nim
+let base = tabella(tavolaPitagorica(2), rownameCol = "×").tabHeader("Times", "of two")
+  .tabSourceNote("One.").tabSourceNote("Two.")
+echo base.rmHeader().rmSourceNotes([0])
+```
+
+```text
+┌───┬───┬───┐
+│   │ 1 │ 2 │
+╞═══╪═══╪═══╡
+│ 1 │ 1 │ 2 │
+│ 2 │ 2 │ 4 │
+└───┴───┴───┘
+Two.
+```
+
+### Requirement: Labels from a proc
+`colsLabelWith(columns, fn)` SHALL relabel columns (by default all of them) with a proc over their
+labels.
+
+```nim
+echo tabella(tavolaPitagorica(2), rownameCol = "×").colsLabelWith(proc (s: string): string = "×" & s)
+```
+
+```text
+┌───┬────┬────┐
+│   │ ×1 │ ×2 │
+╞═══╪════╪════╡
+│ 1 │  1 │  2 │
+│ 2 │  2 │  4 │
+└───┴────┴────┘
+```
+
+### Requirement: Moving columns
+`colsMove(columns, after)`, `colsMoveToStart(columns)` and `colsMoveToEnd(columns)` SHALL move
+columns; `colsReorder(columns)` SHALL put the given columns in the given order in the places they
+hold, leaving the other columns where they are.
+
+```nim
+let d = tableData:
+  a: [1]
+  b: [2]
+  c: [3]
+  d: [4]
+echo tabella(d).colsMoveToEnd("a").colsReorder(["d", "b"])
+```
+
+```text
+┌───┬───┬───┬───┐
+│ d │ c │ b │ a │
+╞═══╪═══╪═══╪═══╡
+│ 4 │ 3 │ 2 │ 1 │
+└───┴───┴───┴───┘
+```
+
+### Requirement: Order of rows and groups
+`rowOrder(columns, reverse)` SHALL show the rows sorted by the columns (the first decides, the next
+break ties), within their groups, with missing values last; `rowGroupOrder(groups)` SHALL show the
+row groups in the given order, the others after them as they were.
+
+```nim
+echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
+  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
+  .rowOrder("moons", reverse = true)
+  .rowGroupOrder(["Ice giant", "Gas giant"])
+```
+
+```text
+┌─────────┬───────┐
+│         │ moons │
+╞═════════╪═══════╡
+│ Ice giant       │
+├┄┄┄┄┄┄┄┄┄┼┄┄┄┄┄┄┄┤
+│ Uranus  │    28 │
+│ Neptune │    16 │
+├─────────┼───────┤
+│ Gas giant       │
+├┄┄┄┄┄┄┄┄┄┼┄┄┄┄┄┄┄┤
+│ Saturn  │   146 │
+│ Jupiter │    95 │
+├─────────┼───────┤
+│ Terrestrial     │
+├┄┄┄┄┄┄┄┄┄┼┄┄┄┄┄┄┄┤
+│ Mars    │     2 │
+│ Earth   │     1 │
+│ Mercury │     0 │
+│ Venus   │     0 │
+└─────────┴───────┘
+```
+
+### Requirement: Text helpers
+Labels and notes SHALL be plain text (escaped in HTML), `md(text)` (inline Markdown: `**bold**`,
+`*italic*`, `` `code` ``, links, `^sup^`, `~sub~`) or `html(text)` (used as is in HTML, its tags
+stripped in text and Markdown).
+
+```nim
+let t = tabella(tavolaPitagorica(2))
+  .tabHeader(md("The **times** table"), html("of <span style=\"color: red\">two</span>"))
+echo "<strong>times</strong>" in t.toHtml, " ", "<span style=\"color: red\">two</span>" in t.toHtml
+echo t
+```
+
+```text
+true true
+The times table
+   of two
+┌───┬───┬───┐
+│ × │ 1 │ 2 │
+╞═══╪═══╪═══╡
+│ 1 │ 1 │ 2 │
+│ 2 │ 2 │ 4 │
+└───┴───┴───┘
+```

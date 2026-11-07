@@ -73,7 +73,10 @@ macro tableData*(body: untyped): TableData =
   for line in body:
     if line.kind notin {nnkCall, nnkCommand} or line.len != 2:
       error("expected `name: [values]`", line)
-    let name = if line[0].kind == nnkAccQuoted: line[0][0].strVal else: line[0].strVal
+    var name = ""
+    if line[0].kind == nnkAccQuoted:   # `size.mass`: every part of the quoted name
+      for p in line[0]: name.add p.strVal
+    else: name = line[0].strVal
     var vals = line[1]
     if vals.kind == nnkStmtList: vals = vals[0]
     var vs = newNimNode(nnkBracket)

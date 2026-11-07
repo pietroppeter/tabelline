@@ -2,6 +2,26 @@
 
 ## Unreleased
 
+The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#9):
+
+- Parts: `tabSpannerDelim` (spanners from `a.b` names), `tabCaption`, and `rmHeader`,
+  `rmSpanners`, `rmFootnotes`, `rmSourceNotes`, `rmStubhead`, `rmCaption`.
+- Formats: `fmtEngineering`, `fmtNumberSi`, `fmtPartsper`, `fmtBytes`, `fmtIndex`,
+  `fmtSpelledNum`, `fmtTime`, `fmtDatetime`, `fmtDuration`, `fmtUrl`, `fmtEmail`, `fmtFlag`
+  (emoji, nothing loaded); `fmtTf` takes gt's ten styles, `naText`, `colors` and `html`; every
+  format has a public value function (`formatBytes`, `formatDuration`, ...).
+- Substitutions and text: `subSmallVals`, `subLargeVals`, `subValues`; `textTransform`,
+  `textReplace`, `textCaseMatch`.
+- Columns and rows: `colsLabelWith`, `colsMoveToEnd`, `colsReorder`, `rowOrder`, `rowGroupOrder`.
+- Styles: `style.css`; the locations `loc.header`, `loc.columnHeader`, `loc.footer` and
+  `loc.spannerLabels`.
+- Options: `optVerticalPadding`, `optHorizontalPadding`, `optTableOutline`, `optTableLines`,
+  `optFootnoteMarks` (with `"extended"` marks and marks of your own), `optFootnoteSpec`,
+  `optFootnoteOrder`, `optCss`; `md()` and `html()` have a spec.
+- Fix: the standard footnote marks are gt's four (\*, †, ‡, §); the six are `"extended"`.
+- Fix: `tableData:` reads quoted names with dots (`` `size.mass` ``) whole.
+- Docs: the devlog post *Designing tabelline 0.1*; the coverage map marks the 24 groups done.
+
 - Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
   plan for the next releases, as a living document (#8).
 - Fix: `loc.body()` targets the data cells only, not the stub, as in gt (#8).

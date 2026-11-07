@@ -12,22 +12,17 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Summary rows** (M, *in progress*: `add-summary-rows`). `summaryRows`, `grandSummaryRows`.
 - **Column merges** (M). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
   (value ± error), `colsMergeRange`, `colsMergeNPct`.
-- **Text transforms** (S). `textTransform(loc, proc)`, `textCase`, `textReplace`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
 - **Stub indent and multi-column stubs** (S). `tabStubIndent`, `rownameCol` with several columns.
-- **Rows** (S). `rowsAdd`, `rowGroupOrder`, hidden rows.
+- **Rows** (S). `rowsAdd`, hidden rows.
 
 ## Formats
 
-- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtDuration`,
-  `fmtBytes`, `fmtFraction`, `fmtPartsper`, `fmtEngineering`, `fmtNumberSi`, `fmtDatetime`,
-  `fmtTime`, `fmtUrl`, `fmtEmail`, `fmtIndex`, `fmtSpelledNum`.
-- **Images, flags and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
-  `fmtFlag`, `fmtIcon`, without loading anything remote. Also `fmtTf(..., html = true)`:
-  `fmtTf` escapes its texts, so Isotype-style tables (an SVG symbol per boolean, as in
-  diagrammari's series part 2) need a custom `fmt` on `RenderContext` today.
+- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
+- **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
+  `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
 - **Locales** (M). Month and day names and number marks for more locales, from CLDR data
   generated into a Nim module at compile time.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
