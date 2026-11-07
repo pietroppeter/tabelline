@@ -9,11 +9,11 @@ import ../quaderno, ../mese
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "operetta" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "Operetta, a first sketch", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "Operetta, a first sketch", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 nbText: """
-<p class="kicker">Devlog · 7 November 2026</p>
+<p class="kicker">7 November 2026</p>
 
 # Operetta, a first sketch
 

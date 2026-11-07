@@ -8,11 +8,11 @@ import ../quaderno, ../piano
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "three-threads" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "post · 7 November 2026",
-               title = "Three threads for every release", homeHref = "../")
+nb.useQuaderno(nome = "tabelline",
+               title = "Three threads for every release", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 nbText: """
-<p class="kicker">Devlog · 7 November 2026</p>
+<p class="kicker">7 November 2026</p>
 
 # Three threads for every release
 

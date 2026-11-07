@@ -129,7 +129,7 @@ html[data-tema="munari"] .etichetta .riga { display: block; border: 0; padding: 
 html[data-tema="munari"] .etichetta .riga span:first-child { display: none; }
 html[data-tema="munari"] .etichetta .riga span:last-child { font: 400 1.25rem/1.3 var(--text); color: var(--pencil); }
 html[data-tema="munari"] .etichetta .nome span:last-child { font: 700 3.4rem/1 var(--text); letter-spacing: -.03em; }
-html[data-tema="munari"] .etichetta .riga:last-child span:last-child { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+html[data-tema="munari"] .etichetta .riga:last-child:not(.nome) span:last-child { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 @media (max-width: 560px) {
   html[data-tema="munari"] .forme { transform: scale(.62); transform-origin: top right; top: 6rem; }
   html[data-tema="munari"] .etichetta { padding-right: 6.4rem; min-height: 6rem; }
