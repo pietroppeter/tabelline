@@ -4,7 +4,7 @@
 
 - Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*
   (Pietro's seven weeks of open source with Claude, from GitHub data), *Operetta, a first sketch*
-  and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#PR).
+  and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#9).
 - Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
   plan for the next releases, as a living document (#8).
 - Fix: `loc.body()` targets the data cells only, not the stub, as in gt (#8).
