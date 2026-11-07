@@ -71,5 +71,8 @@ working rules that are easy to miss.
   (folder links point to index.html). A link to the artifact ending in `#<page>` opens that
   page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`. Give Pietro
   the deep link to what changed.
+- When a change is visual, put before and after screenshots (phone width, both looks) in the PR
+  description and in the reply to Pietro. To show them in the PR without adding them to `main`,
+  commit them, link them by that commit's sha, and remove them in the next commit.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.
