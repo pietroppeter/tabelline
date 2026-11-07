@@ -70,10 +70,6 @@ const temaBodyScript* = """<script>
       show();
     });
   });
-  // one of the three shapes for each section heading, in turn: circle, square, triangle
-  document.querySelectorAll('main h2:not(.indice-title)').forEach(function (h, k) {
-    h.classList.add('forma-' + (k % 3));
-  });
   show();
 })();
 </script>"""
@@ -153,8 +149,6 @@ html[data-tema="munari"] h1 { font-size: 2.9rem; line-height: 1.05; }
 html[data-tema="munari"] h2 { font-size: 1.85rem; display: block; background: none; padding: 0 0 0 2.4rem; margin: 3rem 0 .9rem; position: relative; }
 html[data-tema="munari"] h2::before { content: ""; position: absolute; left: 0; top: .2em; width: 1.5rem; height: 1.5rem;
   background: var(--m-cerchio); border-radius: 50%; }
-html[data-tema="munari"] h2.forma-1::before { background: var(--blu); border-radius: 0; }
-html[data-tema="munari"] h2.forma-2::before { background: var(--giallo); border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 html[data-tema="munari"] h3 { font-size: 1.25rem; color: var(--pen-red); margin-top: 2rem; }
 html[data-tema="munari"] h2 .num { color: var(--muted); }
 html[data-tema="munari"] .kicker { font: 700 .74rem/1 var(--text); letter-spacing: .2em; color: var(--pen-red); }
@@ -195,7 +189,7 @@ html[data-tema="munari"] .tabella .tb_group_heading:not([style*="background"]) {
   background-color: color-mix(in srgb, var(--m-triangolo) 22%, var(--m-carta)) !important; }
 html[data-tema="munari"] main table:not(.tb_table) th, html[data-tema="munari"] main table:not(.tb_table) td { border-color: var(--rule); }
 
-/* the indice: numbers on coloured shapes */
+/* the indice: numbers on red circles, as the section headings (the other shapes are kept for meaning) */
 html[data-tema="munari"] .indice { background: none; box-shadow: none; transform: none; border-radius: 0; padding: 1rem 0;
   border-top: 3px solid var(--pencil); border-bottom: 3px solid var(--pencil); max-width: 36rem; }
 html[data-tema="munari"] .indice h2.indice-title { font: 700 .78rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase;
@@ -205,9 +199,6 @@ html[data-tema="munari"] .indice > ol { list-style: none; padding: 0; counter-re
 html[data-tema="munari"] .indice > ol > li { counter-increment: voce; position: relative; padding-left: 2.3rem; margin: .35rem 0; }
 html[data-tema="munari"] .indice > ol > li::before { content: counter(voce); position: absolute; left: 0; top: .1rem; width: 1.5rem; height: 1.5rem;
   border-radius: 50%; background: var(--m-cerchio); color: #fff; font: 700 .78rem/1.5rem var(--text); text-align: center; }
-html[data-tema="munari"] .indice > ol > li:nth-child(3n+2)::before { background: var(--blu); border-radius: 0; }
-html[data-tema="munari"] .indice > ol > li:nth-child(3n)::before { background: var(--giallo); color: var(--pencil); border-radius: 0;
-  width: 1.7rem; left: -.1rem; top: -.05rem; height: 1.6rem; line-height: 2.05rem; font-size: .7rem; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 html[data-tema="munari"] .indice ol ol { font: 400 .95rem/1.45 var(--text); padding-left: 0; margin: .15rem 0 .3rem; }
 html[data-tema="munari"] .indice ol ol li::before { content: "— "; color: var(--muted); }
 html[data-tema="munari"] .indice a { color: var(--pencil); }

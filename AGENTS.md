@@ -55,7 +55,8 @@ working rules that are easy to miss.
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
   show the newest first.
 - In the Munari look, nothing that only decorates may look like something to press or drag (no
-  dots, holes or knobs on cards). Its colours are six variables in `docs/munari.nim` (`--m-*`);
+  dots, holes or knobs on cards). Shapes carry meaning: section headings and the indice
+  always use the red circle, and the triangle is kept for warnings. Its colours are six variables in `docs/munari.nim` (`--m-*`);
   mix new colours from them rather than adding fixed ones.
 - The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
