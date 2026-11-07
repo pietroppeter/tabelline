@@ -9,4 +9,8 @@ srcDir        = "src"
 # Dependencies
 
 requires "nim >= 2.0.0"
-# nimib is optional: `import tabelline/nimib` (nbTable) needs it; the core needs only the standard library.
+# The core needs only the standard library. nimib is for the docs and `import tabelline/nimib`
+# (nbTable): the `docs` feature, pinned in atlas.lock (`sh tools/setup.sh` replays it).
+
+feature "docs":
+  requires "nimib >= 0.4.3"

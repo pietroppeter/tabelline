@@ -25,8 +25,20 @@ working rules that are easy to miss.
   rows when the verb is called and run when the table is rendered (`build.nim`), so every renderer
   agrees. Macros only where a proc cannot do the job (today: `tabella(data): body`, `tableData:`,
   `tabOptions`).
-- `nim r tests/all.nim` runs the tests; `sh deps.sh` once fetches the pinned docs dependencies
-  (into `deps/`, put on the path by `config.nims`); no nimble needed.
+- `nim r tests/all.nim` runs the tests. Dependencies are managed with atlas: nimib is the `docs`
+  feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/` (not committed) and
+  put on the path by `nim.cfg` (committed, written by atlas).
+
+## Setup
+
+- In a fresh checkout or sandbox, run `sh tools/setup.sh` before anything else. It installs what is
+  missing (Nim from GitHub nightlies, atlas, libpcre3) and the pinned dependencies, and is safe to
+  rerun. It prints the `export PATH=...` line to use when it installed Nim or atlas.
+- To change a dependency: `atlas use <pkg>` or edit the `docs` feature, `atlas install
+  --feature=docs`, run the tests and the pages, then `atlas pin --feature=docs` and commit
+  `atlas.lock` and `nim.cfg`. Without `--feature=docs`, atlas leaves nimib out.
+- `atlas.lock` keeps a copy of `tabelline.nimble`, and `atlas rep` (so `tools/setup.sh`) writes that
+  copy back: after editing `tabelline.nimble`, run `atlas pin --feature=docs` before the setup.
 
 ## Pages
 

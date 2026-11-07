@@ -90,11 +90,16 @@ Posts, dated and not updated afterwards:
 ## Building
 
 ```sh
-sh deps.sh                       # nimib and friends at pinned commits, into deps/ (for the docs)
+sh tools/setup.sh                # once: what is missing (Nim, atlas, libpcre3) + deps from atlas.lock
 nim r tests/all.nim              # tests
 nim r tools/specexamples.nim     # the examples of the specs
 nim r -d:release docs/all.nim    # every page, into docs/
 ```
+
+With Nim and atlas already installed, `atlas rep --feature=docs` is all the setup does on a
+laptop. Dependencies are managed with [atlas](https://github.com/nim-lang/atlas): nimib is the
+`docs` feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/`, and `nim.cfg`
+puts it on the path. AGENTS.md has how to change a dependency.
 
 The library itself needs only Nim (2.0 or later) and its standard library. CI
 (`.github/workflows/pages.yml`) runs the tests and the examples, builds the pages and deploys them
