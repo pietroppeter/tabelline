@@ -8,6 +8,11 @@ stub, row groups, spanners over columns, formatted numbers, colours and notes. I
 with their parts and their verbs (in camelCase), written in plain Nim, and fits in
 [nimib](https://github.com/pietroppeter/nimib) notebooks.
 
+**Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with the
+[explainer](https://pietroppeter.github.io/tabelline/explainer/), the
+[specs](https://pietroppeter.github.io/tabelline/specs/) and the
+[devlog](https://pietroppeter.github.io/tabelline/devlog/).
+
 > **Status: a first version, a proof of concept.** It already makes tables worth showing; most of
 > gt is still ahead, and the API will change.
 
