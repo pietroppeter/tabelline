@@ -3,4 +3,4 @@
 ## initialised, in import order.
 {.warning[UnusedImport]: off.}
 import index, explainer, specs
-import devlog/[day_one, tabellone, two_looks, index as devlogIndex]
+import devlog/[day_one, tabellone, two_looks, palettes, index as devlogIndex]

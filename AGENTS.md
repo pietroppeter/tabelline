@@ -50,8 +50,13 @@ working rules that are easy to miss.
   builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
   `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
 - Living documents (the explainer, the specs page) are kept up to date. A devlog post
-  (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy | title | lede`) is dated and not
-  updated afterwards; the devlog index finds it, and it gets a line in the README.
+  (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
+  updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
+  for posts of the same day, in the order they were written (A, B, C, ...), so the index can
+  show the newest first.
+- In the Munari look, nothing that only decorates may look like something to press or drag (no
+  dots, holes or knobs on cards). Its colours are six variables in `docs/munari.nim` (`--m-*`);
+  mix new colours from them rather than adding fixed ones.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 

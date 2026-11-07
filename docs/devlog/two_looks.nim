@@ -1,4 +1,4 @@
-## devlog: 07 Nov 2026 | Two looks: the quaderno and Munari | The pages get a second look, after Bruno Munari, the new default; the quaderno is one switch away in every header, and your choice is remembered.
+## devlog: 07 Nov 2026 C | Two looks: the quaderno and Munari | The pages get a second look, after Bruno Munari, the new default; the quaderno is one switch away in every header, and your choice is remembered.
 ## A dated post: it tells how the second look was made, and is not updated afterwards.
 import std/[os, sequtils]
 import nimib except md
