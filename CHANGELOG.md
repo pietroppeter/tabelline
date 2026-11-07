@@ -7,6 +7,10 @@
 - Fix: `loc.body()` targets the data cells only, not the stub, as in gt (#8).
 - Docs: the parts of a table in Haru colours, in the explainer and, with a "Show the parts"
   button, on the home page's planets table (#8).
+- Docs: the roadmap (living document, from `docs/piano.nim`): releases 0.1 to 0.5 and three
+  threads for each (build it, use it, port the references); the devlog post *Three threads for
+  every release*; tabs on the pages for the same example in 👑 Nim, 🐍 Python and 🏴‍☠️ R
+  (`nbTabs`) (#8).
 
 - Docs: the Munari colours are named by role (`--m-cerchio`, `--m-quadrato`, `--m-triangolo`,
   `--m-quarto`), code highlighting follows the palette, and the palettes post is compact: a

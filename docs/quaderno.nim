@@ -39,6 +39,21 @@ const fonts = fontFace("Patrick Hand", "patrick-hand", "400", "normal",
               fontFace("Atkinson Hyperlegible", "atkinson-italic", "400", "italic",
                        encode(staticRead(fontDir / "atkinson-italic.woff2")))
 
+const tabsScript = """<script>
+(function () {
+  function choose(lang) {
+    document.querySelectorAll('.lingue').forEach(function (box) {
+      if (!box.querySelector('[data-lingua="' + lang + '"]')) return;
+      box.querySelectorAll('.lingue-tab button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.lingua === lang ? 'true' : 'false'); });
+      box.querySelectorAll('.lingue-pannello').forEach(function (p) { p.hidden = p.dataset.lingua !== lang; });
+    });
+  }
+  document.querySelectorAll('.lingue-tab button').forEach(function (b) {
+    b.addEventListener('click', function () { choose(b.dataset.lingua); });
+  });
+})();
+</script>"""
+
 const quadernoCss* = """
 :root {
   --paper: #FDFDF9;
@@ -150,6 +165,18 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid #
   border-radius: 50%; width: 2.6rem; height: 2.6rem; text-align: center; line-height: 2.5rem; transform: rotate(-8deg); }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1rem; margin: 1.2rem 0; }
 .cards .nota { margin: 0; }
+/* tabs: the same example in Nim, Python and R; the choice holds for the whole page */
+.lingue { margin: 1.2rem 0; }
+.lingue-tab { display: flex; gap: 0; flex-wrap: wrap; }
+.lingue-tab button { font: 1rem var(--hand); color: var(--pen); background: var(--card); border: 1.5px solid var(--pen);
+  border-bottom: 0; padding: .15rem .8rem; cursor: pointer; margin-right: -1.5px; }
+.lingue-tab button[aria-selected="true"] { background: var(--pen); color: #fff; }
+.lingue-pannello { border-top: 1.5px solid var(--pen); padding-top: .2rem; }
+.lingue-pannello > pre:first-child { margin-top: .6rem; }
+html[data-tema="munari"] .lingue-tab button { font: 700 .72rem/1.6 var(--text); letter-spacing: .1em; text-transform: uppercase;
+  border: 2px solid var(--pencil); border-bottom: 0; border-radius: 0; background: transparent; color: var(--pencil); margin-right: -2px; }
+html[data-tema="munari"] .lingue-tab button[aria-selected="true"] { background: var(--pencil); color: var(--paper); }
+html[data-tema="munari"] .lingue-pannello { border-top: 2px solid var(--pencil); }
 footer { font: 1.05rem var(--hand); color: var(--muted); padding: 1rem 0 3rem; text-align: center; }
 footer a { color: var(--pen); }
 details.source { margin-top: 1rem; text-align: left; }
@@ -253,6 +280,40 @@ template nbIndice*(ttitle = "Indice") =
   ## The table of contents of the page's `##` and `###` headings, built when the page is saved.
   nb.indice(ttitle)
 
+const lingue* = [("nim", "👑 Nim"), ("python", "🐍 Python"), ("r", "🏴‍☠️ R")]
+
+func tabsHtml*(panels: openArray[string]): string =
+  ## Tabs over `panels` (HTML), in the order of `lingue`; an empty panel has no tab.
+  result = """<div class="lingue"><div class="lingue-tab" role="tablist">"""
+  var first = true
+  for i, (key, label) in lingue:
+    if panels[i].len == 0: continue
+    result.add &"""<button type="button" role="tab" data-lingua="{key}" aria-selected="{first}">{label}</button>"""
+    first = false
+  result.add "</div>"
+  first = true
+  for i, (key, label) in lingue:
+    if panels[i].len == 0: continue
+    result.add &"""<div class="lingue-pannello" role="tabpanel" data-lingua="{key}"{(if first: "" else: " hidden")}>{panels[i]}</div>"""
+    first = false
+  result.add "</div>"
+
+func codeHtml*(code, lang: string): string =
+  ## Code that is shown, not run (Python and R examples).
+  "<pre><code class=\"" & lang & "\">" & code.strip(chars = {'\n'}).multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;")) & "</code></pre>"
+
+template nbTabs*(python, r: string, body: untyped) =
+  ## The Nim blocks `body` adds (code that runs, and its output), in a 👑 Nim tab next to the
+  ## same example in 🐍 Python (Great Tables) and 🏴‍☠️ R (gt), shown and not run.
+  let first = nb.blocks.len
+  body
+  var nimSide = ""
+  for i in first ..< nb.blocks.len:
+    nimSide.add nb.render(nb.blocks[i])
+  nb.blocks.setLen(first)
+  nbRawHtml: tabsHtml([nimSide, (if python.len > 0: codeHtml(python, "python") else: ""),
+                       (if r.len > 0: codeHtml(r, "r") else: "")])
+
 template nbNota*(text: string, color = "") =
   ## A sticky note; `color` is "", "verde", "rosa" or "azzurra".
   nbRawHtml: "<div class=\"nota " & color & "\">" & markdownToHtml(text) & "</div>"
@@ -283,7 +344,7 @@ func quadernoFooter(blk: JsonNode, nb: Nb): string =
     &"""<a href="{repoUrl}">tabelline</a> · the code on this page ran when it was built""" &
     (if source.len == 0: "" else:
       """<details class="source"><summary>show the source of this page</summary><pre><code class="nohighlight nim">""" &
-      source & "</code></pre></details>") & "</footer>" & temaBodyScript
+      source & "</code></pre></details>") & "</footer>" & temaBodyScript & tabsScript
 
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 

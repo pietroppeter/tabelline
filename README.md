@@ -74,10 +74,15 @@ Kept up to date as tabelline changes:
 - [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
   and Great Tables, what tabelline has, and the releases that plan the rest (data in
   `docs/coverage/gt.json`).
+- [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
+  the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
 - [Devlog](https://pietroppeter.github.io/tabelline/devlog/): the living documents, then the posts.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Three threads for every release](https://pietroppeter.github.io/tabelline/devlog/three-threads/)
+  (7 Nov 2026 E): how tabelline will grow from 0.1 to 0.5, after nanuq: build it, use it on real
+  data, port reference code, with Nim, Python and R in tabs.
 - [Munari meets Japan: palettes for the second look](https://pietroppeter.github.io/tabelline/devlog/palettes/)
   (7 Nov 2026 D): softer colours for the Munari look, from Japan's traditional colour names: what
   each of its six colours does, six palettes to swipe through, the page part by part, and the
