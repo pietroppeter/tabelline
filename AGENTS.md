@@ -43,7 +43,10 @@ working rules that are easy to miss.
 ## Pages
 
 - Every page is a nimib notebook in `docs/` in the quaderno theme (`docs/quaderno.nim`) and
-  writes a standalone HTML file (fonts inlined, nothing remote). The HTML is not committed: CI
+  writes a standalone HTML file (fonts inlined, nothing remote). Every page also carries the
+  Munari look (`docs/munari.nim`, all rules under `html[data-tema="munari"]`), which is the
+  default; the header switches between the two and the choice is remembered. Check new page
+  elements in both looks. The HTML is not committed: CI
   builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
   `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
 - Living documents (the explainer, the specs page) are kept up to date. A devlog post
