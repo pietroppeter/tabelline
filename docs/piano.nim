@@ -20,7 +20,7 @@ const threadKinds* = [
   ("use", "🧭", "Use it",
    "Picks a domain, downloads real data, and writes an explainer about the domain with every new feature, as a user would, without thinking about the implementation. Starts in Python with Great Tables (and R with gt) while the release is built, then in Nim. Reports what is missing, awkward or broken to the build thread."),
   ("port", "📚", "Port the references",
-   "Takes reference code from outside (the gt and Great Tables guides, their examples, Table Contest entries) and ports it to tabelline, with the original next to it, in a tabelline book. Every gap it finds goes to the build thread or the backlog."),
+   "Takes reference code from outside (the gt and Great Tables guides, their examples, Table Contest entries) and ports it to tabelline, with the original next to it, in the tabelline book: a nimibook in this repository, in the Edo palette. Every gap it finds goes to the build thread or the backlog."),
 ]
 
 const releases*: seq[Release] = @[
@@ -28,19 +28,19 @@ const releases*: seq[Release] = @[
     t("build", "Build tabelline 0.1",
       "The 24 small groups proposed in the coverage map (formats, substitutions, caption, rm verbs, order of rows, options, locations), then the release.",
       "post Designing tabelline 0.1; tag v0.1.0"),
-    t("use", "Use it: Milano Cortina 2026",
-      "The medal table of the 2026 Winter Olympics and the fastest times of its races: flags, ranks, durations, small values, links. Data from the official results and Wikipedia.",
+    t("use", "Use it: a month of building with AI, and Operetta",
+      "A simple, conceptual explainer of a month of open source work on GitHub with Claude (libraries, talks, explainers in claude-artifacts), and from it the first design of Operetta: a modular way to build AI-native libraries (living documents, devlog, OpenSpec, coverage, roadmap, book, skills), each part picked by a project's kind and maturity. Includes what skills are and where they live.",
       "explainer post, 👑 🐍 🏴‍☠️ tabs"),
     t("port", "Port the Great Tables guide, Get Started",
       "The first section of the Great Tables user guide (header and footer, stub, column labels, formats, styles, selections) and gt's Introduction to creating gt tables. Both MIT.",
-      "tabelline book, first chapters"),
+      "tabelline book (nimibook, Edo), first chapters"),
   ]),
   Release(version: "0.2", theme: "Rows and merges", threads: @[
     t("build", "Build tabelline 0.2",
       "Summary rows (change add-summary-rows), merged columns, rows added and hidden, stub indent, decimal alignment, more options.",
       "post Designing tabelline 0.2; tag v0.2.0"),
-    t("use", "Use it: the Giro d'Italia, stage by stage",
-      "The 2026 Giro as tables: stages grouped by week with totals, start and finish merged, times and gaps aligned on the decimal mark.",
+    t("use", "Use it: the FOSDEM devrooms",
+      "The history of FOSDEM's devrooms, year by year: names, renames, splits, and the dates of FOSDEM, which fall at different moments. Starts from the FOSDEM devrooms page of claude-artifacts (2024 to 2027) and goes back as far as the schedules go.",
       "explainer post"),
     t("port", "Port the gt case studies",
       "gt's gtcars and sza case studies and the Great Tables examples gallery: groups, summaries, merges.",

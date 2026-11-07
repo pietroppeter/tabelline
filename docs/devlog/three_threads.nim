@@ -154,10 +154,14 @@ block:
   nbTable t
 
 nbText: """
-The subjects of the use-it threads are a first guess, each chosen for what its release adds:
-flags and times for the basics, stages and totals for summary rows, units and months for
-locales, pictures for images and nanoplots, and the clinical tables that gt was first loved
-for. Each thread will check its data and its licence before it starts, and can change subject.
+The first two subjects are chosen. For 0.1 the data is the work itself: a month of open source
+built with Claude, told simply, and from it the first design of *Operetta*, the way of working
+that grew with it (living documents, a devlog, OpenSpec, coverage maps, books, skills), as a set
+of parts that each project picks from. For 0.2, the FOSDEM devrooms: their names, renames and
+splits year by year, and the dates of FOSDEM, which fall at different moments. The later
+subjects are a first guess, chosen for what their release adds: units and months for locales,
+pictures for images and nanoplots, and the clinical tables that gt was first loved for. Each
+thread checks its data and its licence before it starts, and can change subject.
 
 Left aside, for now: interactive tables (the parked [Tabellone](../tabellone/)), the machinery of
 Shiny and R graphics, and fonts loaded from the web.
@@ -168,7 +172,9 @@ Shiny and R graphics, and fonts loaded from the web.
   reference code each port will take, with its licence.
 - The [coverage map](../../coverage/) says what each release adds, group by group, and is
   updated with the code.
-- The ports go in a tabelline book, a new repository made like the Nanuq Book.
+- The ports go in the tabelline book, kept in this repository: a nimibook in one of the
+  Munari palettes, Edo, so that it has a look of its own. The code is small, so one repository
+  is enough; if its CI grows heavy, the book can move out later.
 """
 
 nbSave

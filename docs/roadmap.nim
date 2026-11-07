@@ -86,7 +86,7 @@ block:
     tabHeader "Reference code to port"
     colsLabel {"who": "by", "release": "for"}
     fmtMarkdown "source"
-    tabSourceNote "The ports go in a tabelline book (a new repository, like the Nanuq Book), with the original Python or R next to the Nim."
+    tabSourceNote "The ports go in the tabelline book, a nimibook kept in this repository (in the Edo palette, made like the Nanuq Book), with the original Python or R next to the Nim."
     optQuaderno()
   nbTable t
 
