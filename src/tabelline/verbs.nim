@@ -407,35 +407,33 @@ proc rowGroupOrder*(t: sink Tabella, groups: openArray[string]): Tabella =
 proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
                 palette: seq[string] = palette("blues"), domain = (NaN, NaN), reverse = false,
                 naColor = "#F0F0F0", autoColorText = true, apply = "fill"): Tabella =
-  ## Colours cells by value: numbers along `palette` from the low to the high end of `domain`
-  ## (by default the range of the selected cells), text by category. `apply = "text"` colours the
-  ## text instead of the fill.
+  ## Colours cells by value, each column on its own: a number column along `palette` from the low
+  ## to the high end of `domain` (by default the range of its selected cells), any other column by
+  ## category. A `domain` from high to low runs the palette the other way. `apply = "text"`
+  ## colours the text instead of the fill.
   result = t
   let names = columns.resolve(result.data)
   let ix = rows.resolve(result.data)
   let pal = if reverse: palette.reversed else: palette
-  var lo, hi = NaN
-  var levels: seq[string]
-  var numericCols = true
   for n in names:
-    if not result.data[n].isNumeric: numericCols = false
-  for n in names:
+    let numericCol = result.data[n].isNumeric
+    var lo, hi = NaN
+    var levels: seq[string]
     for i in ix:
       let v = result.data[n, i]
-      if numericCols and v.isNumber:
+      if numericCol and v.isNumber:
         let x = v.toFloat
         if lo.isNaN or x < lo: lo = x
         if hi.isNaN or x > hi: hi = x
       elif not v.isNull and $v notin levels: levels.add $v
-  if not domain[0].isNaN: lo = domain[0]
-  if not domain[1].isNaN: hi = domain[1]
-  for n in names:
+    if not domain[0].isNaN: lo = domain[0]
+    if not domain[1].isNaN: hi = domain[1]
     for i in ix:
       let v = result.data[n, i]
       let c =
         if v.isNull: naColor
-        elif numericCols and v.isNumber:
-          interpolate(pal, if hi > lo: (v.toFloat - lo) / (hi - lo) else: 0.5)
+        elif numericCol and v.isNumber:
+          interpolate(pal, if hi != lo: clamp((v.toFloat - lo) / (hi - lo), 0.0, 1.0) else: 0.5)
         else:
           let k = levels.find($v)
           if levels.len <= 1: pal[0]

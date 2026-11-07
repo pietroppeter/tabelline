@@ -91,6 +91,23 @@ suite "0.1 fixes from the book":
       n: [1, 2]
       s: ["a", "b"]
     check tabella(d).dataColor(everything()).styles.len == 4
+  test "dataColor: each column on its own range, numbers as numbers":
+    let d = tableData:
+      small: [1, 2]
+      large: [100, 200]
+      word: ["a", "b"]
+    let h = tabella(d).dataColor(everything(), palette = @["#FFFFFF", "#000000"]).toHtml
+    check h.count("background-color: #000000; color: #FFFFFF") == 3
+    check h.count("background-color: #FFFFFF; color: #1a1a1a") == 3
+  test "dataColor: a domain from high to low":
+    let d = tableData:
+      x: [0, 90]
+    let h = tabella(d).dataColor("x", palette = @["#FFFFFF", "#000000"], domain = (90.0, 0.0)).toHtml
+    check "background-color: #000000" in h and "background-color: #FFFFFF" in h
+  test "optStylize: white text on a dark heading":
+    for c in ["red", "blue", "pink", "green", "cyan", "gray"]:
+      let h = tabella(tavolaPitagorica(2)).tabHeader("T").optStylize(2, c).toHtml
+      check "color: #FFFFFF; }" in h
   test "the subtitle is not bold":
     check "font-weight: normal" in tabella(tavolaPitagorica(2)).tabHeader("T", "S").toHtml
   test "a part's style wins over its whole part's":

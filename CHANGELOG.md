@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Fix: `dataColor` colours each column on its own range, numbers as numbers next to a text
+  column, and a domain from high to low runs the palette the other way; the heading and column
+  labels get white text on dark backgrounds by contrast, so `optStylize(2, "red")` reads (found by
+  the 0.1 port thread).
+
 - Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*
   (Pietro's seven weeks of open source with Claude, from GitHub data), *Operetta, a first sketch*
   and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#9).
