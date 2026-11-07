@@ -178,10 +178,9 @@ html[data-tema="munari"] .hljs-built_in { color: var(--m-cerchio-testo); }
 html[data-tema="munari"] .hljs-comment { color: var(--muted); font-style: italic; }
 html[data-tema="munari"] .hljs-meta { color: var(--muted); }
 
-/* tables: no tape, no squares; a black rule top and bottom, the top one starting in red */
+/* tables: no tape, no squares; a black rule top and bottom, nothing else */
 html[data-tema="munari"] .tabella { box-shadow: none; border-radius: 0; padding: 16px 0 10px; background: transparent; }
-html[data-tema="munari"] .tabella::before { width: 3rem; height: 3px; border-radius: 0; background: var(--m-cerchio);
-  top: 16px; left: 0; margin: 0; transform: none; box-shadow: none; z-index: 1; }
+html[data-tema="munari"] .tabella::before { content: none; display: none; }
 html[data-tema="munari"] .tabella .tb_table { background-image: none !important; background-color: var(--card) !important;
   font-family: var(--text) !important; color: var(--pencil) !important;
   border-top: 3px solid var(--pencil) !important; border-bottom: 3px solid var(--pencil) !important; }
