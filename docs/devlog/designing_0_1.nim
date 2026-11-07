@@ -2,7 +2,7 @@
 ## A dated post: it tells how 0.1 was designed and built, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
-import tabelline, tabelline/nimib
+import tabelline, tabelline/[nimib, datasets]
 import ../quaderno
 
 let docs = currentSourcePath().parentDir.parentDir
@@ -31,52 +31,266 @@ nbIndice()
 nbText: """
 ## What 0.1 adds
 
-Each row is one OpenSpec change, archived into the [specs](../../specs/) with an example that
-runs. Under each group are its names in R's gt (Python's are the same, when Great Tables has
-them).
+Twenty-four groups, in seven areas. In short:
 """
 
 block:
-  type G = object
-    area, group, gt, nim: string
+  type A = object
+    area: string
+    groups: int
+    enables: string
   let rows = @[
-    G(area: "Parts of a table", group: "Spanners from column names", gt: "tab_spanner_delim()", nim: "tabSpannerDelim(delim, columns, split, limit, reverse): \"a.b\" names become spanners and labels, on several levels."),
-    G(area: "Parts of a table", group: "Caption", gt: "tab_caption()", nim: "tabCaption(text): an HTML <caption>, a first line in text, an italic line in Markdown."),
-    G(area: "Parts of a table", group: "Remove parts", gt: "rm_header(), rm_spanners(), rm_footnotes(), rm_source_notes(), rm_stubhead(), rm_caption()", nim: "rmHeader, rmSpanners(labels, levels), rmFootnotes(indices), rmSourceNotes(indices), rmStubhead, rmCaption."),
-    G(area: "Formats", group: "Engineering, SI prefixes", gt: "fmt_engineering(), fmt_number_si()", nim: "fmtEngineering (× 10³ steps of three), fmtNumberSi(unit) from quecto to quetta."),
-    G(area: "Formats", group: "Parts per", gt: "fmt_partsper()", nim: "fmtPartsper: ‰, ‱, pcm, ppm, ppb, ppt, ppq."),
-    G(area: "Formats", group: "Bytes", gt: "fmt_bytes()", nim: "fmtBytes: kB, MB (decimal) or KiB, MiB (binary)."),
-    G(area: "Formats", group: "Index letters, spelled numbers", gt: "fmt_index(), fmt_spelled_num()", nim: "fmtIndex (repeat or excel), fmtSpelledNum (English, zero to one hundred)."),
-    G(area: "Formats", group: "Times and datetimes", gt: "fmt_time(), fmt_datetime()", nim: "fmtTime, fmtDatetime, with named time styles; no time zones."),
-    G(area: "Formats", group: "Durations", gt: "fmt_duration()", nim: "fmtDuration: narrow, wide, colon-sep and iso styles, from any input unit."),
-    G(area: "Formats", group: "Booleans", gt: "fmt_tf()", nim: "fmtTf with gt's ten styles, naText, colors and html."),
-    G(area: "Formats", group: "URLs and emails", gt: "fmt_url(), fmt_email()", nim: "fmtUrl, fmtEmail: links or buttons; Markdown links in cells are read."),
-    G(area: "Formats", group: "Flags", gt: "fmt_flag()", nim: "fmtFlag: two-letter codes as emoji (regional indicators), nothing to load."),
-    G(area: "Formats", group: "Formats for single values", gt: "vec_fmt_*(), vals.fmt_*()", nim: "A public formatX for every format: formatEngineering, formatBytes, formatDuration, formatFlag, ..."),
-    G(area: "Substitutions and text", group: "Small, large and given values", gt: "sub_small_vals(), sub_large_vals(), sub_values()", nim: "subSmallVals, subLargeVals, subValues(values or a proc)."),
-    G(area: "Substitutions and text", group: "Text transforms", gt: "text_transform(), text_replace(), text_case_match(), text_case_when()", nim: "textTransform(proc, locations), textReplace (plain text), textCaseMatch; textCaseWhen is a proc with case."),
-    G(area: "Columns", group: "Labels from a function", gt: "cols_label_with()", nim: "colsLabelWith(columns, proc)."),
-    G(area: "Columns", group: "Move to end, reorder", gt: "cols_move_to_end(), cols_reorder()", nim: "colsMoveToEnd; colsReorder sorts the given columns in their places."),
-    G(area: "Rows", group: "Order of rows and groups", gt: "row_order(), row_group_order()", nim: "rowOrder(columns, reverse), rowGroupOrder(groups)."),
-    G(area: "Styles and locations", group: "Any CSS", gt: "style.css()", nim: "style.css(\"declarations\")."),
-    G(area: "Styles and locations", group: "Locations", gt: "cells_title(), cells_body(), cells_stub(), ...", nim: "Every location of Great Tables but the summary ones (with summary rows, 0.2): loc.header, loc.columnHeader, loc.footer are new."),
-    G(area: "Options", group: "Padding, outline, lines", gt: "opt_vertical_padding(), opt_horizontal_padding(), opt_table_outline(), opt_table_lines()", nim: "optVerticalPadding, optHorizontalPadding, optTableOutline, optTableLines."),
-    G(area: "Options", group: "Footnote marks", gt: "opt_footnote_marks(), opt_footnote_spec(), opt_footnote_order()", nim: "optFootnoteMarks (names or your own), optFootnoteSpec, optFootnoteOrder."),
-    G(area: "Options", group: "Extra CSS", gt: "opt_css()", nim: "optCss(css, add), scoped to the table."),
-    G(area: "Helpers, data and interop", group: "Text helpers", gt: "md(), html()", nim: "md() and html()."),
+    A(area: "Parts of a table", groups: 3, enables: "headers from `a.b` names, a caption, taking parts away"),
+    A(area: "Formats", groups: 10, enables: "kW and µg, ‰ and ppm, kB and GiB, A B C, *forty-two*, 2:35 PM, 2h 5m, ●○, links, 🇮🇹"),
+    A(area: "Substitutions and text", groups: 2, enables: "<0.01 for noise, n/a for −99, text changed as it is shown"),
+    A(area: "Columns", groups: 2, enables: "labels from a proc, columns moved to the end or swapped in place"),
+    A(area: "Rows", groups: 1, enables: "rows sorted and groups ordered, without touching the data"),
+    A(area: "Styles", groups: 2, enables: "any CSS, on the whole header, column header or footer"),
+    A(area: "Options", groups: 4, enables: "compact or roomy, boxed or bare, footnote marks your way, your own CSS"),
   ]
-  type Row = object
-    area, group, nim: string
-  let shown = rows.mapIt(Row(area: it.area, nim: it.nim,
-    group: "**" & it.group & "**<br>`" & it.gt.replace("(), ", "()` `") & "`"))
-  let t = tabella(shown, groupnameCol = "area"):
-    tabHeader "The 24 groups of 0.1", "one OpenSpec change each"
-    colsLabel {"group": md("group, and its names in gt"), "nim": "in tabelline"}
-    fmtMarkdown "group"
-    colsWidth {"group": "45%"}
+  let t = tabella(rows, rownameCol = "area"):
+    tabHeader "0.1 in seven lines"
+    colsLabel {"groups": "groups", "enables": "what it lets you do"}
+    fmtMarkdown "enables"
+    tabStubhead "area"
     tabOptions(tableWidth = "100%", tableFontSize = "14px")
-    tabSourceNote md("From `docs/coverage/gt.json`, the coverage map, as it was when 0.1 was built.")
   nbTable t
+
+nbText: """
+And one by one: a card for each group, with the smallest example that shows it. Swipe the
+cards sideways (or scroll them with a trackpad); every table is made by the code above it.
+"""
+
+nbRawHtml: """<style>
+.galleria { display: flex; align-items: flex-start; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: .2rem 0 .8rem; -webkit-overflow-scrolling: touch; }
+.galleria::after { content: ""; flex: 0 0 .2rem; }
+.scheda { flex: 0 0 min(86%, 26rem); scroll-snap-align: start; overflow-x: auto; padding: .7rem .9rem .8rem;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+.scheda .numero { font: 700 .72rem/1.2 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
+.scheda h3 { margin: .15rem 0 .3rem !important; font-size: 1.1rem !important; line-height: 1.25 !important; }
+.scheda p { margin: 0 0 .5rem; font-size: .92rem; line-height: 1.45; }
+.scheda pre { margin: .4rem 0 !important; }
+body .scheda pre > code { font-size: 12.5px !important; }
+.scheda .tabella { margin: .4rem 0 0; }
+.scheda .tabella table { font-size: 14px !important; }
+</style>"""
+
+var schede: seq[string]
+var numero = 0
+
+template scheda(titolo, abilita: string, body: untyped) =
+  ## A card of the gallery: what a group lets you do, and the blocks `body` adds (code and table).
+  inc numero
+  let first = nb.blocks.len
+  block:
+    body
+  var inner = ""
+  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
+  nb.blocks.setLen(first)
+  schede.add "<div class=\"scheda\"><div class=\"numero\">" & $numero & " / 24</div><h3>" & titolo &
+    "</h3><p>" & abilita & "</p>" & inner & "</div>"
+
+let pianeti {.used.} = tableData:
+  planet: ["Mercury", "Venus", "Earth", "Mars"]
+  moons: [0, 0, 1, 2]
+  rings: [false, false, false, true]
+
+scheda "Spanners from column names", "Data with names like <code>size.mass</code> gets its headers for free.":
+  nbCode:
+    let d = tableData:
+      planet: ["Earth", "Mars"]
+      `size.mass`: [5.97, 0.64]
+      `size.radius`: [6371, 3390]
+    let t = tabella(d, rownameCol = "planet"):
+      tabSpannerDelim()
+  nbTable t
+
+scheda "Caption", "A table that names itself, for screen readers and for figures in a document.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabCaption "Table 1. The rocky planets."
+  nbTable t
+
+scheda "Removing parts", "One house-style table, and variants that drop what they do not need.":
+  nbCode:
+    let base = tabella(pianeti):
+      tabHeader "Rocky planets", "and their moons"
+      tabSourceNote "NASA"
+    let t = base.rmHeader().rmSourceNotes()
+  nbTable t
+
+scheda "Engineering notation and SI prefixes", "Physics-sized numbers: powers of a thousand, or k, M, µ before a unit.":
+  nbCode:
+    let d = tableData:
+      plant: ["kettle", "wind turbine", "phone"]
+      power: [2000.0, 3.6e6, 0.005]
+    let t = tabella(d):
+      fmtNumberSi "power", unit = "W", decimals = 1
+  nbTable t
+
+scheda "Parts per", "Concentrations in the unit people use: ppm for CO₂, ‰ for salt.":
+  nbCode:
+    let d = tableData:
+      year: [1850, 2025]
+      co2: [0.000285, 0.000425]
+    let t = tabella(d):
+      fmtPartsper "co2", toUnits = "ppm", decimals = 0
+      fmtInteger "year", useSeps = false
+  nbTable t
+
+scheda "Bytes", "File and memory sizes that read at a glance, in kB or KiB.":
+  nbCode:
+    let d = tableData:
+      file: ["notes.txt", "photo.jpg", "film.mkv"]
+      size: [512, 2_400_000, 3_200_000_000]
+    let t = tabella(d):
+      fmtBytes "size"
+  nbTable t
+
+scheda "Letters and spelled numbers", "Lists labelled a, b, c, and small numbers in words, as in prose.":
+  nbCode:
+    let d = tableData:
+      option: [1, 2, 3]
+      moons: [0, 1, 2]
+    let t = tabella(d):
+      fmtIndex "option", upper = false
+      fmtSpelledNum "moons"
+  nbTable t
+
+scheda "Times and datetimes", "Clock times and timestamps in the style of your readers.":
+  nbCode:
+    let d = tableData:
+      event: ["launch", "landing"]
+      utc: ["1969-07-16T13:32:00", "1969-07-20T20:17:40"]
+    let t = tabella(d):
+      fmtDatetime "utc", dateStyle = "day_m_year", timeStyle = "h_m_p"
+  nbTable t
+
+scheda "Durations", "A column of seconds becomes race times or run times.":
+  nbCode:
+    let d = tableData:
+      race: ["5 km", "half marathon", "marathon"]
+      seconds: [1145, 5400, 12_420]
+    let t = tabella(d):
+      fmtDuration "seconds"
+  nbTable t
+
+scheda "Booleans", "True and false as symbols or words, in colour if you like.":
+  nbCode:
+    let t = tabella(pianeti):
+      fmtTf "rings", tfStyle = "circles", colors = ["#B5446E", "#999999"]
+  nbTable t
+
+scheda "Links", "Addresses become links, or small buttons; Markdown links keep their label.":
+  nbCode:
+    let d = tableData:
+      project: ["Nim", "nimib"]
+      site: ["https://nim-lang.org", "[repo](https://github.com/pietroppeter/nimib)"]
+    let t = tabella(d):
+      fmtUrl "site"
+  nbTable t
+
+scheda "Flags", "Country codes as flags, with nothing to load.":
+  nbCode:
+    let d = tableData:
+      city: ["Roma", "Tokyo", "Paris"]
+      country: ["IT", "JP", "FR"]
+    let t = tabella(d):
+      fmtFlag "country"
+  nbTable t
+
+scheda "Value functions", "The same formats outside tables, for the sentence that talks about one.":
+  nbCode:
+    echo "the film is ", formatBytes(3.2e9), " and lasts ", formatDuration(8100)
+    echo "CO₂ went from ", formatPartsper(0.000285, "ppm", 0), " to ", formatPartsper(0.000425, "ppm", 0)
+
+scheda "Small, large and given values", "Hide noise below a threshold, cap huge numbers, mark sentinel values.":
+  nbCode:
+    let d = tableData:
+      sample: ["a", "b", "c"]
+      dose: [0.004, 2.5, -99.0]
+    let t = tabella(d):
+      fmtNumber "dose"
+      subSmallVals "dose"
+      subValues "dose", values = [-99], replacement = "n/a"
+  nbTable t
+
+scheda "Text transforms", "The last word on what a cell says: upper case, a word replaced, a code turned into a label.":
+  nbCode:
+    let t = tabella(pianeti, rownameCol = "planet"):
+      textTransform toUpperAscii, loc.stub()
+      fmtTf "rings", tfStyle = "yes-no"
+      textCaseMatch {"yes": "rings!", "no": ""}, locations = loc.body("rings")
+  nbTable t
+
+scheda "Labels from a proc", "Every label made from its name at once: capitals, units, translations.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsLabelWith capitalizeAscii
+  nbTable t
+
+scheda "Moving columns", "The key column at the end, two columns swapped in place.":
+  nbCode:
+    let t = tabella(pianeti):
+      colsMoveToEnd "planet"
+      colsReorder ["rings", "moons"]
+  nbTable t
+
+scheda "Order of rows and groups", "Rows sorted and groups in your order, while the data stays as it is.":
+  nbCode:
+    let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+      colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance",
+                "orbital_period", "mean_temp", "rings"]
+      rowOrder "moons", reverse = true
+      rowGroupOrder ["Gas giant"]
+  nbTable t
+
+scheda "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabStyle style.css("font-variant: small-caps; letter-spacing: .08em"), loc.body("planet")
+  nbTable t
+
+scheda "Whole parts as locations", "Style the whole header, column header or footer in one call.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabHeader "Rocky planets"
+      tabStyle style.fill("#F6E3EA"), loc.header(), loc.columnHeader()
+  nbTable t
+
+scheda "Padding, outline and lines", "Compact or roomy, boxed, with or without lines between cells.":
+  nbCode:
+    let t = tabella(pianeti):
+      optVerticalPadding 0.4
+      optTableLines "all"
+      optTableOutline color = "#555555", width = "2px"
+  nbTable t
+
+scheda "Footnote marks, look and order", "Marks your way: symbols, letters or your own, raised or in brackets.":
+  nbCode:
+    let t = tabella(pianeti, rownameCol = "planet"):
+      tabFootnote "The only one with a ring in this list.", loc.body("rings", rows = [3])
+      tabFootnote "Moons known in 2024.", loc.columnLabels("moons")
+      optFootnoteMarks ["🌑", "🌓"]
+      optFootnoteSpec "^", "("
+  nbTable t
+
+scheda "Extra CSS", "A rule of your own, scoped to this table only.":
+  nbCode:
+    let t = tabella(pianeti):
+      optCss "td.tb_row:hover { background: #FFF3B0; }"
+  nbTable t
+
+scheda "Markdown and HTML text", "Labels and notes with emphasis, code, sub- and superscripts, or raw HTML.":
+  nbCode:
+    let t = tabella(pianeti):
+      tabHeader md("The **rocky** planets"), html("<i>and their moons</i>")
+      colsLabel {"moons": md("moons (*n*)")}
+  nbTable t
+
+nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"the 24 groups: swipe or scroll sideways\">" &
+  schede.join("") & "</div>"
 
 nbText: """
 ## How they were built
