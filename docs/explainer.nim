@@ -22,18 +22,15 @@ Here is the first table every Italian pupil meets, *la tavola pitagorica*, made 
 from scratch. The code ran when this page was built.
 
 First the data: a column `×` with the numbers 1 to 10, then one column for each factor.
-`collect`, from Nim's `std/sugar`, turns a `for` loop into a list, one value per turn:
+`collect`, from Nim's `std/sugar`, turns a `for` loop into a list, one value per turn, and
+inside `tableData:` a `for` loop adds a column per turn, named `$j`:
 """
 
 nbCode:
-  var tavola = TableData()
-  let numbers = collect:
-    for i in 1 .. 10: toValue(i)
-  tavola.addColumn "×", numbers
-  for j in 1 .. 10:
-    let products = collect:
-      for i in 1 .. 10: toValue(i * j)
-    tavola.addColumn $j, products
+  let tavola = tableData:
+    `×`: collect(for i in 1 .. 10: i)
+    for j in 1 .. 10:
+      $j: collect(for i in 1 .. 10: i * j)
 
 nbText: """
 Then the table: `tabella` takes the data, and each line under it adds a part or a style.
