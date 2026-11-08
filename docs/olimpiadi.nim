@@ -271,6 +271,23 @@ const snow* = [
 const snowSources* = ["2026/02/24/milano-cortina-2026-olimpiadi-invernali-bilancio-insostenibilita-problemi/",
                       "2026/01/22/a-cortina-ci-sono-piu-cantieri-che-neve/"]
 
+type Footprint* = object
+  part*, what*: string
+  tonnes*, snowKm2*, iceMt*: float   ## tonnes of CO2 equivalent; future loss of snow cover (km²) and glacier ice (Mt)
+
+const footprint* = [
+  ## Scientists for Global Responsibility and New Weather Institute, "Olympics Torched", January 2026,
+  ## as summarised by its authors: estimates from the organisers' official data, plus the emissions
+  ## that three sponsorship deals induce. Spectator travel and Eni are parts of the rows above them;
+  ## NaN where the summary gives no figure (a missing value, shown blank).
+  Footprint(part: "The Games", what: "all of it", tonnes: 930_000, snowKm2: 2.3, iceMt: 14),
+  Footprint(part: "The Games", what: "spectators' travel", tonnes: 410_000, snowKm2: NaN, iceMt: NaN),
+  Footprint(part: "Sponsors", what: "Eni, Stellantis, ITA", tonnes: 1_300_000, snowKm2: 3.2, iceMt: 20),
+  Footprint(part: "Sponsors", what: "Eni alone", tonnes: 700_000, snowKm2: 1.7, iceMt: 11),
+]
+const footprintSource* = "https://www.sgr.org.uk/resources/hidden-carbon-footprint-winter-olympics"
+const footprintReport* = "https://www.sgr.org.uk/publications/olympics-torched"
+
 type Afterwards* = object
   venue*, built*, becomes*: string
 const afterwards* = [

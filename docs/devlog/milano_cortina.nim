@@ -575,6 +575,35 @@ The data has the share as a fraction of the air, 0.00042935, which no one wants 
 `fmtPartsper(toUnits = "ppm")` writes it as 429 ppm. Between Turin and Milano Cortina, twenty
 years, the air gained 47 ppm; it took the forty-seven years before Turin to gain 66.
 
+How much did the Games themselves add? Il Post gives no figure. In January 2026 two British
+groups, Scientists for Global Responsibility and the New Weather Institute, estimated it from the
+organisers' own data: about 930,000 tonnes of CO₂ equivalent, almost half of it from spectators'
+travel. They added what the official accounts leave out, the emissions that three sponsors'
+advertising brings (an oil company, a carmaker, an airline), and what all of it will melt:
+"""
+
+nbShowCode:
+  let t = tabella(@footprint, rownameCol = "what", groupnameCol = "part"):
+    optTokens()
+    tabHeader "The Games' footprint", "estimated before the Games, and what it will melt"
+    colsLabel {"tonnes": "CO₂e", "snowKm2": "snow cover", "iceMt": "glacier ice"}
+    fmtNumber "tonnes", compact = true, pattern = "{x} t"
+    fmtNumber "snowKm2", decimals = 1, pattern = "{x} km²"
+    fmtNumber "iceMt", decimals = 0, pattern = "{x} Mt"
+    tabStyle style.text(style = "italic"), loc.body(rows = where($it["what"] in ["spectators' travel", "Eni alone"]))
+    tabStyle style.text(style = "italic"), loc.stub(rows = where($it["what"] in ["spectators' travel", "Eni alone"]))
+    tabStyle style.css("white-space: nowrap"), loc.body()
+    tabFootnote "Over 14 Mt and over 20 Mt: the report gives lower bounds.", loc.columnLabels(cols("iceMt"))
+    tabSourceNote md(&"SGR and New Weather Institute, [Olympics Torched]({footprintReport}), January 2026; figures from [its summary]({footprintSource}).")
+    tabOptions(tableFontSize = "13px")
+  nbTable t
+
+nbText: """
+The rows in italics are part of the row above. The sponsors add about 40% more than the Games'
+own footprint, and the report puts the total loss at 5.5 km² of snow cover and over 34 million
+tonnes of glacier ice. `fmtNumber(compact = true, pattern = "{x} t")` writes 930K t; the same
+`pattern` puts each unit after its number.
+
 ### Buildings
 
 What happens to Olympic venues afterwards? In 2025 the IOC published a study of almost a thousand,
@@ -728,6 +757,8 @@ nbShowCode:
         how: "`textCaseMatch(cases, loc.body(...))` does not compile: `default` and `replace` come first, so the location needs `locations = `. Moving `locations` before them would read as gt does."),
     Gap(what: "Ranks from the data",
         how: "`rowOrder` sorts golds-first or total-first, but a rank column must be computed outside; a `rank` helper over the shown order would make the two tables complete."),
+    Gap(what: "A blank instead of zero",
+        how: "`subZero(zeroText = \"\")` leaves the zero as it is, because an empty text means no substitution; the footprint table stores NaN (a missing value, blank by default) instead."),
   ]
   let t = tabella(rows, rownameCol = "what"):
     optTokens()
