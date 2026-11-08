@@ -191,14 +191,16 @@ newNbBlock(NbParte):
   title: string
   role: PartRole
   toHtml:
-    &"""<p class="parte parte-{blk.role}">Part {blk.numero} · {inline(blk.title)}</p>"""
+    if blk.title == "": &"""<p class="parte parte-{blk.role}" hidden></p>"""   # colour only, no label
+    else: &"""<p class="parte parte-{blk.role}">Part {blk.numero} · {inline(blk.title)}</p>"""
 
 proc parte*(nb: var Nb, num: int, title: string, role: PartRole) =
   nb.add newNbParte(numero = num, title = title, role = role)
 
 template nbParte*(tnum: int, ttitle: string, trole: PartRole) =
   ## The start of a part of a long page: a label, and from here on the sections' circles (and
-  ## their entries in the indice) take the colour of `trole`.
+  ## their entries in the indice) take the colour of `trole`. With an empty title there is no
+  ## label, only the colour: for a page whose headings already name its parts.
   nb.parte(tnum, ttitle, trole)
 
 # ------------------------------------------------------------------------------------ the indice
@@ -241,6 +243,7 @@ type NotaKind* = enum
   nkDone = "done"        ## what is done, what works
   nkMissing = "missing"  ## what is missing, or differs from gt and Great Tables
   nkWarning = "warning"  ## something to watch out for: the API will change, a step breaks things
+  nkCode = "code"        ## about the code: what tabelline does in the table above, and why
 
 newNbBlock(NbNota):
   text: string

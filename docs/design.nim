@@ -153,12 +153,15 @@ with `nbParte(number, title, role)`: from there on, its sections take the part's
 ## Notes
 
 A note is a sheet set apart, beside the text, in Markdown. Its kind is an enum, `NotaKind`, so a
-kind spelled wrong does not compile; its colour follows from the kind.
+kind spelled wrong does not compile; its colour follows from the kind. A page that tells a story
+with tables keeps the story in the text and puts what is about the code in green **code** notes,
+one under the table it explains, and a first one that says so.
 """
 nbShowCode:
   nbNota "**plain**: an aside."
   nbNota "**info**: information, a page to go to.", nkInfo
   nbNota "**done**: what is done, what works.", nkDone
+  nbNota "**code**: about the code, what tabelline does in the table above, and why.", nkCode
   nbNota "**missing**: a gap, or a difference from gt and Great Tables.", nkMissing
   nbNota "**warning**: the API will change.", nkWarning, "A note can have a title"
 

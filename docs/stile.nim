@@ -221,7 +221,7 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid v
    in the colour of their kind; nothing on them to press. A warning carries the triangle. */
 .nota { padding: 1rem 1.2rem; margin: 1.3rem 0; background: var(--n-1); border-top: 5px solid var(--n-9); }
 .nota.info { background: var(--secondary-soft); border-top-color: var(--secondary); }
-.nota.done { background: var(--success-soft); border-top-color: var(--success); }
+.nota.done, .nota.code { background: var(--success-soft); border-top-color: var(--success); }
 .nota.missing { background: var(--primary-soft); border-top-color: var(--primary); }
 .nota.warning { background: var(--warning-soft); border-top-color: var(--warning); }
 .nota > :first-child { margin-top: 0; } .nota > :last-child { margin-bottom: 0; }
@@ -295,6 +295,7 @@ body details.codice pre > code { font-size: 12.5px; }
 /* parts of a long page (nbParte): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--n-7); }
 .parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
+.parte ~ .parte-primary ~ h2 { --part: var(--primary); }   /* a later primary part takes the circles back */
 
 /* the specs page (nbSpecs): each capability folds open; examples carry a pass stamp */
 details.spec { background: var(--n-1); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }
@@ -420,7 +421,7 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border-color: var(-
 /* notes (nbNota): a sticky note, coloured by its kind; a warning carries the triangle */
 .nota { background: var(--postit); padding: .8rem 1.1rem; border-top: 0; border-radius: 2px 2px 14px 2px;
   box-shadow: 2px 3px 8px rgba(0,0,0,.09); transform: rotate(-.3deg); }
-.nota.info { background: var(--secondary-soft); } .nota.done { background: var(--success-soft); }
+.nota.info { background: var(--secondary-soft); } .nota.done, .nota.code { background: var(--success-soft); }
 .nota.missing { background: var(--primary-soft); } .nota.warning { background: var(--warning-soft); }
 .nota .titolo { font: 1.3rem var(--hand); color: var(--red-pen); }
 .nota.warning { padding-left: 3rem; }

@@ -125,6 +125,19 @@ const sportFacts* = [
   SportFacts(sport: "Skeleton", kind: "sliding", new: "mixed team"),
 ]
 
+const kindLabels* = {"snow": "❄️ on snow", "ice": "⛸️ on ice", "sliding": "🛷 sliding"}
+  ## The three kinds of sport, each with its emoji: the labels of the row groups.
+
+proc kindMark*(kind: string): string =
+  ## The emoji of a kind of sport.
+  for (k, label) in kindLabels:
+    if k == kind: return label.split(' ')[0]
+
+proc sportMarks*(): seq[(string, string)] =
+  ## Each sport with the emoji of its kind in front, for `textCaseMatch(replace = "partial")`.
+  for f in sportFacts: result.add (f.sport, kindMark(f.kind) & " " & f.sport)
+  result.add ("Short track speed skating", kindMark("ice") & " Short track speed skating")  # the venues' spelling
+
 type Trip* = object
   ## A trip between two places of the Games, in hours (lowest and highest).
   trip*, by*: string

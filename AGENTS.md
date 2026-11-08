@@ -52,7 +52,9 @@ working rules that are easy to miss.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
+  `nbParte`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
+  with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
   `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
   `optPageTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
