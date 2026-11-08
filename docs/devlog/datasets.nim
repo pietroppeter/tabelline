@@ -45,7 +45,7 @@ pages so far took whatever data was at hand. This post surveys it, in three part
 2. **What gt and Great Tables show first**: the datasets of their READMEs, of their first guide,
    and of their reference.
 3. **What we could have**: three domains in three sizes, a tabelline twin for gt's best known
-   datasets, and a first taste of two of them.
+   datasets, and a first taste of three of them.
 
 It ends with recommendations, the choices to make, and how this page is built.
 """
@@ -395,7 +395,7 @@ nbShowCode:
               "`planets`; `isole`: the islands of the Mediterranean; `alpi`: the highest peaks of the Alps"]
     big: ["a pizzeria's year of orders (made up, as `pizzaplace` is)",
           "every Compasso d'Oro, 1954 to 2024",
-          "`paesi`: countries, their population and their World Heritage Sites"]
+          "`paesi`: countries, their population and their World Heritage Sites; `citta`: the cities of the EU"]
   let t = tabella(grid, rownameCol = "domain"):
     optPageTheme()
     tabHeader "Nine datasets", "three domains × three sizes"
@@ -429,12 +429,12 @@ nbShowCode:
          source: "✅ Wikipedia and `countrypops`"),
     Twin(gt: "`exibble`", twin: "`dispensa`: a pantry, with dates, times, prices, missing values",
          source: "✅ made up"),
-    Twin(gt: "`countrypops`", twin: "`paesi` in full: every country, every year", source: "🟡 World Bank"),
+    Twin(gt: "`countrypops`", twin: "`paesi` in full: every country, every year, with CO₂ and GDP", source: "✅ Our World in Data, on GitHub"),
     Twin(gt: "`sza`", twin: "`tavolaPitagorica`, coloured by value", source: "✅ the code"),
     Twin(gt: "`airquality`", twin: "the air or the weather of an Italian city", source: "🟡 ARPA Lombardia"),
     Twin(gt: "`gtcars`", twin: "the Compasso d'Oro: designer, object, maker, year", source: "✅ Italian Wikipedia"),
     Twin(gt: "`pizzaplace`", twin: "a Neapolitan pizzeria's orders", source: "✅ made up"),
-    Twin(gt: "`towny`", twin: "the *comuni* of Italy", source: "🟡 ISTAT"),
+    Twin(gt: "`towny`", twin: "`citta`: the largest cities of the EU, and the day each was counted", source: "✅ Wikipedia, 95 cities"),
     Twin(gt: "`films`, `metro`", twin: "Venice's Golden Lions, Milan's metro", source: "🟡 Wikipedia, Comune di Milano")]
   let t = tabella(rows, rownameCol = "gt"):
     optPageTheme()
@@ -452,7 +452,7 @@ measures with gaps; `pizzaplace` a big table of sales.
 """
 
 nbText: """
-## Two first tastes
+## Three first tastes
 
 ### The islands of the Mediterranean
 
@@ -488,6 +488,44 @@ nbText: """
 Like `islands`, it is a list anyone can read, and it grows: area and people give a density, the
 countries give row groups (Greece has 101 of the 194, Croatia 41, Italy 27), and the flags come
 for free with `fmtFlag`.
+
+### The cities of the European Union
+
+gt's `towny` lists places and how many people live there. Wikipedia lists the 95 cities of the
+European Union with more than about 300,000 people inside their city limits, each with the day
+its country counted them: Rome is third, after Berlin and Madrid, and the dates show that every
+country counts on a day of its own.
+"""
+
+nbShowCode:
+  let raw = readTsv(data / "citta.tsv")
+  const iso = {"GER": "DE", "ESP": "ES", "ITA": "IT", "FRA": "FR", "AUT": "AT", "POL": "PL", "ROU": "RO",
+               "HUN": "HU", "CZE": "CZ", "BUL": "BG", "NLD": "NL", "SWE": "SE", "POR": "PT", "GRC": "GR",
+               "DEN": "DK", "FIN": "FI", "LTU": "LT", "IRL": "IE", "BEL": "BE", "CRO": "HR", "LVA": "LV",
+               "EST": "EE", "SVN": "SI", "SVK": "SK"}.toTable
+  type Citta = object
+    city, flag: string
+    population: int
+    counted: string
+  var rows: seq[Citta]
+  for i in 0 ..< 10:
+    rows.add Citta(city: $raw["city", i], flag: iso.getOrDefault($raw["state", i]),
+                   population: int(raw["population", i].toFloat), counted: $raw["counted", i])
+  let t = tabella(rows, rownameCol = "city"):
+    optPageTheme()
+    tabHeader "Cities of the European Union", "the ten largest, within their city limits"
+    fmtFlag "flag"
+    fmtInteger "population"
+    fmtDate "counted", dateStyle = "d MMM y"
+    colsLabel {"flag": "", "counted": "counted on"}
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["city"] == "Rome"))
+    tabSourceNote md("Wikipedia, *List of cities in the European Union by population within city limits*, 8 November 2026, by `citta.py`.")
+  nbTable t
+
+nbText: """
+Milan is 13th (1.36 million), Naples 18th and Turin 20th; of the 95 cities, 23 are German, 13
+Spanish, 9 Polish and 9 Italian. Dates like these are what `fmtDate` is for, and the country codes
+give flags again.
 
 ### The countries of the World Heritage
 
@@ -529,8 +567,10 @@ own). So `paesi` should carry both numbers, and its examples should say which th
 
 Two things the twist needs that tabelline does not have: **a join** (the names differ, *Russia*
 here, *Russian Federation* in `countrypops`, so the script joins on ISO codes), and **the data
-itself**: UNESCO's own list and the World Bank's API are blocked from this sandbox, Wikipedia
-answers slowly (it rate-limits) but answers.
+itself**: UNESCO's own list, the World Bank's API and the Our World in Data site are blocked from
+this sandbox, Wikipedia answers slowly (it rate-limits) but answers, and Our World in Data's
+datasets on GitHub can be read: `owid/co2-data` has every country's population, GDP and CO₂ by
+year up to 2024 (CC BY), a richer `countrypops`.
 """
 
 # ================================================================================== closing
@@ -569,7 +609,7 @@ the book keeps its sources as they are, and a `tabelline` box can show the twin 
 ## Choices to make
 
 - **The first table**: `isole` (recommended), `alpi`, `paesi`, the planets as today, or a small food table?
-- **Names**: Italian (`isole`, `alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
+- **Names**: Italian (`isole`, `citta`, `alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
   English, as `planets` is? An Italian name is part of the twist; mixing both is what we have now.
 - **Bottega**: is Munari's *risotto verde* the right tiny example for design, and the Compasso
   d'Oro the right bigger one? A dataset from Munari's own books needs care with what we take from
@@ -593,7 +633,8 @@ README, counting the calls of each dataset and the `tableData:` blocks. They are
 the READMEs, guides and reference files of gt and Great Tables from raw.githubusercontent.com and
 writes `survey.tsv`; `unesco.py` reads Wikipedia's *World Heritage Site* page as wikitext and Great
 Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`; `isole.py` reads
-Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`. The page reads both
+Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`; `citta.py` reads its
+list of the cities of the European Union and writes `citta.tsv`. The page reads both
 with a `readTsv` of its own, which skips the `#` lines naming the sources.
 """
 
