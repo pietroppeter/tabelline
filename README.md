@@ -89,6 +89,10 @@ Kept up to date as tabelline changes. The home page lists them in this order:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Reviewing the design: a palette by roles](https://pietroppeter.github.io/tabelline/devlog/design-review/)
+  (8 Nov 2026 C): what the pages' six colours do today, a palette by roles (neutral, primary,
+  secondary, status, data) for both looks, every component mapped to it, and six choices to make
+  before it becomes the new Design Ref.
 - [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
   (7 Nov 2026 I): what an agent skill is, where skills live in an open source project, who does
   them well, how they work from the phone, how to test one, and what tabelline could do with them.
