@@ -37,7 +37,7 @@
 - Docs: the three devlog posts of the 0.1 use-it thread (*A month of building, as an operetta*,
   *Operetta, a first sketch*, *Skills, from the beginning*, #9) left the devlog: they are about the
   way of working, not tabelline, and are now one article in three parts in claude-artifacts,
-  [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/) (#PR).
+  [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/) (#22).
 
 The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#10):
 
