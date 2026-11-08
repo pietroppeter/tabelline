@@ -4,12 +4,12 @@
 import std/[os, strutils, strformat, tables]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno, ../mese
+import ../blocchi, ../mese
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "month-of-building" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "A month of building, as an operetta", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 const bar = "var(--blu, var(--pen))"   # the square's blue in Munari, the pen in the quaderno
@@ -18,14 +18,10 @@ var repos: CountTable[string]
 for i in 0 ..< d.nrows: repos.inc $d["repo", i]
 let byAct = prsByAct()
 
+nbTitolo &"7 November 2026", "A month of building, as an operetta", &"""
+Seven weeks of open source made with Claude, told in seven acts: what happened, one moment from each, and the parts of a way of working that grew along the way.
+"""
 nbText: &"""
-<p class="kicker">7 November 2026</p>
-
-# A month of building, as an operetta
-
-<p class="lede">Seven weeks of open source made with Claude, told in seven acts: what happened,
-one moment from each, and the parts of a way of working that grew along the way.</p>
-
 Since Opus 5.5 came out, Pietro has been writing open source with Claude, mostly from his phone.
 From 20 September to 7 November that made **{d.nrows} pull requests and issues** in
 **{repos.len} public repositories**, his own and a few of others. That is too much to show, and

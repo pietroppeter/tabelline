@@ -5,18 +5,18 @@
 import std/[os, json, strutils, strformat, sequtils, tables]
 import nimib except md
 import tabelline, tabelline/nimib
-import quaderno
+import blocchi
 
 let docs = currentSourcePath().parentDir
 let data = parseFile(docs / "coverage" / "gt.json")
 nbInit
 nb.doc.filename = docs / "coverage" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Coverage", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Coverage", classe = "living document",
                title = "tabelline and gt: coverage map", homeHref = "../",
                description = "Every feature group of gt and Great Tables, what tabelline has, and the plan for the rest.")
 
 const labels = {"done": "has it", "partial": "partly", "missing": "missing", "no": "not planned"}.toTable
-const colours = {"done": "#2E7D32", "partial": "#A35F00", "missing": "#C62828", "no": "#6B675F"}.toTable
+const colours = {"done": "var(--success-text)", "partial": "var(--secondary-text)", "missing": "var(--primary-text)", "no": "var(--n-7)"}.toTable
 
 type Item = object
   area, feature, gt, status, plan, size, note, where: string
@@ -29,14 +29,10 @@ for a in data["areas"]:
 let total = items.len
 func count(xs: seq[Item], s: string): int = xs.countIt(it.status == s)
 
+nbTitolo &"""Living document · updated {data["updated"].getStr}""", "tabelline and gt: the coverage map", &"""
+Every feature group of gt and Great Tables, whether tabelline has it, and the release that plans the rest.
+"""
 nbText: &"""
-<p class="kicker">Living document · updated {data["updated"].getStr}</p>
-
-# tabelline and gt: the coverage map
-
-<p class="lede">Every feature group of gt and Great Tables, whether tabelline has it, and the
-release that plans the rest.</p>
-
 gt (R) and Great Tables (Python) have about 200 functions between them. This page groups them
 into {total} feature groups and says whether tabelline **has it**, has it **partly** (fewer options
 than gt), is **missing** it, or does **not plan** it (machinery of R or Python, or something a Nim
@@ -66,9 +62,9 @@ block:
     tabHeader "Coverage by area", &"tabelline {data[\"release\"][\"version\"].getStr} against gt and Great Tables"
     tabStubhead "area (groups)"
     colsLabel {"has": "has it", "share": "covered"}
-    fmtBar "share", color = "#7FB3D5", width = "3em", domain = (0.0, 100.0), showValue = false
+    fmtBar "share", color = "var(--secondary)", width = "3em", domain = (0.0, 100.0), showValue = false
     tabSourceNote "Covered: groups that tabelline has, plus half of those it has partly. Not counted: the groups it does not plan."
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -94,7 +90,7 @@ block:
     tabSpanner "sizes", ["s", "m", "l"]
     subZero ["s", "m", "l"], zeroText = ""
     tabStyle style.text(weight = "bold"), loc.body(cols = "theme")
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -116,7 +112,7 @@ block:
     tabHeader "Built for 0.1", &"{rows.len} small groups, each a few hours"
     colsLabel {"feature": "group, gt names, what it is"}
     fmtMarkdown "feature"
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -141,7 +137,7 @@ block:
     colsLabel {"feature": "feature group, gt names, notes", "now": "today", "plan": "planned"}
     fmtMarkdown "feature"
     colsWidth {"now": "5.5em", "plan": "4.5em"}
-    optQuaderno()
+    optTokens()
   for s, label in labels:
     let c = colours[s]
     t = t.tabStyle(style.text(color = c, weight = "bold"), loc.body(cols = "now", rows = where(it["now"] == label)))

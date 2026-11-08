@@ -46,7 +46,7 @@ Rough size: S (hours), M (a day or two), L (more).
   with a legend: a way to learn the parts of a gt table on your own data.
 - **Option presets** (S-M). A page that styles every table the same way repeats six or seven
   `tabOptions` fields per table. A user-defined preset (`let sea = tabOptions(...)`, then
-  `tabOptions sea` or `optPreset sea`), like `optQuaderno` but your own; a docs theme would ship
+  `tabOptions sea` or `optPreset sea`), like `optTokens` but your own; a docs theme would ship
   one.
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.

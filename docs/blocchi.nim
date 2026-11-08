@@ -1,9 +1,305 @@
-## Custom blocks for tabelline's pages. A first, provisional module (name still to be decided):
-## the devlog post "Blocks, not HTML" proposes moving every recurring piece of page HTML here,
-## as a nimib block, so that a page says what it shows and not how it is drawn. Its CSS is in the
-## theme (`docs/quaderno.nim`, `docs/munari.nim`).
-import std/strformat
-import nimib
+## *Blocchi*: the blocks of tabelline's pages, and the page itself (header, footer, headings).
+##
+## A page says what it shows with these blocks, and never how it is drawn: no HTML in `nbText`,
+## no CSS and no colours in a page. The CSS of every block is in `stile.nim`, from the tokens.
+##
+##   nb.useTabelline(materia = "...", title = "...")   # right after nbInit
+##   nbTitolo "kicker", "Title", "a lede, in Markdown"
+##   nbIndice
+##   nbNota "text", nkWarning
+##   nbCards: (nbCard "Title", "href/": nbText "...")
+##   nbGalleria "what it shows": (nbScheda "Title": ...)
+##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
+##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
+##   nbParti t                                 # a table and its parts, with a switch
+##   nbTinte [("--primary", "primary", "sections")]
+##
+## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
+## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
+
+import std/[json, strutils, strformat, sequtils]
+import nimib except md
+import tabelline, tabelline/nimib
+import stile, parti
+export stile
+
+const
+  repoUrl* = "https://github.com/pietroppeter/tabelline"
+  siteUrl* = "https://pietroppeter.github.io/tabelline/"
+
+func esc(s: string): string = s.multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"), ("\"", "&quot;"))
+func inline(md: string): string =
+  ## Markdown for one line: the text without its paragraph.
+  markdownToHtml(md).strip.replace("<p>", "").replace("</p>", "")
+
+# ----------------------------------------------------------------------------- headings and TOC
+
+func slugify*(s: string): string =
+  ## The anchor of a heading: lowercase words joined by `-`.
+  var last = '-'
+  for c in s.toLowerAscii:
+    if c in {'a'..'z', '0'..'9'}:
+      result.add c
+      last = c
+    elif last != '-':
+      result.add '-'
+      last = '-'
+  result = result.strip(chars = {'-'})
+
+func stripInline(s: string): string =
+  ## Heading text without Markdown marks or tags, for anchors and the indice.
+  var inTag = false
+  for c in s:
+    if c == '<': inTag = true
+    elif c == '>': inTag = false
+    elif not inTag and c notin {'*', '`', '_'}: result.add c
+
+func headingsOf*(markdownText: string): seq[(int, string)] =
+  ## The `##` and `###` headings of a Markdown text, with their level (outside code fences).
+  var fence = false
+  for line in markdownText.splitLines:
+    if line.strip.startsWith("```"): fence = not fence
+    if fence: continue
+    if line.startsWith("## "): result.add (2, line[3 .. ^1].strip.stripInline)
+    elif line.startsWith("### "): result.add (3, line[4 .. ^1].strip.stripInline)
+
+func addHeadingIds(html: string): string =
+  ## `<h2>Text</h2>` becomes `<h2 id="text">Text</h2>`, matching `slugify` of the indice.
+  result = html
+  for tag in ["h2", "h3"]:
+    var res = ""
+    var i = 0
+    let open = "<" & tag & ">"
+    let close = "</" & tag & ">"
+    while true:
+      let a = result.find(open, i)
+      if a < 0: break
+      let b = result.find(close, a)
+      if b < 0: break
+      let inner = result[a + open.len ..< b]
+      res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner & close
+      i = b + close.len
+    res.add result[i .. ^1]
+    result = res
+
+# --------------------------------------------------------------------------------- highlighting
+
+func unescapeHtml(s: string): string =
+  s.multiReplace(("&lt;", "<"), ("&gt;", ">"), ("&quot;", "\""), ("&#39;", "'"), ("&amp;", "&"))
+
+const
+  pythonKeywords = ["and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else",
+    "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or",
+    "pass", "raise", "return", "try", "while", "with", "yield"]
+  rKeywords = ["if", "else", "for", "while", "repeat", "function", "return", "next", "break", "in",
+    "library", "require"]
+  otherLiterals = ["True", "False", "None", "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"]
+
+func highlightOther*(code, lang: string): string =
+  ## A small highlighter for the R, Python (and YAML) code that pages show but do not run:
+  ## keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
+  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords else: @[]
+  func span(cls, s: string): string = "<span class=\"hljs-" & cls & "\">" & esc(s) & "</span>"
+  var i = 0
+  while i < code.len:
+    let c = code[i]
+    if c == '#':
+      var j = i
+      while j < code.len and code[j] != '\n': inc j
+      result.add span("comment", code[i ..< j]); i = j
+    elif c in {'"', '\''}:
+      var j = i + 1
+      while j < code.len and code[j] != c and code[j] != '\n':
+        if code[j] == '\\': inc j
+        inc j
+      j = min(j + 1, code.len)
+      result.add span("string", code[i ..< j]); i = j
+    elif c in {'0'..'9'} and (i == 0 or code[i - 1] notin {'a'..'z', 'A'..'Z', '_', '.'}):
+      var j = i
+      while j < code.len and code[j] in {'0'..'9', '.', '_', 'e', 'E', 'x', 'L'}: inc j
+      result.add span("number", code[i ..< j]); i = j
+    elif c in {'a'..'z', 'A'..'Z', '_', '.'}:
+      var j = i
+      while j < code.len and code[j] in {'a'..'z', 'A'..'Z', '0'..'9', '_', '.', '-'}: inc j
+      let w = code[i ..< j]
+      if w in keywords: result.add span("keyword", w)
+      elif w in otherLiterals: result.add span("literal", w)
+      elif lang == "yaml" and j < code.len and code[j] == ':': result.add span("keyword", w)
+      elif j < code.len and code[j] == '(' and w.strip(chars = {'.'}).len > 0:
+        let lead = w.len - w.strip(leading = true, trailing = false, chars = {'.'}).len
+        result.add esc(w[0 ..< lead]) & span("built_in", w[lead .. ^1])
+      else: result.add esc(w)
+      i = j
+    elif c == '|' and i + 1 < code.len and code[i + 1] == '>':
+      result.add span("meta", "|>"); i += 2
+    else:
+      result.add esc($c); inc i
+
+func highlightFences(html: string): string =
+  ## Code fences in Markdown, highlighted like the code that ran: Nim with nimib's highlighter,
+  ## R, Python and YAML with `highlightOther`, shell with its comments.
+  result = html
+  for lang in ["nim", "r", "python", "yaml", "sh"]:
+    let openTag = "<pre><code class=\"language-" & lang & "\">"
+    const close = "</code></pre>"
+    var res = ""
+    var i = 0
+    while true:
+      let a = result.find(openTag, i)
+      if a < 0: break
+      let b = result.find(close, a + openTag.len)
+      if b < 0: break
+      let code = unescapeHtml(result[a + openTag.len ..< b]).strip(leading = false, chars = {'\n'})
+      res.add result[i ..< a]
+      res.add "<pre><code class=\"nohighlight " & lang & " hljs\">" &
+        (if lang == "nim": highlightNim(code) else: highlightOther(code, lang)) & close
+      i = b + close.len
+    res.add result[i .. ^1]
+    result = res
+
+func codeHtml*(code, lang: string): string =
+  ## Code that is shown, not run (Python, R and YAML examples), highlighted.
+  "<pre><code class=\"nohighlight " & lang & " hljs\">" & highlightOther(code.strip(chars = {'\n'}), lang) & "</code></pre>"
+
+# ------------------------------------------------------------------------------------- the title
+
+newNbBlock(NbTitolo):
+  kicker: string
+  title: string
+  lede: string
+  toHtml:
+    (if blk.kicker.len > 0: &"""<p class="kicker">{inline(blk.kicker)}</p>""" & "\n" else: "") &
+      &"<h1>{inline(blk.title)}</h1>\n" &
+      (if blk.lede.len > 0: &"""<div class="lede">{markdownToHtml(blk.lede)}</div>""" else: "")
+
+proc titolo*(nb: var Nb, kicker, title: string, lede = "") =
+  nb.add newNbTitolo(kicker = kicker, title = title, lede = lede)
+
+template nbTitolo*(tkicker, ttitle: string, tlede = "") =
+  ## The top of a page: a small line above (the kicker: what kind of page, a date), the title,
+  ## and the lede, a paragraph that says what the page is for. All three in Markdown.
+  nb.titolo(tkicker, ttitle, tlede)
+
+# ------------------------------------------------------------------------------ parts of a page
+
+type PartRole* = enum
+  ## The colour of a part of a page: its sections' circles and their entries in the indice.
+  prPrimary = "primary", prSecondary = "secondary", prSuccess = "success"
+
+newNbBlock(NbParte):
+  numero: int
+  title: string
+  role: PartRole
+  toHtml:
+    &"""<p class="parte parte-{blk.role}">Part {blk.numero} · {inline(blk.title)}</p>"""
+
+proc parte*(nb: var Nb, num: int, title: string, role: PartRole) =
+  nb.add newNbParte(numero = num, title = title, role = role)
+
+template nbParte*(tnum: int, ttitle: string, trole: PartRole) =
+  ## The start of a part of a long page: a label, and from here on the sections' circles (and
+  ## their entries in the indice) take the colour of `trole`.
+  nb.parte(tnum, ttitle, trole)
+
+# ------------------------------------------------------------------------------------ the indice
+
+newNbBlock(NbIndice):
+  title: string
+  toHtml:
+    var items = ""
+    var openSub = false
+    var part = ""
+    for b in nb.doc.blocksFlattened:
+      if b of NbParte: part = &""" class="parte-{b.NbParte.role}""""
+      if not (b of NbText): continue
+      for (level, text) in headingsOf(b.NbText.text):
+        let link = &"""<a href="#{slugify(text)}">{text}</a>"""
+        if level == 2:
+          if openSub: (items.add "</ol>"; openSub = false)
+          if items.len > 0: items.add "</li>"
+          items.add &"<li{part}>" & link
+        else:
+          if not openSub: (items.add "<ol>"; openSub = true)
+          items.add "<li>" & link & "</li>"
+    if openSub: items.add "</ol>"
+    if items.len > 0: items.add "</li>"
+    &"""<nav class="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
+
+proc indice*(nb: var Nb, title = "Indice") =
+  nb.add newNbIndice(title = title)
+
+template nbIndice*(ttitle = "Indice") =
+  ## The table of contents of the page's `##` and `###` headings, built when the page is saved.
+  nb.indice(ttitle)
+
+# ----------------------------------------------------------------------------------------- notes
+
+type NotaKind* = enum
+  ## What a note is about; its colour follows (`stile.nim`). A warning carries the triangle.
+  nkPlain = "plain"      ## an aside
+  nkInfo = "info"        ## information, a page to go to
+  nkDone = "done"        ## what is done, what works
+  nkMissing = "missing"  ## what is missing, or differs from gt and Great Tables
+  nkWarning = "warning"  ## something to watch out for: the API will change, a step breaks things
+
+newNbBlock(NbNota):
+  text: string
+  tipo: NotaKind
+  title: string
+  toHtml:
+    &"""<div class="nota {blk.tipo}">""" &
+      (if blk.title.len > 0: &"""<span class="titolo">{inline(blk.title)}</span>""" else: "") &
+      markdownToHtml(blk.text) & "</div>"
+
+proc nota*(nb: var Nb, text: string, kind = nkPlain, title = "") =
+  nb.add newNbNota(text = text, tipo = kind, title = title)
+
+template nbNota*(ttext: string, tkind = nkPlain, ttitle = "") =
+  ## A note beside the text, in Markdown, of a kind: `nbNota "The API will change.", nkWarning`.
+  nb.nota(ttext, tkind, ttitle)
+
+# ----------------------------------------------------------------------------------------- cards
+
+newNbBlock(NbCards of NbContainer):
+  label: string
+  toHtml:
+    &"""<div class="cards" role="list" aria-label="{blk.label}">""" & nbContainerToHtml(blk, nb) & "</div>"
+
+newNbBlock(NbCard of NbContainer):
+  title: string
+  href: string
+  numero: string
+  tipo: NotaKind
+  toHtml:
+    let title = if blk.href.len > 0: &"""<a href="{blk.href}">{inline(blk.title)}</a>""" else: inline(blk.title)
+    &"""<div class="nota {blk.tipo}" role="listitem">""" &
+      (if blk.numero.len > 0: &"""<span class="numero">{blk.numero}</span>""" else: "") &
+      &"""<span class="titolo">{title}</span>""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbCards*(what: string, body: untyped) =
+  ## A grid of cards (`nbCard`), such as the living documents on the home page.
+  let cards = newNbCards(label = what)
+  nb.withContainer(cards):
+    body
+  nb.add cards
+
+template nbCard*(heading, link, num: string, kind: NotaKind, body: untyped) =
+  ## A card: a title (a link when `link` is not empty), a small number above it (or ""), a kind
+  ## (`nkInfo` for a page to go to) and blocks inside.
+  let card = newNbCard(title = heading, href = link, numero = num, tipo = kind)
+  nb.withContainer(card):
+    body
+  nb.add card
+
+template nbCard*(heading, link, num: string, body: untyped) =
+  ## A card of kind `nkInfo`.
+  nbCard(heading, link, num, nkInfo, body)
+
+template nbCard*(heading: string, body: untyped) =
+  ## A card with a title only.
+  nbCard(heading, "", "", nkInfo, body)
+
+# --------------------------------------------------------------------------------------- gallery
 
 newNbBlock(NbGalleria of NbContainer):
   label: string
@@ -12,20 +308,285 @@ newNbBlock(NbGalleria of NbContainer):
 
 newNbBlock(NbScheda of NbContainer):
   title: string
+  label: string
   toHtml:
-    &"""<div class="nb-scheda"><h3>{blk.title}</h3>""" & nbContainerToHtml(blk, nb) & "</div>"
+    let label = if blk.label.len > 0: &""" data-label="{esc(blk.label)}"""" else: ""
+    &"""<div class="nb-scheda"{label}><h3>{inline(blk.title)}</h3>""" & nbContainerToHtml(blk, nb) & "</div>"
+
+newNbBlock(NbAccanto of NbContainer):
+  toHtml:
+    """<div class="accanto">""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbAccanto*(body: untyped) =
+  ## The blocks of `body` side by side, wrapping on a narrow screen: small tables to compare.
+  let accanto = newNbAccanto()
+  nb.withContainer(accanto):
+    body
+  nb.add accanto
+
+proc accosta*(c: NbContainer) =
+  ## Puts tables that follow each other in `c` side by side (in an `NbAccanto`).
+  var res: seq[NbBlock]
+  var i = 0
+  while i < c.blocks.len:
+    var j = i
+    while j < c.blocks.len and c.blocks[j] of NbTable: inc j
+    if j - i >= 2:
+      let a = newNbAccanto()
+      a.blocks = c.blocks[i ..< j]
+      res.add a
+      i = j
+    else:
+      res.add c.blocks[i]
+      inc i
+  c.blocks = res
 
 template nbGalleria*(what: string, body: untyped) =
-  ## A row of cards to swipe sideways; `what` says what they are, for screen readers.
+  ## A gallery: cards (`nbScheda`) side by side, to swipe or scroll sideways, numbered.
+  ## `what` says what it shows, for screen readers.
   let galleria = newNbGalleria(label = what)
   nb.withContainer(galleria):
     body
   nb.add galleria
 
 template nbScheda*(heading: string, body: untyped) =
-  ## One card of a gallery: a heading, then any blocks (text, code, tables). Cards are numbered
-  ## by the theme.
-  let scheda = newNbScheda(title = heading)
+  ## A card of a gallery: a title and any blocks.
+  nbScheda(heading, "", body)
+
+template nbScheda*(heading, what: string, body: untyped) =
+  ## A card of a gallery with a label before its number (a step, a part).
+  let scheda = newNbScheda(title = heading, label = what)
   nb.withContainer(scheda):
     body
   nb.add scheda
+
+# ------------------------------------------------------------------------------------------ tabs
+
+const lingue* = [("nim", "👑 Nim"), ("python", "🐍 Python"), ("r", "🏴‍☠️ R")]
+
+newNbBlock(NbTabs of NbContainer):
+  python: string
+  r: string
+  toHtml:
+    let panels = [nbContainerToHtml(blk, nb), (if blk.python.len > 0: codeHtml(blk.python, "python") else: ""),
+                  (if blk.r.len > 0: codeHtml(blk.r, "r") else: "")]
+    var res = """<div class="lingue"><div class="lingue-tab" role="tablist">"""
+    var first = true
+    for i, (key, label) in lingue:
+      if panels[i].len == 0: continue
+      res.add &"""<button type="button" role="tab" data-lingua="{key}" aria-selected="{first}">{label}</button>"""
+      first = false
+    res.add "</div>"
+    first = true
+    for i, (key, label) in lingue:
+      if panels[i].len == 0: continue
+      res.add &"""<div class="lingue-pannello" role="tabpanel" data-lingua="{key}"{(if first: "" else: " hidden")}>{panels[i]}</div>"""
+      first = false
+    res & "</div>"
+
+func tabsBlock(py, rr: string): NbTabs = newNbTabs(python = py, r = rr)
+
+template nbTabs*(python, r: string, body: untyped) =
+  ## The Nim blocks `body` adds (code that runs, and its output), in a 👑 Nim tab next to the
+  ## same example in 🐍 Python (Great Tables) and 🏴‍☠️ R (gt), shown and not run. The tab picked
+  ## holds for the whole page.
+  let tabs = tabsBlock(python, r)   # a proc: the parameters share the fields' names
+  nb.withContainer(tabs):
+    body
+  nb.add tabs
+
+# ------------------------------------------------------------------------------------- show code
+
+newNbBlock(NbShowCode of NbContainer):
+  code: string
+  toHtml:
+    nbContainerToHtml(blk, nb) & """<details class="codice"><summary></summary><pre><code class="nohighlight nim hljs">""" &
+      highlightNim(blk.code) & "</code></pre></details>"
+
+template nbShowCode*(body: untyped) =
+  ## Runs `body` and shows the blocks it adds (its tables), with `body`'s own code folded below
+  ## them: "show code" opens it.
+  let showCode = newNbShowCode(code = getCode(body))
+  nb.withContainer(showCode):
+    block:
+      body
+  nb.add showCode
+
+# ------------------------------------------------------------------------------ parts of a table
+
+newNbBlock(NbParti):
+  dati: string
+  parti: string
+  toHtml:
+    var legend = "<ul class=\"parti\">"
+    for i, p in parts:
+      legend.add &"""<li><span class="tinta-parte" style="background:{partTints[i]}"></span><strong>{p.name}</strong>: {p.what} <span class="colore">(<span lang="ja">{p.kanji}</span> {p.colourName})</span></li>"""
+    legend.add "</ul>"
+    if blk.dati.len == 0: return legend
+    """<button type="button" class="mostra-parti" aria-pressed="false">Show the parts</button>""" &
+      &"""<div class="vista-dati">{blk.dati}</div><div class="vista-parti" hidden>{blk.parti}{legend}</div>"""
+
+proc parti*(nb: var Nb, t: Tabella) =
+  nb.add newNbParti(dati = t.toHtml, parti = showParts(t).toHtml)
+
+template nbParti*(t: Tabella) =
+  ## The table `t`, with a switch that shows its parts in their colours, and their legend.
+  nb.parti(t)
+
+template nbPartiLegenda*() =
+  ## The parts of a table, each with its colour, as a list.
+  nb.add newNbParti()
+
+# -------------------------------------------------------------------------------------- swatches
+
+newNbBlock(NbTinte):
+  tinte: seq[(string, string, string)]
+  toHtml:
+    var res = """<div class="tinte">"""
+    for (colour, name, what) in blk.tinte:
+      let css = if colour.startsWith("--"): "var(" & colour & ")" else: colour
+      res.add &"""<div class="tinta"><span style="background:{css}"></span><strong>{inline(name)}</strong>{inline(what)}</div>"""
+    res & "</div>"
+
+proc tinte*(nb: var Nb, swatches: openArray[(string, string, string)]) =
+  nb.add newNbTinte(tinte = @swatches)
+
+template nbTinte*(swatches: openArray[(string, string, string)]) =
+  ## Swatches: a colour (a token such as `--primary`, or a CSS colour), its name and what it is
+  ## for, in Markdown.
+  nb.tinte(swatches)
+
+# ------------------------------------------------------------------------------------- the page
+
+const temaHeadScript = """<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('tema');
+    if (q === 'munari' || q === 'quaderno') localStorage.setItem('tabelline-tema', q);
+    var t = q || localStorage.getItem('tabelline-tema');
+    document.documentElement.dataset.tema = (t === 'quaderno') ? 'quaderno' : 'munari';
+  } catch (e) { document.documentElement.dataset.tema = 'munari'; }
+})();
+</script>"""
+
+# What the blocks do in the browser: the look switch, the language tabs, the parts switch, and
+# the filter of the specs page.
+const bodyScript = """<script>
+(function () {
+  var root = document.documentElement;
+  function show() {
+    var t = root.dataset.tema === 'munari' ? 'munari' : 'quaderno';
+    document.querySelectorAll('.tema button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll('.tema button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.dataset.tema = b.dataset.tema;
+      try { localStorage.setItem('tabelline-tema', b.dataset.tema); } catch (e) {}
+      show();
+    });
+  });
+  show();
+  function choose(lang) {
+    document.querySelectorAll('.lingue').forEach(function (box) {
+      if (!box.querySelector('[data-lingua="' + lang + '"]')) return;
+      box.querySelectorAll('.lingue-tab button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.lingua === lang ? 'true' : 'false'); });
+      box.querySelectorAll('.lingue-pannello').forEach(function (p) { p.hidden = p.dataset.lingua !== lang; });
+    });
+  }
+  document.querySelectorAll('.lingue-tab button').forEach(function (b) {
+    b.addEventListener('click', function () { choose(b.dataset.lingua); });
+  });
+  document.querySelectorAll('.mostra-parti').forEach(function (b) {
+    var d = b.nextElementSibling, p = d.nextElementSibling;
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? 'Show the data' : 'Show the parts';
+      d.hidden = on; p.hidden = !on;
+    });
+  });
+})();
+(function () {
+  // the specs page: ?spec=a,b&change=c (or after #) shows only those, opened
+  if (!document.getElementById("filterbar")) return;
+  const params = new URLSearchParams(location.search || location.hash.slice(1));
+  const want = { spec: [], change: [] };
+  for (const k of ["spec", "change"]) for (const v of params.getAll(k)) want[k].push(...v.split(",").map(s => s.trim()).filter(Boolean));
+  if (!want.spec.length && !want.change.length) return;
+  const match = (name, list) => list.some(p => p === "all" || p === name || (p.endsWith("*") && name.startsWith(p.slice(0, -1))));
+  const found = [];
+  document.querySelectorAll("details.spec[data-spec]").forEach(d => {
+    const ok = match(d.dataset.spec, want.spec); d.hidden = !ok; if (ok) { d.open = true; found.push(d.dataset.spec); } });
+  document.querySelectorAll("details.change[data-change]").forEach(d => {
+    const ok = match(d.dataset.change, want.change); d.hidden = !ok; if (ok) { d.open = true; found.push(d.dataset.change); } });
+  if (!want.spec.length) document.getElementById("specs").hidden = true;
+  if (!want.change.length) document.getElementById("open-changes").hidden = true;
+  const bar = document.getElementById("filterbar");
+  const missing = [...want.spec, ...want.change].filter(p => !p.endsWith("*") && p !== "all" && !found.includes(p));
+  bar.innerHTML = "Showing only: <b>" + (found.join(", ") || "nothing") + "</b>" +
+    (missing.length ? " · not found: " + missing.join(", ") : "") + ' · <a href="' + location.pathname + '">show everything</a>';
+  bar.hidden = false;
+})();
+</script>"""
+
+const temaSwitch = """<div class="tema" role="group" aria-label="Look of the page">
+<button type="button" data-tema="munari" title="after Bruno Munari">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
+</div>"""
+const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
+const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
+
+func pageText(blk: JsonNode, nb: Nb): string =
+  highlightFences(addHeadingIds(markdownToHtml(blk{"text"}.getStr)))
+
+func pageHeader(blk: JsonNode, nb: Nb): string =
+  let c = nb.doc.context
+  let home = c{"home_href"}.getStr
+  let backLabel = c{"back_label"}.getStr("tabelline")
+  let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
+  var rows = ""
+  for (key, label, cls) in [("nome", "Nome", "nome"), ("materia", "Materia", ""), ("classe", "Classe", "")]:
+    let v = c{key}.getStr
+    if v.len > 0:
+      let nameHref = c{"name_href"}.getStr
+      let shown = if key == "nome" and nameHref.len > 0: &"""<a href="{nameHref}">{v}</a>""" else: v
+      rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
+  &"""<header>
+<nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
+{temaSwitch}{forme}
+<div class="etichetta">{rows}</div>
+</header>"""
+
+func pageFooter(blk: JsonNode, nb: Nb): string =
+  let source = nb.doc.context{"source_highlighted"}.getStr
+  "<footer>" & motto & "Written in Nim with <a href=\"https://github.com/pietroppeter/nimib\">nimib</a> 🐳 · tables by " &
+    &"""<a href="{repoUrl}">tabelline</a> · the code on this page ran when it was built""" &
+    (if source.len == 0: "" else:
+      """<details class="source"><summary>show the source of this page</summary><pre><code class="nohighlight nim">""" &
+      source & "</code></pre></details>") & "</footer>" & bodyScript
+
+func emptyPartial(blk: JsonNode, nb: Nb): string = ""
+
+proc useTabelline*(nb: var Nb, nome = "tabelline", materia = "", classe = "", title = "", description = "",
+                   homeHref = "", backLabel = "tabelline", nameHref = "") =
+  ## The page: both looks (Munari and the quaderno, `stile.nim`), the header with the switch and the
+  ## cover label (`nome`, `materia`, `classe`), and the footer. `homeHref` links back, with
+  ## `backLabel` as its text (a devlog post links back to the devlog); `nameHref` makes the name a
+  ## link (a post's name links to the home page).
+  let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
+  nb.doc.context["title"] = %(if title.len > 0: title else: nome)
+  nb.doc.context["stylesheet"] = %(desc &
+    """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
+    "\n" & temaHeadScript & "\n<style>\n" & css & "</style>")
+  nb.doc.context["highlight"] = %""
+  nb.doc.context["nb_style"] = %""
+  nb.doc.context["disableHighlightJs"] = %true
+  for (key, value) in [("nome", nome), ("materia", materia), ("classe", classe), ("home_href", homeHref),
+                       ("back_label", backLabel), ("name_href", nameHref)]:
+    nb.doc.context[key] = %value
+  nb.backend.partials["header"] = pageHeader
+  nb.backend.partials["footer"] = pageFooter
+  nb.backend.partials["nbText"] = pageText
+  nb.backend.partials["left"] = emptyPartial
+  nb.backend.partials["right"] = emptyPartial

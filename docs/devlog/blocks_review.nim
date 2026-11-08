@@ -6,12 +6,12 @@
 import std/[os, strutils, strformat, sequtils, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno, ../blocchi
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "blocks-review" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Blocks, not HTML", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 nbText: """
@@ -133,7 +133,7 @@ block:
                "script": "<script>", "inline": "style=", "hex": "hex colours"}
     fmtMarkdown "file"
     tabSourceNote md("Counted in the sources on 8 November 2026; snapshot in `devlog/data/blocks-review/audit.tsv`. The theme and its helpers may hold CSS: that is their job. `style=` counts inline styles.")
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: &"""
@@ -180,7 +180,7 @@ block:
     tabHeader "Blocks for tabelline's pages", "proposed names; nbIndice and nbTabs exist"
     colsLabel {"what": "what it shows", "today": "how it is done today", "uses": "where"}
     fmtMarkdown ["block_name", "today"]
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -192,7 +192,7 @@ its body adds. So a gallery is two small blocks and two templates, in `docs/bloc
 name is provisional):
 
 ```nim
-""" & readFile(docs / "blocchi.nim").split("\n").filterIt(not it.startsWith("##")).join("\n").strip & """
+""" & readFile(docs / "devlog" / "data" / "blocks-review" / "blocchi.nim").split("\n").filterIt(not it.startsWith("##")).join("\n").strip & """
 
 ```
 
@@ -306,7 +306,8 @@ living documents, posts, or theme and helpers (where CSS belongs); data modules 
 ran once and was saved as `docs/devlog/data/blocks-review/audit.tsv`: the post is dated, so its
 numbers stay those of 8 November 2026 while the pages are migrated (the live count will be a
 check in CI, `tools/drift.nim`, that reads the pages every time). The
-code of `docs/blocchi.nim` above is read from the file when the page is built, so it is the code
-that drew the gallery.
+code of `docs/blocchi.nim` above is the module as it was on 8 November 2026, kept in
+`docs/devlog/data/blocks-review/blocchi.nim`: the blocks module has grown since, and the gallery
+is drawn with the same two blocks.
 """
 nbSave

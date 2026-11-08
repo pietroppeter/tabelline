@@ -42,13 +42,21 @@ working rules that are easy to miss.
 
 ## Pages
 
-- Every page is a nimib notebook in `docs/` in the quaderno theme (`docs/quaderno.nim`) and
-  writes a standalone HTML file (fonts inlined, nothing remote). Every page also carries the
-  Munari look (`docs/munari.nim`, all rules under `html[data-tema="munari"]`), which is the
-  default; the header switches between the two and the choice is remembered. Check new page
-  elements in both looks. The HTML is not committed: CI
-  builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
-  `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
+- Every page is a nimib notebook in `docs/` that calls `nb.useTabelline(...)` after `nbInit`
+  and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
+  default (rules under `html[data-tema="munari"]`), and the quaderno; the header switches between
+  them and the choice is remembered. Check new page elements in both looks, at 390px. The HTML is
+  not committed: CI builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to
+  GitHub Pages from `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
+- **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
+  of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
+  `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
+  `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
+  becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
+  `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
+  `optTokens()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
+  `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
+  its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
 - The home page shows the simplest example and links the living documents in this order: The
   Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
   lists only posts. A new living document gets a card there
@@ -60,10 +68,13 @@ working rules that are easy to miss.
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
   show the newest first.
-- In the Munari look, nothing that only decorates may look like something to press or drag (no
-  dots, holes or knobs on cards). Shapes carry meaning: section headings and the indice
-  always use the red circle, and the triangle is kept for warnings. Its colours are six variables in `docs/munari.nim` (`--m-*`);
-  mix new colours from them rather than adding fixed ones.
+- Shape for kind, colour for role. The circle is a place (sections, the indice), the triangle a
+  warning (`nkWarning`, drawn as a road sign), the square a sheet set apart (notes, cards, gallery
+  cards: their straight top edge). Each shape has a default colour, another only with a reason.
+  Nothing that only decorates may look like something to press or drag (no dots, holes or knobs
+  on cards). Colours are the tokens of `docs/stile.nim`: six values per look (paper, ink,
+  primary, secondary, warning, success), and every other colour mixed from them (`--n-0` …
+  `--n-9`, `--surface`, `--x-soft`, `--x-text`); the warning colour is never text.
 - The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.

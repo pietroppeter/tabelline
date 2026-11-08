@@ -5,12 +5,12 @@
 import std/[os, strutils, strformat, sequtils, math, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "design-review" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Reviewing the design: a palette by roles", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # ---------------------------------------------------------------------------------- colour maths
@@ -147,18 +147,10 @@ html[data-tema="munari"] {{ {css(munariTokens)} }}
 .p-table .bar {{ display: inline-block; height: .6rem; background: var(--secondary); vertical-align: middle; }}
 </style>"""
 
+nbTitolo "8 November 2026", "Reviewing the design: a palette by roles", """
+The pages of tabelline grew faster than their palette. Six colours named after Munari's shapes still paint everything, but which colour a new element should take is decided case by case, the yellow that should only warn does five other jobs, and galleries are copied from post to post. This post looks at what we have, proposes a palette by roles (neutral, primary, secondary, status and data) for both looks, maps every component to it, and lists the choices to make. What is chosen becomes the new Design Ref.
+"""
 nbText: """
-<p class="kicker">8 November 2026</p>
-
-# Reviewing the design: a palette by roles
-
-<p class="lede">The pages of tabelline grew faster than their palette. Six colours named after
-Munari's shapes still paint everything, but which colour a new element should take is decided
-case by case, the yellow that should only warn does five other jobs, and galleries are copied
-from post to post. This post looks at what we have, proposes a palette by roles (neutral,
-primary, secondary, status and data) for both looks, maps every component to it, and lists the
-choices to make. What is chosen becomes the new Design Ref.</p>
-
 Everything below that shows a colour uses the proposed tokens, live, in the look picked at the top
 of the page: switch it to see the quaderno's version. The contrast numbers are computed when the
 page is built, from the fixed values of the two looks.
@@ -190,7 +182,7 @@ block:
     fmtMarkdown "what"
     fmtBar "jobs", color = "var(--secondary)", width = "4em"
     tabSourceNote "From docs/munari.nim and the devlog post Munari meets Japan."
-    optQuaderno()
+    optTokens()
   nbTable t
 
 # Fixed colours written in each source of the pages. Counted once, on 8 November 2026, and saved
@@ -233,7 +225,7 @@ block:
     colsLabel {"colours": "hex values"}
     fmtBar "colours", color = "var(--primary)", width = "6em"
     tabSourceNote "Counted on 8 November 2026 (snapshot in devlog/data/design-review/); files with fewer than three are left out."
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -409,7 +401,7 @@ block:
     tabStyle style.text(color = "var(--primary-text)", weight = "bold"), loc.body(cols = ["paper", "soft"], rows = where(it["paper"] < 4.5))
     tabStyle style.text(color = "var(--primary-text)", weight = "bold"), loc.body(cols = "soft", rows = where(it["soft"] < 4.5))
     tabSourceNote md("`--n-7` (grey text) is measured on `--n-1`. In bold: below 4.5. Computed when this page was built.")
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -471,7 +463,7 @@ block:
     colsLabel {"swatch": "", "token": "proposed", "today": "today"}
     fmtMarkdown ["token", "today"]
     fmtMarkdown "component"
-    optQuaderno()
+    optTokens()
   for i, row in rows:
     if row.token.startsWith("--"):
       t = t.tabStyle(style.fill(&"var({row.token})"), loc.body(cols = "swatch", rows = [i]))
@@ -549,7 +541,7 @@ Each has my recommendation first. What you pick goes into the next PR and the De
 4. **The highlighter.** `<mark>` keeps the warning's soft yellow (a highlighter pen is yellow), *or*
    it takes the primary's soft tint so yellow means warning only. *Recommended: keep yellow*;
    it is never a shape, so it can't be mistaken for the triangle.
-5. **Tables.** A preset in the library that uses the tokens (`optTokens()`: colours as
+5. **Tables.** A preset in the library that uses the tokens (`optQuaderno()`: colours as
    `var(--n-9)`, …, so a table follows whichever look the page has) and replaces `optQuaderno()`
    in every page; `optQuaderno` itself is removed before 0.1 is tagged, *or* kept as a library
    preset for people who like it. *Recommended: replace, and keep `optQuaderno` out of 0.1*;

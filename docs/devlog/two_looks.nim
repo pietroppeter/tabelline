@@ -3,22 +3,18 @@
 import std/[os, sequtils]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "two-looks" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Two looks: the quaderno and Munari", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026", "Two looks: the quaderno and Munari", """
+The pages get a second look, after Bruno Munari, one switch away in every header: Munari is the new default, and your choice is remembered.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Two looks: the quaderno and Munari
-
-<p class="lede">The pages get a second look, after Bruno Munari, one switch away in every
-header: Munari is the new default, and your choice is remembered.</p>
-
 The quaderno look (squared paper, a red margin, handwriting, tape and sticky notes) is fun, and
 not for everybody: a reader found it too much. So every page now has two looks, and a switch at
 the top right, **Munari | quaderno**. Munari is the default from 0.1; the quaderno is one tap
@@ -63,7 +59,7 @@ block:  # the table only, not its code
     colsWidth {"work": "36%"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "year")
     tabSourceNote md("Dates from [Wikipedia](https://it.wikipedia.org/wiki/Bruno_Munari) (Italian and English). The useless machines date from the early 1930s. Munari won the Compasso d'Oro, Italy's design prize, in 1954, 1955 and 1979, and for his whole career in 1995.")
-    optQuaderno()
+    optTokens()
   nbTable worksTable
 
 nbText: """
@@ -101,7 +97,7 @@ block:  # the table only, not its code
     tabHeader "One page, two looks", "what each part of a page becomes"
     colsLabel {"quaderno": "quaderno", "munari": "Munari (default)"}
     colsWidth {"quaderno": "40%", "munari": "45%"}
-    optQuaderno()
+    optTokens()
   nbTable lookTable
 
 nbNota("""
@@ -109,7 +105,7 @@ nbNota("""
 simplify is hard. It is the line of Munari's that is quoted most, from his
 [*Verbale scritto*](https://it.wikiquote.org/wiki/Bruno_Munari) (1992). The Munari look puts it
 at the foot of every page, as a reminder for whoever writes the next one.
-""", "azzurra")
+""", nkInfo)
 
 nbText: """
 ## How it works

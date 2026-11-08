@@ -507,26 +507,26 @@ proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
     result.options.rowStripingBackgroundColor = light
     result.options.tableBodyHlinesColor = "transparent"
 
-proc optQuaderno*(t: sink Tabella, ink = "#1F4E99"): Tabella =
-  ## The school-notebook look of tabelline's own pages: a graph-paper body, a blue-pen header and
-  ## a red margin rule, as in an Italian *quaderno a quadretti*.
+proc optTokens*(t: sink Tabella): Tabella =
+  ## Colours from the page: every colour of the table is a CSS variable of the page it is on
+  ## (`--n-9` the ink, `--n-3` and `--n-1` light greys, `--surface` the sheet, `--primary`, and
+  ## `--text` the font), each with a plain fallback, so the table follows the page's palette and
+  ## looks like a plain table on a page without them. tabelline's own pages are made with it.
   result = t
-  result.options.tableFontNames = "'Atkinson Hyperlegible', 'Comic Neue', 'Chalkboard SE', system-ui, sans-serif"
-  result.options.tableFontColor = "#24324A"
-  result.options.tableBackgroundColor = "#FFFFFF"
-  result.options.tableBorderTopColor = ink
-  result.options.tableBorderBottomColor = ink
-  result.options.columnLabelsBorderBottomColor = ink
+  result.options.tableFontNames = "var(--text, system-ui, sans-serif)"
+  result.options.tableFontColor = "var(--n-9, #1C1C1C)"
+  result.options.tableBackgroundColor = "var(--surface, #FFFFFF)"
+  result.options.tableBorderTopColor = "var(--n-9, #1C1C1C)"
+  result.options.tableBorderTopWidth = "3px"
+  result.options.tableBorderBottomColor = "var(--n-9, #1C1C1C)"
+  result.options.tableBorderBottomWidth = "3px"
+  result.options.headingBorderBottomColor = "var(--primary, #1C1C1C)"
+  result.options.columnLabelsBorderBottomColor = "var(--n-9, #1C1C1C)"
   result.options.columnLabelsFontWeight = "bold"
-  result.options.headingBorderBottomColor = "#E53935"
-  result.options.tableBodyHlinesColor = "#BFD7EF"
-  result.options.rowGroupBackgroundColor = "#FFF3B0"
-  result.options.extraCss = """
- .tb_table { background-image: linear-gradient(#DCEBFA 1px, transparent 1px),
-    linear-gradient(90deg, #DCEBFA 1px, transparent 1px); background-size: 12px 12px; }
- .tb_title { color: """ & ink & """; font-family: 'Patrick Hand', 'Comic Neue', 'Chalkboard SE', 'Comic Sans MS', cursive; font-size: 150%; }
- .tb_col_heading, .tb_spanner { color: """ & ink & """; }
-"""
+  result.options.tableBodyHlinesColor = "var(--n-3, #D3D3D3)"
+  result.options.rowGroupBackgroundColor = "var(--n-1, #F2F2F2)"
+  result.options.rowGroupBorderColor = "var(--n-9, #1C1C1C)"
+  result.options.rowStripingBackgroundColor = "var(--n-1, #F2F2F2)"
 
 func px(x: float): string =
   var s = formatFloat(x, ffDecimal, 1)

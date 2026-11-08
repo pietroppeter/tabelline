@@ -4,7 +4,7 @@
 ## letter can be left out for a day with one post. A new post needs no entry here.
 import std/[os, strutils, times, algorithm, strformat]
 import nimib except md
-import ../quaderno
+import ../blocchi
 
 let here = currentSourcePath().parentDir
 
@@ -29,17 +29,16 @@ posts.sort(proc (a, b: Post): int = cmp((b.day, b.letter), (a.day, a.letter)))
 
 nbInit
 nb.doc.filename = here / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Devlog", classe = "posts",
+nb.useTabelline(nome = "tabelline", materia = "Devlog", classe = "posts",
                title = "tabelline devlog", homeHref = "../")
 
-var items = ""
-for p in posts:
-  items.add &"""<div class="nota"><small>{p.date}</small><span class="titolo"><a href="{p.slug}/">{p.title}</a></span>{p.lede}</div>"""
-
-nbRawHtml: &"""<p class="kicker">Devlog</p>
-<h1>How tabelline is made</h1>
-<p class="lede">Dated posts on the steps that made tabelline, newest first. Bigger changes are
-tracked and explained in a post. Each tells one step as it happened, and is not updated
-afterwards; the living documents, kept up to date, are on the <a href="../">home page</a>.</p>
-{items}"""
+nbTitolo "Devlog", "How tabelline is made", """
+Dated posts on the steps that made tabelline, newest first. Bigger changes are tracked and
+explained in a post. Each tells one step as it happened, and is not updated afterwards; the
+living documents, kept up to date, are on the [home page](../).
+"""
+nbCards "the posts, newest first":
+  for p in posts:
+    nbCard(p.title, p.slug & "/", p.date, nkPlain):
+      nbText p.lede
 nbSave
