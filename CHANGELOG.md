@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
+  quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
+  (#24).
 - **Breaking (before 0.1):** `optTokens()` is renamed `optPageTheme()`, a name a gt user can read;
   the home page says what it does, and The Great Explainer has a section on it, *Tables that follow
   the page* (#21). The home page and the README no longer carry the status warning: the

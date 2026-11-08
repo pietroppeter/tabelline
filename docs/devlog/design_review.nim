@@ -86,8 +86,8 @@ func value(ts: seq[Token], name: string): string =
     if t.name == name: return t.value
 
 nbRawHtml: &"""<style>
-html {{ {css(quadernoTokens)} }}
-html[data-tema="munari"] {{ {css(munariTokens)} }}
+html {{ {css(munariTokens)} }}
+html[data-tema="quaderno"] {{ {css(quadernoTokens)} }}
 .scala {{ display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; margin: .6rem 0 .2rem; }}
 .scala span {{ height: 2.2rem; outline: 1px solid rgba(0,0,0,.06); }}
 .scala-num {{ display: grid; grid-template-columns: repeat(10, 1fr); font-size: .72rem; color: var(--n-7); text-align: center; }}
