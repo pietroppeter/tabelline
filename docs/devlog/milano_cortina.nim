@@ -324,7 +324,8 @@ gt(head(medals, 10), rowname_col = "team") |>
 nbNota("""
 This is the only table of the post shown in three languages: Nim with tabelline, Python with
 Great Tables, R with gt. It is the table everyone knows, so it is the one to compare, verb by
-verb. The [Book](../../book/) does the same for every example of the gt and Great Tables guides.
+verb. The [Book](../../book/) does the same for the examples it ports from the gt and Great
+Tables guides.
 """, nkCode, "Three languages, once")
 
 nbNota("""
