@@ -14,7 +14,10 @@ nb.useTabelline(nome = "tabelline",
                 title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", nameHref = "../../")
 
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
-const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
+proc blend(a, b: string, t: float): string = mix(parseColor(a), parseColor(b), t).toHex
+let gold = haru.warning                                                  # rapeseed yellow
+let silver = blend(haru.paper, haru.ink, 0.3)                            # paper and a little ink
+let bronze = blend(blend(haru.warning, haru.primary, 0.5), haru.ink, 0.2) # yellow, plum and ink
 let gilt = tinta("--warning")                 # Italy's row
 let fresh = tinta("--success-soft")           # venues built for the Games
 
@@ -356,7 +359,9 @@ medals = pl.read_csv("docs/stories/data/milano-cortina/medals.tsv",
     .fmt_flag("code")
     .cols_label(code="", gold="🥇", silver="🥈", bronze="🥉")
     .tab_spanner("medals", columns=["gold", "silver", "bronze"])
-    .data_color(["gold", "silver", "bronze"], palette=["{haru.paper}", "{haru.warning}"])
+    .data_color("gold", palette=["{haru.paper}", "{gold}"])
+    .data_color("silver", palette=["{haru.paper}", "{silver}"])
+    .data_color("bronze", palette=["{haru.paper}", "{bronze}"])
     .tab_style(style.text(weight="bold"), loc.body(columns="total")))
 """, r = &"""
 library(gt)
@@ -368,7 +373,9 @@ gt(head(medals, 10), rowname_col = "team") |>
   fmt_flag(code) |>
   cols_label(code = "", gold = "🥇", silver = "🥈", bronze = "🥉") |>
   tab_spanner("medals", columns = c(gold, silver, bronze)) |>
-  data_color(c(gold, silver, bronze), palette = c("{haru.paper}", "{haru.warning}")) |>
+  data_color(gold, palette = c("{haru.paper}", "{gold}")) |>
+  data_color(silver, palette = c("{haru.paper}", "{silver}")) |>
+  data_color(bronze, palette = c("{haru.paper}", "{bronze}")) |>
   tab_style(cell_text(weight = "bold"), cells_body(columns = total))
 """):
   nbCode:
@@ -380,7 +387,9 @@ gt(head(medals, 10), rowname_col = "team") |>
       fmtFlag "code"
       colsLabel {"code": "", "gold": "🥇", "silver": "🥈", "bronze": "🥉"}
       tabSpanner "medals", ["gold", "silver", "bronze"]
-      dataColor ["gold", "silver", "bronze"], palette = metal
+      dataColor "gold", palette = @[haru.paper, gold]
+      dataColor "silver", palette = @[haru.paper, silver]
+      dataColor "bronze", palette = @[haru.paper, bronze]
       tabStyle style.text(weight = "bold"), loc.body(cols("total"))
       tabOptions(tableFontSize = "14px")
   nbTable t
@@ -395,12 +404,14 @@ Tables guides.
 nbNota("""
 `readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
-emoji, so nothing is loaded. `dataColor` shades each medal column on its own (with tabelline 0.1
-each column has its own range, as in gt), along `metal`, a palette of two colours defined at the
-top of the page: the paper and the yellow of the Munari look (`haru.paper` and `haru.warning`,
-from `docs/stile.nim`). They are written as values, not as the page's CSS variables, because
-`dataColor` mixes the colours itself while building the table, so the shading stays the same in
-the quaderno look. The blue scales below (`soft`) are made the same way, from Munari's blue.
+emoji, so nothing is loaded. `dataColor` shades each medal column in its own metal, from the paper
+to `gold`, `silver` or `bronze`, so the deepest cell of a column is the country with most of that
+medal (each column has its own range, as in gt). The three are mixed at the top of the page from
+the Munari look's colours (`docs/stile.nim`) with tabelline's `mix`: gold is its yellow
+(`haru.warning`), silver the paper with a little ink, bronze the yellow and the plum with a little
+ink. They are values, not the page's CSS variables, because `dataColor` mixes the colours itself
+while building the table, and picks a dark or light text for each cell so the numbers stay
+readable. The blue scales below (`soft`) are made the same way, from Munari's blue.
 """, nkCode)
 
 nbText: """
