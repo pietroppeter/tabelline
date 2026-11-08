@@ -1,0 +1,196 @@
+# Islands of the Mediterranean by area: Wikipedia, List of islands in the Mediterranean, read 8 Nov 2026 by isole.nim
+island,country,area,population,city
+Sicily,Italy,25834,5010001,Palermo
+Sardinia,Italy,24100,1656000,Cagliari
+Cyprus,Cyprus,9251,,Nicosia
+Corsica,France,8681,322000,Ajaccio
+Crete,Greece,8312,622871,Heraklion
+Euboea,Greece,3655,191206,Chalcis
+Mallorca,Spain,3640,846000,Palma
+Lesbos,Greece,1630,86436,Mytilene
+Rhodes,Greece,1398,115490,Rhodes
+Chios,Greece,842,51390,Chios
+Cephalonia,Greece,781,35801,Argostoli
+Menorca,Spain,694,87000,Mahón
+Corfu,Greece,592,100853,Corfu
+Ibiza,Spain,577,111000,Ibiza Town
+Djerba,Tunisia,523,139544,Houmt Souk
+Lemnos,Greece,476,16992,Myrina
+Samos,Greece,476,32973,Vathy
+Naxos,Greece,428,17970,Naxos
+Zakynthos,Greece,406,40758,Zakynthos
+Cres,Croatia,405.78,3079,Cres
+Krk,Croatia,405.78,19383,Krk
+Brač,Croatia,394.57,13956,Supetar
+Andros,Greece,380,9221,Andros
+Thasos,Greece,379,13765,Thasos
+Lefkada,Greece,303,22076,Lefkada
+Karpathos,Greece,301,6181,Pigadia
+Hvar,Croatia,299.66,11077,Hvar
+Kos,Greece,290,33388,Kos
+Pag,Croatia,284.56,9059,Pag
+Gökçeada,Turkey,279,8894,Çınarlı
+Kythira,Greece,278,3973,Kythira
+Korčula,Croatia,276.03,15522,Korčula
+Icaria,Greece,255,8423,Agios Kirykos
+Malta,Malta,246,409259,Valletta
+Elba,Italy,224,31572,Portoferraio
+Skyros,Greece,209,2994,Skyros
+Paros,Greece,196,13715,Parikia
+Tinos,Greece,194,8636,Tinos
+Samothrace,Greece,178,2859,Samothrace
+Milos,Greece,160,4977,Plaka
+Kea,Greece,129,2446,Ioulis
+Amorgos,Greece,121,1971,Amorgos
+Marmara,Turkey,117,,
+Dugi Otok,Croatia,114.44,1655,Sali
+Kalymnos,Greece,111,16001,Pothia
+Chergui,Tunisia,110,,
+Sant'Antioco,Italy,109,11730,Sant'Antioco
+Ios,Greece,109,2024,Ios
+Mljet,Croatia,100.41,1088,Babino Polje
+Kythnos,Greece,100,1456,Kythnos
+Astypalaia,Greece,97,1334,Astypalaia
+Ithaca,Greece,96,3231,Vathy
+Skopelos,Greece,95.5,4960,Skopelos
+Salamis,Greece,95,39283,Salamina
+Rab,Croatia,90.84,9328,Rab
+Vis,Croatia,90.26,3445,Vis
+Mykonos,Greece,86,10120,Mykonos
+Syros,Greece,84,21505,Ermoupoli
+Aegina,Greece,83,13056,Aegina
+Formentera,Spain,83,7461,Sant Francesc Xavier
+Pantelleria,Italy,83,7729,Pantelleria
+Santorini,Greece,76,15230,Fira
+Lošinj,Croatia,74.68,7587,Mali Lošinj
+Serifos,Greece,73,1420,Serifos
+Sifnos,Greece,73,2625,Apollonia
+Gharbi,Tunisia,69,,
+Gozo,Malta,67,37288,Victoria
+Kasos,Greece,66,1084,Fry
+Alonissos,Greece,64,2712,Patitiri
+Tilos,Greece,63,780,Megálo Chorió
+Pašman,Croatia,63.34,2845,Pašman
+Šolta,Croatia,58.98,1700,Grohote
+Symi,Greece,58,2590,Symi
+Leros,Greece,53,7907,Agia Marina
+San Pietro,Italy,51,6444,Carloforte
+Asinara,Italy,51,1,Cala d'Oliva
+Hydra,Greece,50,1948,Hydra
+Ugljan,Croatia,50.21,6049,Preko
+Skiathos,Greece,48,6088,Skiathos
+Lastovo,Croatia,46.87,792,Lastovo
+Ischia,Italy,46,60335,Ischia
+Agios Efstratios,Greece,43,270,Agios Efstratios
+Nisyros,Greece,41,987,Mandraki
+Sikinos,Greece,41,273,Sikinos
+Psara,Greece,40,454,Psara
+Anafi,Greece,38,271,Anafi
+Lipari,Italy,37,10763,Lipari
+Bozcaada,Turkey,36,2427,Bozcaada
+Kimolos,Greece,36,908,Kimolos
+Antiparos,Greece,35,1211,Antiparos
+Patmos,Greece,35,2998,Patmos
+Kornat,Croatia,32.30,19,
+Folegandros,Greece,32,765,Folegandros
+Fourni,Greece,30,1313,Fourni
+Gavdos,Greece,29.6,152,Kastri
+Čiovo,Croatia,28.80,5908,Okrug Gornji
+Halki,Greece,28.1,478,Halki
+Salina,Italy,26.8,2300,Malfa
+Olib,Croatia,26.09,140,Olib
+Uzunada,Turkey,25.4,,
+Paxi,Greece,25.3,2280,Gaios
+Kalamos,Greece,25,496,Kalamos
+Kyra Panagia,Greece,25,2,
+Giglio,Italy,23.8,1458,
+Cunda (Alibey),Turkey,23.4,,
+Poros,Greece,22.9,3993,Poros
+Molat,Croatia,22.82,197,Molat
+Vir,Croatia,22.38,3000,Vir
+Spetses,Greece,22.2,4027,Spetses
+Paşalimanı,Turkey,21.4,,
+Saria,Greece,21.1,45,
+Vulcano,Italy,20.9,715,Vulcano
+Avsa,Turkey,20.6,,
+Antikythera,Greece,20.4,68,Potamós
+Lampedusa,Italy,20.2,4500,Lampedusa e Linosa
+La Maddalena,Italy,20.1,11902,La Maddalena
+Meganisi,Greece,20,1040,Katomeri
+Favignana,Italy,19,4383,Favignana
+Capraia,Italy,19,410,Capraia
+Elafonisos,Greece,19,1024,Elafonisos
+Murter,Croatia,18.60,4895,Murter
+Makronisos,Greece,18.3,9,
+Irakleia,Greece,17.6,141,Irakleia
+Iž,Croatia,17.59,615,Iž Veli
+Gyaros,Greece,17.3,0,
+Megalonisos Petalion,Greece,17.2,0,
+Polyaigos,Greece,17.2,2,
+Unije,Croatia,16.92,88,Unije
+Leipsoi,Greece,16,790,Leipsoi
+Šipan,Croatia,15.81,419,Šipanska Luka
+Caprera,Italy,15.7,0,
+Cabrera,Spain,15.7,0,
+Keros,Greece,15.2,0,
+Žirje,Croatia,15.06,103,Žirje
+Sestrunj,Croatia,15.03,48,Sestrunj
+Silba,Croatia,14.98,292,Silba
+Žut,Croatia,14.82,0,
+Pserimos,Greece,14.8,80,Pserimos
+Oinousses,Greece,14.4,826,Oinousses
+Peristera,Greece,14.2,30,
+Rineia,Greece,13.7,0,
+Agathonisi,Greece,13.6,185,Megálo Chorió
+Donoussa,Greece,13.6,167,Donoussa (Stavros)
+Prvic (Krk),Croatia,13.5,0,
+Stromboli,Italy,12.6,572,San Vincenzo
+Dokos,Greece,12.5,18,Dokos
+Porquerolles,France,12.5,200,
+Schiza,Greece,12.3,0,
+Drvenik Veliki,Croatia,12.1,168,Drvenik Veliki
+Marettimo,Italy,12,819,Marettimo
+Agistri,Greece,12,1142,Milos (Megalohori)
+Dia,Greece,11.8,0,
+Gioura,Greece,11.1,0,
+Capri,Italy,10.4,12200,Capri
+Montecristo,Italy,10.4,2,
+Pianosa,Italy,10.3,10,
+Othonoi,Greece,10.1,392,Othonoi
+Thymaina,Greece,10.1,143,Thymaina
+Imrali,Turkey,10,,
+Ist,Croatia,9.65,202,
+Filicudi,Italy,9.5,235,
+Therasia,Greece,9.3,319,
+Kastellorizo,Greece,9.1,492,
+Levitha,Greece,9.1,0,
+Sapientza,Greece,9.1,2,
+Kara Ada,Turkey,9,,
+Premuda,Croatia,8.7,58,
+Ustica,Italy,8.7,1302,
+Plavnik,Croatia,8.6,0,
+Maun,Croatia,8.5,0,
+Šćedro,Croatia,8.4,0,
+Zlarin,Croatia,8.1,276,
+Schoinousa,Greece,8.1,227,
+Antimilos,Greece,8,0,
+Syrna,Greece,7.9,0,
+Despotiko,Greece,7.8,0,
+Ammouliani,Greece,7.7,541,
+Ponza,Italy,7.5,3107,
+Alimia,Greece,7.4,0,
+La Galite,,7.3,,0
+Kaprije,Croatia,7.1,143,
+Port-Cros,France,7,30,
+Arkoi,Greece,6.7,44,
+Sveti Grgur,Croatia,6.4,0,
+Skantzoura,Greece,6.2,0,
+Biševo,Croatia,5.9,15,
+Kastos,Greece,5.9,80,
+Tavolara,Italy,5.9,0,
+Levanzo,Italy,5.8,208,
+Pano Koufonisi,Greece,5.8,399,
+Sazan Island,Albania,5.7,0,
+Veliki Brijun,Croatia,5.7,0,
+Ilovik,Croatia,5.5,85,
+Petalas,Greece,5.5,0,
