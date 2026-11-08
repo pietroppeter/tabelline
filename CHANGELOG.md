@@ -7,6 +7,10 @@
   with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
   shows the stories as a gallery, and the roadmap links each *use it* thread to its story (#26).
 
+- Docs: the home page groups its pages by the question a reader brings (Learn tabelline, Where
+  it's going, How it's made) and names them in plain words: the Guide (The Great Explainer), the
+  Feature map (was Coverage map), the Design guide (was Design Ref), For coding agents (was
+  Agents); Specs keeps its name. URLs are the same (#25).
 - Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
   quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
   (#24).

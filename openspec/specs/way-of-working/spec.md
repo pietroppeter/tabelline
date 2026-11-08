@@ -1,7 +1,7 @@
 # way-of-working Specification
 
 ## Purpose
-How tabelline is made: specs with examples that run, living documents, stories and a devlog built as
+How tabelline is made: specs with examples that run, pages kept up to date, stories and a devlog built as
 nimib notebooks, previews before merges.
 
 ## Requirements
@@ -31,10 +31,11 @@ quaderno theme (`docs/quaderno.nim`), with the code that made each table shown n
 SHALL build all pages (`docs/all.nim`) and deploy them to GitHub Pages from `main`; the HTML SHALL
 NOT be committed.
 
-### Requirement: Living documents and a devlog
-The site SHALL have living documents, kept up to date as tabelline changes (the explainer, the
-specs page), and a devlog of dated posts, each telling one step as it happened and not updated
-afterwards. The devlog index SHALL list the living documents first, then the posts newest first,
+### Requirement: Pages kept up to date, and a devlog
+The site SHALL have pages kept up to date as tabelline changes (the Guide, the specs page and
+the others on the home page), and a devlog of dated posts, each telling one step as it happened
+and not updated afterwards. The home page SHALL list the pages in groups, by the question a reader
+brings, with names a newcomer can read. The devlog index SHALL list only the posts, newest first,
 read from the posts' sources. The specs page SHALL show every spec with its examples, their
 output and the HTML table each example makes.
 
