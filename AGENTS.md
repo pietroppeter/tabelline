@@ -52,19 +52,22 @@ working rules that are easy to miss.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
+  `nbParte`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
+  with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
   `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
   `optCssTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
-- The home page shows the simplest example and links the living documents in this order: The
-  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
-  lists only posts. A new living document gets a card there
-  (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
-- The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
-  change starts as a devlog post. The Agents page reads this file when it builds.
-- Living documents are kept up to date. A devlog post
+- The home page shows the simplest example and links the pages in three groups, by the question
+  a reader brings: Learn tabelline (Guide, Book), Where it's going (Roadmap, Feature map), How
+  it's made (Devlog, Specs, Design guide, For coding agents). Name pages in plain words a newcomer
+  reads without knowing how tabelline is made. The devlog lists only posts. A new page gets a card
+  there (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
+- The Design guide (`docs/design.nim`) is updated in the PR that changes the look; a big design
+  change starts as a devlog post. The page For coding agents reads this file when it builds.
+- The pages of the site are kept up to date. A devlog post
   (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
@@ -78,7 +81,7 @@ working rules that are easy to miss.
   `--shade`, `--line`, `--muted` and the scale `--neutral-0` … `--neutral-9`, `--surface`,
   `--x-soft`, `--x-text`); the warning colour is never text. The old names `--n-0` … `--n-9` and
   `--text` (now `--font`) are kept only for the dated posts' own CSS.
-- The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
+- The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
@@ -112,8 +115,9 @@ working rules that are easy to miss.
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.
-- When a change is visual, put before and after screenshots (phone width, both looks) in the PR
-  description and in the reply to Pietro. To show them in the PR without adding them to `main`,
-  commit them, link them by that commit's sha, and remove them in the next commit.
+- When a change is visual, put before and after screenshots (phone width, both looks) in the reply
+  to Pietro, and only the after shots of what changed in the PR description. To show them in the
+  PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
+  in the next commit.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.

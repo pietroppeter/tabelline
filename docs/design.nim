@@ -1,7 +1,7 @@
-## The Design Ref, docs/design/index.html: how tabelline's pages look and why, and the reference
+## The Design guide, docs/design/index.html: how tabelline's pages look and why, and the reference
 ## for writing one. In three parts: the foundations (two looks, the rules, shapes, the palette by
 ## roles, type), the blocks a page is made of (each shown live, with its code), and how to write
-## and build a page. A living document: it changes in the PR that changes the design
+## and build a page. Kept up to date: it changes in the PR that changes the design
 ## (docs/stile.nim, docs/blocchi.nim); big design changes start as a devlog post that ends here.
 import std/[os, strformat]
 import nimib except md
@@ -11,11 +11,11 @@ import blocchi
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "design" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Design Ref", classe = "living document",
-               title = "tabelline Design Ref", homeHref = "../",
+nb.useTabelline(nome = "tabelline", materia = "Design guide", classe = "kept up to date",
+               title = "tabelline design guide", homeHref = "../",
                description = "The design of tabelline's pages: two looks, shapes for kinds, a palette by roles, and the blocks every page is made of.")
 
-nbTitolo "Design Ref · living document · started 8 November 2026", "How tabelline's pages look, and why", """
+nbTitolo "Design guide · kept up to date · started 8 November 2026", "How tabelline's pages look, and why", """
 Every page of tabelline is made of a few pieces: two looks, three shapes, a palette by roles, one
 typeface and a dozen blocks. This page shows each of them live, says what it means and when to
 use it, and how it is built. It is the reference for writing a new page.
@@ -50,7 +50,7 @@ its tables work just as well in a very different theme: everything it changes is
 ## Three rules
 
 1. **Simplest first.** A page starts from zero and goes from the simplest, most fundamental
-   thing to the most complex; a living document ends with *How it is built*.
+   thing to the most complex; a page kept up to date ends with *How it is built*.
    *Complicare è facile, semplificare è difficile* (Munari).
 2. **Shape for kind, colour for role.** A shape says what kind of thing it is; a colour says
    which role it plays. Each shape has a default colour and takes another only for a reason that
@@ -106,7 +106,7 @@ into the paper (`--primary-soft`, 22%), for backgrounds; and a **text** version 
 version: **the warning colour is never text**, a warning is ink on its soft, with the triangle.
 """
 nbTinte [("--primary", "primary", "the circle: sections, kickers, link underlines, keywords"),
-         ("--secondary", "secondary", "the square: information, living documents, strings, bars"),
+         ("--secondary", "secondary", "the square: information, pages to go to, strings, bars"),
          ("--warning", "warning", "the triangle: warnings, and the highlighter"),
          ("--success", "success", "what is done, what works; numbers in code"),
          ("--primary-soft", "`--primary-soft`", "a note of what is missing"),
@@ -142,7 +142,7 @@ gives the reader. Everything below is a block: each section shows one live, with
 under it.
 """
 nbShowCode:
-  nbTitolo "Living document", "A title", "The lede: what this page gives you, in a sentence or two."
+  nbTitolo "Kicker · kept up to date", "A title", "The lede: what this page gives you, in a sentence or two."
 
 nbText: """
 ## Headings and the indice
@@ -155,24 +155,27 @@ with `nbParte(number, title, role)`: from there on, its sections take the part's
 ## Notes
 
 A note is a sheet set apart, beside the text, in Markdown. Its kind is an enum, `NotaKind`, so a
-kind spelled wrong does not compile; its colour follows from the kind.
+kind spelled wrong does not compile; its colour follows from the kind. A page that tells a story
+with tables keeps the story in the text and puts what is about the code in green **code** notes,
+one under the table it explains, and a first one that says so.
 """
 nbShowCode:
   nbNota "**plain**: an aside."
   nbNota "**info**: information, a page to go to.", nkInfo
   nbNota "**done**: what is done, what works.", nkDone
+  nbNota "**code**: about the code, what tabelline does in the table above, and why.", nkCode
   nbNota "**missing**: a gap, or a difference from gt and Great Tables.", nkMissing
   nbNota "**warning**: the API will change.", nkWarning, "A note can have a title"
 
 nbText: """
 ## Cards
 
-Cards in a grid: a menu of pages, as the living documents on the home page. A card has a title
+Cards in a grid: a menu of pages, as the pages on the home page. A card has a title
 (a link when it has an address), a small number, a kind (info by default) and any blocks inside.
 """
 nbShowCode:
-  nbCards "two living documents":
-    nbCard "The Great Explainer", "../explainer/", "1":
+  nbCards "two pages":
+    nbCard "Guide", "../explainer/", "1":
       nbText "A card links somewhere and says in a line what is there."
     nbCard "Devlog", "../devlog/", "2":
       nbText "Cards of a grid share a kind when they are the same kind of thing."
@@ -260,7 +263,7 @@ nbText: """
   resort, for a one-off, with a comment that says why.
 - Check every new element in both looks, and at phone width (390px): nothing may be wider than
   the screen.
-- A living document is kept up to date; a devlog post is dated, and its numbers are frozen as
+- A page of the site is kept up to date; a devlog post is dated, and its numbers are frozen as
   snapshots so it does not change afterwards.
 
 `nim r tools/drift.nim` counts, page by page, the HTML, styles, scripts and fixed colours written

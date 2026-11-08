@@ -1,6 +1,6 @@
-## The living spec page, docs/specs/index.html: every OpenSpec spec and open change of tabelline,
+## The specs page, docs/specs/index.html: every OpenSpec spec and open change of tabelline,
 ## with each example run against the code while the page builds (tools/specexamples.nim), its
-## output, and the table it makes. A living page, not a dated post: CI rebuilds it on every push.
+## output, and the table it makes. Kept up to date, not a dated post: CI rebuilds it on every push.
 ## `?spec=<names>` and `?change=<names>` (or the same after `#`) show only those; see the
 ## "Links" box on the page.
 import std/[os, strutils, json, algorithm, strformat, sequtils]
@@ -11,7 +11,7 @@ import ../tools/specexamples
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "specs" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Specs", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Specs", classe = "kept up to date",
                title = "tabelline specs", homeHref = "../",
                description = "How tabelline behaves today: OpenSpec requirements with examples that run.")
 
@@ -157,7 +157,7 @@ for k, ex in examples:
 for s in specs:
   for (_, rs) in s.sections: nreq += rs.len
 
-nbTitolo "Specs · living page · rebuilt on every push", "How tabelline behaves", &"""
+nbTitolo "Specs · rebuilt on every push", "How tabelline behaves", &"""
 Every behaviour agreed so far, written down with [OpenSpec](https://github.com/Fission-AI/OpenSpec):
 {specs.len} specs, {nreq} requirements, {total} examples. Each example ran against the code while
 this page was built: **{passing} of {total} pass**.
