@@ -155,8 +155,8 @@ primary, secondary, status and data) for both looks, maps every component to it,
 choices to make. What is chosen becomes the new Design Ref.</p>
 
 Everything below that shows a colour uses the proposed tokens, live, in the look picked at the top
-of the page: switch it to see the quaderno's version. The contrast numbers were computed when the
-page was built.
+of the page: switch it to see the quaderno's version. The contrast numbers are computed when the
+page is built, from the fixed values of the two looks.
 """
 nbIndice
 
@@ -188,10 +188,12 @@ block:
     optQuaderno()
   nbTable t
 
-# Fixed colours written in each source of the pages, counted when this page is built.
-block:
-  var files: seq[string]
-  var counts: seq[int]
+# Fixed colours written in each source of the pages. Counted once, on 8 November 2026, and saved
+# as a dated snapshot (the post is dated: its numbers must not move as the pages change). Delete
+# the file to count again.
+let hexSnapshot = docs / "devlog" / "data" / "design-review" / "hex-colours.tsv"
+if not fileExists(hexSnapshot):
+  var lines = @["source\tcolours"]
   for path in walkDirRec(docs):
     if not path.endsWith(".nim") or "design_review" in path: continue
     var found: seq[string]
@@ -204,8 +206,17 @@ block:
       else: inc i
     found = found.deduplicate
     if found.len >= 3:
-      files.add path.relativePath(docs)
-      counts.add found.len
+      lines.add path.relativePath(docs) & "\t" & $found.len
+  createDir(hexSnapshot.parentDir)
+  writeFile(hexSnapshot, lines.join("\n") & "\n")
+
+block:
+  var files: seq[string]
+  var counts: seq[int]
+  for line in readFile(hexSnapshot).strip.splitLines[1 .. ^1]:
+    let f = line.split('\t')
+    files.add f[0]
+    counts.add parseInt(f[1])
   var order = toSeq(0 ..< files.len)
   order.sort(proc (a, b: int): int = cmp(counts[b], counts[a]))
   let fixed = tableData:
@@ -216,7 +227,7 @@ block:
     tabHeader "Fixed colours in the sources of the pages", &"distinct hex values per file, {total} in all"
     colsLabel {"colours": "hex values"}
     fmtBar "colours", color = "var(--primary)", width = "6em"
-    tabSourceNote "Counted when this page was built; files with fewer than three are left out."
+    tabSourceNote "Counted on 8 November 2026 (snapshot in devlog/data/design-review/); files with fewer than three are left out."
     optQuaderno()
   nbTable t
 
@@ -497,7 +508,8 @@ steps put 0, 4, 8, 14, 25, 40, 55, 65, 80 and 100% of ink in the paper; a soft t
 colour in paper; a text colour is 50% of the colour in ink. The tokens are written as CSS
 variables on `html` (the quaderno) and on `html[data-tema="munari"]`, so every swatch, card and
 table here changes with the look switch. Contrast is the WCAG 2 ratio of the two relative
-luminances. The fixed-colour count reads every `.nim` file under `docs/` and counts the distinct
-`#RRGGBB` values.
+luminances. The fixed-colour count read every `.nim` file under `docs/` and counted the distinct
+`#RRGGBB` values once, on 8 November 2026; it is kept as a dated snapshot,
+`docs/devlog/data/design-review/hex-colours.tsv`, so the post keeps its numbers as the pages change.
 """
 nbSave
