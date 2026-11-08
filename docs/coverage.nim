@@ -63,6 +63,7 @@ block:
     tabStubhead "area (groups)"
     colsLabel {"has": "has it", "share": "covered"}
     fmtNumber "share", decimals = 0, pattern = "{x}%"
+    dataColor "share", palette = palette("greens"), domain = (0.0, 100.0)
     tabSourceNote "Covered: groups that tabelline has, plus half of those it has partly. Not counted: the groups it does not plan."
     optPageTheme()
   nbTable t
