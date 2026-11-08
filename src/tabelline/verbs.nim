@@ -510,14 +510,13 @@ proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
 type CssTheme* = object
   ## Where a table takes its colours and font from (`optCssTheme`): for each, the name of a CSS
   ## variable of the page (`"--ink"`) or a CSS value (`"#1C1C1C"`).
-  ink*, paper*, line*, shade*, primary*, secondary*, font*: string
+  ink*, paper*, line*, shade*, primary*, font*: string
 
 func cssTheme*(ink = "--ink", paper = "--paper", line = "--line", shade = "--shade",
-               primary = "--primary", secondary = "--secondary", font = "--font"): CssTheme =
+               primary = "--primary", font = "--font"): CssTheme =
   ## A theme to keep and reuse with `optCssTheme(theme)`. Each argument starting with `--` names
   ## the variable to read; anything else is the CSS value itself.
-  CssTheme(ink: ink, paper: paper, line: line, shade: shade, primary: primary,
-           secondary: secondary, font: font)
+  CssTheme(ink: ink, paper: paper, line: line, shade: shade, primary: primary, font: font)
 
 func cssRef(x, fallback: string): string =
   ## A variable with its fallback, or the value as it is.
@@ -543,22 +542,21 @@ proc optCssTheme*(t: sink Tabella, theme: CssTheme): Tabella =
   result.options.columnLabelsFontWeight = "bold"
   result.options.tableBodyHlinesColor = line
   result.options.rowGroupBackgroundColor = shade
-  result.options.rowGroupBorderColor = cssRef(theme.secondary, ink)
+  result.options.rowGroupBorderColor = ink
   result.options.rowStripingBackgroundColor = shade
 
 proc optCssTheme*(t: sink Tabella, ink = "--ink", paper = "--paper", line = "--line",
-                  shade = "--shade", primary = "--primary", secondary = "--secondary",
-                  font = "--font"): Tabella =
+                  shade = "--shade", primary = "--primary", font = "--font"): Tabella =
   ## The page's theme: every colour of the table, and its font, is a CSS variable of the page it
   ## is on, so the table follows the page's palette and changes with it. It reads `--ink` (text
   ## and the heavy rules), `--paper` (behind the table), `--line` (the rules between rows),
-  ## `--shade` (row groups and stripes), `--primary` (the rule under the heading), `--secondary`
-  ## (the rules of the row groups) and `--font`. Two are enough: without the others, line and
-  ## shade are mixed from ink and paper, primary and secondary are the ink; without any, the table
+  ## `--shade` (row groups and stripes), `--primary` (the rule under the heading) and `--font`.
+  ## Two are enough: without the others, line and shade are mixed from ink and paper, primary is
+  ## the ink; without any, the table
   ## is black on white. An argument names another variable (`ink = "--foreground"`), or, when it
   ## does not start with `--`, is a value (`primary = "#D64545"`). gt and Great Tables have no
   ## such preset.
-  optCssTheme(t, cssTheme(ink, paper, line, shade, primary, secondary, font))
+  optCssTheme(t, cssTheme(ink, paper, line, shade, primary, font))
 
 func px(x: float): string =
   var s = formatFloat(x, ffDecimal, 1)

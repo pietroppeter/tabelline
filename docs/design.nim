@@ -302,7 +302,7 @@ the page is drawn (from `?tema=`, else `localStorage`, else `munari`); one scrip
 the switch, the tabs, *Show the parts* and the specs filter work.
 
 **Tables.** `optCssTheme()` is a tabelline preset that reads the tokens by name (`--ink`,
-`--paper`, `--line`, `--shade`, `--primary`, `--secondary`, `--font`), each with a plain fallback
+`--paper`, `--line`, `--shade`, `--primary`, `--font`), each with a plain fallback
 (`var(--ink, #1C1C1C)`), so a table follows the page it is on with no arguments.
 """
 nbSave

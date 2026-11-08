@@ -114,7 +114,7 @@ suite "0.1 fixes from the book":
     check o.tableBackgroundColor == "var(--paper, #FFFFFF)"
     check o.rowGroupBackgroundColor == "var(--shade, color-mix(in oklab, var(--ink, #1C1C1C) 4%, var(--paper, #FFFFFF)))"
     check o.headingBorderBottomColor == "var(--primary, var(--ink, #1C1C1C))"
-    check o.rowGroupBorderColor == "var(--secondary, var(--ink, #1C1C1C))"
+    check o.rowGroupBorderColor == "var(--ink, #1C1C1C)"
     check o.tableFontNames == "var(--font, system-ui, sans-serif)"
   test "optCssTheme: another name, or a value":
     let o = tabella(tavolaPitagorica(2)).optCssTheme(ink = "--foreground", line = "#CCCCCC").options

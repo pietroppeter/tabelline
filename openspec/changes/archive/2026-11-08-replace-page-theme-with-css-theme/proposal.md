@@ -10,11 +10,11 @@ the preset and the tokens of the pages.
 ## What Changes
 
 - **BREAKING (before 0.1):** `optPageTheme()` is replaced by `optCssTheme()`, beside `optCss()`.
-- It reads seven names that say what they are: `--ink` (text and heavy rules), `--paper` (behind
+- It reads six names that say what they are: `--ink` (text and heavy rules), `--paper` (behind
   the table), `--line` (rules between rows), `--shade` (row groups, stripes), `--primary` (the
-  rule under the heading), `--secondary` (the rules of the row groups) and `--font`.
+  rule under the heading) and `--font`.
 - Two make a table: without `--line` and `--shade`, they are mixed from ink and paper
-  (`color-mix`); without `--primary` and `--secondary`, they are the ink; without ink and paper,
+  (`color-mix`); without `--primary`, it is the ink; without ink and paper,
   the table is black on white.
 - Every name can be changed, or replaced by a value: an argument starting with `--` names a
   variable, anything else is a CSS value (`optCssTheme(ink = "--foreground", primary = "#D64545")`).
@@ -22,8 +22,7 @@ the preset and the tokens of the pages.
 - The docs: the tokens of `docs/stile.nim` take the same names, so tables follow the pages with
   no arguments. `--n-0` and `--n-9` were the paper and the ink; `--n-1` is `--shade`, `--n-3`
   `--line`, `--n-7` `--muted`; the whole scale is `--neutral-0` … `--neutral-9`; the font
-  `--text` is `--font`. Tables now sit on `--paper` (was `--surface`), and their row groups are
-  ruled in the secondary colour.
+  `--text` is `--font`. Tables now sit on `--paper` (was `--surface`).
 
 ## Differences from gt and Great Tables
 

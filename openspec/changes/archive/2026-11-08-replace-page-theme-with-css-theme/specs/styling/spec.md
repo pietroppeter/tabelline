@@ -7,10 +7,10 @@ SHALL set any of them by name, checked when compiling. `optRowStriping`, `optAli
 `optCssTheme()` SHALL take every colour, and the font, from CSS variables of the page: `--ink`
 (text, the rules above and below and under the column labels), `--paper` (behind the table),
 `--line` (rules between rows), `--shade` (row groups and stripes), `--primary` (the rule under
-the heading), `--secondary` (the rules of the row groups) and `--font`. Without them, `--ink`
+the heading) and `--font`. Without them, `--ink`
 SHALL fall back to `#1C1C1C` and `--paper` to `#FFFFFF`; `--line` and `--shade` SHALL be the ink
-mixed into the paper (14% and 4%), and `--primary` and `--secondary` the ink.
-Each argument of `optCssTheme(ink, paper, line, shade, primary, secondary, font)` SHALL name the
+mixed into the paper (14% and 4%), and `--primary` the ink.
+Each argument of `optCssTheme(ink, paper, line, shade, primary, font)` SHALL name the
 variable to read when it starts with `--`, and SHALL be the CSS value itself otherwise.
 `cssTheme(...)` SHALL make a `CssTheme` with the same arguments, which `optCssTheme(theme)` takes.
 On a heading or column labels background that light text reads better on, the text SHALL be

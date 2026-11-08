@@ -586,8 +586,7 @@ nbTinte [("--ink", "`--ink`, the ink", "the text, the rules above and below, the
          ("--paper", "`--paper`, the paper", "behind the table"),
          ("--line", "`--line`, a light grey", "the rules between rows"),
          ("--shade", "`--shade`, a lighter grey", "the row groups, and the stripes when rows are striped"),
-         ("--primary", "`--primary`, the first colour", "the rule under the heading"),
-         ("--secondary", "`--secondary`, the second colour", "the rules above and below each row group")]
+         ("--primary", "`--primary`, the first colour", "the rule under the heading")]
 nbText: """
 and `--font`, the page's font.
 
@@ -595,7 +594,7 @@ and `--font`, the page's font.
 
 Each variable comes with a fallback, written in the option itself. Without `--ink` and `--paper`
 the table is black on white. Without `--line` and `--shade`, they are the ink mixed into the
-paper, by the browser; without `--primary` and `--secondary`, they are the ink. So a page that
+paper, by the browser; without `--primary`, it is the ink. So a page that
 sets only its ink and its paper already gets a whole table, and a page that sets nothing gets a
 plain one, never a broken one:
 """
