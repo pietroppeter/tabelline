@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Breaking (before 0.1):** `toHtmlPage` is removed; `toHtml(t, makePage = true)` returns the
+  whole page, as Great Tables' `as_raw_html(make_page = True)`. `save` is unchanged.
 - Docs: a new section, *Stories*: real subjects told in tables made with tabelline, one for every
   release, kept up to date (`docs/stories/`). *Milano Cortina 2026* moves there from the devlog,
   with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
