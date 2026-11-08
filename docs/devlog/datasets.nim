@@ -390,7 +390,7 @@ nbShowCode:
     tiny: ["three dishes and their region; *tabelline* 2 × 3; a *pagella*",
            "the steps of Munari's method, for a *risotto verde*",
            "four planets and their moons"]
-    builtIn: ["`tavolaPitagorica`; `dispensa`, a pantry with one column of each type (an `exibble` you can eat)",
+    builtIn: ["`tavolaPitagorica`, the times tables",
               "`compasso`: the Compasso d'Oro of 1954, its designers, objects and makers",
               "`planets`; `isole`: the islands of the Mediterranean; `alpi`: the highest peaks of the Alps"]
     big: ["`pizza`: the price of a margherita, by city and year (inflation and regional differences)",
@@ -461,8 +461,8 @@ nbShowCode:
          source: "✅ Wikipedia, 194 islands"),
     Twin(gt: "`sp500`", twin: "`paesi`: World Heritage Sites and population, flags, ratios",
          source: "✅ Wikipedia and `countrypops`"),
-    Twin(gt: "`exibble`", twin: "`dispensa`: a pantry, with dates, times, prices, missing values",
-         source: "✅ made up"),
+    Twin(gt: "`exibble`", twin: "none for now: `exibble` stays as it is",
+         source: "—"),
     Twin(gt: "`countrypops`", twin: "`paesi` in full: every country, every year, with CO₂ and GDP", source: "✅ Our World in Data, on GitHub"),
     Twin(gt: "`sza`", twin: "`tavolaPitagorica`, coloured by value", source: "✅ the code"),
     Twin(gt: "`airquality`", twin: "the air or the weather of an Italian city", source: "🟡 ARPA Lombardia"),
@@ -621,8 +621,10 @@ Three, to discuss, each with its choices.
   and flags. `alpi` follows it as the second geography dataset.
 - **Landmark: `paesi`**, the twin of `countrypops` and the README's showcase in the place of
   `sp500`: flags, integers, ratios, a title, a bold row.
-- **Toy: `dispensa`**, the twin of `exibble`, for formats and selectors, while the book keeps
-  `exibble` itself.
+- **Toy: `exibble` as it is.** A value in tabelline is missing, a bool, an integer, a float or
+  a string: dates, times and factors are strings, formatted when the table is rendered. A twin
+  with a column for each type can wait until there are more types; a pantry (`dispensa`) would
+  be a good one, with a reason for every missing value.
 
 ### 2 · Small examples come from the kitchen and the school
 
@@ -634,16 +636,15 @@ the book keeps its sources as they are, and a `tabelline` box can show the twin 
 ### 3 · Three steps, in three PRs
 
 1. **Decide** the names and the nine cells (this post, with its review).
-2. **Build** (an OpenSpec change): `isole`, `alpi`, `paesi` and `dispensa` in `tabelline/datasets`, each
-   with its source, licence and date in the module, and the scripts that made them; plus `readCsv`
-   with a `comment` option, which every data file here needs.
+2. **Build** (an OpenSpec change): `isole`, `alpi` and `paesi` in `tabelline/datasets`, each
+   with its source, licence and date in the module, and the scripts that made them.
 3. **Migrate**: the README, the home page, the explainer and the specs' examples move to the new
    datasets; the dated posts keep what they had.
 
 ## Choices to make
 
 - **The first table**: `isole` (recommended), `alpi`, `paesi`, the planets as today, or a small food table?
-- **Names**: Italian (`isole`, `citta`, `alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
+- **Names**: Italian (`isole`, `citta`, `alpi`, `paesi`, `compasso`), as `tavolaPitagorica` is, or
   English, as `planets` is? An Italian name is part of the twist; mixing both is what we have now.
 - **Bottega**: is Munari's *risotto verde* the right tiny example for design, and the Compasso
   d'Oro the right bigger one? A dataset from Munari's own books needs care with what we take from
