@@ -52,7 +52,7 @@ block:
   let t = tabella(rows, rownameCol = "", groupnameCol = "step"):
     colsLabel {"found": "What the book found", "now": "In 0.1"}
     fmtMarkdown ["found", "now"]
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -74,8 +74,8 @@ block:
     fctr: ["one", "two", "five"]
   # the colours of the book's examples, as the guide gives them (names, not the page's tokens)
   nbAccanto:
-    nbTable tabella(simple).optTokens.dataColor(everything(), palette = @["blue", "red"])
-    nbTable tabella(few).optTokens
+    nbTable tabella(simple).optPageTheme.dataColor(everything(), palette = @["blue", "red"])
+    nbTable tabella(few).optPageTheme
       .tabSpanner("spanner", ["char", "fctr"])
       .tabStyle(style.fill("lightblue"), loc.columnLabels(cols = "num"))
       .tabStyle(style.fill("yellow"), loc.columnHeader())

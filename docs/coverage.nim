@@ -64,7 +64,7 @@ block:
     colsLabel {"has": "has it", "share": "covered"}
     fmtBar "share", color = "var(--secondary)", width = "3em", domain = (0.0, 100.0), showValue = false
     tabSourceNote "Covered: groups that tabelline has, plus half of those it has partly. Not counted: the groups it does not plan."
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -90,7 +90,7 @@ block:
     tabSpanner "sizes", ["s", "m", "l"]
     subZero ["s", "m", "l"], zeroText = ""
     tabStyle style.text(weight = "bold"), loc.body(cols = "theme")
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -112,7 +112,7 @@ block:
     tabHeader "Built for 0.1", &"{rows.len} small groups, each a few hours"
     colsLabel {"feature": "group, gt names, what it is"}
     fmtMarkdown "feature"
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -137,7 +137,7 @@ block:
     colsLabel {"feature": "feature group, gt names, notes", "now": "today", "plan": "planned"}
     fmtMarkdown "feature"
     colsWidth {"now": "5.5em", "plan": "4.5em"}
-    optTokens()
+    optPageTheme()
   for s, label in labels:
     let c = colours[s]
     t = t.tabStyle(style.text(color = c, weight = "bold"), loc.body(cols = "now", rows = where(it["now"] == label)))

@@ -66,7 +66,7 @@ nbShowCode:
     athletes: [2884]
     nations: [92]
   let t = tabella(games, rownameCol = "edition"):
-    optTokens()
+    optPageTheme()
     tabHeader "Milano Cortina 2026", "the Olympic Winter Games"
     fmtRoman "edition"
     fmtDate ["opening", "closing"], dateStyle = "d MMM"
@@ -98,7 +98,7 @@ nbShowCode:
     PartRow(n: 3, part: "🏔️ What stays", questions: "Snow, buildings, and what came after"),
   ]
   let t = tabella(rows, rownameCol = "n"):
-    optTokens()
+    optPageTheme()
     fmtIndex "n"
     colsLabel {"part": "part", "questions": "three questions"}
     tabStyle style.text(weight = "bold"), loc.body(cols("part"))
@@ -132,7 +132,7 @@ nbShowCode:
     else: rows.add VenueRow(cluster: $raw["cluster", i], venue: venue, events: $raw["events", i],
                             capacity: int(raw["capacity", i].toFloat), status: $raw["status", i])
   let t = tabella(rows, rownameCol = "venue", groupnameCol = "cluster"):
-    optTokens()
+    optPageTheme()
     tabHeader "Fourteen venues, five clusters", "and what each was before the Games"
     colsLabel {"events": "for", "capacity": "seats", "status": "before"}
     fmtInteger "capacity"
@@ -156,7 +156,7 @@ spreading the Games is distance. Ester Ledecká, who won gold in skiing and in s
 
 nbShowCode:
   let t = tabella(@trips, rownameCol = "trip"):
-    optTokens()
+    optPageTheme()
     tabHeader "How far apart"
     colsLabel {"by": "by", "low": "from", "high": "to"}
     fmtDuration ["low", "high"], inputUnits = "hours"
@@ -205,7 +205,7 @@ gt(head(medals, 10), rowname_col = "team") |>
   nbCode:
     let medals = readTsv("medals.tsv").top(10, ["gold", "silver", "bronze"])
     let t = tabella(medals, rownameCol = "team"):
-      optTokens()
+      optPageTheme()
       tabHeader "Medal table", "Milano Cortina 2026, top ten"
       colsHide "rank"
       fmtFlag "code"
@@ -233,7 +233,7 @@ nbShowCode:
     let medals = readTsv("medals.tsv").top(10, by)
     let order = cols(by)
     result = tabella(medals, rownameCol = "team"):
-      optTokens()
+      optPageTheme()
       tabHeader (if byTotal: "Total first" else: "Golds first")
       colsHide ["rank", "code"]
       colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉", "total": "all"}
@@ -263,7 +263,7 @@ nbShowCode:
   let all = readTsv("italy-history.tsv")
   let h = all.keep(proc (i: int): bool = all["year", i].toFloat >= 1994)
   let t = tabella(h, rownameCol = "year"):
-    optTokens()
+    optPageTheme()
     tabHeader "Italy at the Winter Games", "since Lillehammer 1994, the old record"
     colsHide ["gold", "silver", "bronze"]
     colsLabel {"host": "", "athletes": "athletes", "total": "🏅", "rank": "rank"}
@@ -289,7 +289,7 @@ many athletes are on the podium:
 nbShowCode:
   let m = readTsv("italy-medals.tsv")
   let t = tabella(m, groupnameCol = "medal"):
-    optTokens()
+    optPageTheme()
     tabHeader "Italy's thirty medals"
     colsLabel {"date": "", "sport": "sport", "event": "event", "athletes": "who"}
     fmtDate "date", dateStyle = "d MMM"
@@ -314,7 +314,7 @@ nbShowCode:
   proc small(file, title: string): Tabella =
     let d = readTsv(file).top(6, ["gold", "silver", "bronze"])
     result = tabella(d, rownameCol = "team"):
-      optTokens()
+      optPageTheme()
       tabHeader title
       colsHide ["rank", "silver", "bronze"]
       fmtFlag "code"
@@ -342,7 +342,7 @@ Games every race could be streamed.
 
 nbShowCode:
   let t = tabella(@channels, rownameCol = "channel"):
-    optTokens()
+    optPageTheme()
     tabHeader "Where to watch, in Italy"
     colsLabel {"how": "", "free": "free", "allEvents": "every race"}
     fmtTf ["free", "allEvents"], tfStyle = "check-mark"
@@ -366,7 +366,7 @@ nbShowCode:
   nbAccanto:
     block:
       let t = tabella(@prices, rownameCol = "what"):
-        optTokens()
+        optPageTheme()
         tabHeader "Prices"
         colsLabel {"euro": ""}
         fmtCurrency "euro", currency = "EUR", decimals = 0
@@ -375,7 +375,7 @@ nbShowCode:
       nbTable t
     block:
       let t = tabella(@ticketShares, rownameCol = "what"):
-        optTokens()
+        optPageTheme()
         tabHeader "Shares"
         colsLabel {"share": ""}
         fmtPercent "share", decimals = 0
@@ -399,7 +399,7 @@ against the €4 million it had set aside.
 
 nbShowCode:
   let t = tabella(@prizes, rownameCol = "country"):
-    optTokens()
+    optPageTheme()
     tabHeader "What a medal pays", "to the athlete, from their country's committee"
     colsHide "currency"
     fmtFlag "code"
@@ -428,7 +428,7 @@ The medal itself is worth less than one would think. A gold medal is silver with
 
 nbShowCode:
   let t = tabella(@metals, rownameCol = "medal"):
-    optTokens()
+    optPageTheme()
     tabHeader "The medal as metal"
     colsLabel {"grams": "weighs", "goldGrams": "of gold", "euro": "worth"}
     fmtNumberSi ["grams", "goldGrams"], unit = "g", decimals = 0
@@ -451,7 +451,7 @@ the last, in millions of euros:
 
 nbShowCode:
   let t = tabella(@estimates, rownameCol = "work"):
-    optTokens()
+    optPageTheme()
     tabHeader "From the first estimate to the last", "millions of euros"
     colsLabel {"place": "", "fate": "", "first": "first", "last": "last", "times": "×"}
     fmtNumber ["first", "last"], decimals = 1, dropTrailingZeros = true
@@ -474,7 +474,7 @@ Its cost, step by step:
 
 nbShowCode:
   let t = tabella(@trackSteps, rownameCol = "date"):
-    optTokens()
+    optPageTheme()
     tabHeader "The sliding track of Cortina", "its cost, in millions of euros"
     colsLabel {"what": "", "millions": "€ m"}
     colsHide "path"
@@ -492,7 +492,7 @@ million. One line per item, in and out:
 
 nbShowCode:
   let t = tabella(@trackYear, rownameCol = "item", groupnameCol = "side"):
-    optTokens()
+    optPageTheme()
     tabHeader "One year of the sliding track", "2027, as planned"
     colsLabel {"euro": ""}
     fmtCurrency "euro", currency = "EUR", decimals = 0
@@ -511,7 +511,7 @@ the state pays for its extra costs, and how much those are depends on who is ask
 
 nbShowCode:
   let t = tabella(@santaGiulia, rownameCol = "who"):
-    optTokens()
+    optPageTheme()
     tabHeader "Santa Giulia's extra costs", "millions of euros, as each side tells them"
     colsLabel {"says": "", "millions": "€ m"}
     fmtBar "millions", color = bar, width = "4em"
@@ -531,7 +531,7 @@ snow had been made.
 
 nbShowCode:
   let t = tabella(@snow, rownameCol = "what"):
-    optTokens()
+    optPageTheme()
     colsLabel {"value": "", "unit": "", "note": ""}
     fmtNumber "value", decimals = 1, compact = true
     colsMoveToEnd "note"
@@ -558,7 +558,7 @@ nbShowCode:
   var d = air
   d.addColumn("more", more)
   let t = tabella(d, rownameCol = "year"):
-    optTokens()
+    optPageTheme()
     tabHeader "CO₂ in the air", "in February, at Mauna Loa"
     colsLabel {"games": "", "co2": "CO₂", "more": "more than 1959"}
     fmtPartsper "co2", toUnits = "ppm", decimals = 0
@@ -584,7 +584,7 @@ advertising brings (an oil company, a carmaker, an airline), and what all of it 
 
 nbShowCode:
   let t = tabella(@footprint, rownameCol = "what", groupnameCol = "part"):
-    optTokens()
+    optPageTheme()
     tabHeader "The Games' footprint", "estimated before the Games, and what it will melt"
     colsLabel {"tonnes": "CO₂e", "snowKm2": "snow cover", "iceMt": "glacier ice"}
     fmtNumber "tonnes", compact = true, pattern = "{x} t"
@@ -616,7 +616,7 @@ nbShowCode:
   d.addColumn("venues", ioc.mapIt(toValue(it.venues)))
   d.addColumn("share", ioc.mapIt(toValue(it.venues / 982)))
   let t = tabella(d, rownameCol = "fate"):
-    optTokens()
+    optPageTheme()
     tabHeader "982 Olympic venues, 1896 to 2022", "what became of them"
     colsLabel {"venues": "", "share": ""}
     fmtPercent "share", decimals = 0
@@ -637,7 +637,7 @@ And what each new or rebuilt place becomes:
 
 nbShowCode:
   let t = tabella(@afterwards, rownameCol = "venue"):
-    optTokens()
+    optPageTheme()
     tabHeader "After the Games"
     colsLabel {"built": "", "becomes": "becomes"}
     textTransform(proc (s: string): string = s.toUpperAscii, loc.body(cols("built")))
@@ -658,7 +658,7 @@ The Games ended on 22 February, the Paralympics on 15 March. The news did not:
 
 nbShowCode:
   let t = tabella(after.mapIt((date: it.date, what: it.what, path: post(it.path))), rownameCol = "date"):
-    optTokens()
+    optPageTheme()
     tabHeader "Since the Games"
     colsLabel {"what": "", "path": ""}
     fmtDate "date", dateStyle = "d MMM yyyy"
@@ -686,7 +686,7 @@ nbShowCode:
   d.addColumn("url", articles.mapIt(toValue(post(it.path))))
   d.addColumn("angle", articles.mapIt(toValue(it.angle)))
   let t = tabella(d, rownameCol = "date"):
-    optTokens()
+    optPageTheme()
     tabHeader "Fifteen articles", "from Il Post's coverage, 2025–2026"
     colsLabel {"title": "", "url": "", "angle": "its angle"}
     fmtDate "date", dateStyle = "d MMM yy"
@@ -761,7 +761,7 @@ nbShowCode:
         how: "`subZero(zeroText = \"\")` leaves the zero as it is, because an empty text means no substitution; the footprint table stores NaN (a missing value, blank by default) instead."),
   ]
   let t = tabella(rows, rownameCol = "what"):
-    optTokens()
+    optPageTheme()
     tabHeader "Gaps found by this post"
     colsLabel {"how": ""}
     fmtMarkdown "how"

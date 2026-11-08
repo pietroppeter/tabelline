@@ -507,11 +507,13 @@ proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
     result.options.rowStripingBackgroundColor = light
     result.options.tableBodyHlinesColor = "transparent"
 
-proc optTokens*(t: sink Tabella): Tabella =
-  ## Colours from the page: every colour of the table is a CSS variable of the page it is on
-  ## (`--n-9` the ink, `--n-3` and `--n-1` light greys, `--surface` the sheet, `--primary`, and
-  ## `--text` the font), each with a plain fallback, so the table follows the page's palette and
-  ## looks like a plain table on a page without them. tabelline's own pages are made with it.
+proc optPageTheme*(t: sink Tabella): Tabella =
+  ## The page's theme: every colour of the table, and its font, is a CSS variable of the page it
+  ## is on, so the table follows the page's palette and changes with it. It reads `--n-9` (the
+  ## ink: text and the heavy rules), `--n-3` (the light rules), `--n-1` (row groups and stripes),
+  ## `--surface` (the sheet), `--primary` (the rule under the heading) and `--text` (the font),
+  ## each with a plain fallback (`var(--n-9, #1C1C1C)`), so on a page without them the table is a
+  ## plain black and grey one. gt and Great Tables have no such preset; tabelline's pages use it.
   result = t
   result.options.tableFontNames = "var(--text, system-ui, sans-serif)"
   result.options.tableFontColor = "var(--n-9, #1C1C1C)"
