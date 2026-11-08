@@ -17,6 +17,7 @@ let bar = tinta("--secondary")               # bars in the page's secondary colo
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
 let gilt = tinta("--warning")                 # Italy's row
+let fresh = tinta("--success-soft")           # venues built for the Games
 
 proc link(path, label: string): string = &"[{label}]({post(path)})"
 
@@ -82,6 +83,41 @@ They were the 25th Winter Games, and the roman numeral is how the Games count th
 ISO dates in the data, `"2026-02-06"`, and `fmtDate` shows them as a reader wants them. Everything
 else in this post adds one idea at a time to a table like this one.
 
+One row says little until there are others to set it beside. Here is the same row for every
+Winter Games held, from Chamonix 1924 (the Games of 1940 and 1944 were cancelled by the war,
+1944's in Cortina). The three in Italy are in yellow:
+"""
+
+nbShowCode:
+  var d = readTsv("history.tsv")
+  d.addColumn("n", toSeq(1 .. d.nrows).mapIt(toValue(it)))
+  let t = tabella(d, rownameCol = "year"):
+    optPageTheme()
+    tabHeader "Every Winter Games", "1924 to 2026"
+    colsHide "country"
+    colsMove ["n"], after = "year"
+    colsLabel {"n": "", "host": "", "nations": "nations", "athletes": "athletes", "events": "events"}
+    fmtRoman "n"
+    fmtInteger "athletes"
+    textReplace "Milan Cortina d'Ampezzo", "Milano Cortina", loc.body(cols("host"))
+    textReplace "Garmisch-Partenkirchen", "Garmisch", loc.body(cols("host"))
+    tabStyle style.fill(gilt), loc.body(rows = where(it["country"] == "Italy"))
+    tabStyle style.fill(gilt), loc.stub(rows = where(it["country"] == "Italy"))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(size = "11px"), loc.body(cols("n"))
+    tabFootnote "2,884 in the article on these Games, the first table's source.",
+      loc.body(cols("athletes"), rows = where(it["year"].toFloat == 2026))
+    tabSourceNote md("Wikipedia, [Winter Olympic Games § List](https://en.wikipedia.org/wiki/Winter_Olympic_Games).")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbText: """
+Read down a column and the Games grow: 16 events in 1924, 24 when Cortina first had them in 1956,
+84 in Turin, 116 now; athletes from 258 to almost 3,000. Turin and Milano Cortina are twenty years
+apart, and the second has 32 events more. Nothing in the data says "edition": the roman column is
+the row's number, `fmtRoman` again.
+
 ## Three parts of three
 
 What happened is too much for one table, so the post splits it in three, and every part in three
@@ -133,12 +169,14 @@ nbShowCode:
                             capacity: int(raw["capacity", i].toFloat), status: $raw["status", i])
   let t = tabella(rows, rownameCol = "venue", groupnameCol = "cluster"):
     optPageTheme()
-    tabHeader "Fourteen venues, five clusters", "and what each was before the Games"
+    tabHeader "Fourteen venues, five clusters", "and what each was before the Games; in green, the new ones"
     colsLabel {"events": "for", "capacity": "seats", "status": "before"}
     fmtInteger "capacity"
     textCaseMatch {"Existing": "existing", "New": "<b>new</b>", "Existing with temporary stands": "existing, temporary stands"},
       locations = loc.body(cols("status"))
     textReplace "Milano ", "", loc.stub()
+    tabStyle style.fill(fresh), loc.body(rows = where(it["status"] == "New"))
+    tabStyle style.fill(fresh), loc.stub(rows = where(it["status"] == "New"))
     rowGroupOrder ["Milan", "Valtellina", "Val di Fiemme", "Cortina d'Ampezzo", "Verona"]
     tabFootnote "Anterselva is in South Tyrol, but belongs to Cortina's cluster.",
       loc.stub(rows = where(it["venue"] == "Anterselva Biathlon Arena"))
@@ -632,7 +670,8 @@ nbText: """
 small to matter, here used to say the abandoned venues are few. Few, but the ones that are
 abandoned are exactly the kind Milano Cortina built again: a ski jump and a sliding track.
 
-And what each new or rebuilt place becomes:
+And what each new or rebuilt place becomes, in green again what was built for the Games (Il Post
+calls the sliding track rebuilt: the old one, from 1923, was torn down):
 """
 
 nbShowCode:
@@ -642,6 +681,8 @@ nbShowCode:
     colsLabel {"built": "", "becomes": "becomes"}
     textTransform(proc (s: string): string = s.toUpperAscii, loc.body(cols("built")))
     tabStyle style.text(size = "11px", weight = "bold"), loc.body(cols("built"))
+    tabStyle style.fill(fresh), loc.body(rows = where($it["built"] in ["new", "rebuilt"]))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it["built"] in ["new", "rebuilt"]))
     tabSourceNote md(&"Il Post, {link(afterwardsSources[0], \"25 Feb 2026\")}, {link(afterwardsSources[1], \"22 Jan 2026\")}, {link(afterwardsSources[2], \"8 Oct 2026\")}.")
     tabOptions(tableFontSize = "14px")
   nbTable t
