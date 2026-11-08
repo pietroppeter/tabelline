@@ -163,7 +163,6 @@ block:
     N(what: "`colsReorder`", why: "puts some columns in a new order in the places they hold, so two can swap", closest: "`cols_move()`, `cols_move_to_start()`"),
     N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
     N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
-    N(what: "`save`, `toHtmlPage`", why: "a table as a standalone HTML page", closest: "`gtsave()` / `GT.save()`, `GT.write_raw_html()`"),
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),
     N(what: "the datasets `planets` and `tavolaPitagorica`", why: "small examples for the docs (`exibble` is gt's)", closest: "gt's and Great Tables' datasets"),
   ]

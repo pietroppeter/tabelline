@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Breaking (before 0.1):** `toHtmlPage` is removed; `toHtml(t, makePage = true)` returns the
+  whole page, as Great Tables' `as_raw_html(make_page = True)`. `save` is unchanged.
 - `tableData:` takes `for` and `if`, and computed column names (`$j: [...]`, `(expr): [...]`), so
   a column per item of a list is one call (#30).
 - Docs: The Great Explainer's first table builds *la tavola pitagorica* from scratch, with one

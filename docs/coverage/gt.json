@@ -645,7 +645,7 @@
      "feature": "HTML",
      "gt": "as_raw_html(), write_raw_html()",
      "status": "done",
-     "note": "Scoped CSS, standalone page with save()."
+     "note": "Scoped CSS; a standalone page with toHtml(makePage = true), written by save()."
     },
     {
      "feature": "Text and Markdown",

@@ -148,8 +148,8 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
     if levels == 0 or c.hasAnySpanner: result.add labelCell(c, 1)
   result.add "</tr>\n"
 
-proc toHtml*(t: Tabella): string =
-  ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`), ready to put in a page.
+proc tableHtml(t: Tabella): string =
+  ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`).
   let b = t.build(rcHtml)
   let m = t.options
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
@@ -187,17 +187,21 @@ proc toHtml*(t: Tabella): string =
 {body}{foot}</table>
 </div>"""
 
-proc toHtmlPage*(t: Tabella, title = ""): string =
-  ## A whole standalone HTML page holding the table.
-  let tt = if title.len > 0: title elif not t.title.isEmpty: textToPlain(t.title) else: "tabella"
+proc toHtml*(t: Tabella, makePage = false): string =
+  ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`), ready to put in a
+  ## page. With `makePage = true`, a whole standalone page holding it, titled after the table, as
+  ## Great Tables' `as_raw_html(make_page = True)`.
+  let html = t.tableHtml
+  if not makePage: return html
+  let tt = if not t.title.isEmpty: textToPlain(t.title) else: "tabella"
   &"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escapeHtml(tt)}</title><style>body{{margin:0;padding:24px}}</style></head>
 <body>
-{t.toHtml}
+{html}
 </body></html>
 """
 
 proc save*(t: Tabella, path: string) =
-  ## Writes the table as a standalone HTML page.
-  writeFile(path, t.toHtmlPage)
+  ## Writes the table as a standalone HTML page, as gt's `gtsave("x.html")`.
+  writeFile(path, t.toHtml(makePage = true))
