@@ -183,6 +183,17 @@ footer a { color: var(--pen); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
 details.source pre { max-height: 32rem; overflow: auto; }
+/* the code of a table, folded under it */
+details.codice { margin: -1rem 0 1.6rem; }
+details.codice > summary { list-style: none; cursor: pointer; display: inline-block; font: 1rem var(--hand); color: var(--pen); }
+details.codice > summary::-webkit-details-marker { display: none; }
+details.codice > summary::before { content: "+ show code"; }
+details.codice[open] > summary::before { content: "− hide code"; }
+details.codice pre { margin: .4rem 0 0; }
+body details.codice pre > code { font-size: 12.5px; }
+html[data-tema="munari"] details.codice { margin-top: -.8rem; }
+html[data-tema="munari"] details.codice > summary { font: 700 .68rem/1.6 var(--text); letter-spacing: .12em;
+  text-transform: uppercase; color: var(--pencil); border-bottom: 2px solid var(--m-quadrato); }
 """
 
 # ----------------------------------------------------------------------------- headings and TOC
@@ -383,6 +394,20 @@ template nbTabs*(python, r: string, body: untyped) =
   nb.blocks.setLen(first)
   nbRawHtml: tabsHtml([nimSide, (if python.len > 0: codeHtml(python, "python") else: ""),
                        (if r.len > 0: codeHtml(r, "r") else: "")])
+
+template nbShowCode*(body: untyped) =
+  ## Runs `body` and shows the blocks it adds (its tables), with `body`'s own code folded below
+  ## them: "show code" opens it. For pages that show off the code behind each table.
+  let code = getCode(body)
+  let first = nb.blocks.len
+  block:
+    body
+  var shown = ""
+  for i in first ..< nb.blocks.len:
+    shown.add nb.render(nb.blocks[i])
+  nb.blocks.setLen(first)
+  nbRawHtml: shown & "<details class=\"codice\"><summary></summary><pre><code class=\"nohighlight nim hljs\">" &
+    highlightNim(code) & "</code></pre></details>"
 
 template nbNota*(text: string, color = "") =
   ## A sticky note; `color` is "", "verde", "rosa" or "azzurra".

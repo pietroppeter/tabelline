@@ -64,7 +64,7 @@ nbText: """
 The least one can say about the Games fits in one row: which ones, where, when, how big.
 """
 
-block:
+nbShowCode:
   let games = tableData:
     edition: [25]
     opening: ["2026-02-06"]
@@ -94,7 +94,7 @@ What happened is too much for one table, so the post splits it in three, and eve
 again: three questions each, nine tables to answer them, simplest first.
 """
 
-block:
+nbShowCode:
   type PartRow = object
     n: int
     part, questions: string
@@ -124,7 +124,7 @@ one row per venue and sport, so the page joins them first; `textCaseMatch` rewri
 column and `textReplace` drops "Milano" from the venue names, after formatting.
 """
 
-block:
+nbShowCode:
   let raw = readTsv("venues.tsv")
   type VenueRow = object
     cluster, venue, events: string
@@ -158,7 +158,7 @@ spreading the Games is distance. Ester Ledecká, who won gold in skiing and in s
 ({link(tripsSource2, "Il Post")}).
 """
 
-block:
+nbShowCode:
   let t = tabella(@trips, rownameCol = "trip"):
     tabHeader "How far apart"
     colsLabel {"by": "by", "low": "from", "high": "to"}
@@ -229,22 +229,23 @@ Post, and China) do, or total first, as the United States do. At Milano Cortina 
 either way; below it, the order changes. The same data, two `rowOrder` calls:
 """
 
-proc topTen(byTotal: bool): Tabella =
-  let by = if byTotal: @["total", "gold", "silver"] else: @["gold", "silver", "bronze"]
-  let medals = readTsv("medals.tsv").top(10, by)
-  let order = cols(by)
-  result = tabella(medals, rownameCol = "team"):
-    tabHeader (if byTotal: "Total first" else: "Golds first")
-    colsHide ["rank", "code"]
-    colsLabel {"gold": "G", "silver": "S", "bronze": "B", "total": "all"}
-    rowOrder order, reverse = true
-    tabStyle style.text(weight = "bold"), loc.body(cols(if byTotal: "total" else: "gold"))
-    tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
-    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+nbShowCode:
+  proc topTen(byTotal: bool): Tabella =
+    let by = if byTotal: @["total", "gold", "silver"] else: @["gold", "silver", "bronze"]
+    let medals = readTsv("medals.tsv").top(10, by)
+    let order = cols(by)
+    result = tabella(medals, rownameCol = "team"):
+      tabHeader (if byTotal: "Total first" else: "Golds first")
+      colsHide ["rank", "code"]
+      colsLabel {"gold": "G", "silver": "S", "bronze": "B", "total": "all"}
+      rowOrder order, reverse = true
+      tabStyle style.text(weight = "bold"), loc.body(cols(if byTotal: "total" else: "gold"))
+      tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
+      tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
-affiancate:
-  nbTable topTen(false)
-  nbTable topTen(true)
+  affiancate:
+    nbTable topTen(false)
+    nbTable topTen(true)
 
 nbText: &"""
 Italy is fourth by golds (ten, like the Netherlands, but one silver fewer) and third by total
@@ -259,7 +260,7 @@ committee, had hoped for eighteen. Is it a lot? Il Post answers by putting the n
 others, so here is every Games Italy went to since the record of 1994:
 """
 
-block:
+nbShowCode:
   let all = readTsv("italy-history.tsv")
   let h = all.keep(proc (i: int): bool = all["year", i].toFloat >= 1994)
   let t = tabella(h, rownameCol = "year"):
@@ -285,7 +286,7 @@ The thirty, one row each, grouped by colour. Relays and team events count as one
 many athletes are on the podium:
 """
 
-block:
+nbShowCode:
   let m = readTsv("italy-medals.tsv")
   let t = tabella(m, groupnameCol = "medal"):
     tabHeader "Italy's thirty medals"
@@ -308,20 +309,21 @@ which won its first Winter Paralympic medal only in 2018, was first again, as in
 The two tables, side by side:
 """
 
-proc small(file, title: string): Tabella =
-  let d = readTsv(file).top(6, ["gold", "silver", "bronze"])
-  result = tabella(d, rownameCol = "team"):
-    tabHeader title
-    colsHide ["rank", "silver", "bronze"]
-    fmtFlag "code"
-    colsLabel {"code": "", "gold": "gold", "total": "all"}
-    colsMoveToEnd "code"
-    tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
-    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+nbShowCode:
+  proc small(file, title: string): Tabella =
+    let d = readTsv(file).top(6, ["gold", "silver", "bronze"])
+    result = tabella(d, rownameCol = "team"):
+      tabHeader title
+      colsHide ["rank", "silver", "bronze"]
+      fmtFlag "code"
+      colsLabel {"code": "", "gold": "gold", "total": "all"}
+      colsMoveToEnd "code"
+      tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
+      tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
-affiancate:
-  nbTable small("medals.tsv", "Olympics")
-  nbTable small("paralympics.tsv", "Paralympics")
+  affiancate:
+    nbTable small("medals.tsv", "Olympics")
+    nbTable small("paralympics.tsv", "Paralympics")
 
 nbText: &"""
 Russia, banned from the Olympics, where some of its athletes came as neutrals, competed under
@@ -336,7 +338,7 @@ United States NBC had 94% more viewers than for Beijing 2022, and for the first 
 Games every race could be streamed.
 """
 
-block:
+nbShowCode:
   let t = tabella(@channels, rownameCol = "channel"):
     tabHeader "Where to watch, in Italy"
     colsLabel {"how": "", "free": "free", "allEvents": "every race"}
@@ -357,23 +359,24 @@ A seat was cheap or very dear: €30 for the cheapest, €1,400 for the men's ho
 €2,900 for a ceremony. Two tables: the prices, and how they were spread.
 """
 
-affiancate:
-  block:
-    let t = tabella(@prices, rownameCol = "what"):
-      tabHeader "Prices"
-      colsLabel {"euro": ""}
-      fmtCurrency "euro", currency = "EUR", decimals = 0
-      tabSourceNote md(link(pricesSource, "Il Post, 17 Oct 2025"))
-      tabOptions(tableFontSize = "13px")
-    nbTable t
-  block:
-    let t = tabella(@ticketShares, rownameCol = "what"):
-      tabHeader "Shares"
-      colsLabel {"share": ""}
-      fmtPercent "share", decimals = 0
-      tabSourceNote md(link(sharesSource, "Il Post, 24 Feb 2026"))
-      tabOptions(tableFontSize = "13px")
-    nbTable t
+nbShowCode:
+  affiancate:
+    block:
+      let t = tabella(@prices, rownameCol = "what"):
+        tabHeader "Prices"
+        colsLabel {"euro": ""}
+        fmtCurrency "euro", currency = "EUR", decimals = 0
+        tabSourceNote md(link(pricesSource, "Il Post, 17 Oct 2025"))
+        tabOptions(tableFontSize = "13px")
+      nbTable t
+    block:
+      let t = tabella(@ticketShares, rownameCol = "what"):
+        tabHeader "Shares"
+        colsLabel {"share": ""}
+        fmtPercent "share", decimals = 0
+        tabSourceNote md(link(sharesSource, "Il Post, 24 Feb 2026"))
+        tabOptions(tableFontSize = "13px")
+      nbTable t
 
 nbText: &"""
 1.3 million tickets were sold, 88% of those on sale, and almost two spectators in three came from
@@ -389,7 +392,7 @@ The IOC pays nothing for a medal; the countries do, if they want. Italy is among
 against the €4 million it had set aside.
 """
 
-block:
+nbShowCode:
   let t = tabella(@prizes, rownameCol = "country"):
     tabHeader "What a medal pays", "to the athlete, from their country's committee"
     colsHide "currency"
@@ -417,7 +420,7 @@ medal table, pays no prizes at all. Singapore and Hong Kong pay the most, and wo
 The medal itself is worth less than one would think. A gold medal is silver with six grams of gold:
 """
 
-block:
+nbShowCode:
   let t = tabella(@metals, rownameCol = "medal"):
     tabHeader "The medal as metal"
     colsLabel {"grams": "weighs", "goldGrams": "of gold", "euro": "worth"}
@@ -438,7 +441,7 @@ writing down each work's first figure and each new one. Four of them, from the f
 the last, in millions of euros:
 """
 
-block:
+nbShowCode:
   let t = tabella(@estimates, rownameCol = "work"):
     tabHeader "From the first estimate to the last", "millions of euros"
     colsLabel {"place": "", "fate": "", "first": "first", "last": "last", "times": "×"}
@@ -460,7 +463,7 @@ track, and the government and the Veneto region chose to rebuild it. A forest wa
 Its cost, step by step:
 """
 
-block:
+nbShowCode:
   let t = tabella(@trackSteps, rownameCol = "date"):
     tabHeader "The sliding track of Cortina", "its cost, in millions of euros"
     colsLabel {"what": "", "millions": "€ m"}
@@ -477,7 +480,7 @@ business plan KPMG wrote for the region: in 2027 the track takes in €527,000 a
 million. One line per item, in and out:
 """
 
-block:
+nbShowCode:
   let t = tabella(@trackYear, rownameCol = "item", groupnameCol = "side"):
     tabHeader "One year of the sliding track", "2027, as planned"
     colsLabel {"euro": ""}
@@ -495,7 +498,7 @@ The hockey arena of Santa Giulia is private (it belongs to CTS Eventim, which ow
 the state pays for its extra costs, and how much those are depends on who is asked:
 """
 
-block:
+nbShowCode:
   let t = tabella(@santaGiulia, rownameCol = "who"):
     tabHeader "Santa Giulia's extra costs", "millions of euros, as each side tells them"
     colsLabel {"says": "", "millions": "€ m"}
@@ -514,7 +517,7 @@ well". It snowed on almost every outdoor venue during the races, which hid the f
 snow had been made.
 """
 
-block:
+nbShowCode:
   let t = tabella(@snow, rownameCol = "what"):
     colsLabel {"value": "", "unit": "", "note": ""}
     fmtNumber "value", decimals = 1, compact = true
@@ -532,7 +535,7 @@ What happens to Olympic venues afterwards? In 2025 the IOC published a study of 
 in every Games from 1896 to 2022. Most are still used:
 """
 
-block:
+nbShowCode:
   var d = TableData()
   d.addColumn("fate", ioc.mapIt(toValue(it.fate)))
   d.addColumn("venues", ioc.mapIt(toValue(it.venues)))
@@ -556,7 +559,7 @@ abandoned are exactly the kind Milano Cortina built again: a ski jump and a slid
 And what each new or rebuilt place becomes:
 """
 
-block:
+nbShowCode:
   let t = tabella(@afterwards, rownameCol = "venue"):
     tabHeader "After the Games"
     colsLabel {"built": "", "becomes": "becomes"}
@@ -576,7 +579,7 @@ student.
 The Games ended on 22 February, the Paralympics on 15 March. The news did not:
 """
 
-block:
+nbShowCode:
   let t = tabella(after.mapIt((date: it.date, what: it.what, path: post(it.path))), rownameCol = "date"):
     tabHeader "Since the Games"
     colsLabel {"what": "", "path": ""}
@@ -598,7 +601,7 @@ works in 2025, is due to open on 8 December, a month from today.
 The Il Post articles this post learned from, with the angle each takes. `fmtUrl` makes the links:
 """
 
-block:
+nbShowCode:
   var d = TableData()
   d.addColumn("date", articles.mapIt(toValue(it.date)))
   d.addColumn("title", articles.mapIt(toValue(it.title)))
@@ -641,7 +644,9 @@ time, so that `fmtFlag "code"` becomes `t = t.fmtFlag("code")`. The verbs themse
 and a format such as `fmtCurrency` only records what to do: it runs when the table is rendered,
 so the HTML, text and Markdown renderers all agree. Two small helpers belong to this page:
 `readTsv`, which skips comment lines, and `affiancate`, which puts the tables it makes side by
-side (they wrap to one column on a phone).
+side (they wrap to one column on a phone). Under every table, *show code* opens the code that
+made it: `nbShowCode` (in the pages' theme, `docs/quaderno.nim`) runs its block, reads the
+block's own source back with nimib's `getCode`, and folds it under the tables the block made.
 
 **4. Nothing is fetched while the page is built.** The TSV files and the facts are in the
 repository, so the page builds offline and the same way every time; `fetch.py` is run by hand
@@ -653,7 +658,7 @@ Used on someone else's data, tabelline 0.1 held up. These are the places where i
 do extra work, sent to the thread that builds it:
 """
 
-block:
+nbShowCode:
   type Gap = object
     what, how: string
   let rows = @[
