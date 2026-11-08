@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Docs: a review for stale content. The roadmap drops the month/Operetta thread (moved to
+  claude-artifacts) and its empty *what* column, and gives 0.1's threads their status; the
+  Guide's menu counts what 0.1 has (21 formats, all five substitutions, 14 `opt*`, 56 options,
+  checked against the sources at build), names its three macros, shows `toHtml(makePage = true)`,
+  and takes *What comes next* from the roadmap; the Milano Cortina story calls itself a story.
 - Docs: the Great Explainer explains where a table goes (text, Markdown, HTML, none of it
   needing nimib) before the first table step by step, and then `nbTable`, from the one module
   that imports nimib (#33).

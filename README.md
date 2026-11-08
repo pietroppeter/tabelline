@@ -10,6 +10,7 @@ with their parts and their verbs (in camelCase), written in plain Nim, and fits 
 
 **Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with
 the [Guide](https://pietroppeter.github.io/tabelline/explainer/), the
+[stories](https://pietroppeter.github.io/tabelline/stories/), the
 [book](https://pietroppeter.github.io/tabelline/book/), the
 [roadmap](https://pietroppeter.github.io/tabelline/roadmap/), the
 [devlog](https://pietroppeter.github.io/tabelline/devlog/) and the
@@ -139,7 +140,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 
 ## Files
 
-- `src/tabelline.nim`: the module to import, with the two macros (`tabella(data): body`, `tableData:`).
+- `src/tabelline.nim`: the module to import, with two of the three macros (`tabella(data): body`, `tableData:`; `tabOptions` is in `verbs.nim`).
 - `src/tabelline/core.nim`: the data model (`Value`, `TableData`, `Text`, selectors, styles, `Tabella`).
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
