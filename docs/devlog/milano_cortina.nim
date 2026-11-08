@@ -62,7 +62,7 @@ followed the Games for seven years, from the bid to the Court of Auditors. Il Po
 questions (*how did we get here?*, *why so many medals?*, *what is left?*), puts a number next
 to another that gives it a size, and comes back to a story when there is news. This post asks
 its questions the same way, takes the numbers Il Post reported (each table links the article),
-and the rest from Wikipedia. The words are this post's own.
+and the rest from Wikipedia (and the air from NOAA). The words are this post's own.
 """
 
 nbIndice()
@@ -539,6 +539,38 @@ nbText: """
 `fmtNumber(compact = true)` writes 1.6M. The unit stays in a column of its own:
 `fmtNumberSi(unit = "m³", decimals = 1)` would write "1.6 Mm³", which reads as cubic megametres (more about this at the end).
 
+### Air
+
+Snow has to be made because winters are warmer, and the cause is in the air. Carbon dioxide is
+a tiny part of it, so it is counted in parts per million (ppm): how many molecules in every
+million. Here it is in February of each Italian Winter Games that was measured (the record, at
+Mauna Loa in Hawaii, starts in 1958, two years after Cortina 1956):
+"""
+
+nbShowCode:
+  let air = readTsv("co2.tsv")
+  let first = air["co2", 0].toFloat
+  var more: seq[Value]
+  for i in 0 ..< air.nrows: more.add toValue(air["co2", i].toFloat / first - 1)
+  var d = air
+  d.addColumn("more", more)
+  let t = tabella(d, rownameCol = "year"):
+    tabHeader "CO₂ in the air", "in February, at Mauna Loa"
+    colsLabel {"games": "", "co2": "CO₂", "more": "more than 1959"}
+    fmtPartsper "co2", toUnits = "ppm", decimals = 0
+    fmtPercent "more", decimals = 0
+    subZero "more", zeroText = "—"
+    tabStyle style.css("white-space: nowrap"), loc.body(cols("co2"))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
+    tabSourceNote md("NOAA GML and Scripps, [monthly means at Mauna Loa](https://gml.noaa.gov/ccgg/trends/data.html), public data.")
+    tabOptions(tableFontSize = "14px")
+  nbTable t
+
+nbText: """
+The data has the share as a fraction of the air, 0.00042935, which no one wants to read:
+`fmtPartsper(toUnits = "ppm")` writes it as 429 ppm. Between Turin and Milano Cortina, twenty
+years, the air gained 47 ppm; it took the forty-seven years before Turin to gain 66.
+
 ### Buildings
 
 What happens to Olympic venues afterwards? In 2025 the IOC published a study of almost a thousand,
@@ -639,7 +671,8 @@ tables of the Olympics and the Paralympics, Italy at every Winter Games, Italy's
 venues and the sports. A short Python script beside them, `fetch.py`, reads five Wikipedia articles
 through the REST API (slowly: Wikipedia limits fast clients) and writes the tables with pandas.
 Each file starts with a comment line naming the article and its revision, so the numbers can be
-checked against the exact page they came from. Wikipedia's text is under CC BY-SA 4.0.
+checked against the exact page they came from. Wikipedia's text is under CC BY-SA 4.0. One more
+file, `co2.tsv`, comes from NOAA's public Mauna Loa record, written by `co2.py` beside it.
 
 **2. The facts from Il Post** are typed by hand in `docs/olimpiadi.nim`: Nim objects, one `const`
 array per table, each with the path of the article it comes from. Il Post is a newspaper and its
@@ -659,8 +692,8 @@ made it: `nbShowCode` (in the pages' theme, `docs/quaderno.nim`) runs its block,
 block's own source back with nimib's `getCode`, and folds it under the tables the block made.
 
 **4. Nothing is fetched while the page is built.** The TSV files and the facts are in the
-repository, so the page builds offline and the same way every time; `fetch.py` is run by hand
-when the data should change.
+repository, so the page builds offline and the same way every time; `fetch.py` and `co2.py`
+are run by hand when the data should change.
 
 ## What tabelline was missing
 
