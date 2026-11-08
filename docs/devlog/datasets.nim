@@ -69,7 +69,7 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
       nbText "From a file, with `readCsv` (or from a string, with `parseCsv`). Each value's type is guessed."
       nbCode:
         let ricette = readCsv(data / "ricette.csv")
-      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+      nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
   nbScheda "Write the columns":
     block:
       nbText "In the code, one line per column, with the `tableData:` macro."
@@ -78,7 +78,7 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
           dish: ["Carbonara", "Pesto alla genovese", "Risotto alla milanese"]
           region: ["Lazio", "Liguria", "Lombardia"]
           vegetarian: [false, true, false]
-      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+      nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
   nbScheda "From objects":
     block:
       nbText "From Nim objects or named tuples, one field per column: `tabella` takes them as they are."
@@ -90,7 +90,7 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
           Ricetta(dish: "Carbonara", region: "Lazio", vegetarian: false),
           Ricetta(dish: "Pesto alla genovese", region: "Liguria", vegetarian: true),
           Ricetta(dish: "Risotto alla milanese", region: "Lombardia", vegetarian: false)]
-      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+      nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
 
 nbNota """
 **1 · Load it.** `readCsv(path)` reads a file; `parseCsv(text)` reads a string. Both take a
@@ -174,7 +174,7 @@ nbShowCode:
     row("`tavolaPitagorica`", "tavolaPitagorica(", "the times table, made by the code"),
     row("`exibble`", "exibble()", "gt's toy table, a column per type (MIT)")]
   let t = tabella(rows, rownameCol = "dataset"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "The datasets tabelline ships", "and how many times the sources call them"
     tabSpanner "calls in", ["docs", "book", "checks"]
     colsLabel {"checks": "specs, tests"}
@@ -224,7 +224,7 @@ nbShowCode:
           examples: "the commands of the repo, the choices of day one, the colours of the design, the audit of the pages, the Table Contest's winners",
           where: "Agents, Day one, Design review, Blocks review, explainer")]
   let t = tabella(rows, rownameCol = "theme", groupnameCol = "family"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "The small datasets, by what they are about", "written in the pages, 8 November 2026"
     colsLabel {"examples": "for example", "where": "in"}
     fmtMarkdown "examples"
@@ -264,7 +264,7 @@ nbShowCode:
     rows.add First(library: $survey["library", i], page: page.replace("Get Started: index", "Get Started"),
                    datasets: ($survey["datasets", i]).split(' ').mapIt("`" & it & "`").join(", "))
   let t = tabella(rows, groupnameCol = "library"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "The first pages", "and the datasets their code uses, in order of appearance in the list of datasets"
     fmtMarkdown "datasets"
     colsLabel {"page": "page", "datasets": "datasets"}
@@ -296,7 +296,7 @@ nbShowCode:
     elif page == "reference examples":
       reference.add ($survey["datasets", i], int(survey["inline", i].toFloat))
   let g = tabella(guide, rownameCol = "page"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Great Tables, Get Started", "after the first page"
     colsLabel {"frames": "own frames"}
     fmtMarkdown "datasets"
@@ -305,7 +305,7 @@ nbShowCode:
     dataset: reference.mapIt("`" & it[0] & "`")
     examples: reference.mapIt(it[1])
   let r = tabella(refData, rownameCol = "dataset"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "gt's reference", "examples that start from each dataset"
     fmtMarkdown "dataset"
     tabSourceNote md("In four of gt's R files: `format_data`, `tab_create_modify`, `data_color`, `utils_render_html`.")
@@ -345,7 +345,7 @@ nbShowCode:
     Ds(dataset: "rx_adsl", what: "a clinical trial's subjects (gt only)", rows: 182),
     Ds(dataset: "rx_addv", what: "a clinical trial's protocol deviations (gt only)", rows: 291)]
   let t = tabella(rows, rownameCol = "dataset"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "The datasets of gt and Great Tables", "in the order of their READMEs"
     fmtInteger "rows"
     tabSourceNote md("From gt's `R/datasets.R` and the READMEs, 8 November 2026.")
@@ -397,7 +397,7 @@ nbShowCode:
           "every Compasso d'Oro, 1954 to 2024",
           "`paesi`: countries, their population and their World Heritage Sites; `citta`: the cities of the EU"]
   let t = tabella(grid, rownameCol = "domain"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Nine datasets", "three domains × three sizes"
     colsLabel {"builtIn": "built in"}
     fmtMarkdown ["tiny", "builtIn", "big"]
@@ -430,7 +430,7 @@ by area, with an index that sets Naples at 100.
 nbShowCode:
   let pizza = readData("pizza.csv")
   let t = tabella(pizza, rownameCol = "area"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "What a margherita costs", "a Neapolitan margherita in 101 pizzerias, presented in January 2026"
     fmtCurrency "price", currency = "EUR", decimals = 2
     fmtNumber "index", decimals = 1
@@ -471,7 +471,7 @@ nbShowCode:
     Twin(gt: "`towny`", twin: "`citta`: the largest cities of the EU, and the day each was counted", source: "✅ Wikipedia, 95 cities"),
     Twin(gt: "`films`, `metro`", twin: "Venice's Golden Lions, Milan's metro", source: "🟡 Wikipedia, Comune di Milano")]
   let t = tabella(rows, rownameCol = "gt"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Twins", "a tabelline dataset for the part each gt dataset plays"
     colsLabel {"twin": "tabelline's twin", "source": "from"}
     fmtMarkdown ["gt", "twin", "source"]
@@ -509,7 +509,7 @@ nbShowCode:
     rows.add Isola(island: $raw["island", i], flag: iso.getOrDefault($raw["country", i]),
                    area: raw["area", i].toFloat, population: raw["population", i], city: $raw["city", i])
   let t = tabella(rows, rownameCol = "island"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Islands of the Mediterranean", "the ten largest"
     fmtFlag "flag"
     fmtInteger ["area", "population"]
@@ -546,7 +546,7 @@ nbShowCode:
     rows.add Citta(city: $raw["city", i], flag: iso.getOrDefault($raw["state", i]),
                    population: int(raw["population", i].toFloat), counted: $raw["counted", i])
   let t = tabella(rows, rownameCol = "city"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Cities of the European Union", "the ten largest, within their city limits"
     fmtFlag "flag"
     fmtInteger "population"
@@ -583,7 +583,7 @@ nbShowCode:
                    perTenMillion: sites / pop * 1e7)
   rows.sort(proc (a, b: Paese): int = cmp(b.perTenMillion, a.perTenMillion))
   let t = tabella(rows[0 ..< 10], rownameCol = "country"):
-    optPageTheme()
+    optCssTheme()
     tabHeader md("Where the **World Heritage** is dense"), "the countries with 15 sites or more, by sites per 10 million people"
     fmtFlag "code"
     fmtInteger ["sites", "population"]
@@ -657,7 +657,7 @@ the book keeps its sources as they are, and a `tabelline` box can show the twin 
 **1. The page** is a nimib notebook, `docs/devlog/datasets.nim`, written with the docs' blocks
 (`docs/blocchi.nim`): `nbGalleria` for the three ways, `nbShowCode` under every table, `nbAccanto`
 for the two tables side by side, `nbNota` for the notes, `nbParte` for the three parts. Every
-table takes `optPageTheme()`, so it follows the look you picked in the header.
+table takes `optCssTheme()`, so it follows the look you picked in the header.
 
 **2. The counts of tabelline** were taken from the sources the first time the page was built:
 every `.nim` and `.md` file in `docs/`, `book/`, `openspec/specs/`, `tests/` and `src/`, and the
@@ -691,7 +691,7 @@ nbShowCode:
   for s in ["survey", "unesco", "isole", "citta"]:
     rows.add Pair(script: s, nim: lines(s & ".nim"), python: lines(s & ".py"), same: "✅")
   let t = tabella(rows, rownameCol = "script"):
-    optPageTheme()
+    optCssTheme()
     tabHeader "Four scripts, twice", "lines of each, and whether they write the same file"
     tabSpanner "lines", ["nim", "python"]
     colsLabel {"nim": "👑 Nim", "python": "🐍 Python", "same": "same file"}
