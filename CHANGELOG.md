@@ -3,13 +3,13 @@
 ## Unreleased
 
 - **Breaking (before 0.1):** `optQuaderno()` is replaced by `optTokens()`, a preset whose colours
-  are CSS variables of the page (`var(--n-9, #1C1C1C)`, …), so a table follows the page's palette.
+  are CSS variables of the page (`var(--n-9, #1C1C1C)`, …), so a table follows the page's palette (#19).
 - Docs: every page is made of blocks. `docs/stile.nim` holds the palette by roles (six values per
   look, every other colour mixed from them) and the CSS of both looks; `docs/blocchi.nim` holds
   the blocks (`nbTitolo`, `nbNota` with a kind enum and the warning triangle, `nbCards`,
   `nbGalleria`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`, `nbParte`); pages have
   no HTML, styles or colours of their own, and `tools/drift.nim` checks it in CI. The Design Ref
-  is rewritten around the blocks, in three coloured parts.
+  is rewritten around the blocks, in three coloured parts (#19).
 - Docs: devlog post *Blocks, not HTML*, and a first custom block module `docs/blocchi.nim`
   (`nbGalleria`, `nbScheda`; their CSS in the theme).
 - Docs: devlog post *Reviewing the design: a palette by roles*, the proposal for the new
