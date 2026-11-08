@@ -52,7 +52,7 @@ nbCode:
     tabHeader "A table and a grid", "the same rows, shown for two different jobs"
     colsLabel {"table": "a table (gt, tabelline)", "grid": "a grid (AG Grid, Tabulator, ...)"}
     colsWidth {"table": "42%", "grid": "42%"}
-    optPageTheme()
+    optCssTheme()
   nbTable t1
 
 nbText: """
@@ -82,7 +82,7 @@ nbCode:
                "gt": "gt opt_interactive()"}
     colsWidth {"features": "34%"}
     tabSourceNote md("AG Grid: [Community vs Enterprise](https://www.ag-grid.com/javascript-data-grid/community-vs-enterprise/), version 36.3. gt: [`opt_interactive()`](https://gt.rstudio.com/reference/opt_interactive.html). Great Tables has nothing interactive yet.")
-    optPageTheme()
+    optCssTheme()
   nbTable t2
 
 nbText: """
@@ -169,7 +169,7 @@ nbCode:
     colsLabel {"grid": "in a grid", "how": "in a tabellone"}
     tabStyle style.text(color = "#C62828", weight = "bold"),
       loc.body(cols = "grid", rows = where(it["grid"] == "none"))
-    optPageTheme()
+    optCssTheme()
   nbTable t3
 
 nbText: """
@@ -195,7 +195,7 @@ nbCode:
     colsWidth {"what": "30%", "good": "25%", "bad": "30%"}
     tabStyle style.fill("#E8F5E9"), loc.body(rows = [2])
     tabStyle style.fill("#E8F5E9"), loc.stub(rows = [2])
-    optPageTheme()
+    optCssTheme()
   nbTable t4
 
 nbText: """
@@ -255,7 +255,7 @@ nbCode:
     dataColor "divisors", palette = palette("blues")
     colsLabel {"roman": "in Roman", "root": "√n"}
     tabSourceNote "Every row is computed when the page is built."
-    optPageTheme()
+    optCssTheme()
 
 nbCode:
   proc gridData(t: Tabella): JsonNode =
