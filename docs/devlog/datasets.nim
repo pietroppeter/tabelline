@@ -393,7 +393,7 @@ nbShowCode:
     builtIn: ["`tavolaPitagorica`; `dispensa`, a pantry with one column of each type (an `exibble` you can eat)",
               "`compasso`: the Compasso d'Oro of 1954, its designers, objects and makers",
               "`planets`; `isole`: the islands of the Mediterranean; `alpi`: the highest peaks of the Alps"]
-    big: ["a pizzeria's year of orders (made up, as `pizzaplace` is)",
+    big: ["`pizza`: the price of a margherita, by city and year (inflation and regional differences)",
           "every Compasso d'Oro, 1954 to 2024",
           "`paesi`: countries, their population and their World Heritage Sites; `citta`: the cities of the EU"]
   let t = tabella(grid, rownameCol = "domain"):
@@ -414,6 +414,17 @@ seen from Italy: the planets stay, the islands of the Mediterranean (the sea Ita
 Alps, which cross eight countries (their highest peaks stand between Italy, France and
 Switzerland), and the countries of the world, with a twist.
 
+The big Casa dataset is a real one: **the price of a pizza margherita in Italy**, by city and by
+year, so that one table shows both inflation (the same city, year after year) and the differences
+between regions (the same year, north to south). It is also the dataset that is hardest to get:
+Il Post [wrote in 2023](https://www.ilpost.it/2023/02/24/pizza-prezzo-aumento/) that there is little
+data on what pizzerias charge, beyond the restaurant federation's estimates (+7.7% in a year, in
+January 2023) and ISTAT's indices for the ingredients and for ready-made pizza. The candidates are
+ISTAT's consumer price indices (by city, for restaurants and pizzerias: indices, not prices), the
+price observatory of the Ministry of Enterprises (average prices by provincial capital), and the
+surveys of consumer associations; all their sites are blocked from this sandbox, so which of them
+has a margherita in euros is still to be checked.
+
 ## A twin for gt's best known datasets
 
 A reader who comes from gt should find a dataset that plays the same part, in the same place.
@@ -433,7 +444,7 @@ nbShowCode:
     Twin(gt: "`sza`", twin: "`tavolaPitagorica`, coloured by value", source: "✅ the code"),
     Twin(gt: "`airquality`", twin: "the air or the weather of an Italian city", source: "🟡 ARPA Lombardia"),
     Twin(gt: "`gtcars`", twin: "the Compasso d'Oro: designer, object, maker, year", source: "✅ Italian Wikipedia"),
-    Twin(gt: "`pizzaplace`", twin: "a Neapolitan pizzeria's orders", source: "✅ made up"),
+    Twin(gt: "`pizzaplace`", twin: "`pizza`: what a margherita costs, by city and year", source: "🟡 ISTAT, the ministry's price observatory"),
     Twin(gt: "`towny`", twin: "`citta`: the largest cities of the EU, and the day each was counted", source: "✅ Wikipedia, 95 cities"),
     Twin(gt: "`films`, `metro`", twin: "Venice's Golden Lions, Milan's metro", source: "🟡 Wikipedia, Comune di Milano")]
   let t = tabella(rows, rownameCol = "gt"):
