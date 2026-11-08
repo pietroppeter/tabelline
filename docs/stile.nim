@@ -54,6 +54,15 @@ const
                success: "#86C166")     # 苗 nae, seedling: the fourth
     ## Munari's default palette, Haru (spring): Japanese traditional colours (nipponcolors.com).
 
+  edo* = Look(paper: "#FCFAF2",        # 白練 shironeri, white silk
+              ink: "#1C1C1C",          # 墨 sumi, ink
+              primary: "#77428D",      # 江戸紫 edomurasaki, Edo purple: the circle, links, the book's notes
+              secondary: "#0089A7",    # 新橋 shinbashi, Shinbashi blue: the square, the Python tab
+              warning: "#FFB11B",      # 山吹 yamabuki, kerria flower: the triangle, the source box
+              success: "#7BA23F")      # 萌黄 moegi, fresh sprouts: numbers in code
+    ## The book's palette, Edo (the fashion colours of old Tokyo): the book has one look,
+    ## Munari, in these six values (`book/theme/edo.css`, `paletteCss(edo)`).
+
   neutralSteps* = [0, 4, 8, 14, 25, 40, 55, 65, 80, 100]  ## ink in paper, % per step `--n-0`..`--n-9`
   softShare* = 22   ## % of a colour in paper, for `--x-soft`
   textShare* = 50   ## % of a colour in ink, for `--x-text`
@@ -75,6 +84,11 @@ func tokensCss(): string =
 func lookCss(l: Look): string =
   &"--paper: {l.paper}; --ink: {l.ink}; --primary: {l.primary}; --secondary: {l.secondary}; " &
     &"--warning: {l.warning}; --success: {l.success};"
+
+func paletteCss*(l: Look, selector = "html"): string =
+  ## The six values of a look and every token mixed from them, on one selector: for a page with
+  ## one look, such as the book (`book/bookbuild.nim` puts `paletteCss(edo)` before its theme).
+  selector & " {\n" & lookCss(l) & "\n" & tokensCss() & "}\n"
 
 const tokens = "html {\n" & lookCss(quadernoLook) & "\n" & tokensCss() & "}\n" &
   # Munari names its six values after where they go; the palettes post swaps them on the page.
@@ -180,6 +194,7 @@ pre.nb-output::before { content: "output"; display: block; font: .95rem var(--ha
 .tabella .tb_table { background-image: linear-gradient(var(--grid) 1px, transparent 1px),
   linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 12px 12px; }
 .tabella .tb_title { font-family: var(--hand); font-size: 150%; }
+.tabella td code { overflow-wrap: anywhere; }  /* long names in a cell wrap on a phone */
 main table:not(.tb_table) { border-collapse: collapse; margin: 1rem 0; background: var(--surface); }
 main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid var(--edge); padding: .35rem .6rem; text-align: left; vertical-align: top; }
 

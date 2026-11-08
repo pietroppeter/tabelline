@@ -86,6 +86,9 @@ Rough size: S (hours), M (a day or two), L (more).
   skills post (0.1 use-it thread).
 - **A small skill benchmark** (S). Five tasks with and without the user skill, graded by building
   the result.
+- **Port the gt user guide** (M). A second part of the book: the guide of R's gt
+  (gt.rstudio.com/articles), its text kept, with 👑 Nim, 🏴‍☠️ R (the original) and, where Great
+  Tables has it, 🐍 Python. Check its licence (MIT) first.
 
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.

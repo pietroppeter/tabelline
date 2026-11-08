@@ -65,6 +65,8 @@ nbText: """
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
 - `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim`; the look is `docs/stile.nim`,
   explained in the [Design Ref](../design/). Posts are in `docs/devlog/`.
+- `book/`: the [book](../book/), a nimibook (`nim r book/bookbuild.nim`); its planned sources are
+  in `book/plan/`.
 - `BACKLOG.md` (ideas), `CHANGELOG.md` (what shipped), `docs/coverage/gt.json` (what of gt is
   covered), `docs/piano.nim` (the roadmap's data).
 
@@ -91,6 +93,7 @@ nbSave
 let pages = [
   ("The Great Explainer", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
   ("Devlog", "devlog/", "every post, newest first"),
+  ("Book", "book/", "the Great Tables and gt guides ported to tabelline, with what the book will port and what the port found"),
   ("Roadmap", "roadmap/", "the releases from 0.1 to 0.5"),
   ("Coverage map", "coverage/", "what of gt and Great Tables tabelline has"),
   ("Design Ref", "design/", "the look of the pages and every component"),
