@@ -29,7 +29,6 @@ nbCode:
     fmtNumber "mass", decimals = 3, dropTrailingZeros = true
     fmtInteger "diameter"
     dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
-    fmtBar "moons", color = "var(--secondary)", width = "4em"
     tabSourceNote "NASA Planetary Fact Sheet"
     optPageTheme()  # the page's colours
 nbParti t

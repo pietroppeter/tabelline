@@ -44,9 +44,10 @@ Rough size: S (hours), M (a day or two), L (more).
 ## Plots in cells
 
 - **Nanoplots** (L). `fmtNanoplot` / `colsNanoplot`: line, bar and box plots in SVG, with
-  reference lines and areas, as in gt 0.10+. The tiny `fmtBar` is the first step.
-- **`fmtBar` layout** (S). Bar only, or the value before the bar: with the value after it, a
-  column of bars reads unevenly (diagrammari's series part 5).
+  reference lines and areas, as in gt 0.10+ and Great Tables (experimental in gt, so not in 0.1).
+  First step: one value per cell, a horizontal bar or line from a zero line shared by the rows,
+  the value shown on hover (Great Tables' `_utils_nanoplots.py`). A draft of that step, with
+  `nanoplotOptions`, was written on 8 Nov 2026 and set aside when `fmtBar` was removed before 0.1.
 
 ## Options and building
 

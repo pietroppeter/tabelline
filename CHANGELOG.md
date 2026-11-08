@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Breaking (before 0.1): `fmtBar` is removed. It was tabelline's only format not in gt or Great
+  Tables, and it drew the bar before the number; bars come back with `fmtNanoplot`, after 0.1.
+  The Coverage map lists everything in tabelline that is not from gt.
+
 - Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
   quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
   (#24).

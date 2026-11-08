@@ -13,7 +13,7 @@ nb.doc.filename = docs / "devlog" / "milano-cortina" / "index.html"
 nb.useTabelline(nome = "tabelline",
                 title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-let bar = tinta("--secondary")               # bars in the page's secondary colour
+let bar {.used.} = tinta("--secondary")      # the page's secondary colour
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
 let gilt = tinta("--warning")                 # Italy's row
@@ -267,7 +267,6 @@ nbShowCode:
     tabHeader "Italy at the Winter Games", "since Lillehammer 1994, the old record"
     colsHide ["gold", "silver", "bronze"]
     colsLabel {"host": "", "athletes": "athletes", "total": "🏅", "rank": "rank"}
-    fmtBar "total", color = bar, width = "3.5em"
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
     tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
     tabFootnote "At home, and fewer medals than four years before.",
@@ -479,7 +478,6 @@ nbShowCode:
     colsLabel {"what": "", "millions": "€ m"}
     colsHide "path"
     fmtDate "date", dateStyle = "MMM yyyy"
-    fmtBar "millions", color = bar, width = "4em", decimals = 1
     colsReorder ["what", "millions"]
     tabSourceNote md(&"Italian Wikipedia ([XXV Giochi olimpici invernali](https://it.wikipedia.org/wiki/XXV_Giochi_olimpici_invernali)); Il Post, {link(\"2023/09/21/nessuno-costruire-pista-bob-cortina-olimpiadi/\", \"Sep 2023\")}, {link(\"2024/02/02/accordo-pista-bob-cortina/\", \"Feb 2024\")}, {link(\"2026/01/22/a-cortina-ci-sono-piu-cantieri-che-neve/\", \"Jan 2026\")}.")
   nbTable t
@@ -514,7 +512,6 @@ nbShowCode:
     optPageTheme()
     tabHeader "Santa Giulia's extra costs", "millions of euros, as each side tells them"
     colsLabel {"says": "", "millions": "€ m"}
-    fmtBar "millions", color = bar, width = "4em"
     tabStyle style.text(style = "italic"), loc.body(rows = where(it.index == 0))
     tabSourceNote md(&"Il Post, {link(santaGiuliaSource, \"5 May 2026\")}; the Court of Auditors is investigating.")
   nbTable t
@@ -621,7 +618,6 @@ nbShowCode:
     colsLabel {"venues": "", "share": ""}
     fmtPercent "share", decimals = 0
     subSmallVals "share", threshold = 0.05, smallPattern = "under 5%"
-    fmtBar "venues", color = bar, width = "6em"
     tabFootnote "Two of them from Turin 2006: the ski jumps of Pragelato and the sliding track of Cesana.",
       loc.stub(rows = where(it["fate"] == "Permanent, abandoned"))
     tabSourceNote md(&"The IOC, via Il Post, {link(iocSource, \"30 October 2025\")}.")
