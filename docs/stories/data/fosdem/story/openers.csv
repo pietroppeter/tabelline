@@ -1,0 +1,28 @@
+# The first talk in the main room on Saturday of every edition (after the welcome), from events.csv and event_speakers.csv.
+year,start,room,title,by
+2001,10:00,A,software patents dangers,Richard Stallman
+2002,10:00,Janson,RMS,""
+2003,10:30,Conference Room 1,The History of Free Software,Jon 'Maddog' Hall
+2004,10:30,Janson,The Open Source Paradigm Shift,Tim O'Reilly
+2005,10:30,Janson,Wikipedia,Jimmy 'Jimbo' Wales
+2006,10:30,Janson,Welcome of visitors followed by Richard M Stallman's keynote,Richard M Stallman
+2007,10:30,Janson,Status of Software Patents in Europe,Pieter Hintjens
+2008,10:30,Janson,"Tux with Shades, Linux in Hollywood","Robin Rowe, Gabrielle Pantera"
+2009,10:30,Janson,Free. Open. Future?,Mark Surman
+2010,10:45,Janson,Promoting Open Source Methods at a Large Company,Brooks Davis
+2011,10:45,Janson,Why Political Liberty Depends on Software Freedom More Than Ever,Eben Moglen
+2012,11:00,Janson,Free Software: A viable model for Commercial Success,Robert Dewar
+2013,11:00,Janson,How we made the Jenkins community,Kohsuke Kawaguchi
+2014,11:00,Janson,How we found a million style and grammar errors in the English Wikipedia,Daniel Naber
+2015,10:00,Janson,Identity Crisis: Are we who we say we are?,Karen Sandler
+2016,10:00,Janson,systemd and Where We Want to Take the Basic Linux Userspace in 2016,Lennart Poettering
+2017,10:00,Janson,Kubernetes on the road to GIFEE,Brandon Philips
+2018,10:00,Janson,Consensus as a Service,"Simon Phipps, Italo Vignoli"
+2019,10:00,Janson,Can Anyone Live in Full Software Freedom Today?,"Bradley M. Kuhn, Karen Sandler"
+2020,10:00,Janson,The Linux Kernel: We have to finish this thing one day ;),Thorsten Leemhuis
+2021,10:00,M.community,Empowering the school of the future,"Marco Marinello, Paolo Dongilli"
+2022,10:00,M.community,Making a community-managed FOSS project sustainable in the medium- to long-term,Italo Vignoli
+2023,10:00,Janson,Celebrating 25 years of Open Source,Nick Vidal
+2024,10:00,Janson,Where have the women of tech history gone?,Laura Durieux
+2025,10:00,Janson,Program to Learn: The Power of Creative Coding,"Bernat Romagosa, John Maloney, Jens Mönig, Jadga Huegle"
+2026,10:00,Janson,"FOSS in times of war, scarcity and (adversarial) AI",Michiel Leenaars

@@ -35,6 +35,15 @@ proc preview*(slug: string): Option[Tabella] =
       colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉"}
       optCssTheme()
     some t
+  of "fosdem":
+    let path = currentSourcePath().parentDir / "data" / "fosdem" / "story" / "devrooms_longest.csv"
+    let d = readCsv(path, comment = "#").top(3, ["editions"])
+    let t = tabella(d, rownameCol = "devroom"):
+      tabHeader "The longest-running devrooms"
+      colsHide ["first", "last", "longest_run", "talks", "n_names", "names", "in_2027"]
+      colsLabel {"editions": "editions"}
+      optCssTheme()
+    some t
   else: none(Tabella)
 
 proc next*(): string =

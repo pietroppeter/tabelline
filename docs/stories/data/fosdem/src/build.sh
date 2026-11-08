@@ -22,3 +22,6 @@ py extract_lists.py "$RAW/lists/fosdem.mbox"
 python3 -I "$HERE/extract_upcoming.py" "$RAW/upcoming" "$STAGE" "${NEXT:-2027}"
 nim c -d:release --hints:off --path:"$NANUQ/src" -o:"$STAGE/process" "$HERE/process.nim"
 "$STAGE/process" "$STAGE" "$OUT"
+# The small tables of the story (docs/stories/fosdem.nim), from the tables above.
+nim c -d:release --hints:off --path:"$NANUQ/src" -o:"$STAGE/insights" "$HERE/insights.nim"
+"$STAGE/insights" "$OUT" "$OUT/story"

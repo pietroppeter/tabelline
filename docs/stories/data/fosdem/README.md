@@ -1,7 +1,7 @@
 # FOSDEM, 2001–2026: the data
 
-Data for a tabelline story about FOSDEM (the planned 0.2 story: devrooms, talks and the people who
-give them). Twenty-six editions, from OSDEM in February 2001 to FOSDEM 2026, plus 2027 as announced so far
+Data for tabelline's story about FOSDEM, [FOSDEM, twenty-six times](../../fosdem.nim) (the 0.2
+story: devrooms, talks and the people who give them). Twenty-six editions, from OSDEM in February 2001 to FOSDEM 2026, plus 2027 as announced so far
 (dates, the 78 accepted devrooms and their calls for participation). Only the data is here; the story comes later.
 
 Every table is a CSV whose first line is a `#` comment naming its sources, so it reads with
@@ -28,6 +28,12 @@ is `richard hartmann`), so the same person matches across years. It does not kno
 Organizers: FOSDEM never published devroom organizers as data. The closest structured trace is the
 sender of each devroom's CfP post (`cfp_posts.csv`), usually one of the devroom's managers; 43% of
 them also spoke at that edition. The FOSDEM staff itself is only in prose (team pages of 2003–2006).
+
+The story's own small tables are in `story/`, made from these by `src/insights.nim` (nanuq): the
+dates, sizes, online years, devroom families (renames matched by hand), the devrooms of 2027,
+opening talks, recurring speakers and newcomers. `story/fosdem-gt.json` keeps the HTML of the
+story's gt tables (it is written in R with gt until tabelline 0.2 and 0.3 are built), to compare
+with the tabelline port.
 
 ## Coverage by year
 

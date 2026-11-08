@@ -70,6 +70,9 @@ the home page shows them as a gallery:
 - [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/stories/milano-cortina/)
   (tabelline 0.1): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
   the money, what stays), learning from Il Post's coverage, on data from Wikipedia, Il Post and NOAA.
+- [FOSDEM, twenty-six times](https://pietroppeter.github.io/tabelline/stories/fosdem/)
+  (tabelline 0.2, written in R with gt until 0.2 and 0.3 are built): the editions, the devrooms
+  and the people of FOSDEM from 2001 to 2027, on FOSDEM's own schedules, read with nanuq.
 
 ## The site
 

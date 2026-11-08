@@ -1,0 +1,34 @@
+# Devrooms held in ten editions or more, from tracks.csv: years, longest run of consecutive editions, talks, names.
+devroom,first,last,editions,longest_run,talks,n_names,names,in_2027
+Mozilla,2002,2025,24,24,303,4,Mozilla; Mozilla Devroom; Mozilla devroom; mozilla,false
+"Embedded, Mobile and Automotive",2003,2027,24,16,343,8,"Embedded; Embedded Devroom; Embedded and mobile; Embedded devroom; Embedded, Mobile and Automotive; Embedded, Mobile and Automotive devroom; Embedded, mobile and automotive; embedded",true
+Free Java,2004,2027,23,22,362,7,Free Java; Free Java Devroom; Free Java devroom; Friends of OpenJDK; GNU Classpath+OpenJDK DevJam; Java; classpath,true
+PostgreSQL,2003,2027,18,16,132,3,PostgreSQL; PostgreSQL Devroom; PostgreSQL devroom,true
+FOSS Office,2008,2027,18,16,332,10,FOSS Office; LibreOffice; LibreOffice Devroom; LibreOffice Technology; LibreOffice Technology Development Platform; LibreOffice devroom; Open Document Editors; Open Document editors; Open document editors; OpenOffice.org,true
+Distributions,2010,2027,18,18,312,5,Cross distro; CrossDistribution Devroom; CrossDistro devroom; Distributions; Distributions devroom,true
+MySQL,2004,2025,17,15,291,9,"MariaDB; MariaDB Server; MariaDB, MySQL and Friends; MySQL; MySQL & friends devroom; MySQL and Friends; MySQL and Friends Devroom; MySQL and friends; MySQL, MariaDB and Friends",false
+"BSD, illumos, bhyve, OpenZFS",2010,2027,17,14,123,4,"BSD; BSD Devroom; BSD devroom; BSD, illumos, bhyve, OpenZFS",true
+Virtualization and Cloud Infrastructure,2011,2027,17,17,269,8,Infrastructure as a service; New challenges in Virtualization devroom; Virtualisation; Virtualisation and IaaS; Virtualization and Cloud Devroom; Virtualization and Cloud Infrastructure; Virtualization and Cloud Infrastructure devroom; Virtualization and IaaS,true
+Real Time Communications (RTC),2005,2025,16,5,248,7,Jabber; Jabber and XMPP Devroom; Jabber+XMPP; Open Source Telephony devroom; Real Time Communications; Real Time Communications (RTC); Real Time Communications (RTC) devroom,false
+Legal & Policy,2012,2027,16,16,215,7,Legal & Policy; Legal Issues Devroom; Legal and Policy; Legal and Policy Issues; Legal and Policy Issues devroom; Legal and policy issues; Legal issues,true
+Microkernel and Component-based OS,2012,2027,16,16,157,8,Microkernel; Microkernel OS Devroom; Microkernel and Component-Based OS; Microkernel and Component-based OS; Microkernel and Component-based OS devroom; Microkernel-based operating systems; Microkernels; Microkernels and Component-based OS,true
+Python,2007,2026,14,8,213,2,Python; Python Devroom devroom,false
+Testing and Continuous Delivery,2013,2027,14,8,213,5,Continuous Integration and Continuous Deployment; Testing and Automation; Testing and Continuous Delivery; Testing and Continuous delivery devroom; Testing and automation,true
+Go,2014,2027,14,14,167,2,Go; Go devroom,true
+Perl & Raku,2005,2027,13,8,150,8,Perl; Perl & Raku; Perl Devroom; Perl Programming Languages; Perl and Raku Programming; Perl and Raku devroom; Perl devroom; Raku,true
+"HPC, Big Data, and Data Science",2014,2027,13,12,230,5,"HPC and computational science; HPC, Big Data & Data Science; HPC, Big Data & Data Science devroom; HPC, Big Data and Data Science; HPC, Big Data, and Data Science",true
+LLVM,2014,2027,13,7,123,4,LLVM; LLVM Toolchain; LLVM devroom; LLVM toolchain,true
+Radio-Frequency Digital Signal Processing,2014,2027,13,9,168,7,Free Software Radio; Radio; Radio-Frequency Digital Signal Processing; Software Defined Radio; Software Defined Radio(SDR)/Digital Signal Processing(DSP); Software defined radio; Software-Defined Radio and Amateur Radio devroom,true
+Ada,2006,2025,12,5,147,3,Ada; Ada Devroom; ada,false
+Infra Management,2011,2022,12,12,124,8,Config Management; Config management; Configuration & Systems Management devroom; Configuration Management; Configuration Systems Management; Configuration and Systems Management Devroom; Configuration management; Infra Management,false
+Open Source Design,2015,2026,12,12,153,3,Open Source Design; Open Source Design devroom; Open source design,false
+Containers,2016,2027,12,12,175,4,Containers; Containers and Process Isolation; Containers devroom; Linux Containers and Microservices,true
+Desktops,2007,2017,11,11,148,5,Cross desktop; CrossDesktop; CrossDesktop Devroom; Crossdesktop devroom; Desktops,false
+Geospatial,2015,2027,11,8,147,1,Geospatial,true
+Open Media,2015,2027,11,6,150,3,Open Media; Open Media devroom; Open media,true
+Software Defined Storage,2017,2027,11,11,118,2,Software Defined Storage; Software Defined Storage devroom,true
+Graph Systems and Algorithms,2012,2023,10,9,108,5,Graph; Graph Processing; Graph Processing Devroom; Graph Systems and Algorithms; Graph processing,false
+Security,2012,2027,10,3,125,3,Security; Security Devroom; Security devroom,true
+Graphics,2014,2027,10,3,97,2,Graphics; Graphics devroom,true
+Community,2017,2027,10,5,148,2,Community; Community devroom,true
+Monitoring and Observability,2017,2027,10,9,112,3,Monitoring & Observability devroom; Monitoring and Cloud; Monitoring and Observability,true
