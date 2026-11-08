@@ -3,22 +3,18 @@
 import std/os
 import nimib except md
 import tabelline, tabelline/[datasets, nimib]
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "day-one" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Day one: from gt to tabelline", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026", "Day one: from gt to tabelline", """
+Reading gt and Great Tables, deciding to write rather than wrap, and a first tabelline with its specs, its explainer and a notebook look.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Day one: from gt to tabelline
-
-<p class="lede">Reading gt and Great Tables, deciding to write rather than wrap, and a first
-tabelline with its specs, its explainer and a notebook look.</p>
-
 The request was short: *let's make great tables for Nim*. The name was already picked,
 **tabelline**, the times tables of Italian primary school, and the repository already made.
 The rest of this post tells the first day.
@@ -67,8 +63,8 @@ nbCode:
   let choicesTable = tabella(choices, rownameCol = "topic"):
     tabHeader "Design choices of day one", "and what gt and Great Tables do instead"
     colsLabel {"choice": "tabelline", "instead": "gt / Great Tables"}
-    tabStyle style.text(color = "#5E6475", size = "90%"), loc.body(cols = "instead")
-    optQuaderno()
+    tabStyle style.text(color = "var(--n-7)", size = "90%"), loc.body(cols = "instead")
+    optTokens()
   nbTable choicesTable
 
 nbText: """

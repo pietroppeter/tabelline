@@ -4,22 +4,18 @@
 import std/[os, strutils, strformat]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno, ../mese
+import ../blocchi, ../mese
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "operetta" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Operetta, a first sketch", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026", "Operetta, a first sketch", """
+A name for the way of working that grew in a month of building with Claude: parts that a project picks by what it is and how far along it is, and adds to as it grows.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Operetta, a first sketch
-
-<p class="lede">A name for the way of working that grew in a month of building with Claude: parts
-that a project picks by what it is and how far along it is, and adds to as it grows.</p>
-
 Operetta is a way to make an open source library with an AI agent. It is not a tool and not a
 template: it is a list of parts (a setup script, an explainer, specs, a devlog, a coverage map,
 skills, ...), and a project uses the ones it needs. Each part is small, and each one was

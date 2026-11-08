@@ -52,6 +52,9 @@ jobs:
       - name: Spec examples
         run: nim r tools/specexamples.nim
 
+      - name: No new HTML, styles or colours in the pages
+        run: nim r tools/drift.nim
+
       - name: Build the pages
         run: nim r -d:release -d:nimibQuiet docs/all.nim
 

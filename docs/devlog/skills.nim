@@ -4,13 +4,13 @@
 import std/[os, strutils, strformat, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "skills" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Skills, from the beginning", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # the OpenSpec skills and commands in this repository, as they are on disk
@@ -27,15 +27,10 @@ for kind, f in walkDir(repo / ".claude" / "commands" / "opsx"):
 installed.sort(proc (a, b: Installed): int = (if a.kind != b.kind: cmp(b.kind, a.kind) else: cmp(a.name, b.name)))
 let skillHead = readFile(repo / ".claude" / "skills" / "openspec-propose" / "SKILL.md").splitLines[0 .. 10].join("\n")
 
+nbTitolo "7 November 2026", "Skills, from the beginning", """
+What an agent skill is, where skills live in an open source project, who does them well, how they work from the phone, how to tell whether one helps, and what tabelline and Operetta could do with them.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Skills, from the beginning
-
-<p class="lede">What an agent skill is, where skills live in an open source project, who does them
-well, how they work from the phone, how to tell whether one helps, and what tabelline and
-Operetta could do with them.</p>
-
 Skills are the fifth group of [Operetta](../operetta/), the *suggeritore*, and the one with the
 least in it. This post starts from nothing and goes step by step.
 
@@ -48,7 +43,7 @@ hold scripts to run and longer references to read. That is all: no code to insta
 Here is the top of a skill that is in this repository right now, put there by OpenSpec:
 """
 
-nbRawHtml: codeHtml(skillHead & "\n...", "yaml")
+nbText "```yaml\n" & skillHead & "\n...\n```"
 
 nbText: """
 What makes skills work is *when* each part is read. The agent sees only the `name` and the

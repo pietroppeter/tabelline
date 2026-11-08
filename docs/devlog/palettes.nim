@@ -3,12 +3,12 @@
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "palettes" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # ------------------------------------------------------------------------------------ palettes
@@ -152,15 +152,10 @@ nbRawHtml: """<style>
 .parte { font: 700 .7rem/1.3 var(--text); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 1.6rem 0 -.6rem; }
 </style>"""
 
+nbTitolo "7 November 2026", "Munari meets Japan: palettes for the second look", """
+The Munari look gets softer colours, from Japan's traditional colour names, and loses the dots and holes that looked like buttons. Here is what each colour does, six palettes to swipe through, and the stories behind their names.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Munari meets Japan: palettes for the second look
-
-<p class="lede">The Munari look gets softer colours, from Japan's traditional colour names, and
-loses the dots and holes that looked like buttons. Here is what each colour does, six palettes
-to swipe through, and the stories behind their names.</p>
-
 ## The page in six colours
 
 A Munari page is drawn with six colours, named after where they go rather than their hue: the
@@ -216,9 +211,9 @@ square, triangle.
 """
 
 nbNota("**The plain note** is paper with a third of the triangle in it, and the full triangle along its top edge.")
-nbNota("**The azzurra note** does the same with the square.", "azzurra")
-nbNota("**The rosa note** with the circle.", "rosa")
-nbNota("**The verde note** with the fourth colour, which is green in most palettes, but need not be.", "verde")
+nbNota("**The azzurra note** does the same with the square.", nkInfo)
+nbNota("**The rosa note** with the circle.", nkMissing)
+nbNota("**The verde note** with the fourth colour, which is green in most palettes, but need not be.", nkDone)
 
 nbText: """<p class="parte">Code and its output</p>
 
@@ -251,7 +246,7 @@ block:
     tabHeader "Munari's three shapes", "a small book for each"
     fmtMarkdown "book"
     tabSourceNote "Black rules above and below, the top one starting in the circle colour; group headings in a tint of the triangle."
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -295,7 +290,7 @@ block:  # the table only, not its code
     tabHeader "One page, part by part", "the Munari look"
     colsLabel {"typeface": "type", "colour": "colour", "swatch": ""}
     colsWidth {"swatch": "1.6em", "typeface": "30%"}
-    optQuaderno()
+    optTokens()
   for i, x in parts:   # the swatch is the first colour the row names
     var first = (x.colour.len, "")
     for (k, v) in swatchOf:
@@ -346,7 +341,7 @@ block:  # the table only, not its code
     fmtNumber "contrast", decimals = 1
     colsWidth {"swatch": "1.6em"}
     tabSourceNote md("Contrast ratio after WCAG 2: 4.5 is enough for small text, 3 for large. As text, the page mixes a little ink into the circle, square and fourth colours, so they read better than these numbers say.")
-    optQuaderno()
+    optTokens()
   for i, r in rows:
     t = t.tabStyle(style.fill(r.hex), loc.body(cols = "swatch", rows = [i]))
   nbTable t

@@ -3,23 +3,18 @@
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
 import tabelline, tabelline/[nimib, datasets]
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "designing-0-1" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Designing tabelline 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026", "Designing tabelline 0.1", """
+tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it is built.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Designing tabelline 0.1
-
-<p class="lede">tabelline 0.1 from zero: what a table needs, from the data to the last
-style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim
-asked for something of its own; and how it is built.</p>
-
 What is the least a library of tables has to do? This post answers with 0.1 itself, built up one
 idea at a time: the data first, then a table that shows it as it is, then everything that
 changes what it looks like, each idea only after the ones it needs. Every step is a card with the
@@ -63,48 +58,20 @@ And one by one, simplest first. Swipe the cards sideways (or scroll them with a 
 every table is made by the code above it.
 """
 
-nbRawHtml: """<style>
-.galleria { display: flex; align-items: flex-start; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
-  padding: .2rem 0 .8rem; -webkit-overflow-scrolling: touch; }
-.galleria::after { content: ""; flex: 0 0 .2rem; }
-.scheda { flex: 0 0 min(86%, 26rem); scroll-snap-align: start; overflow-x: auto; padding: .7rem .9rem .8rem;
-  border: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
-.scheda .numero { font: 700 .72rem/1.2 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
-.scheda h3 { margin: .15rem 0 .3rem !important; font-size: 1.1rem !important; line-height: 1.25 !important; }
-.scheda p { margin: 0 0 .5rem; font-size: .92rem; line-height: 1.45; }
-.scheda pre { margin: .4rem 0 !important; }
-body .scheda pre > code { font-size: 12.5px !important; }
-.scheda pre > code { white-space: pre-wrap !important; overflow-wrap: anywhere; }
-.scheda .tabella { margin: .4rem 0 0; }
-.scheda .affiancate { display: flex; flex-wrap: wrap; gap: 0 .6rem; justify-content: center; align-items: flex-start; }
-.scheda .affiancate .tabella { padding-left: 6px; padding-right: 6px; }
-.scheda .tabella table { font-size: 14px !important; }
-</style>"""
 
-var schede: seq[string]
+let galleriaPassi = newNbGalleria(label = "0.1 step by step: swipe or scroll sideways")
 
 template scheda(passo, titolo, abilita: string, body: untyped) =
   ## A card of the gallery: one step, what it lets you do, and the blocks `body` adds.
   ## Tables that follow each other sit side by side.
-  let first = nb.blocks.len
-  block:
-    body
-  var inner = ""
-  var i = first
-  while i < nb.blocks.len:
-    var j = i
-    while j < nb.blocks.len and nb.blocks[j] of NbTable: inc j
-    if j - i >= 2:
-      inner.add "<div class=\"affiancate\">"
-      for k in i ..< j: inner.add nb.render(nb.blocks[k])
-      inner.add "</div>"
-      i = j
-    else:
-      inner.add nb.render(nb.blocks[i])
-      inc i
-  nb.blocks.setLen(first)
-  schede.add "<div class=\"scheda\"><div class=\"numero\">" & passo & " · {n} / {N}</div><h3>" & titolo &
-    "</h3><p>" & abilita & "</p>" & inner & "</div>"
+  nb.withContainer(galleriaPassi):
+    let card = newNbScheda(title = titolo, label = passo)
+    nb.withContainer(card):
+      nbText abilita
+      block:
+        body
+    accosta(card)
+    nb.add card
 
 let pianeti {.used.} = tableData:
   planet: ["Mercury", "Venus", "Earth", "Mars"]
@@ -133,7 +100,7 @@ scheda "1 data", "Objects and CSV", "A seq of objects or named tuples is data to
 
 # 2. A table
 
-scheda "2 table", "A table", "<code>tabella(data)</code> is the table: every value shown as it is, with the column names as labels.":
+scheda "2 table", "A table", "`tabella(data)` is the table: every value shown as it is, with the column names as labels.":
   nbCode:
     let t = tabella(pianeti)
   nbTable t
@@ -179,7 +146,7 @@ scheda "3 parts", "Spanners", "A label over some columns, at as many levels as y
       tabSpanner "size", ["mass", "radius"]
   nbTable t
 
-scheda "3 parts", "Spanners from column names", "Data with names like <code>size.mass</code> gets its spanners for free.":
+scheda "3 parts", "Spanners from column names", "Data with names like `size.mass` gets its spanners for free.":
   nbCode:
     let d = tableData:
       planet: ["Earth", "Mars"]
@@ -384,7 +351,7 @@ scheda "7 text", "Markdown and HTML", "Cells, labels and notes with emphasis, co
       fmtMarkdown ["gas", "note"]
   nbTable t
 
-scheda "7 text", "Missing, zero, tiny and given values", "A word for zero, a threshold for noise, n/a for a sentinel value; <code>subMissing</code> does the same for missing ones.":
+scheda "7 text", "Missing, zero, tiny and given values", "A word for zero, a threshold for noise, n/a for a sentinel value; `subMissing` does the same for missing ones.":
   nbCode:
     let d = tableData:
       sample: ["a", "b", "c", "d"]
@@ -460,7 +427,7 @@ scheda "9 styles", "Whole parts as locations", "Style the whole header, column h
       tabStyle style.fill("#F6E3EA"), loc.header(), loc.columnHeader()
   nbTable t
 
-scheda "9 styles", "Any CSS", "Any CSS property, where <code>style.fill</code> and <code>style.text</code> stop.":
+scheda "9 styles", "Any CSS", "Any CSS property, where `style.fill` and `style.text` stop.":
   nbCode:
     let t = tabella(pianeti):
       tabStyle style.css("font-variant: small-caps; letter-spacing: .08em"), loc.body("planet")
@@ -475,12 +442,7 @@ scheda "9 styles", "Colours from the data", "Each cell coloured by its value, al
       dataColor "moons", palette = @["#FFF3B0", "#B5446E"]
   nbTable t
 
-block:
-  var cards: seq[string]
-  for i, c in schede:
-    cards.add c.replace("{n}", $(i + 1)).replace("{N}", $schede.len)
-  nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"0.1 step by step: swipe or scroll sideways\">" &
-    cards.join("") & "</div>"
+nb.add galleriaPassi
 
 nbText: """
 ## R, Python or Nim?
@@ -522,19 +484,16 @@ And one card for each: the same thing written in R, in Python and in tabelline, 
 tabelline chose what it did. Swipe sideways.
 """
 
-var scelte: seq[string]
-var nScelta = 0
+let galleriaScelte = newNbGalleria(label = "eight choices: swipe or scroll sideways")
 
 template scelta(titolo, domanda: string, body: untyped) =
   ## A card of the second gallery: one choice, the code in three languages and the verdict.
-  inc nScelta
-  let first = nb.blocks.len
-  body
-  var inner = ""
-  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
-  nb.blocks.setLen(first)
-  scelte.add "<div class=\"scheda\"><div class=\"numero\">" & $nScelta & " / 8</div><h3>" & titolo &
-    "</h3><p>" & domanda & "</p>" & inner & "</div>"
+  nb.withContainer(galleriaScelte):
+    let card = newNbScheda(title = titolo)
+    nb.withContainer(card):
+      nbText domanda
+      body
+    nb.add card
 
 scelta "Names", "What is a verb called?":
   nbText: """
@@ -670,8 +629,7 @@ textTransform proc (s: string): string =
 **tabelline:** no `textCaseWhen`. R needs formulas (`~`) for this; Nim already has `if` and `case`, so a small proc does it.
 """
 
-nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"eight choices: swipe or scroll sideways\">" &
-  scelte.join("") & "</div>"
+nb.add galleriaScelte
 
 nbText: """
 Two verbs have no twin. `colsReorder` puts some columns in a new order in the places they hold
@@ -773,29 +731,26 @@ The rest is Nim as it is. Eight things, one card each, with code that runs and w
 Swipe sideways.
 """
 
-var zuccheri: seq[string]
-var nZucchero = 0
+let galleriaZucchero = newNbGalleria(label = "Nim sugar: swipe or scroll sideways")
 
 template zucchero(titolo, cosa: string, body: untyped) =
   ## A card of the third gallery: one piece of Nim sugar, code that runs and what it makes.
-  inc nZucchero
-  let first = nb.blocks.len
-  block:
-    body
-  var inner = ""
-  for i in first ..< nb.blocks.len: inner.add nb.render(nb.blocks[i])
-  nb.blocks.setLen(first)
-  zuccheri.add "<div class=\"scheda\"><div class=\"numero\">" & $nZucchero & " / 8</div><h3>" & titolo &
-    "</h3><p>" & cosa & "</p>" & inner & "</div>"
+  nb.withContainer(galleriaZucchero):
+    let card = newNbScheda(title = titolo)
+    nb.withContainer(card):
+      nbText cosa
+      block:
+        body
+    nb.add card
 
-zucchero "A verb per line", "Inside <code>tabella(data):</code> each line is a verb applied to the table: no dots, no <code>|&gt;</code>, no parentheses.":
+zucchero "A verb per line", "Inside `tabella(data):` each line is a verb applied to the table: no dots, no `|>`, no parentheses.":
   nbCode:
     let t = tabella(pianeti, rownameCol = "planet"):
       tabHeader "Rocky planets"
       fmtTf "rings", tfStyle = "yes-no"
   nbTable t
 
-zucchero "Pairs in braces", "<code>{key: value}</code> is Nim's list of pairs: typed, in order, one argument.":
+zucchero "Pairs in braces", "`{key: value}` is Nim's list of pairs: typed, in order, one argument.":
   nbCode:
     let t = tabella(pianeti):
       colsLabel {"planet": "Planet", "moons": "Moons", "rings": "Rings?"}
@@ -815,7 +770,7 @@ zucchero "Objects straight in", "A seq of objects or named tuples is a table: on
       fmtNumber "km", decimals = 1
   nbTable t
 
-zucchero "Dotted names, no quotes", "<code>tableData:</code> is a macro: it reads <code>size.mass</code> as a column name before Nim sees a field access.":
+zucchero "Dotted names, no quotes", "`tableData:` is a macro: it reads `size.mass` as a column name before Nim sees a field access.":
   nbCode:
     let d = tableData:
       planet: ["Earth", "Mars"]
@@ -833,7 +788,7 @@ zucchero "Procs are values", "A proc from the standard library goes in as it is;
       textTransform proc (s: string): string = s & "!", loc.body("planet", rows = [2])
   nbTable t
 
-zucchero "Loops and ifs in the body", "The body is Nim code: a <code>for</code> or an <code>if</code> can hold verbs too.":
+zucchero "Loops and ifs in the body", "The body is Nim code: a `for` or an `if` can hold verbs too.":
   nbCode:
     let compact = true
     let t = tabella(pianeti):
@@ -843,21 +798,20 @@ zucchero "Loops and ifs in the body", "The body is Nim code: a <code>for</code> 
         optVerticalPadding 0.4
   nbTable t
 
-zucchero "Rows by condition", "<code>where</code> takes any Nim condition over the row <code>it</code>.":
+zucchero "Rows by condition", "`where` takes any Nim condition over the row `it`.":
   nbCode:
     let t = tabella(pianeti):
       tabStyle style.fill("#FFF3B0"), loc.body(rows = where(it["moons"] > 0))
   nbTable t
 
-zucchero "Options checked when compiling", "<code>tabOptions</code> sets any option by name; a misspelt name does not compile.":
+zucchero "Options checked when compiling", "`tabOptions` sets any option by name; a misspelt name does not compile.":
   nbCode:
     let t = tabella(pianeti):
       tabOptions(rowStriping = true)
     echo compiles(t.tabOptions(rowStripping = true))
   nbTable t
 
-nbRawHtml: "<div class=\"galleria\" tabindex=\"0\" aria-label=\"Nim sugar: swipe or scroll sideways\">" &
-  zuccheri.join("") & "</div>"
+nb.add galleriaZucchero
 
 nbText: """
 ## How it is built
@@ -931,6 +885,6 @@ nbNota("""
 **Still to do in this thread.** Open the release PR, which moves these lines of the changelog
 under 0.1.0, and tag `v0.1.0` when Pietro says *vai*. The other two threads of 0.1 use the
 release on a month of work and port the first references to the tabelline book.
-""", "verde")
+""", nkDone)
 
 nbSave

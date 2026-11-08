@@ -5,25 +5,20 @@
 import std/[os, strformat, strutils]
 import nimib except md
 import tabelline, tabelline/nimib
-import quaderno
+import blocchi
 
 let docs = currentSourcePath().parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "agents" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Agents", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Agents", classe = "living document",
                title = "tabelline for agents", homeHref = "../",
                description = "For coding agents working on tabelline: setup, commands, where things are, and the working rules.")
 
+nbTitolo "Agents · living document · started 8 November 2026", "Working on tabelline, for agents", """
+What a coding agent needs to change tabelline: how to set up, the commands it will run, where things are, and the rules of the repository. People new to the code can read it too.
+"""
 nbText: """
-<p class="kicker">Agents · living document · started 8 November 2026</p>
-
-# Working on tabelline, for agents
-
-<p class="lede">What a coding agent needs to change tabelline: how to set up, the five commands
-it will run, where things are, and the rules of the repository. People new to the code can read
-it too.</p>
-
 The rules below are read from [AGENTS.md](https://github.com/pietroppeter/tabelline/blob/main/AGENTS.md)
 when this page is built, so they are always the ones in the repository. A short map of the site
 for language models is at [llms.txt](../llms.txt). Skills for tabelline will be listed here when
@@ -47,16 +42,17 @@ Then these are the commands an agent runs, in the order a change needs them:
 block:
   let cmds = tableData:
     command: ["nim r tests/all.nim", "nim r tools/specexamples.nim", "nim r tools/specexamples.nim --update",
-              "nim r -d:release docs/all.nim", "python3 tools/preview.py"]
+              "nim r tools/drift.nim", "nim r -d:release docs/all.nim", "python3 tools/preview.py"]
     does: ["runs the tests", "runs every example in the specs and checks its output",
            "rewrites the outputs after a change is built (`--changes` adds open changes)",
+           "checks that no page adds HTML, styles or colours (`--update` lowers the baseline)",
            "builds every page into docs/ (the HTML is not committed)",
            "copies the built pages to ../tabelline-preview, for an artifact to show Pietro"]
   let t = tabella(cmds, rownameCol = "command"):
     tabHeader "The commands"
     colsLabel {"does": "what it does"}
     fmtMarkdown "does"
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -67,7 +63,7 @@ nbText: """
 - `openspec/specs/`: how tabelline behaves, requirement by requirement, each with an example.
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
-- `docs/`: every page, a nimib notebook. The look is `docs/quaderno.nim` and `docs/munari.nim`,
+- `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim`; the look is `docs/stile.nim`,
   explained in the [Design Ref](../design/). Posts are in `docs/devlog/`.
 - `BACKLOG.md` (ideas), `CHANGELOG.md` (what shipped), `docs/coverage/gt.json` (what of gt is
   covered), `docs/piano.nim` (the roadmap's data).

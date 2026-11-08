@@ -89,6 +89,10 @@ Kept up to date as tabelline changes. The home page lists them in this order:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Blocks, not HTML](https://pietroppeter.github.io/tabelline/devlog/blocks-review/)
+  (8 Nov 2026 D): how much HTML, CSS and colour the pages write by hand (measured at build), the
+  custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where
+  styles and colours should live, and what a nimib skill should teach against the drift.
 - [Reviewing the design: a palette by roles](https://pietroppeter.github.io/tabelline/devlog/design-review/)
   (8 Nov 2026 C): what the pages' six colours do today, shape apart from colour, a palette by roles (neutral, primary,
   secondary, status, data) for both looks, every component mapped to it, and six choices to make
@@ -130,7 +134,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
-- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/quaderno.nim` is the theme, `docs/munari.nim` the Munari look laid over it, the default).
+- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/stile.nim` is the style of both looks, from the tokens, and `docs/blocchi.nim` the blocks every page is made of).
 - `openspec/`: specs and open changes; `openspec/config.yaml` has the rules. `BACKLOG.md`, `CHANGELOG.md`, `AGENTS.md`.
 
 ## Building

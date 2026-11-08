@@ -3,23 +3,18 @@
 import std/[os, strutils, strformat]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno, ../piano
+import ../blocchi, ../piano
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "three-threads" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Three threads for every release", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026", "Three threads for every release", """
+How tabelline will grow from 0.1 to 0.5: for every release, one thread builds it, one uses it on real data, and one ports reference code from gt and Great Tables, with Nim, Python and R side by side.
+"""
 nbText: """
-<p class="kicker">7 November 2026</p>
-
-# Three threads for every release
-
-<p class="lede">How tabelline will grow from 0.1 to 0.5: for every release, one thread builds it,
-one uses it on real data, and one ports reference code from gt and Great Tables, with Nim,
-Python and R side by side.</p>
-
 The [coverage map](../../coverage/) says what is missing; this post says how it gets done. The
 plan is the one that made [nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim, from
 0.3 to 0.6: every release is three pieces of work running at the same time, each in its own
@@ -52,7 +47,7 @@ block:
     colsLabel {"design": "🔨 Designing Nanuq 0.x", "explainer": "🧭 the explainer"}
     fmtMarkdown "explainer"
     tabSourceNote md("Alongside, the 📚 Nanuq Book ported the Polars user guide, *Polars: The Definitive Guide*, *Modern Polars*, a Polars cookbook, Real Python tutorials and three benchmarks (1BRC, PDS-H, db-benchmark), each chapter with its source and licence.")
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -75,7 +70,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """
@@ -150,7 +145,7 @@ block:
     colsLabel {"build": "🔨 build", "use": "🧭 use it on", "port": "📚 port"}
     fmtMarkdown "release"
     colsWidth {"build": "40%"}
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: """

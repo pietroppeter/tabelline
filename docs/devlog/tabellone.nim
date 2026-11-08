@@ -3,22 +3,18 @@
 import std/[os, json, strutils, math, sequtils, strformat]
 import nimib except md
 import tabelline, tabelline/[nimib, build]
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "tabellone" / "index.html"
-nb.useQuaderno(nome = "tabelline",
+nb.useTabelline(nome = "tabelline",
                title = "Tabellone: when a table becomes a grid", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
+nbTitolo "7 November 2026 · research", "Tabellone: when a table becomes a grid", """
+gt and Great Tables make tables to read; dashboards need grids to explore. What a grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.
+"""
 nbText: """
-<p class="kicker">7 November 2026 · research</p>
-
-# Tabellone: when a table becomes a grid
-
-<p class="lede">gt and Great Tables make tables to read; dashboards need grids to explore. What a
-grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.</p>
-
 In an Italian school the *tabellone* is the big board in the hallway where the end-of-year
 marks are posted: every pupil, every subject, one huge table that everybody crowds around to
 search for one name. *Tabelline* are the little times tables of the first years. The two words
@@ -56,7 +52,7 @@ nbCode:
     tabHeader "A table and a grid", "the same rows, shown for two different jobs"
     colsLabel {"table": "a table (gt, tabelline)", "grid": "a grid (AG Grid, Tabulator, ...)"}
     colsWidth {"table": "42%", "grid": "42%"}
-    optQuaderno()
+    optTokens()
   nbTable t1
 
 nbText: """
@@ -86,7 +82,7 @@ nbCode:
                "gt": "gt opt_interactive()"}
     colsWidth {"features": "34%"}
     tabSourceNote md("AG Grid: [Community vs Enterprise](https://www.ag-grid.com/javascript-data-grid/community-vs-enterprise/), version 36.3. gt: [`opt_interactive()`](https://gt.rstudio.com/reference/opt_interactive.html). Great Tables has nothing interactive yet.")
-    optQuaderno()
+    optTokens()
   nbTable t2
 
 nbText: """
@@ -173,7 +169,7 @@ nbCode:
     colsLabel {"grid": "in a grid", "how": "in a tabellone"}
     tabStyle style.text(color = "#C62828", weight = "bold"),
       loc.body(cols = "grid", rows = where(it["grid"] == "none"))
-    optQuaderno()
+    optTokens()
   nbTable t3
 
 nbText: """
@@ -199,7 +195,7 @@ nbCode:
     colsWidth {"what": "30%", "good": "25%", "bad": "30%"}
     tabStyle style.fill("#E8F5E9"), loc.body(rows = [2])
     tabStyle style.fill("#E8F5E9"), loc.stub(rows = [2])
-    optQuaderno()
+    optTokens()
   nbTable t4
 
 nbText: """
@@ -259,7 +255,7 @@ nbCode:
     dataColor "divisors", palette = palette("blues")
     colsLabel {"roman": "in Roman", "root": "√n"}
     tabSourceNote "Every row is computed when the page is built."
-    optQuaderno()
+    optTokens()
 
 nbCode:
   proc gridData(t: Tabella): JsonNode =
