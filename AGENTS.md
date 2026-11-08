@@ -52,7 +52,9 @@ working rules that are easy to miss.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
+  `nbParte`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
+  with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
   `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
   `optPageTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
@@ -116,8 +118,9 @@ working rules that are easy to miss.
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.
-- When a change is visual, put before and after screenshots (phone width, both looks) in the PR
-  description and in the reply to Pietro. To show them in the PR without adding them to `main`,
-  commit them, link them by that commit's sha, and remove them in the next commit.
+- When a change is visual, put before and after screenshots (phone width, both looks) in the reply
+  to Pietro, and only the after shots of what changed in the PR description. To show them in the
+  PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
+  in the next commit.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.
