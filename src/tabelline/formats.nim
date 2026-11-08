@@ -478,34 +478,6 @@ proc fmtMarkdown*(t: sink Tabella, columns: ColSel, rows = allRows()): Tabella =
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if ctx == rcHtml: inlineMarkdown($v) else: $v, rows)
 
-proc fmtBar*(t: sink Tabella, columns: ColSel, rows = allRows(), color = "#7fb3d5", width = "8em",
-             showValue = true, decimals = 0, domain = (NaN, NaN)): Tabella =
-  ## A small horizontal bar for each number, scaled to the column's range (or `domain`):
-  ## the tiniest of nanoplots.
-  let names = columns.resolve(t.data)
-  var lo, hi = NaN
-  for n in names:
-    for v in t.data[n].values:
-      if v.isNumber:
-        let x = v.toFloat
-        if lo.isNaN or x < lo: lo = x
-        if hi.isNaN or x > hi: hi = x
-  if not domain[0].isNaN: lo = domain[0]
-  if not domain[1].isNaN: hi = domain[1]
-  lo = min(lo, 0.0)
-  let m = t.marksFor("", "", "")
-  fmt(t, names, proc (v: Value, ctx: RenderContext): string =
-    if not v.isNumber: return escapeHtml($v)
-    let x = v.toFloat
-    let frac = if hi > lo: clamp((x - lo) / (hi - lo), 0.0, 1.0) else: 0.0
-    let label = if showValue: formatNumber(x, decimals, sepMark = m.sep, decMark = m.dec) else: ""
-    if ctx == rcText:
-      return "█".repeat(int(round(frac * 10))) & (if showValue: " " & label else: "")
-    "<span class=\"tb_bar\"><span class=\"tb_bar_track\" style=\"width:" & width &
-      "\"><span class=\"tb_bar_fill\" style=\"width:" & formatFloat(frac * 100, ffDecimal, 1) &
-      "%;background:" & color & "\"></span></span>" & (if showValue: "<span class=\"tb_bar_label\">" & label & "</span>" else: "") &
-      "</span>", rows)
-
 proc subMissing*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(), missingText = "—"): Tabella =
   ## Shows missing values as `missingText` (by default they are blank).
   result = t

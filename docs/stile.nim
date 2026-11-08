@@ -503,7 +503,7 @@ const tokenColours* = ["--paper", "--shade", "--line", "--muted", "--ink", "--su
   ## The tokens a page may name in a table colour, as `tinta("--secondary")`.
 
 func tinta*(token: string): string =
-  ## A token as a CSS colour, for tabelline's colour arguments: `fmtBar(color = tinta("--secondary"))`.
+  ## A token as a CSS colour, for tabelline's colour arguments: `style.fill(tinta("--secondary"))`.
   doAssert token in tokenColours, "not a token: " & token
   "var(" & token & ")"
 

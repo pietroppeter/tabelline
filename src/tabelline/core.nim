@@ -191,14 +191,17 @@ func parseCsvLine(line: string, sep: char): seq[string] =
     inc i
   result.add cur
 
-proc parseCsv*(text: string, sep = ','): TableData =
+proc parseCsv*(text: string, sep = ',', comment = ""): TableData =
   ## A CSV text with a header line. Each value is read as an int, a float, a bool, a missing value
-  ## (empty, NA) or else a string; a column mixing ints and floats is a float column.
+  ## (empty, NA) or else a string; a column mixing ints and floats is a float column. With a
+  ## `comment` such as `"#"`, a line that starts with it (after any spaces) is skipped, so a file
+  ## can say where its data comes from.
   result = TableData()
   var header: seq[string]
   var cols: seq[seq[Value]]
   for line in text.splitLines:
     if line.strip.len == 0: continue
+    if comment.len > 0 and line.strip(trailing = false).startsWith(comment): continue
     let fields = parseCsvLine(line, sep)
     if header.len == 0:
       header = fields
@@ -213,7 +216,9 @@ proc parseCsv*(text: string, sep = ','): TableData =
         if v.kind == vkInt: v = toValue(float(v.i))
     result.addColumn(h, vs)
 
-proc readCsv*(path: string, sep = ','): TableData = parseCsv(readFile(path), sep)
+proc readCsv*(path: string, sep = ',', comment = ""): TableData =
+  ## `parseCsv` of a file.
+  parseCsv(readFile(path), sep, comment)
 
 type Row* = object
   ## One row of the data, as seen by a row predicate (`where`): `it["mass"]`, `it.index`.

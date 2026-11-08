@@ -180,7 +180,6 @@ block:
     tabHeader "Six colours, and their jobs", "in the Munari look, on 8 November 2026"
     colsLabel {"what": "where it goes"}
     fmtMarkdown "what"
-    fmtBar "jobs", color = "var(--secondary)", width = "4em"
     tabSourceNote "From docs/munari.nim and the devlog post Munari meets Japan."
     optCssTheme()
   nbTable t
@@ -223,7 +222,6 @@ block:
   let t = tabella(fixed, rownameCol = "source"):
     tabHeader "Fixed colours in the sources of the pages", &"distinct hex values per file, {total} in all"
     colsLabel {"colours": "hex values"}
-    fmtBar "colours", color = "var(--primary)", width = "6em"
     tabSourceNote "Counted on 8 November 2026 (snapshot in devlog/data/design-review/); files with fewer than three are left out."
     optCssTheme()
   nbTable t

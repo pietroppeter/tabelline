@@ -404,7 +404,6 @@ reading order, wherever they were added.
 """
 nbCode:
   t = t.dataColor("mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0))
-    .fmtBar("moons", color = "var(--secondary)", width = "5em")
     .tabStyle(style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.stub(rows = where(it["planet"] == "Earth")))
     .tabFootnote("Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons"))
     .tabFootnote("Venus is hotter than Mercury: its thick atmosphere traps the heat.",
