@@ -1,7 +1,7 @@
 name: Pages
 
-# Runs the tests and the spec examples, builds every page (home, explainer, specs, devlog) and,
-# on main, deploys docs/ to GitHub Pages. The HTML is not committed: it is built here, so it always
+# Runs the tests and the spec examples, builds every page (home, explainer, specs, devlog) and the
+# book, and, on main, deploys docs/ to GitHub Pages. The HTML is not committed: it is built here, so it always
 # matches the sources. Pages must use "GitHub Actions" as its source (Settings > Pages).
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.cache/nim
-          key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'nim.cfg', 'atlas.lock') }}
+          key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'book/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'nim.cfg', 'atlas.lock') }}
           restore-keys: nimcache-2.2.4-
 
       - name: Tests
@@ -58,10 +58,22 @@ jobs:
       - name: Build the pages
         run: nim r -d:release -d:nimibQuiet docs/all.nim
 
+      # The book reruns only the chapters whose inputs changed, starting from the chapters' JSON
+      # of the live book (book/bookbuild.nim). It never runs Python: the Great Tables outputs are
+      # committed in book/gt/outputs/, and a chapter whose outputs are out of date fails here.
+      - name: Build the book
+        run: nim r -d:nimibQuiet book/bookbuild.nim
+        env:
+          BOOK_FROM: https://pietroppeter.github.io/tabelline/book
+          BOOK_NO_PYTHON: "1"
+          BOOK_NO_R: "1"
+
       - name: Assemble site
         run: |
           mkdir _site
-          (cd docs && find . -name '*.html' -o -name llms.txt | tar -c -T - | tar -x -C ../_site)
+          (cd docs && find . \( -name '*.html' -o -name llms.txt \) -not -path './book/*' | tar -c -T - | tar -x -C ../_site)
+          # the book whole: its pages, assets and images, and the chapters' JSON for the next build
+          cp -r docs/book _site/book
           find _site -name '*.html' | sort
           du -sh _site
 

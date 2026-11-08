@@ -1,0 +1,436 @@
+{
+ "sources": [
+  {
+   "id": "gt-getstarted",
+   "title": "Great Tables: Get Started",
+   "by": "Rich Iannone, Michael Chow and the Great Tables contributors (Posit)",
+   "url": "https://posit-dev.github.io/great-tables/get-started/",
+   "licence": "MIT",
+   "kind": "guide",
+   "status": "ported",
+   "what": "The first guide of Great Tables: the parts of a table, formats, styles, themes, selections",
+   "pages": [
+    {
+     "title": "Intro",
+     "raw": "posit-dev/great-tables/main/docs/get-started/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/index.html",
+     "port": "port"
+    },
+    {
+     "title": "Overview",
+     "raw": "posit-dev/great-tables/main/docs/get-started/overview.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/overview.html",
+     "port": "port"
+    },
+    {
+     "title": "Header and Footer",
+     "raw": "posit-dev/great-tables/main/docs/get-started/basic-header.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/basic-header.html",
+     "port": "port"
+    },
+    {
+     "title": "Stub (Row Labels)",
+     "raw": "posit-dev/great-tables/main/docs/get-started/basic-stub.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/basic-stub.html",
+     "port": "port"
+    },
+    {
+     "title": "Column Labels",
+     "raw": "posit-dev/great-tables/main/docs/get-started/basic-column-labels.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/basic-column-labels.html",
+     "port": "port"
+    },
+    {
+     "title": "Formatting Values",
+     "raw": "posit-dev/great-tables/main/docs/get-started/basic-formatting.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/basic-formatting.html",
+     "port": "port"
+    },
+    {
+     "title": "Nanoplots",
+     "raw": "posit-dev/great-tables/main/docs/get-started/nanoplots.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/nanoplots.html",
+     "port": "port"
+    },
+    {
+     "title": "Styling the Table Body",
+     "raw": "posit-dev/great-tables/main/docs/get-started/basic-styling.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/basic-styling.html",
+     "port": "port"
+    },
+    {
+     "title": "Styling the whole table",
+     "raw": "posit-dev/great-tables/main/docs/get-started/targeted-styles.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/targeted-styles.html",
+     "port": "port"
+    },
+    {
+     "title": "Colorizing with Data",
+     "raw": "posit-dev/great-tables/main/docs/get-started/colorizing-with-data.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/colorizing-with-data.html",
+     "port": "port"
+    },
+    {
+     "title": "Table Theme Options",
+     "raw": "posit-dev/great-tables/main/docs/get-started/table-theme-options.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-options.html",
+     "port": "port"
+    },
+    {
+     "title": "Premade Themes",
+     "raw": "posit-dev/great-tables/main/docs/get-started/table-theme-premade.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-premade.html",
+     "port": "port"
+    },
+    {
+     "title": "Column Selection",
+     "raw": "posit-dev/great-tables/main/docs/get-started/column-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/column-selection.html",
+     "port": "port"
+    },
+    {
+     "title": "Row Selection",
+     "raw": "posit-dev/great-tables/main/docs/get-started/row-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/row-selection.html",
+     "port": "port"
+    },
+    {
+     "title": "Location selection",
+     "raw": "posit-dev/great-tables/main/docs/get-started/loc-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/loc-selection.html",
+     "port": "port"
+    },
+    {
+     "title": "Extending Great Tables",
+     "raw": "posit-dev/great-tables/main/docs/get-started/extensions.qmd",
+     "url": "https://posit-dev.github.io/great-tables/get-started/extensions.html",
+     "port": "skip",
+     "note": "About extending Great Tables in Python"
+    }
+   ]
+  },
+  {
+   "id": "r-gt-intro",
+   "title": "gt: Introduction to Creating gt Tables",
+   "by": "Richard Iannone and the gt authors (Posit)",
+   "url": "https://gt.rstudio.com/articles/gt.html",
+   "licence": "MIT",
+   "kind": "guide",
+   "status": "planned",
+   "what": "gt's own first guide, the R side of the same ideas",
+   "pages": [
+    {
+     "title": "Introduction to Creating gt Tables",
+     "raw": "rstudio/gt/master/vignettes/gt.Rmd",
+     "url": "https://gt.rstudio.com/articles/gt.html",
+     "port": "port"
+    }
+   ]
+  },
+  {
+   "id": "gt-blog",
+   "title": "Great Tables blog",
+   "by": "Rich Iannone, Michael Chow, Jules Walzer-Goldfeld and others (Posit)",
+   "url": "https://posit-dev.github.io/great-tables/blog/",
+   "licence": "MIT",
+   "kind": "blog",
+   "status": "planned",
+   "what": "One post per release and one per idea: each a few tables, with the story of why",
+   "pages": [
+    {
+     "title": "Introducing Great Tables",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction_great_tables.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.2.0: Easy Data Coloring",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.2.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.3.0: So Many Style Options!",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.3.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.4.0: Nanoplots and More",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.4.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.12.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.12.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.13.0: Applying styles to all table locations",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.13.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.13.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.15.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
+     "raw": "posit-dev/great-tables/main/docs/blog/introduction-0.18.0/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
+     "port": "port"
+    },
+    {
+     "title": "The Design Philosophy of Great Tables",
+     "raw": "posit-dev/great-tables/main/docs/blog/design-philosophy/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
+     "raw": "posit-dev/great-tables/main/docs/blog/bring-your-own-df/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/bring-your-own-df/",
+     "port": "adapt",
+     "note": "About Python's data frame libraries: the book tells what tabelline reads instead"
+    },
+    {
+     "title": "Great Tables: The Polars DataFrame Styler of Your Dreams",
+     "raw": "posit-dev/great-tables/main/docs/blog/polars-styling/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/polars-styling/",
+     "port": "adapt",
+     "note": "About Polars: the tables are ported, the Polars side is told in Nim"
+    },
+    {
+     "title": "Great Tables: Becoming the Polars .style Property",
+     "raw": "posit-dev/great-tables/main/docs/blog/polars-dot-style/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/polars-dot-style/",
+     "port": "adapt",
+     "note": "About Polars: the tables are ported, the Polars side is told in Nim"
+    },
+    {
+     "title": "Using Polars to Win at Super Bowl Squares",
+     "raw": "posit-dev/great-tables/main/docs/blog/superbowl-squares/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/superbowl-squares/",
+     "port": "port"
+    },
+    {
+     "title": "PyCon 2024: Making Beautiful, Publication Quality Tables is Possible in 2024",
+     "raw": "posit-dev/great-tables/main/docs/blog/pycon-2024-great-tables-are-possible/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/pycon-2024-great-tables-are-possible/",
+     "port": "port"
+    },
+    {
+     "title": "Style Table Body with mask= in loc.body()",
+     "raw": "posit-dev/great-tables/main/docs/blog/locbody-mask/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/locbody-mask/",
+     "port": "port",
+     "found": [
+      "A condition for each cell, loc.body(mask = ...)"
+     ]
+    },
+    {
+     "title": "Recreating Septa Transit Timetables in Python",
+     "raw": "posit-dev/great-tables/main/docs/blog/septa-timetables/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/septa-timetables/",
+     "port": "port"
+    },
+    {
+     "title": "Contributing to Public Transit Data Analysis and Tooling",
+     "raw": "posit-dev/great-tables/main/docs/blog/open-transit-tools/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/open-transit-tools/",
+     "port": "port"
+    },
+    {
+     "title": "Rendering images anywhere in Great Tables",
+     "raw": "posit-dev/great-tables/main/docs/blog/rendering-images/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/rendering-images/",
+     "port": "port"
+    },
+    {
+     "title": "Adding Plots to Great Tables",
+     "raw": "posit-dev/great-tables/main/docs/blog/plots-in-tables/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/plots-in-tables/",
+     "port": "adapt",
+     "note": "The plots come from plotnine and ggplot: in Nim, from a Nim plotting library"
+    },
+    {
+     "title": "Great Tables for Scientific Publishing",
+     "raw": "posit-dev/great-tables/main/docs/blog/tables-for-scientific-publishing/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables: Generating LaTeX Output for PDF",
+     "raw": "posit-dev/great-tables/main/docs/blog/latex-output-tables/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
+     "port": "port"
+    },
+    {
+     "title": "Great Tables + marimo = Interactive Tables",
+     "raw": "posit-dev/great-tables/main/docs/blog/marimo-and-great-tables/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/marimo-and-great-tables/",
+     "port": "adapt",
+     "note": "About marimo: for when tabelline runs in Python notebooks"
+    },
+    {
+     "title": "How We Used Great Tables to Supercharge Reporting in Pointblank",
+     "raw": "posit-dev/great-tables/main/docs/blog/pointblank-intro/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/blog/pointblank-intro/",
+     "port": "adapt",
+     "note": "About Pointblank's reports: the tables are ported"
+    }
+   ]
+  },
+  {
+   "id": "gt-examples",
+   "title": "Great Tables examples",
+   "by": "The Great Tables contributors (Posit)",
+   "url": "https://posit-dev.github.io/great-tables/examples/",
+   "licence": "MIT",
+   "kind": "examples",
+   "status": "planned",
+   "what": "A gallery of finished tables, each with its code",
+   "pages": [
+    {
+     "title": "Examples",
+     "raw": "posit-dev/great-tables/main/docs/examples/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/examples/",
+     "port": "port"
+    },
+    {
+     "title": "Sports earnings",
+     "raw": "posit-dev/great-tables/main/docs/examples/sports-earnings/index.ipynb",
+     "url": "https://posit-dev.github.io/great-tables/examples/sports-earnings/",
+     "port": "port"
+    },
+    {
+     "title": "Gini coefficient (with gt-extras)",
+     "raw": "posit-dev/great-tables/main/docs/examples/gt-extras-gini/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/examples/gt-extras-gini/",
+     "port": "port"
+    }
+   ]
+  },
+  {
+   "id": "r-gt-vignettes",
+   "title": "gt: case studies and articles",
+   "by": "Richard Iannone and the gt authors (Posit)",
+   "url": "https://gt.rstudio.com/articles/",
+   "licence": "MIT",
+   "kind": "case study",
+   "status": "planned",
+   "what": "Long tables built step by step: cars, clinical trials, summary lines, gt's datasets",
+   "pages": [
+    {
+     "title": "Case Study: gtcars",
+     "raw": "rstudio/gt/master/vignettes/case-study-gtcars.Rmd",
+     "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
+     "port": "port"
+    },
+    {
+     "title": "Case Study: Clinical Tables",
+     "raw": "rstudio/gt/master/vignettes/case-study-clinical-tables.Rmd",
+     "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
+     "port": "port"
+    },
+    {
+     "title": "Creating Summary Lines",
+     "raw": "rstudio/gt/master/vignettes/creating-summary-lines.Rmd",
+     "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
+     "port": "port"
+    },
+    {
+     "title": "gt Datasets",
+     "raw": "rstudio/gt/master/vignettes/gt-datasets.Rmd",
+     "url": "https://gt.rstudio.com/articles/gt-datasets.html",
+     "port": "port"
+    },
+    {
+     "title": "gt interactive tables",
+     "raw": "rstudio/gt/master/vignettes/gt-interactive.qmd",
+     "url": "https://gt.rstudio.com/articles/gt-interactive.html",
+     "port": "adapt",
+     "note": "Interactive tables are tabellone, a later idea"
+    }
+   ]
+  },
+  {
+   "id": "gt-extras-py",
+   "title": "gt-extras",
+   "by": "Jules Walzer-Goldfeld and the gt-extras contributors",
+   "url": "https://posit-dev.github.io/gt-extras/",
+   "licence": "MIT",
+   "kind": "extension",
+   "status": "planned",
+   "what": "Plots, icons and themes in cells, for Great Tables",
+   "pages": [
+    {
+     "title": "Examples With Code",
+     "raw": "posit-dev/gt-extras/main/docs/examples/with-code.qmd",
+     "url": "https://posit-dev.github.io/gt-extras/examples/with-code.html",
+     "port": "port"
+    }
+   ]
+  },
+  {
+   "id": "r-gtextras",
+   "title": "gtExtras",
+   "by": "Thomas Mock",
+   "url": "https://jthomasmock.github.io/gtExtras/",
+   "licence": "MIT",
+   "kind": "extension",
+   "status": "planned",
+   "what": "The R original of gt-extras: sparklines, bars, themes",
+   "pages": [
+    {
+     "title": "Plotting with gtExtras",
+     "raw": "jthomasmock/gtExtras/master/vignettes/articles/plotting-with-gtExtras.Rmd",
+     "url": "https://jthomasmock.github.io/gtExtras/articles/plotting-with-gtExtras.html",
+     "port": "port"
+    }
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "title": "gt reference examples",
+   "by": "The gt authors (Posit)",
+   "url": "https://gt.rstudio.com/reference/",
+   "licence": "MIT licence",
+   "what": "The examples on the help page of every gt function: ported with each feature as it lands, in the specs"
+  },
+  {
+   "title": "Posit Table Contest",
+   "by": "Each entrant",
+   "url": "https://github.com/rich-iannone/table-contest",
+   "licence": "Per entry; the 2025 repository is CC0-1.0, most earlier entries have no licence (ideas only)",
+   "what": "Tables made to win: the hardest tests, one entry at a time"
+  },
+  {
+   "title": "pandas Styler user guide",
+   "by": "The pandas developers",
+   "url": "https://github.com/pandas-dev/pandas/blob/main/doc/source/user_guide/style.ipynb",
+   "licence": "BSD-3-Clause licence",
+   "what": "Styling a data frame in pandas: the same tables seen from the data frame"
+  },
+  {
+   "title": "gtsummary",
+   "by": "Daniel D. Sjoberg and the gtsummary authors",
+   "url": "https://github.com/ddsjoberg/gtsummary",
+   "licence": "MIT licence",
+   "what": "Summary and regression tables on top of gt: needs statistics, not only tables"
+  },
+  {
+   "title": "reactable",
+   "by": "Greg Lin",
+   "url": "https://github.com/glin/reactable",
+   "licence": "MIT licence",
+   "what": "Interactive tables: for tabellone, the grid idea"
+  }
+ ]
+}

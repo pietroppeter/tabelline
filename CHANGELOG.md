@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Book: the tabelline book, a nimibook in `book/` in the Munari look with the Edo palette (the tokens of `docs/stile.nim`):
+  the Great Tables *Get Started* guide ported page by page (14 pages), each example in 👑 Nim
+  next to the original 🐍 Python and the same in 🏴‍☠️ R with gt, each with its table, *What the port found* (the gaps), and *What the book will port*: every planned source (Great
+  Tables blog and examples, gt's guides and case studies, gt-extras), page by page, with the release
+  that can port it (`book/plan/plan.py`); built
+  incrementally, deployed at `/book/` (#11).
 - **Breaking (before 0.1):** `optQuaderno()` is replaced by `optTokens()`, a preset whose colours
   are CSS variables of the page (`var(--n-9, #1C1C1C)`, …), so a table follows the page's palette (#19).
 - Docs: every page is made of blocks. `docs/stile.nim` holds the palette by roles (six values per
@@ -52,7 +58,6 @@ The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec chang
   the 0.1 port thread).
 - `tableData:` reads dotted names without quotes (`size.mass: [...]`), and quoted names whole.
 - Docs: the devlog post *Designing tabelline 0.1*; the coverage map marks the 24 groups done.
-
 - Docs: a coverage map of tabelline against gt and Great Tables (85 feature groups), with the
   plan for the next releases, as a living document (#8).
 - Fix: `loc.body()` targets the data cells only, not the stub, as in gt (#8).

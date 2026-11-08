@@ -81,13 +81,31 @@ working rules that are easy to miss.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 
+## The book
+
+- The book is `book/`, a nimibook built by `nim r book/bookbuild.nim` into `docs/book/` (see
+  README.md). One theme, the Munari look with the Edo palette (`book/theme/edo.css`); its
+  colours are the same six `--m-*` variables.
+- A ported page keeps the text of the original as it is; everything the book says about
+  tabelline goes in `tabelline "..."` boxes, and every gap found goes to `book/gaps.md` (and to
+  the build thread, or BACKLOG.md).
+- A change to a chapter's Python needs uv (`book/gt/`), and a change to its R needs R with gt:
+  rebuild, then commit `book/gt/outputs/` and `book/gt/outputs-r/`. CI never runs Python or R.
+  The R tab is written for the book (the gt way to make the same table); where gt has no way,
+  pass `""` and the tab says so.
+- When tabelline gains a feature a chapter works around, update the chapter and `book/gaps.md`.
+- The sources the book plans to port are in `book/plan/sources.json`; `python3 book/plan/plan.py`
+  maps each page to the features it calls and writes `book/plan/pages.json` (committed). Rerun it
+  when `docs/coverage/gt.json` changes or a source is added; findings of a port go to `found`.
+
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
 - `python3 tools/preview.py` copies the built pages to `../tabelline-preview` for an artifact
-  (folder links point to index.html). A link to the artifact ending in `#<page>` opens that
-  page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`. Give Pietro
-  the deep link to what changed.
+  (folder links point to index.html), with the book. A link to the artifact ending in `#<page>`
+  opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
+  and for the book `#book-` and the page's path without `.html`, such as
+  `#book-get-started-intro`. Give Pietro the deep link to what changed.
 - When a change is visual, put before and after screenshots (phone width, both looks) in the PR
   description and in the reply to Pietro. To show them in the PR without adding them to `main`,
   commit them, link them by that commit's sha, and remove them in the next commit.

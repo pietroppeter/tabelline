@@ -1,0 +1,161 @@
+/* The look of the tabelline book: nimibook's layout in the Munari look of tabelline's pages
+   (docs/munari.nim), with the Edo palette: the fashion colours of old Tokyo. One theme, no
+   switch. `nim r book/bookbuild.nim` adds this file to the end of nimibook's chrome.css, the
+   last stylesheet every page loads, so it wins over nimibook's own rules.
+
+   The six colours, named by where they go (as in docs/munari.nim):
+     --m-carta      白練 shironeri, white silk      the paper
+     --m-inchiostro 墨 sumi, ink                    text and rules
+     --m-cerchio    江戸紫 edomurasaki, Edo purple  the circle: links, the book's notes
+     --m-quadrato   新橋 shinbashi, Shinbashi blue  the square: strings, the Python tab
+     --m-triangolo  山吹 yamabuki, kerria flower    the triangle: highlights, the source box
+     --m-quarto     萌黄 moegi, fresh sprouts       the fourth: numbers in code
+   Everything else is mixed from them. nimibook sets html to 62.5%, so 1rem is 10px here. */
+@font-face { font-family: "Jost"; src: url("../fonts-edo/jost-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("../fonts-edo/jost-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("../fonts-edo/jost-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+html.light, html.rust, html.coal, html.navy, html.ayu {
+  --m-carta: #FCFAF2;
+  --m-inchiostro: #1C1C1C;
+  --m-cerchio: #77428D;
+  --m-quadrato: #0089A7;
+  --m-triangolo: #FFB11B;
+  --m-quarto: #7BA23F;
+  --m-cerchio-testo: color-mix(in oklab, var(--m-cerchio) 88%, var(--m-inchiostro));
+  --m-quadrato-testo: color-mix(in oklab, var(--m-quadrato) 70%, var(--m-inchiostro));
+  --m-quarto-testo: color-mix(in oklab, var(--m-quarto) 62%, var(--m-inchiostro));
+  --muted: color-mix(in srgb, var(--m-inchiostro) 62%, var(--m-carta));
+  --rule-m: color-mix(in srgb, var(--m-inchiostro) 14%, var(--m-carta));
+  --card: color-mix(in srgb, #FFFFFF 60%, var(--m-carta));
+  --grigio: color-mix(in srgb, var(--m-inchiostro) 6%, var(--m-carta));
+  --text-font: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+
+  --bg: var(--m-carta); --fg: var(--m-inchiostro); --links: var(--m-cerchio-testo);
+  --inline-code-color: var(--m-inchiostro);
+  --sidebar-bg: var(--m-carta); --sidebar-fg: var(--m-inchiostro); --sidebar-active: var(--m-cerchio-testo);
+  --sidebar-non-existant: var(--muted); --sidebar-spacer: var(--rule-m);
+  --scrollbar: var(--muted); --icons: var(--m-inchiostro); --icons-hover: var(--m-cerchio);
+  --theme-popup-bg: var(--card); --theme-popup-border: var(--m-inchiostro); --theme-hover: var(--grigio);
+  --quote-bg: transparent; --quote-border: var(--m-triangolo);
+  --table-border-color: var(--rule-m); --table-header-bg: var(--grigio); --table-alternate-bg: transparent;
+  --searchbar-bg: var(--card); --searchbar-fg: var(--m-inchiostro); --searchbar-border-color: var(--m-inchiostro);
+  --searchresults-header-fg: var(--muted); --searchresults-border-color: var(--rule-m);
+  --searchresults-li-bg: var(--grigio);
+  --search-mark-bg: color-mix(in srgb, var(--m-triangolo) 55%, var(--m-carta));
+  --content-max-width: 76rem;
+  color-scheme: light;
+}
+html { font-family: var(--text-font); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { font-size: 1.8rem; line-height: 1.6; }
+
+/* sidebar and menu bar: flat paper, a black rule; the theme menu is gone (one theme) */
+.sidebar { font: 400 1.55rem/1.4 var(--text-font); border-right: 2px solid var(--m-inchiostro); }
+.chapter li.chapter-item { line-height: 1.35; }
+.chapter li a.active { font-weight: 700; }
+.chapter li.part-title { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 1.15rem; color: var(--m-cerchio-testo); }
+.chapter li strong { color: var(--muted); font-weight: 400; }
+#theme-toggle, #theme-list { display: none !important; }
+.menu-bar, .menu-bar.bordered { border-bottom: 2px solid var(--m-inchiostro) !important; }
+.menu-title { font: 700 1.6rem/var(--menu-bar-height) var(--text-font); letter-spacing: .16em; text-transform: uppercase; }
+.nav-chapters { color: var(--m-inchiostro); }
+.nav-chapters:hover { background: color-mix(in srgb, var(--m-triangolo) 40%, transparent); color: var(--m-inchiostro); }
+
+/* type: one sans, big and plain; the circle before every section heading (one marker: shapes
+   mean something, and the triangle is kept for warnings) */
+.content main { line-height: 1.6; }
+.content h1, .content h2, .content h3, .content h4 { font-family: var(--text-font); font-weight: 700; color: var(--m-inchiostro);
+  letter-spacing: -.015em; line-height: 1.12; text-wrap: balance; }
+.content h1 { font-size: clamp(3.4rem, 7vw, 4.8rem); margin: 2rem 0 1.4rem; letter-spacing: -.03em; }
+.content h2 { font-size: 2.8rem; margin: 4rem 0 1rem; position: relative; padding-left: 3.4rem; }
+.content h2::before { content: ""; position: absolute; left: 0; top: .18em; width: 2.2rem; height: 2.2rem;
+  background: var(--m-cerchio); border-radius: 50%; }
+.content h3 { font-size: 2.1rem; margin-top: 2.8rem; color: var(--m-cerchio-testo); }
+.content p, .content li { max-width: 68ch; }
+.content a, .content a:link, .content a:visited { color: var(--m-inchiostro); text-decoration: underline;
+  text-decoration-color: var(--m-cerchio); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.content a:hover { background: color-mix(in srgb, var(--m-triangolo) 55%, transparent); }
+.content .header:link, .content .header:visited { color: var(--m-inchiostro); text-decoration: none; }
+.content img { max-width: 100%; border: 2px solid var(--m-inchiostro); }
+blockquote { border-left: 6px solid var(--m-triangolo); border-top: 0; border-bottom: 0; margin: 1.5rem 0; padding: .2rem 1.6rem; }
+
+/* code: a white sheet with a black edge; outputs on grey paper. Code is smaller than text. */
+code, pre, pre code, .hljs { font-family: var(--mono) !important; font-variant-ligatures: none; }
+:not(pre) > code { font-size: .84em; background: var(--grigio); padding: .1em .3em; border-radius: 0; color: var(--m-inchiostro); }
+.content pre { margin: 1.2rem 0 0; position: relative; }
+body .content pre > code, body .content pre > code.hljs { display: block; background: var(--card); color: var(--m-inchiostro);
+  border: 2px solid var(--m-inchiostro); border-radius: 0; padding: 1.2rem 1.4rem; font-size: 1.3rem; line-height: 1.55;
+  overflow-x: auto; }
+.content pre.nb-output { background: var(--grigio); border: 2px solid var(--m-inchiostro); border-top: 0; margin: 0;
+  padding: 1rem 1.4rem; font: 1.25rem/1.45 var(--mono); color: var(--m-inchiostro); white-space: pre; overflow-x: auto; }
+.content pre.tb-error { color: var(--m-cerchio-testo); }
+.content .hljs-keyword, .content .hljs-built_in { color: var(--m-cerchio-testo); font-weight: 700; }
+.content .hljs-string { color: var(--m-quadrato-testo); }
+.content .hljs-number, .content .hljs-literal { color: var(--m-quarto-testo); }
+.content .hljs-comment { color: var(--muted); font-style: italic; }
+.content .hljs-type { color: var(--m-inchiostro); font-weight: 700; }
+.content .hljs-meta, .content .hljs-operator, .content .hljs-punctuation { color: var(--m-inchiostro); }
+
+/* Markdown tables (not the tables the examples make) */
+.content table:not(.gt_table):not(.tb_table) { border-collapse: collapse; margin: 1.5rem 0; font-size: 1.5rem; line-height: 1.45;
+  border-top: 3px solid var(--m-inchiostro); border-bottom: 3px solid var(--m-inchiostro); display: block; overflow-x: auto;
+  width: max-content; max-width: 100%; }
+.content table:not(.gt_table):not(.tb_table) td, .content table:not(.gt_table):not(.tb_table) th { padding: .5rem .9rem; border: 0;
+  border-bottom: 1px solid var(--rule-m); text-align: left; }
+.content table:not(.gt_table):not(.tb_table) thead { background: transparent; }
+.content table:not(.gt_table):not(.tb_table) thead th { font-weight: 700; border-bottom: 2px solid var(--m-inchiostro); }
+
+/* the tables of the examples: each library's own CSS, with nimibook's generic table rules undone */
+.content .tabella, .gt-output { background: var(--card); border: 2px solid var(--m-inchiostro); border-top: 0; padding: 1.4rem 1rem;
+  overflow-x: auto; }
+.content .tabella table tr, .gt-output table tr { background: transparent; }
+.content .tabella table, .gt-output table { margin-left: auto; margin-right: auto; }
+.gt-output > div { padding-top: 0 !important; padding-bottom: 0 !important; }
+.gt-output table.dataframe { border-collapse: collapse; font: 1.3rem/1.4 var(--mono); }
+.gt-output table.dataframe td, .gt-output table.dataframe th { padding: .3rem .8rem; border: 0; border-bottom: 1px solid var(--rule-m); text-align: right; }
+.gt-output table.dataframe thead { background: transparent; }
+
+/* 👑 Nim / 🐍 Python / 🏴‍☠️ R tabs: one flat sheet each, the chosen one with a coloured edge */
+.tb-tabs { margin: 2rem 0 2.4rem; }
+.tb-tablist { display: flex; gap: 0; }
+.tb-tab { font: 700 1.2rem/1 var(--text-font); letter-spacing: .14em; text-transform: uppercase; padding: .8rem 1.4rem;
+  cursor: pointer; border: 2px solid var(--m-inchiostro); border-bottom: 0; background: transparent; color: var(--m-inchiostro); }
+.tb-tab + .tb-tab { border-left: 0; }
+.tb-tab[aria-selected="true"] { background: var(--m-inchiostro); color: var(--m-carta); }
+.tb-tab[data-lang="python"][aria-selected="true"] { background: var(--m-quadrato-testo); }
+.tb-tab[data-lang="r"][aria-selected="true"] { background: var(--m-quarto-testo); }
+.tb-no-r { font-style: italic; margin: 1rem 0; }
+.tb-tab:focus-visible { outline: 3px solid var(--m-triangolo); outline-offset: 2px; }
+.tb-panel > pre:first-child, .tb-panel > :first-child { margin-top: 0; }
+.tb-panel[hidden] { display: none !important; }
+
+/* the book's own remarks, and the attribution: flat coloured paper, its colour along the top edge */
+.tb-note { margin: 1.8rem 0; padding: 1rem 1.6rem 1.1rem; background: color-mix(in srgb, var(--m-cerchio) 12%, var(--m-carta));
+  border-top: 5px solid var(--m-cerchio); }
+.tb-note > p.tb-note-label { margin: 0 0 .3rem; font: 700 1.15rem/1.4 var(--text-font); letter-spacing: .16em;
+  text-transform: uppercase; color: var(--m-cerchio-testo); }
+.tb-note > :last-child { margin-bottom: 0; }
+.tb-note p, .tb-note li { font-size: .95em; }
+.tb-note pre > code { font-size: 1.25rem; }
+
+/* "Show source": the page's own nimib source, folded at the end */
+details.tb-source { margin: 4rem 0 1rem; }
+details.tb-source summary { cursor: pointer; width: max-content; font: 700 1.2rem/1 var(--text-font); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--m-inchiostro); padding: .8rem 1.2rem; border: 2px solid var(--m-inchiostro);
+  background: transparent; list-style: none; }
+details.tb-source summary::-webkit-details-marker { display: none; }
+details.tb-source summary::before { content: "Show source"; }
+details.tb-source[open] summary::before { content: "Hide source"; }
+details.tb-source[open] summary { background: var(--m-inchiostro); color: var(--m-carta); }
+details.tb-source .tb-source-link { font-size: 1.4rem; color: var(--muted); margin: 1rem 0 0; }
+.tb-foot { margin-top: 3rem; padding-top: 1rem; border-top: 2px solid var(--m-inchiostro); font-size: 1.4rem; color: var(--muted); }
+.tb-foot .motto { display: block; font: 700 1.8rem/1.3 var(--text-font); color: var(--m-inchiostro); margin: 0 0 .4rem; }
+
+/* the six premade styles side by side (Premade Themes), small */
+/* small tables side by side (sideBySide in tabbook.nim): as many as fit, one on a phone */
+.tb-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr)); gap: 0 2rem; align-items: start; margin: 2rem 0 2.4rem; }
+.tb-side > .tb-tabs { margin: 0 0 1.6rem; min-width: 0; }
+.tb-styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr)); gap: 1.6rem; }
+.tb-styles table { zoom: 60%; }
+.gt-output .tb-styles > div > div, .tb-panel .tb-styles > div > div { font-weight: 700; }
