@@ -12,9 +12,12 @@ listed by hand that is no longer there is reported. The pages listed in sources.
 the ones the book has something to say about (a title, `port`, a `note`, gaps `found`); a page
 found and not listed gets `port: "triage"` until someone reads it.
 
-Two kinds of source:
+Three kinds of source:
 - a guide, a blog, a gallery: one page per file (Quarto, R Markdown or a notebook), its code in
   the ```{python} and ```{r} chunks;
+- a contest: one page per entry, a whole repository (`find.entries`, listed by hand with year,
+  author, package and licence), its code read from every R, Python, R Markdown, Quarto and
+  notebook file but the README; `gtsave` does not count, it only shares the table;
 - a reference: the examples on the help page of every function. For gt, the `Examples` section
   of each `man/*.Rd`; for Great Tables, the `Examples` section of the docstring of every name in
   the API reference (`docs/_quarto.yml`), found by following the imports in `great_tables/`.
@@ -41,10 +44,13 @@ NEW = "new"  # a gap the coverage map does not have yet
 ORDER = RELEASES + [NEW, LATER]
 
 # gt-extras and gtExtras functions: plots, icons and themes in cells, planned with nanoplots.
-EXTRAS = re.compile(r"\b(?:gte\.)?(gt_plt_\w+|gt_theme_\w+|gt_color_\w+|gt_fa_\w+|gt_highlight_\w+|"
+EXTRAS = re.compile(r"\bgte\.\w+|\b(?:gte\.)?(gt_plt_\w+|gt_theme_\w+|gt_color_\w+|gt_fa_\w+|gt_highlight_\w+|"
                     r"gt_hulk_\w+|gt_merge_stack|gt_add_divider|gt_img_\w+|gt_sparkline|gt_\w+_rating|"
                     r"fa_icon_repeat|fmt_pct_extra|fmt_pill|add_text_img|img_header)\s*\(")
 EXTRAS_FEATURE = ("Plots, icons and themes from gt-extras", "0.4")
+# Tables made with another package than gt: interactive ones (reactable, DT) wait for tabellone.
+OTHER = re.compile(r"\b(reactable|reactablefmtr|datatable|DT::datatable|flextable|kable)\s*\(")
+OTHER_FEATURE = "Interactive tables"
 
 
 # ---------------------------------------------------------------- the coverage map
@@ -82,6 +88,7 @@ ALIAS = {"fill": "cell_fill", "text": "cell_text", "borders": "cell_borders"}
 
 
 def calls(code):
+    code = re.sub(r"(?m)^\s*#.*$", "", code)  # code commented out is not called
     out = collections.Counter()
     for m in re.finditer(r"(?:\b(loc|style|vals)\.)?\b([a-z_][a-z0-9_]*)\s*\(", code):
         ns, name = m.groups()
@@ -119,8 +126,9 @@ def listing(repo, ref, offline):
     if not offline:
         if not os.path.exists(d):
             os.makedirs(os.path.dirname(d), exist_ok=True)
+            branch = ["--branch", ref] if ref != "HEAD" else []  # HEAD: the default branch
             subprocess.run(["git", "clone", "-q", "--depth", "1", "--filter=blob:none", "--no-checkout",
-                            "--branch", ref, f"https://github.com/{repo}", d], check=True)
+                            *branch, f"https://github.com/{repo}", d], check=True)
         else:
             git("fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", ref)
             git("update-ref", "HEAD", "FETCH_HEAD")
@@ -320,7 +328,31 @@ def py_pages(find, commit, files, offline):
 
 # ---------------------------------------------------------------- the search
 
-KINDS = {"pages": guide_pages, "rd": rd_pages, "quartodoc": py_pages}
+# ---------------------------------------------------------------- whole repositories (Table Contest entries)
+
+CODE = re.compile(r"\.(R|r|py)$")
+CHUNKS = re.compile(r"\.(Rmd|rmd|qmd|ipynb)$")
+
+
+def repo_pages(find, commit, files, offline):
+    """One page per repository: an entry with all its code. `find.entries` lists them; `listing`
+    and `read` are called again for each entry's own repository."""
+    for e in find["entries"]:
+        c, fs = listing(e["repo"], e.get("ref", "HEAD"), offline)
+        code = []
+        for f in fs:
+            if os.path.basename(f).lower().startswith("readme"):
+                continue  # how the repository presents itself, not the entry
+            if CODE.search(f):
+                code.append(read(e["repo"], c, f, offline))
+            elif CHUNKS.search(f):
+                code.append(code_of(f, read(e["repo"], c, f, offline)))
+        # saving the table as a picture (gtsave) is how it was shared, not what the table needs
+        code = re.sub(r"\bgtsave\s*\(", "saved(", "\n".join(code))
+        yield e["repo"], e["title"], e.get("url", "https://github.com/" + e["repo"]), code
+
+
+KINDS = {"pages": guide_pages, "rd": rd_pages, "quartodoc": py_pages, "repos": repo_pages}
 
 
 def main(offline):
@@ -334,11 +366,17 @@ def main(offline):
         pages = []
         for path, title, url, code in KINDS[find.get("kind", "pages")](find, commit, files, offline):
             hand = listed.pop(path, None)
+            if find.get("kind") == "repos":  # an entry is listed by hand, with what the book says
+                hand = next(e for e in find["entries"] if e["repo"] == path)
             needs, uses = collections.defaultdict(set), set()
             n = calls(code)
             for name in n:
                 i = lookup(name, exact, prefix)
                 if i is not None:
+                    needs[plan_of(rows[i])].add(rows[i]["feature"])
+                    uses.add(i)
+            for name, i in exact.items():  # a function passed by name: map(x, ggplot_image, ...)
+                if "_" in name and re.search(r"[(,]\s*(?:gt::)?" + name + r"\s*[,)]", code):
                     needs[plan_of(rows[i])].add(rows[i]["feature"])
                     uses.add(i)
             for name, i in args.items():
@@ -347,13 +385,18 @@ def main(offline):
                     uses.add(i)
             if EXTRAS.search(code):
                 needs[EXTRAS_FEATURE[1]].add(EXTRAS_FEATURE[0])
+            if OTHER.search(code):
+                i = next(i for i, r in enumerate(rows) if r["feature"] == OTHER_FEATURE)
+                needs[plan_of(rows[i])].add(OTHER_FEATURE)
+                uses.add(i)
             for f in (hand or {}).get("found", []):  # gaps the map does not have, found by reading the page
                 needs[NEW].add(f)
             ready = max((r for r in needs), key=ORDER.index, default="0.1")
-            port = hand["port"] if hand else ("port" if s["kind"] == "reference" else "triage")
+            port = hand.get("port", "port") if hand else ("port" if s["kind"] == "reference" else "triage")
             if not hand and s["kind"] != "reference":
                 report.append(f"  new page in {s['id']}: {path} ({title})")
             page = {"title": (hand or {}).get("title", title), "path": path,
+                    **{k: hand[k] for k in ("year", "by", "licence", "package") if hand and k in hand},
                     "url": (hand or {}).get("url", url), "port": port,
                     "note": (hand or {}).get("note", ""), "ready": ready,
                     "calls": sum(n.values()),

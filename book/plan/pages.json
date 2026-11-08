@@ -52,7 +52,7 @@
     "port": "port",
     "note": "",
     "ready": "0.1",
-    "calls": 12,
+    "calls": 11,
     "needs": {},
     "uses": [
      "A table from data",
@@ -148,7 +148,7 @@
     "port": "skip",
     "note": "About extending Great Tables in Python",
     "ready": "0.1",
-    "calls": 23,
+    "calls": 22,
     "needs": {},
     "uses": [
      "Any format",
@@ -187,7 +187,7 @@
     "port": "port",
     "note": "",
     "ready": "0.1",
-    "calls": 61,
+    "calls": 59,
     "needs": {},
     "uses": [
      "A table from data",
@@ -256,7 +256,7 @@
     "port": "port",
     "note": "",
     "ready": "0.2",
-    "calls": 19,
+    "calls": 20,
     "needs": {
      "0.2": [
       "Summary rows",
@@ -359,7 +359,7 @@
     "port": "port",
     "note": "",
     "ready": "0.1",
-    "calls": 64,
+    "calls": 58,
     "needs": {},
     "uses": [
      "A table from data",
@@ -651,8 +651,11 @@
     "port": "port",
     "note": "",
     "ready": "0.3",
-    "calls": 59,
+    "calls": 58,
     "needs": {
+     "0.2": [
+      "Body styles from a column"
+     ],
      "0.3": [
       "Currency",
       "Dates",
@@ -661,6 +664,7 @@
     },
     "uses": [
      "A table from data",
+     "Body styles from a column",
      "Column selectors",
      "Currency",
      "Dates",
@@ -731,7 +735,7 @@
     "port": "port",
     "note": "",
     "ready": "new",
-    "calls": 32,
+    "calls": 31,
     "needs": {
      "new": [
       "A condition for each cell, loc.body(mask = ...)"
@@ -810,7 +814,7 @@
     "port": "adapt",
     "note": "About Polars: the tables are ported, the Polars side is told in Nim",
     "ready": "0.1",
-    "calls": 5,
+    "calls": 4,
     "needs": {},
     "uses": [
      "A table from data"
@@ -875,7 +879,7 @@
     "port": "port",
     "note": "",
     "ready": "0.2",
-    "calls": 132,
+    "calls": 131,
     "needs": {
      "0.2": [
       "Table options"
@@ -910,7 +914,7 @@
     "port": "port",
     "note": "",
     "ready": "0.1",
-    "calls": 127,
+    "calls": 121,
     "needs": {},
     "uses": [
      "A table from data",
@@ -972,7 +976,7 @@
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 70,
+    "calls": 68,
     "needs": {
      "0.4": [
       "Plots, icons and themes from gt-extras"
@@ -999,7 +1003,7 @@
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 110,
+    "calls": 109,
     "needs": {
      "0.2": [
       "Table options"
@@ -1043,7 +1047,7 @@
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 28,
+    "calls": 26,
     "needs": {
      "0.4": [
       "Images"
@@ -1117,7 +1121,7 @@
     "port": "port",
     "note": "",
     "ready": "0.3",
-    "calls": 135,
+    "calls": 128,
     "needs": {
      "0.2": [
       "Merge columns"
@@ -1153,7 +1157,7 @@
     "port": "port",
     "note": "",
     "ready": "0.3",
-    "calls": 113,
+    "calls": 99,
     "needs": {
      "0.2": [
       "Extract",
@@ -1254,7 +1258,7 @@
     "port": "skip",
     "note": "gt's tests of its renderers side by side, not a guide",
     "ready": "later",
-    "calls": 64,
+    "calls": 63,
     "needs": {
      "0.2": [
       "Stub indent, multi-column stub",
@@ -1298,9 +1302,13 @@
     "url": "https://posit-dev.github.io/gt-extras/articles/intro.html",
     "port": "port",
     "note": "",
-    "ready": "0.1",
-    "calls": 17,
-    "needs": {},
+    "ready": "0.4",
+    "calls": 16,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
     "uses": [
      "A table from data",
      "Align",
@@ -1338,7 +1346,7 @@
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 288,
+    "calls": 285,
     "needs": {
      "0.4": [
       "Images",
@@ -1407,6 +1415,682 @@
      "Row groups",
      "Sizes",
      "Table options",
+     "Title and subtitle",
+     "Widths"
+    ]
+   }
+  ]
+ },
+ "table-contest": {
+  "commit": "11671756672e1c5e73442b51dd2c5373097779b7",
+  "pages": [
+   {
+    "title": "Spending on Education in the US",
+    "path": "committedtotape/education-spending",
+    "year": 2020,
+    "by": "David Smale",
+    "package": "gt",
+    "url": "https://github.com/committedtotape/education-spending",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 292,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "A 3-way crosstab table with gt",
+    "path": "jdjohn215/2020-RStudio-Table-Contest",
+    "year": 2020,
+    "by": "John D. Johnson",
+    "package": "gt",
+    "url": "https://github.com/jdjohn215/2020-RStudio-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.3",
+    "calls": 263,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Spanners from column names",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "An interactive table of the world",
+    "path": "gkaramanis/table-contest",
+    "year": 2020,
+    "by": "Georgios Karamanis",
+    "licence": "MIT",
+    "package": "reactable",
+    "url": "https://github.com/gkaramanis/table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 68,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "The world's most prestigious wines",
+    "path": "AbdoulMa/RStudio-Table-Contest-2021",
+    "year": 2021,
+    "by": "Abdoul Madjid",
+    "package": "gt",
+    "url": "https://github.com/AbdoulMa/RStudio-Table-Contest-2021",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 530,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Locales"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Air quality summaries with gt and openair (tutorial)",
+    "path": "jack-davison/rstudio_table-contest_2021",
+    "year": 2021,
+    "by": "Jack Davison",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/jack-davison/rstudio_table-contest_2021",
+    "port": "port",
+    "note": "Honourable mention. No licence: an idea only",
+    "ready": "0.4",
+    "calls": 919,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Premier League standings 2021",
+    "path": "ggapac/PL-table-shiny",
+    "year": 2021,
+    "by": "Greta Gašparac",
+    "package": "reactable, Shiny",
+    "url": "https://github.com/ggapac/PL-table-shiny",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 216,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Fast big data tables in Shiny (tutorial)",
+    "path": "rszymanski/table-contest",
+    "year": 2021,
+    "by": "Ryszard Szymański",
+    "package": "reactable, Shiny",
+    "url": "https://github.com/rszymanski/table-contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 529,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "W.E.B. Du Bois's charts redone as tables",
+    "path": "jack-davison/rstudio_table-contest_2022",
+    "year": 2022,
+    "by": "Jack Davison",
+    "licence": "MIT",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/jack-davison/rstudio_table-contest_2022",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 1007,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Footnotes",
+     "Formats for single values",
+     "HTML",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Lemurs at Duke Lemur Center",
+    "path": "nrennie/2022-table-contest",
+    "year": 2022,
+    "by": "Nicola Rennie",
+    "licence": "CC BY 4.0",
+    "package": "gt",
+    "url": "https://github.com/nrennie/2022-table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 182,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Creating beautiful tables in R with gt (tutorial)",
+    "path": "AlbertRapp/gt_book",
+    "year": 2022,
+    "by": "Albert Rapp",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/AlbertRapp/gt_book",
+    "port": "port",
+    "note": "Honourable mention. No licence: an idea only",
+    "ready": "later",
+    "calls": 2563,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates",
+      "Locales"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Extra CSS",
+     "Footnotes",
+     "HTML",
+     "Images",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Small, large and given values",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table info",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Top 20 golfers: Scottie Scheffler's 2024",
+    "path": "steodose/Table-Contest-2024",
+    "year": 2024,
+    "by": "Stephan Teodosescu",
+    "package": "Great Tables",
+    "url": "https://github.com/steodose/Table-Contest-2024",
+    "port": "port",
+    "note": "A 2024 winner. No licence: an idea only",
+    "ready": "0.4",
+    "calls": 80,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Images",
+     "Labels",
+     "Numbers and integers",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Carbon intensity of electricity",
+    "path": "chalg/posit_table_contest_2024",
+    "year": 2024,
+    "by": "Grant Chalmers",
+    "package": "gt",
+    "url": "https://github.com/chalg/posit_table_contest_2024",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.2",
+    "calls": 52,
+    "needs": {
+     "0.2": [
+      "Align on the decimal mark",
+      "Body styles from a column",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Align on the decimal mark",
+     "Body styles from a column",
+     "Colour by value",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Scottish football, season by season",
+    "path": "dplloyd/posit-table-comp-2024",
+    "year": 2024,
+    "by": "Diarmuid Lloyd",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/dplloyd/posit-table-comp-2024",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 169,
+    "needs": {
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Source notes",
+     "Spanners",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Gibraltar's weather, May 2023 (the example entry)",
+    "path": "rich-iannone/table-contest-example-entry",
+    "year": 2025,
+    "by": "Rich Iannone",
+    "licence": "CC0-1.0",
+    "package": "Great Tables, gt-extras",
+    "url": "https://github.com/rich-iannone/table-contest-example-entry",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 48,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any CSS",
+     "Locations",
+     "Padding, outline, lines",
+     "Source notes",
+     "Styles",
+     "Text helpers",
+     "Times and datetimes",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Multiple sequence alignments with gt",
+    "path": "wvictor14/2025-posit-table-contest-gt-msa",
+    "year": 2025,
+    "by": "Victor Yuan",
+    "package": "gt",
+    "url": "https://github.com/wvictor14/2025-posit-table-contest-gt-msa",
+    "port": "port",
+    "note": "Best gt table of 2025. No licence: an idea only",
+    "ready": "0.2",
+    "calls": 1103,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Markdown",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Sustainable milk comparison",
+    "path": "PablaOO7/Posit-Table-Contest-2025",
+    "year": 2025,
+    "by": "PablaOO7",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/PablaOO7/Posit-Table-Contest-2025",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 318,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Extra CSS",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "S&P 500 monitoring dashboard",
+    "path": "ozancanozdemir/2025-Posit-Table-Contest",
+    "year": 2025,
+    "by": "Ozancan Özdemir",
+    "package": "gt, Shiny",
+    "url": "https://github.com/ozancanozdemir/2025-Posit-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 1111,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "gt tables for scientific projects (tutorial)",
+    "path": "emaleckova/2025-Table-Contest",
+    "year": 2025,
+    "by": "E. Malečková",
+    "package": "gt",
+    "url": "https://github.com/emaleckova/2025-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 715,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
      "Title and subtitle",
      "Widths"
     ]
@@ -5149,11 +5833,16 @@
     "url": "https://gt.rstudio.com/reference/ggplot_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.1",
+    "ready": "0.4",
     "calls": 13,
-    "needs": {},
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
     "uses": [
      "A table from data",
+     "Images",
      "Locations",
      "Sizes",
      "Text transforms"

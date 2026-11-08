@@ -11,7 +11,9 @@ ones that can be ported now, then the ones that wait for a release. The
 
 How the pages are found: each source says where its pages are, a GitHub repository and the
 paths of its pages, and `book/plan/plan.py` lists the repository, so a page added there shows
-up here (marked *To triage* until someone reads it), and a page that is gone is reported.
+up here (marked *To triage* until someone reads it), and a page that is gone is reported. The
+Table Contest entries are listed by hand, one repository each, and their code is read whole;
+saving the table as a picture (`gtsave`) does not count.
 
 How it is measured: `book/plan/plan.py` reads each page's code, finds the gt and Great Tables
 functions it calls, and looks each one up in the

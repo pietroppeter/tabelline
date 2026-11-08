@@ -486,6 +486,169 @@
    ]
   },
   {
+   "id": "table-contest",
+   "title": "Posit Table Contest entries",
+   "by": "Each entrant",
+   "url": "https://github.com/rich-iannone/table-contest",
+   "licence": "per entry",
+   "kind": "contest",
+   "lang": "R and Python",
+   "status": "planned",
+   "what": "Tables made to win, one entry at a time, from 2020 to 2025: the ones whose code is on GitHub. Most have no licence, so they are ideas to redo, not code to port; the 2025 entries are GitHub Discussions, read here only when they link a repository",
+   "find": {
+    "kind": "repos",
+    "repo": "rich-iannone/table-contest",
+    "ref": "main",
+    "entries": [
+     {
+      "repo": "committedtotape/education-spending",
+      "year": 2020,
+      "title": "Spending on Education in the US",
+      "by": "David Smale",
+      "package": "gt",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "jdjohn215/2020-RStudio-Table-Contest",
+      "year": 2020,
+      "title": "A 3-way crosstab table with gt",
+      "by": "John D. Johnson",
+      "package": "gt",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "gkaramanis/table-contest",
+      "year": 2020,
+      "title": "An interactive table of the world",
+      "by": "Georgios Karamanis",
+      "package": "reactable",
+      "licence": "MIT"
+     },
+     {
+      "repo": "AbdoulMa/RStudio-Table-Contest-2021",
+      "year": 2021,
+      "title": "The world's most prestigious wines",
+      "by": "Abdoul Madjid",
+      "package": "gt",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "jack-davison/rstudio_table-contest_2021",
+      "year": 2021,
+      "title": "Air quality summaries with gt and openair (tutorial)",
+      "by": "Jack Davison",
+      "package": "gt, gtExtras",
+      "note": "Honourable mention. No licence: an idea only"
+     },
+     {
+      "repo": "ggapac/PL-table-shiny",
+      "year": 2021,
+      "title": "Premier League standings 2021",
+      "by": "Greta Gašparac",
+      "package": "reactable, Shiny",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "rszymanski/table-contest",
+      "year": 2021,
+      "title": "Fast big data tables in Shiny (tutorial)",
+      "by": "Ryszard Szymański",
+      "package": "reactable, Shiny",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "jack-davison/rstudio_table-contest_2022",
+      "year": 2022,
+      "title": "W.E.B. Du Bois's charts redone as tables",
+      "by": "Jack Davison",
+      "package": "gt, gtExtras",
+      "licence": "MIT"
+     },
+     {
+      "repo": "nrennie/2022-table-contest",
+      "year": 2022,
+      "title": "Lemurs at Duke Lemur Center",
+      "by": "Nicola Rennie",
+      "package": "gt",
+      "licence": "CC BY 4.0"
+     },
+     {
+      "repo": "AlbertRapp/gt_book",
+      "year": 2022,
+      "title": "Creating beautiful tables in R with gt (tutorial)",
+      "by": "Albert Rapp",
+      "package": "gt, gtExtras",
+      "note": "Honourable mention. No licence: an idea only"
+     },
+     {
+      "repo": "steodose/Table-Contest-2024",
+      "year": 2024,
+      "title": "Top 20 golfers: Scottie Scheffler's 2024",
+      "by": "Stephan Teodosescu",
+      "package": "Great Tables",
+      "note": "A 2024 winner. No licence: an idea only"
+     },
+     {
+      "repo": "chalg/posit_table_contest_2024",
+      "year": 2024,
+      "title": "Carbon intensity of electricity",
+      "by": "Grant Chalmers",
+      "package": "gt",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "dplloyd/posit-table-comp-2024",
+      "year": 2024,
+      "title": "Scottish football, season by season",
+      "by": "Diarmuid Lloyd",
+      "package": "gt, gtExtras",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "rich-iannone/table-contest-example-entry",
+      "year": 2025,
+      "title": "Gibraltar's weather, May 2023 (the example entry)",
+      "by": "Rich Iannone",
+      "package": "Great Tables, gt-extras",
+      "licence": "CC0-1.0"
+     },
+     {
+      "repo": "wvictor14/2025-posit-table-contest-gt-msa",
+      "year": 2025,
+      "title": "Multiple sequence alignments with gt",
+      "by": "Victor Yuan",
+      "package": "gt",
+      "note": "Best gt table of 2025. No licence: an idea only"
+     },
+     {
+      "repo": "PablaOO7/Posit-Table-Contest-2025",
+      "year": 2025,
+      "title": "Sustainable milk comparison",
+      "by": "PablaOO7",
+      "package": "gt, gtExtras",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "ozancanozdemir/2025-Posit-Table-Contest",
+      "year": 2025,
+      "title": "S&P 500 monitoring dashboard",
+      "by": "Ozancan Özdemir",
+      "package": "gt, Shiny",
+      "note": "No licence: an idea only"
+     },
+     {
+      "repo": "emaleckova/2025-Table-Contest",
+      "year": 2025,
+      "title": "gt tables for scientific projects (tutorial)",
+      "by": "E. Malečková",
+      "package": "gt",
+      "note": "No licence: an idea only"
+     }
+    ]
+   },
+   "pages": []
+  },
+  {
    "id": "gt-reference",
    "title": "Great Tables API reference examples",
    "by": "Rich Iannone, Michael Chow and the Great Tables contributors (Posit)",
@@ -533,13 +696,6 @@
   }
  ],
  "candidates": [
-  {
-   "title": "Posit Table Contest",
-   "by": "Each entrant",
-   "url": "https://github.com/rich-iannone/table-contest",
-   "licence": "Per entry; the 2025 repository is CC0-1.0, most earlier entries have no licence (ideas only)",
-   "what": "Tables made to win: the hardest tests, one entry at a time"
-  },
   {
    "title": "pandas Styler user guide",
    "by": "The pandas developers",

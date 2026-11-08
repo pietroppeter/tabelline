@@ -84,6 +84,9 @@ proc pagesTable*(id: string, ported = false): Tabella =
       if p["needs"].hasKey(r):
         needs.add "*" & whenLabel(r).capitalizeAscii & ":* " & p["needs"][r].getElems.mapIt(it.getStr).join(", ")
     var page = mdLink(p["title"].getStr, p["url"].getStr)
+    if p.hasKey("year"):  # a contest entry: when, who, with what, and its licence
+      page.add "<br>*" & $p["year"].getInt & ", " & p["by"].getStr & ", " & p["package"].getStr &
+        (if p.hasKey("licence"): ", " & p["licence"].getStr else: "") & "*"
     if p["note"].getStr != "": page.add "<br>" & p["note"].getStr
     var ready = whenLabel(p["ready"].getStr).capitalizeAscii
     if p["port"].getStr == "skip": ready = "Left out"
@@ -158,7 +161,10 @@ proc featuresTable*(shown = 3): Tabella =
         (if ps.len == 1: "1 page" else: $ps.len & " pages") & "*"
       let ex = ps[0 ..< min(shown, ps.len)].mapIt(
         mdLink(it.page["title"].getStr.replace("()", "").removePrefix2("GT."), it.page["url"].getStr) &
-          " " & (if it.lang == "R": "🏴‍☠️" else: "🐍"))
+          " " & (case it.lang
+                 of "R": "🏴‍☠️"
+                 of "Python": "🐍"
+                 else: "🏆"))
       rows.add FeatureRow(area: a["title"].getStr, feature: feature, examples: ex.join("<br>"))
   tabella(rows, rownameCol = "", groupnameCol = "area"):
     colsLabel {"feature": "Feature", "examples": "Where to start"}
