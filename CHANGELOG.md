@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: the Great Explainer explains where a table goes (text, Markdown, HTML, none of it
+  needing nimib) before the first table step by step, and then `nbTable`, from the one module
+  that imports nimib (#33).
 - Docs: a new section, *Stories*: real subjects told in tables made with tabelline, one for every
   release, kept up to date (`docs/stories/`). *Milano Cortina 2026* moves there from the devlog,
   with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
