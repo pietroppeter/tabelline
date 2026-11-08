@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: The Great Explainer's first table builds *la tavola pitagorica* from scratch, with
+  `collect` from `std/sugar` and a `for` loop, before using it; `tavolaPitagorica(n)` is
+  introduced later, as the same data ready made (#PR).
 - Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
   quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
   (#24).
