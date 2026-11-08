@@ -19,6 +19,15 @@ const metal = @["#FCFAF2", "#F7D94C"]         # paper to rapeseed yellow
 
 proc link(path, label: string): string = &"[{label}]({post(path)})"
 
+proc medal(s: string): string =
+  ## "gold" as "🥇 Gold": the medal's emoji, then its name.
+  let emoji = case s.toLowerAscii
+    of "gold": "🥇"
+    of "silver": "🥈"
+    of "bronze": "🥉"
+    else: ""
+  (if emoji.len > 0: emoji & " " else: "") & s.capitalizeAscii
+
 nbRawHtml: """<style>
 .affiancate { display: flex; flex-wrap: wrap; gap: 0 1rem; justify-content: center; align-items: flex-start; }
 .affiancate > .tabella { flex: 0 1 auto; }
@@ -99,9 +108,9 @@ nbShowCode:
     n: int
     part, questions: string
   let rows = @[
-    PartRow(n: 1, part: "The Games", questions: "Where were they? Who won? How was Italy?"),
-    PartRow(n: 2, part: "The money", questions: "What did a seat cost? What is a medal worth? What did the works cost?"),
-    PartRow(n: 3, part: "What stays", questions: "Snow, buildings, and what came after"),
+    PartRow(n: 1, part: "🏅 The Games", questions: "Where were they? Who won? How was Italy?"),
+    PartRow(n: 2, part: "💶 The money", questions: "What did a seat cost? What is a medal worth? What did the works cost?"),
+    PartRow(n: 3, part: "🏔️ What stays", questions: "Snow, buildings, and what came after"),
   ]
   let t = tabella(rows, rownameCol = "n"):
     fmtIndex "n"
@@ -188,7 +197,7 @@ medals = pl.read_csv("docs/devlog/data/milano-cortina/medals.tsv",
     .tab_header("Medal table", "Milano Cortina 2026, top ten")
     .cols_hide("rank")
     .fmt_flag("code")
-    .cols_label(code="")
+    .cols_label(code="", gold="🥇", silver="🥈", bronze="🥉")
     .tab_spanner("medals", columns=["gold", "silver", "bronze"])
     .data_color(["gold", "silver", "bronze"], palette=["#FCFAF2", "#F7D94C"])
     .tab_style(style.text(weight="bold"), loc.body(columns="total")))
@@ -200,7 +209,7 @@ gt(head(medals, 10), rowname_col = "team") |>
   tab_header("Medal table", "Milano Cortina 2026, top ten") |>
   cols_hide(rank) |>
   fmt_flag(code) |>
-  cols_label(code = "") |>
+  cols_label(code = "", gold = "🥇", silver = "🥈", bronze = "🥉") |>
   tab_spanner("medals", columns = c(gold, silver, bronze)) |>
   data_color(c(gold, silver, bronze), palette = c("#FCFAF2", "#F7D94C")) |>
   tab_style(cell_text(weight = "bold"), cells_body(columns = total))
@@ -211,7 +220,7 @@ gt(head(medals, 10), rowname_col = "team") |>
       tabHeader "Medal table", "Milano Cortina 2026, top ten"
       colsHide "rank"
       fmtFlag "code"
-      colsLabel {"code": ""}
+      colsLabel {"code": "", "gold": "🥇", "silver": "🥈", "bronze": "🥉"}
       tabSpanner "medals", ["gold", "silver", "bronze"]
       dataColor ["gold", "silver", "bronze"], palette = @["#FCFAF2", "#F7D94C"]
       tabStyle style.text(weight = "bold"), loc.body(cols("total"))
@@ -237,7 +246,7 @@ nbShowCode:
     result = tabella(medals, rownameCol = "team"):
       tabHeader (if byTotal: "Total first" else: "Golds first")
       colsHide ["rank", "code"]
-      colsLabel {"gold": "G", "silver": "S", "bronze": "B", "total": "all"}
+      colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉", "total": "all"}
       rowOrder order, reverse = true
       tabStyle style.text(weight = "bold"), loc.body(cols(if byTotal: "total" else: "gold"))
       tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
@@ -266,7 +275,7 @@ nbShowCode:
   let t = tabella(h, rownameCol = "year"):
     tabHeader "Italy at the Winter Games", "since Lillehammer 1994, the old record"
     colsHide ["gold", "silver", "bronze"]
-    colsLabel {"host": "", "athletes": "athletes", "total": "medals", "rank": "rank"}
+    colsLabel {"host": "", "athletes": "athletes", "total": "🏅", "rank": "rank"}
     fmtBar "total", color = bar, width = "3.5em"
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
     tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
@@ -292,7 +301,7 @@ nbShowCode:
     tabHeader "Italy's thirty medals"
     colsLabel {"date": "", "sport": "sport", "event": "event", "athletes": "who"}
     fmtDate "date", dateStyle = "d MMM"
-    textTransform(proc (s: string): string = s.capitalizeAscii, loc.rowGroups())
+    textTransform(medal, loc.rowGroups())
     tabStyle style.css("white-space: nowrap"), loc.body(cols("date"))
     tabStyle style.text(size = "12px"), loc.body(cols("athletes"))
     tabSourceNote md("Wikipedia, [Italy at the 2026 Winter Olympics § Medalists](https://en.wikipedia.org/wiki/Italy_at_the_2026_Winter_Olympics).")
@@ -316,7 +325,7 @@ nbShowCode:
       tabHeader title
       colsHide ["rank", "silver", "bronze"]
       fmtFlag "code"
-      colsLabel {"code": "", "gold": "gold", "total": "all"}
+      colsLabel {"code": "", "gold": "🥇", "total": "all"}
       colsMoveToEnd "code"
       tabStyle style.fill("#F7D94C"), loc.body(rows = where(it["team"] == "Italy"))
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
@@ -397,7 +406,7 @@ nbShowCode:
     tabHeader "What a medal pays", "to the athlete, from their country's committee"
     colsHide "currency"
     fmtFlag "code"
-    colsLabel {"code": ""}
+    colsLabel {"code": "", "gold": "🥇", "silver": "🥈", "bronze": "🥉"}
     colsMoveToEnd "code"
     fmtCurrency ["gold", "silver", "bronze"], currency = "EUR", decimals = 0,
       rows = where(it["currency"] == "EUR")
@@ -429,7 +438,8 @@ nbShowCode:
     subZero ["grams"], zeroText = "—"
     subZero ["goldGrams"], zeroText = "none"
     subZero ["euro"], zeroText = "a few euros"
-    textTransform(proc (s: string): string = s.capitalizeAscii, loc.stub())
+    textTransform(medal, loc.stub())
+    tabStyle style.css("white-space: nowrap"), loc.stub()
     tabSourceNote md(&"Il Post, {link(prizesSource, \"23 February 2026\")}, at February's prices; the silver medal's weight is not given.")
   nbTable t
 
