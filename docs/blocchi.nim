@@ -277,7 +277,7 @@ newNbBlock(NbCard of NbContainer):
       &"""<span class="titolo">{title}</span>""" & nbContainerToHtml(blk, nb) & "</div>"
 
 template nbCards*(what: string, body: untyped) =
-  ## A grid of cards (`nbCard`), such as the living documents on the home page.
+  ## A grid of cards (`nbCard`), such as the pages on the home page.
   let cards = newNbCards(label = what)
   nb.withContainer(cards):
     body

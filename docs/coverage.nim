@@ -1,5 +1,5 @@
-## The gt coverage map, docs/coverage/index.html: every feature group of gt (R) and Great Tables
-## (Python), where tabelline stands, and the release that plans the rest. A living page, not a
+## The feature map (gt coverage), docs/coverage/index.html: every feature group of gt (R) and Great Tables
+## (Python), where tabelline stands, and the release that plans the rest. Kept up to date, not a
 ## dated post: the data is docs/coverage/gt.json, updated in the PR that changes a status (and
 ## in each release PR). The tables on the page are tabelline tables.
 import std/[os, json, strutils, strformat, sequtils, tables]
@@ -11,8 +11,8 @@ let docs = currentSourcePath().parentDir
 let data = parseFile(docs / "coverage" / "gt.json")
 nbInit
 nb.doc.filename = docs / "coverage" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Coverage", classe = "living document",
-               title = "tabelline and gt: coverage map", homeHref = "../",
+nb.useTabelline(nome = "tabelline", materia = "Feature map", classe = "kept up to date",
+               title = "tabelline and gt: feature map", homeHref = "../",
                description = "Every feature group of gt and Great Tables, what tabelline has, and the plan for the rest.")
 
 const labels = {"done": "has it", "partial": "partly", "missing": "missing", "no": "not planned"}.toTable
@@ -29,7 +29,7 @@ for a in data["areas"]:
 let total = items.len
 func count(xs: seq[Item], s: string): int = xs.countIt(it.status == s)
 
-nbTitolo &"""Living document · updated {data["updated"].getStr}""", "tabelline and gt: the coverage map", &"""
+nbTitolo &"""Feature map · updated {data["updated"].getStr}""", "tabelline and gt: the feature map", &"""
 Every feature group of gt and Great Tables, whether tabelline has it, and the release that plans the rest.
 """
 nbText: &"""
