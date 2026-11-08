@@ -53,7 +53,8 @@ and the rest from Wikipedia (and the air from NOAA). The words are this post's o
 nbNota("""
 Green cards like this one are about the code. Under every table, **show code** opens the Nim
 that made it, and a green card says which tabelline verbs do the work, and why. The
-rest of the text is about the Games: skip the green cards to read only the story.
+rest of the text is about the Games: skip the green cards to read only the story. One table,
+the medal table, is also shown in Python and in R, to compare.
 """, nkCode, "Reading the code")
 
 nbIndice()
@@ -276,8 +277,7 @@ for men and one for women.
 
 The medal table is the table everyone looks at, and the one the Olympic Charter says does not
 exist: the Games are "competitions between athletes, not between countries". Here is its top ten
-as Wikipedia gives it, in the three languages of tabelline's pages: Nim with tabelline, Python
-with Great Tables, R with gt.
+as Wikipedia gives it:
 """
 
 nbTabs(python = &"""
@@ -320,6 +320,12 @@ gt(head(medals, 10), rowname_col = "team") |>
       tabStyle style.text(weight = "bold"), loc.body(cols("total"))
       tabOptions(tableFontSize = "14px")
   nbTable t
+
+nbNota("""
+This is the only table of the post shown in three languages: Nim with tabelline, Python with
+Great Tables, R with gt. It is the table everyone knows, so it is the one to compare, verb by
+verb. The [Book](../../book/) does the same for every example of the gt and Great Tables guides.
+""", nkCode, "Three languages, once")
 
 nbNota("""
 `readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
