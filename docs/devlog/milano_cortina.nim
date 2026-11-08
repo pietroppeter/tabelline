@@ -257,8 +257,12 @@ gt(head(medals, 10), rowname_col = "team") |>
 nbText: """
 `readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
-emoji, so nothing is loaded. `dataColor` shades each medal column on its own, from the page's
-paper to yellow (with tabelline 0.1 each column has its own range, as in gt).
+emoji, so nothing is loaded. `dataColor` shades each medal column on its own (with tabelline 0.1
+each column has its own range, as in gt), along `metal`, a palette of two colours defined at the
+top of the page: the paper and the yellow of the Munari look (`haru.paper` and `haru.warning`,
+from `docs/stile.nim`). They are written as values, not as the page's CSS variables, because
+`dataColor` mixes the colours itself while building the table, so the shading stays the same in
+the quaderno look. The blue scales below (`soft`) are made the same way, from Munari's blue.
 
 But a table of medals can be read two ways, Il Post explains: golds first, as the IOC (and Il
 Post, and China) do, or total first, as the United States do. At Milano Cortina Norway is first
