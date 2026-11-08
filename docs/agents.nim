@@ -52,7 +52,7 @@ block:
     tabHeader "The commands"
     colsLabel {"does": "what it does"}
     fmtMarkdown "does"
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """

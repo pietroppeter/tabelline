@@ -47,7 +47,7 @@ block:
     colsLabel {"design": "🔨 Designing Nanuq 0.x", "explainer": "🧭 the explainer"}
     fmtMarkdown "explainer"
     tabSourceNote md("Alongside, the 📚 Nanuq Book ported the Polars user guide, *Polars: The Definitive Guide*, *Modern Polars*, a Polars cookbook, Real Python tutorials and three benchmarks (1BRC, PDS-H, db-benchmark), each chapter with its source and licence.")
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -70,7 +70,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """
@@ -145,7 +145,7 @@ block:
     colsLabel {"build": "🔨 build", "use": "🧭 use it on", "port": "📚 port"}
     fmtMarkdown "release"
     colsWidth {"build": "40%"}
-    optTokens()
+    optPageTheme()
   nbTable t
 
 nbText: """

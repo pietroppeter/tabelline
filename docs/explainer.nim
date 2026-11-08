@@ -29,7 +29,7 @@ nbCode:
     dataColor everything(), palette = palette("quaderno"), domain = (1.0, 100.0)
     tabStyle style.text(weight = "bold", color = "var(--primary-text)"), loc.stub(), loc.columnLabels()
     tabSourceNote md("Every cell is `row × column`. The squares are on the diagonal.")
-    optTokens()
+    optPageTheme()
     colsAlign alCenter
 nbTable pitagora
 
@@ -413,12 +413,12 @@ nbCode:
 nbTable t
 
 nbText: """
-Step 5: the same table with `optTokens()`, the preset of these pages: its colours are the page's
-own (CSS variables such as `--n-9` for the ink), so it follows the look you pick at the top. Next
-to it, `optStylize`:
+Step 5: the same table with `optPageTheme()`, the preset of these pages: its colours are the page's
+own, so it follows the look you pick at the top ([Tables that follow the page](#tables-that-follow-the-page)
+explains it). Next to it, `optStylize`:
 """
 nbCode:
-  nbTable t.optTokens()
+  nbTable t.optPageTheme()
   nbTable t.optStylize(style = 2, color = "gray").tabOptions(headingAlign = "left", tableFontSize = "14px")
 
 nbText: """
@@ -432,7 +432,7 @@ let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "typ
   tabSpanner "Size", ["mass", "diameter"]
   fmtNumber "mass", decimals = 3, dropTrailingZeros = true
   dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
-  optTokens()
+  optPageTheme()
 ```
 
 ## A tour of the formats
@@ -526,7 +526,7 @@ nbCode:
     tabStubhead "×"
     for i in 1 .. 6:
       tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
-    optTokens()
+    optPageTheme()
 nbTable squares
 
 nbText: """
@@ -545,10 +545,118 @@ nbTable t
 nbSave
 ```
 
-Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme. (This
-page has two looks, *Munari* and *quaderno*, both in `docs/stile.nim`; tables made with
-`optTokens()` take their colours from the look.) And because `echo` draws
-a text table, a table printed in `nbCode` shows up in the output, as above.
+Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme, unless
+you ask it to take the theme's colours, which is the next section. And because `echo` draws a
+text table, a table printed in `nbCode` shows up in the output, as above.
+
+## Tables that follow the page
+
+Every table on these pages ends with `optPageTheme()`. It is the one verb here that gt and Great
+Tables do not have.
+
+### One line
+
+Here is a small table twice: on the left as it comes, on the right with `optPageTheme()` added.
+Switch the look at the top of the page (Munari or quaderno): the right one changes with the page,
+the left one stays as it is.
+"""
+nbCode:
+  let moons = tableData:
+    planet: ["Mercury", "Earth", "Jupiter", "Saturn"]
+    kind: ["rocky", "rocky", "giant", "giant"]
+    moons: [0, 1, 95, 146]
+  let small = tabella(moons, rownameCol = "planet", groupnameCol = "kind"):
+    tabHeader "Moons"
+nbAccanto:
+  nbTable small
+  nbTable small.optPageTheme()
+
+nbText: """
+### A preset of colours that are not colours
+
+In gt, every colour option takes any CSS colour: a name, `#1C1C1C`, and also `var(--ink)`, a CSS
+variable, whose value the browser looks up on the page when it draws the table. `optPageTheme()`
+is a preset, like gt's `opt_stylize()`, but where `opt_stylize()` fills the options with fixed
+colours, it fills them with the page's variables. In R you could write the same by hand, one
+option at a time: `tab_options(table.font.color = "var(--n-9)", ...)`.
+
+These are the variables it reads, here in the look you picked:
+"""
+nbTinte [("--n-9", "`--n-9`, the ink", "the text, the rules above and below, the rule under the column labels"),
+         ("--n-3", "`--n-3`, a light grey", "the rules between rows"),
+         ("--n-1", "`--n-1`, a lighter grey", "the row groups, and the stripes when rows are striped"),
+         ("--surface", "`--surface`, the sheet", "behind the table"),
+         ("--primary", "`--primary`, the first colour", "the rule under the heading")]
+nbText: """
+and `--text`, the page's font. Each comes with a fallback, `var(--n-9, #1C1C1C)`: on a page that
+does not define them, the table is black and grey on white, a plain table, never a broken one.
+
+### Changing one colour
+
+A preset only fills options, so any option set after it wins. Here the rule under the heading is
+the second colour, and the rules above and below are thinner:
+"""
+nbCode:
+  nbTable small.optPageTheme().tabOptions(headingBorderBottomColor = "var(--secondary)",
+    tableBorderTopWidth = "1px", tableBorderBottomWidth = "1px")
+
+nbText: """
+### On your own page
+
+Give the variables a value in your page's CSS, once, and every table made with `optPageTheme()`
+takes it; change them, and every table changes:
+
+```css
+:root {
+  --n-9: #102A43;  --n-3: #BCCCDC;  --n-1: #F0F4F8;
+  --surface: white;  --primary: #D64545;
+  --text: "Inter", system-ui, sans-serif;
+}
+```
+
+The names are the ones of these pages. A page whose theme has other names can map them
+(`--n-9: var(--my-ink)`).
+
+### How it is built
+
+**The preset** is a proc that sets fourteen options, as `opt_stylize()` does in gt. This is its
+code, read from `src/tabelline/verbs.nim` when this page was built:
+"""
+block:
+  let verbs = readFile(root.parentDir / "src" / "tabelline" / "verbs.nim")
+  let a = verbs.find("proc optPageTheme*")
+  let b = verbs.find("\n\n", a)
+  nbText "```nim\n" & verbs[a ..< b] & "\n```"
+
+nbText: """
+**The table's CSS.** Every table carries its own CSS, scoped to its id, and writes the value
+of each option as it is. So the variables reach the browser untouched; these are the declarations
+that name them, in the CSS of the table on the right above:
+"""
+nbCode:
+  var seen: seq[string]
+  for declaration in small.optPageTheme().toHtml.split({'{', '}', ';'}):
+    let d = declaration.strip
+    if "var(--" in d and d notin seen:
+      seen.add d
+      echo d
+
+nbText: """
+**The page's variables.** On these pages they are not written one by one. `docs/stile.nim` gives
+each look six values (paper, ink, primary, secondary, warning, success), and mixes every other
+colour from them in the browser: `--n-0` (the paper) to `--n-9` (the ink) are the ink in the
+paper, step by step, and `--surface` is the paper with white. For Munari's palette, Haru:
+"""
+nbCode:
+  for line in paletteCss(haru).splitLines:
+    if line.startsWith("--paper") or line.startsWith("--n-1:") or line.startsWith("--n-3:") or
+       line.startsWith("--n-9:") or line.startsWith("--surface"):
+      echo line
+
+nbText: """
+**The switch.** The look you pick sets `data-tema` on the page's `<html>`; Munari's six values
+replace the quaderno's, the browser works out every variable again, and every table follows. The
+tables were made once, when the page was built: nothing runs on them when the look changes.
 
 ## What comes next
 

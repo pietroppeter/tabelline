@@ -45,7 +45,7 @@ proc sourcesTable*(): Tabella =
   tabella(rows, rownameCol = "", groupnameCol = ""):
     colsLabel {"source": "Source", "pages": "Pages", "ready": "Can be ported"}
     fmtMarkdown ["source", "ready"]
-    optTokens()
+    optPageTheme()
 
 type CandidateRow = object
   source, what: string
@@ -58,7 +58,7 @@ proc candidatesTable*(): Tabella =
   tabella(rows, rownameCol = "", groupnameCol = ""):
     colsLabel {"source": "Source", "what": "What it has"}
     fmtMarkdown ["source"]
-    optTokens()
+    optPageTheme()
 
 type PageRow = object
   page, ready, needs: string
@@ -85,4 +85,4 @@ proc pagesTable*(id: string, ported = false): Tabella =
   tabella(rows, rownameCol = "", groupnameCol = ""):
     colsLabel {"page": "Page", "ready": "Can be ported", "needs": "What it waits for"}
     fmtMarkdown ["page", "needs"]
-    optTokens()
+    optPageTheme()

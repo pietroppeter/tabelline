@@ -59,7 +59,7 @@ block:  # the table only, not its code
     colsWidth {"work": "36%"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "year")
     tabSourceNote md("Dates from [Wikipedia](https://it.wikipedia.org/wiki/Bruno_Munari) (Italian and English). The useless machines date from the early 1930s. Munari won the Compasso d'Oro, Italy's design prize, in 1954, 1955 and 1979, and for his whole career in 1995.")
-    optTokens()
+    optPageTheme()
   nbTable worksTable
 
 nbText: """
@@ -97,7 +97,7 @@ block:  # the table only, not its code
     tabHeader "One page, two looks", "what each part of a page becomes"
     colsLabel {"quaderno": "quaderno", "munari": "Munari (default)"}
     colsWidth {"quaderno": "40%", "munari": "45%"}
-    optTokens()
+    optPageTheme()
   nbTable lookTable
 
 nbNota("""

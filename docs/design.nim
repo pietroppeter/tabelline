@@ -198,7 +198,7 @@ nbShowCode:
 nbText: """
 ## Tables
 
-A tabelline table is placed with `nbTable` and takes `optTokens()`: its colours are the tokens,
+A tabelline table is placed with `nbTable` and takes `optPageTheme()`: its colours are the tokens,
 so it follows the look (Munari: an ink rule above and below, the primary under the heading; the
 quaderno: taped in, on squared paper). `nbShowCode` shows a table with its code folded under it,
 and `nbParti` adds a switch that shows the parts of the table in their colours.
@@ -210,7 +210,7 @@ nbShowCode:
   let t = tabella(tre, rownameCol = "tabellina"):
     tabHeader "Three tabelline"
     fmtBar "risultato", color = "var(--secondary)", width = "4em"
-    optTokens()
+    optPageTheme()
   nbParti t
 
 nbText: """
@@ -293,7 +293,7 @@ highlights code fences. A few lines of script in the `<head>` set `data-tema` on
 the page is drawn (from `?tema=`, else `localStorage`, else `munari`); one script at the end makes
 the switch, the tabs, *Show the parts* and the specs filter work.
 
-**Tables.** `optTokens()` is a tabelline preset whose colours are the tokens, each with a plain
+**Tables.** `optPageTheme()` is a tabelline preset whose colours are the tokens, each with a plain
 fallback (`var(--n-9, #1C1C1C)`), so a table follows the page it is on.
 """
 nbSave

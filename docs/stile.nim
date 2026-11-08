@@ -16,7 +16,7 @@
 ## Two looks are in every page: Munari (the default, scoped by `html[data-tema="munari"]`) and the
 ## quaderno (an Italian school exercise book). Fonts are inlined, so a page is one standalone file.
 ## No other module of the docs writes CSS or a colour: pages use the blocks of `blocchi.nim`, and
-## tables take tabelline's `optTokens()`, whose colours are these tokens.
+## tables take tabelline's `optPageTheme()`, whose colours are these tokens.
 
 import std/[os, strformat, strutils, base64]
 
@@ -388,7 +388,7 @@ html[data-tema="munari"] .hljs-number, html[data-tema="munari"] .hljs-literal { 
 html[data-tema="munari"] .hljs-type { color: var(--n-9); font-weight: 700; }
 html[data-tema="munari"] .hljs-built_in { color: var(--primary-text); }
 
-/* tables: no tape, no squares; the rules come from optTokens(), from the tokens */
+/* tables: no tape, no squares; the rules come from optPageTheme(), from the tokens */
 html[data-tema="munari"] .tabella { box-shadow: none; border-radius: 0; padding: 16px 0 10px; background: transparent; }
 html[data-tema="munari"] .tabella::before { content: none; display: none; }
 html[data-tema="munari"] .tabella .tb_table { background-image: none; }

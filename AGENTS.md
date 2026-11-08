@@ -54,7 +54,7 @@ working rules that are easy to miss.
   `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
   `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
-  `optTokens()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
+  `optPageTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
 - The home page shows the simplest example and links the living documents in this order: The
@@ -86,7 +86,7 @@ working rules that are easy to miss.
 - The book is `book/`, a nimibook built by `nim r book/bookbuild.nim` into `docs/book/` (see
   README.md). One theme, the Munari look with the Edo palette: the tokens of `docs/stile.nim` in
   the values `edo`, written by the build before `book/theme/edo.css`, which names no colour of
-  its own. Its own tables (the sources) take `optTokens()`; the ported examples keep the colours
+  its own. Its own tables (the sources) take `optPageTheme()`; the ported examples keep the colours
   of the guide. Chapters are written with `book/tabbook.nim`'s blocks (`tabs`, `tabelline`,
   `sideBySide`), not with HTML.
 - A ported page keeps the text of the original as it is; everything the book says about
