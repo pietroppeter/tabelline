@@ -295,7 +295,9 @@ body details.codice pre > code { font-size: 12.5px; }
 /* parts of a long page (nbParte): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--n-7); }
 .parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
-.parte ~ .parte-primary ~ h2 { --part: var(--primary); }   /* a later primary part takes the circles back */
+/* a later part wins over an earlier one, whatever its colour: one more class for the second part on */
+.parte ~ .parte-primary ~ h2 { --part: var(--primary); } .parte ~ .parte-secondary ~ h2 { --part: var(--secondary); }
+.parte ~ .parte-success ~ h2 { --part: var(--success); }
 
 /* the specs page (nbSpecs): each capability folds open; examples carry a pass stamp */
 details.spec { background: var(--n-1); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }

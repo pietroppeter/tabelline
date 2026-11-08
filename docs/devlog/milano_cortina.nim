@@ -156,7 +156,7 @@ nbNota("""
 `fmtIndex` writes 1, 2, 3 as A, B, C, so the parts below are A, B and C.
 """, nkCode)
 
-nbParte 1, "", prPrimary
+nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
 nbText: """
 ## A · The Games
 
@@ -521,7 +521,6 @@ The table could say more about media (Rai Sport's director left after his commen
 a check mark is what the reader came for.
 """
 
-nbParte 2, "", prSecondary
 nbText: """
 ## B · The money
 
@@ -700,7 +699,6 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(santaGiuliaSource, \"5 May 2026\")}; the Court of Auditors is investigating.")
   nbTable t
 
-nbParte 3, "", prSuccess   # no label: the heading names the part, the circles take its colour
 nbText: """
 ## C · What stays
 
@@ -873,7 +871,7 @@ The last row is in the future: the cable car of Socrepes, built on a landslide t
 works in 2025, is due to open on 8 December, a month from today.
 """
 
-nbParte 4, "", prPrimary
+nbParte 2, "", prSecondary   # the closing sections: the articles and the code
 nbText: """
 ## The articles
 
