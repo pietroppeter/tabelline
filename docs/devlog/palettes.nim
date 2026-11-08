@@ -246,7 +246,7 @@ block:
     tabHeader "Munari's three shapes", "a small book for each"
     fmtMarkdown "book"
     tabSourceNote "Black rules above and below, the top one starting in the circle colour; group headings in a tint of the triangle."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -290,7 +290,7 @@ block:  # the table only, not its code
     tabHeader "One page, part by part", "the Munari look"
     colsLabel {"typeface": "type", "colour": "colour", "swatch": ""}
     colsWidth {"swatch": "1.6em", "typeface": "30%"}
-    optPageTheme()
+    optCssTheme()
   for i, x in parts:   # the swatch is the first colour the row names
     var first = (x.colour.len, "")
     for (k, v) in swatchOf:
@@ -341,7 +341,7 @@ block:  # the table only, not its code
     fmtNumber "contrast", decimals = 1
     colsWidth {"swatch": "1.6em"}
     tabSourceNote md("Contrast ratio after WCAG 2: 4.5 is enough for small text, 3 for large. As text, the page mixes a little ink into the circle, square and fourth colours, so they read better than these numbers say.")
-    optPageTheme()
+    optCssTheme()
   for i, r in rows:
     t = t.tabStyle(style.fill(r.hex), loc.body(cols = "swatch", rows = [i]))
   nbTable t

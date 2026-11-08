@@ -5,7 +5,9 @@
 ## in the browser (`color-mix(in oklab, ...)`), so a palette is six values and a reader can try
 ## another one on the page:
 ##
-## - a neutral scale `--n-0` (the paper) to `--n-9` (the ink), and `--surface`, a whiter sheet;
+## - the neutrals, ink mixed into paper: `--shade` (outputs, plain notes, row groups), `--line`
+##   (rules), `--muted` (grey text), the whole scale `--neutral-0` (the paper) to `--neutral-9`
+##   (the ink) for the steps in between, and `--surface`, a whiter sheet;
 ## - for each colour role, the colour (`--primary`, for shapes and edges), a soft version for
 ##   backgrounds (`--primary-soft`) and a text version (`--primary-text`); warning has no text
 ##   version: the warning colour is never text.
@@ -17,7 +19,8 @@
 ## without JavaScript is Munari), and the quaderno (an Italian school exercise book), every rule of
 ## which is scoped by `html[data-tema="quaderno"]`. Fonts are inlined, so a page is one standalone
 ## file. No other module of the docs writes CSS or a colour: pages use the blocks of `blocchi.nim`, and
-## tables take tabelline's `optPageTheme()`, whose colours are these tokens.
+## tables take tabelline's `optCssTheme()`, which reads these tokens by name (`--ink`, `--paper`,
+## `--line`, `--shade`, `--primary`, `--secondary`, `--font`).
 
 import std/[os, strformat, strutils, base64]
 
@@ -64,7 +67,7 @@ const
     ## The book's palette, Edo (the fashion colours of old Tokyo): the book has one look,
     ## Munari, in these six values (`book/theme/edo.css`, `paletteCss(edo)`).
 
-  neutralSteps* = [0, 4, 8, 14, 25, 40, 55, 65, 80, 100]  ## ink in paper, % per step `--n-0`..`--n-9`
+  neutralSteps* = [0, 4, 8, 14, 25, 40, 55, 65, 80, 100]  ## ink in paper, % per step `--neutral-0`..`--neutral-9`
   softShare* = 22   ## % of a colour in paper, for `--x-soft`
   textShare* = 50   ## % of a colour in ink, for `--x-text`
 
@@ -75,7 +78,8 @@ const
 func tokensCss(): string =
   ## The derived tokens, declared once on `html` for both looks.
   for i, s in neutralSteps:
-    result.add &"--n-{i}: color-mix(in oklab, var(--ink) {s}%, var(--paper));\n"
+    result.add &"--neutral-{i}: color-mix(in oklab, var(--ink) {s}%, var(--paper));\n"
+  result.add "--shade: var(--neutral-1); --line: var(--neutral-3); --muted: var(--neutral-7);\n"
   result.add "--surface: color-mix(in oklab, #FFFFFF 60%, var(--paper));\n"
   for role in ["primary", "secondary", "warning", "success"]:
     result.add &"--{role}-soft: color-mix(in oklab, var(--{role}) {softShare}%, var(--paper));\n"
@@ -109,7 +113,7 @@ const tokens =
 const munariCss = """
 html {
   --hand: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
-  --text: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --font: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   /* the quaderno's own motifs, kept here for the dated posts' own CSS */
   --grid: #D9E7F5;          /* the squares */
@@ -121,15 +125,17 @@ html {
   --red-pen: #C62828;       /* corrections, subheadings, stamps */
   --sq: 20px;               /* one square, about 5 mm */
   /* names from before the tokens, for the dated posts' own CSS */
-  --pencil: var(--n-9); --pen: var(--n-9); --pen-red: var(--primary-text); --muted: var(--n-7);
-  --card: var(--surface); --rule: var(--n-3); --carta: var(--n-1);
+  --pencil: var(--ink); --pen: var(--ink); --pen-red: var(--primary-text);
+  --card: var(--surface); --rule: var(--line); --carta: var(--shade);
+  --text: var(--font); --n-0: var(--neutral-0); --n-1: var(--neutral-1); --n-2: var(--neutral-2); --n-3: var(--neutral-3); --n-4: var(--neutral-4);
+  --n-5: var(--neutral-5); --n-6: var(--neutral-6); --n-7: var(--neutral-7); --n-8: var(--neutral-8); --n-9: var(--neutral-9);
   --giallo: var(--warning); --blu: var(--secondary);
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; color: var(--n-9); font: 18px/1.6 var(--text); background-color: var(--paper);
+  margin: 0; color: var(--ink); font: 18px/1.6 var(--font); background-color: var(--paper);
   padding: 0 max(14px, env(safe-area-inset-right, 0px)) 0 max(14px, env(safe-area-inset-left, 0px));
 }
 body > header, body > main, body > footer { max-width: 50rem; margin: 0 auto; position: relative; }
@@ -145,9 +151,9 @@ header { padding-top: .4rem; }
   clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 .etichetta { margin: 2.4rem 0 1.4rem; position: relative; padding: 0 10.5rem 0 0; min-height: 8.5rem; }
 .etichetta .riga span:first-child { display: none; }
-.etichetta .riga span:last-child { font: 400 1.25rem/1.3 var(--text); color: var(--n-9); }
-.etichetta .nome span:last-child { font: 700 3.4rem/1 var(--text); letter-spacing: -.03em; }
-.etichetta .riga:last-child:not(.nome) span:last-child { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--n-7); }
+.etichetta .riga span:last-child { font: 400 1.25rem/1.3 var(--font); color: var(--ink); }
+.etichetta .nome span:last-child { font: 700 3.4rem/1 var(--font); letter-spacing: -.03em; }
+.etichetta .riga:last-child:not(.nome) span:last-child { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 .etichetta .nome a { color: inherit; text-decoration: none; }
 @media (max-width: 560px) {
   .forme { transform: scale(.62); transform-origin: top right; top: 6rem; }
@@ -155,26 +161,26 @@ header { padding-top: .4rem; }
   .etichetta .nome span:last-child { font-size: 2.5rem; }
 }
 .crumbs { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem;
-  font: 700 .74rem/1 var(--text); letter-spacing: .16em; text-transform: uppercase; }
-.crumbs a { color: var(--n-9); text-decoration: none; }
-.lede { font-size: 1.3rem; line-height: 1.45; color: var(--n-9); margin: 0 0 1.2rem; }
-.kicker { font: 700 .74rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); margin: 0; }
+  font: 700 .74rem/1 var(--font); letter-spacing: .16em; text-transform: uppercase; }
+.crumbs a { color: var(--ink); text-decoration: none; }
+.lede { font-size: 1.3rem; line-height: 1.45; color: var(--ink); margin: 0 0 1.2rem; }
+.kicker { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); margin: 0; }
 
 /* type: one sans, big and plain; sections marked by the circle */
-h1, h2, h3, h4 { font-family: var(--text); font-weight: 700; color: var(--n-9); letter-spacing: -.015em; line-height: 1.15; }
+h1, h2, h3, h4 { font-family: var(--font); font-weight: 700; color: var(--ink); letter-spacing: -.015em; line-height: 1.15; }
 h1 { font-size: 2.9rem; line-height: 1.05; margin: 1.5rem 0 .4rem; }
 h2 { font-size: 1.85rem; display: block; padding: 0 0 0 2.4rem; margin: 3rem 0 .9rem; position: relative; scroll-margin-top: 1rem; }
 h2::before { content: ""; position: absolute; left: 0; top: .2em; width: 1.5rem; height: 1.5rem;
   background: var(--part, var(--primary)); border-radius: 50%; }
 h3 { font-size: 1.25rem; color: var(--primary-text); margin: 2rem 0 .5rem; scroll-margin-top: 1rem; }
-h2 .num { color: var(--n-7); margin-right: .35rem; }
-a { color: var(--n-9); text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 2px; }
+h2 .num { color: var(--muted); margin-right: .35rem; }
+a { color: var(--ink); text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 2px; }
 a:hover { background: var(--primary-soft); }
 strong { font-weight: 700; }
 p, li { max-width: 46rem; }
-blockquote { margin: 1.2rem 0; padding: .7rem 1rem; border-left: 6px solid var(--n-4); }
+blockquote { margin: 1.2rem 0; padding: .7rem 1rem; border-left: 6px solid var(--neutral-4); }
 blockquote p { margin: .3rem 0; }
-hr { border: 0; border-top: 2px solid var(--n-9); margin: 2rem 0; }
+hr { border: 0; border-top: 2px solid var(--ink); margin: 2rem 0; }
 mark { background: var(--warning-soft); padding: 0 .15em; }
 img { max-width: 100%; }
 
@@ -182,58 +188,58 @@ img { max-width: 100%; }
 pre { margin: 1rem 0; }
 pre > code, pre.nb-output { display: block; overflow-x: auto; font: 13px/1.55 var(--mono); padding: .8rem 1rem; }
 body pre > code { font-size: 13px; }
-pre > code { background: var(--surface); border: 2px solid var(--n-9); }
-pre.nb-output { background: var(--n-1); border: 0; white-space: pre; color: var(--n-9); }
+pre > code { background: var(--surface); border: 2px solid var(--ink); }
+pre.nb-output { background: var(--shade); border: 0; white-space: pre; color: var(--ink); }
 pre.nb-output::before { content: "output"; display: block; margin-bottom: .1rem;
-  font: 700 .66rem/1.4 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); }
-:not(pre) > code { font: .88em var(--mono); background: var(--n-1); padding: .05em .3em; }
+  font: 700 .66rem/1.4 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); }
+:not(pre) > code { font: .88em var(--mono); background: var(--shade); padding: .05em .3em; }
 .hljs-keyword { color: var(--primary-text); font-weight: 700; } .hljs-string { color: var(--secondary-text); }
 .hljs-number, .hljs-literal { color: var(--success-text); }
-.hljs-comment { color: var(--n-7); font-style: italic; } .hljs-type { color: var(--n-9); font-weight: 700; }
-.hljs-built_in { color: var(--primary-text); } .hljs-meta { color: var(--n-7); }
+.hljs-comment { color: var(--muted); font-style: italic; } .hljs-type { color: var(--ink); font-weight: 700; }
+.hljs-built_in { color: var(--primary-text); } .hljs-meta { color: var(--muted); }
 
-/* tables: no tape, no squares; the rules come from optPageTheme(), from the tokens */
+/* tables: no tape, no squares; the rules come from optCssTheme(), from the tokens */
 .tabella { position: relative; margin: 1.6rem 0 1.8rem; padding: 16px 0 10px; }
 .tabella .tb_title { font-family: var(--hand); font-size: 125%; letter-spacing: -.01em; }
 .tabella td code { overflow-wrap: anywhere; }  /* long names in a cell wrap on a phone */
 main table:not(.tb_table) { border-collapse: collapse; margin: 1rem 0; background: var(--surface); }
-main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid var(--n-3); padding: .35rem .6rem; text-align: left; vertical-align: top; }
+main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid var(--line); padding: .35rem .6rem; text-align: left; vertical-align: top; }
 
 /* the indice: numbers on circles, as the section headings */
 .indice { padding: 1rem 0; margin: 1.4rem 0 2rem; max-width: 36rem;
-  border-top: 3px solid var(--n-9); border-bottom: 3px solid var(--n-9); }
-.indice h2.indice-title { font: 700 .78rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase;
-  color: var(--n-9); padding: 0; margin: 0 0 .9rem; display: block; }
+  border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
+.indice h2.indice-title { font: 700 .78rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink); padding: 0; margin: 0 0 .9rem; display: block; }
 .indice h2.indice-title::before { display: none; }
 .indice ol { margin: 0; }
-.indice > ol { list-style: none; padding: 0; counter-reset: voce; font: 500 1.08rem/1.5 var(--text); }
+.indice > ol { list-style: none; padding: 0; counter-reset: voce; font: 500 1.08rem/1.5 var(--font); }
 .indice > ol > li { counter-increment: voce; position: relative; padding-left: 2.3rem; margin: .35rem 0; }
 .indice > ol > li::before { content: counter(voce); position: absolute; left: 0; top: .1rem; width: 1.5rem; height: 1.5rem;
-  border-radius: 50%; background: var(--primary); color: #fff; font: 700 .78rem/1.5rem var(--text); text-align: center; }
-.indice > ol > li.parte-secondary::before { background: var(--secondary); color: var(--n-9); }
-.indice > ol > li.parte-success::before { background: var(--success); color: var(--n-9); }
-.indice ol ol { font: 400 .95rem/1.45 var(--text); padding-left: 0; margin: .15rem 0 .3rem; list-style: none; }
-.indice ol ol li::before { content: "— "; color: var(--n-7); }
-.indice a { text-decoration-line: none; color: var(--n-9); }
+  border-radius: 50%; background: var(--primary); color: #fff; font: 700 .78rem/1.5rem var(--font); text-align: center; }
+.indice > ol > li.parte-secondary::before { background: var(--secondary); color: var(--ink); }
+.indice > ol > li.parte-success::before { background: var(--success); color: var(--ink); }
+.indice ol ol { font: 400 .95rem/1.45 var(--font); padding-left: 0; margin: .15rem 0 .3rem; list-style: none; }
+.indice ol ol li::before { content: "— "; color: var(--muted); }
+.indice a { text-decoration-line: none; color: var(--ink); }
 .indice a:hover { text-decoration-line: underline; }
 
 /* sheets set apart (notes, cards, gallery cards): flat paper with the square's straight top edge,
    in the colour of their kind; nothing on them to press. A warning carries the triangle. */
-.nota { padding: 1rem 1.2rem; margin: 1.3rem 0; background: var(--n-1); border-top: 5px solid var(--n-9); }
+.nota { padding: 1rem 1.2rem; margin: 1.3rem 0; background: var(--shade); border-top: 5px solid var(--ink); }
 .nota.info { background: var(--secondary-soft); border-top-color: var(--secondary); }
 .nota.done, .nota.code { background: var(--success-soft); border-top-color: var(--success); }
 .nota.missing { background: var(--primary-soft); border-top-color: var(--primary); }
 .nota.warning { background: var(--warning-soft); border-top-color: var(--warning); }
 .nota > :first-child { margin-top: 0; } .nota > :last-child { margin-bottom: 0; }
-.nota .titolo { font: 700 1.1rem var(--text); color: var(--n-9); display: block; }
-.nota .numero { font: 700 .72rem/1.2 var(--text); letter-spacing: .14em; color: var(--n-7); display: block; }
+.nota .titolo { font: 700 1.1rem var(--font); color: var(--ink); display: block; }
+.nota .numero { font: 700 .72rem/1.2 var(--font); letter-spacing: .14em; color: var(--muted); display: block; }
 .nota.warning { position: relative; padding-left: 3.1rem; }
 .nota.warning::before, .nota.warning::after { content: ""; position: absolute; left: 1.1rem; top: 1.1rem; width: 1.4rem; height: 1.25rem;
   clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-.nota.warning::before { background: var(--n-9); }
+.nota.warning::before { background: var(--ink); }
 .nota.warning::after { background: var(--warning); transform: scale(.7); transform-origin: 50% 68%; }
-.timbro { display: inline-block; font: 700 .8rem/1.6 var(--text); letter-spacing: .12em; text-transform: uppercase;
-  color: var(--n-9); border: 2px solid var(--n-9); padding: 0 .5rem; }
+.timbro { display: inline-block; font: 700 .8rem/1.6 var(--font); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink); border: 2px solid var(--ink); padding: 0 .5rem; }
 .timbro.ok { color: var(--success-text); border-color: var(--success); }
 .timbro.ko { background: var(--primary-soft); }
 
@@ -247,8 +253,8 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid v
   padding: .2rem 0 .8rem; counter-reset: nb-scheda; -webkit-overflow-scrolling: touch; }
 .nb-galleria::after { content: ""; flex: 0 0 .2rem; }
 .nb-galleria > .nb-scheda { flex: 0 0 min(84%, 24rem); scroll-snap-align: start; overflow-x: auto; padding: .7rem .9rem .8rem;
-  background: var(--n-1); border: 0; border-top: 5px solid var(--secondary); counter-increment: nb-scheda; }
-.nb-galleria > .nb-scheda::before { content: counter(nb-scheda); display: block; font: 700 .72rem/1.2 var(--text); letter-spacing: .14em; color: var(--n-7); }
+  background: var(--shade); border: 0; border-top: 5px solid var(--secondary); counter-increment: nb-scheda; }
+.nb-galleria > .nb-scheda::before { content: counter(nb-scheda); display: block; font: 700 .72rem/1.2 var(--font); letter-spacing: .14em; color: var(--muted); }
 .nb-galleria > .nb-scheda > h3 { margin: .15rem 0 .4rem; font-size: 1.15rem; }
 .nb-galleria > .nb-scheda[data-label]::before { content: attr(data-label) " · " counter(nb-scheda); text-transform: uppercase; }
 .nb-galleria > .nb-scheda p { font-size: .94rem; line-height: 1.45; margin: 0 0 .5rem; }
@@ -261,16 +267,16 @@ body .nb-scheda pre > code { font-size: 12.5px; white-space: pre-wrap; overflow-
 /* tabs (nbTabs): the same example in Nim, Python and R; the choice holds for the whole page */
 .lingue { margin: 1.2rem 0; }
 .lingue-tab { display: flex; gap: 0; flex-wrap: wrap; }
-.lingue-tab button { font: 700 .72rem/1.6 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--n-9);
-  background: transparent; border: 2px solid var(--n-9); border-bottom: 0; padding: .15rem .8rem; cursor: pointer; margin-right: -2px; }
-.lingue-tab button[aria-selected="true"] { background: var(--n-9); color: var(--n-0); }
-.lingue-pannello { border-top: 2px solid var(--n-9); padding-top: .2rem; }
+.lingue-tab button { font: 700 .72rem/1.6 var(--font); letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+  background: transparent; border: 2px solid var(--ink); border-bottom: 0; padding: .15rem .8rem; cursor: pointer; margin-right: -2px; }
+.lingue-tab button[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+.lingue-pannello { border-top: 2px solid var(--ink); padding-top: .2rem; }
 .lingue-pannello > pre:first-child { margin-top: .6rem; }
 
 /* the code of a table, folded under it (nbShowCode) */
 details.codice { margin: -.8rem 0 1.6rem; }
-details.codice > summary { list-style: none; cursor: pointer; display: inline-block; font: 700 .68rem/1.6 var(--text);
-  letter-spacing: .12em; text-transform: uppercase; color: var(--n-9); border-bottom: 2px solid var(--secondary); }
+details.codice > summary { list-style: none; cursor: pointer; display: inline-block; font: 700 .68rem/1.6 var(--font);
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink); border-bottom: 2px solid var(--secondary); }
 details.codice > summary::-webkit-details-marker { display: none; }
 details.codice > summary::before { content: "+ show code"; }
 details.codice[open] > summary::before { content: "− hide code"; }
@@ -280,58 +286,58 @@ body details.codice pre > code { font-size: 12.5px; }
 /* the parts of a table (nbParti): a switch between the data and its parts, and their legend */
 .parti { list-style: none; padding: 0; margin: .8rem 0; }
 .parti li { margin: .35rem 0; padding-left: 2rem; position: relative; line-height: 1.45; }
-.tinta-parte { position: absolute; left: 0; top: .25em; width: 1.3rem; height: 1rem; outline: 1px solid var(--n-3); }
-.parti .colore { color: var(--n-7); font-size: .88em; }
-.mostra-parti { font: 700 .72rem/1.6 var(--text); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
-  border: 2px solid var(--n-9); background: transparent; color: var(--n-9); padding: .3rem .8rem; margin: .2rem 0 0; }
-.mostra-parti[aria-pressed="true"] { background: var(--n-9); color: var(--n-0); }
+.tinta-parte { position: absolute; left: 0; top: .25em; width: 1.3rem; height: 1rem; outline: 1px solid var(--line); }
+.parti .colore { color: var(--muted); font-size: .88em; }
+.mostra-parti { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .3rem .8rem; margin: .2rem 0 0; }
+.mostra-parti[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
 /* swatches (nbTinte): a colour beside its name */
 .tinte { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .8rem; margin: 1rem 0; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }
-.tinte .tinta span { display: block; height: 2.4rem; margin-bottom: .3rem; outline: 1px solid var(--n-2); }
+.tinte .tinta span { display: block; height: 2.4rem; margin-bottom: .3rem; outline: 1px solid var(--neutral-2); }
 .tinte .tinta strong { display: block; font-size: .95rem; }
 
 /* parts of a long page (nbParte): a label, then the sections' circles take the part's colour */
-.parte { font: 700 .74rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--n-7); }
+.parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
 .parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
 /* a later part wins over an earlier one, whatever its colour: one more class for the second part on */
 .parte ~ .parte-primary ~ h2 { --part: var(--primary); } .parte ~ .parte-secondary ~ h2 { --part: var(--secondary); }
 .parte ~ .parte-success ~ h2 { --part: var(--success); }
 
 /* the specs page (nbSpecs): each capability folds open; examples carry a pass stamp */
-details.spec { background: var(--n-1); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }
+details.spec { background: var(--shade); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }
 details.spec > summary { cursor: pointer; font-size: 1.1rem; }
-details.spec > summary b { font: 700 1.2rem var(--text); color: var(--n-9); margin-right: .4rem; }
-details.spec .counts { color: var(--n-7); font-size: .85rem; }
-details.spec .purpose { display: block; color: var(--n-9); font-size: .95rem; margin: .2rem 0 .3rem; }
-.req { border-top: 2px dashed var(--n-3); padding: .4rem 0 .6rem; }
-.req h4 { font: 700 1rem var(--text); color: var(--primary-text); margin: .6rem 0 .2rem; }
+details.spec > summary b { font: 700 1.2rem var(--font); color: var(--ink); margin-right: .4rem; }
+details.spec .counts { color: var(--muted); font-size: .85rem; }
+details.spec .purpose { display: block; color: var(--ink); font-size: .95rem; margin: .2rem 0 .3rem; }
+.req { border-top: 2px dashed var(--line); padding: .4rem 0 .6rem; }
+.req h4 { font: 700 1rem var(--font); color: var(--primary-text); margin: .6rem 0 .2rem; }
 .example { margin: .6rem 0 1rem; }
-.example .ex-head { display: flex; gap: .6rem; align-items: center; font-size: .8rem; color: var(--n-7); }
-.ex-out summary { cursor: pointer; font: 700 1rem var(--text); color: var(--n-7); }
-.scen { background: var(--n-0); padding: .4rem .8rem; margin: .5rem 0; }
-.scen-name { font: 700 1rem var(--text); color: var(--n-9); }
+.example .ex-head { display: flex; gap: .6rem; align-items: center; font-size: .8rem; color: var(--muted); }
+.ex-out summary { cursor: pointer; font: 700 1rem var(--font); color: var(--muted); }
+.scen { background: var(--paper); padding: .4rem .8rem; margin: .5rem 0; }
+.scen-name { font: 700 1rem var(--font); color: var(--ink); }
 .scen ul { margin: .2rem 0; padding-left: 1.2rem; }
-.kw { font: 600 .75rem var(--text); letter-spacing: .08em; padding: 0 .3rem; border-radius: 4px; }
-.kw.when { background: var(--secondary-soft); } .kw.then { background: var(--success-soft); } .kw.and, .kw.given { background: var(--n-2); }
-.src { font-size: .8rem; color: var(--n-7); }
+.kw { font: 600 .75rem var(--font); letter-spacing: .08em; padding: 0 .3rem; border-radius: 4px; }
+.kw.when { background: var(--secondary-soft); } .kw.then { background: var(--success-soft); } .kw.and, .kw.given { background: var(--neutral-2); }
+.src { font-size: .8rem; color: var(--muted); }
 details.links summary { cursor: pointer; }
 
 /* the look switch: ink, the selected one filled */
 .tema { display: flex; justify-content: flex-end; gap: 0; margin: .6rem 0 0; }
-.tema button { font: 700 .72rem/1.6 var(--text); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
-  border: 2px solid var(--n-9); background: transparent; color: var(--n-9); padding: .2rem .7rem; }
+.tema button { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .2rem .7rem; }
 .tema button:last-child { border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--n-9); color: var(--n-0); }
+.tema button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
 /* footer, with Munari's motto */
-footer { font: 400 .9rem/1.5 var(--text); color: var(--n-7); padding: 1rem 0 3rem; text-align: center;
-  border-top: 2px solid var(--n-9); }
+footer { font: 400 .9rem/1.5 var(--font); color: var(--muted); padding: 1rem 0 3rem; text-align: center;
+  border-top: 2px solid var(--ink); }
 body > footer { margin-top: 2rem; }
-footer a { color: var(--n-9); }
-.motto { display: block; font: 700 1.35rem/1.3 var(--text); color: var(--n-9); margin: .2rem 0 1rem; }
-.motto span { display: block; font: 400 .74rem/2 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); }
+footer a { color: var(--ink); }
+.motto { display: block; font: 700 1.35rem/1.3 var(--font); color: var(--ink); margin: .2rem 0 1rem; }
+.motto span { display: block; font: 400 .74rem/2 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
 details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
@@ -345,10 +351,10 @@ details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: i
 const quadernoRules = """
 html {
   --hand: "Patrick Hand", "Segoe Print", "Comic Sans MS", cursive;
-  --text: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --pen: var(--primary); --pen-red: var(--red-pen);
 }
-body { font: 17px/1.6 var(--text);
+body { font: 17px/1.6 var(--font);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
@@ -363,7 +369,7 @@ header { padding-top: 0; }
   box-shadow: 4px 5px 0 color-mix(in srgb, var(--primary) 15%, transparent); }
 .etichetta::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--edge); border-radius: 13px; pointer-events: none; }
 .etichetta .riga { display: flex; gap: .6rem; align-items: baseline; border-bottom: 1.5px dotted var(--edge); padding: .15rem 0; }
-.etichetta .riga span:first-child { display: inline; font: 600 .72rem/1 var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--n-7); min-width: 5.2rem; }
+.etichetta .riga span:first-child { display: inline; font: 600 .72rem/1 var(--font); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-width: 5.2rem; }
 .etichetta .riga span:last-child { font: 1.55rem/1.25 var(--hand); color: var(--primary); }
 .etichetta .nome span:last-child { font: 2.3rem/1.25 var(--hand); letter-spacing: normal; }
 .etichetta .riga:last-child:not(.nome) span:last-child { font-size: 1.55rem; letter-spacing: normal; text-transform: none; color: var(--primary); }
@@ -392,7 +398,7 @@ pre > code, pre.nb-output { border-radius: 6px; }
 pre > code { border: 1px solid var(--edge); border-left: 5px solid var(--primary);
   box-shadow: 2px 3px 0 color-mix(in srgb, var(--primary) 8%, transparent); }
 pre.nb-output { background: var(--postit); box-shadow: 2px 3px 6px rgba(0,0,0,.07); }
-pre.nb-output::before { font: .95rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--n-7); }
+pre.nb-output::before { font: .95rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--muted); }
 :not(pre) > code { background: color-mix(in srgb, var(--primary) 7%, transparent); border-radius: 4px; }
 .hljs-string { color: var(--success-text); }
 .hljs-number, .hljs-literal { color: var(--secondary-text); }
@@ -431,30 +437,30 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border-color: var(-
 .timbro { font: 1.05rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--red-pen); border-color: var(--red-pen);
   border-radius: 8px; transform: rotate(-4deg); }
 .timbro.ok { color: var(--success-text); border-color: var(--success-text); }
-.nb-galleria > .nb-scheda { background: var(--surface); border: 1px solid var(--n-3); }
+.nb-galleria > .nb-scheda { background: var(--surface); border: 1px solid var(--line); }
 .accanto .tabella { padding-left: 6px; padding-right: 6px; }
 
 /* tabs and switches in blue pen */
 .lingue-tab button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
   background: var(--surface); border: 1.5px solid var(--primary); border-bottom: 0; margin-right: -1.5px; }
-.lingue-tab button[aria-selected="true"] { background: var(--primary); color: var(--n-0); }
+.lingue-tab button[aria-selected="true"] { background: var(--primary); color: var(--paper); }
 .lingue-pannello { border-top: 1.5px solid var(--primary); }
 details.codice { margin-top: -1rem; }
 details.codice > summary { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary); border-bottom: 0; }
 
 /* specs */
-details.spec { background: var(--surface); border: 1.5px solid var(--n-3); border-radius: 10px; }
+details.spec { background: var(--surface); border: 1.5px solid var(--line); border-radius: 10px; }
 details.spec > summary b { font: 1.45rem var(--hand); color: var(--primary); }
 .req h4 { font: 1.3rem var(--hand); color: var(--red-pen); }
 .ex-out summary { font: 1.05rem var(--hand); }
-.scen { background: var(--n-1); border-radius: 8px; }
+.scen { background: var(--shade); border-radius: 8px; }
 .scen-name { font: 1.1rem var(--hand); color: var(--primary); }
 
 /* the look switch */
 .tema button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
   background: var(--surface); border: 1.5px solid var(--primary); padding: .1rem .7rem; }
 .tema button:first-child { border-radius: 10px 0 0 10px; } .tema button:last-child { border-radius: 0 10px 10px 0; border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--primary); color: var(--n-0); }
+.tema button[aria-pressed="true"] { background: var(--primary); color: var(--paper); }
 .forme, .motto { display: none; }
 
 footer { font: 1.05rem var(--hand); border-top: 0; }
@@ -491,7 +497,7 @@ const css* = fonts & tokens & munariCss & quadernoCss
 
 # ----------------------------------------------------------------------------------------- tables
 
-const tokenColours* = ["--n-0", "--n-1", "--n-3", "--n-7", "--n-9", "--surface",
+const tokenColours* = ["--paper", "--shade", "--line", "--muted", "--ink", "--surface",
   "--primary", "--primary-soft", "--primary-text", "--secondary", "--secondary-soft", "--secondary-text",
   "--warning", "--warning-soft", "--success", "--success-soft", "--success-text"]
   ## The tokens a page may name in a table colour, as `tinta("--secondary")`.
@@ -501,7 +507,7 @@ func tinta*(token: string): string =
   doAssert token in tokenColours, "not a token: " & token
   "var(" & token & ")"
 
-func tintaMix*(token: string, share: int, other = "--n-0"): string =
+func tintaMix*(token: string, share: int, other = "--paper"): string =
   ## `share`% of a token in another (the paper by default), for a scale drawn from the palette.
   doAssert token in tokenColours and other in tokenColours
   &"color-mix(in oklab, var({token}) {share}%, var({other}))"
