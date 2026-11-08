@@ -80,6 +80,10 @@ Kept up to date as tabelline changes:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/devlog/milano-cortina/)
+  (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
+  the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
+  Wikipedia and Il Post.
 - [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
   (7 Nov 2026 I): what an agent skill is, where skills live in an open source project, who does
   them well, how they work from the phone, how to test one, and what tabelline could do with them.
