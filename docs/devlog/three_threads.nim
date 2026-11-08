@@ -137,7 +137,8 @@ block:
     for th in r.threads:
       case th.kind
       of "build": row.build = th.what
-      of "use": row.use = th.title.replace("Use it: ", "")
+      of "use":
+        if row.use.len == 0: row.use = th.title.replace("Use it: ", "")  # the first, as when posted
       of "port": row.port = th.title.replace("Port ", "").capitalizeAscii
     rows.add row
   let t = tabella(rows, rownameCol = "release"):

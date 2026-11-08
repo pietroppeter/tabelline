@@ -7,18 +7,19 @@ type
   Thread* = object
     kind*: string        ## "build", "use", "port"
     title*, what*, output*, status*: string
+    href*: string        ## what it made, from the site's root ("stories/milano-cortina/"), or ""
   Release* = object
     version*, theme*: string
     threads*: seq[Thread]
 
-func t(kind, title, what, output: string, status = "planned"): Thread =
-  Thread(kind: kind, title: title, what: what, output: output, status: status)
+func t(kind, title, what, output: string, status = "planned", href = ""): Thread =
+  Thread(kind: kind, title: title, what: what, output: output, status: status, href: href)
 
 const threadKinds* = [
   ("build", "🔨", "Build it",
    "Implements the release from the coverage map: one OpenSpec change per feature group, built in PRs. Ends with the release PR and the tag. Writes the API design post: which features and why, how they are built, R against Python against Nim, and the Nim sugar."),
   ("use", "🧭", "Use it",
-   "Picks a domain, downloads real data, and writes an explainer about the domain with every new feature, as a user would, without thinking about the implementation. Starts in Python with Great Tables (and R with gt) while the release is built, then in Nim. Reports what is missing, awkward or broken to the build thread."),
+   "Picks a domain, downloads real data, and writes a story about the domain (in Stories) with every new feature, as a user would, without thinking about the implementation. Starts in Python with Great Tables (and R with gt) while the release is built, then in Nim. Reports what is missing, awkward or broken to the build thread."),
   ("port", "📚", "Port the references",
    "Takes reference code from outside (the gt and Great Tables guides, their examples, Table Contest entries) and ports it to tabelline, with the original next to it, in the tabelline book: a nimibook in this repository, in the Edo palette. Every gap it finds goes to the build thread or the backlog."),
 ]
@@ -31,6 +32,9 @@ const releases*: seq[Release] = @[
     t("use", "Use it: a month of building with AI, and Operetta",
       "A simple, conceptual explainer of a month of open source work on GitHub with Claude (libraries, talks, explainers in claude-artifacts), and from it the first design of Operetta: a modular way to build AI-native libraries (living documents, devlog, OpenSpec, coverage, roadmap, book, skills), each part picked by a project's kind and maturity. Includes what skills are and where they live.",
       "an article in three parts in claude-artifacts: the month, Operetta, skills; 👑 🐍 🏴‍☠️ tabs", "in review"),
+    t("use", "Use it: Milano Cortina 2026",
+      "The Winter Olympics and Paralympics of 2026 in tables, in three parts of three (the Games, the money, what stays), learning from Il Post, with data from Wikipedia and NOAA.",
+      "story", "done", "stories/milano-cortina/"),
     t("port", "Port the Great Tables guide, Get Started",
       "The first section of the Great Tables user guide (header and footer, stub, column labels, formats, styles, selections) and gt's Introduction to creating gt tables. Both MIT.",
       "tabelline book (nimibook, Edo), first chapters"),
@@ -41,7 +45,7 @@ const releases*: seq[Release] = @[
       "post Designing tabelline 0.2; tag v0.2.0"),
     t("use", "Use it: the FOSDEM devrooms",
       "The history of FOSDEM's devrooms, year by year: names, renames, splits, and the dates of FOSDEM, which fall at different moments. Starts from the FOSDEM devrooms page of claude-artifacts (2024 to 2027) and goes back as far as the schedules go.",
-      "explainer post"),
+      "story"),
     t("port", "Port the gt case studies",
       "gt's gtcars and sza case studies and the Great Tables examples gallery: groups, summaries, merges.",
       "tabelline book"),
@@ -52,7 +56,7 @@ const releases*: seq[Release] = @[
       "post Designing tabelline 0.3; tag v0.3.0"),
     t("use", "Use it: the climate of Italian cities",
       "Climate normals of Italian cities, in Italian, English and Japanese: units, months, decimal marks. The data read with nanuq.",
-      "explainer post"),
+      "story"),
     t("port", "Port the formats and the Table Contest",
       "The format examples of gt's reference (fmt_units, fmt_fraction, ...) and Posit Table Contest entries whose licence allows a port.",
       "tabelline book"),
@@ -63,7 +67,7 @@ const releases*: seq[Release] = @[
       "post Designing tabelline 0.4; tag v0.4.0"),
     t("use", "Use it: the moons of the Solar System",
       "The planets' moons with NASA images (public domain), icons for their kind, and nanoplots of their orbits and sizes.",
-      "explainer post"),
+      "story"),
     t("port", "Port nanoplots and images",
       "The Great Tables nanoplots guide and blog posts, gt's image and icon examples.",
       "tabelline book"),
@@ -74,7 +78,7 @@ const releases*: seq[Release] = @[
       "post Designing tabelline 0.5; tag v0.5.0"),
     t("use", "Use it: a clinical table",
       "The demographic and adverse event tables of a clinical study report, from the public CDISC pilot data, in Word, RTF and PDF.",
-      "explainer post"),
+      "story"),
     t("port", "Port the pharma tables",
       "Tables from the pharmaverse examples and gt's LaTeX and RTF articles, where licences allow.",
       "tabelline book"),

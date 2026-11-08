@@ -106,7 +106,7 @@ computed in a loop, the proc behind it takes pairs: `toTableData({"n": ns.toValu
 **3 · From objects.** `toTableData(rows)` reads the fields of each object with `fieldPairs`,
 in their order; `tabella(rows)` calls it for you. This is the way for data that a program
 already has: rows parsed from somewhere else, or built with types of its own.
-""", nkDone, "Code"
+""", nkCode, "Code"
 
 nbNota """
 **Missing.** There is no reader for JSON, and no verbs on the data

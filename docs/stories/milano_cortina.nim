@@ -1,6 +1,6 @@
-## devlog: 08 Nov 2026 A | Milano Cortina 2026, in small numbers | The Winter Olympics and Paralympics of 2026 told in tables made with tabelline 0.1, in three parts of three: the Games, the money, what stays. Learning from Il Post's coverage, with data from Wikipedia and Il Post.
-## A dated post: it tells the Games as known on 8 November 2026, and is not updated afterwards.
-## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/devlog/data/milano-cortina/
+## story: 0.1 | Milano Cortina 2026, in small numbers | The Winter Olympics and Paralympics of 2026 told in tables made with tabelline 0.1, in three parts of three: the Games, the money, what stays. Learning from Il Post's coverage, with data from Wikipedia and Il Post.
+## A story, kept up to date: it tells the Games with tabelline 0.1 (first written on 8 November 2026).
+## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/stories/data/milano-cortina/
 ## (tables from Wikipedia, written by fetch.py there).
 import std/[os, strutils, strformat, sequtils, algorithm]
 import nimib except md
@@ -9,9 +9,9 @@ import ../blocchi, ../olimpiadi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
-nb.doc.filename = docs / "devlog" / "milano-cortina" / "index.html"
+nb.doc.filename = docs / "stories" / "milano-cortina" / "index.html"
 nb.useTabelline(nome = "tabelline",
-                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", nameHref = "../../")
 
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
@@ -29,7 +29,7 @@ proc medal(s: string): string =
     else: ""
   (if emoji.len > 0: emoji & " " else: "") & s.capitalizeAscii
 
-nbTitolo "8 November 2026", "Milano Cortina 2026, in small numbers", """
+nbTitolo "A story · tabelline 0.1", "Milano Cortina 2026, in small numbers", """
 The Winter Olympics and Paralympics of 2026, told in tables: in three parts of three, from the
 simplest fact to the bills that are still arriving.
 """
@@ -187,7 +187,7 @@ nbShowCode:
   rows.add Source(kind: "hand", data: "footprint", `from`: &"[Scientists for Global Responsibility]({footprintSource})", rows: footprint.len)
   let t = tabella(rows, rownameCol = "data", groupnameCol = "kind"):
     optPageTheme()
-    tabHeader "Where the numbers come from", "the files in docs/devlog/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
+    tabHeader "Where the numbers come from", "the files in docs/stories/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
     textCaseMatch {"files": "📄 files, from Wikipedia and NOAA", "hand": "✍️ typed by hand"}, locations = loc.rowGroups()
     colsLabel {"from": "from", "rows": "rows"}
     fmtMarkdown "from"
@@ -348,7 +348,7 @@ nbTabs(python = &"""
 import polars as pl
 from great_tables import GT, loc, style
 
-medals = pl.read_csv("docs/devlog/data/milano-cortina/medals.tsv",
+medals = pl.read_csv("docs/stories/data/milano-cortina/medals.tsv",
                      separator="\t", comment_prefix="#").head(10)
 (GT(medals, rowname_col="team")
     .tab_header("Medal table", "Milano Cortina 2026, top ten")
@@ -361,7 +361,7 @@ medals = pl.read_csv("docs/devlog/data/milano-cortina/medals.tsv",
 """, r = &"""
 library(gt)
 
-medals <- read.delim("docs/devlog/data/milano-cortina/medals.tsv", comment.char = "#")
+medals <- read.delim("docs/stories/data/milano-cortina/medals.tsv", comment.char = "#")
 gt(head(medals, 10), rowname_col = "team") |>
   tab_header("Medal table", "Milano Cortina 2026, top ten") |>
   cols_hide(rank) |>
@@ -977,10 +977,10 @@ nbNota("""
 nbText: """
 ## How this post is built
 
-The page is a nimib notebook, `docs/devlog/milano_cortina.nim`, built with the others by
+The page is a nimib notebook, `docs/stories/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
 
-**1. The data from Wikipedia** is nine TSV files in `docs/devlog/data/milano-cortina/` (the
+**1. The data from Wikipedia** is nine TSV files in `docs/stories/data/milano-cortina/` (the
 table in *Where the numbers come from* lists them): the medal tables of the Olympics and the
 Paralympics, the athletes of each team, Italy at every Winter Games, Italy's thirty medals, the
 venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short Python

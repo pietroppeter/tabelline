@@ -1,6 +1,6 @@
 """Write co2.tsv: CO2 in the air in February of each Italian Winter Games we can measure.
 
-    python3 docs/devlog/data/milano-cortina/co2.py
+    python3 docs/stories/data/milano-cortina/co2.py
 
 Reads NOAA's monthly means at Mauna Loa (Scripps before 1974), public data, and keeps February
 of 1959 (the first February measured: Cortina 1956 was before the record began), 2006 (Turin)

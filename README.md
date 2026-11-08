@@ -61,6 +61,16 @@ NASA Planetary Fact Sheet
 The same verbs chain, too: `tabella(planets()).tabHeader("The planets").fmtNumber("mass")`.
 In a nimib notebook, `import tabelline/nimib` and `nbTable t`.
 
+## Stories
+
+Real subjects told in tables made with tabelline, one for every release, kept up to date
+([all the stories](https://pietroppeter.github.io/tabelline/stories/), sources in `docs/stories/`);
+the home page shows them as a gallery:
+
+- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/stories/milano-cortina/)
+  (tabelline 0.1): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
+  the money, what stays), learning from Il Post's coverage, on data from Wikipedia, Il Post and NOAA.
+
 ## The site
 
 The home page groups the pages by the question a reader brings. They are kept up to date as
@@ -114,10 +124,6 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
   before it becomes the new Design Ref.
 - [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/)
   (8 Nov 2026 B): what porting the Great Tables guide into the book found, and 0.1 fixed.
-- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/devlog/milano-cortina/)
-  (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
-  the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
-  Wikipedia, Il Post and NOAA.
 - [Designing tabelline 0.1](https://pietroppeter.github.io/tabelline/devlog/designing-0-1/)
   (7 Nov 2026 F): the 24 small groups of gt in 0.1, how each became an OpenSpec change, R vs
   Python vs Nim, and the Nim sugar.
