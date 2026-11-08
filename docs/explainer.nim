@@ -1,4 +1,4 @@
-## The explainer: what gt and Great Tables are, how they work, who uses them, and a first
+## The Great Explainer: what gt and Great Tables are, how they work, who uses them, and a first
 ## tabelline built step by step. A living document: kept up to date as tabelline grows.
 ## Writes docs/explainer/index.html.
 import std/[os, strutils, sequtils, sugar]
@@ -9,13 +9,13 @@ import quaderno, parti
 let root = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = root / "explainer" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Great tables, explained", classe = "1ª · living document",
-               title = "tabelline explained: great tables for Nim",
+nb.useQuaderno(nome = "tabelline", materia = "The Great Explainer", classe = "1ª · living document",
+               title = "The Great Explainer: great tables for Nim",
                description = "What gt and Great Tables are, how they work inside, who uses them, and a first version of tabelline, great tables for Nim.",
                homeHref = "../")
 
 nbText: """
-<p class="kicker">Explainer · living document · started 7 November 2026</p>
+<p class="kicker">The Great Explainer · living document · started 7 November 2026</p>
 
 # Great tables, for Nim
 

@@ -58,7 +58,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir _site
-          (cd docs && find . -name '*.html' | tar -c -T - | tar -x -C ../_site)
+          (cd docs && find . -name '*.html' -o -name llms.txt | tar -c -T - | tar -x -C ../_site)
           find _site -name '*.html' | sort
           du -sh _site
 

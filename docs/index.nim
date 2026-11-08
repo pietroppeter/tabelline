@@ -1,6 +1,7 @@
-## The home page, docs/index.html: what tabelline is, one table, and the way to the living
-## documents and the devlog.
-import std/os
+## The home page, docs/index.html: what tabelline is, the simplest table that shows it, and the
+## living documents, in reading order. Dated posts are not listed here: they are in the devlog.
+## When a release adds features, the table may grow a little, but it stays simple.
+import std/[os, strformat]
 import nimib except md
 import tabelline, tabelline/[datasets, nimib]
 import quaderno, parti
@@ -36,7 +37,7 @@ nbRawHtml: partsCss & """<button type="button" class="mostra-parti" aria-pressed
 nbTable t
 nbRawHtml: """</div><div class="vista-parti" hidden>"""
 nbTable showParts(t)
-nbRawHtml: partsLegend() & """<p>The six parts of every gt table, explained in the <a href="explainer/#the-parts-of-a-table">explainer</a>.</p></div>
+nbRawHtml: partsLegend() & """<p>The six parts of every gt table, explained in <a href="explainer/#the-parts-of-a-table">The Great Explainer</a>.</p></div>
 <script>
 (function () {
   var b = document.querySelector('.mostra-parti'), d = document.querySelector('.vista-dati'), p = document.querySelector('.vista-parti');
@@ -49,13 +50,25 @@ nbRawHtml: partsLegend() & """<p>The six parts of every gt table, explained in t
 })();
 </script>"""
 
-nbText: """
-<div class="cards">
-<div class="nota"><span class="titolo"><a href="explainer/">Explainer</a></span>gt and Great Tables: what they are, how they work inside, who uses them; and tabelline, step by step.</div>
-<div class="nota azzurra"><span class="titolo"><a href="specs/">Specs</a></span>How tabelline behaves today, with examples that ran when the page was built.</div>
-<div class="nota verde"><span class="titolo"><a href="devlog/">Devlog</a></span>Living documents first, then dated posts on how tabelline is made.</div>
-</div>
+# The living documents, in the order to read them; each is kept up to date. Posts are in the devlog.
+# The book appears once its sources (book/) are in the repository.
+type Living = tuple[href, title, what: string]
+var living: seq[Living] = @[
+  ("explainer/", "The Great Explainer", "gt and Great Tables from zero: what they are, how they work inside, who uses them; and tabelline, step by step."),
+  ("devlog/", "Devlog", "How tabelline is made: the roadmap and the coverage map, then every post, newest first. Bigger changes are tracked and explained here."),
+  ("book/", "Book", "The Great Tables and gt guides ported to tabelline, page by page, with the original next to it."),
+  ("design/", "Design Ref", "The two looks, the shapes, the palette, the type and every component, with when to use each: the reference for writing a page."),
+  ("agents/", "Agents", "For coding agents: setup, commands, the working rules and where things are."),
+  ("specs/", "Specs", "How tabelline behaves today: requirements with examples that ran when the page was built."),
+]
+if not dirExists(docs.parentDir / "book"):
+  living.delete(2)
+var cards = ""
+for i, d in living:
+  cards.add &"""<div class="nota azzurra"><small>{i + 1}</small><span class="titolo"><a href="{d.href}">{d.title}</a></span>{d.what}</div>"""
 
-Status: a first version, a proof of concept. The API will change.
-"""
+nbRawHtml: &"""<h2 id="living-documents">Living documents</h2>
+<p>Kept up to date as tabelline changes, in the order to read them.</p>
+<div class="cards">{cards}</div>
+<p>Status: a first version. The API will change.</p>"""
 nbSave

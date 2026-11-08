@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Docs: a new structure. The home page keeps one simple table and lists the living documents
+  in reading order (The Great Explainer, Devlog, Book, Design Ref, Agents, Specs); the devlog
+  opens with the plan (roadmap, coverage map); new pages Design Ref (`docs/design.nim`) and
+  Agents (`docs/agents.nim`, with the rules from AGENTS.md and a `llms.txt`); the explainer is
+  now The Great Explainer.
 - Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*
   (Pietro's seven weeks of open source with Claude, from GitHub data), *Operetta, a first sketch*
   and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#9).
