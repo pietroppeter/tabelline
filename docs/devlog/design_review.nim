@@ -109,8 +109,10 @@ html[data-tema="munari"] {{ {css(munariTokens)} }}
 .p-nota.fatto {{ background: var(--success-soft); border-color: var(--success); }}
 .p-nota.manca {{ background: var(--primary-soft); border-color: var(--primary); }}
 .p-nota.avviso {{ background: var(--warning-soft); border-color: var(--warning); position: relative; padding-left: 2.3rem; }}
-.p-nota.avviso::before {{ content: ""; position: absolute; left: .7rem; top: .65rem; width: 1.05rem; height: .95rem;
-  background: var(--warning); clip-path: polygon(50% 0, 100% 100%, 0 100%); }}
+.p-nota.avviso::before, .p-nota.avviso::after {{ content: ""; position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }}
+.p-nota.avviso::before {{ left: .65rem; top: .55rem; width: 1.25rem; height: 1.1rem; background: var(--n-9); }}
+.p-nota.avviso::after {{ left: .65rem; top: .55rem; width: 1.25rem; height: 1.1rem; background: var(--warning);
+  transform: scale(.7); transform-origin: 50% 68%; }}
 .p-sec {{ font: 700 1.2rem/1.2 var(--text); color: var(--n-9); position: relative; padding-left: 1.6rem; margin: .4rem 0; }}
 .p-sec::before {{ content: ""; position: absolute; left: 0; top: .2em; width: 1rem; height: 1rem; border-radius: 50%; background: var(--primary); }}
 .forma {{ display: inline-block; width: 1.1rem; height: 1.1rem; vertical-align: -.15rem; margin-right: .45rem; }}
@@ -301,7 +303,9 @@ nbText: """
 2. **More combinations, more noise.** A shape in a colour with no reason is decoration, which
    the pages forbid. Hence the rule: the default colour, unless the reason can be said.
 3. **The yellow triangle is a convention** the world reads as "warning". A triangle in another
-   colour reads a little less so; its colours stay among the status colours.
+   colour reads a little less so; its colours stay among the status colours. And it is drawn as a road
+   sign, yellow with an ink edge: a yellow shape on its own pale yellow note has far less than
+   the 3:1 contrast a graphic needs (WCAG 1.4.11).
 4. **The square needs a job** or it is decoration. As the shape of the sheet itself it has one;
    as a separate mark it would look like a checkbox, and is not allowed.
 
