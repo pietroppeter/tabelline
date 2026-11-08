@@ -8,7 +8,7 @@
   can be changed, or replaced by a value, in the call, and `cssTheme(...)` keeps a theme to reuse.
   Docs: the tokens take the same names (`--n-1` is `--shade`, `--n-3` `--line`, `--n-7` `--muted`,
   the scale `--neutral-0` … `--neutral-9`, the font `--font`); tables sit on the paper and rule
-  their row groups in the secondary colour (#PR).
+  their row groups in the secondary colour (#29).
 - Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
   quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
   (#24).
