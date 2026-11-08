@@ -8,10 +8,12 @@ stub, row groups, spanners over columns, formatted numbers, colours and notes. I
 with their parts and their verbs (in camelCase), written in plain Nim, and fits in
 [nimib](https://github.com/pietroppeter/nimib) notebooks.
 
-**Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with the
-[explainer](https://pietroppeter.github.io/tabelline/explainer/), the
-[specs](https://pietroppeter.github.io/tabelline/specs/) and the
-[devlog](https://pietroppeter.github.io/tabelline/devlog/).
+**Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with
+[The Great Explainer](https://pietroppeter.github.io/tabelline/explainer/), the
+[devlog](https://pietroppeter.github.io/tabelline/devlog/), the
+[Design Ref](https://pietroppeter.github.io/tabelline/design/), a page for
+[agents](https://pietroppeter.github.io/tabelline/agents/) and the
+[specs](https://pietroppeter.github.io/tabelline/specs/).
 
 > **Status: 0.1, a proof of concept.** It already makes tables worth showing; most of gt is still
 > ahead, and the API will change.
@@ -64,26 +66,46 @@ In a nimib notebook, `import tabelline/nimib` and `nbTable t`.
 
 ## Living documents
 
-Kept up to date as tabelline changes:
+Kept up to date as tabelline changes. The home page lists them in this order:
 
-- [Explainer](https://pietroppeter.github.io/tabelline/explainer/): what gt and Great Tables are,
-  how they work inside, who uses them (the Posit Table Contest and more), and tabelline step by step.
-- [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
-  down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
-  run against the code while the page is built.
-- [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
-  and Great Tables, what tabelline has, and the releases that plan the rest (data in
-  `docs/coverage/gt.json`).
-- [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
-  the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
-- [Devlog](https://pietroppeter.github.io/tabelline/devlog/): the living documents, then the posts.
+1. [The Great Explainer](https://pietroppeter.github.io/tabelline/explainer/): what gt and Great
+   Tables are, how they work inside, who uses them (the Posit Table Contest and more), and
+   tabelline step by step.
+2. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): every post, newest first.
+3. [Book](https://pietroppeter.github.io/tabelline/book/): guides and examples of gt and Great
+   Tables ported to tabelline, with the original code and its table next to every example, [what
+   the book will port](https://pietroppeter.github.io/tabelline/book/next.html) and [what the port
+   found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
+   `book/` (see [The book](#the-book) below).
+4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
+   the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
+5. [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+   and Great Tables, what tabelline has, and the releases that plan the rest (data in
+   `docs/coverage/gt.json`).
+6. [Design Ref](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
+   colours, the type and every component, with when to use each.
+7. [Agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where things are,
+   and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
+8. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
+   down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
+   run against the code while the page is built.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Blocks, not HTML](https://pietroppeter.github.io/tabelline/devlog/blocks-review/)
+  (8 Nov 2026 D): how much HTML, CSS and colour the pages write by hand (measured at build), the
+  custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where
+  styles and colours should live, and what a nimib skill should teach against the drift.
+- [Reviewing the design: a palette by roles](https://pietroppeter.github.io/tabelline/devlog/design-review/)
+  (8 Nov 2026 C): what the pages' six colours do today, shape apart from colour, a palette by roles (neutral, primary,
+  secondary, status, data) for both looks, every component mapped to it, and six choices to make
+  before it becomes the new Design Ref.
+- [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/)
+  (8 Nov 2026 B): what porting the Great Tables guide into the book found, and 0.1 fixed.
 - [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/devlog/milano-cortina/)
   (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
   the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
-  Wikipedia and Il Post.
+  Wikipedia, Il Post and NOAA.
 - [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
   (7 Nov 2026 I): what an agent skill is, where skills live in an open source project, who does
   them well, how they work from the phone, how to test one, and what tabelline could do with them.
@@ -121,7 +143,8 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
-- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/quaderno.nim` is the theme, `docs/munari.nim` the Munari look laid over it, the default).
+- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/stile.nim` is the style of both looks, from the tokens, and `docs/blocchi.nim` the blocks every page is made of).
+- `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).
 - `openspec/`: specs and open changes; `openspec/config.yaml` has the rules. `BACKLOG.md`, `CHANGELOG.md`, `AGENTS.md`.
 
 ## Building
@@ -131,6 +154,7 @@ sh tools/setup.sh                # once: what is missing (Nim, atlas, libpcre3) 
 nim r tests/all.nim              # tests
 nim r tools/specexamples.nim     # the examples of the specs
 nim r -d:release docs/all.nim    # every page, into docs/
+nim r book/bookbuild.nim         # the book, into docs/book/ (only the chapters that changed)
 ```
 
 With Nim and atlas already installed, `atlas rep --feature=docs` is all the setup does on a
@@ -142,7 +166,34 @@ The library itself needs only Nim (2.2 or later) and its standard library. CI
 (`.github/workflows/pages.yml`) runs the tests and the examples, builds the pages and deploys them
 to GitHub Pages from `main`.
 
+## The book
+
+`book/` is a [nimibook](https://github.com/pietroppeter/nimibook): `book/nbook.nim` has the
+table of contents, a chapter is `book/<section>/<page>.nim` (Markdown pages are `.md`), and
+`book/tabbook.nim` has the helpers: `attribution` (the box that names the source, its licence
+and what the port changed), `tabs` (an example in 👑 Nim next to the original 🐍 Python
+and the same in 🏴‍☠️ R with gt), `python` (Python and R with no Nim yet), `sideBySide` (small examples next to each other) and `tabelline` (the book's own remarks). The look is in
+`book/theme/` (the Munari look with the Edo palette), the data of the sources in `book/data/`,
+their licences in `licenses/`.
+
+`nim r book/bookbuild.nim` builds it into `docs/book/`, the way the Nanuq book does: a chapter
+reruns only when a file it depends on changed (the record is in `docs/book/<chapter>.json`), the
+stale chapters run as one program, and every page is then rendered from the JSON, so a theme
+change reruns nothing. `--force` reruns them all. CI starts from the JSON of the live book.
+
+The Python side runs with Great Tables (the uv project `book/gt/`, `book/gt/run.py`) only when a
+chapter's Python changed, and its outputs are committed in `book/gt/outputs/`: building the book
+needs [uv](https://docs.astral.sh/uv/) only then. The R side is the same with gt
+(`book/gt/run.R`, outputs in `book/gt/outputs-r/`): it needs R with gt, dplyr, tidyr, jsonlite
+and knitr only when a chapter's R changed. CI sets `BOOK_NO_PYTHON=1` and `BOOK_NO_R=1`, so a
+chapter whose outputs are out of date fails there.
+
+To add a chapter: check the source's licence, write the page with `bookInit()`, `attribution`,
+`tabs` and `bookSave()` (see any chapter), add it to `book/nbook.nim` and the source to
+`book/licences.md`, and note what tabelline lacks in `book/gaps.md`.
+
 ## License
 
 MIT. The datasets: `planets` from NASA's Planetary Fact Sheet (public domain), `exibble` from gt
-(MIT). The fonts in `docs/assets/fonts` are under the SIL Open Font License.
+(MIT). The fonts in `docs/assets/fonts` are under the SIL Open Font License. The book's ported
+pages keep the licence of their source (Great Tables: MIT, `licenses/great-tables-MIT.txt`).

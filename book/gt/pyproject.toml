@@ -1,0 +1,11 @@
+[project]
+name = "tabelline-book-gt"
+version = "0.1.0"
+description = "Runs the Great Tables side of the tabelline book (see run.py)"
+requires-python = ">=3.11"
+dependencies = [
+  "great_tables==1.1.0",
+  "pandas",
+  "polars",
+  "pyarrow",
+]

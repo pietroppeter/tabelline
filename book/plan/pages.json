@@ -1,0 +1,606 @@
+{
+ "gt-getstarted": [
+  {
+   "title": "Intro",
+   "url": "https://posit-dev.github.io/great-tables/get-started/index.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Overview",
+   "url": "https://posit-dev.github.io/great-tables/get-started/overview.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Header and Footer",
+   "url": "https://posit-dev.github.io/great-tables/get-started/basic-header.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Stub (Row Labels)",
+   "url": "https://posit-dev.github.io/great-tables/get-started/basic-stub.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Column Labels",
+   "url": "https://posit-dev.github.io/great-tables/get-started/basic-column-labels.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Formatting Values",
+   "url": "https://posit-dev.github.io/great-tables/get-started/basic-formatting.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Currency",
+     "Dates"
+    ]
+   }
+  },
+  {
+   "title": "Nanoplots",
+   "url": "https://posit-dev.github.io/great-tables/get-started/nanoplots.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Plots in cells"
+    ]
+   }
+  },
+  {
+   "title": "Styling the Table Body",
+   "url": "https://posit-dev.github.io/great-tables/get-started/basic-styling.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Body styles from a column"
+    ]
+   }
+  },
+  {
+   "title": "Styling the whole table",
+   "url": "https://posit-dev.github.io/great-tables/get-started/targeted-styles.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Summary rows"
+    ]
+   }
+  },
+  {
+   "title": "Colorizing with Data",
+   "url": "https://posit-dev.github.io/great-tables/get-started/colorizing-with-data.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Table Theme Options",
+   "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-options.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Summary rows",
+     "Table options"
+    ]
+   }
+  },
+  {
+   "title": "Premade Themes",
+   "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-premade.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Currency"
+    ]
+   }
+  },
+  {
+   "title": "Column Selection",
+   "url": "https://posit-dev.github.io/great-tables/get-started/column-selection.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Row Selection",
+   "url": "https://posit-dev.github.io/great-tables/get-started/row-selection.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Currency"
+    ]
+   }
+  },
+  {
+   "title": "Location selection",
+   "url": "https://posit-dev.github.io/great-tables/get-started/loc-selection.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Extending Great Tables",
+   "url": "https://posit-dev.github.io/great-tables/get-started/extensions.html",
+   "port": "skip",
+   "note": "About extending Great Tables in Python",
+   "ready": "0.1",
+   "needs": {}
+  }
+ ],
+ "r-gt-intro": [
+  {
+   "title": "Introduction to Creating gt Tables",
+   "url": "https://gt.rstudio.com/articles/gt.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  }
+ ],
+ "gt-blog": [
+  {
+   "title": "Introducing Great Tables",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Currency",
+     "Dates"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.2.0: Easy Data Coloring",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Currency"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.3.0: So Many Style Options!",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.3": [
+     "Currency"
+    ],
+    "0.4": [
+     "Images"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.4.0: Nanoplots and More",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Plots in cells"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.12.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.13.0: Applying styles to all table locations",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.13.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.3": [
+     "Currency"
+    ],
+    "0.4": [
+     "Icons"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
+   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.3": [
+     "Rotated labels"
+    ]
+   }
+  },
+  {
+   "title": "The Design Philosophy of Great Tables",
+   "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.3": [
+     "Dates"
+    ],
+    "0.4": [
+     "Plots in cells"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
+   "url": "https://posit-dev.github.io/great-tables/blog/bring-your-own-df/",
+   "port": "adapt",
+   "note": "About Python's data frame libraries: the book tells what tabelline reads instead",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Great Tables: The Polars DataFrame Styler of Your Dreams",
+   "url": "https://posit-dev.github.io/great-tables/blog/polars-styling/",
+   "port": "adapt",
+   "note": "About Polars: the tables are ported, the Polars side is told in Nim",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Great Tables: Becoming the Polars .style Property",
+   "url": "https://posit-dev.github.io/great-tables/blog/polars-dot-style/",
+   "port": "adapt",
+   "note": "About Polars: the tables are ported, the Polars side is told in Nim",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Using Polars to Win at Super Bowl Squares",
+   "url": "https://posit-dev.github.io/great-tables/blog/superbowl-squares/",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "PyCon 2024: Making Beautiful, Publication Quality Tables is Possible in 2024",
+   "url": "https://posit-dev.github.io/great-tables/blog/pycon-2024-great-tables-are-possible/",
+   "port": "port",
+   "note": "",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Style Table Body with mask= in loc.body()",
+   "url": "https://posit-dev.github.io/great-tables/blog/locbody-mask/",
+   "port": "port",
+   "note": "",
+   "ready": "new",
+   "needs": {
+    "new": [
+     "A condition for each cell, loc.body(mask = ...)"
+    ]
+   }
+  },
+  {
+   "title": "Recreating Septa Transit Timetables in Python",
+   "url": "https://posit-dev.github.io/great-tables/blog/septa-timetables/",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ]
+   }
+  },
+  {
+   "title": "Contributing to Public Transit Data Analysis and Tooling",
+   "url": "https://posit-dev.github.io/great-tables/blog/open-transit-tools/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Images"
+    ]
+   }
+  },
+  {
+   "title": "Rendering images anywhere in Great Tables",
+   "url": "https://posit-dev.github.io/great-tables/blog/rendering-images/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Images"
+    ]
+   }
+  },
+  {
+   "title": "Adding Plots to Great Tables",
+   "url": "https://posit-dev.github.io/great-tables/blog/plots-in-tables/",
+   "port": "adapt",
+   "note": "The plots come from plotnine and ggplot: in Nim, from a Nim plotting library",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "Great Tables for Scientific Publishing",
+   "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.3": [
+     "Dates",
+     "Units"
+    ],
+    "0.4": [
+     "Plots in cells"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables: Generating LaTeX Output for PDF",
+   "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
+   "port": "port",
+   "note": "",
+   "ready": "0.5",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.3": [
+     "Currency",
+     "Units"
+    ],
+    "0.4": [
+     "Images",
+     "Plots in cells"
+    ],
+    "0.5": [
+     "LaTeX"
+    ]
+   }
+  },
+  {
+   "title": "Great Tables + marimo = Interactive Tables",
+   "url": "https://posit-dev.github.io/great-tables/blog/marimo-and-great-tables/",
+   "port": "adapt",
+   "note": "About marimo: for when tabelline runs in Python notebooks",
+   "ready": "0.1",
+   "needs": {}
+  },
+  {
+   "title": "How We Used Great Tables to Supercharge Reporting in Pointblank",
+   "url": "https://posit-dev.github.io/great-tables/blog/pointblank-intro/",
+   "port": "adapt",
+   "note": "About Pointblank's reports: the tables are ported",
+   "ready": "0.1",
+   "needs": {}
+  }
+ ],
+ "gt-examples": [
+  {
+   "title": "Examples",
+   "url": "https://posit-dev.github.io/great-tables/examples/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.4": [
+     "Images",
+     "Plots in cells"
+    ]
+   }
+  },
+  {
+   "title": "Sports earnings",
+   "url": "https://posit-dev.github.io/great-tables/examples/sports-earnings/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Images"
+    ]
+   }
+  },
+  {
+   "title": "Gini coefficient (with gt-extras)",
+   "url": "https://posit-dev.github.io/great-tables/examples/gt-extras-gini/",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Plots, icons and themes from gt-extras"
+    ]
+   }
+  }
+ ],
+ "r-gt-vignettes": [
+  {
+   "title": "Case Study: gtcars",
+   "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.2": [
+     "Merge columns"
+    ],
+    "0.3": [
+     "Currency"
+    ]
+   }
+  },
+  {
+   "title": "Case Study: Clinical Tables",
+   "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.2",
+   "needs": {
+    "0.2": [
+     "Merge columns",
+     "Stub indent, multi-column stub",
+     "Summary rows",
+     "Table options"
+    ]
+   }
+  },
+  {
+   "title": "Creating Summary Lines",
+   "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.2": [
+     "Extract",
+     "Summary rows",
+     "Table options"
+    ],
+    "0.3": [
+     "Bins, auto format, passthrough",
+     "Currency"
+    ]
+   }
+  },
+  {
+   "title": "gt Datasets",
+   "url": "https://gt.rstudio.com/articles/gt-datasets.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.3",
+   "needs": {
+    "0.2": [
+     "Merge columns",
+     "Summary rows",
+     "Table options"
+    ],
+    "0.3": [
+     "Currency",
+     "Dates"
+    ]
+   }
+  },
+  {
+   "title": "gt interactive tables",
+   "url": "https://gt.rstudio.com/articles/gt-interactive.html",
+   "port": "adapt",
+   "note": "Interactive tables are tabellone, a later idea",
+   "ready": "later",
+   "needs": {
+    "later": [
+     "Interactive tables"
+    ]
+   }
+  }
+ ],
+ "gt-extras-py": [
+  {
+   "title": "Examples With Code",
+   "url": "https://posit-dev.github.io/gt-extras/examples/with-code.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.4": [
+     "Images",
+     "Plots, icons and themes from gt-extras"
+    ]
+   }
+  }
+ ],
+ "r-gtextras": [
+  {
+   "title": "Plotting with gtExtras",
+   "url": "https://jthomasmock.github.io/gtExtras/articles/plotting-with-gtExtras.html",
+   "port": "port",
+   "note": "",
+   "ready": "0.4",
+   "needs": {
+    "0.2": [
+     "Table options"
+    ],
+    "0.4": [
+     "Plots, icons and themes from gt-extras"
+    ]
+   }
+  }
+ ]
+}

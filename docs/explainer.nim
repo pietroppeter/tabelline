@@ -1,31 +1,23 @@
-## The explainer: what gt and Great Tables are, how they work, who uses them, and a first
+## The Great Explainer: what gt and Great Tables are, how they work, who uses them, and a first
 ## tabelline built step by step. A living document: kept up to date as tabelline grows.
 ## Writes docs/explainer/index.html.
 import std/[os, strutils, sequtils, sugar]
 import nimib except md   # nimib's old `md` (deprecated) would clash with tabelline's
 import tabelline, tabelline/[datasets, nimib]
-import quaderno, parti
+import blocchi
 
 let root = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = root / "explainer" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Great tables, explained", classe = "1ª · living document",
-               title = "tabelline explained: great tables for Nim",
+nb.useTabelline(nome = "tabelline", materia = "The Great Explainer", classe = "1ª · living document",
+               title = "The Great Explainer: great tables for Nim",
                description = "What gt and Great Tables are, how they work inside, who uses them, and a first version of tabelline, great tables for Nim.",
                homeHref = "../")
 
+nbTitolo "The Great Explainer · living document · started 7 November 2026", "Great tables, for Nim", """
+*Tabelline* is what Italian children call the times tables, the little tables learned by heart in primary school. It is also the name of a new Nim library for making **display tables**: tables meant to be read by people, with a title, grouped rows, labels over columns, formatted numbers, colours and notes. This page explains where the idea comes from (R's **gt** and Python's **Great Tables**), how those libraries are built, who uses them, and then builds a first, small tabelline, step by step.
+"""
 nbText: """
-<p class="kicker">Explainer · living document · started 7 November 2026</p>
-
-# Great tables, for Nim
-
-<p class="lede"><em>Tabelline</em> is what Italian children call the times tables, the little tables
-learned by heart in primary school. It is also the name of a new Nim library for making
-<strong>display tables</strong>: tables meant to be read by people, with a title, grouped rows,
-labels over columns, formatted numbers, colours and notes. This page explains where the idea comes
-from (R's <strong>gt</strong> and Python's <strong>Great Tables</strong>), how those libraries are
-built, who uses them, and then builds a first, small tabelline, step by step.</p>
-
 Here is the first table every Italian pupil meets, *la tavola pitagorica*, made with tabelline.
 The code ran when this page was built:
 """
@@ -35,9 +27,9 @@ nbCode:
     tabHeader md("La *tavola pitagorica*"), "the times table, from 1 × 1 to 10 × 10"
     tabStubhead "×"
     dataColor everything(), palette = palette("quaderno"), domain = (1.0, 100.0)
-    tabStyle style.text(weight = "bold", color = "#C62828"), loc.stub(), loc.columnLabels()
+    tabStyle style.text(weight = "bold", color = "var(--primary-text)"), loc.stub(), loc.columnLabels()
     tabSourceNote md("Every cell is `row × column`. The squares are on the diagonal.")
-    optQuaderno()
+    optTokens()
     colsAlign alCenter
 nbTable pitagora
 
@@ -90,18 +82,18 @@ nbCode:
     colsHide ["density", "gravity", "day_length", "orbital_period", "mean_temp", "rings"]
     colsLabel {"mass": "column", "diameter": "labels", "distance": "…", "moons": "…"}
     tabSourceNote "Table footer: source notes and footnotes"
-    tabStyle style.fill("#FAECAC"), loc.title(), loc.subtitle()
-    tabStyle style.fill("#C7DFEA"), loc.columnLabels(), loc.spanners()
-    tabStyle style.fill("#F1BEC7"), loc.stubhead()
-    tabStyle style.fill("#FDDFC4"), loc.stub()
-    tabStyle style.fill("#CDC7DE"), loc.rowGroups()
-    tabStyle style.fill("#CAE2B7"), loc.body()
-    tabStyle style.fill("#D7EEEC"), loc.sourceNotes()
+    tabStyle style.fill(partTints[0]), loc.title(), loc.subtitle()
+    tabStyle style.fill(partTints[1]), loc.columnLabels(), loc.spanners()
+    tabStyle style.fill(partTints[2]), loc.stubhead()
+    tabStyle style.fill(partTints[3]), loc.stub()
+    tabStyle style.fill(partTints[4]), loc.rowGroups()
+    tabStyle style.fill(partTints[5]), loc.body()
+    tabStyle style.fill(partTints[6]), loc.sourceNotes()
     fmtNumber "mass", decimals = 2
     fmtInteger "diameter"
 nbTable parts
 
-nbRawHtml: partsCss & partsLegend()
+nbPartiLegenda()
 
 nbText: """
 The colours are light tints of Japanese traditional colours: those of Haru, the palette of these
@@ -133,8 +125,8 @@ nbCode:
     colsLabel {"verbs": "gt / Great Tables verbs", "does": "what for", "tabelline": "tabelline today"}
     colsWidth {"verbs": "45%"}
     tabStyle style.text(font = "ui-monospace, Menlo, monospace", size = "85%"), loc.body(cols = "verbs")
-    tabStyle style.text(color = "#1C7A4E", weight = "bold"), loc.body(cols = "tabelline")
-    tabStyle style.text(color = "#C62828", weight = "bold"),
+    tabStyle style.text(color = "var(--success-text)", weight = "bold"), loc.body(cols = "tabelline")
+    tabStyle style.text(color = "var(--primary-text)", weight = "bold"),
       loc.body(cols = "tabelline", rows = where(it["tabelline"] == "not yet"))
     optAllCaps()
 nbTable menuTable
@@ -212,7 +204,7 @@ nbCode:
     tabHeader "Grand prizes of the Table Contest", "RStudio (2020-2022), then Posit (2024-2025); there was no 2023 edition"
     colsLabel {"winner": "grand prize", "entry": "the table", "tools": "made with", "note": "also"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "winner")
-    tabStyle style.text(size = "85%", color = "#5E6475"), loc.body(cols = "note")
+    tabStyle style.text(size = "85%", color = "var(--n-7)"), loc.body(cols = "note")
     tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it["year"] == 2025))
     tabSourceNote md("Posit blog, [2020](https://www.r-bloggers.com/2020/12/winners-of-the-2020-rstudio-table-contest/), [2021](https://www.r-bloggers.com/2021/12/winners-of-the-2021-table-contest/), [2022](https://posit.co/blog/winners-of-the-2022-table-contest/), [2024](https://posit.co/blog/2024-table-contest-winners/), [2025](https://posit.co/blog/2025-table-contest-winners/)")
     optStylize(style = 1, color = "blue")
@@ -323,7 +315,7 @@ nbText: """
 - `RowSel` selects rows: indices (`[0, 2]`, `0..3`) or a predicate,
   `where(it["type"] == "Gas giant")`, which reads like Nim's `filterIt`.
 - `loc` and `style` are empty objects used as namespaces, so `loc.body(cols = "mass")` and
-  `style.fill("#FFF3B0") & style.text(weight = "bold")` read exactly like Great Tables.
+  `style.fill("var(--warning-soft)") & style.text(weight = "bold")` read exactly like Great Tables.
 - `TabOptions` uses Nim 2's default field values for its 40 options.
 
 ### Two macros, and only where they help
@@ -412,8 +404,8 @@ reading order, wherever they were added.
 """
 nbCode:
   t = t.dataColor("mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0))
-    .fmtBar("moons", color = "#A0C4FF", width = "5em")
-    .tabStyle(style.fill("#FFF3B0") & style.text(weight = "bold"), loc.stub(rows = where(it["planet"] == "Earth")))
+    .fmtBar("moons", color = "var(--secondary)", width = "5em")
+    .tabStyle(style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.stub(rows = where(it["planet"] == "Earth")))
     .tabFootnote("Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons"))
     .tabFootnote("Venus is hotter than Mercury: its thick atmosphere traps the heat.",
                  loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus")))
@@ -421,11 +413,12 @@ nbCode:
 nbTable t
 
 nbText: """
-Step 5: the same table in the quaderno look of this page (`optQuaderno`), one of the options
-presets, next to `optStylize`:
+Step 5: the same table with `optTokens()`, the preset of these pages: its colours are the page's
+own (CSS variables such as `--n-9` for the ink), so it follows the look you pick at the top. Next
+to it, `optStylize`:
 """
 nbCode:
-  nbTable t.optQuaderno()
+  nbTable t.optTokens()
   nbTable t.optStylize(style = 2, color = "gray").tabOptions(headingAlign = "left", tableFontSize = "14px")
 
 nbText: """
@@ -439,7 +432,7 @@ let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "typ
   tabSpanner "Size", ["mass", "diameter"]
   fmtNumber "mass", decimals = 3, dropTrailingZeros = true
   dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
-  optQuaderno()
+  optTokens()
 ```
 
 ## A tour of the formats
@@ -532,8 +525,8 @@ nbCode:
     tabHeader "Squares on the diagonal"
     tabStubhead "×"
     for i in 1 .. 6:
-      tabStyle style.fill("#FFF3B0") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
-    optQuaderno()
+      tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
+    optTokens()
 nbTable squares
 
 nbText: """
@@ -553,8 +546,8 @@ nbSave
 ```
 
 Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme. (This
-page has two looks, *Munari* and *quaderno*, in `docs/munari.nim` and `docs/quaderno.nim`; the
-Munari look dresses the tables made with `optQuaderno()` again, on purpose.) And because `echo` draws
+page has two looks, *Munari* and *quaderno*, both in `docs/stile.nim`; tables made with
+`optTokens()` take their colours from the look.) And because `echo` draws
 a text table, a table printed in `nbCode` shows up in the output, as above.
 
 ## What comes next
@@ -574,10 +567,9 @@ on the [specs page](../specs/)) and in the backlog; the main ones:
   from Nim to JavaScript.
 - **A gallery** that rebuilds famous gt tables, and an entry for the next Table Contest.
 
-<div class="nota verde"><span class="titolo">How this page was made</span>
-This page is a nimib notebook, <code>docs/explainer.nim</code>: every table on it was made by the
-code shown, when the page was built. The research behind it read the sources of gt and Great
-Tables and the Posit blog. Corrections are welcome, as issues or pull requests.</div>
 """
+nbNota("""
+This page is a nimib notebook, `docs/explainer.nim`: every table on it was made by the code shown, when the page was built. The research behind it read the sources of gt and Great Tables and the Posit blog. Corrections are welcome, as issues or pull requests.
+""", nkDone, "How this page was made")
 
 nbSave

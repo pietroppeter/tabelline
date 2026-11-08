@@ -1,0 +1,10 @@
+[nimib]
+srcDir = "."
+homeDir = "../docs/book"
+
+[nimibook]
+language = "en"
+title = "The tabelline book"
+description = "Great Tables and gt guides and examples, ported to tabelline (great tables for Nim)"
+git_repository_url = "https://github.com/pietroppeter/tabelline"
+favicon_escaped = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✖️</text></svg>">'

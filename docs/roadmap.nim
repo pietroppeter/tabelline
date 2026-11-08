@@ -4,23 +4,19 @@
 import std/[os, strutils, strformat]
 import nimib except md
 import tabelline, tabelline/nimib
-import quaderno, piano
+import blocchi, piano
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "roadmap" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Roadmap", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Roadmap", classe = "living document",
                title = "tabelline roadmap", homeHref = "../",
                description = "The releases of tabelline, and the three threads that make each one.")
 
+nbTitolo "Living document", "The roadmap", """
+Five releases to cover most of gt, and three threads for each: one builds it, one uses it, one ports the code that already exists.
+"""
 nbText: """
-<p class="kicker">Living document</p>
-
-# The roadmap
-
-<p class="lede">Five releases to cover most of gt, and three threads for each: one builds it,
-one uses it, one ports the code that already exists.</p>
-
 What goes in each release comes from the [coverage map](../coverage/); why the work is split in
 three is told in the devlog post [Three threads for every release](../devlog/three-threads/).
 This page says where each thread stands.
@@ -38,7 +34,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: "## Releases"
@@ -59,8 +55,8 @@ block:
     colsLabel {"thread": "thread, and what it does", "output": "makes"}
     fmtMarkdown "thread"
     colsWidth {"output": "24%", "status": "5em"}
-    optQuaderno()
-  t = t.tabStyle(style.text(color = "#6B675F"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
+    optTokens()
+  t = t.tabStyle(style.text(color = "var(--n-7)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
   nbTable t
 
 nbText: """
@@ -87,7 +83,7 @@ block:
     colsLabel {"who": "by", "release": "for"}
     fmtMarkdown "source"
     tabSourceNote "The ports go in the tabelline book, a nimibook kept in this repository (in the Edo palette, made like the Nanuq Book), with the original Python or R next to the Nim."
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbText: "## Left aside"
@@ -100,7 +96,7 @@ block:
   let t = tabella(rows, rownameCol = "what"):
     tabHeader "Not planned, for now"
     colsLabel {"why": ""}
-    optQuaderno()
+    optTokens()
   nbTable t
 
 nbSave

@@ -14,3 +14,4 @@ requires "nim >= 2.2.0"  # nimble 0.18+ (Nim 2.2) reads the `feature` block belo
 
 feature "docs":
   requires "nimib >= 0.4.3"
+  requires "nimibook >= 0.4.0"  # the tabelline book (book/)

@@ -6,6 +6,12 @@
       "commit": "7cfe29cefd76b5110a0c7798f540b8c693b065cf",
       "version": ""
     },
+    "nimibook": {
+      "dir": "$deps/nimibook",
+      "url": "https://github.com/pietroppeter/nimibook",
+      "commit": "b02b02f3ddce3c5f765b1ef274115a689c6ecf9f",
+      "version": ""
+    },
     "fusion": {
       "dir": "$deps/fusion",
       "url": "https://github.com/nim-lang/fusion",
@@ -38,6 +44,7 @@
     "--path:\"deps/jsony/src\"",
     "--path:\"deps/markdown/src\"",
     "--path:\"deps/nimib/src\"",
+    "--path:\"deps/nimibook/src\"",
     "--path:\"deps/parsetoml/src\"",
     "--define:\"features.tabelline.docs\"",
     "--define:\"feature.tabelline.docs\"",
@@ -63,12 +70,13 @@
       "",
       "feature \"docs\":",
       "  requires \"nimib >= 0.4.3\"",
+      "  requires \"nimibook >= 0.4.0\"  # the tabelline book (book/)",
       ""
     ]
   },
   "hostOS": "linux",
   "hostCPU": "amd64",
-  "nimVersion": "2.2.15",
+  "nimVersion": "2.2.4 f7145dd26efeeeb6eeae6fff649db244d81b212d",
   "gccVersion": "13.3.0",
   "clangVersion": ""
 }

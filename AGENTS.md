@@ -42,35 +42,73 @@ working rules that are easy to miss.
 
 ## Pages
 
-- Every page is a nimib notebook in `docs/` in the quaderno theme (`docs/quaderno.nim`) and
-  writes a standalone HTML file (fonts inlined, nothing remote). Every page also carries the
-  Munari look (`docs/munari.nim`, all rules under `html[data-tema="munari"]`), which is the
-  default; the header switches between the two and the choice is remembered. Check new page
-  elements in both looks. The HTML is not committed: CI
-  builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
-  `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
-- Living documents (the explainer, the specs page) are kept up to date. A devlog post
+- Every page is a nimib notebook in `docs/` that calls `nb.useTabelline(...)` after `nbInit`
+  and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
+  default (rules under `html[data-tema="munari"]`), and the quaderno; the header switches between
+  them and the choice is remembered. Check new page elements in both looks, at 390px. The HTML is
+  not committed: CI builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to
+  GitHub Pages from `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
+- **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
+  of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
+  `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
+  `nbParte`). No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
+  becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
+  `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
+  `optTokens()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
+  `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
+  its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
+- The home page shows the simplest example and links the living documents in this order: The
+  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
+  lists only posts. A new living document gets a card there
+  (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
+- The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
+  change starts as a devlog post. The Agents page reads this file when it builds.
+- Living documents are kept up to date. A devlog post
   (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
   show the newest first.
-- In the Munari look, nothing that only decorates may look like something to press or drag (no
-  dots, holes or knobs on cards). Shapes carry meaning: section headings and the indice
-  always use the red circle, and the triangle is kept for warnings. Its colours are six variables in `docs/munari.nim` (`--m-*`);
-  mix new colours from them rather than adding fixed ones.
+- Shape for kind, colour for role. The circle is a place (sections, the indice), the triangle a
+  warning (`nkWarning`, drawn as a road sign), the square a sheet set apart (notes, cards, gallery
+  cards: their straight top edge). Each shape has a default colour, another only with a reason.
+  Nothing that only decorates may look like something to press or drag (no dots, holes or knobs
+  on cards). Colours are the tokens of `docs/stile.nim`: six values per look (paper, ink,
+  primary, secondary, warning, success), and every other colour mixed from them (`--n-0` …
+  `--n-9`, `--surface`, `--x-soft`, `--x-text`); the warning colour is never text.
 - The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 
+## The book
+
+- The book is `book/`, a nimibook built by `nim r book/bookbuild.nim` into `docs/book/` (see
+  README.md). One theme, the Munari look with the Edo palette: the tokens of `docs/stile.nim` in
+  the values `edo`, written by the build before `book/theme/edo.css`, which names no colour of
+  its own. Its own tables (the sources) take `optTokens()`; the ported examples keep the colours
+  of the guide. Chapters are written with `book/tabbook.nim`'s blocks (`tabs`, `tabelline`,
+  `sideBySide`), not with HTML.
+- A ported page keeps the text of the original as it is; everything the book says about
+  tabelline goes in `tabelline "..."` boxes, and every gap found goes to `book/gaps.md` (and to
+  the build thread, or BACKLOG.md).
+- A change to a chapter's Python needs uv (`book/gt/`), and a change to its R needs R with gt:
+  rebuild, then commit `book/gt/outputs/` and `book/gt/outputs-r/`. CI never runs Python or R.
+  The R tab is written for the book (the gt way to make the same table); where gt has no way,
+  pass `""` and the tab says so.
+- When tabelline gains a feature a chapter works around, update the chapter and `book/gaps.md`.
+- The sources the book plans to port are in `book/plan/sources.json`; `python3 book/plan/plan.py`
+  maps each page to the features it calls and writes `book/plan/pages.json` (committed). Rerun it
+  when `docs/coverage/gt.json` changes or a source is added; findings of a port go to `found`.
+
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
 - `python3 tools/preview.py` copies the built pages to `../tabelline-preview` for an artifact
-  (folder links point to index.html). A link to the artifact ending in `#<page>` opens that
-  page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`. Give Pietro
-  the deep link to what changed.
+  (folder links point to index.html), with the book. A link to the artifact ending in `#<page>`
+  opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
+  and for the book `#book-` and the page's path without `.html`, such as
+  `#book-get-started-intro`. Give Pietro the deep link to what changed.
 - When a change is visual, put before and after screenshots (phone width, both looks) in the PR
   description and in the reply to Pietro. To show them in the PR without adding them to `main`,
   commit them, link them by that commit's sha, and remove them in the next commit.

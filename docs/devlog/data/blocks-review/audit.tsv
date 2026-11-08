@@ -1,0 +1,23 @@
+file	kind	nbRawHtml	nbTextWithHtml	style	script	inline	hex
+blocchi.nim	theme and helpers	0	0	0	0	0	0
+coverage.nim	living documents	0	1	0	0	0	5
+roadmap.nim	living documents	0	1	0	0	0	1
+munari.nim	theme and helpers	0	0	0	2	0	7
+specs.nim	living documents	6	0	1	1	0	7
+explainer.nim	living documents	1	3	1	0	0	12
+design.nim	living documents	6	3	2	0	7	14
+parti.nim	theme and helpers	0	0	1	0	1	8
+quaderno.nim	theme and helpers	2	0	1	1	0	22
+agents.nim	living documents	0	1	0	0	0	0
+index.nim	living documents	4	1	0	1	0	1
+devlog/palettes.nim	posts	7	4	2	1	9	31
+devlog/tabellone.nim	posts	1	2	1	2	3	4
+devlog/skills.nim	posts	1	1	0	0	0	0
+devlog/two_looks.nim	posts	0	1	0	0	0	0
+devlog/operetta.nim	posts	0	1	0	0	0	0
+devlog/design_review.nim	posts	4	1	1	0	17	20
+devlog/three_threads.nim	posts	0	1	0	0	0	0
+devlog/designing_0_1.nim	posts	4	1	1	0	0	5
+devlog/day_one.nim	posts	0	1	1	0	0	1
+devlog/month_of_building.nim	posts	0	2	0	0	0	0
+devlog/index.nim	posts	1	0	0	0	0	0

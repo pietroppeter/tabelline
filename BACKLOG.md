@@ -53,7 +53,7 @@ Rough size: S (hours), M (a day or two), L (more).
   with a legend: a way to learn the parts of a gt table on your own data.
 - **Option presets** (S-M). A page that styles every table the same way repeats six or seven
   `tabOptions` fields per table. A user-defined preset (`let sea = tabOptions(...)`, then
-  `tabOptions sea` or `optPreset sea`), like `optQuaderno` but your own; a docs theme would ship
+  `tabOptions sea` or `optPreset sea`), like `optTokens` but your own; a docs theme would ship
   one.
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.
@@ -93,6 +93,9 @@ Rough size: S (hours), M (a day or two), L (more).
   skills post (0.1 use-it thread).
 - **A small skill benchmark** (S). Five tasks with and without the user skill, graded by building
   the result.
+- **Port the gt user guide** (M). A second part of the book: the guide of R's gt
+  (gt.rstudio.com/articles), its text kept, with 👑 Nim, 🏴‍☠️ R (the original) and, where Great
+  Tables has it, 🐍 Python. Check its licence (MIT) first.
 
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.

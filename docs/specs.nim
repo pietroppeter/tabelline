@@ -5,13 +5,13 @@
 ## "Links" box on the page.
 import std/[os, strutils, json, algorithm, strformat, sequtils]
 import nimib except md
-import quaderno
+import blocchi
 import ../tools/specexamples
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "specs" / "index.html"
-nb.useQuaderno(nome = "tabelline", materia = "Specs", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Specs", classe = "living document",
                title = "tabelline specs", homeHref = "../",
                description = "How tabelline behaves today: OpenSpec requirements with examples that run.")
 
@@ -118,7 +118,7 @@ proc exampleHtml(k: int): string =
     of "ran": "ran (no expected output)"
     of "fail": "✗ the output differs"
     else: (if ex.path.startsWith("openspec/changes"): "to do: not built yet" else: "✗ error")
-  result = &"""<div class="example {v}"><div class="ex-head"><span class="timbro">{label}</span> <code>{ex.path}:{ex.line}</code></div>"""
+  result = &"""<div class="example {v}"><div class="ex-head"><span class="timbro {(if v in ["pass", "ran"]: "ok" else: "ko")}">{label}</span> <code>{ex.path}:{ex.line}</code></div>"""
   result.add """<pre><code class="nohighlight nim">""" & highlightNim(ex.code) & "</code></pre>"
   for h in r["html"]: result.add h.getStr
   let o = r["out"].getStr
@@ -157,12 +157,11 @@ for k, ex in examples:
 for s in specs:
   for (_, rs) in s.sections: nreq += rs.len
 
-nbRawHtml: &"""<p class="kicker">Specs · living page · rebuilt on every push</p>
-<h1>How tabelline behaves</h1>
-<p class="lede">Every behaviour agreed so far, written down with <a href="https://github.com/Fission-AI/OpenSpec">OpenSpec</a>:
-{specs.len} specs, {nreq} requirements, {total} examples. Each example ran against the code while this page was
-built: <span class="timbro">{passing} of {total} pass</span></p>
-<div class="filterbar nota azzurra" id="filterbar" hidden></div>"""
+nbTitolo "Specs · living page · rebuilt on every push", "How tabelline behaves", &"""
+Every behaviour agreed so far, written down with [OpenSpec](https://github.com/Fission-AI/OpenSpec):
+{specs.len} specs, {nreq} requirements, {total} examples. Each example ran against the code while
+this page was built: **{passing} of {total} pass**.
+"""
 
 nbText: """
 A **spec** in `openspec/specs/` says how one part of tabelline behaves today: requirements, each
@@ -172,22 +171,25 @@ archived and its deltas join the specs. The examples are checked by
 `nim r tools/specexamples.nim`, here and in CI. Tap a spec to open it.
 """
 
-nbRawHtml: """<details class="links nota"><summary><b>Links to a part of this page</b>, for people and agents</summary>""" &
-  markdownToHtml("""
+nbNota("""
 Add `spec=` or `change=` to this page's link to show only some of it, opened:
 [`?spec=formatting`](?spec=formatting), [`?spec=table-*`](?spec=table-*) (a prefix),
 [`?spec=formatting,styling`](?spec=formatting,styling), [`?change=all`](?change=all).
 The same works after `#` (`#spec=formatting`). The filter runs in the browser; a tool that does
 not run JavaScript gets the whole page, so to read one spec, read its markdown:
 `openspec/specs/<name>/spec.md` in the repository.
-""") & "</details>"
+""", nkInfo, "Links to a part of this page, for people and agents")
 
-var specsHtml = "<h2 id=\"specs\">Specs</h2>"
+# The specs and changes are rendered from OpenSpec's markdown by this page's own procs above: a
+# one-off renderer, so they go in as HTML. Their CSS is in stile.nim, the filter in blocchi.nim.
+nbText "## Specs"
+var specsHtml = """<div class="filterbar nota info" id="filterbar" hidden></div>"""
 for s in specs: specsHtml.add specHtml(s)
 nbRawHtml: specsHtml
 
-var changesHtml = "<h2 id=\"open-changes\">Open changes</h2>"
-if changes.len == 0: changesHtml.add "<p>None at the moment: see the backlog for what may come next.</p>"
+nbText "## Open changes"
+if changes.len == 0: nbText "None at the moment: see the backlog for what may come next."
+var changesHtml = ""
 for c in changes:
   changesHtml.add &"""<details class="spec change" data-change="{c.name}" id="change-{c.name}"><summary><b>{c.name}</b> <span class="counts">tasks {c.done}/{c.total}</span></summary>"""
   changesHtml.add "<div class=\"req\">" & markdownToHtml(c.proposal) & "</div>"
@@ -195,52 +197,5 @@ for c in changes:
   if c.tasks.len > 0: changesHtml.add "<div class=\"req\"><h4>Tasks</h4>" & markdownToHtml(c.tasks) & "</div>"
   changesHtml.add "</details>"
 nbRawHtml: changesHtml
-
-nbRawHtml: """<style>
-details.spec { background: var(--card); border: 1.5px solid #C9D9EC; border-radius: 10px; margin: .8rem 0; padding: .5rem 1rem; box-shadow: 2px 3px 0 rgba(31,78,153,.07); }
-details.spec > summary { cursor: pointer; font-size: 1.1rem; }
-details.spec > summary b { font: 1.45rem var(--hand); color: var(--pen); margin-right: .4rem; }
-details.spec .counts { color: var(--muted); font-size: .85rem; }
-details.spec .purpose { display: block; color: var(--pencil); font-size: .95rem; margin: .2rem 0 .3rem; }
-details.spec .spec { box-shadow: none; }
-.req { border-top: 2px dashed #C9D9EC; padding: .4rem 0 .6rem; }
-.req h4 { font: 1.3rem var(--hand); color: var(--pen-red); margin: .6rem 0 .2rem; }
-h4.section { font: 1.2rem var(--hand); color: var(--muted); }
-.example { margin: .6rem 0 1rem; }
-.example .ex-head { display: flex; gap: .6rem; align-items: center; font-size: .8rem; color: var(--muted); }
-.example.fail .timbro, .example.error .timbro { background: #FDE0EA; }
-.example.pass .timbro { color: #1C7A4E; border-color: #1C7A4E; }
-.ex-out summary { cursor: pointer; font: 1.05rem var(--hand); color: var(--muted); }
-.scen { background: #F4F8FD; border-radius: 8px; padding: .4rem .8rem; margin: .5rem 0; }
-.scen-name { font: 1.1rem var(--hand); color: var(--pen); }
-.scen ul { margin: .2rem 0; padding-left: 1.2rem; }
-.kw { font: 600 .75rem var(--text); letter-spacing: .08em; padding: 0 .3rem; border-radius: 4px; }
-.kw.when { background: #DDEEFF; } .kw.then { background: #DDF7DA; } .kw.and, .kw.given { background: #FFF6B8; }
-.src { font-size: .8rem; color: var(--muted); }
-details.links summary { cursor: pointer; }
-</style>"""
-
-# The filter: `?spec=a,b&change=c` (or after `#`) shows only those, opened. Runs in the browser.
-nbRawHtml: """<script>
-(function () {
-  const params = new URLSearchParams(location.search || location.hash.slice(1));
-  const want = { spec: [], change: [] };
-  for (const k of ["spec", "change"]) for (const v of params.getAll(k)) want[k].push(...v.split(",").map(s => s.trim()).filter(Boolean));
-  if (!want.spec.length && !want.change.length) return;
-  const match = (name, list) => list.some(p => p === "all" || p === name || (p.endsWith("*") && name.startsWith(p.slice(0, -1))));
-  const found = [];
-  document.querySelectorAll("details.spec[data-spec]").forEach(d => {
-    const ok = match(d.dataset.spec, want.spec); d.hidden = !ok; if (ok) { d.open = true; found.push(d.dataset.spec); } });
-  document.querySelectorAll("details.change[data-change]").forEach(d => {
-    const ok = match(d.dataset.change, want.change); d.hidden = !ok; if (ok) { d.open = true; found.push(d.dataset.change); } });
-  if (!want.spec.length) document.getElementById("specs").hidden = true;
-  if (!want.change.length) document.getElementById("open-changes").hidden = true;
-  const bar = document.getElementById("filterbar");
-  const missing = [...want.spec, ...want.change].filter(p => !p.endsWith("*") && p !== "all" && !found.includes(p));
-  bar.innerHTML = "Showing only: <b>" + (found.join(", ") || "nothing") + "</b>" +
-    (missing.length ? " · not found: " + missing.join(", ") : "") + ' · <a href="' + location.pathname + '">show everything</a>';
-  bar.hidden = false;
-})();
-</script>"""
 
 nbSave
