@@ -62,13 +62,14 @@ working rules that are easy to miss.
   `optPageTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
-- The home page shows the simplest example and links the living documents in this order: The
-  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
-  lists only posts. A new living document gets a card there
-  (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
-- The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
-  change starts as a devlog post. The Agents page reads this file when it builds.
-- Living documents are kept up to date. A devlog post
+- The home page shows the simplest example and links the pages in three groups, by the question
+  a reader brings: Learn tabelline (Guide, Book), Where it's going (Roadmap, Feature map), How
+  it's made (Devlog, Specs, Design guide, For coding agents). Name pages in plain words a newcomer
+  reads without knowing how tabelline is made. The devlog lists only posts. A new page gets a card
+  there (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
+- The Design guide (`docs/design.nim`) is updated in the PR that changes the look; a big design
+  change starts as a devlog post. The page For coding agents reads this file when it builds.
+- The pages of the site are kept up to date. A devlog post
   (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
@@ -80,7 +81,7 @@ working rules that are easy to miss.
   on cards). Colours are the tokens of `docs/stile.nim`: six values per look (paper, ink,
   primary, secondary, warning, success), and every other colour mixed from them (`--n-0` …
   `--n-9`, `--surface`, `--x-soft`, `--x-text`); the warning colour is never text.
-- The coverage map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
+- The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`

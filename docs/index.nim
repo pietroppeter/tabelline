@@ -1,5 +1,6 @@
 ## The home page, docs/index.html: what tabelline is, the simplest table that shows it, and the
-## living documents, in reading order. Dated posts are not listed here: they are in the devlog.
+## pages of the site in three groups, by the question a reader brings: learn tabelline, where it is
+## going, how it is made. Dated posts are not listed here: they are in the devlog.
 ## When a release adds features, the table may grow a little, but it stays simple.
 import std/os
 import nimib except md
@@ -33,34 +34,40 @@ nbCode:
     optPageTheme()  # the page's colours
 nbParti t
 nbText: """
-The six parts of every gt table are explained in [The Great Explainer](explainer/#the-parts-of-a-table).
+The six parts of every gt table are explained in the [Guide](explainer/#the-parts-of-a-table).
 The last line, `optPageTheme()`, is tabelline's own: the table takes its colours and font from the
 page, so it changes with the look you pick at the top ([how it works](explainer/#tables-that-follow-the-page)).
 """
 
-# The living documents, in the order to read them; each is kept up to date. Posts are in the devlog.
+# The pages of the site, in three groups by the question a reader brings, each in reading order.
+# They are kept up to date as tabelline changes; dated posts are in the devlog.
 # Until the book's sources (book/) are in the repository, its card says it is coming, with no link.
-type Living = tuple[href, title, what: string]
-var living: seq[Living] = @[
-  ("explainer/", "The Great Explainer", "gt and Great Tables from zero: what they are, how they work inside, who uses them; and tabelline, step by step."),
-  ("devlog/", "Devlog", "How tabelline is made: every post, newest first. Bigger changes are tracked and explained here."),
-  ("book/", "Book", "The Great Tables and gt guides ported to tabelline, page by page, with the original next to it."),
-  ("roadmap/", "Roadmap", "The releases from 0.1 to 0.5, and the three threads that make each one: build it, use it, port the references."),
-  ("coverage/", "Coverage map", "Every feature group of gt and Great Tables, what tabelline has, and the releases that plan the rest."),
-  ("design/", "Design Ref", "The two looks, the shapes, the palette, the type and every component, with when to use each: the reference for writing a page."),
-  ("agents/", "Agents", "For coding agents: setup, commands, the working rules and where things are."),
-  ("specs/", "Specs", "How tabelline behaves today: requirements with examples that ran when the page was built."),
+type
+  Page = tuple[href, title, what: string]
+  Group = tuple[heading, lede: string, pages: seq[Page]]
+let groups: seq[Group] = @[
+  ("Learn tabelline", "Start here.", @[
+    ("explainer/", "Guide", "gt and Great Tables from zero: what they are, how they work inside, who uses them; then tabelline, step by step."),
+    ("book/", "Book", "The gt and Great Tables guides, redone in Nim page by page, with the original next to every example."),
+  ]),
+  ("Where it's going", "What tabelline has today and what comes next.", @[
+    ("roadmap/", "Roadmap", "What each release from 0.1 to 0.5 adds, and the real tables it is tried on."),
+    ("coverage/", "Feature map", "Every feature of gt and Great Tables, and whether tabelline has it yet."),
+  ]),
+  ("How it's made", "For anyone who wants to look inside or help.", @[
+    ("devlog/", "Devlog", "Dated posts on how tabelline is made, newest first. The other pages are kept up to date; posts stay as they were written."),
+    ("specs/", "Specs", "How tabelline behaves, requirement by requirement, written with OpenSpec for agents and people: each with an example that ran when the page was built."),
+    ("design/", "Design guide", "How these pages look and why: the two looks, the shapes, the palette, the type and every component."),
+    ("agents/", "For coding agents", "Setup, commands, where things are and the working rules, for a coding agent or a person new to the code."),
+  ]),
 ]
 let bookReady = dirExists(docs.parentDir / "book")
 
-nbText: """
-## Living documents
-
-Kept up to date as tabelline changes, in the order to read them.
-"""
-nbCards "the living documents":
-  for i, d in living:
-    let ready = d.href != "book/" or bookReady
-    nbCard(d.title & (if ready: "" else: " (coming soon)"), (if ready: d.href else: ""), $(i + 1)):
-      nbText d.what
+for g in groups:
+  nbText "## " & g.heading & "\n\n" & g.lede
+  nbCards g.heading:
+    for d in g.pages:
+      let ready = d.href != "book/" or bookReady
+      nbCard(d.title & (if ready: "" else: " (coming soon)"), (if ready: d.href else: ""), ""):
+        nbText d.what
 nbSave

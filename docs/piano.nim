@@ -1,5 +1,5 @@
 ## The plan of the releases: for each one, the three threads that make it (build, use it, port
-## the references) and what each will produce. Shared by the roadmap (a living document) and
+## the references) and what each will produce. Shared by the roadmap (kept up to date) and
 ## the devlog post that introduced it. Change it here when a thread starts, ships or changes
 ## its plan.
 
