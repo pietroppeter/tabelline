@@ -33,7 +33,7 @@ proc preview*(slug: string): Option[Tabella] =
       tabHeader "The medal table, top three"
       colsHide ["rank", "code", "total"]
       colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉"}
-      optPageTheme()
+      optCssTheme()
     some t
   else: none(Tabella)
 

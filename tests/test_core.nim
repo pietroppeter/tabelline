@@ -1,4 +1,4 @@
-import std/[unittest, options, math]
+import std/[unittest, options, math, sugar]
 import tabelline, tabelline/datasets
 
 suite "values and data":
@@ -25,6 +25,18 @@ suite "values and data":
     check d["a", 1].isNull
     check d["a"].kindOf == vkInt
     check d["b"].kindOf == vkString
+
+  test "tableData macro with loops and computed names":
+    let d = tableData:
+      `×`: collect(for i in 1 .. 3: i)
+      for j in 1 .. 3:
+        $j: collect(for i in 1 .. 3: i * j)
+      for k in ["a"]:
+        if k == "a":
+          (k & "!"): [k, nil, k]
+    check d.names == @["×", "1", "2", "3", "a!"]
+    check d["3", 2] == 9
+    check d["a!", 1].isNull
 
   test "csv inference":
     let d = parseCsv("a,b,c,d\n1,2.5,x,true\n2,,y,false\n")
