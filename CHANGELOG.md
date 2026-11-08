@@ -5,8 +5,11 @@
 - Docs: a new section, *Stories*: real subjects told in tables made with tabelline, one for every
   release, kept up to date (`docs/stories/`). *Milano Cortina 2026* moves there from the devlog,
   with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
-  has a Stories card, and the roadmap links each *use it* thread to its story.
+  shows the stories as a gallery, and the roadmap links each *use it* thread to its story (#26).
 
+- Docs: Munari is the base look of every page, so a page without JavaScript is Munari; the
+  quaderno stays as the other look, every rule of it scoped by `html[data-tema="quaderno"]`
+  (#24).
 - **Breaking (before 0.1):** `optTokens()` is renamed `optPageTheme()`, a name a gt user can read;
   the home page says what it does, and The Great Explainer has a section on it, *Tables that follow
   the page* (#21). The home page and the README no longer carry the status warning: the
