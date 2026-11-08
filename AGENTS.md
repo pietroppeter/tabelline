@@ -111,9 +111,14 @@ working rules that are easy to miss.
   The R tab is written for the book (the gt way to make the same table); where gt has no way,
   pass `""` and the tab says so.
 - When tabelline gains a feature a chapter works around, update the chapter and `book/gaps.md`.
-- The sources the book plans to port are in `book/plan/sources.json`; `python3 book/plan/plan.py`
-  maps each page to the features it calls and writes `book/plan/pages.json` (committed). Rerun it
-  when `docs/coverage/gt.json` changes or a source is added; findings of a port go to `found`.
+- The sources the book plans to port are in `book/plan/sources.json`: each says where its pages
+  are (`find`: a repository and paths), and lists by hand only the pages it has something to say
+  about. `python3 book/plan/plan.py` searches the repositories (git, no API), maps each page to
+  the features it uses and writes `book/plan/pages.json` (committed); it reports pages found and
+  not listed (`port: "triage"` until read: list them) and pages listed and gone. Rerun it when
+  `docs/coverage/gt.json` changes or a source is added; findings of a port go to `found`.
+  `python3 book/plan/plan.py fmt_currency` (or words of a feature) lists the pages that show a
+  feature, the help pages of gt and Great Tables first: start there when porting or building it.
 
 ## Previews and PRs
 
