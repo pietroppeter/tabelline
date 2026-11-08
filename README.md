@@ -94,7 +94,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
   custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where
   styles and colours should live, and what a nimib skill should teach against the drift.
 - [Reviewing the design: a palette by roles](https://pietroppeter.github.io/tabelline/devlog/design-review/)
-  (8 Nov 2026 C): what the pages' six colours do today, a palette by roles (neutral, primary,
+  (8 Nov 2026 C): what the pages' six colours do today, shape apart from colour, a palette by roles (neutral, primary,
   secondary, status, data) for both looks, every component mapped to it, and six choices to make
   before it becomes the new Design Ref.
 - [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
