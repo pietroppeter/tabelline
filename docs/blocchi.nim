@@ -475,7 +475,7 @@ const bodyScript = """<script>
 (function () {
   var root = document.documentElement;
   function show() {
-    var t = root.dataset.tema === 'munari' ? 'munari' : 'quaderno';
+    var t = root.dataset.tema === 'quaderno' ? 'quaderno' : 'munari';
     document.querySelectorAll('.tema button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
@@ -532,7 +532,7 @@ const bodyScript = """<script>
 </script>"""
 
 const temaSwitch = """<div class="tema" role="group" aria-label="Look of the page">
-<button type="button" data-tema="munari" title="after Bruno Munari">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
+<button type="button" data-tema="munari" title="after Bruno Munari" aria-pressed="true">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
 </div>"""
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
