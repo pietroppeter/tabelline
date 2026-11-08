@@ -64,5 +64,4 @@ nbCards "the living documents":
     let ready = d.href != "book/" or bookReady
     nbCard(d.title & (if ready: "" else: " (coming soon)"), (if ready: d.href else: ""), $(i + 1)):
       nbText d.what
-nbNota "Status: a first version. The API will change.", nkWarning
 nbSave

@@ -15,9 +15,6 @@ with their parts and their verbs (in camelCase), written in plain Nim, and fits 
 [agents](https://pietroppeter.github.io/tabelline/agents/) and the
 [specs](https://pietroppeter.github.io/tabelline/specs/).
 
-> **Status: 0.1, a proof of concept.** It already makes tables worth showing; most of gt is still
-> ahead, and the API will change.
-
 ```nim
 import tabelline, tabelline/datasets
 
