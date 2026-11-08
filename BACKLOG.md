@@ -23,10 +23,9 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Gaps from the month article** (S each, 0.1 use-it thread, [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/)): an `html()` cell format
   (`fmtMarkdown` escapes every tag but `<br>`); Markdown in row group labels; a TSV or
   `quote = ""` option for `readCsv` (a `"` inside a field is taken as quoting and dropped);
-  document that colours such as `fmtBar(color = "var(--x)")` can use the page's CSS variables.
+  document that colours such as `style.fill("var(--x)")` can use the page's CSS variables.
 
-- **Gaps from the Milano Cortina post** (S each, 0.1 use-it thread): a `comment` option for
-  `readCsv` (`#` lines); a `head`/`rowsKeep` that cuts the rows after `rowOrder`, for a top ten
+- **Gaps from the Milano Cortina post** (S each, 0.1 use-it thread): a `head`/`rowsKeep` that cuts the rows after `rowOrder`, for a top ten
   by another column; a rank helper; `fmtNumberSi` with a powered unit (`m³`) writes cubic
   megametres; `textCaseMatch(cases, loc...)` needs `locations =` because `default` and `replace`
   come first; say in the docs that text transforms run after `fmtMarkdown` (Markdown in a
