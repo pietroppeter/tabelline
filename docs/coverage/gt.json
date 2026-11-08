@@ -347,8 +347,8 @@
     {
      "feature": "Plots in cells",
      "gt": "fmt_nanoplot(), cols_nanoplot()",
-     "status": "partial",
-     "note": "fmtBar (a bar, not in gt) is the first step; nanoplots are lines, bars and boxes in SVG.",
+     "status": "missing",
+     "note": "Lines, bars and boxes in SVG. A draft of the single-value bar and line is kept for after 0.1.",
      "plan": "0.4",
      "size": "L"
     },

@@ -1,5 +1,5 @@
 ## The plan of the releases: for each one, the three threads that make it (build, use it, port
-## the references) and what each will produce. Shared by the roadmap (a living document) and
+## the references) and what each will produce. Shared by the roadmap (kept up to date) and
 ## the devlog post that introduced it. Change it here when a thread starts, ships or changes
 ## its plan.
 
@@ -59,7 +59,7 @@ const releases*: seq[Release] = @[
   ]),
   Release(version: "0.4", theme: "Pictures in cells", threads: @[
     t("build", "Build tabelline 0.4",
-      "Images inlined as data URLs, a small set of SVG icons, nanoplots (lines, bars, boxes), fmtBar layouts.",
+      "Images inlined as data URLs, a small set of SVG icons, nanoplots (lines, bars, boxes).",
       "post Designing tabelline 0.4; tag v0.4.0"),
     t("use", "Use it: the moons of the Solar System",
       "The planets' moons with NASA images (public domain), icons for their kind, and nanoplots of their orbits and sizes.",

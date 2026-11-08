@@ -1,5 +1,5 @@
 ## The Great Explainer: what gt and Great Tables are, how they work, who uses them, and a first
-## tabelline built step by step. A living document: kept up to date as tabelline grows.
+## tabelline built step by step. The site's Guide: kept up to date as tabelline grows.
 ## Writes docs/explainer/index.html.
 import std/[os, strutils, sequtils, sugar]
 import nimib except md   # nimib's old `md` (deprecated) would clash with tabelline's
@@ -9,12 +9,12 @@ import blocchi
 let root = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = root / "explainer" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "The Great Explainer", classe = "1ª · living document",
+nb.useTabelline(nome = "tabelline", materia = "The Great Explainer", classe = "1ª · guide",
                title = "The Great Explainer: great tables for Nim",
                description = "What gt and Great Tables are, how they work inside, who uses them, and a first version of tabelline, great tables for Nim.",
                homeHref = "../")
 
-nbTitolo "The Great Explainer · living document · started 7 November 2026", "Great tables, for Nim", """
+nbTitolo "Guide · The Great Explainer · started 7 November 2026", "Great tables, for Nim", """
 *Tabelline* is what Italian children call the times tables, the little tables learned by heart in primary school. It is also the name of a new Nim library for making **display tables**: tables meant to be read by people, with a title, grouped rows, labels over columns, formatted numbers, colours and notes. This page explains where the idea comes from (R's **gt** and Python's **Great Tables**), how those libraries are built, who uses them, and then builds a first, small tabelline, step by step.
 """
 nbText: """
@@ -404,7 +404,6 @@ reading order, wherever they were added.
 """
 nbCode:
   t = t.dataColor("mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0))
-    .fmtBar("moons", color = "var(--secondary)", width = "5em")
     .tabStyle(style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.stub(rows = where(it["planet"] == "Earth")))
     .tabFootnote("Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons"))
     .tabFootnote("Venus is hotter than Mercury: its thick atmosphere traps the heat.",

@@ -6,7 +6,7 @@ devlog post [What the book found for 0.1](https://pietroppeter.github.io/tabelli
 
 The gaps go from the simplest to the most complex, in the order a table is made: the data, the
 parts of the table, its columns and rows, then formats, text, options and styles. Each says
-where it is planned in the [coverage map](https://pietroppeter.github.io/tabelline/coverage/),
+where it is planned in the [feature map](https://pietroppeter.github.io/tabelline/coverage/),
 or **new** when the map does not have it; the new ones go to the build of the next release and
 to the backlog.
 

@@ -100,6 +100,44 @@ const articles* = [
 
 # ------------------------------------------------------------------------------------- the Games
 
+type SportFacts* = object
+  sport*, kind*, new*: string   ## kind: on snow, on ice, or sliding; new: the events added in 2026
+
+const sportFacts* = [
+  ## From Wikipedia's 2026 Winter Olympics § Sports: 116 events in 16 sports, seven more than
+  ## Beijing 2022. Eleven are new, four were dropped (alpine combined, the mixed team parallel,
+  ## luge's open doubles).
+  SportFacts(sport: "Alpine skiing", kind: "snow", new: "team combined, men and women"),
+  SportFacts(sport: "Biathlon", kind: "snow"),
+  SportFacts(sport: "Cross-country skiing", kind: "snow"),
+  SportFacts(sport: "Freestyle skiing", kind: "snow", new: "dual moguls, men and women"),
+  SportFacts(sport: "Nordic combined", kind: "snow"),
+  SportFacts(sport: "Ski jumping", kind: "snow", new: "women's large hill"),
+  SportFacts(sport: "Ski mountaineering", kind: "snow", new: "the whole sport: two sprints and a mixed relay"),
+  SportFacts(sport: "Snowboarding", kind: "snow"),
+  SportFacts(sport: "Curling", kind: "ice"),
+  SportFacts(sport: "Figure skating", kind: "ice"),
+  SportFacts(sport: "Ice hockey", kind: "ice"),
+  SportFacts(sport: "Short-track speed skating", kind: "ice"),
+  SportFacts(sport: "Speed skating", kind: "ice"),
+  SportFacts(sport: "Bobsleigh", kind: "sliding"),
+  SportFacts(sport: "Luge", kind: "sliding", new: "doubles for men and for women, instead of open doubles"),
+  SportFacts(sport: "Skeleton", kind: "sliding", new: "mixed team"),
+]
+
+const kindLabels* = {"snow": "❄️ on snow", "ice": "⛸️ on ice", "sliding": "🛷 sliding"}
+  ## The three kinds of sport, each with its emoji: the labels of the row groups.
+
+proc kindMark*(kind: string): string =
+  ## The emoji of a kind of sport.
+  for (k, label) in kindLabels:
+    if k == kind: return label.split(' ')[0]
+
+proc sportMarks*(): seq[(string, string)] =
+  ## Each sport with the emoji of its kind in front, for `textCaseMatch(replace = "partial")`.
+  for f in sportFacts: result.add (f.sport, kindMark(f.kind) & " " & f.sport)
+  result.add ("Short track speed skating", kindMark("ice") & " Short track speed skating")  # the venues' spelling
+
 type Trip* = object
   ## A trip between two places of the Games, in hours (lowest and highest).
   trip*, by*: string
