@@ -1,0 +1,61 @@
+# Every keynote of FOSDEM's schedules (2007-2025; earlier years and 2026 have no keynote type), without the welcome, closing and quiz, from events.csv and event_speakers.csv.
+year,day,start,title,by
+2007,Saturday,10:30,Status of Software Patents in Europe,Pieter Hintjens
+2007,Saturday,11:00,Keynote: OLPC,Jim Gettys
+2007,Saturday,12:00,Keynote: Liberating Java,Simon Phipps
+2007,Sunday,17:15,Beyond GPLv3,Georg Greve
+2008,Saturday,10:30,"Tux with Shades, Linux in Hollywood","Robin Rowe, Gabrielle Pantera"
+2008,Saturday,11:30,How a large scale opensource project works,Robert Watson
+2008,Saturday,12:30,Status update of Software Patents,Pieter Hintjens
+2009,Saturday,10:30,Free. Open. Future?,Mark Surman
+2009,Saturday,11:30,Debian,Bdale Garbee
+2009,Sunday,17:15,Google Summer of Code: A Behind the Scenes Look at Large Scale Community Management,Leslie Hawthorn
+2010,Saturday,10:45,Promoting Open Source Methods at a Large Company,Brooks Davis
+2010,Saturday,11:45,Evil on the Internet,Richard Clayton
+2010,Sunday,17:15,Write and Submit your first Linux kernel Patch,Greg Kroah-Hartman
+2011,Saturday,10:45,Why Political Liberty Depends on Software Freedom More Than Ever,Eben Moglen
+2011,Saturday,11:45,LLVM and Clang,Chris Lattner
+2011,Sunday,17:00,How kernel development goes wrong and why you should be a part of it anyway,Jonathan Corbet
+2012,Saturday,11:00,Free Software: A viable model for Commercial Success,Robert Dewar
+2012,Saturday,12:00,A New OSI For A New Decade,Simon Phipps
+2013,Saturday,11:00,How we made the Jenkins community,Kohsuke Kawaguchi
+2013,Saturday,12:00,The Devil is in the Details,Amelia Andersdotter
+2013,Sunday,17:00,The Keeper of Secrets,Leslie Hawthorn
+2014,Saturday,11:00,How we found a million style and grammar errors in the English Wikipedia,Daniel Naber
+2014,Saturday,12:00,Software Archaeology for Beginners,James Turnbull
+2014,Sunday,17:00,NSA operation ORCHESTRA: Annual Status Report,Poul-Henning Kamp
+2015,Saturday,10:00,Identity Crisis: Are we who we say we are?,Karen Sandler
+2015,Saturday,11:00,What is wrong with Operating Systems,Antti Kantee
+2015,Sunday,17:00,Living on Mars: A Beginner's Guide,Ryan MacDonald
+2016,Saturday,10:00,systemd and Where We Want to Take the Basic Linux Userspace in 2016,Lennart Poettering
+2016,Saturday,18:00,Ian Murdock,Martin Michlmayr
+2016,Sunday,17:00,Putting 8 Million People on the Map:,Blake Girardot
+2017,Saturday,10:00,Kubernetes on the road to GIFEE,Brandon Philips
+2017,Saturday,11:00,Software Heritage,"Stefano Zacchiroli, Roberto Di Cosmo"
+2017,Saturday,18:05,Understanding The Complexity of Copyleft Defense,Bradley M. Kuhn
+2017,Sunday,17:00,Using Linux in Air Traffic Control,Gerolf Ziegenhain
+2018,Saturday,10:00,Consensus as a Service,"Simon Phipps, Italo Vignoli"
+2018,Saturday,11:00,Next Generation Internet Initiative,"Rob van Kranenburg, Michiel Leenaars, Marietje Schaake, Georgios Tselentis"
+2018,Sunday,17:00,Exploiting modern microarchitectures,Jon Masters
+2019,Saturday,10:00,Can Anyone Live in Full Software Freedom Today?,"Bradley M. Kuhn, Karen Sandler"
+2019,Saturday,11:00,"FLOSS, the Internet and the Future",Mitchell Baker
+2019,Saturday,12:00,Blockchain: The Ethical Considerations,Deb Nicholson
+2019,Sunday,16:00,The Cloud is Just Another Sun,Kyle Rankin
+2019,Sunday,17:00,2019 - Fifty years of Unix and Linux advances,Jon 'maddog' Hall
+2020,Saturday,10:00,The Linux Kernel: We have to finish this thing one day ;),Thorsten Leemhuis
+2020,Sunday,16:00,FOSSH - 2000 to 2020 and beyond!,Jon 'maddog' Hall
+2020,Sunday,17:00,FOSDEM@20 - A Celebration,Steven Goodwin
+2023,Saturday,10:00,Celebrating 25 years of Open Source,Nick Vidal
+2023,Sunday,17:00,Open Source Software at NASA,Steve Crawford
+2024,Saturday,10:00,Where have the women of tech history gone?,Laura Durieux
+2024,Saturday,11:00,Outreachy: 1000 interns,"Karen Sandler, Anna e só, Omotola Eunice OMOTAYO, Sage Sharp"
+2025,Saturday,10:00,Program to Learn: The Power of Creative Coding,"Bernat Romagosa, John Maloney, Jens Mönig, Jadga Huegle"
+2025,Saturday,11:00,Where have the women of tech history gone? 2.0,Laura Durieux
+2025,Saturday,12:00,Scaling Open-Source Solutions to Achieve the Sustainable Development Goals: A Global Call to Action,"Amreen Taneja, omar"
+2025,Saturday,13:00,Rust for Linux,Miguel Ojeda
+2025,Saturday,16:00,14 Years of systemd,Lennart Poettering
+2025,Sunday,09:00,What FLOSS Means in the AI World,Mitchell Baker
+2025,Sunday,11:00,"Early Screening of ""ZeMarmot"" animation film (work-in-progress) with live music","Jehan, Aryeom, ORL AMMD"
+2025,Sunday,15:00,The Growing Body of Proprietary Infrastructure for FOSS Development: Repeating Bad History,"Karen Sandler, Bradley M. Kuhn, Denver Gingerich"
+2025,Sunday,16:00,How we are defending Software Freedom against Apple at the EU's highest court,Lucas Lasota
+2025,Sunday,17:00,"Ten Years as a Free, Open, and Automated Certificate Authority",Josh Aas

@@ -1,0 +1,49 @@
+# Devrooms that ran under names that differ by more than case, punctuation or the word devroom, matched by the families of insights.nim: their names in order, with years, from tracks.csv.
+devroom,first,keys,names
+GNUstep,2002,3,GNUstep (2002–2012); GNUstep+OpenGroupware+Etoile (2009); World of GNUstep (2011)
+PHP,2002,4,PHP (2002–2027); phppear (2005); PHP and Friends (2013–2017); PHP & Friends (2019)
+"Embedded, Mobile and Automotive",2003,3,"Embedded (2003–2015); Embedded and mobile (2013); Embedded, Mobile and Automotive (2016–2027)"
+Free Java,2004,5,Free Java (2004–2027); classpath (2005–2006); GNU Classpath+OpenJDK DevJam (2007); Java (2014–2015); Friends of OpenJDK (2021–2023)
+MySQL,2004,7,"MySQL (2004–2025); MySQL & friends (2011); MySQL and Friends (2012–2018); MySQL, MariaDB and Friends (2019–2020); MariaDB (2021); MariaDB Server (2022); MariaDB, MySQL and Friends (2023)"
+Perl & Raku,2005,6,Perl (2005–2017); Perl Programming Languages (2018); Perl and Raku Programming (2021); Raku (2022); Perl and Raku (2024); Perl & Raku (2027)
+Real Time Communications (RTC),2005,8,Jabber (2005–2013); Jabber & XMPP (2009–2011); Open Source Telephony (2011); Jabber and XMPP (2012); Telephony and Communications (2012); Telephony (2013); Real Time Communications (2017–2023); Real Time Communications (RTC) (2019–2025)
+X.Org,2006,3,xorg (2006); X.Org (2007–2013); X.org+OpenICC (2012)
+Desktops,2007,3,CrossDesktop (2007–2012); Cross desktop (2013); Desktops (2014–2017)
+FOSS Office,2008,7,OpenOffice.org (2008–2010); LibreOffice (2011–2025); Apache OpenOffice (2013–2022); Open Document Editors (2014–2020); LibreOffice Technology (2022); LibreOffice Technology Development Platform (2023); FOSS Office (2027)
+Ruby,2008,4,Ruby on Rails (2008); Ruby and Rails (2009); Ruby+Rails (2010); Ruby (2015–2027)
+"BSD, illumos, bhyve, OpenZFS",2010,2,"BSD (2010–2025); BSD, illumos, bhyve, OpenZFS (2026–2027)"
+Distributions,2010,4,Distributions (2010–2027); CrossDistro (2011); CrossDistribution (2012); Cross distro (2013)
+Infra Management,2011,5,Configuration Systems Management (2011–2013); Configuration and Systems Management (2012); Configuration Management (2014–2016); Config Management (2017–2018); Infra Management (2019–2022)
+Virtualization and Cloud Infrastructure,2011,7,New challenges in Virtualization (2011); Virtualization and Cloud (2012); Virtualisation (2013–2015); Virtualisation and IaaS (2014–2017); Infrastructure as a service (2015); Virtualization and IaaS (2018–2023); Virtualization and Cloud Infrastructure (2024–2027)
+Game Development,2012,3,Open Source Game Development (2012–2013); Game Development (2014–2020); Open Game Development (2016–2017)
+Graph Systems and Algorithms,2012,3,Graph Processing (2012–2019); Graph (2017); Graph Systems and Algorithms (2020–2023)
+Legal & Policy,2012,4,Legal issues (2012–2013); Legal and Policy Issues (2014–2024); Legal and Policy (2025); Legal & Policy (2026–2027)
+Microkernel and Component-based OS,2012,6,Microkernel OS (2012); Microkernels and Component-based OS (2013–2020); Microkernel-based operating systems (2014); Microkernels (2015–2018); Microkernel (2021); Microkernel and Component-based OS (2022–2027)
+Testing and Continuous Delivery,2013,4,Testing and Automation (2013–2023); Continuous Integration and Continuous Deployment (2020–2023); Test (2023); Testing and Continuous Delivery (2024–2027)
+Wine,2013,2,Wine Project (2013); Wine (2014)
+Energy,2014,4,Energy-efficient computing (2014); Energy (2023–2026); Energy: Reimagining this Ecosystem through Open Source (2024); Energy: Accelerating the Transition through Open Source (2025)
+"HPC, Big Data, and Data Science",2014,3,"HPC and computational science (2014); HPC, Big Data, and Data Science (2016–2027); HPC, Big Data & Data Science (2024–2026)"
+LLVM,2014,2,LLVM (2014–2027); LLVM Toolchain (2015–2018)
+Radio-Frequency Digital Signal Processing,2014,6,Software Defined Radio (2014–2018); Free Software Radio (2019–2022); Software-Defined Radio and Amateur Radio (2024); Radio (2025); Software Defined Radio(SDR)/Digital Signal Processing(DSP) (2026); Radio-Frequency Digital Signal Processing (2027)
+Electronic Design Automation (EDA),2015,3,Electronic design automation (2015); EDA (2016); Electronic Design Automation (EDA) (2017)
+Search,2015,2,Open source search (2015); Search (2019–2026)
+Containers,2016,3,Containers and Process Isolation (2016); Linux Containers and Microservices (2017); Containers (2018–2027)
+Backup and Recovery,2017,2,Backup and Disaster Recovery (2017); Backup and Recovery (2020)
+Decentralized Internet and Privacy,2017,3,Decentralised Internet (2017); Decentralised Internet and Privacy (2018); Decentralized Internet and Privacy (2019–2027)
+Monitoring and Observability,2017,3,Monitoring and Cloud (2017–2018); Monitoring and Observability (2019–2027); Monitoring & Observability (2024)
+Open Hardware and CAD/CAM,2018,2,CAD and Open Hardware (2018–2019); Open Hardware and CAD/CAM (2024–2027)
+Collaboration and content management,2019,2,Collaborative Information and Content Management Applications (2019–2021); Collaboration and content management (2022–2027)
+RISCV,2019,2,RISC-V (2019–2026); RISCV (2027)
+Confidential Computing,2020,2,Hardware-Aided Trusted Computing (2020–2022); Confidential Computing (2023–2026)
+"Erlang, Elixir, Gleam and Friends",2020,2,"Erlang, Elixir and Friends (2020–2023); Erlang, Elixir, Gleam and Friends (2024–2027)"
+Open Research,2020,3,Open Research Tools and Technologies (2020–2022); Open Research Tools and Technology (2023); Open Research (2024–2027)
+Emulator Development,2021,2,Emulator Development (2021–2027); Emulator (2024)
+FOSS on Mobile,2022,2,FOSS on Mobile Devices (2022–2025); FOSS on Mobile (2026–2027)
+FPGA and VLSI,2022,3,"Libre-Open VLSI and FPGA (2022); Libre-SOC, FPGA and VLSI (2024); FPGA and VLSI (2026)"
+Matrix.org Foundation and Community,2022,3,Matrix.org Foundation & Community (2022); Matrix (2023–2024); Matrix.org Foundation and Community (2025)
+Educational,2023,2,FOSS Educational Programming Languages (2023–2024); Educational (2025–2027)
+Image-Based Linux and Boot Integrity,2023,2,Image-based Linux and Secure Measured Boot (2023); Image-Based Linux and Boot Integrity (2025–2027)
+SBOMS and supply chains,2023,3,Software Bill of Materials (2023–2024); Software Bill of Materials (SBOM) (2025); SBOMS and supply chains (2026)
+"APIs: GraphQL, OpenAPI, AsyncAPI, and friends",2024,2,"APIs & friends (2024); APIs: GraphQL, OpenAPI, AsyncAPI, and friends (2025)"
+GCC (GNU Toolchain),2024,2,GCC (2024); GCC (GNU Toolchain) (2025–2027)
+Open Source & EU Policy,2024,3,Open Source In The European Legislative Landscape (2024); Open Source In The European Legislative Landscape and Beyond (2025); Open Source & EU Policy (2026–2027)

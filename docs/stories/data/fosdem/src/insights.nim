@@ -27,7 +27,7 @@ proc trackKey(e: Expr): Expr =
   e.str.normalize(UnicodeForm.NFKD).str.replaceAll(r"\p{Mn}", "")
    .str.toLowercase.str.replaceAll(r"[^a-z0-9]+", " ").str.stripChars
    .str.replace(r"^the ", "")
-   .str.replace(r" (devroom|dev room|developer room|developers room|track)s?$", "")
+   .str.replace(r"( (devroom|dev room|developer room|developers room|track)s?)+$", "")
 
 const lastYear = 2027      # the edition announced so far
 const lastHeld = 2026      # the last edition with a schedule
@@ -192,6 +192,29 @@ rooms.lazy.groupBy(col.family).agg(
   .collect
   .save("devrooms_longest.csv", "Devrooms held in ten editions or more, from tracks.csv: years, longest run of consecutive editions, talks, names.")
 
+# B2b: the renames. A name folded to a key matches "Mozilla devroom" and "mozilla"; the families
+# above join keys that differ. One row per family with more than one key: its names in order.
+let raw = rd("tracks.csv").filter(col.kind == "devroom")
+  .withColumns(trackKey(col.track).alias("key"))
+  .withColumns(familyOf(col.key).alias("family"))
+raw.sort(["family", "key", "year", "events", "track"], descending = [false, false, false, true, false])
+  .groupBy(col.family, col.key)
+  .agg(col.year.min.alias("from"), col.year.max.alias("to"), col.year.nUnique.alias("years"),
+       col.track.last.str.replace(r"(?i)( dev ?room)+$", "").alias("name"))
+  .withColumns(choose(
+      if col("from") == col.to: format("{} ({})", col.name, col("from"))
+      else: format("{} ({}–{})", col.name, col("from"), col.to)).alias("label"))
+  .sort(["family", "from", "to", "key"])
+  .groupBy(col.family)
+  .agg(col.key.count.alias("keys"), col("from").min.alias("first"),
+       col.label.str.join("; ").alias("names"),
+       col.name.sortBy(col.to).last.alias("devroom"))
+  .filter(col.keys > 1)
+  .sort(["first", "devroom"])
+  .select(col.devroom, col.first, col.keys, col.names)
+  .collect
+  .save("devroom_renames.csv", "Devrooms that ran under names that differ by more than case, punctuation or the word devroom, matched by the families of insights.nim: their names in order, with years, from tracks.csv.")
+
 # B3: every year, how many devrooms were new, continued, came back, and did not come back.
 rooms.lazy.withColumns(
     (col.next.isNull and col.year < lastYear).alias("last_time"))
@@ -230,6 +253,26 @@ saturday.join(mainRoom, on = ["year"]).filter(col.title.str.contains(welcome).no
   .select(col.year, col.start, col.room, col.title, col.by)
   .sort("year").collect
   .save("openers.csv", "The first talk in the main room on Saturday of every edition (after the welcome), from events.csv and event_speakers.csv.")
+
+# C1b: the keynotes, where the schedule has them (2007-2025): the opening talk is the first, and
+# most years one more on Saturday morning and one at the end of Sunday, before the closing.
+let notKeynote = r"(?i)^(welcome|closing|donators return|the endgame)|highlights|quiz"
+events.filter(col.kind == "keynote" and col.title.str.contains(notKeynote).not)
+  .join(names, on = ["year", "event_id"], how = JoinType.Left)
+  .filter(col.by.isNotNull and col.by != "FOSDEM" and col.by != "FOSDEM Staff")
+  .withColumns(choose(if col.day == "Saturday": 1 else: 2).alias("d"))
+  .sort(["year", "d", "start", "event_id"])
+  .select(col.year, col.day, col.start, col.title, col.by)
+  .collect
+  .save("keynotes.csv", "Every keynote of FOSDEM's schedules (2007-2025; earlier years and 2026 have no keynote type), without the welcome, closing and quiz, from events.csv and event_speakers.csv.")
+
+# C1c: the keynotes of each year, Saturday's and Sunday's, by who gave them.
+readCsv(outDir / "keynotes.csv", commentPrefix = "#").lazy.groupBy(col.year)
+  .agg(len().alias("keynotes"),
+       col.by.filter(col.day == "Saturday").str.join("; ").alias("saturday"),
+       col.by.filter(col.day == "Sunday").str.join("; ").alias("sunday"))
+  .sort("year").collect
+  .save("keynotes_by_year.csv", "The keynotes of every year that has them (2007-2025), by who gave them, Saturday's and Sunday's, from keynotes.csv.")
 
 # C2: the people who spoke at the most editions.
 people.filter(col.is_person)

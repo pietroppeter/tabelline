@@ -77,7 +77,7 @@ parts <- data.frame(
   part = c("📅 The editions", "🚪 The devrooms", "🎤 The people"),
   questions = c("When is it? How big is it? What did the online years change?",
                 "Which devrooms come in 2027? Which ran the longest? How many are new each year?",
-                "Who opens FOSDEM? Who keeps coming back? How many speak for the first time?"))
+                "Who gives the keynotes? Who keeps coming back? How many speak for the first time?"))
 gt(parts) |>
   opt_css_theme() |>
   cols_label(part = "part", questions = "three questions") |>
@@ -184,10 +184,8 @@ gt(sizes, rowname_col = "year", groupname_col = "decade") |>
                fns = list(total = ~ sum(.)), fmt = ~ fmt_integer(.)) |>
   grand_summary_rows(columns = c(events, devroom_talks, main_track_talks),
                      fns = list(`all 26` = ~ sum(.)), fmt = ~ fmt_integer(.)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_body(rows = year <= 2006)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_stub(rows = year <= 2006)) |>
-  tab_footnote("Until 2006 the devroom talks are known only where a devroom page is archived.",
-               cells_stub(rows = year == 2006)) |>
+  tab_footnote("Partial: until 2006 the devroom talks are known only where a devroom page is archived.",
+               cells_stub(rows = year >= 2004 & year <= 2006)) |>
   tab_source_note("FOSDEM's schedules; an event is anything on them, with stands and BOFs.") |>
   tab_options(table.font.size = "12px", data_row.padding = px(2), column_labels.padding.horizontal = px(3), data_row.padding.horizontal = px(3))
 """
@@ -294,26 +292,25 @@ Twenty-four editions, almost all of them, for two devrooms: Mozilla's, which ran
 
 nbShowR """
 longest <- read.csv("devrooms_longest.csv", comment.char = "#")
-longest$in_2027 <- longest$in_2027 == "true"
-gt(longest, rowname_col = "devroom") |>
+longest$now <- ifelse(longest$in_2027 == "true", "in 2027 too", "no longer held")
+gt(longest, rowname_col = "devroom", groupname_col = "now") |>
   opt_css_theme() |>
   tab_header("The longest-running devrooms", "held in ten editions or more") |>
   cols_hide(c(names, in_2027)) |>
+  row_group_order(c("in 2027 too", "no longer held")) |>
   cols_merge_range(first, last, sep = "–") |>
   fmt_integer(talks) |>
   cols_label(first = "years", editions = "editions", longest_run = "in a row",
              talks = "talks", n_names = "names") |>
   tab_style(cell_text(whitespace = "nowrap"), cells_body(first)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_body(rows = !in_2027)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_stub(rows = !in_2027)) |>
   tab_style(cell_text(weight = "bold"), cells_body(editions)) |>
-  tab_footnote("Grey: not among the devrooms of 2027.", cells_column_labels(first)) |>
   tab_source_note("FOSDEM's schedules and devroom pages; 2002–2006 partial.") |>
   tab_options(table.font.size = "12px", data_row.padding = px(2), column_labels.padding.horizontal = px(3), data_row.padding.horizontal = px(3))
 """
 
 nbNota("""
-`cols_merge_range` again, for the first and the last year. The longest run of consecutive
+`cols_merge_range` again, for the first and the last year; the two groups come from a column
+made in R from `in_2027`. The longest run of consecutive
 editions comes from nanuq: the year minus the year's rank in its devroom is the same number
 for the whole run (`col.year - col.year.rank.over("family")`), and a group by counts it.
 """, nkCode)
@@ -323,6 +320,35 @@ The names column is the number of names a devroom had: FOSS Office had ten, from
 OpenOffice.org to LibreOffice Technology. Some are languages (Java, Python, Go, Perl, Ada), some
 communities of projects (BSD, Distributions), some topics that kept their room as the projects
 in them changed (Legal and Policy, Virtualization, Containers).
+
+How is a devroom matched across years, when its name changes? In two steps. First every name is
+folded to a key: lower case, no accents or punctuation, without a leading "the" or a trailing
+"devroom" or "track", so "Mozilla devroom" and "mozilla" are one. That is enough for most. Then
+49 rules typed by hand join keys that are the same room under another name, such as Jabber,
+XMPP and Real Time Communications. These are the devrooms the rules joined, with every name
+they had:
+"""
+
+nbShowR """
+renames <- read.csv("devroom_renames.csv", comment.char = "#")
+gt(renames, rowname_col = "devroom") |>
+  opt_css_theme() |>
+  tab_header("One devroom, many names", "the devrooms joined by hand, with every name and its years") |>
+  cols_hide(keys) |>
+  cols_label(first = "since", names = "") |>
+  cols_width(devroom ~ pct(34), first ~ px(44)) |>
+  tab_style(cell_text(size = "11.5px"), cells_body(names)) |>
+  tab_style(cell_text(weight = "bold"), cells_stub()) |>
+  tab_source_note("FOSDEM's schedules and devroom pages; the rules are in src/insights.nim.") |>
+  tab_options(table.font.size = "12px", data_row.padding = px(3))
+"""
+
+nbNota("""
+The table is made in nanuq: each devroom's names are grouped by their key, written as "name
+(first–last)" with `format`, and joined in order with `str.join("; ")`. A name can overlap the
+next one: Free Java and Java were both used in 2014 and 2015.
+""", nkCode)
+nbText: """
 
 ### How many are new each year?
 
@@ -342,9 +368,9 @@ gt(flow, rowname_col = "year", groupname_col = "decade") |>
                fns = list(total = ~ sum(.)), fmt = ~ fmt_integer(.)) |>
   sub_zero(last_time, zero_text = "", rows = year == 2027) |>
   tab_style(cell_fill(tinta("--success-soft")), cells_body(new, rows = new >= 13)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_body(rows = year <= 2006)) |>
-  tab_style(cell_text(color = tinta("--muted")), cells_stub(rows = year <= 2006)) |>
   tab_footnote("Not held again up to 2027.", cells_column_labels(last_time)) |>
+  tab_footnote("Partial: the old sites list some devrooms without their pages.",
+               cells_stub(rows = year <= 2006)) |>
   tab_source_note("FOSDEM's schedules and devroom pages; 2002–2006 partial.") |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
@@ -364,10 +390,10 @@ devrooms turn over faster.
 nbText: """
 ## C · The people
 
-### Who opens FOSDEM?
+### Who gives the keynotes?
 
 The first talk on Saturday morning, in Janson, the biggest hall of the ULB, after the
-welcome, is FOSDEM's keynote. Richard Stallman gave the first, on software patents, and two
+welcome, opens FOSDEM. Richard Stallman gave the first, on software patents, and two
 more; then came the founders of O'Reilly, Wikipedia, the Software Freedom Law Center, Jenkins,
 systemd:
 """
@@ -399,9 +425,36 @@ after the welcome) is in nanuq.
 """, nkCode)
 
 nbText: """
-The early keynotes were about freedom, patents and licences. From 2012 they are about how
+The early openings were about freedom, patents and licences. From 2012 they are about how
 projects are made and kept (communities, money, the kernel), and in 2025 about how one learns
 to program.
+
+The opening is not the only keynote. From 2007, when the schedule starts to mark them, to 2025,
+Janson usually has one or two more on Saturday and one at the end of Sunday, before the closing:
+Greg Kroah-Hartman on a first kernel patch in 2010, Chris Lattner on LLVM in 2011, Poul-Henning
+Kamp on the NSA in 2014. 2025 had ten, Saturday and Sunday. The pretalx schedule of 2026 has no
+keynote type, and the online years had none.
+"""
+
+nbShowR """
+keynotes <- read.csv("keynotes_by_year.csv", comment.char = "#")
+gt(keynotes, rowname_col = "year") |>
+  opt_css_theme() |>
+  tab_header("The keynotes", "who gave them, 2007 to 2025") |>
+  cols_label(keynotes = "", saturday = "Saturday", sunday = "Sunday") |>
+  text_transform(function(x) gsub("; ", " · ", x), cells_body(c(saturday, sunday))) |>
+  tab_style(cell_text(size = "12px"), cells_body(c(saturday, sunday))) |>
+  tab_style(cell_text(weight = "bold"), cells_body(keynotes)) |>
+  tab_source_note("FOSDEM's schedules, events of type keynote; without the welcome, the closing and the quiz.") |>
+  tab_options(table.font.size = "13px", data_row.padding = px(3))
+"""
+
+nbNota("""
+`text_transform` turns the separator nanuq wrote between talks into a dot, and leaves the commas
+between the people of one talk. The keynotes are kept one per row in `story/keynotes.csv`; this
+table groups them by year and day, in nanuq.
+""", nkCode)
+nbText: """
 
 ### Who keeps coming back?
 

@@ -30,8 +30,9 @@ sender of each devroom's CfP post (`cfp_posts.csv`), usually one of the devroom'
 them also spoke at that edition. The FOSDEM staff itself is only in prose (team pages of 2003–2006).
 
 The story's own small tables are in `story/`, made from these by `src/insights.nim` (nanuq): the
-dates, sizes, online years, devroom families (renames matched by hand), the devrooms of 2027,
-opening talks, recurring speakers and newcomers. `story/fosdem-gt.json` keeps the HTML of the
+dates, sizes, online years, devroom families (renames matched by hand, listed in
+`devroom_renames.csv`), the devrooms of 2027, opening talks and keynotes, recurring speakers and
+newcomers. `story/fosdem-gt.json` keeps the HTML of the
 story's gt tables (it is written in R with gt until tabelline 0.2 and 0.3 are built), to compare
 with the tabelline port.
 
