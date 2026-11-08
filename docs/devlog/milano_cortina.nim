@@ -205,6 +205,42 @@ nbText: """
 `fmtDuration` takes hours and writes them as a length of time, "10h", so it reads as a trip,
 not as a number. Ten hours on buses and trains, from the men's downhill to the women's.
 
+### What was raced?
+
+116 events in 16 sports, seven more than four years before in Beijing. A sport is born on snow,
+on ice, or on a sled: grouped that way, the sports of 2026 with their events, and in green those
+with something new.
+"""
+
+nbShowCode:
+  let events = readTsv("sports.tsv")
+  type SportRow = object
+    kind, sport: string
+    events: int
+    new: string
+  var rows: seq[SportRow]
+  for f in sportFacts:   # the facts, in their order, with the events counted on Wikipedia
+    let i = toSeq(0 ..< events.nrows).filterIt($events["sport", it] == f.sport)[0]
+    rows.add SportRow(kind: f.kind, sport: f.sport, events: int(events["events", i].toFloat), new: f.new)
+  let t = tabella(rows, rownameCol = "sport", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "116 events, 16 sports", "in green, what is new in 2026"
+    colsLabel {"events": "events", "new": "new"}
+    textCaseMatch {"snow": "❄️ on snow", "ice": "⛸️ on ice", "sliding": "🛷 sliding"}, locations = loc.rowGroups()
+    tabStyle style.fill(fresh), loc.body(rows = where($it["new"] != ""))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it["new"] != ""))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["sport"] == "Ski mountaineering"))
+    tabStyle style.text(size = "12px"), loc.body(cols("new"))
+    tabSourceNote md("Wikipedia, [2026 Winter Olympics § Sports](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Sports).")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbText: """
+Eleven events are new and four were dropped, so 109 became 116. Ski mountaineering, racing up and
+down a mountain on skis, is a sport the Games had never had; luge split its open doubles into one
+for men and one for women. The row groups come from a column,
+`groupnameCol = "kind"`, and `textCaseMatch(locations = loc.rowGroups())` gives each its emoji.
+
 ### Who won?
 
 The medal table is the table everyone looks at, and the one the Olympic Charter says does not
@@ -293,6 +329,44 @@ Italy is fourth by golds (ten, like the Netherlands, but one silver fewer) and t
 (thirty). The Netherlands drop from third to ninth: all their twenty medals came from two sports,
 speed skating and short track. Germany won nineteen in the three sliding sports, Japan
 twenty-one where judges give the score ({link("2026/02/23/criteri-classifica-olimpiadi-medaglie/", "Il Post")}).
+
+Every sport has a medal table of its own. Here is the first team of each, grouped as the events
+were, with Italy's medals beside it:
+"""
+
+nbShowCode:
+  let all = readTsv("by-sport.tsv")   # every row of the 16 sports' medal tables
+  type Leader = object
+    kind, sport, code, team: string
+    gold, italy: int
+  var rows: seq[Leader]
+  for f in sportFacts:
+    let mine = toSeq(0 ..< all.nrows).filterIt($all["sport", it] == f.sport)
+    let first = mine[0]   # each sport's table is in medal-table order
+    let italy = mine.filterIt($all["team", it] == "Italy")
+    rows.add Leader(kind: f.kind, sport: f.sport, code: $all["code", first], team: $all["team", first],
+                    gold: int(all["gold", first].toFloat),
+                    italy: (if italy.len > 0: int(all["total", italy[0]].toFloat) else: 0))
+  let t = tabella(rows, rownameCol = "sport", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "Who won each sport", "the first team of each sport's medal table"
+    fmtFlag "code"
+    colsLabel {"code": "", "team": "first", "gold": "🥇", "italy": "🇮🇹 🏅"}
+    textCaseMatch {"snow": "❄️ on snow", "ice": "⛸️ on ice", "sliding": "🛷 sliding"}, locations = loc.rowGroups()
+    subZero "italy", zeroText = "—"
+    tabStyle style.fill(gilt), loc.body(cols("italy"), rows = where(it["italy"].toFloat >= 4))
+    tabStyle style.text(size = "12px"), loc.body(cols("team"))
+    tabSourceNote md("Wikipedia, the 16 articles *<sport> at the 2026 Winter Olympics*, each with its medal table.")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbText: &"""
+Nine countries share the sixteen firsts. Norway, first overall, leads three, all Nordic
+skiing (cross-country, ski jumping, Nordic combined); the United States lead three sports on ice
+and snow; the Netherlands both kinds of skating on a track; Germany two of the three sleds. Italy
+won something in ten sports, and four or more medals (in yellow) in four: alpine skiing, luge,
+short track and speed skating. The table is built from the one before: the same groups and
+emojis, and `fmtFlag` again.
 
 ### How was Italy?
 
@@ -484,6 +558,13 @@ nbShowCode:
   nbTable t
 
 nbText: """
+The data has a 0 in three places, and each means something else. `subZero` says it column by
+column: in *weighs* the 0 is a number nobody gave, so it shows "—"; in *of gold* it is a true
+zero, "none"; in *worth* it is a value too small for the article to count, "a few euros". The data
+stays numbers (so it could be summed or sorted), and the words are only in what the reader sees.
+(A number nobody gave would be better as a missing value, blank by default or shown with
+`subMissing`; here it is a 0 so that the three meanings sit side by side.)
+
 ### What did the works cost?
 
 Here the coverage was hardest to follow, because the numbers moved for years. Il Post kept
@@ -748,10 +829,12 @@ nbText: """
 The page is a nimib notebook, `docs/devlog/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
 
-**1. The data from Wikipedia** is six TSV files in `docs/devlog/data/milano-cortina/`: the medal
-tables of the Olympics and the Paralympics, Italy at every Winter Games, Italy's thirty medals, the
-venues and the sports. A short Python script beside them, `fetch.py`, reads five Wikipedia articles
-through the REST API (slowly: Wikipedia limits fast clients) and writes the tables with pandas.
+**1. The data from Wikipedia** is eight TSV files in `docs/devlog/data/milano-cortina/`: the
+medal tables of the Olympics and the Paralympics, Italy at every Winter Games, Italy's thirty
+medals, the venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short
+Python scripts beside them read the articles through the REST API (slowly: Wikipedia limits fast
+clients) and write the tables with pandas: `fetch.py` the first six, `history.py` the history,
+`sports.py` the sports.
 Each file starts with a comment line naming the article and its revision, so the numbers can be
 checked against the exact page they came from. Wikipedia's text is under CC BY-SA 4.0. One more
 file, `co2.tsv`, comes from NOAA's public Mauna Loa record, written by `co2.py` beside it.
@@ -775,8 +858,7 @@ to one column on a phone), and under every table *show code* opens the code that
 block's own source back with nimib's `getCode`, and folds it under the tables the block made.
 
 **4. Nothing is fetched while the page is built.** The TSV files and the facts are in the
-repository, so the page builds offline and the same way every time; `fetch.py` and `co2.py`
-are run by hand when the data should change.
+repository, so the page builds offline and the same way every time; the scripts are run by hand when the data should change.
 
 ## What tabelline was missing
 
