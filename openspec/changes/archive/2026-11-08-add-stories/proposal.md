@@ -15,7 +15,9 @@ docs PR.
 - A story is kept up to date, like a living document, and is not a dated post.
 - *Milano Cortina 2026* moves from `docs/devlog/` to `docs/stories/`, with its data; its old
   address (`devlog/milano-cortina/`) forwards to the story.
-- The home page gets a Stories card; the roadmap links each *use it* thread to its story.
+- The home page shows the stories as a gallery of their own, after the simplest example and
+  apart from the living documents, ending with a card for the stories to come; the roadmap links
+  each *use it* thread to its story.
 
 ## Differences from gt and Great Tables
 

@@ -58,16 +58,16 @@ working rules that are easy to miss.
   `optPageTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
-- The home page shows the simplest example and links the living documents in this order: The
-  Great Explainer, Stories, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
+- The home page shows the simplest example, the gallery of the stories, and links the living
+  documents in this order: The Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
   lists only posts. A new living document gets a card there
   (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
 - The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
   change starts as a devlog post. The Agents page reads this file when it builds.
 - Stories are the *use it* threads' output, one for every release: a real subject told in
   tables, as a user would. A story is `docs/stories/<slug>.nim` (first line `## story: <release> |
-  title | lede`, data in `docs/stories/data/<slug>/`); the stories page finds it, shows a small
-  table from it (`preview` in `docs/stories/index.nim`), and the roadmap's thread links it (`href`
+  title | lede`, data in `docs/stories/data/<slug>/`); the gallery of the home page and of the
+  stories page finds it and shows a small table from it (`preview` in `docs/stories/storie.nim`), and the roadmap's thread links it (`href`
   in `docs/piano.nim`). A story is kept up to date, like a living document: when a release makes
   one of its tables better, change the story.
 - Living documents are kept up to date. A devlog post
