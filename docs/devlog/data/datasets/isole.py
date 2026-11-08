@@ -1,4 +1,4 @@
-"""The islands of the Mediterranean, the twin of gt's `islands`: writes isole.tsv.
+"""The islands of the Mediterranean, the twin of gt's `islands`: writes isole.csv.
 Run: python3 isole.py
 
 From Wikipedia's "List of islands in the Mediterranean", table "By area", read as wikitext
@@ -6,6 +6,11 @@ From Wikipedia's "List of islands in the Mediterranean", table "By area", read a
 template there, so it is written in here (9,251 km², Wikipedia's Cyprus).
 """
 import re, urllib.request, pathlib
+
+def row(*fields):
+    """One CSV line: a field with a comma or a quote goes in quotes."""
+    cells = [str(x) for x in fields]
+    return ",".join('"' + x.replace('"', '""') + '"' if "," in x or '"' in x else x for x in cells)
 
 URL = "https://en.wikipedia.org/w/index.php?title=List_of_islands_in_the_Mediterranean&action=raw"
 req = urllib.request.Request(URL, headers={"User-Agent": "tabelline-docs/0.1"})
@@ -29,14 +34,14 @@ for chunk in table.split("\n|-")[1:]:
     countries = re.findall(r"\{\{flag\|([^}|]+)", chunk)
     area = re.search(r"\{\{convert\|([\d,.]+)\|km2", chunk)
     area = area.group(1).replace(",", "") if area else ("9251" if name == "Cyprus" else "")
-    rest = [c for c in cells if not c.startswith(("[[File", "{{flag", "{{convert"))]
+    rest = [c for c in cells if not c.lower().startswith(("[[file", "{{flag", "{{convert"))]
     pop = number(rest[1]) if len(rest) > 1 else ""
     city = link(rest[2]) if len(rest) > 2 else ""
     if name and area and not name.startswith("class="):
         rows.append((name, countries[0] if countries else "", area, pop, city))
 
 out = ["# Islands of the Mediterranean by area: Wikipedia, List of islands in the Mediterranean, read 8 Nov 2026 by isole.py",
-       "island\tcountry\tarea\tpopulation\tcity"]
-out += ["\t".join(r) for r in rows]
-pathlib.Path(__file__).with_name("isole.tsv").write_text("\n".join(out) + "\n")
+       "island,country,area,population,city"]
+out += [row(*r) for r in rows]
+pathlib.Path(__file__).with_name("isole.csv").write_text("\n".join(out) + "\n")
 print(len(rows)); print("\n".join(out[:16]))

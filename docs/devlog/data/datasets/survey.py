@@ -1,9 +1,14 @@
-"""Counts the datasets that the first pages of gt and Great Tables use: writes survey.tsv.
+"""Counts the datasets that the first pages of gt and Great Tables use: writes survey.csv.
 
 Run from anywhere: python3 survey.py. Reads the sources from raw.githubusercontent.com (the docs'
 own sites may be blocked). The post keeps the file as a dated snapshot (8 November 2026).
 """
 import re, urllib.request, pathlib
+
+def row(*fields):
+    """One CSV line: a field with a comma or a quote goes in quotes."""
+    cells = [str(x) for x in fields]
+    return ",".join('"' + x.replace('"', '""') + '"' if "," in x or '"' in x else x for x in cells)
 
 RAW = "https://raw.githubusercontent.com/"
 NAMES = ["countrypops", "sza", "gtcars", "sp500", "pizzaplace", "exibble", "towny", "peeps", "films",
@@ -29,18 +34,18 @@ def code(text):
     return "\n".join(re.findall(r"```[ ]*\{?(?:python|r)\b[^\n]*\n(.*?)```", text, re.S))
 
 rows = ["# The datasets used by the code of gt's and Great Tables' first pages, counted on 8 Nov 2026 by survey.py",
-        "library\tpage\tsource\tdatasets\tinline"]
+        "library,page,source,datasets,inline"]
 for lib, page, path in PAGES:
     c = code(get(path))
     used = [n for n in NAMES if re.search(rf"\b{n}\b", c)]
     inline = len(re.findall(r"\b(?:pl|pd)\.DataFrame\(|\btibble\(|\bdata\.frame\(", c))
-    rows.append(f"{lib}\t{page}\t{path}\t{' '.join(used)}\t{inline}")
+    rows.append(row(lib, page, path, ' '.join(used), inline))
 counts = {}
 for f in REFERENCE:
     for m in re.findall(r"^#' +(\w+) \|>", get(f"rstudio/gt/master/R/{f}.R"), re.M):
         if m in NAMES: counts[m] = counts.get(m, 0) + 1
 rows.append("# gt's reference examples (R/" + ", ".join(REFERENCE) + "): examples that start from each dataset")
 for n, k in sorted(counts.items(), key=lambda x: -x[1]):
-    rows.append(f"gt\treference examples\t{n}\t{n}\t{k}")
-pathlib.Path(__file__).with_name("survey.tsv").write_text("\n".join(rows) + "\n")
+    rows.append(row("gt", "reference examples", n, n, k))
+pathlib.Path(__file__).with_name("survey.csv").write_text("\n".join(rows) + "\n")
 print("\n".join(rows))

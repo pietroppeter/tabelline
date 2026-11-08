@@ -1,4 +1,4 @@
-## The islands of the Mediterranean, the twin of gt's `islands`: writes isole.tsv.
+## The islands of the Mediterranean, the twin of gt's `islands`: writes isole.csv.
 ## Run: nim r -d:ssl isole.nim
 ##
 ## From Wikipedia's "List of islands in the Mediterranean", table "By area", read as wikitext
@@ -7,6 +7,13 @@
 import std/[httpclient, os, re, strutils]
 
 const url = "https://en.wikipedia.org/w/index.php?title=List_of_islands_in_the_Mediterranean&action=raw"
+
+proc csvLine(fields: openArray[string]): string =
+  ## One CSV line: a field with a comma or a quote goes in quotes.
+  var cells: seq[string]
+  for x in fields:
+    cells.add(if ',' in x or '"' in x: '"' & x.replace("\"", "\"\"") & '"' else: x)
+  cells.join(",")
 
 proc get(url: string): string =
   ## A page over HTTPS, through the proxy in HTTPS_PROXY when there is one.
@@ -30,7 +37,7 @@ proc number(s: string): string =
 let text = get(url)
 let table = text[text.find("== By area ==") ..< text.find("==By population")]
 var lines = @["# Islands of the Mediterranean by area: Wikipedia, List of islands in the Mediterranean, read 8 Nov 2026 by isole.nim",
-              "island\tcountry\tarea\tpopulation\tcity"]
+              "island,country,area,population,city"]
 for chunk in table.split("\n|-")[1 .. ^1]:
   var cells: seq[string]
   for c in chunk.split(re"\n\||\|\|"):
@@ -43,10 +50,10 @@ for chunk in table.split("\n|-")[1 .. ^1]:
   elif name == "Cyprus": area[0] = "9251"
   var rest: seq[string]
   for c in cells:
-    if not (c.startsWith("[[File") or c.startsWith("{{flag") or c.startsWith("{{convert")): rest.add c
+    if not (c.toLowerAscii.startsWith("[[file") or c.startsWith("{{flag") or c.startsWith("{{convert")): rest.add c
   let pop = if rest.len > 1: number(rest[1]) else: ""
   let city = if rest.len > 2: link(rest[2]) else: ""
   if name.len > 0 and area[0].len > 0 and not name.startsWith("class="):
-    lines.add [name, country[0], area[0], pop, city].join("\t")
-writeFile(currentSourcePath().parentDir / "isole.tsv", lines.join("\n") & "\n")
+    lines.add [name, country[0], area[0], pop, city].csvLine
+writeFile(currentSourcePath().parentDir / "isole.csv", lines.join("\n") & "\n")
 echo lines.len - 2, " islands"

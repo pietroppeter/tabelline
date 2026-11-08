@@ -1,5 +1,5 @@
 ## A first taste of a `paesi` dataset: the countries with the most World Heritage Sites, with their
-## population. Writes unesco.tsv. Run: nim r -d:ssl unesco.nim
+## population. Writes unesco.csv. Run: nim r -d:ssl unesco.nim
 ##
 ## - Sites: the bar chart of the countries with the most sites in Wikipedia's "World Heritage Site"
 ##   (read as wikitext, action=raw, which the REST API's rate limits don't block as often).
@@ -7,6 +7,13 @@
 ##   its last year. Countries are joined on their ISO code, since the names differ
 ##   (Russia / Russian Federation, Turkey / Türkiye, Iran / Iran (Islamic Republic)).
 import std/[httpclient, os, parsecsv, re, streams, strutils, tables]
+
+proc csvLine(fields: openArray[string]): string =
+  ## One CSV line: a field with a comma or a quote goes in quotes.
+  var cells: seq[string]
+  for x in fields:
+    cells.add(if ',' in x or '"' in x: '"' & x.replace("\"", "\"\"") & '"' else: x)
+  cells.join(",")
 
 proc get(url: string): string =
   ## A page over HTTPS, through the proxy in HTTPS_PROXY when there is one.
@@ -36,11 +43,11 @@ while csv.readRow():
 
 var lines = @["# World Heritage Sites: Wikipedia, World Heritage Site, as of " & asof[1] & " " & asof[0] &
               "; population: Great Tables' countrypops (World Bank), 2022. Written by unesco.nim on 8 Nov 2026",
-              "country\tcode\tsites\tpopulation"]
+              "country,code,sites,population"]
 for m in wiki.findAll(re"""text:"[^"]*" \(\d+\)"""):
   var parts: array[2, string]
   discard m.find(re"""text:"([^"]*)" \((\d+)\)""", parts)
   let name = parts[0].replacef(re"\[\[(?:[^|\]]*\|)?([^\]]*)\]\]", "$1")
-  lines.add [name, iso[name], parts[1], population[iso[name]]].join("\t")
-writeFile(currentSourcePath().parentDir / "unesco.tsv", lines.join("\n") & "\n")
+  lines.add [name, iso[name], parts[1], population[iso[name]]].csvLine
+writeFile(currentSourcePath().parentDir / "unesco.csv", lines.join("\n") & "\n")
 echo lines.len - 2, " countries"

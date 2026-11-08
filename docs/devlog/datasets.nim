@@ -1,7 +1,7 @@
 ## devlog: 08 Nov 2026 E | Rethinking tabelline's datasets | A table is for people, and people recognise the data before they read a number. Which datasets tabelline uses today and where they come from, which ones a reader of gt and Great Tables meets first, and a brainstorm of what tabelline could use instead: familiar from gt, with an Italian twist, in three domains and three sizes, with the islands of the Mediterranean as the first table. A first draft, to decide from.
 ## A dated post: the survey as it was on 8 November 2026, not updated afterwards. The counts of
 ## tabelline's own datasets are taken from the sources when the page is first built and kept in
-## devlog/data/datasets/uses.tsv; the data from outside was fetched by four Nim scripts there
+## devlog/data/datasets/uses.csv; the data from outside was fetched by four Nim scripts there
 ## (survey, unesco, isole, citta), each with its Python twin, from public sources.
 import std/[os, strutils, strformat, sequtils, algorithm, tables]
 import nimib except md
@@ -16,9 +16,9 @@ nb.doc.filename = docs / "devlog" / "datasets" / "index.html"
 nb.useTabelline(nome = "tabelline",
                 title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-proc readTsv(path: string): TableData =
-  ## A TSV file whose `#` lines are comments (readCsv has no `comment` option yet).
-  parseCsv(readFile(path).splitLines.filterIt(not it.startsWith("#")).join("\n"), sep = '\t')
+proc readData(name: string): TableData =
+  ## One of this post's CSV files: its `#` lines name the source.
+  readCsv(data / name, comment = "#")
 
 nbTitolo "8 November 2026", "Rethinking tabelline's datasets", """
 A table is for people, and people recognise the data before they read a number. What tabelline
@@ -93,8 +93,9 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
       nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
 
 nbNota """
-**1 · Load it.** `readCsv(path, sep = ',')` reads a file; `parseCsv(text, sep)` reads a string,
-so a page can read its file when it is compiled with `staticRead` and carry it inside (the book
+**1 · Load it.** `readCsv(path)` reads a file; `parseCsv(text)` reads a string. Both take a
+`sep` (`'\t'` for TSV) and a `comment` (`comment = "#"` skips the lines naming a source).
+With `parseCsv` a page can read its file when it is compiled with `staticRead` and carry it inside (the book
 does this for Great Tables' data). The built-in datasets are of this kind too: `planets()`
 parses a CSV string kept in `tabelline/datasets`.
 
@@ -108,14 +109,13 @@ already has: rows parsed from somewhere else, or built with types of its own.
 """, nkDone, "Code"
 
 nbNota """
-**Missing.** `readCsv` has no `comment` option, so the Milano Cortina post and this one write
-their own `readTsv` to skip `#` lines; there is no reader for JSON, and no verbs on the data
+**Missing.** There is no reader for JSON, and no verbs on the data
 (filter, sort, head, join): the book writes its own `head`, `take` and `select`. Data frames
 are planned for 0.3.
 """, nkMissing
 
 # -------------------------------------------------------------------------- counted uses
-let snapshot = data / "uses.tsv"
+let snapshot = data / "uses.csv"
 const builtins = ["planets()", "exibble()", "tavolaPitagorica(", "islands()", "airquality()", "sza()",
                   "tableData:", "readCsv(", "readTsv("]
 
@@ -145,11 +145,11 @@ if not fileExists(snapshot):
     let n = readFile(root / "README.md").count(b)
     if n > 0: counts.mgetOrPut(("README", b), 0) += n
   var lines = @["# Uses of each way to get a dataset, counted in tabelline's sources on 8 Nov 2026",
-                "area\tdataset\tuses"]
-  for k, v in counts: lines.add &"{k[0]}\t{k[1]}\t{v}"
+                "area,dataset,uses"]
+  for k, v in counts: lines.add &"{k[0]},{k[1]},{v}"
   writeFile(snapshot, lines.join("\n") & "\n")
 
-let uses = readTsv(snapshot)
+let uses = readData("uses.csv")
 proc used(a, b: string): int =
   for i in 0 ..< uses.nrows:
     if $uses["area", i] == a and $uses["dataset", i] == b: return int(uses["uses", i].toFloat)
@@ -180,7 +180,7 @@ nbShowCode:
     colsLabel {"checks": "specs, tests"}
     fmtMarkdown "dataset"
     subZero zeroText = "·"
-    tabSourceNote md("Counted in the sources on 8 November 2026 (`devlog/data/datasets/uses.tsv`); *docs* are the README, the pages and the posts.")
+    tabSourceNote md("Counted in the sources on 8 November 2026 (`devlog/data/datasets/uses.csv`); *docs* are the README, the pages and the posts.")
   nbTable t
 
 nbText: &"""
@@ -241,7 +241,7 @@ the page that reads them.
 # ======================================================================================== Part 2
 nbParte 2, "What gt and Great Tables show first", prSecondary
 
-let survey = readTsv(data / "survey.tsv")
+let survey = readData("survey.csv")
 
 nbText: """
 ## The first table
@@ -428,7 +428,7 @@ by area, with an index that sets Naples at 100.
 """
 
 nbShowCode:
-  let pizza = readTsv(data / "pizza.tsv")
+  let pizza = readData("pizza.csv")
   let t = tabella(pizza, rownameCol = "area"):
     optPageTheme()
     tabHeader "What a margherita costs", "a Neapolitan margherita in 101 pizzerias, presented in January 2026"
@@ -496,7 +496,7 @@ town. The two largest are Italian, and the first ten are shared by five countrie
 """
 
 nbShowCode:
-  let raw = readTsv(data / "isole.tsv")
+  let raw = readData("isole.csv")
   const iso = {"Italy": "IT", "Cyprus": "CY", "France": "FR", "Greece": "GR", "Spain": "ES", "Croatia": "HR",
                "Turkey": "TR", "Tunisia": "TN", "Malta": "MT", "Albania": "AL"}.toTable
   type Isola = object
@@ -532,7 +532,7 @@ country counts on a day of its own.
 """
 
 nbShowCode:
-  let raw = readTsv(data / "citta.tsv")
+  let raw = readData("citta.csv")
   const iso = {"GER": "DE", "ESP": "ES", "ITA": "IT", "FRA": "FR", "AUT": "AT", "POL": "PL", "ROU": "RO",
                "HUN": "HU", "CZE": "CZ", "BUL": "BG", "NLD": "NL", "SWE": "SE", "POR": "PT", "GRC": "GR",
                "DEN": "DK", "FIN": "FI", "LTU": "LT", "IRL": "IE", "BEL": "BE", "CRO": "HR", "LVA": "LV",
@@ -570,7 +570,7 @@ the population from Great Tables' own `countrypops`, and the sites per ten milli
 """
 
 nbShowCode:
-  let raw = readTsv(data / "unesco.tsv")
+  let raw = readData("unesco.csv")
   type Paese = object
     country, code: string
     sites, population: int
@@ -661,15 +661,15 @@ table takes `optPageTheme()`, so it follows the look you picked in the header.
 **2. The counts of tabelline** were taken from the sources the first time the page was built:
 every `.nim` and `.md` file in `docs/`, `book/`, `openspec/specs/`, `tests/` and `src/`, and the
 README, counting the calls of each dataset and the `tableData:` blocks. They are kept in
-`devlog/data/datasets/uses.tsv`, because a dated post keeps the numbers it had.
+`devlog/data/datasets/uses.csv`, because a dated post keeps the numbers it had.
 
 **3. The data from outside** was fetched by four scripts beside it, run once: `survey.nim` reads
 the READMEs, guides and reference files of gt and Great Tables from raw.githubusercontent.com and
-writes `survey.tsv`; `unesco.nim` reads Wikipedia's *World Heritage Site* page as wikitext and Great
-Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`; `isole.nim` reads
-Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`; `citta.nim` reads its
-list of the cities of the European Union and writes `citta.tsv`. The page reads them with a
-`readTsv` of its own, which skips the `#` lines naming the sources.
+writes `survey.csv`; `unesco.nim` reads Wikipedia's *World Heritage Site* page as wikitext and Great
+Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.csv`; `isole.nim` reads
+Wikipedia's list of the islands of the Mediterranean and writes `isole.csv`; `citta.nim` reads its
+list of the cities of the European Union and writes `citta.csv`. Each file starts with a `#` line naming its source, and the page reads it
+with `readCsv(path, comment = "#")`, which skips those lines.
 
 The scripts were first written in Python, then in Nim, and both are kept beside the data: each
 pair writes the same file, row for row. Nim needs nothing beyond its standard library:

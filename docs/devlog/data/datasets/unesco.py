@@ -1,5 +1,5 @@
 """A first taste of a `paesi` dataset: the countries with the most World Heritage Sites, with their
-population. Writes unesco.tsv. Run: python3 unesco.py
+population. Writes unesco.csv. Run: python3 unesco.py
 
 - Sites: the bar chart of the countries with the most sites in Wikipedia's "World Heritage Site"
   (read as wikitext, action=raw, which the REST API's rate limits don't block as often).
@@ -8,6 +8,11 @@ population. Writes unesco.tsv. Run: python3 unesco.py
   (Russia / Russian Federation, Turkey / Türkiye, Iran / Iran (Islamic Republic)).
 """
 import csv, io, re, urllib.request, pathlib
+
+def row(*fields):
+    """One CSV line: a field with a comma or a quote goes in quotes."""
+    cells = [str(x) for x in fields]
+    return ",".join('"' + x.replace('"', '""') + '"' if "," in x or '"' in x else x for x in cells)
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "tabelline-docs/0.1"})
@@ -28,9 +33,9 @@ population = {r["country_code_2"]: int(r["population"]) for r in csv.DictReader(
               if r["year"] == "2022" and r["population"]}
 out = [f"# World Heritage Sites: Wikipedia, World Heritage Site, as of {asof.group(2)} {asof.group(1)}; "
        "population: Great Tables' countrypops (World Bank), 2022. Written by unesco.py on 8 Nov 2026",
-       "country\tcode\tsites\tpopulation"]
+       "country,code,sites,population"]
 for name, n in sites:
     code = iso[name]
-    out.append(f"{name}\t{code}\t{n}\t{population[code]}")
-pathlib.Path(__file__).with_name("unesco.tsv").write_text("\n".join(out) + "\n")
+    out.append(row(name, code, n, population[code]))
+pathlib.Path(__file__).with_name("unesco.csv").write_text("\n".join(out) + "\n")
 print("\n".join(out))

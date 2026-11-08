@@ -1,4 +1,4 @@
-## Counts the datasets that the first pages of gt and Great Tables use: writes survey.tsv.
+## Counts the datasets that the first pages of gt and Great Tables use: writes survey.csv.
 ## Run: nim r -d:ssl survey.nim
 ##
 ## Reads the sources from raw.githubusercontent.com (the docs' own sites may be blocked). The post
@@ -14,6 +14,13 @@ const
         "nanoplots", "basic-styling", "targeted-styles", "colorizing-with-data", "table-theme-options",
         "table-theme-premade", "column-selection", "row-selection", "loc-selection"]
   reference = ["format_data", "tab_create_modify", "data_color", "utils_render_html"]
+
+proc csvLine(fields: openArray[string]): string =
+  ## One CSV line: a field with a comma or a quote goes in quotes.
+  var cells: seq[string]
+  for x in fields:
+    cells.add(if ',' in x or '"' in x: '"' & x.replace("\"", "\"\"") & '"' else: x)
+  cells.join(",")
 
 proc get(path: string): string =
   ## A file of a GitHub repository, through the proxy in HTTPS_PROXY when there is one.
@@ -42,12 +49,12 @@ for p in gs: pages.add ("Great Tables", "Get Started: " & p, "posit-dev/great-ta
 pages.add ("Great Tables", "Examples", "posit-dev/great-tables/main/docs/examples/index.qmd")
 
 var lines = @["# The datasets used by the code of gt's and Great Tables' first pages, counted on 8 Nov 2026 by survey.nim",
-              "library\tpage\tsource\tdatasets\tinline"]
+              "library,page,source,datasets,inline"]
 for (lib, page, path) in pages:
   let c = code(get(path))
   let used = names.filterIt(c.contains(re("\\b" & it & "\\b")))
   let inline = c.findAll(re"\b(?:pl|pd)\.DataFrame\(|\btibble\(|\bdata\.frame\(").len
-  lines.add [lib, page, path, used.join(" "), $inline].join("\t")
+  lines.add [lib, page, path, used.join(" "), $inline].csvLine
 
 var counts: OrderedTable[string, int]
 for f in reference:
@@ -57,6 +64,6 @@ for f in reference:
 lines.add "# gt's reference examples (R/" & reference.join(", ") & "): examples that start from each dataset"
 var sorted = toSeq(counts.pairs)
 sorted.sort(proc (a, b: (string, int)): int = cmp(b[1], a[1]), SortOrder.Ascending)
-for (n, k) in sorted: lines.add ["gt", "reference examples", n, n, $k].join("\t")
-writeFile(currentSourcePath().parentDir / "survey.tsv", lines.join("\n") & "\n")
+for (n, k) in sorted: lines.add ["gt", "reference examples", n, n, $k].csvLine
+writeFile(currentSourcePath().parentDir / "survey.csv", lines.join("\n") & "\n")
 echo lines.join("\n")
