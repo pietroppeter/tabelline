@@ -1,0 +1,671 @@
+# Devroom calls for participation as FOSDEM listed them: devrooms-cfp.yaml in github.com/FOSDEM/website (editions 2013-2020) and the CfP link of each track page on archive.fosdem.org (2021-2026).
+year,devroom,day,announcement,deadline,first_listed,source
+2013,Ada,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001647.html,2012-12-12,2012-11-16,website devrooms-cfp.yaml
+2013,Apache OpenOffice,sat,https://lists.fosdem.org/pipermail/fosdem/2012-November/001664.html,2012-12-23,2012-11-16,website devrooms-cfp.yaml
+2013,BSD,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001662.html,2012-12-17,2012-11-16,website devrooms-cfp.yaml
+2013,Cloud,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001649.html,2012-12-14,2012-11-16,website devrooms-cfp.yaml
+2013,Community Development and Marketing,sat,https://lists.fosdem.org/pipermail/fosdem/2012-November/001656.html,2012-12-23,2012-11-16,website devrooms-cfp.yaml
+2013,Configuration/Systems Management,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001661.html,2012-12-15,2012-11-16,website devrooms-cfp.yaml
+2013,Cross Distro,both,https://lists.fosdem.org/pipermail/fosdem/2012-October/001635.html,2012-12-20,2012-11-16,website devrooms-cfp.yaml
+2013,CrossDesktop,both,https://lists.fosdem.org/pipermail/fosdem/2012-October/001643.html,2012-12-14,2012-11-16,website devrooms-cfp.yaml
+2013,Embedded and Mobile,both,https://lists.fosdem.org/pipermail/fosdem/2012-November/001650.html,2012-12-25,2012-11-16,website devrooms-cfp.yaml
+2013,FOSS for Scientists,sat,https://lists.fosdem.org/pipermail/fosdem/2012-November/001651.html,2012-12-16,2012-11-16,website devrooms-cfp.yaml
+2013,Free Java,both,https://lists.fosdem.org/pipermail/fosdem/2012-November/001653.html,,2012-11-16,website devrooms-cfp.yaml
+2013,Graph Processing,sat,https://lists.fosdem.org/pipermail/fosdem/2012-October/001636.html,2012-12-23,2012-11-16,website devrooms-cfp.yaml
+2013,Jabber/XMPP,sat,https://lists.fosdem.org/pipermail/fosdem/2012-December/001671.html,2012-12-31,2012-11-16,website devrooms-cfp.yaml
+2013,Legal Issues,both,https://lists.fosdem.org/pipermail/fosdem/2012-November/001652.html,2012-12-21,2012-11-16,website devrooms-cfp.yaml
+2013,LibreOffice,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001645.html,2012-12-14,2012-11-16,website devrooms-cfp.yaml
+2013,Microkernels / Component-based OSes,sat,https://lists.fosdem.org/pipermail/fosdem/2012-October/001639.html,2012-12-22,2012-11-16,website devrooms-cfp.yaml
+2013,Mono,sat,https://lists.fosdem.org/pipermail/fosdem/2012-December/001670.html,2012-12-25,2012-11-16,website devrooms-cfp.yaml
+2013,Mozilla,both,https://lists.fosdem.org/pipermail/fosdem/2012-November/001654.html,2012-12-20,2012-11-16,website devrooms-cfp.yaml
+2013,MySQL & Friends,sun,http://lists.mysql.com/community/393,2012-12-21,2012-11-16,website devrooms-cfp.yaml
+2013,NoSQL,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001648.html,2012-12-14,2012-11-16,website devrooms-cfp.yaml
+2013,Open Source Game Development,sun,https://lists.fosdem.org/pipermail/fosdem/2012-October/001634.html,2012-12-16,2012-11-16,website devrooms-cfp.yaml
+2013,PHP and Friends,sat,https://lists.fosdem.org/pipermail/fosdem/2012-October/001640.html,2012-12-14,2012-11-16,website devrooms-cfp.yaml
+2013,PostgreSQL,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001658.html,2012-12-21,2012-11-16,website devrooms-cfp.yaml
+2013,Python,sun,http://wirtel.be/posts/en/2012/11/20/call_of_papers_fosdem_2013/,2012-12-21,2012-11-16,website devrooms-cfp.yaml
+2013,Smalltalk,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001659.html,2012-12-31,2012-11-16,website devrooms-cfp.yaml
+2013,Telephony,sun,https://lists.fosdem.org/pipermail/fosdem/2012-November/001667.html,2013-01-04,2012-11-16,website devrooms-cfp.yaml
+2013,Testing and Automation,sat,https://lists.fosdem.org/pipermail/fosdem/2012-November/001665.html,2012-12-21,2012-11-16,website devrooms-cfp.yaml
+2013,The Wine Project,sun,http://www.winehq.org/pipermail/wine-devel/2012-November/097669.html,2012-12-31,2012-11-16,website devrooms-cfp.yaml
+2013,Virtualization,sat,https://lists.fosdem.org/pipermail/fosdem/2012-November/001660.html,2012-12-16,2012-11-16,website devrooms-cfp.yaml
+2013,X.org,sat,http://lists.freedesktop.org/archives/wayland-devel/2012-September/005444.html,,2012-11-16,website devrooms-cfp.yaml
+2014,Ada,saturday,http://www.cs.kuleuven.be/~dirk/ada-belgium/events/14/140201-fosdem.html,2013-11-30,2013-10-02,website devrooms-cfp.yaml
+2014,Automotive development,sunday,http://lists.genivi.org/pipermail/genivi-meta-ivi/2013-October/000042.html,2013-12-31,2013-10-02,website devrooms-cfp.yaml
+2014,BSD,saturday,https://lists.fosdem.org/pipermail/fosdem/2013-November/001877.html,2013-12-20,2013-10-02,website devrooms-cfp.yaml
+2014,Configuration management,saturday,https://lists.fosdem.org/pipermail/fosdem/2013-October/001862.html,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,Desktops,saturday,http://www.elpauer.org/2013/10/fosdem-desktops-devroom-2014-call-for-talks/,2013-12-14,2013-10-02,website devrooms-cfp.yaml
+2014,Distributions,both,https://lists.fosdem.org/pipermail/fosdem/2013-December/001891.html,2013-12-22,2013-10-02,website devrooms-cfp.yaml
+2014,Embedded,both,https://lists.fosdem.org/pipermail/fosdem/2013-October/001870.html,2013-12-10,2013-10-02,website devrooms-cfp.yaml
+2014,Energy-efficient computing,sunday,http://mageec.org/wiki/FOSDEM_2014_Energy-efficient_Computing_devroom,2013-11-25,2013-10-02,website devrooms-cfp.yaml
+2014,Game development,saturday,https://lists.fosdem.org/pipermail/open-source-gamedev-devroom/2013-October/000053.html,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,Go,sunday,https://code.google.com/p/go-wiki/wiki/Fosdem2014,,2013-10-02,website devrooms-cfp.yaml
+2014,Graph processing,sunday,http://graphdevroom.org,2013-12-10,2013-10-02,website devrooms-cfp.yaml
+2014,Graphics,both,http://lists.x.org/archives/xorg-devel/2013-October/038185.html,,2013-10-02,website devrooms-cfp.yaml
+2014,HPC and computational science,saturday,http://hpcugent.github.io/easybuild/fosdem14.html,2013-12-06,2013-12-11,website devrooms-cfp.yaml
+2014,Internet of things,sunday,https://groups.google.com/forum/?hl=en#!forum/iot-devroom,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,Java,saturday,https://lists.fosdem.org/pipermail/fosdem/2013-October/001865.html,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,JavaScript,sunday,http://fosdem14-js-devroom.github.io/,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,LLVM,sunday,http://llvm.org/devmtg/2014-02/,,2013-10-02,website devrooms-cfp.yaml
+2014,Legal and policy issues,both,https://lists.fosdem.org/pipermail/fosdem/2013-November/001875.html,2013-12-01,2013-12-11,website devrooms-cfp.yaml
+2014,Microkernel-based operating systems,sunday,https://os.inf.tu-dresden.de/pipermail/l4-hackers/2013/006068.html,2013-12-01,2013-12-11,website devrooms-cfp.yaml
+2014,Mozilla,saturday,http://claristamozilla.wordpress.com/2013/11/14/fosdem-2014-call-for-proposals/,2013-12-20,2013-10-02,website devrooms-cfp.yaml
+2014,MySQL,saturday,http://lists.mysql.com/community/407,2013-12-06,2013-10-02,website devrooms-cfp.yaml
+2014,NoSQL,sunday,http://www.lczajkowski.com/2013/10/10/cfp-for-nosql-devroom-at-fosdem/,,2013-10-02,website devrooms-cfp.yaml
+2014,Open document editors,saturday,,,2013-10-02,website devrooms-cfp.yaml
+2014,Perl,saturday,http://wendyga.wordpress.com/2013/09/23/fosdem-1-2-feb-2014-brussels-call-for-speakers/,2013-11-20,2013-10-02,website devrooms-cfp.yaml
+2014,PostgreSQL,saturday,https://lists.fosdem.org/pipermail/fosdem/2013-November/001878.html,2013-12-15,2013-10-02,website devrooms-cfp.yaml
+2014,Python,sunday,http://wirtel.be/posts/en/2013/11/18/python-fosdem-2014-call-for-proposals/,2013-12-31,2013-10-02,website devrooms-cfp.yaml
+2014,Smalltalk,saturday,https://lists.fosdem.org/pipermail/fosdem/2013-October/001873.html,2013-12-31,2013-10-02,website devrooms-cfp.yaml
+2014,Software-defined radio,sunday,http://gnuradio.org/redmine/projects/gnuradio/wiki/FOSDEM14,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2014,Testing and automation,sunday,https://lists.fosdem.org/pipermail/fosdem/2013-November/001876.html,2013-11-30,2013-10-02,website devrooms-cfp.yaml
+2014,Valgrind,sunday,https://lists.fosdem.org/pipermail/fosdem/2013-October/001871.html,2013-12-08,2013-10-02,website devrooms-cfp.yaml
+2014,Virtualisation and IaaS,both,https://groups.google.com/forum/#!topic/fosdem14-virt-and-iaas-devroom/04y5YkyqzIo,2013-12-01,2013-10-18,website devrooms-cfp.yaml
+2014,Wikis,saturday,https://lists.fosdem.org/pipermail/wikis-devroom/2013-October/000000.html,2013-11-30,2013-10-02,website devrooms-cfp.yaml
+2014,Wine,sunday,http://www.winehq.org/pipermail/wineconf/2013-October/000841.html,2013-12-01,2013-10-02,website devrooms-cfp.yaml
+2015,Ada,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002063.html,2014-12-14,2014-09-27,website devrooms-cfp.yaml
+2015,BSD,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002038.html,2014-12-14,2014-09-27,website devrooms-cfp.yaml
+2015,Configuration management,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002029.html,2014-12-10,2014-09-27,website devrooms-cfp.yaml
+2015,Desktops,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002057.html,2014-12-07,2014-09-27,website devrooms-cfp.yaml
+2015,Distributions,both,https://lists.fosdem.org/pipermail/fosdem/2014-October/002047.html,2014-12-07,2014-09-27,website devrooms-cfp.yaml
+2015,Electronic design automation,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002030.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Embedded,both,https://lists.fosdem.org/pipermail/fosdem/2014-October/002045.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Geospatial,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002039.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Go,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002059.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Graph processing,saturday,http://www.graphdevroom.org/#CfP,2014-12-14,2014-09-27,website devrooms-cfp.yaml
+2015,Graphics,both,http://lists.x.org/archives/xorg-devel/2014-October/044133.html,2014-12-24,2014-09-27,website devrooms-cfp.yaml
+2015,Infrastructure as a service,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002055.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Internet of things,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002044.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Java,both,https://lists.fosdem.org/pipermail/fosdem/2014-October/002050.html,2014-12-07,2014-09-27,website devrooms-cfp.yaml
+2015,LLVM toolchain,sunday,http://lists.cs.uiuc.edu/pipermail/llvmdev/2014-October/077976.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Legal and policy issues,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002036.html,2014-11-17,2014-09-27,website devrooms-cfp.yaml
+2015,Lisp,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002072.html,2014-12-14,2014-09-27,website devrooms-cfp.yaml
+2015,Microkernel-based operating systems,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002061.html,2014-11-28,2014-09-27,website devrooms-cfp.yaml
+2015,Mozilla,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002046.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,MySQL and friends,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002064.html,2014-12-07,2014-09-27,website devrooms-cfp.yaml
+2015,Network management and SDN,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002060.html,2014-12-10,2014-09-27,website devrooms-cfp.yaml
+2015,Open Document editors,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002066.html,2014-12-14,2014-09-27,website devrooms-cfp.yaml
+2015,Open media,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002041.html,2014-12-01,2014-10-09,website devrooms-cfp.yaml
+2015,Open source design,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002031.html,2014-12-08,2014-09-27,website devrooms-cfp.yaml
+2015,Open source search,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002040.html,2014-12-09,2014-09-27,website devrooms-cfp.yaml
+2015,PHP and friends,sunday,,,2014-09-27,website devrooms-cfp.yaml
+2015,Perl,saturday,,,2014-09-27,website devrooms-cfp.yaml
+2015,PostgreSQL,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002058.html,2014-11-24,2014-09-27,website devrooms-cfp.yaml
+2015,Python,saturday,http://python-fosdem.org/,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Ruby,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002054.html,2014-12-12,2014-09-27,website devrooms-cfp.yaml
+2015,Security,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002049.html,2014-12-07,2014-09-27,website devrooms-cfp.yaml
+2015,Smalltalk,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002035.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Software-defined radio,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002043.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Testing and automation,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002053.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Valgrind,saturday,https://lists.fosdem.org/pipermail/fosdem/2014-November/002065.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2015,Virtualisation,sunday,https://lists.fosdem.org/pipermail/fosdem/2014-October/002056.html,2014-12-01,2014-09-27,website devrooms-cfp.yaml
+2016,Ada,saturday,http://www.cs.kuleuven.be/~dirk/ada-belgium/events/16/160130-fosdem.html,2015-11-29,2015-10-23,website devrooms-cfp.yaml
+2016,BSD,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002189.html,2015-12-10,2015-10-23,website devrooms-cfp.yaml
+2016,Coding for Language Communities,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002295.html,2015-12-11,2015-10-23,website devrooms-cfp.yaml
+2016,Config Management,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002201.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Containers and Process Isolation,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002294.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Desktops,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002296.html,2015-12-06,2015-10-23,website devrooms-cfp.yaml
+2016,Distributions,both,https://lists.fosdem.org/pipermail/fosdem/2015-November/002297.html,2015-12-10,2015-10-23,website devrooms-cfp.yaml
+2016,EDA,saturday,http://www.ohwr.org/projects/ohr-meta/wiki/FOSDEM2016,2015-12-04,2015-10-23,website devrooms-cfp.yaml
+2016,"Embedded, Mobile and Automotive",both,https://lists.fosdem.org/pipermail/fosdem/2015-October/002283.html,2015-12-07,2015-11-15,website devrooms-cfp.yaml
+2016,Free Java,both,https://lists.fosdem.org/pipermail/java-devroom/2015-October/000136.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,GNU Guile,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002273.html,2015-11-30,2015-10-23,website devrooms-cfp.yaml
+2016,Geospatial,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-November/thread.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Go,sunday,https://forum.golangbridge.org/t/fosdem-2016-call-for-proposals/1358/1,2015-12-05,2015-10-23,website devrooms-cfp.yaml
+2016,Graph Processing,saturday,http://graphdevroom.github.io/,2015-12-14,2015-10-23,website devrooms-cfp.yaml
+2016,Graphics,sunday,http://lists.x.org/archives/xorg-devel/2015-October/047719.html,2015-12-08,2015-10-23,website devrooms-cfp.yaml
+2016,"HPC, Big Data and Data Science",sunday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002290.html,2015-12-04,2015-10-23,website devrooms-cfp.yaml
+2016,IoT,saturday,http://iot-devroom.wikidot.com/blog:3,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,LLVM Toolchain,sunday,http://lists.llvm.org/pipermail/llvm-dev/2015-November/091906.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Legal and Policy issues,both,https://lists.fosdem.org/pipermail/fosdem/2015-October/002202.html,2015-11-29,2015-10-23,website devrooms-cfp.yaml
+2016,Lua,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002291.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Microkernels,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002191.html,2015-12-13,2015-10-23,website devrooms-cfp.yaml
+2016,Mozilla,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002200.html,2015-12-04,2015-10-23,website devrooms-cfp.yaml
+2016,MySQL and Friends,saturday,http://www.mysqlandfriends.eu/post/fosdem-mysql-friends-devroom-cfp-is-open/,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Open Document Editors,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002302.html,2015-12-07,2015-10-23,website devrooms-cfp.yaml
+2016,Open Game Development,sunday,http://gamelier.org/open-game-development-room-at-fosdem-call-for-participation/,2015-12-04,2015-10-23,website devrooms-cfp.yaml
+2016,Open Media,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002193.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,Open Source Design,saturday,http://opensourcedesign.net/events/design/hack/meeting/2016/01/30/opensourcedesign-fosdem.html,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,PHP and Friends,sunday,http://fosdemphp.cu.be/,2015-11-25,2015-10-23,website devrooms-cfp.yaml
+2016,Perl,sunday,https://wendyga.wordpress.com/2015/10/08/fosdem-30-31-january-2016-brussels-belgium-call-for-speakers/,2015-12-08,2015-10-23,website devrooms-cfp.yaml
+2016,PostgreSQL,sunday,http://fosdem2016.pgconf.eu/callforpapers/,2015-12-07,2015-10-23,website devrooms-cfp.yaml
+2016,Python,saturday,http://python-fosdem.org/,2015-12-11,2015-10-23,website devrooms-cfp.yaml
+2016,Real Time Communications,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002281.html,2015-11-27,2015-10-30,website devrooms-cfp.yaml
+2016,Ruby,sunday,http://fosdem.rubybelgium.be/cfp,2015-12-01,2015-10-23,website devrooms-cfp.yaml
+2016,SDN and NFV,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-November/002300.html,2015-11-18,2015-10-23,website devrooms-cfp.yaml
+2016,Security,saturday,https://github.com/security-devroom/fosdem-2016,2015-12-10,2015-10-23,website devrooms-cfp.yaml
+2016,Software Defined Radio,sunday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002188.html,2015-12-04,2015-10-23,website devrooms-cfp.yaml
+2016,Testing and Automation,saturday,https://lists.fosdem.org/pipermail/fosdem/2015-October/002198.html,2015-11-30,2015-10-23,website devrooms-cfp.yaml
+2016,Virtualisation and IaaS,both,https://lists.fosdem.org/pipermail/fosdem/2015-October/002197.html,2015-12-01,2015-10-27,website devrooms-cfp.yaml
+2017,BSD,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002464.html,2016-12-10,2016-10-10,website devrooms-cfp.yaml
+2017,Backup and Disaster Recovery,saturday,https://github.com/gdha/backup-disaster-recovery-devroom-fosdem-2017,2016-12-02,2016-10-10,website devrooms-cfp.yaml
+2017,Community,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002470.html,2016-11-25,2016-10-10,website devrooms-cfp.yaml
+2017,Config Management,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002459.html,2016-11-18,2016-10-10,website devrooms-cfp.yaml
+2017,Decentralised Internet,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-November/002495.html,2016-12-04,2016-10-10,website devrooms-cfp.yaml
+2017,Desktops,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002477.html,2016-12-05,2016-10-10,website devrooms-cfp.yaml
+2017,Distributions,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002483.html,2016-11-25,2016-10-10,website devrooms-cfp.yaml
+2017,Electronic Design Automation,sunday,http://www.ohwr.org/projects/ohr-meta/wiki/FOSDEM2017,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,"Embedded, Mobile and Automotive",both,http://lists.genivi.org/pipermail/genivi-projects/2016-October/003088.html,2016-12-12,2016-10-10,website devrooms-cfp.yaml
+2017,Free Java,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002482.html,2016-12-10,2016-10-10,website devrooms-cfp.yaml
+2017,GNU Guile,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002469.html,2016-11-18,2016-10-10,website devrooms-cfp.yaml
+2017,Geospatial,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002458.html,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Go,sunday,https://forum.golangbridge.org/t/fosdem-2017-call-for-proposals/3716,2016-12-12,2016-10-10,website devrooms-cfp.yaml
+2017,Graph Processing,saturday,https://graphdevroom.github.io/,2016-11-25,2016-10-10,website devrooms-cfp.yaml
+2017,"HPC, Big Data, and Data Science",saturday,https://hpc-bigdata-fosdem17.github.io/,2016-12-02,2016-10-10,website devrooms-cfp.yaml
+2017,Internet of Things,saturday,https://github.com/maximevince/IoT-devroom-fosdem,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,LLVM Toolchain,sunday,http://lists.llvm.org/pipermail/llvm-dev/2016-October/105815.html,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Legal and Policy Issues,both,https://lists.fosdem.org/pipermail/fosdem/2016-October/002462.html,2016-11-27,2016-10-10,website devrooms-cfp.yaml
+2017,Linux Containers and Microservices,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002490.html,2016-11-26,2016-10-10,website devrooms-cfp.yaml
+2017,Lua,saturday,http://lua.space/general/cfp-lua-devroom-fosdem-2017,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Microkernels and Component-based OS,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002463.html,2016-12-04,2016-10-10,website devrooms-cfp.yaml
+2017,Monitoring and Cloud,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002490.html,2016-11-26,2016-10-10,website devrooms-cfp.yaml
+2017,Mozilla,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002484.html,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,MySQL and Friends,saturday,http://www.mysqlandfriends.eu/post/fosdem-2017s-mysql-friends-devroom-call-for-papers-is-now-open/,2016-12-06,2016-10-10,website devrooms-cfp.yaml
+2017,Open Document Editors,saturday,https://blog.documentfoundation.org/blog/2016/11/04/fosdem-call-for-papers-open-document-editors-devroom/,2016-12-11,2016-10-10,website devrooms-cfp.yaml
+2017,Open Game Development,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002460.html,2016-12-04,2016-10-10,website devrooms-cfp.yaml
+2017,Open Media,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-November/002494.html,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Open Source Design,sunday,http://opensourcedesign.net/events/2017/02/05/opensourcedesign-fosdem-2017,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,PHP and Friends,sunday,https://fosdemphp.cu.be/,2016-11-25,2016-10-10,website devrooms-cfp.yaml
+2017,Perl,sunday,https://wendyga.wordpress.com/2016/10/08/fosdem-04-05-february-2017-brussels-belgium-call-for-speakers/,2016-12-11,2016-10-10,website devrooms-cfp.yaml
+2017,PostgreSQL,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002474.html,2016-11-13,2016-10-10,website devrooms-cfp.yaml
+2017,Python,sunday,http://python-fosdem.org/cfp.html,2016-12-18,2016-10-10,website devrooms-cfp.yaml
+2017,Real Time Communications,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002481.html,2016-11-17,2016-10-10,website devrooms-cfp.yaml
+2017,Ruby,saturday,http://fosdem.rubybelgium.be/,2016-12-04,2016-10-10,website devrooms-cfp.yaml
+2017,SDN and NFV,saturday,https://blogs.gnome.org/bolsh/2016/10/19/fosdem-sdn-nfv-devroom-call-for-content/,2016-11-16,2016-10-10,website devrooms-cfp.yaml
+2017,Security,saturday,https://github.com/security-devroom/fosdem-2017,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Software Defined Radio,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002471.html,2016-12-09,2016-10-10,website devrooms-cfp.yaml
+2017,Software Defined Storage,sunday,http://ceph.com/community/fosdem-2017-software-defined-storage-devroom/,2016-11-16,2016-10-10,website devrooms-cfp.yaml
+2017,Testing and Automation,sunday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002491.html,2016-12-15,2016-10-10,website devrooms-cfp.yaml
+2017,Valgrind,saturday,https://lists.fosdem.org/pipermail/fosdem/2016-October/002467.html,2016-12-01,2016-10-10,website devrooms-cfp.yaml
+2017,Virtualisation and IaaS,saturday,http://www.ovirt.org/blog/2016/10/call-for-proposal-fosdem-2017/,2016-11-18,2016-10-10,website devrooms-cfp.yaml
+2018,Ada,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002644.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,BSD,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002614.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,CAD and Open Hardware,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002637.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Community,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002610.html,2017-11-27,2017-10-04,website devrooms-cfp.yaml
+2018,Config Management,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002608.html,2017-11-12,2017-10-04,website devrooms-cfp.yaml
+2018,Containers,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002626.html,2017-11-30,2017-10-04,website devrooms-cfp.yaml
+2018,DNS,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-November/002659.html,2017-12-08,2017-10-04,website devrooms-cfp.yaml
+2018,Debugging Tools,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002620.html,2017-12-01,2017-10-13,website devrooms-cfp.yaml
+2018,Decentralised Internet and Privacy,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002627.html,2017-11-26,2017-10-13,website devrooms-cfp.yaml
+2018,Distributions,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002648.html,2017-12-03,2017-10-04,website devrooms-cfp.yaml
+2018,"Embedded, Mobile and Automotive",both,https://lists.fosdem.org/pipermail/fosdem/2017-October/002647.html,2017-12-11,2017-10-04,website devrooms-cfp.yaml
+2018,Free Java,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002646.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Geospatial,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002633.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Go,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002617.html,,2017-10-04,website devrooms-cfp.yaml
+2018,Graph Processing,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002639.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Graphics,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-November/002657.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,"HPC, Big Data, and Data Science",sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002615.html,2017-11-24,2017-10-04,website devrooms-cfp.yaml
+2018,Hardware Enablement,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002649.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Identity and Access Management,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002607.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Internet of Things,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002643.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,LLVM Toolchain,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002624.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Legal and Policy Issues,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002611.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Microkernels,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002606.html,2017-12-08,2017-10-04,website devrooms-cfp.yaml
+2018,Monitoring and Cloud,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002631.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Mozilla,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-November/002653.html,2017-12-06,2017-10-04,website devrooms-cfp.yaml
+2018,MySQL and Friends,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002605.html,,2017-10-04,website devrooms-cfp.yaml
+2018,Open Document Editors,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002650.html,2017-12-04,2017-10-04,website devrooms-cfp.yaml
+2018,Open Media,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002622.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Open Source Design,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002628.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Package Management,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002630.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Perl,sunday,https://wendyga.wordpress.com/2017/09/19/fosdem-03-04-february-2018-brussels-belgium-call-for-speakers/,2017-12-15,2017-10-04,website devrooms-cfp.yaml
+2018,PostgreSQL,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002638.html,2017-11-19,2017-10-04,website devrooms-cfp.yaml
+2018,Real Time Communications,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002636.html,2017-11-30,2017-10-04,website devrooms-cfp.yaml
+2018,Retrocomputing,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002623.html,2017-11-25,2017-10-04,website devrooms-cfp.yaml
+2018,Rust,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002625.html,2017-11-24,2017-10-04,website devrooms-cfp.yaml
+2018,SDN and NFV,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002642.html,2017-11-16,2017-10-04,website devrooms-cfp.yaml
+2018,Software Defined Radio,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002603.html,2017-12-08,2017-10-04,website devrooms-cfp.yaml
+2018,Software Defined Storage,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002616.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Source Code Analysis,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002629.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2018,Testing and Automation,saturday,https://lists.fosdem.org/pipermail/fosdem/2017-October/002635.html,2017-11-26,2017-10-04,website devrooms-cfp.yaml
+2018,Tool the Docs,sunday,https://lists.fosdem.org/pipermail/fosdem/2017-November/002655.html,2017-12-12,2017-10-04,website devrooms-cfp.yaml
+2018,Virtualization and IaaS,both,https://lists.fosdem.org/pipermail/fosdem/2017-October/002632.html,2017-12-01,2017-10-04,website devrooms-cfp.yaml
+2019,.NET and TypeScript,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002794.html,2018-12-03,2018-10-14,website devrooms-cfp.yaml
+2019,Ada,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002801.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,BSD,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002741.html,2018-12-10,2018-10-14,website devrooms-cfp.yaml
+2019,Blockchain,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002778.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,CAD and Open Hardware,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002752.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Collaborative Information and Content Management Applications,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002774.html,2018-12-10,2018-10-14,website devrooms-cfp.yaml
+2019,Community,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002776.html,2018-11-23,2018-10-14,website devrooms-cfp.yaml
+2019,Containers,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002790.html,2018-12-14,2018-10-14,website devrooms-cfp.yaml
+2019,DNS,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002739.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Decentralized Internet and Privacy,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002769.html,2018-11-26,2018-10-14,website devrooms-cfp.yaml
+2019,Distributions,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002786.html,2018-12-02,2018-10-14,website devrooms-cfp.yaml
+2019,Free Java,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002766.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Free Software Radio,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002732.html,2018-12-07,2018-10-14,website devrooms-cfp.yaml
+2019,Free Tools and Editors,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002783.html,2018-12-07,2018-10-14,website devrooms-cfp.yaml
+2019,Geospatial,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002793.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Go,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002767.html,2018-11-30,2018-10-14,website devrooms-cfp.yaml
+2019,Graph Processing,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002800.html,2018-12-02,2018-10-14,website devrooms-cfp.yaml
+2019,Graphics,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002806.html,2018-12-14,2018-10-14,website devrooms-cfp.yaml
+2019,"HPC, Big Data and Data Science",sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002745.html,2018-11-23,2018-10-14,website devrooms-cfp.yaml
+2019,Hardware Enablement,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002797.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Infra Management,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002744.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Javascript,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002780.html,2018-11-28,2018-10-14,website devrooms-cfp.yaml
+2019,LLVM,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002737.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Legal,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002773.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Machine Learning on Code,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002764.html,2018-11-30,2018-10-14,website devrooms-cfp.yaml
+2019,Microkernels and Component-based OS,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002742.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Minimalistic Languages,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002760.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Monitoring and Observability,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002770.html,2018-11-26,2018-10-14,website devrooms-cfp.yaml
+2019,Mozilla,saturday,https://discourse.mozilla.org/t/fosdem-2019-call-for-proposals/33038,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,"MySQL, MariaDB and Friends",saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002733.html,2018-11-15,2018-10-14,website devrooms-cfp.yaml
+2019,Open Document Editors,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002820.html,2018-12-24,2018-12-17,website devrooms-cfp.yaml
+2019,Open Media,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002736.html,2018-12-03,2018-10-14,website devrooms-cfp.yaml
+2019,Open Source Design,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002746.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,PHP and Friends,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002768.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,PostgreSQL,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002796.html,2018-11-19,2018-10-14,website devrooms-cfp.yaml
+2019,Python,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002781.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Quantum Computing,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002811.html,2018-12-11,2018-10-14,website devrooms-cfp.yaml
+2019,RISC-V,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002743.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Real Time Communications,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002784.html,2018-12-02,2018-10-14,website devrooms-cfp.yaml
+2019,Retrocomputing,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002782.html,2018-11-30,2018-10-14,website devrooms-cfp.yaml
+2019,Rust,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002740.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Search,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002805.html,2018-12-14,2018-10-14,website devrooms-cfp.yaml
+2019,Security,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002777.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2019,Software Defined Networking,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002758.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Software Defined Storage,sunday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002735.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Tool the Docs,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002798.html,2018-11-25,2018-10-14,website devrooms-cfp.yaml
+2019,Virtualization and IaaS,saturday,https://lists.fosdem.org/pipermail/fosdem/2018q4/002757.html,2018-12-01,2018-10-14,website devrooms-cfp.yaml
+2020,Ada,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002935.html,2019-11-25,2019-10-16,website devrooms-cfp.yaml
+2020,BSD,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002890.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Backup and Recovery,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002934.html,2019-11-29,2019-10-16,website devrooms-cfp.yaml
+2020,Coding for Language Communities,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002899.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Collaborative Information and Content Management Applications,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002882.html,2019-12-09,2019-10-16,website devrooms-cfp.yaml
+2020,Community,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002893.html,2019-11-27,2019-10-16,website devrooms-cfp.yaml
+2020,Containers,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002888.html,2019-11-29,2019-10-16,website devrooms-cfp.yaml
+2020,Continuous Integration and Continuous Deployment,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002880.html,2019-11-30,2019-10-16,website devrooms-cfp.yaml
+2020,DNS,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002905.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Debugging Tools,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002902.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Decentralized Internet and Privacy,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002903.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Dependency Management,saturday,https://l.ow2.org/FOSDEM20,2019-12-04,2019-10-16,website devrooms-cfp.yaml
+2020,Distributions,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002936.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,"Embedded, Mobile and Automotive",saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002920.html,2019-12-06,2019-10-16,website devrooms-cfp.yaml
+2020,"Erlang, Elixir and Friends",saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002901.html,2019-11-25,2019-10-17,website devrooms-cfp.yaml
+2020,Free Java,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002917.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Free Software Radio,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002922.html,2019-12-06,2019-10-16,website devrooms-cfp.yaml
+2020,Free Tools and Editors,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002904.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Game Development,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002884.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Geospatial,sunday,https://lists.osgeo.org/pipermail/dutch/2019-October/001773.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Go,sunday,https://medium.com/@maartjeme/go-devroom-cfp-fosdem-2020-7615f2ed390,2019-11-30,2019-10-16,website devrooms-cfp.yaml
+2020,Graph Systems and Algorithms,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002900.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Graphics,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002943.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,"HPC, Big Data, and Data Science",sunday,https://hpc-bigdata-fosdem20.github.io/,2019-11-22,2019-10-16,website devrooms-cfp.yaml
+2020,Hardware Enablement,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002955.html,2019-12-15,2019-10-16,website devrooms-cfp.yaml
+2020,Hardware-aided Trusted Computing,saturday,https://pastebin.com/JzxPpsXB,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Infra Management,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002923.html,2019-11-30,2019-10-16,website devrooms-cfp.yaml
+2020,Internet of Things,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002929.html,2019-12-15,2019-10-16,website devrooms-cfp.yaml
+2020,JavaScript,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002892.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Kotlin,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002931.html,2019-12-07,2019-10-16,website devrooms-cfp.yaml
+2020,LLVM,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002881.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Legal and Policy Issues,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002883.html,2019-11-17,2019-10-16,website devrooms-cfp.yaml
+2020,Microkernels and Component-based OS,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002878.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,"Minimalistic, Experimental and Emerging Languages",sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002916.html,2019-11-26,2019-10-18,website devrooms-cfp.yaml
+2020,Monitoring and Observability,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002879.html,2019-11-26,2019-10-16,website devrooms-cfp.yaml
+2020,Mozilla,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002895.html,2019-11-15,2019-10-16,website devrooms-cfp.yaml
+2020,"MySQL, MariaDB and Friends",saturday,https://www.mysqlmariadbandfriends.eu/post/2020-committee/,2019-11-20,2019-10-16,website devrooms-cfp.yaml
+2020,Open Document Editors,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002921.html,2019-11-30,2019-10-16,website devrooms-cfp.yaml
+2020,Open Media,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002906.html,2019-12-02,2019-10-16,website devrooms-cfp.yaml
+2020,Open Research Tools and Technologies,saturday,https://research-fosdem.github.io/,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Open Source Computer Aided Modeling and Design,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002898.html,2019-11-20,2019-10-16,website devrooms-cfp.yaml
+2020,Open Source Design,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002896.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,"Open Source Firmware, BMC and Bootloader",saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002933.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,PostgreSQL,sunday,https://2020.fosdempgday.org/callforpapers/,2019-11-18,2019-10-16,website devrooms-cfp.yaml
+2020,Python,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002885.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Quantum Computing,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002940.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,RISC-V,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002925.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Real Time Communications,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002938.html,2019-12-15,2019-10-16,website devrooms-cfp.yaml
+2020,Retrocomputing,saturday,https://lists.fosdem.org/pipermail/retrocomputing-devroom/2019-October/000026.html,2019-11-30,2019-10-16,website devrooms-cfp.yaml
+2020,Rust,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002894.html,2019-11-25,2019-10-16,website devrooms-cfp.yaml
+2020,Security,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002909.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Software Defined Networking,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002886.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Software Defined Storage,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002891.html,2019-11-24,2019-10-16,website devrooms-cfp.yaml
+2020,Testing and Automation,saturday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002897.html,2019-12-10,2019-10-16,website devrooms-cfp.yaml
+2020,Virtualization and IaaS,sunday,https://lists.fosdem.org/pipermail/fosdem/2019q4/002889.html,2019-12-01,2019-10-16,website devrooms-cfp.yaml
+2020,Web Performance,saturday,https://github.com/wikimedia/fosdem20-web-performance-cfp,2019-12-02,2019-10-16,website devrooms-cfp.yaml
+2021,Apache OpenOffice devroom,"",https://s.apache.org/openoffice-fosdem-2021-cfp,"","",track page
+2021,BSD devroom,"",https://people.freebsd.org/~rodrigo/fosdem21/,"","",track page
+2021,Beyond Blockchain - Distributed Web devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003153.html,"","",track page
+2021,Collaborative Information and Content Management Applications devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003115.html,"","",track page
+2021,Community devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003134.html,"","",track page
+2021,Containers devroom,"",https://discuss.linuxcontainers.org/t/fosdem-2021-containers-devroom-call-for-papers/9625,"","",track page
+2021,Continuous Integration and Continuous Deployment devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003140.html,"","",track page
+2021,Declarative and Minimalistic Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003111.html,"","",track page
+2021,Dependency Management devroom,"",https://www.fasten-project.eu/view/Events/FOSDEM21_Devroom_Call_For_Presentations,"","",track page
+2021,Distributions devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003128.html,"","",track page
+2021,"Embedded, Mobile and Automotive devroom","",https://lists.fosdem.org/pipermail/fosdem/2020q4/003137.html,"","",track page
+2021,Emulator Development devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003129.html,"","",track page
+2021,Free Software Radio devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003158.html,"","",track page
+2021,Friends of OpenJDK devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003160.html,"","",track page
+2021,Geospatial devroom,"",https://www.osgeo.org/foundation-news/osgeo-at-fosdem-2021-online-call-for-participation/,"","",track page
+2021,Go devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003172.html,"","",track page
+2021,Graph Systems and Algorithms devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003135.html,"","",track page
+2021,"HPC, Big Data and Data Science devroom","",https://lists.fosdem.org/pipermail/fosdem/2020q4/003112.html,"","",track page
+2021,Hardware-Aided Trusted Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003139.html,"","",track page
+2021,Infra Management devroom,"",https://cfp.cfgmgmtcamp.org/fosdem2021/cfp,"","",track page
+2021,JavaScript devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003151.html,"","",track page
+2021,Kotlin devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003130.html,"","",track page
+2021,Legal and Policy Issues devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003145.html,"","",track page
+2021,LibreOffice devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003166.html,"","",track page
+2021,MariaDB devroom,"",https://mariadb.org/fosdem2021cfp/,"","",track page
+2021,Microkernel devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003144.html,"","",track page
+2021,Monitoring and Observability devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003143.html,"","",track page
+2021,Mozilla devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003150.html,"","",track page
+2021,MySQL devroom,"",https://www.mysqlandfriends.eu/post/fosdem-2021-mysql-devroom-cfp-is-now-open/,"","",track page
+2021,"Network monitoring, discovery and inventory devroom","",https://lists.fosdem.org/pipermail/fosdem/2020q4/003138.html,"","",track page
+2021,Open Research Tools and Technologies devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003155.html,"","",track page
+2021,Open Source Computer Aided Modeling and Design devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003110.html,"","",track page
+2021,Open Source Design devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003147.html,"","",track page
+2021,"Open Source Firmware, BMC and Bootloader devroom","",https://lists.fosdem.org/pipermail/fosdem/2020q4/003154.html,"","",track page
+2021,OpenChain devroom,"",https://github.com/Open-Source-Compliance/Sharing-creates-value/blob/master/Events/FOSDEM/FOSDEM-2021/OpenChain-devroom-CFP.md,"","",track page
+2021,OpenPOWER devroom,"",https://cfp.openpower.foundation/fosdem2021/cfp,"","",track page
+2021,Perl and Raku Programming devroom,"",https://news.perlfoundation.org/post/fosdem-2021-call-for-papers,"","",track page
+2021,PostgreSQL devroom,"",https://www.postgresql.org/about/news/postgresql-fosdem-2021-call-for-papers-2132/,"","",track page
+2021,Python devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003114.html,"","",track page
+2021,Real Time Communications devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003173.html,"","",track page
+2021,Retrocomputing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003184.html,"","",track page
+2021,Safety and Open Source devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003157.html,"","",track page
+2021,Software Composition devroom,"",https://github.com/software-composition-analysis/fosdem-2021-devroom,"","",track page
+2021,Software Defined Networking devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003117.html,"","",track page
+2021,Software Defined Storage devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003146.html,"","",track page
+2021,Testing and Automation devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003113.html,"","",track page
+2021,Tool The Docs devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003149.html,"","",track page
+2021,Virtualization and IaaS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003109.html,"","",track page
+2021,Web Performance devroom,"",https://lists.fosdem.org/pipermail/fosdem/2020q4/003142.html,"","",track page
+2021,Zig Programming Language devroom,"",https://ziglang.org/news/fosdem-2021.html,"","",track page
+2022,Ada devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003331.html,"","",track page
+2022,Apache OpenOffice devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003350.html,"","",track page
+2022,BSD devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003305.html,"","",track page
+2022,Collaboration and Content Management devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003294.html,"","",track page
+2022,Computer Aided Modeling and Design devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003297.html,"","",track page
+2022,Conference Organisation devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003300.html,"","",track page
+2022,Containers devroom,"",https://discuss.linuxcontainers.org/t/fosdem-2022-containers-devroom-call-for-papers/12832,"","",track page
+2022,Continuous Integration and Continuous Deployment devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003341.html,"","",track page
+2022,Dart and Flutter devroom,"",https://github.com/DartFlutterDev/2022,"","",track page
+2022,Declarative and Minimalistic Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003302.html,"","",track page
+2022,Distributions devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003311.html,"","",track page
+2022,"Embedded, Mobile and Automotive devroom","",https://lists.fosdem.org/pipermail/fosdem/2021q4/003312.html,"","",track page
+2022,Emulator Development devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003293.html,"","",track page
+2022,FOSS on Mobile Devices devroom,"",https://gitlab.com/fosdem_mobile/devroom/-/blob/main/README.md,"","",track page
+2022,Free Software Radio devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003328.html,"","",track page
+2022,Friends of OpenJDK devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003314.html,"","",track page
+2022,Geospatial devroom,"",https://www.osgeo.org/foundation-news/osgeo-at-fosdem-2022-online-call-for-participation-for-the-geospatial-devroom/,"","",track page
+2022,Go devroom,"",https://github.com/go-devroom/cfp,"","",track page
+2022,Graphics devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003362.html,"","",track page
+2022,"HPC, Big Data, and Data Science devroom","",https://lists.fosdem.org/pipermail/fosdem/2021q4/003315.html,"","",track page
+2022,Hardware-Aided Trusted Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003334.html,"","",track page
+2022,Infra Management devroom,"",https://cfp.cfgmgmtcamp.org/fosdem2022/cfp,"","",track page
+2022,JavaScript devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003301.html,"","",track page
+2022,Kotlin devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003313.html,"","",track page
+2022,LLVM devroom,"",https://lists.llvm.org/pipermail/llvm-dev/2021-December/154215.html,"","",track page
+2022,Legal and Policy Issues devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003356.html,"","",track page
+2022,Libre-Open VLSI and FPGA devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003306.html,"","",track page
+2022,LibreOffice Technology devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003303.html,"","",track page
+2022,MariaDB Server devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003353.html,"","",track page
+2022,Matrix.org Foundation & Community devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003333.html,"","",track page
+2022,Microkernel and Component-based OS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003336.html,"","",track page
+2022,Monitoring and Observability devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003361.html,"","",track page
+2022,Mozilla devroom,"",https://discourse.mozilla.org/t/fosdem-2022-call-for-proposals-talks/89700,"","",track page
+2022,MySQL devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003310.html,"","",track page
+2022,Network devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003296.html,"","",track page
+2022,Nim Programming Language devroom,"",https://nim-lang.org/blog/2021/12/02/fosdem-2022-cfp.html,"","",track page
+2022,Open Research Tools and Technologies devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003304.html,"","",track page
+2022,Open Source Design devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003319.html,"","",track page
+2022,"Open Source Firmware, BMC and Bootloader devroom","",https://lists.fosdem.org/pipermail/fosdem/2021q4/003320.html,"","",track page
+2022,OpenPOWER devroom,"",https://cfp.openpower.foundation/fosdem2022/cfp,"","",track page
+2022,PostgreSQL devroom,"",https://www.postgresql.org/message-id/163900296066.695.12240662022374343606%40wrigleys.postgresql.org,"","",track page
+2022,Public Code devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003299.html,"","",track page
+2022,Python devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003346.html,"","",track page
+2022,Raku devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003355.html,"","",track page
+2022,Retrocomputing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003309.html,"","",track page
+2022,Safety and Open Source devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003363.html,"","",track page
+2022,Software Defined Storage devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003332.html,"","",track page
+2022,Software composition and dependency management devroom,"",https://github.com/software-composition-analysis/fosdem-2022-devroom/,"","",track page
+2022,Testing and Automation devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003318.html,"","",track page
+2022,Valgrind devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003354.html,"","",track page
+2022,Virtualization and IaaS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2021q4/003298.html,"","",track page
+2022,Web3 Infrastructure devroom,"",https://github.com/lekanova/Web3-FOSDEM/blob/main/README.md,"","",track page
+2023,BSD devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003460.html,"","",track page
+2023,Binary Tools devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003436.html,"","",track page
+2023,Collaboration and Content Management devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003466.html,"","",track page
+2023,Community devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003429.html,"","",track page
+2023,Confidential Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003434.html,"","",track page
+2023,Containers devroom,"",https://discuss.linuxcontainers.org/t/fosdem-2023-containers-devroom-call-for-papers/15597,"","",track page
+2023,Continuous Integration and Continuous Deployment devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003457.html,"","",track page
+2023,DNS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003449.html,"","",track page
+2023,Declarative and Minimalistic Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003446.html,"","",track page
+2023,Distributions devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003468.html,"","",track page
+2023,"Embedded, Mobile and Automotive devroom","",https://lists.fosdem.org/pipermail/fosdem/2022q4/003445.html,"","",track page
+2023,Emulator Development devroom,"",https://blackbeard334.github.io/fosdem23-emulator-devroom-cfp/,"","",track page
+2023,Energy devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003439.html,"","",track page
+2023,"Erlang, Elixir and Friends devroom","",https://lists.fosdem.org/pipermail/fosdem/2022q4/003464.html,"","",track page
+2023,FOSS on Mobile Devices devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003440.html,"","",track page
+2023,Fast and Streaming Data devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003456.html,"","",track page
+2023,Friends of OpenJDK devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003454.html,"","",track page
+2023,Go devroom,"",https://github.com/go-devroom/cfp,"","",track page
+2023,Graph Systems and Algorithms devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003448.html,"","",track page
+2023,"HPC, Big Data and Data Science devroom","",https://hpc-bigdata-fosdem23.github.io/,"","",track page
+2023,Haskell devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003443.html,"","",track page
+2023,Image-based Linux and Secure Measured Boot devroom,"",https://uapi-group.org/docs/conferences/2023-02-04__fosdem-devroom/,"","",track page
+2023,JavaScript devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003453.html,"","",track page
+2023,Kernel devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003432.html,"","",track page
+2023,Kotlin devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003452.html,"","",track page
+2023,LLVM devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003471.html,"","",track page
+2023,Legal and Policy Issues devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003476.html,"","",track page
+2023,LibreOffice Technology Development Platform devroom,"",https://blog.documentfoundation.org/blog/2022/11/08/fosdem-2023-cfp-libreoffice-technology-devroom/,"","",track page
+2023,"MariaDB, MySQL and Friends devroom","",https://mariadb.org/fosdem2023-cfp/,"","",track page
+2023,Matrix devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003461.html,"","",track page
+2023,Microkernel and Component-based OS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003458.html,"","",track page
+2023,Monitoring and Observability devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003459.html,"","",track page
+2023,Mozilla devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003447.html,"","",track page
+2023,Network devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003478.html,"","",track page
+2023,Nix and NixOS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003463.html,"","",track page
+2023,Open Media devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003451.html,"","",track page
+2023,Open Research Tools and Technology devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003470.html,"","",track page
+2023,Open Source Design devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003465.html,"","",track page
+2023,"Open Source Firmware, BMC and Bootloader devroom","",https://lists.fosdem.org/pipermail/fosdem/2022q4/003467.html,"","",track page
+2023,PostgreSQL devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003450.html,"","",track page
+2023,Public Code and Digital Public Goods devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003444.html,"","",track page
+2023,Python devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003477.html,"","",track page
+2023,RISC-V devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003474.html,"","",track page
+2023,Railways and Open Transport devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003438.html,"","",track page
+2023,Real Time Communications devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003479.html,"","",track page
+2023,Rust devroom,"",https://rust-fosdem.github.io/,"","",track page
+2023,Security devroom,"",https://github.com/security-devroom/fosdem-2023,"","",track page
+2023,Software Bill of Materials devroom,"",https://gist.github.com/zvr/c852b4a560ac2c67885c473034cd4a93,"","",track page
+2023,Software Defined Storage devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003455.html,"","",track page
+2023,Sovereign Cloud devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003475.html,"","",track page
+2023,Testing and Automation devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003472.html,"","",track page
+2023,Translations devroom,"",https://gitlab.com/translations-devroom/cfp,"","",track page
+2023,Virtualization and IaaS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2022q4/003473.html,"","",track page
+2024,AI and Machine Learning devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003514.html,"","",track page
+2024,APIs & friends devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003497.html,"","",track page
+2024,Collaboration and Content Management devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003493.html,"","",track page
+2024,Community devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003487.html,"","",track page
+2024,Confidential Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003505.html,"","",track page
+2024,Containers devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003491.html,"","",track page
+2024,Debuggers and analysis tools devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003500.html,"","",track page
+2024,Declarative and Minimalistic Computing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003519.html,"","",track page
+2024,Designing Futures of FOSS Content Management with the Open Website Alliance devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003513.html,"","",track page
+2024,Distributions devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003529.html,"","",track page
+2024,"Embedded, Mobile and Automotive devroom","",https://lists.fosdem.org/pipermail/fosdem/2023q4/003522.html,"","",track page
+2024,Emulator devroom,"",https://fosdem-emudev-room.github.io/fosdem24-emulator-devroom-cfp/,"","",track page
+2024,Energy: Reimagining this Ecosystem through Open Source devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003495.html,"","",track page
+2024,"Erlang, Elixir, Gleam and Friends devroom","",https://lists.fosdem.org/pipermail/fosdem/2023q4/003498.html,"","",track page
+2024,FOSS on Mobile Devices devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003510.html,"","",track page
+2024,Free Java devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003527.html,"","",track page
+2024,GCC devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003526.html,"","",track page
+2024,Go devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003520.html,"","",track page
+2024,Graphics devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003539.html,"","",track page
+2024,"HPC, Big Data & Data Science devroom","",https://hpc-bigdata-fosdem24.github.io/,"","",track page
+2024,Identity and Access Management devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003488.html,"","",track page
+2024,JavaScript devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003531.html,"","",track page
+2024,Kernel devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003536.html,"","",track page
+2024,LLVM devroom,"",https://discourse.llvm.org/t/cfp-fosdem-2024-llvm-dev-room/74823,"","",track page
+2024,Legal and Policy Issues devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003535.html,"","",track page
+2024,"Libre-SOC, FPGA and VLSI devroom","",https://lists.fosdem.org/pipermail/fosdem/2023q4/003485.html,"","",track page
+2024,Matrix devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003503.html,"","",track page
+2024,Microkernel and Component-based OS devroom,"",http://fosdem.microkernel.info/,"","",track page
+2024,Modern Email devroom,"",https://github.com/modern-email/FOSDEM-24,"","",track page
+2024,Monitoring & Observability devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003517.html,"","",track page
+2024,Mozilla devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003506.html,"","",track page
+2024,Network devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003490.html,"","",track page
+2024,Nix and NixOS devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003494.html,"","",track page
+2024,Open Hardware and CAD/CAM devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003486.html,"","",track page
+2024,Open Media devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003540.html,"","",track page
+2024,Open Research devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003528.html,"","",track page
+2024,Open Source Design devroom,"",https://opensourcedesign.net/2023/11/14/fosdem-cfp-2024,"","",track page
+2024,"Open Source Firmware, BMC and Bootloader devroom","",https://lists.fosdem.org/pipermail/fosdem/2023q4/003524.html,"","",track page
+2024,Open Source In The European Legislative Landscape devroom,"",https://md.softwarefreedom.net/s/FOSDEM24,"","",track page
+2024,Perl and Raku devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003537.html,"","",track page
+2024,PostgreSQL devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003496.html,"","",track page
+2024,Public Code and Digital Public Goods devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003492.html,"","",track page
+2024,Python Devroom devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003508.html,"","",track page
+2024,RISC-V devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003499.html,"","",track page
+2024,Railways and Open Transport devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003502.html,"","",track page
+2024,Real Time Communications (RTC) devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003518.html,"","",track page
+2024,Retrocomputing devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003515.html,"","",track page
+2024,Ruby devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003511.html,"","",track page
+2024,Rust devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003507.html,"","",track page
+2024,Software Bill of Materials devroom,"",https://hackmd.io/@spdx/fosdem2024-cfp,"","",track page
+2024,Software Defined Storage devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003489.html,"","",track page
+2024,Software-Defined Radio and Amateur Radio devroom,"",https://www.gnuradio.org/news/2023-11-08-FOSDEM24-CfP/,"","",track page
+2024,Testing and Continuous delivery devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003532.html,"","",track page
+2024,Tool the docs devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003525.html,"","",track page
+2024,Translations devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003504.html,"","",track page
+2024,Virtualization and Cloud Infrastructure devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003481.html,"","",track page
+2024,Web Performance devroom,"",https://lists.fosdem.org/pipermail/fosdem/2023q4/003501.html,"","",track page
+2025,"APIs: GraphQL, OpenAPI, AsyncAPI, and friends","",https://lists.fosdem.org/pipermail/fosdem/2024q4/003572.html,"","",track page
+2025,Ada,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003580.html,"","",track page
+2025,Android Open Source Project,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003577.html,"","",track page
+2025,Attestation,"",https://hackmd.io/@po26cgI8T7u_FLuVujBdrQ/r1w2pK1-kl,"","",track page
+2025,BSD,"",https://people.freebsd.org/~rodrigo/fosdem25/,"","",track page
+2025,Cloud Native Databases,"",https://fosdem-cloud-native-databases-devroom.github.io/,"","",track page
+2025,Collaboration and Content Management,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003566.html,"","",track page
+2025,Community,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003550.html,"","",track page
+2025,Confidential Computing,"",https://falder.org/fosdem25-cfp,"","",track page
+2025,Containers,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003557.html,"","",track page
+2025,DNS,"",https://blog.powerdns.com/2024/10/28/fosdem-2025-dns-developer-room-call-for-participation,"","",track page
+2025,Data Analytics,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003587.html,"","",track page
+2025,Declarative and Minimalistic Computing,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003568.html,"","",track page
+2025,Digital Wallets and Verifiable Credentials,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003616.html,"","",track page
+2025,Distributions,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003551.html,"","",track page
+2025,Educational,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003547.html,"","",track page
+2025,"Embedded, Mobile and Automotive","",https://lists.fosdem.org/pipermail/fosdem/2024q4/003575.html,"","",track page
+2025,Energy: Accelerating the Transition through Open Source,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003573.html,"","",track page
+2025,FOSS on Mobile Devices,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003599.html,"","",track page
+2025,Free Java,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003578.html,"","",track page
+2025,Funding the FOSS Ecosystem,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003579.html,"","",track page
+2025,GCC (GNU Toolchain),"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003583.html,"","",track page
+2025,Geospatial,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003597.html,"","",track page
+2025,Go,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003613.html,"","",track page
+2025,Government Collaboration,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003608.html,"","",track page
+2025,"HPC, Big Data & Data Science","",https://hpc-bigdata-fosdem25.github.io/,"","",track page
+2025,Identity and Access Management,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003560.html,"","",track page
+2025,Image-Based Linux and Boot Integrity,"",https://uapi-group.org/docs/conferences/2025-02-02__fosdem-devroom/,"","",track page
+2025,Inclusive Web,"",https://github.com/Inclusive-Web-Devroom/fosdem-2025/blob/main/CFP.md,"","",track page
+2025,JavaScript,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003611.html,"","",track page
+2025,Kernel,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003559.html,"","",track page
+2025,LLVM,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003555.html,"","",track page
+2025,Legal and Policy,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003586.html,"","",track page
+2025,LibreOffice,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003562.html,"","",track page
+2025,Low-level AI Engineering and Hacking,"",https://aifoundry.org/fosdem-2025-low-level-ai-engineering-hacking-dev-room,"","",track page
+2025,Matrix.org Foundation and Community,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003606.html,"","",track page
+2025,Microkernel and Component-Based OS,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003582.html,"","",track page
+2025,Modern Email,"",https://github.com/modern-email/FOSDEM-25,"","",track page
+2025,Monitoring and Observability,"",https://docs.google.com/document/d/1KQmNqzN3cO29ZZUSpd83REvJY_QhbvxIYr4IRBruQTc,"","",track page
+2025,Mozilla,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003609.html,"","",track page
+2025,MySQL,"",https://www.mysqlandfriends.eu/post/fosdem-2025-mysql-devroom-call-for-participation/,"","",track page
+2025,Network,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003549.html,"","",track page
+2025,Nix and NixOS,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003570.html,"","",track page
+2025,Open Hardware and CAD/CAM,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003569.html,"","",track page
+2025,Open Media,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003561.html,"","",track page
+2025,Open Research,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003603.html,"","",track page
+2025,Open Source Design,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003596.html,"","",track page
+2025,"Open Source Firmware, BMC and Bootloader","",https://lists.fosdem.org/pipermail/fosdem/2024q4/003615.html,"","",track page
+2025,Open Source In The European Legislative Landscape and Beyond,"",https://softwarefreedom.net/fosdem-25-cfp,"","",track page
+2025,PostgreSQL,"",https://www.postgresql.eu/events/fosdem2025/news/fosdem-pgday-2025-call-for-papers-is-now-open-144/,"","",track page
+2025,Python,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003564.html,"","",track page
+2025,Quantum Computing,"",https://unitary.fund/community/FOSDEM_2025/,"","",track page
+2025,RISC-V,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003553.html,"","",track page
+2025,Radio,"",https://www.iaru-r1.org/2024/radio-devroom-fosdem25-1st-february/,"","",track page
+2025,Railways and Open Transport,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003548.html,"","",track page
+2025,Real Time Communications (RTC),"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003584.html,"","",track page
+2025,Retrocomputing,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003591.html,"","",track page
+2025,Robotics and Simulation,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003576.html,"","",track page
+2025,Rust,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003565.html,"","",track page
+2025,Security,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003556.html,"","",track page
+2025,Social Web,"",https://socialwebfoundation.org/2024/11/01/fosdem-2025-social-web-devroom-call-for-participation/,"","",track page
+2025,Software Bill of Materials (SBOM),"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003605.html,"","",track page
+2025,Software Defined Storage,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003563.html,"","",track page
+2025,Swift,"",https://swiftlang.github.io/event-fosdem/,"","",track page
+2025,Testing and Continuous Delivery,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003546.html,"","",track page
+2025,Tool the Docs,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003571.html,"","",track page
+2025,Virtualization and Cloud Infrastructure,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003574.html,"","",track page
+2025,Web Performance,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003598.html,"","",track page
+2025,WebAssembly,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003581.html,"","",track page
+2025,eBPF,"",https://lists.fosdem.org/pipermail/fosdem/2024q4/003552.html,"","",track page
+2026,AI Plumbers,"",https://aifoundry.org/#fosdem,"","",track page
+2026,"Audio, Video & Graphics Creation","",https://lists.fosdem.org/pipermail/fosdem/2025q4/003700.html,"","",track page
+2026,"BSD, illumos, bhyve, OpenZFS","",https://lists.fosdem.org/pipermail/fosdem/2025q4/003680.html,"","",track page
+2026,Bioinformatics & Computational Biology,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003648.html,"","",track page
+2026,Browser and web platform,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003677.html,"","",track page
+2026,Building Europe’s Public Digital Infrastructure,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003688.html,"","",track page
+2026,CRA in practice,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003697.html,"","",track page
+2026,Collaboration and content management,"",https://www.xwiki.org/xwiki/bin/view/Main/Events/FOSDEM%202026/Call%20for%20Participation/,"","",track page
+2026,Community,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003686.html,"","",track page
+2026,Confidential Computing,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003672.html,"","",track page
+2026,Containers,"",https://discuss.linuxcontainers.org/t/fosdem-2026-containers-devroom-call-for-papers/25098,"","",track page
+2026,DNS,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003682.html,"","",track page
+2026,Databases,"",https://fosdem-databases-devroom.github.io/,"","",track page
+2026,Decentralised Communication,"",https://matrix.org/blog/2025/11/fosdem-cfp/,"","",track page
+2026,Decentralized Internet and Privacy,"",https://decentral.community/FOSDEM2026/,"","",track page
+2026,Declarative and Minimalistic Computing,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003662.html,"","",track page
+2026,Distributions,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003684.html,"","",track page
+2026,Educational,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003665.html,"","",track page
+2026,"Embedded, Mobile and Automotive","",https://lists.fosdem.org/pipermail/fosdem/2025q4/003654.html,"","",track page
+2026,Energy,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003637.html,"","",track page
+2026,FOSS on Mobile,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003687.html,"","",track page
+2026,FPGA and VLSI,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003683.html,"","",track page
+2026,Funding the FOSS Ecosystem,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003656.html,"","",track page
+2026,GCC (GNU Toolchain),"",https://inbox.sourceware.org/DDZ33YE13W8K.3GW0F1S381V0T@adacore.com,"","",track page
+2026,Gaming and VR devroom,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003675.html,"","",track page
+2026,Geospatial,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003698.html,"","",track page
+2026,Go,"",https://github.com/go-devroom/cfp,"","",track page
+2026,Graphics,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003670.html,"","",track page
+2026,"HPC, Big Data & Data Science","",https://hpc-bigdata-fosdem26.github.io/,"","",track page
+2026,Identity and Access Management,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003645.html,"","",track page
+2026,Kernel,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003678.html,"","",track page
+2026,LLVM,"",https://discourse.llvm.org/t/cfp-fosdem-2026-llvm-dev-room/88746,"","",track page
+2026,Legal & Policy,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003703.html,"","",track page
+2026,"Local-First, sync engines, CRDTs","",https://openlocalfirst.org/fosdem/2026/CfP/,"","",track page
+2026,Microkernel and Component-Based OS,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003644.html,"","",track page
+2026,Modern Email,"",https://github.com/modern-email/FOSDEM-26,"","",track page
+2026,Music Production,"",https://music.lminiero.it/fosdem/,"","",track page
+2026,Network,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003639.html,"","",track page
+2026,Nix and NixOS,"",https://discourse.nixos.org/t/call-for-participation-nix-and-nixos-devroom-fosdem-2026/71551,"","",track page
+2026,Open Hardware and CAD/CAM,"",https://openhardwaredevroom.github.io/FOSDEM2026/,"","",track page
+2026,Open Media devroom,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003649.html,"","",track page
+2026,Open Research,"",https://research-fosdem.github.io/,"","",track page
+2026,Open Source & EU Policy,"",https://softwarefreedom.net/fosdem-2026-cfp,"","",track page
+2026,Open Source Design,"",https://opensourcedesign.net/2025/10/01/fosdem-cfp-2026,"","",track page
+2026,Open Source Digital Forensics,"",https://fosdem-osdf-devroom.github.io/cfp_2026/,"","",track page
+2026,Plan 9,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003658.html,"","",track page
+2026,Python,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003652.html,"","",track page
+2026,RISC-V,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003646.html,"","",track page
+2026,Railways and Open Transport,"",https://github.com/OpenRailAssociation/FOSDEM/blob/main/2026-cfp.md,"","",track page
+2026,Retrocomputing,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003685.html,"","",track page
+2026,Robotics and Simulation,"",https://robotics-devroom.github.io/cfp/fosdem26,"","",track page
+2026,Rust,"",https://rust-fosdem.github.io/,"","",track page
+2026,SBOMS and supply chains,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003702.html,"","",track page
+2026,Search,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003647.html,"","",track page
+2026,Security,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003653.html,"","",track page
+2026,Social Web,"",https://socialwebfoundation.org/2025/10/31/fosdem-2026-social-web-devroom-call-for-participation/,"","",track page
+2026,Software Defined Radio(SDR)/Digital Signal Processing(DSP),"",http://jmfriedt.free.fr/fosdem2026.html,"","",track page
+2026,Software Defined Storage,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003674.html,"","",track page
+2026,Software Performance,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003692.html,"","",track page
+2026,Testing and Continuous Delivery,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003641.html,"","",track page
+2026,Tool the Docs,"",https://docs.google.com/document/d/1lVrTGes3GGlF_vI9UuAj7XISoJhukd2djT5wwAkpVnI/edit?usp=sharing,"","",track page
+2026,Translations,"",https://translations-devroom.github.io/FOSDEMtranslationsDevroom26/,"","",track page
+2026,Virtualization and Cloud Infrastructure,"",https://lists.fosdem.org/pipermail/fosdem/2025q4/003634.html,"","",track page
+2026,eBPF,"",https://ebpf.io/fosdem-2026.html,"","",track page
