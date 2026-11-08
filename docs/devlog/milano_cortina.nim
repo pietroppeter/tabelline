@@ -280,7 +280,7 @@ spreading the Games is distance. Ester Ledecká, who won gold in skiing and in s
 """
 
 nbShowCode:
-  let t = tabella(@trips, rownameCol = "trip"):
+  let t = tabella(trips, rownameCol = "trip"):
     optPageTheme()
     tabHeader "How far apart"
     colsLabel {"by": "by", "low": "from", "high": "to"}
@@ -576,7 +576,7 @@ Games every race could be streamed.
 """
 
 nbShowCode:
-  let t = tabella(@channels, rownameCol = "channel"):
+  let t = tabella(channels, rownameCol = "channel"):
     optPageTheme()
     tabHeader "Where to watch, in Italy"
     colsLabel {"how": "", "free": "free", "allEvents": "every race"}
@@ -605,7 +605,7 @@ A seat was cheap or very dear: €30 for the cheapest, €1,400 for the men's ho
 nbShowCode:
   nbAccanto:
     block:
-      let t = tabella(@prices, rownameCol = "what"):
+      let t = tabella(prices, rownameCol = "what"):
         optPageTheme()
         tabHeader "Prices"
         colsLabel {"euro": ""}
@@ -614,7 +614,7 @@ nbShowCode:
         tabOptions(tableFontSize = "13px")
       nbTable t
     block:
-      let t = tabella(@ticketShares, rownameCol = "what"):
+      let t = tabella(ticketShares, rownameCol = "what"):
         optPageTheme()
         tabHeader "Shares"
         colsLabel {"share": ""}
@@ -638,7 +638,7 @@ against the €4 million it had set aside.
 """
 
 nbShowCode:
-  let t = tabella(@prizes, rownameCol = "country"):
+  let t = tabella(prizes, rownameCol = "country"):
     optPageTheme()
     tabHeader "What a medal pays", "to the athlete, from their country's committee"
     colsHide "currency"
@@ -670,7 +670,7 @@ The medal itself is worth less than one would think. A gold medal is silver with
 """
 
 nbShowCode:
-  let t = tabella(@metals, rownameCol = "medal"):
+  let t = tabella(metals, rownameCol = "medal"):
     optPageTheme()
     tabHeader "The medal as metal"
     colsLabel {"grams": "weighs", "goldGrams": "of gold", "euro": "worth"}
@@ -702,7 +702,7 @@ the last, in millions of euros:
 """
 
 nbShowCode:
-  let t = tabella(@estimates, rownameCol = "work"):
+  let t = tabella(estimates, rownameCol = "work"):
     optPageTheme()
     tabHeader "From the first estimate to the last", "millions of euros"
     colsLabel {"place": "", "fate": "", "first": "first", "last": "last", "times": "×"}
@@ -725,7 +725,7 @@ Its cost, step by step:
 """
 
 nbShowCode:
-  let t = tabella(@trackSteps, rownameCol = "date"):
+  let t = tabella(trackSteps, rownameCol = "date"):
     optPageTheme()
     tabHeader "The sliding track of Cortina", "its cost, in millions of euros"
     colsLabel {"what": "", "millions": "€ m"}
@@ -743,7 +743,7 @@ million. One line per item, in and out:
 """
 
 nbShowCode:
-  let t = tabella(@trackYear, rownameCol = "item", groupnameCol = "side"):
+  let t = tabella(trackYear, rownameCol = "item", groupnameCol = "side"):
     optPageTheme()
     tabHeader "One year of the sliding track", "2027, as planned"
     colsLabel {"euro": ""}
@@ -762,7 +762,7 @@ the state pays for its extra costs, and how much those are depends on who is ask
 """
 
 nbShowCode:
-  let t = tabella(@santaGiulia, rownameCol = "who"):
+  let t = tabella(santaGiulia, rownameCol = "who"):
     optPageTheme()
     tabHeader "Santa Giulia's extra costs", "millions of euros, as each side tells them"
     colsLabel {"says": "", "millions": "€ m"}
@@ -782,7 +782,7 @@ snow had been made.
 """
 
 nbShowCode:
-  let t = tabella(@snow, rownameCol = "what"):
+  let t = tabella(snow, rownameCol = "what"):
     optPageTheme()
     colsLabel {"value": "", "unit": "", "note": ""}
     fmtNumber "value", decimals = 1, compact = true
@@ -841,7 +841,7 @@ advertising brings (an oil company, a carmaker, an airline), and what all of it 
 """
 
 nbShowCode:
-  let t = tabella(@footprint, rownameCol = "what", groupnameCol = "part"):
+  let t = tabella(footprint, rownameCol = "what", groupnameCol = "part"):
     optPageTheme()
     tabHeader "The Games' footprint", "estimated before the Games, and what it will melt"
     colsLabel {"tonnes": "CO₂e", "snowKm2": "snow cover", "iceMt": "glacier ice"}
@@ -902,7 +902,7 @@ calls the sliding track rebuilt: the old one, from 1923, was torn down):
 """
 
 nbShowCode:
-  let t = tabella(@afterwards, rownameCol = "venue"):
+  let t = tabella(afterwards, rownameCol = "venue"):
     optPageTheme()
     tabHeader "After the Games"
     colsLabel {"built": "", "becomes": "becomes"}
