@@ -516,7 +516,7 @@ nbShowCode:
     tabHeader "Cities of the European Union", "the ten largest, within their city limits"
     fmtFlag "flag"
     fmtInteger "population"
-    fmtDate "counted", dateStyle = "d MMM y"
+    fmtDate "counted", dateStyle = "d MMM yyyy"
     colsLabel {"flag": "", "counted": "counted on"}
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["city"] == "Rome"))
     tabSourceNote md("Wikipedia, *List of cities in the European Union by population within city limits*, 8 November 2026, by `citta.py`.")
