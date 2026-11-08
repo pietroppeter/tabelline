@@ -1425,14 +1425,1318 @@
   "commit": "11671756672e1c5e73442b51dd2c5373097779b7",
   "pages": [
    {
+    "title": "'Graphical' study characteristics table for a systematic review",
+    "path": "awconway/table-contest-2020",
+    "year": 2020,
+    "by": "Aaron Conway",
+    "package": "flextable",
+    "post": "https://forum.posit.co/t/graphical-study-characteristics-table-for-a-systematic-review-table-contest-submission/85939",
+    "files": 1,
+    "url": "https://github.com/awconway/table-contest-2020",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 193,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "2021 Seattle Mariners Top Prospects List",
+    "path": "smadaplaysfantasy/TeamProspectBoard",
+    "year": 2020,
+    "by": "Mat",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/2021-seattle-mariners-top-prospects-list-table-contest-submission/87896",
+    "files": 2,
+    "url": "https://github.com/smadaplaysfantasy/TeamProspectBoard",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 368,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "A 3-way crosstab table with gt",
+    "path": "jdjohn215/2020-RStudio-Table-Contest",
+    "year": 2020,
+    "by": "John D. Johnson",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/a-3-way-crosstab-table-with-gt-table-contest-submission/82062",
+    "files": 2,
+    "url": "https://github.com/jdjohn215/2020-RStudio-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 263,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Spanners from column names",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "A Not So Short Introduction to rtables",
+    "path": "waddella/RStudioTableContest2020",
+    "year": 2020,
+    "by": "Adrian Waddella",
+    "package": "rtables",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/a-not-so-short-introduction-to-rtables-table-contest-submission/86538",
+    "files": 1,
+    "url": "https://github.com/waddella/RStudioTableContest2020",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 519,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "A Reactable-based Calendar",
+    "path": "mattkumar/react_calendar",
+    "year": 2020,
+    "by": "Matthew Kumar",
+    "package": "reactable, Shiny, pandas Styler",
+    "post": "https://forum.posit.co/t/a-reactable-based-calendar-table-contest-submission/86582",
+    "files": 4,
+    "url": "https://github.com/mattkumar/react_calendar",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 140,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "A Year of 311 Service Requests in Chicago, in {gt} Tables",
+    "path": "jimtheflash/rstudio.tablecontest.2020",
+    "year": 2020,
+    "by": "Jim Kloet",
+    "package": "gt, reactable",
+    "post": "https://forum.posit.co/t/a-year-of-311-service-requests-in-chicago-in-gt-tables-table-contest-submission/87957",
+    "files": 2,
+    "url": "https://github.com/jimtheflash/rstudio.tablecontest.2020",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 204,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Interactive tables",
+     "Locations",
+     "Numbers and integers",
+     "Presets",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Banana Crop Yields Over Time",
+    "path": "soroosj/TidyTuesday",
+    "year": 2020,
+    "by": "Joel Soroos",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/banana-crop-yields-over-time-table-contest-submission/86137",
+    "files": 3,
+    "url": "https://github.com/soroosj/TidyTuesday/tree/master/2020-09-01",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 197,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Fonts",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Summary rows",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Beyoncé and Taylor Swift Albums",
+    "path": "gkaramanis/tidytuesday",
+    "year": 2020,
+    "by": "Georgios Karamanis",
+    "licence": "MIT",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/beyonce-and-taylor-swift-albums/86399",
+    "files": 3,
+    "url": "https://github.com/gkaramanis/tidytuesday/tree/master/2020/2020-week40",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 169,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Challenger Disaster O-ring Table",
+    "path": "coolbutuseless/emphatic",
+    "year": 2020,
+    "by": "mikefc",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/challenger-disaster-o-ring-table-table-contest-submission/86358",
+    "kind": "package",
+    "files": 7,
+    "url": "https://github.com/coolbutuseless/emphatic",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 171,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "Comparison Tutorial",
+    "path": "EvaMaeRey/tables",
+    "year": 2020,
+    "by": "Gina Reynolds",
+    "package": "gt, reactable, DT, flextable, kableExtra, formattable, huxtable, kable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/comparison-tutorial-table-contest-submission/87978",
+    "files": 116,
+    "url": "https://github.com/EvaMaeRey/tables",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 2514,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates"
+     ],
+     "0.4": [
+      "Images"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Move",
+     "Numbers and integers",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Summary rows",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "COVID-19 Table Race",
+    "path": "nvelden/table-race",
+    "year": 2020,
+    "by": "noveld",
+    "package": "Shiny",
+    "post": "https://forum.posit.co/t/covid-19-table-race/87912",
+    "files": 2,
+    "url": "https://github.com/nvelden/table-race",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 100,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "DataEditR: Interactive Editor for Viewing, Filtering, Entering & Editing Data",
+    "path": "DillonHammill/DataEditR",
+    "year": 2020,
+    "by": "Dillon Hammill",
+    "licence": "GPL-2",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/dataeditr-interactive-editor-for-viewing-filtering-entering-editing-data-table-contest-submission/87976",
+    "kind": "package",
+    "files": 1,
+    "url": "https://github.com/DillonHammill/DataEditR",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 115,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "DT Examples",
+    "path": "neilhatfield/dataTableExample",
+    "year": 2020,
+    "by": "Neil Hatfield",
+    "licence": "GPL-3",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/dt-examples-table-contest-submission/86110",
+    "files": 1,
+    "url": "https://github.com/neilhatfield/dataTableExample",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 246,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Editable DataTables in R shiny using SQL",
+    "path": "nvelden/sql_table",
+    "year": 2020,
+    "by": "noveld",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/editable-datatables-in-r-shiny-using-sql/81401",
+    "files": 1,
+    "url": "https://github.com/nvelden/sql_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 88,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Employee Directory editable DT",
+    "path": "nvelden/Employee_Directory_CRUD",
+    "year": 2020,
+    "by": "noveld",
+    "package": "DT, Shiny",
+    "prize": "Winner",
+    "post": "https://forum.posit.co/t/employee-directory-editable-dt/81403",
+    "files": 1,
+    "url": "https://github.com/nvelden/Employee_Directory_CRUD",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 342,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "Example Large Multi-page Table",
+    "path": "bstaton1/pdf-tables",
+    "year": 2020,
+    "by": "bstaton1",
+    "licence": "MIT",
+    "package": "kableExtra, kable",
+    "post": "https://forum.posit.co/t/example-large-multi-page-table-table-contest-submission/86381",
+    "files": 1,
+    "url": "https://github.com/bstaton1/pdf-tables/tree/main/large-table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 36,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Expected Goals (xG) & Shot Timeline for Soccer/Football with {gt}",
+    "path": "Ryo-N7/soccer_gt_timelines",
+    "year": 2020,
+    "by": "Ryo Nakagawara",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/expected-goals-xg-shot-timeline-for-soccer-football-with-gt/86449",
+    "files": 4,
+    "url": "https://github.com/Ryo-N7/soccer_gt_timelines",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 953,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Extra CSS",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Scientific",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Format columns as markdown with the flextable and ftExtra packages",
+    "path": "atusy/ftExtra",
+    "year": 2020,
+    "by": "atusy",
+    "licence": "MIT",
+    "package": "flextable",
+    "post": "https://forum.posit.co/t/format-columns-as-markdown-with-the-flextable-and-ftextra-packages-table-contest-submission/86497",
+    "files": 3,
+    "url": "https://github.com/atusy/ftExtra/tree/master/vignettes",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 162,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Friends data visualisation for a #tidytuesday challenge",
+    "path": "beeb22/tidytuesday",
+    "year": 2020,
+    "by": "Bee",
+    "package": "gt, Shiny",
+    "post": "https://forum.posit.co/t/friends-data-visualisation-for-a-tidytuesday-challenge-table-contest-submission/86308",
+    "files": 17,
+    "url": "https://github.com/beeb22/tidytuesday",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 1353,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Hierarchically Structured Tables using V-Party Dataset",
+    "path": "bobfromspace/rstudio_table_contest",
+    "year": 2020,
+    "by": "Nina Ilchenko",
+    "package": "kableExtra, kable",
+    "post": "https://forum.posit.co/t/hierarchically-structured-tables-using-v-party-dataset-table-contest-submission/86501",
+    "files": 1,
+    "url": "https://github.com/bobfromspace/rstudio_table_contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 155,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "How to make a table of means plus/minus standar errors and other functions",
+    "path": "another-smith/meanSE",
+    "year": 2020,
+    "by": "Eric Smith",
+    "licence": "GPL-3.0",
+    "package": "kableExtra",
+    "post": "https://forum.posit.co/t/how-to-make-a-table-of-means-plus-minus-standar-errors-and-other-functions-table-contest-submission/87607",
+    "files": 2,
+    "url": "https://github.com/another-smith/meanSE",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 152,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Imperial March - static {gt} table",
+    "path": "schmid07/R-Studio-Table-Contest-Submission",
+    "year": 2020,
+    "by": "schmid",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/imperial-march-static-gt-table/86345",
+    "url": "https://github.com/schmid07/R-Studio-Table-Contest-Submission",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Interactive HTML Table of NFL Team Ratings",
+    "path": "kcuilla/2020-RStudio-Table-Contest",
+    "year": 2020,
+    "by": "Kyle Cuilla",
+    "package": "reactable, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/interactive-html-table-of-nfl-team-ratings/81205",
+    "files": 1,
+    "url": "https://github.com/kcuilla/2020-RStudio-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 151,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Interactive Survival Tables",
+    "path": "mattkumar/react_surv_tables",
+    "year": 2020,
+    "by": "Matthew Kumar",
+    "package": "reactable, DT, Shiny",
+    "post": "https://forum.posit.co/t/interactive-survival-tables-table-contest-submission/81216",
+    "files": 3,
+    "url": "https://github.com/mattkumar/react_surv_tables",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 167,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Interactive table with drill down - Fantasy Football Receiving Stats & Opportunities",
+    "path": "kcuilla/fantasy_football_receiving_opps",
+    "year": 2020,
+    "by": "Kyle Cuilla",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/interactive-table-with-drill-down-fantasy-football-receiving-stats-opportunities/86430",
+    "files": 1,
+    "url": "https://github.com/kcuilla/fantasy_football_receiving_opps",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 225,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "New York State Hospital Performance Comparison Tool",
+    "path": "esmith78/nys-hospital-compare",
+    "year": 2020,
+    "by": "Erica Smith",
+    "post": "https://forum.posit.co/t/new-york-state-hospital-performance-comparison-tool-table-contest-submission/87962",
+    "url": "https://github.com/esmith78/nys-hospital-compare",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Office of Financial Management (OFM) Estimates for the Central Puget Sound Region",
+    "path": "cyyllam/ofm-wa-estimates",
+    "year": 2020,
+    "by": "malcmalc",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/office-of-financial-management-ofm-estimates-for-the-central-puget-sound-region-table-contest-submission/85929",
+    "files": 8,
+    "url": "https://github.com/cyyllam/ofm-wa-estimates",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 286,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Olympic Medals: Building an Award Winning Table",
+    "path": "ty-sanders/gold_medal_table",
+    "year": 2020,
+    "by": "Tyler Sanders",
+    "package": "kableExtra, formattable, kable",
+    "post": "https://forum.posit.co/t/olympic-medals-building-an-award-winning-table-table-contest-submission/86230",
+    "files": 1,
+    "url": "https://github.com/ty-sanders/gold_medal_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 340,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Pretty Printing Python DataFrames in RMarkdown using `reticulate` and `kableExtra`",
+    "path": "nischalshrestha/pandas-rmarkdown",
+    "year": 2020,
+    "by": "Nischal Shrestha",
+    "licence": "MIT",
+    "package": "kableExtra, formattable",
+    "post": "https://forum.posit.co/t/pretty-printing-python-dataframes-in-rmarkdown-using-reticulate-and-kableextra-table-contest-submission/87981",
+    "files": 3,
+    "url": "https://github.com/nischalshrestha/pandas-rmarkdown",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 151,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "R Package Download Tracker",
+    "path": "choux130/RPackageDownloadTracker",
+    "year": 2020,
+    "by": "Yin-Ting Chou",
+    "package": "reactable, flextable, kableExtra, Shiny, huxtable",
+    "post": "https://forum.posit.co/t/r-package-download-tracker-table-contest-submission/86134",
+    "files": 5,
+    "url": "https://github.com/choux130/RPackageDownloadTracker",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 371,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Recreating a NEJM forest plot/table hybrid",
+    "path": "rdboyes/forestable",
+    "year": 2020,
+    "by": "Randy Boyes",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/recreating-a-nejm-forest-plot-table-hybrid-table-contest-submission/86111",
+    "kind": "package",
+    "files": 2,
+    "url": "https://github.com/rdboyes/forestable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 204,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "Recreating a Table by The Economist with Reactable",
+    "path": "connorrothschild/economist-table-replication",
+    "year": 2020,
+    "by": "Connor Rothschild",
+    "package": "reactable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/recreating-a-table-by-the-economist-with-reactable-table-contest-submission/84725",
+    "files": 1,
+    "url": "https://github.com/connorrothschild/economist-table-replication",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 220,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Replicating a New York Times Table of Swedish COVID-19 deaths with gt",
+    "path": "malcolmbarrett/malco.io",
+    "year": 2020,
+    "by": "Malcolm Barrett",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/replicating-a-new-york-times-table-of-swedish-covid-19-deaths-with-gt-table-contest-submission/82423",
+    "files": 1,
+    "url": "https://github.com/malcolmbarrett/malco.io/tree/master/content/post/2020-05-16-replicating-an-nyt-table-of-swedish-covid-deaths-with-gt",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 74,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any CSS",
+     "Any format",
+     "Column selectors",
+     "HTML",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Styles",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Reproducing the Periodic Table of Elements",
+    "path": "etiennebacher/periodic-table",
+    "year": 2020,
+    "by": "bretauv",
+    "licence": "GPL-3.0",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/reproducing-the-periodic-table-of-elements/85701",
+    "files": 1,
+    "url": "https://github.com/etiennebacher/periodic-table",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 143,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnote marks",
+     "Footnotes",
+     "Locations",
+     "Markdown",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "rounding, tabulation, and inline presentation with table.glue",
+    "path": "bcjaeger/table.glue",
+    "year": 2020,
+    "by": "Byron Jaeger",
+    "licence": "MIT",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/rounding-tabulation-and-inline-presentation-with-table-glue-table-contest-submission/85851",
+    "kind": "package",
+    "files": 2,
+    "url": "https://github.com/bcjaeger/table.glue",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 66,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Labels",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "Spotting the Difference",
+    "path": "mattkumar/flexdiff",
+    "year": 2020,
+    "by": "Matthew Kumar",
+    "package": "flextable",
+    "post": "https://forum.posit.co/t/spotting-the-difference-table-contest-submission/83285",
+    "files": 2,
+    "url": "https://github.com/mattkumar/flexdiff",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 107,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Stock Table",
+    "path": "rmwoody/stock-table",
+    "year": 2020,
+    "by": "Robert Woody",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/stock-table-table-contest-submission/85872",
+    "files": 3,
+    "url": "https://github.com/rmwoody/stock-table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 353,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Swiss Public Transit Travel Planner",
+    "path": "xari/transit",
+    "year": 2020,
+    "by": "Harry",
+    "post": "https://forum.posit.co/t/swiss-public-transit-travel-planner-table-contest-submission/87918",
+    "kind": "package",
+    "url": "https://github.com/xari/transit",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Table 1 : Summary of baseline demographics across treatment groups",
+    "path": "BiostatsReportAutomation/Table1_R_Excel_Output",
+    "year": 2020,
+    "by": "Steve Boateng Ampah",
+    "post": "https://forum.posit.co/t/table-1-summary-of-baseline-demographics-across-treatment-groups-table-contest-submission/86487",
+    "files": 2,
+    "url": "https://github.com/BiostatsReportAutomation/Table1_R_Excel_Output",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 432,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "An interactive table of the world",
+    "path": "gkaramanis/table-contest",
+    "year": 2020,
+    "by": "Georgios Karamanis",
+    "licence": "MIT",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/table-of-the-table-contest-submission-table-contest-submissions/86480",
+    "files": 1,
+    "url": "https://github.com/gkaramanis/table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 68,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Table summarization app",
+    "path": "ironwest/egsummary",
+    "year": 2020,
+    "by": "Norimitsu Nishida",
+    "package": "gt, flextable, gtsummary, Shiny",
+    "post": "https://forum.posit.co/t/table-summarization-app-table-contest-submission/87971",
+    "files": 4,
+    "url": "https://github.com/ironwest/egsummary",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 591,
+    "needs": {
+     "later": [
+      "Statistical summary tables (gtsummary, rtables, tfrmt)",
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "Column selectors",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "Tables of USA COVID-19 Policy Orders",
+    "path": "parmsam/rstudio-table-contest",
+    "year": 2020,
+    "by": "Sam",
+    "package": "DT",
+    "post": "https://forum.posit.co/t/tables-of-usa-covid-19-policy-orders-table-contest-submission/85728",
+    "files": 1,
+    "url": "https://github.com/parmsam/rstudio-table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 83,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Tables with a Subset of RStudio Keyboard Shortcuts",
+    "path": "bstaton1/useful-keystrokes",
+    "year": 2020,
+    "by": "bstaton1",
+    "licence": "MIT",
+    "package": "kableExtra, kable",
+    "post": "https://forum.posit.co/t/tables-with-a-subset-of-rstudio-keyboard-shortcuts-table-contest-submission/86383",
+    "files": 1,
+    "url": "https://github.com/bstaton1/useful-keystrokes",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 33,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Technology Figures of the EU",
+    "path": "FlorianHandke/RStudio_Table_Contest_2020",
+    "year": 2020,
+    "by": "Florian Handke",
+    "package": "kableExtra, kable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/technology-figures-of-the-eu-table-contest-submission/87855",
+    "files": 1,
+    "url": "https://github.com/FlorianHandke/RStudio_Table_Contest_2020",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 202,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "The Big Mac Index Table",
+    "path": "agstn/RStudio_table_contest_2020",
+    "year": 2020,
+    "by": "Agustin Calatroni",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/the-big-mac-index-table-table-contest-submission/86123",
+    "files": 1,
+    "url": "https://github.com/agstn/RStudio_table_contest_2020",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 255,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "Formats for single values",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "The different faces of the Beta distribution",
+    "path": "richardvogg/Data-Simulation",
+    "year": 2020,
+    "by": "Richard Vogg",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/the-different-faces-of-the-beta-distribution-table-contest-submission/84958",
+    "files": 4,
+    "url": "https://github.com/richardvogg/Data-Simulation",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 335,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "The Modern Baseball Card",
+    "path": "kevin-m-kent/Rstudio-table-contest-2020",
+    "year": 2020,
+    "by": "Kevin Kent",
+    "package": "gt, Shiny, formattable",
+    "post": "https://forum.posit.co/t/the-modern-baseball-card-table-contest-submission/87898",
+    "files": 8,
+    "url": "https://github.com/kevin-m-kent/Rstudio-table-contest-2020",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 672,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "later": [
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Fonts",
+     "Presets",
+     "Sizes",
+     "Table options",
+     "Title and subtitle",
+     "Widths",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "The NFL Analytics Say \"Go For It!\"",
+    "path": "kcuilla/fourth_down_go_rates",
+    "year": 2020,
+    "by": "Kyle Cuilla",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/the-nfl-analytics-say-go-for-it/87145",
+    "files": 1,
+    "url": "https://github.com/kcuilla/fourth_down_go_rates",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 82,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "The Office US - pivta",
+    "path": "feddelegrand7/RSContest",
+    "year": 2020,
+    "by": "Mohamed El Fodil Ihaddaden",
+    "package": "Shiny",
+    "post": "https://forum.posit.co/t/the-office-us-pivta-table-contest-submission/81128",
+    "files": 1,
+    "url": "https://github.com/feddelegrand7/RSContest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 37,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "The Tidyverse in a Table",
+    "path": "rasmusab/tidyverse-in-a-table",
+    "year": 2020,
+    "by": "Rasmus Bååth",
+    "licence": "MIT",
+    "package": "DT",
+    "post": "https://forum.posit.co/t/the-tidyverse-in-a-table-table-contest-submission/86543",
+    "files": 2,
+    "url": "https://github.com/rasmusab/tidyverse-in-a-table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 150,
+    "needs": {},
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "TOne - a flexible 'Table 1'",
+    "path": "AndriSignorell/TOne",
+    "year": 2020,
+    "by": "Signorell",
+    "package": "kable",
+    "post": "https://forum.posit.co/t/tone-a-flexible-table-1-table-contest-submission/86504",
+    "files": 1,
+    "url": "https://github.com/AndriSignorell/TOne",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 29,
+    "needs": {},
+    "uses": [
+     "Any format",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Top and bottom 5 UK areas by pet population",
+    "path": "Anavoron/Rstudio-table-contest-2020",
+    "year": 2020,
+    "by": "Anastasia Voronkova",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/top-and-bottom-5-uk-areas-by-pet-population-table-contest-submission/87737",
+    "files": 1,
+    "url": "https://github.com/Anavoron/Rstudio-table-contest-2020",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 207,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Top Earning Broadway Shows",
+    "path": "ekholme/viz_portfolio",
+    "year": 2020,
+    "by": "Eric Ekholm",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/top-earning-broadway-shows-table-contest-submission/85976",
+    "files": 2,
+    "url": "https://github.com/ekholme/viz_portfolio/tree/master/R",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 167,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
     "title": "Spending on Education in the US",
     "path": "committedtotape/education-spending",
     "year": 2020,
     "by": "David Smale",
     "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/top-of-the-class-public-spending-on-education/86113",
+    "files": 2,
     "url": "https://github.com/committedtotape/education-spending",
     "port": "port",
-    "note": "No licence: an idea only",
+    "note": "",
     "ready": "0.4",
     "calls": 292,
     "needs": {
@@ -1467,59 +2771,505 @@
     ]
    },
    {
-    "title": "A 3-way crosstab table with gt",
-    "path": "jdjohn215/2020-RStudio-Table-Contest",
+    "title": "Top ten fishing countries by total government subsidies",
+    "path": "andrewjdyck/fisheries-subsidies-rstudio-table-competition",
     "year": 2020,
-    "by": "John D. Johnson",
-    "package": "gt",
-    "url": "https://github.com/jdjohn215/2020-RStudio-Table-Contest",
+    "by": "Andy",
+    "package": "kableExtra, formattable",
+    "post": "https://forum.posit.co/t/top-ten-fishing-countries-by-total-government-subsidies-table-contest-submission/85828",
+    "files": 1,
+    "url": "https://github.com/andrewjdyck/fisheries-subsidies-rstudio-table-competition",
     "port": "port",
-    "note": "No licence: an idea only",
-    "ready": "0.3",
-    "calls": 263,
+    "note": "",
+    "ready": "other",
+    "calls": 36,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Top-100 Vintage NBA Seasons with {reactable}",
+    "path": "PaulApivat/tidytuesday",
+    "year": 2020,
+    "by": "Paul Apivat Hanvongse",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/top-100-vintage-nba-seasons-with-reactable-table-contest-submission/86165",
+    "files": 2,
+    "url": "https://github.com/PaulApivat/tidytuesday/tree/master/2020/table/table_comp",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 222,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Tutorial reporting tables with the R3port package",
+    "path": "RichardHooijmaijers/tutorial-R3port",
+    "year": 2020,
+    "by": "richardh",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/tutorial-reporting-tables-with-the-r3port-package-table-contest-submission/86280",
+    "files": 1,
+    "url": "https://github.com/RichardHooijmaijers/tutorial-R3port",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 102,
+    "needs": {
+     "0.5": [
+      "LaTeX"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "LaTeX"
+    ]
+   },
+   {
+    "title": "US Elections - Interactive Shiny",
+    "path": "PWPiranha/US_Elections_Draft",
+    "year": 2020,
+    "by": "Piranha",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/us-elections-interactive-shiny-table-contest-submission/87980",
+    "files": 1,
+    "url": "https://github.com/PWPiranha/US_Elections_Draft",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 40,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Visualise Fitted Glm Coefficients With Base Levels",
+    "path": "jared-fowler/prettyglm",
+    "year": 2020,
+    "by": "Jared",
+    "licence": "GPL-3",
+    "package": "kableExtra, kable",
+    "post": "https://forum.posit.co/t/visualise-fitted-glm-coefficients-with-base-levels-table-contest-submission/87569",
+    "kind": "package",
+    "files": 7,
+    "url": "https://github.com/jared-fowler/prettyglm",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 203,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "What do I binge next? An overview of the top IMDb TV shows",
+    "path": "Z3tt/Rstudio_TableContest_2020",
+    "year": 2020,
+    "by": "Cedric Scherer",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/what-do-i-binge-next-an-overview-of-the-top-imdb-tv-shows-table-contest-submission/86409",
+    "files": 2,
+    "url": "https://github.com/Z3tt/Rstudio_TableContest_2020",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 494,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "World's most powerful media franchise",
+    "path": "VaibhavSingh033/Weekly-Analysis---R-Open-Source-Contribution",
+    "year": 2020,
+    "by": "Vaibhav",
+    "package": "gt, reactable",
+    "post": "https://forum.posit.co/t/worlds-most-powerful-media-franchise-table-contest-submission/83686",
+    "files": 19,
+    "url": "https://github.com/VaibhavSingh033/Weekly-Analysis---R-Open-Source-Contribution",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 2180,
     "needs": {
      "0.2": [
       "Table options"
      ],
      "0.3": [
       "Currency"
-     ]
-    },
-    "uses": [
-     "A table from data",
-     "Column selectors",
-     "Currency",
-     "Footnotes",
-     "Locations",
-     "Numbers and integers",
-     "Percent",
-     "Sizes",
-     "Source notes",
-     "Spanners from column names",
-     "Stub and stub head",
-     "Styles",
-     "Table options",
-     "Text helpers",
-     "Title and subtitle"
-    ]
-   },
-   {
-    "title": "An interactive table of the world",
-    "path": "gkaramanis/table-contest",
-    "year": 2020,
-    "by": "Georgios Karamanis",
-    "licence": "MIT",
-    "package": "reactable",
-    "url": "https://github.com/gkaramanis/table-contest",
-    "port": "port",
-    "note": "",
-    "ready": "later",
-    "calls": 68,
-    "needs": {
+     ],
+     "0.4": [
+      "Images"
+     ],
      "later": [
       "Interactive tables"
      ]
     },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "2021-22 English Premier League Standings",
+    "path": "steodose/RStudio-Table-Contest",
+    "year": 2021,
+    "by": "Stephen C Teodosescu",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/2021-22-english-premier-league-standings/119430",
+    "files": 1,
+    "url": "https://github.com/steodose/RStudio-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 219,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Age by Spanish Origin - 1980 U.S. Census",
+    "path": "robkempOFM/rstudio_table_competition",
+    "year": 2021,
+    "by": "Rob Kemp",
+    "package": "flextable",
+    "post": "https://forum.posit.co/t/age-by-spanish-origin-1980-u-s-census-table-contest-submission/121561",
+    "files": 1,
+    "url": "https://github.com/robkempOFM/rstudio_table_competition",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 43,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Apex Legends",
+    "path": "michaelbgarcia/rstudiotablecontest_2021",
+    "year": 2021,
+    "by": "Michael Garcia",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/apex-legends-table-contest-submission/120776",
+    "files": 3,
+    "url": "https://github.com/michaelbgarcia/rstudiotablecontest_2021",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 228,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Fonts",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Average Distance of 3-PT FGA across 2008-2021 NBA Seasons {reactable} {reactablefmtr}",
+    "path": "schmid07/NBA-R",
+    "year": 2021,
+    "by": "schmid",
+    "package": "reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/average-distance-of-3-pt-fga-across-2008-2021-nba-seasons-reactable-reactablefmtr-table-contest-submission/121595",
+    "files": 10,
+    "url": "https://github.com/schmid07/NBA-R",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 910,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "BGG Explorer",
+    "path": "IcaroBernardes/table-contest",
+    "year": 2021,
+    "by": "Ícaro Bernardes",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/bgg-explorer-table-contest-submission/121478",
+    "files": 3,
+    "url": "https://github.com/IcaroBernardes/table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 356,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables",
+     "Locales"
+    ]
+   },
+   {
+    "title": "Butterfly species richness in LA: various sources",
+    "path": "pablobernabeu/Data-is-present",
+    "year": 2021,
+    "by": "Pablo Bernabeu",
+    "licence": "CC0-1.0",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/butterfly-species-richness-in-la-various-sources-table-contest-submission/118572",
+    "files": 1,
+    "url": "https://github.com/pablobernabeu/Data-is-present/tree/master/examples-documents-dashboards/Dashboards/Flexdashboard",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 106,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Conditionally Formatted State Transition Matrices",
+    "path": "mthomas-ketchbrook/migrate_table",
+    "year": 2021,
+    "by": "Michael Thomas",
+    "package": "gt, kable",
+    "post": "https://forum.posit.co/t/conditionally-formatted-state-transition-matrices/120336",
+    "files": 3,
+    "url": "https://github.com/mthomas-ketchbrook/migrate_table",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 557,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any format",
+     "Column selectors",
+     "Formats for single values",
+     "Interactive tables",
+     "Locations",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Crosstable, easily describe your dataset",
+    "path": "DanChaltiel/crosstable",
+    "year": 2021,
+    "by": "Dan Chaltiel",
+    "licence": "GPL-3",
+    "package": "flextable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/crosstable-easily-describe-your-dataset-table-contest-submission/120496",
+    "kind": "package",
+    "files": 7,
+    "url": "https://github.com/DanChaltiel/crosstable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 278,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "dataxray: an interactive table interface for data summaries",
+    "path": "agstn/describer",
+    "year": 2021,
+    "by": "Agustin Calatroni",
+    "licence": "MIT",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/dataxray-an-interactive-table-interface-for-data-summaries/121483",
+    "kind": "package",
+    "url": "https://github.com/agstn/describer",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Fast big data tables in Shiny (tutorial)",
+    "path": "rszymanski/table-contest",
+    "year": 2021,
+    "by": "Ryszard Szymański",
+    "package": "reactable, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/fast-big-data-tables-in-shiny/121358",
+    "files": 12,
+    "url": "https://github.com/rszymanski/table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 529,
+    "needs": {},
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "FCS Meta Power Rankings",
+    "path": "andrew-block/tidy-vizzies",
+    "year": 2021,
+    "by": "Andrew Block",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/fcs-meta-power-rankings-table-contest-submission/117889",
+    "files": 1,
+    "url": "https://github.com/andrew-block/tidy-vizzies/tree/main/fcs_power_rankings",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 101,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "FIFA 22 Player Card INFO",
+    "path": "harikrishna19/RStudio-Table-Contest",
+    "year": 2021,
+    "by": "Hari Krishna",
+    "package": "reactable, reactablefmtr, Shiny",
+    "post": "https://forum.posit.co/t/fifa-22-player-card-info-table-contest-submission/121371",
+    "files": 2,
+    "url": "https://github.com/harikrishna19/RStudio-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 65,
+    "needs": {},
     "uses": [
      "Interactive tables"
     ]
@@ -1530,9 +3280,12 @@
     "year": 2021,
     "by": "Abdoul Madjid",
     "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/from-vines-to-wines-the-most-exceptional-wines-from-all-over-the-world/121492",
+    "files": 2,
     "url": "https://github.com/AbdoulMa/RStudio-Table-Contest-2021",
     "port": "port",
-    "note": "No licence: an idea only",
+    "note": "",
     "ready": "0.4",
     "calls": 530,
     "needs": {
@@ -1566,14 +3319,402 @@
     ]
    },
    {
+    "title": "Histable - visualize the distribution of variables in a data table",
+    "path": "milosvil/histable",
+    "year": 2021,
+    "by": "Milos Vilotic",
+    "package": "DT, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/histable-visualize-the-distribution-of-variables-in-a-data-table/121002",
+    "files": 4,
+    "url": "https://github.com/milosvil/histable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 209,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Premier League standings 2021",
+    "path": "ggapac/PL-table-shiny",
+    "year": 2021,
+    "by": "Greta Gašparac",
+    "package": "reactable, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/interactive-shiny-table-premier-league-standings-2021/121418",
+    "files": 3,
+    "url": "https://github.com/ggapac/PL-table-shiny",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 216,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Interactivity with the deluxe cars dataset",
+    "path": "jcheng5/d3scatter",
+    "year": 2021,
+    "by": "Sam",
+    "licence": "GPL (>=3)",
+    "post": "https://forum.posit.co/t/interactivity-with-the-deluxe-cars-dataset-table-contest-submission/119272",
+    "kind": "package",
+    "url": "https://github.com/jcheng5/d3scatter",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Italian Serie A Final Table 2020/21",
+    "path": "BlackieOBrien/SerieADataTable",
+    "year": 2021,
+    "by": "Paul Ankers",
+    "package": "kableExtra, formattable",
+    "post": "https://forum.posit.co/t/italian-serie-a-final-table-2020-21-table-contest-submission/121519",
+    "files": 1,
+    "url": "https://github.com/BlackieOBrien/SerieADataTable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 46,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "ML Image Classification Evaluation",
+    "path": "ericnewkirk/ml_evaluation_table",
+    "year": 2021,
+    "by": "Eric Newkirk",
+    "licence": "MIT",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/ml-image-classification-evaluation-table-contest-submission/119413",
+    "files": 5,
+    "url": "https://github.com/ericnewkirk/ml_evaluation_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 357,
+    "needs": {},
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "MLB's Biggest Teams",
+    "path": "Edgar-Zamora/My-Work",
+    "year": 2021,
+    "by": "Edgar Zamora",
+    "package": "gt, gtExtras, kableExtra",
+    "post": "https://forum.posit.co/t/mlbs-biggest-teams/120527",
+    "files": 12,
+    "url": "https://github.com/Edgar-Zamora/My-Work/tree/master/Tidyverse",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 749,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Order of rows and groups",
+     "Presets",
+     "Sizes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Most Popular Dog Breeds of 2020",
+    "path": "kkakey/dog_breeds_table",
+    "year": 2021,
+    "by": "Kristen",
+    "package": "reactable, reactablefmtr, Shiny",
+    "post": "https://forum.posit.co/t/most-popular-dog-breeds-of-2020-table-contest-submission/121364",
+    "files": 2,
+    "url": "https://github.com/kkakey/dog_breeds_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 203,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "One Farm - Creating Our Cultivated Planet & The Big Barnyard Tables",
+    "path": "BjnNowak/CultivatedPlanet",
+    "year": 2021,
+    "by": "Benjamin",
+    "package": "gt, gtExtras",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/one-farm-creating-our-cultivated-planet-the-big-barnyard-tables/117744",
+    "files": 3,
+    "url": "https://github.com/BjnNowak/CultivatedPlanet",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 642,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Pokemon Red/Blue/Yellow Information Table",
+    "path": "kylebutts/RStudio_2021_Table_Comp",
+    "year": 2021,
+    "by": "Kyle Butts",
+    "package": "Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/pokemon-red-blue-yellow-information-table-table-contest-submission/121448",
+    "files": 1,
+    "url": "https://github.com/kylebutts/RStudio_2021_Table_Comp",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 130,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "Pole vault & high jump results: Clearing a new bar",
+    "path": "gpilgrim2670/VerticalTable",
+    "year": 2021,
+    "by": "George M. Perry",
+    "package": "gt, reactable, Shiny",
+    "post": "https://forum.posit.co/t/pole-vault-high-jump-results-clearing-a-new-bar-table-contest-submission/121458",
+    "files": 1,
+    "url": "https://github.com/gpilgrim2670/VerticalTable",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 145,
+    "needs": {
+     "later": [
+      "Interactive tables",
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Interactive tables",
+     "Spanners from column names",
+     "Title and subtitle",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "R for Clinical Study Reports and Submission",
+    "path": "elong0527/r4csr",
+    "year": 2021,
+    "by": "Yilong Zhang",
+    "licence": "CC BY-NC-ND 4.0",
+    "package": "kableExtra, kable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/r-for-clinical-study-reports-and-submission-table-contest-submission/116788",
+    "files": 29,
+    "url": "https://github.com/elong0527/r4csr",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1011,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Formats for single values",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Riding tables with {gt} and {gtExtras}",
+    "path": "BjnNowak/BjnNowak",
+    "year": 2021,
+    "by": "Benjamin",
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/riding-tables-with-gt-and-gtextras/117184",
+    "files": 1,
+    "url": "https://github.com/BjnNowak/BjnNowak/tree/main/content/post/2021-10-04-r-beautiful-tables-with-gt-and-gtextras",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 193,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Dates"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Dates",
+     "Fonts",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Satellites currently orbiting the Earth",
+    "path": "vfridkin/satellite_table",
+    "year": 2021,
+    "by": "Vladislav Fridkin",
+    "licence": "MIT",
+    "package": "gt, reactable, reactablefmtr, Shiny",
+    "prize": "Winner",
+    "post": "https://forum.posit.co/t/satellites-currently-orbiting-the-earth/120539",
+    "files": 10,
+    "url": "https://github.com/vfridkin/satellite_table",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 919,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "later": [
+      "Interactive tables",
+      "Table info",
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Interactive tables",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table info",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "Top Ten Greatest Summer Olympic Performances",
+    "path": "b4billy/R_Studio_Table_Contest_2021",
+    "year": 2021,
+    "by": "Billy Fryer",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/top-ten-greatest-summer-olympic-performances/119172",
+    "files": 1,
+    "url": "https://github.com/b4billy/R_Studio_Table_Contest_2021",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 76,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
     "title": "Air quality summaries with gt and openair (tutorial)",
     "path": "jack-davison/rstudio_table-contest_2021",
     "year": 2021,
     "by": "Jack Davison",
     "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/using-gt-and-openair-to-present-air-quality-data/119603",
+    "files": 3,
     "url": "https://github.com/jack-davison/rstudio_table-contest_2021",
     "port": "port",
-    "note": "Honourable mention. No licence: an idea only",
+    "note": "",
     "ready": "0.4",
     "calls": 919,
     "needs": {
@@ -1607,44 +3748,89 @@
     ]
    },
    {
-    "title": "Premier League standings 2021",
-    "path": "ggapac/PL-table-shiny",
+    "title": "Web application to simulate experimental data",
+    "path": "pablobernabeu/Experimental-data-simulation",
     "year": 2021,
-    "by": "Greta Gašparac",
-    "package": "reactable, Shiny",
-    "url": "https://github.com/ggapac/PL-table-shiny",
+    "by": "Pablo Bernabeu",
+    "licence": "CC0-1.0",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/web-application-to-simulate-experimental-data-table-contest-submission/118584",
+    "files": 3,
+    "url": "https://github.com/pablobernabeu/Experimental-data-simulation",
     "port": "port",
-    "note": "No licence: an idea only",
-    "ready": "later",
-    "calls": 216,
-    "needs": {
-     "later": [
-      "Interactive tables"
-     ]
-    },
+    "note": "",
+    "ready": "other",
+    "calls": 1713,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Web application: Dutch modality exclusivity norms",
+    "path": "pablobernabeu/Dutch-modality-exclusivity-norms-Bernabeu-2018",
+    "year": 2021,
+    "by": "Pablo Bernabeu",
+    "licence": "CC0-1.0",
+    "package": "reactable, kableExtra, Shiny, kable",
+    "post": "https://forum.posit.co/t/web-application-dutch-modality-exclusivity-norms-table-contest-submission/118593",
+    "files": 1,
+    "url": "https://github.com/pablobernabeu/Dutch-modality-exclusivity-norms-Bernabeu-2018/tree/master/Shiny-app",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 2953,
+    "needs": {},
     "uses": [
      "Interactive tables"
     ]
    },
    {
-    "title": "Fast big data tables in Shiny (tutorial)",
-    "path": "rszymanski/table-contest",
+    "title": "What's the Most American of American Films?",
+    "path": "jtlawren67/data_visualizations",
     "year": 2021,
-    "by": "Ryszard Szymański",
-    "package": "reactable, Shiny",
-    "url": "https://github.com/rszymanski/table-contest",
+    "by": "jtlawren",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/whats-the-most-american-of-american-films-table-contest-submission/117258",
+    "files": 2,
+    "url": "https://github.com/jtlawren67/data_visualizations/tree/main/20211003_MostAmericanMovie",
     "port": "port",
-    "note": "No licence: an idea only",
-    "ready": "later",
-    "calls": 529,
+    "note": "",
+    "ready": "0.4",
+    "calls": 136,
     "needs": {
-     "later": [
-      "Interactive tables"
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
      ]
     },
     "uses": [
-     "Interactive tables",
-     "Text helpers"
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Fonts",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
     ]
    },
    {
@@ -1654,6 +3840,9 @@
     "by": "Jack Davison",
     "licence": "MIT",
     "package": "gt, gtExtras",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/tabulating-dubois-historical-data-viz-with-gt-table-contest/149570",
+    "files": 19,
     "url": "https://github.com/jack-davison/rstudio_table-contest_2022",
     "port": "port",
     "note": "",
@@ -1698,37 +3887,220 @@
     ]
    },
    {
-    "title": "Lemurs at Duke Lemur Center",
-    "path": "nrennie/2022-table-contest",
+    "title": "2022 Diamond League: Top 5 money earners per event",
+    "path": "GeorgeNAL/Diamond-League-Earnings",
     "year": 2022,
-    "by": "Nicola Rennie",
-    "licence": "CC BY 4.0",
+    "by": "George M. Perry",
     "package": "gt",
-    "url": "https://github.com/nrennie/2022-table-contest",
+    "post": "https://forum.posit.co/t/2022-diamond-league-top-5-money-earners-per-event-table-contest/154063",
+    "files": 2,
+    "url": "https://github.com/GeorgeNAL/Diamond-League-Earnings",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 171,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Labels",
+     "Move",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "A Hostile World",
+    "path": "svalvaro/war_table",
+    "year": 2022,
+    "by": "Alvaro",
+    "package": "reactable, Shiny",
+    "post": "https://forum.posit.co/t/a-hostile-world-table-contest/154182",
+    "files": 5,
+    "url": "https://github.com/svalvaro/war_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 785,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "All Aboard! Exploring the Amtrak Passenger Rail System",
+    "path": "jfangmeier/table-contest-2022",
+    "year": 2022,
+    "by": "jfangmeier",
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/all-aboard-exploring-the-amtrak-passenger-rail-system-table-contest/154203",
+    "files": 3,
+    "url": "https://github.com/jfangmeier/table-contest-2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1255,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Basic gt Styling Reference",
+    "path": "a-drumm/table-contest-2022",
+    "year": 2022,
+    "by": "Abigail",
+    "licence": "MIT",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/basic-gt-styling-reference-table-contest/154198",
+    "files": 1,
+    "url": "https://github.com/a-drumm/table-contest-2022",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 452,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "HTML",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Basketball Players – Regular Season vs. Playoffs",
+    "path": "blam3/blam_table_comp22",
+    "year": 2022,
+    "by": "Brendan Lam",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/basketball-players-regular-season-vs-playoffs-table-contest/153115",
+    "files": 1,
+    "url": "https://github.com/blam3/blam_table_comp22",
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 182,
+    "calls": 114,
     "needs": {
      "0.2": [
       "Table options"
      ],
      "0.4": [
-      "Images"
+      "Images",
+      "Plots, icons and themes from gt-extras"
      ]
     },
     "uses": [
      "A table from data",
-     "Fonts",
+     "Align",
+     "Footnotes",
      "Images",
      "Labels",
      "Locations",
+     "Numbers and integers",
      "Sizes",
      "Source notes",
+     "Spanners",
      "Styles",
      "Table options",
      "Text helpers",
      "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Best Airbnb in Ragusa, Sicily",
+    "path": "alecrsf/rstudio_table_contest2022",
+    "year": 2022,
+    "by": "Alessio",
+    "package": "reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/best-airbnb-in-ragusa-sicily-table-contest/153184",
+    "files": 2,
+    "url": "https://github.com/alecrsf/rstudio_table_contest2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 152,
+    "needs": {},
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "Construction Spending in the United States",
+    "path": "ji53ll/Posit-2022-Table-Contest",
+    "year": 2022,
+    "by": "Jisell Howe",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/construction-spending-in-the-united-states-table-contest/154209",
+    "files": 1,
+    "url": "https://github.com/ji53ll/Posit-2022-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 427,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
      "Title and subtitle",
      "Widths"
     ]
@@ -1739,9 +4111,12 @@
     "year": 2022,
     "by": "Albert Rapp",
     "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/creating-beautiful-tables-in-r-with-gt-table-contest/153738",
+    "files": 10,
     "url": "https://github.com/AlbertRapp/gt_book",
     "port": "port",
-    "note": "Honourable mention. No licence: an idea only",
+    "note": "",
     "ready": "later",
     "calls": 2563,
     "needs": {
@@ -1799,16 +4174,19 @@
     ]
    },
    {
-    "title": "Top 20 golfers: Scottie Scheffler's 2024",
-    "path": "steodose/Table-Contest-2024",
-    "year": 2024,
-    "by": "Stephan Teodosescu",
-    "package": "Great Tables",
-    "url": "https://github.com/steodose/Table-Contest-2024",
+    "title": "Currency Crisis",
+    "path": "shaf1430/Currency-Crisis",
+    "year": 2022,
+    "by": "HS2022",
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/currency-crisis-table-contest/154060",
+    "files": 1,
+    "url": "https://github.com/shaf1430/Currency-Crisis",
     "port": "port",
-    "note": "A 2024 winner. No licence: an idea only",
+    "note": "",
     "ready": "0.4",
-    "calls": 80,
+    "calls": 248,
     "needs": {
      "0.2": [
       "Table options"
@@ -1819,52 +4197,679 @@
     },
     "uses": [
      "A table from data",
-     "Colour by value",
+     "Footnotes",
      "Images",
      "Labels",
-     "Numbers and integers",
-     "Source notes",
-     "Spanners",
-     "Table options",
-     "Text helpers",
-     "Title and subtitle",
-     "Widths"
-    ]
-   },
-   {
-    "title": "Carbon intensity of electricity",
-    "path": "chalg/posit_table_contest_2024",
-    "year": 2024,
-    "by": "Grant Chalmers",
-    "package": "gt",
-    "url": "https://github.com/chalg/posit_table_contest_2024",
-    "port": "port",
-    "note": "No licence: an idea only",
-    "ready": "0.2",
-    "calls": 52,
-    "needs": {
-     "0.2": [
-      "Align on the decimal mark",
-      "Body styles from a column",
-      "Table options"
-     ]
-    },
-    "uses": [
-     "A table from data",
-     "Align",
-     "Align on the decimal mark",
-     "Body styles from a column",
-     "Colour by value",
-     "Numbers and integers",
-     "Padding, outline, lines",
-     "Percent",
+     "Locations",
      "Sizes",
      "Source notes",
      "Styles",
      "Table options",
      "Text helpers",
+     "Text transforms",
      "Title and subtitle",
      "Widths"
+    ]
+   },
+   {
+    "title": "Dynamic and Interactive Tables, Listings and Figures",
+    "path": "mattkumar/dynamic-tlf",
+    "year": 2022,
+    "by": "Matthew Kumar",
+    "licence": "MIT",
+    "package": "reactable, reactablefmtr",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/dynamic-and-interactive-tables-listings-and-figures-table-contest/151405",
+    "files": 2,
+    "url": "https://github.com/mattkumar/dynamic-tlf",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 744,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "FretTable🎸 - Learn & play a Shiny guitar",
+    "path": "vfridkin/fret_table",
+    "year": 2022,
+    "by": "Vladislav Fridkin",
+    "package": "gt, gtExtras, reactable, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/frettable-learn-play-a-shiny-guitar-table-contest/153606",
+    "files": 25,
+    "url": "https://github.com/vfridkin/fret_table",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 881,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Grand Slam Legends",
+    "path": "tashapiro/tanya-data-viz",
+    "year": 2022,
+    "by": "Tanya Shapiro",
+    "package": "reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/grand-slam-legends-table-contest/154257",
+    "files": 1,
+    "url": "https://github.com/tashapiro/tanya-data-viz/tree/main/tennis",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 67,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Hearthstone Deck Database",
+    "path": "michaelBane/hsDecklistScraper",
+    "year": 2022,
+    "by": "bane",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/hearthstone-deck-database-table-contest/149241",
+    "files": 4,
+    "url": "https://github.com/michaelBane/hsDecklistScraper",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 279,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Highest Rated Horror Movies",
+    "path": "gdatascience/tidytuesday",
+    "year": 2022,
+    "by": "Anthony Galvan",
+    "package": "gt, gtExtras, reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/highest-rated-horror-movies-table-contest/153022",
+    "files": 261,
+    "url": "https://github.com/gdatascience/tidytuesday",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 9286,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Locales"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Fonts",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Numbers and integers",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Highlight matching regex filters with reactable",
+    "path": "rjake/one-off-projects",
+    "year": 2022,
+    "by": "Jake",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/highlight-matching-regex-filters-with-reactable-table-contest/154100",
+    "files": 2,
+    "url": "https://github.com/rjake/one-off-projects/tree/main/R/posit-table-contest-2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 42,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "How often do NBA teams attempt more 3 than 2-point shots?",
+    "path": "schmid07/2022-Table-Contest",
+    "year": 2022,
+    "by": "schmid",
+    "package": "reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/how-often-do-nba-teams-attempt-more-3-than-2-point-shots-table-contest/153620",
+    "files": 1,
+    "url": "https://github.com/schmid07/2022-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 90,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Income tax calculator table for labor contracts in Ecuador",
+    "path": "AlexB4891/income_tax_calculator_table",
+    "year": 2022,
+    "by": "Alex Bajaña",
+    "licence": "GPL-3.0",
+    "package": "gt, gtExtras, Shiny",
+    "post": "https://forum.posit.co/t/income-tax-calculator-table-for-labor-contracts-in-ecuador-table-contest/154259",
+    "files": 8,
+    "url": "https://github.com/AlexB4891/income_tax_calculator_table",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 506,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Images",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Spanners",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Widths",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "Jeopardy!",
+    "path": "mattkumar/jeopardy-game-contest",
+    "year": 2022,
+    "by": "Matthew Kumar",
+    "package": "reactable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/jeopardy-table-contest/148574",
+    "files": 1,
+    "url": "https://github.com/mattkumar/jeopardy-game-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 29,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Lemurs at Duke Lemur Center",
+    "path": "nrennie/2022-table-contest",
+    "year": 2022,
+    "by": "Nicola Rennie",
+    "licence": "CC0-1.0",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/lemurs-at-duke-lemur-center-table-contest/153662",
+    "files": 1,
+    "url": "https://github.com/nrennie/2022-table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 182,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Most common crossword answers with lots of vowels",
+    "path": "bamattre/tidytuesday",
+    "year": 2022,
+    "by": "Richard Bamattre",
+    "package": "gt, reactable, reactablefmtr, pandas Styler",
+    "post": "https://forum.posit.co/t/most-common-crossword-answers-with-lots-of-vowels-table-contest/152689",
+    "files": 24,
+    "url": "https://github.com/bamattre/tidytuesday/tree/master/code",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 2292,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Move",
+     "Numbers and integers",
+     "Presets",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Patent Assignees whose titles contain \"databases\"",
+    "path": "mustberuss/tablesubmission",
+    "year": 2022,
+    "by": "Russ Allen",
+    "post": "https://forum.posit.co/t/patent-assignees-whose-titles-contain-databases-table-contest/154071",
+    "files": 1,
+    "url": "https://github.com/mustberuss/tablesubmission/tree/master/data-raw",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 43,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "Personal Peloton Instructor Leaderboard",
+    "path": "tashapiro/peloton-stats",
+    "year": 2022,
+    "by": "Tanya Shapiro",
+    "package": "gt, gtExtras, reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/personal-peloton-instructor-leaderboard-table-contest/154250",
+    "files": 10,
+    "url": "https://github.com/tashapiro/peloton-stats/tree/main/code",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 797,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Fonts",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Quarto Code Block Options",
+    "path": "richardjtelford/quarto-chunk-options",
+    "year": 2022,
+    "by": "Richard Telford",
+    "package": "reactable",
+    "post": "https://forum.posit.co/t/quarto-code-block-options-table-contest/150198",
+    "files": 2,
+    "url": "https://github.com/richardjtelford/quarto-chunk-options",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 569,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Ratings of Plain Dark Chocolate Bar",
+    "path": "leeolney3/2022_Table_Contest",
+    "year": 2022,
+    "by": "Lee Olney",
+    "licence": "MIT",
+    "package": "gt, gtExtras, kableExtra",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/ratings-of-plain-dark-chocolate-bar-table-contest/152700",
+    "files": 2,
+    "url": "https://github.com/leeolney3/2022_Table_Contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 106,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "SARS-CoV-2 Pango Lineage Translator",
+    "path": "sschmutz/PangoLineageTranslator",
+    "year": 2022,
+    "by": "Stefan Schmutz",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/sars-cov-2-pango-lineage-translator-table-contest/151380",
+    "kind": "package",
+    "url": "https://github.com/sschmutz/PangoLineageTranslator",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Some things about bees...",
+    "path": "Jorge-hercas/table-contest-bees",
+    "year": 2022,
+    "by": "Jorge Hernández ",
+    "licence": "CC0-1.0",
+    "package": "reactable, reactablefmtr, Shiny",
+    "post": "https://forum.posit.co/t/some-things-about-bees-table-contest/154260",
+    "files": 5,
+    "url": "https://github.com/Jorge-hercas/table-contest-bees",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 187,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "The grammar of tables in python (pandas) and R (gt)",
+    "path": "karbartolome/quartopub",
+    "year": 2022,
+    "by": "Karina Bartolomé",
+    "package": "gt, gtExtras, Great Tables, gtsummary, pandas Styler",
+    "prize": "Winner",
+    "post": "https://forum.posit.co/t/the-grammar-of-tables-in-python-pandas-and-r-gt-table-contest/150150",
+    "files": 2,
+    "url": "https://github.com/karbartolome/quartopub/tree/main/01_tables_r_python",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 540,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Locales"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Statistical summary tables (gtsummary, rtables, tfrmt)"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Fonts",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "The New York Times Best Selling Authors",
+    "path": "tashapiro/TidyTuesday",
+    "year": 2022,
+    "by": "Tanya Shapiro",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/the-new-york-times-best-selling-authors-table-contest/154246",
+    "files": 1,
+    "url": "https://github.com/tashapiro/TidyTuesday/tree/master/2022/W19",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 125,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "The Quotable Office: Easily Find Your Favorite Quotes From the Office",
+    "path": "bradlindblad/QuotableOffice",
+    "year": 2022,
+    "by": "Brad Lindblad",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/the-quotable-office-easily-find-your-favorite-quotes-from-the-office-table-contest/150284",
+    "kind": "package",
+    "url": "https://github.com/bradlindblad/QuotableOffice",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Tidyverse in Numbers",
+    "path": "szymanskir/table-contest-2022",
+    "year": 2022,
+    "by": "Ryszard Szymański",
+    "package": "reactable, pandas Styler",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/tidyverse-in-numbers-table-contest/152592",
+    "files": 4,
+    "url": "https://github.com/szymanskir/table-contest-2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 605,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Time Travel Machine",
+    "path": "mattkumar/time-travel-contest",
+    "year": 2022,
+    "by": "Matthew Kumar",
+    "package": "reactable, reactablefmtr",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/time-travel-machine-table-contest/150861",
+    "files": 1,
+    "url": "https://github.com/mattkumar/time-travel-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 49,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Top songs in beauty-related TikToks Summer 2022",
+    "path": "qagentur/table-contest-2022",
+    "year": 2022,
+    "by": "Swen Sieben",
+    "package": "reactable, reactablefmtr, pandas Styler",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/top-songs-in-beauty-related-tiktoks-summer-2022-table-contest/153079",
+    "files": 1,
+    "url": "https://github.com/qagentur/table-contest-2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 42,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Triangular Tables",
+    "path": "Mosk915/RStudioTableContest2022",
+    "year": 2022,
+    "by": "Michael Moskowitz",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/triangular-tables-table-contest/151614",
+    "files": 19,
+    "url": "https://github.com/Mosk915/RStudioTableContest2022",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1105,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "{tableboom}: inspect calls and (de)construct table",
+    "path": "gsmolinski/tableboom",
+    "year": 2022,
+    "by": "Grzegorz",
+    "licence": "MIT",
+    "package": "kableExtra, kable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/tableboom-inspect-calls-and-de-construct-table-table-contest/152161",
+    "kind": "package",
+    "files": 1,
+    "url": "https://github.com/gsmolinski/tableboom",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 71,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "{tfrmt} Tutorial",
+    "path": "thebioengineer/tfrmt_posit_table_contest_2022",
+    "year": 2022,
+    "by": "ELLIS H HUGHES",
+    "package": "gt, gtExtras, tfrmt",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/tfrmt-tutorial-table-contest/154268",
+    "files": 1,
+    "url": "https://github.com/thebioengineer/tfrmt_posit_table_contest_2022",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 101,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Statistical summary tables (gtsummary, rtables, tfrmt)"
+     ]
+    },
+    "uses": [
+     "Column selectors",
+     "Locations",
+     "Styles"
     ]
    },
    {
@@ -1873,9 +4878,11 @@
     "year": 2024,
     "by": "Diarmuid Lloyd",
     "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/2023-24-scottish-premiership-table-contest/188024",
+    "files": 5,
     "url": "https://github.com/dplloyd/posit-table-comp-2024",
     "port": "port",
-    "note": "No licence: an idea only",
+    "note": "",
     "ready": "later",
     "calls": 169,
     "needs": {
@@ -1904,82 +4911,19 @@
     ]
    },
    {
-    "title": "Gibraltar's weather, May 2023 (the example entry)",
-    "path": "rich-iannone/table-contest-example-entry",
-    "year": 2025,
-    "by": "Rich Iannone",
-    "licence": "CC0-1.0",
-    "package": "Great Tables, gt-extras",
-    "url": "https://github.com/rich-iannone/table-contest-example-entry",
+    "title": "2024 ACC Baseball Standings and Tournament Seeding",
+    "path": "gallochris/hellogallo",
+    "year": 2024,
+    "by": "Chris Gallo",
+    "licence": "MIT",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/2024-acc-baseball-standings-and-tournament-seeding-table-contest/187114",
+    "files": 2,
+    "url": "https://github.com/gallochris/hellogallo/tree/main/posit_2024_table_contest",
     "port": "port",
     "note": "",
     "ready": "0.4",
-    "calls": 48,
-    "needs": {
-     "0.4": [
-      "Plots, icons and themes from gt-extras"
-     ]
-    },
-    "uses": [
-     "A table from data",
-     "Align",
-     "Any CSS",
-     "Locations",
-     "Padding, outline, lines",
-     "Source notes",
-     "Styles",
-     "Text helpers",
-     "Times and datetimes",
-     "Title and subtitle"
-    ]
-   },
-   {
-    "title": "Multiple sequence alignments with gt",
-    "path": "wvictor14/2025-posit-table-contest-gt-msa",
-    "year": 2025,
-    "by": "Victor Yuan",
-    "package": "gt",
-    "url": "https://github.com/wvictor14/2025-posit-table-contest-gt-msa",
-    "port": "port",
-    "note": "Best gt table of 2025. No licence: an idea only",
-    "ready": "0.2",
-    "calls": 1103,
-    "needs": {
-     "0.2": [
-      "Summary rows",
-      "Table options"
-     ]
-    },
-    "uses": [
-     "A table from data",
-     "Align",
-     "Colour by value",
-     "Column selectors",
-     "Labels",
-     "Labels from a function",
-     "Locations",
-     "Markdown",
-     "Row groups",
-     "Sizes",
-     "Spanners",
-     "Stub and stub head",
-     "Styles",
-     "Summary rows",
-     "Table options",
-     "Widths"
-    ]
-   },
-   {
-    "title": "Sustainable milk comparison",
-    "path": "PablaOO7/Posit-Table-Contest-2025",
-    "year": 2025,
-    "by": "PablaOO7",
-    "package": "gt, gtExtras",
-    "url": "https://github.com/PablaOO7/Posit-Table-Contest-2025",
-    "port": "port",
-    "note": "No licence: an idea only",
-    "ready": "0.4",
-    "calls": 318,
+    "calls": 397,
     "needs": {
      "0.2": [
       "Table options"
@@ -1990,11 +4934,878 @@
     },
     "uses": [
      "A table from data",
-     "Extra CSS",
+     "Align",
+     "Any format",
+     "Column selectors",
+     "Fonts",
      "Labels",
      "Locations",
+     "Markdown",
      "Sizes",
      "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Africa Explorer",
+    "path": "MonyakeR/africa-explorer",
+    "year": 2024,
+    "by": "Retselisitsoe Monyake",
+    "package": "reactable, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/africa-explorer-table-contest/188186",
+    "files": 5,
+    "url": "https://github.com/MonyakeR/africa-explorer",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 178,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "All Mocks are Wrong, but Some are Useful",
+    "path": "nvietto/Table-Contest-2024",
+    "year": 2024,
+    "by": "Nicholas ",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/all-mocks-are-wrong-but-some-are-useful-table-contest/187787",
+    "files": 2,
+    "url": "https://github.com/nvietto/Table-Contest-2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 93,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Fonts",
+     "Labels",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Arizona Indigenous Tribal Water Rights",
+    "path": "Gchism94/posit-table-2024",
+    "year": 2024,
+    "by": "Greg Chism",
+    "licence": "GPL-3.0",
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Best Single-Table Example",
+    "post": "https://forum.posit.co/t/arizona-indigenous-tribal-water-rights-table-contest/188140",
+    "files": 1,
+    "url": "https://github.com/Gchism94/posit-table-2024",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 247,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Carbon intensity of electricity",
+    "path": "chalg/posit_table_contest_2024",
+    "year": 2024,
+    "by": "Grant Chalmers",
+    "package": "gt",
+    "prize": "Special Prize for Going Viral with a Table",
+    "post": "https://forum.posit.co/t/carbon-intensity-of-electricity-consumption-table-contest/186032",
+    "files": 3,
+    "url": "https://github.com/chalg/posit_table_contest_2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 52,
+    "needs": {
+     "0.2": [
+      "Align on the decimal mark",
+      "Body styles from a column",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Align on the decimal mark",
+     "Body styles from a column",
+     "Colour by value",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Chain Reaction game based on Shiny based interactive table",
+    "path": "IJayC/table_contest",
+    "year": 2024,
+    "by": "Jayachandra N",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/chain-reaction-game-based-on-shiny-based-interactive-table-table-contest/188144",
+    "files": 2,
+    "url": "https://github.com/IJayC/table_contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 523,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Complete Clinical Study Report Tables with gtsummary",
+    "path": "agstn/CPR_gtsummary",
+    "year": 2024,
+    "by": "Agustin Calatroni",
+    "licence": "GPL-3.0",
+    "package": "gt, gtsummary",
+    "prize": "Best Pharma Table",
+    "post": "https://forum.posit.co/t/complete-clinical-study-report-tables-with-gtsummary-table-contest/187465",
+    "files": 38,
+    "url": "https://github.com/agstn/CPR_gtsummary",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 2726,
+    "needs": {
+     "later": [
+      "Statistical summary tables (gtsummary, rtables, tfrmt)"
+     ]
+    },
+    "uses": [
+     "Column selectors",
+     "Markdown"
+    ]
+   },
+   {
+    "title": "Cost Per Click for Paid Search",
+    "path": "matthewcurrier/PositTableContest2024",
+    "year": 2024,
+    "by": "matthew currier",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/cost-per-click-for-paid-search-table-contest/187561",
+    "files": 3,
+    "url": "https://github.com/matthewcurrier/PositTableContest2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 177,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Icons",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Extra CSS",
+     "Flags",
+     "Fonts",
+     "Footnotes",
+     "Hide and unhide",
+     "Icons",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Merge columns",
+     "Presets",
+     "Sizes",
+     "Small, large and given values",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cran-rank",
+    "path": "ixpantia/cran-rank",
+    "year": 2024,
+    "by": "Andrés Quintero",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/cran-rank-table-contest/188194",
+    "files": 9,
+    "url": "https://github.com/ixpantia/cran-rank",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 892,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Create a Interactive Table for Adverse Events Analysis for Clinical Trials",
+    "path": "Merck/forestly",
+    "year": 2024,
+    "by": "Bingjun Wang",
+    "licence": "GPL (>= 3)",
+    "prize": "Best {reactable} Table",
+    "post": "https://forum.posit.co/t/create-a-interactive-table-for-adverse-events-analysis-for-clinical-trials-table-contest/188200",
+    "kind": "package",
+    "files": 12,
+    "url": "https://github.com/Merck/forestly",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 311,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "declarative basic pivot table construction",
+    "path": "EvaMaeRey/tidytitanic",
+    "year": 2024,
+    "by": "Gina Reynolds",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/declarative-basic-pivot-table-construction-table-contest/188205",
+    "kind": "package",
+    "url": "https://github.com/EvaMaeRey/tidytitanic",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Display of calculated Replenishment Plan for Supply Chain",
+    "path": "nguyennico/planr",
+    "year": 2024,
+    "by": "Nicolas NGUYEN",
+    "licence": "MIT",
+    "package": "reactable, reactablefmtr, DT, Shiny",
+    "post": "https://forum.posit.co/t/display-of-calculated-replenishment-plan-for-supply-chain-table-contest/185995",
+    "kind": "package",
+    "files": 2,
+    "url": "https://github.com/nguyennico/planr",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 528,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Enhancing Data Collection and Display with PyShinyDataTable",
+    "path": "AbdulrahamanMusa/PyshinyDataTable",
+    "year": 2024,
+    "by": "Abdulrahaman A Musa",
+    "licence": "MIT",
+    "post": "https://forum.posit.co/t/enhancing-data-collection-and-display-with-pyshinydatatable-table-contest/186085",
+    "files": 2,
+    "url": "https://github.com/AbdulrahamanMusa/PyshinyDataTable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 56,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Estimated Nuclear Warhead Inventories, 2023",
+    "path": "ahasoplakus/nuclearweapons",
+    "year": 2024,
+    "by": "Sukalpo Saha",
+    "licence": "Apache-2.0",
+    "package": "gt, gtExtras",
+    "post": "https://forum.posit.co/t/estimated-nuclear-warhead-inventories-2023-table-contest/187436",
+    "files": 2,
+    "url": "https://github.com/ahasoplakus/nuclearweapons",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 873,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Merge columns"
+     ],
+     "0.4": [
+      "Plots in cells",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Align",
+     "Column selectors",
+     "Extra CSS",
+     "Flags",
+     "Footnotes",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Move",
+     "Plots in cells",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Euro NCAP Safety Ratings - 2023",
+    "path": "jrycw/posit-gt-2024",
+    "year": 2024,
+    "by": "Jerry Wu",
+    "licence": "MIT",
+    "package": "Great Tables",
+    "prize": "Best Table that Uses Polars",
+    "post": "https://forum.posit.co/t/euro-ncap-safety-ratings-2023-table-contest/187584",
+    "files": 2,
+    "url": "https://github.com/jrycw/posit-gt-2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 186,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Exploring Coffee Flavour Notes in The Great American Taste Test",
+    "path": "freierson/coffee-table",
+    "year": 2024,
+    "by": "Filip Reierson",
+    "licence": "GPL-3.0",
+    "package": "reactable, reactablefmtr",
+    "post": "https://forum.posit.co/t/exploring-coffee-flavour-notes-in-the-great-american-taste-test-table-contest/188063",
+    "files": 2,
+    "url": "https://github.com/freierson/coffee-table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 175,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Favorite Pizza Places, powered by {faketables}",
+    "path": "landeranalytics/faketables",
+    "year": 2024,
+    "by": "Gus Lipkin",
+    "licence": "MIT",
+    "package": "Shiny",
+    "post": "https://forum.posit.co/t/favorite-pizza-places-powered-by-faketables-table-contest/188196",
+    "files": 4,
+    "url": "https://github.com/landeranalytics/faketables/tree/main/vignettes",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 136,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "felp::fuzzyhelp() for Fuzzy Search and Preview of R Documentation",
+    "path": "atusy/fuzzyhelp-shinyapp",
+    "year": 2024,
+    "by": "atusy",
+    "package": "Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/felp-fuzzyhelp-for-fuzzy-search-and-preview-of-r-documentation-table-contest/186465",
+    "files": 2,
+    "url": "https://github.com/atusy/fuzzyhelp-shinyapp",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 721,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Genetic similarities and differences between humans",
+    "path": "brouwern/posit_tables_2024",
+    "year": 2024,
+    "by": "Nathan Brouwer",
+    "package": "Great Tables",
+    "post": "https://forum.posit.co/t/genetic-similarities-and-differences-between-humans-table-contest/188178",
+    "files": 5,
+    "url": "https://github.com/brouwern/posit_tables_2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 192,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Move",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Global and National Greenhouse Gas Emissions",
+    "path": "JidduAlexander/posit_2024_table_contest",
+    "year": 2024,
+    "by": "JidduAlexander",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/global-and-national-greenhouse-gas-emissions-table-contest/188162",
+    "files": 1,
+    "url": "https://github.com/JidduAlexander/posit_2024_table_contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 926,
+    "needs": {},
+    "uses": [
+     "Column selectors"
+    ]
+   },
+   {
+    "title": "Great GPX",
+    "path": "ATL2001/great_GPX",
+    "year": 2024,
+    "by": "Aaron T Leese",
+    "package": "Great Tables",
+    "post": "https://forum.posit.co/t/great-gpx-table-contest/188138",
+    "files": 1,
+    "url": "https://github.com/ATL2001/great_GPX",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 174,
+    "needs": {
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Hide and unhide",
+     "Labels",
+     "Move",
+     "Numbers and integers",
+     "Plots in cells",
+     "Source notes",
+     "Spanners",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Indian Club Football Records",
+    "path": "samrit2442/posit_table_contest_2024",
+    "year": 2024,
+    "by": "Samrit Pramanik",
+    "package": "gt, gtsummary",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/indian-club-football-records-table-contest/188133",
+    "files": 3,
+    "url": "https://github.com/samrit2442/posit_table_contest_2024",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 272,
+    "needs": {
+     "0.4": [
+      "Images"
+     ],
+     "later": [
+      "Statistical summary tables (gtsummary, rtables, tfrmt)"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Sizes",
+     "Styles",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Indian States Meteorological Data Table",
+    "path": "PablaOO7/Posit-Table-Contest-2024",
+    "year": 2024,
+    "by": "Jaspreet",
+    "package": "DT",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/indian-states-meteorological-data-table-table-contest/188134",
+    "files": 2,
+    "url": "https://github.com/PablaOO7/Posit-Table-Contest-2024",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 171,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "IPL Player Analysis",
+    "path": "sree1658/PlayerPerformanceAnalysis",
+    "year": 2024,
+    "by": "Sreeram",
+    "package": "reactable, reactablefmtr, DT, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/ipl-player-analysis-table-contest/188136",
+    "files": 8,
+    "url": "https://github.com/sree1658/PlayerPerformanceAnalysis",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 282,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Michigan Substance Use Vulnerability Index (MI-SUVI) Exploration Table",
+    "path": "brendensm/misuvi_table",
+    "year": 2024,
+    "by": "Brenden Smith",
+    "package": "DT, Shiny",
+    "post": "https://forum.posit.co/t/michigan-substance-use-vulnerability-index-mi-suvi-exploration-table-table-contest/188198",
+    "files": 2,
+    "url": "https://github.com/brendensm/misuvi_table",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 340,
+    "needs": {},
+    "uses": [
+     "Any CSS",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Podcast Index Database Dashboard",
+    "path": "rpodcast/pod-db-dash",
+    "year": 2024,
+    "by": "Eric Nantz",
+    "licence": "MIT",
+    "package": "reactable, reactablefmtr",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/podcast-index-database-dashboard-table-contest/188177",
+    "files": 6,
+    "url": "https://github.com/rpodcast/pod-db-dash",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 313,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "R Developer Contributions",
+    "path": "mccarthy-m-g/tidytales",
+    "year": 2024,
+    "by": "Michael McCarthy",
+    "package": "gt",
+    "post": "https://forum.posit.co/t/r-developer-contributions-table-contest/187259",
+    "files": 1,
+    "url": "https://github.com/mccarthy-m-g/tidytales/tree/main/posts/2023-05-03_r-developers",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 183,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any format",
+     "Column selectors",
+     "Interactive tables",
+     "Numbers and integers",
+     "Sizes",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Resumen Sistema Educativo en Córdoba Capital",
+    "path": "illak/prueba_quarto_blog",
+    "year": 2024,
+    "by": "Illak Zapata",
+    "package": "gt, gtExtras",
+    "prize": "Best {gt} Table",
+    "post": "https://forum.posit.co/t/resumen-sistema-educativo-en-cordoba-capital-table-contest/186606",
+    "files": 1,
+    "url": "https://github.com/illak/prueba_quarto_blog/tree/main/posts/tabla_gt_se",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 321,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "Colour by value",
+     "Fonts",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Presets",
+     "Sizes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "Rolling Stone's Greatest Albums of All Time",
+    "path": "ahasoplakus/rollingstones",
+    "year": 2024,
+    "by": "Sukalpo Saha",
+    "package": "gt, gtExtras",
+    "prize": "Best Static Table",
+    "post": "https://forum.posit.co/t/rolling-stones-greatest-albums-of-all-time-table-contest/186660",
+    "files": 3,
+    "url": "https://github.com/ahasoplakus/rollingstones",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 881,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "Images",
+     "Labels from a function",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Padding, outline, lines",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "URLs and emails",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Top 20 golfers: Scottie Scheffler's 2024",
+    "path": "steodose/Table-Contest-2024",
+    "year": 2024,
+    "by": "Stephan Teodosescu",
+    "package": "Great Tables",
+    "prize": "Best Sports Table",
+    "post": "https://forum.posit.co/t/scottie-schefflers-dominance-table-contest/188181",
+    "files": 3,
+    "url": "https://github.com/steodose/Table-Contest-2024",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 80,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Images",
+     "Labels",
+     "Numbers and integers",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "shiftR: Tidy Shift Tables in R",
+    "path": "ahasoplakus/shifter",
+    "year": 2024,
+    "by": "Sukalpo Saha",
+    "licence": "Apache-2.0",
+    "package": "gt, DT",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/shiftr-tidy-shift-tables-in-r-table-contest/186105",
+    "files": 6,
+    "url": "https://github.com/ahasoplakus/shifter",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 895,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.5": [
+      "Groups of tables, split tables"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Extra CSS",
+     "Footnotes",
+     "Groups of tables, split tables",
+     "Interactive tables",
+     "Labels from a function",
+     "Locations",
+     "Row groups",
+     "Source notes",
+     "Spanners from column names",
      "Stub and stub head",
      "Styles",
      "Table options",
@@ -2004,14 +5815,774 @@
     ]
    },
    {
+    "title": "SingleCellTable",
+    "path": "teima90/SingleCellTable",
+    "year": 2024,
+    "by": "Maite",
+    "package": "reactable, DT, Shiny",
+    "post": "https://forum.posit.co/t/singlecelltable-table-contest/188166",
+    "files": 3,
+    "url": "https://github.com/teima90/SingleCellTable",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 201,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Stock-specific summaries and optimal portfolio weights",
+    "path": "christophscheuch/app-stock-analyzer",
+    "year": 2024,
+    "by": "Christoph Scheuch",
+    "licence": "CC BY-NC-ND 4.0",
+    "package": "gt, gtExtras, Shiny",
+    "prize": "Best Shiny Table",
+    "post": "https://forum.posit.co/t/stock-specific-summaries-and-optimal-portfolio-weights-table-contest/187594",
+    "files": 5,
+    "url": "https://github.com/christophscheuch/app-stock-analyzer",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1062,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Percent",
+     "Sizes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "Table of Birds",
+    "path": "Shuhanstack/table-of-birds",
+    "year": 2024,
+    "by": "Shuhan Song",
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/table-of-birds-table-contest/187908",
+    "files": 2,
+    "url": "https://github.com/Shuhanstack/table-of-birds",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 365,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any CSS",
+     "Colour by value",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Tables for Personal Finance (Ebenezer)",
+    "path": "DeepanshKhurana/PositTableContest2024",
+    "year": 2024,
+    "by": "Deepansh Khurana",
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Best Finance Table",
+    "post": "https://forum.posit.co/t/tables-for-personal-finance-ebenezer-table-contest/187529",
+    "files": 2,
+    "url": "https://github.com/DeepanshKhurana/PositTableContest2024",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 273,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Tabulating Group Sequential Designs for Clinical Trials: Lucid, Structured, and Compact Summaries",
+    "path": "Merck/gsdesign2",
+    "year": 2024,
+    "by": "Yujie Zhao",
+    "licence": "GPL-3",
+    "package": "kableExtra, kable",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/tabulating-group-sequential-designs-for-clinical-trials-lucid-structured-and-compact-summaries-table-contest/188202",
+    "kind": "package",
+    "files": 22,
+    "url": "https://github.com/Merck/gsdesign2",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1847,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Three.js Table with Country Geographic Information - Shiny Package",
+    "path": "AKostiv8/threejstable",
+    "year": 2024,
+    "by": "Anastasiia Kostiv",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/three-js-table-with-country-geographic-information-shiny-package-table-contest/188098",
+    "kind": "package",
+    "url": "https://github.com/AKostiv8/threejstable",
+    "port": "port",
+    "note": "No code found in the repository",
+    "ready": "other",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Titanic Challenge: Data Analysis to Predict Passenger Survival",
+    "path": "fralfaro/Titanic-Challenge",
+    "year": 2024,
+    "by": "Francisco Alfaro Medina",
+    "licence": "MIT",
+    "package": "Great Tables",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/titanic-challenge-data-analysis-to-predict-passenger-survival-table-contest/187768",
+    "files": 5,
+    "url": "https://github.com/fralfaro/Titanic-Challenge",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 547,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "HTML",
+     "Labels",
+     "Numbers and integers",
+     "Presets",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Today's Top Hits - Spotify Dashboard",
+    "path": "melissavanbussel/spotify-dashboard",
+    "year": 2024,
+    "by": "Melissa Van Bussel",
+    "package": "gt",
+    "prize": "Winner",
+    "post": "https://forum.posit.co/t/todays-top-hits-spotify-dashboard-table-contest/187538",
+    "files": 5,
+    "url": "https://github.com/melissavanbussel/spotify-dashboard",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 797,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "Body styles from a column",
+     "Extra CSS",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Plots in cells",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "Top AI Companies Stock Performance",
+    "path": "arnavchauhan7/top_ai_stock_analysis",
+    "year": 2024,
+    "by": "Arnav Chauhan",
+    "package": "gt, gtExtras",
+    "prize": "Outstanding Novice Submission",
+    "post": "https://forum.posit.co/t/top-ai-companies-stock-performance-table-contest/188153",
+    "files": 2,
+    "url": "https://github.com/arnavchauhan7/top_ai_stock_analysis",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 513,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Top Ranked Board Games",
+    "path": "bamattre/posit_table_2024",
+    "year": 2024,
+    "by": "Richard Bamattre",
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Best Interactive Table",
+    "post": "https://forum.posit.co/t/top-ranked-board-games-table-contest/187897",
+    "files": 1,
+    "url": "https://github.com/bamattre/posit_table_2024",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 101,
+    "needs": {},
+    "uses": [
+     "Fonts",
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Top Word Board Games by Year",
+    "path": "neelloc28/Posit-2024-table-contest",
+    "year": 2024,
+    "by": "Colleen M.",
+    "package": "formattable",
+    "post": "https://forum.posit.co/t/top-word-board-games-by-year-table-contest/188093",
+    "files": 1,
+    "url": "https://github.com/neelloc28/Posit-2024-table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 33,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Transfermarkt Contract Detector Shiny Application",
+    "path": "EkremBayar/2024-Posit-Table-Contest",
+    "year": 2024,
+    "by": "Ekrem Bayar",
+    "licence": "MIT",
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Runner up",
+    "post": "https://forum.posit.co/t/transfermarkt-contract-detector-shiny-application-table-contest/186348",
+    "files": 12,
+    "url": "https://github.com/EkremBayar/2024-Posit-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 944,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "TSA Airport Checkings on Major Holidays",
+    "path": "jorammutenge/contest",
+    "year": 2024,
+    "by": "Joram",
+    "package": "Great Tables",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/tsa-airport-checkings-on-major-holidays-table-contest/187965",
+    "files": 1,
+    "url": "https://github.com/jorammutenge/contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 177,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Dates"
+     ],
+     "0.4": [
+      "Images",
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Dates",
+     "Images",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Plots in cells",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "World Cup 2022 Recap",
+    "path": "dy1395/edson",
+    "year": 2024,
+    "by": "Day Yi",
+    "package": "Shiny",
+    "prize": "Honourable mention",
+    "post": "https://forum.posit.co/t/world-cup-2022-recap-table-contest/188070",
+    "files": 3,
+    "url": "https://github.com/dy1395/edson",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 471,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Baseball Pitchers: Luck vs. Skill",
+    "path": "juleswg23/baseball",
+    "year": 2025,
+    "package": "Great Tables, gt-extras",
+    "prize": "Greatest Great Tables Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/5",
+    "files": 2,
+    "url": "https://github.com/juleswg23/baseball",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 350,
+    "needs": {
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "HTML",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Move",
+     "Source notes",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Culinary Collection Dashboard",
+    "path": "deepdk/table_2025",
+    "year": 2025,
+    "package": "reactable, Shiny",
+    "prize": "Best Reactable Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/4",
+    "files": 2,
+    "url": "https://github.com/deepdk/table_2025",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 375,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Estimating National Rugby League Finals Probabilities with Monte Carlo Simulation",
+    "path": "mitchhenderson/2025-Table-Contest",
+    "year": 2025,
+    "package": "gt, gtExtras",
+    "prize": "Best Sports Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/27",
+    "files": 2,
+    "url": "https://github.com/mitchhenderson/2025-Table-Contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 799,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Numbers and integers",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Exploring United’s Fleet Using fleetR: An Airline Fleet Dashboard",
+    "path": "mstavro/fleetR",
+    "year": 2025,
+    "package": "gt, gtExtras",
+    "prize": "Winner",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/19",
+    "files": 3,
+    "url": "https://github.com/mstavro/fleetR",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 516,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Footnotes",
+     "HTML",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Move",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Mapping the Latin American Pharmaceutical Landscape",
+    "path": "lukmanaj/latam-pharma-atc-analysis",
+    "year": 2025,
+    "licence": "MIT",
+    "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/33",
+    "files": 1,
+    "url": "https://github.com/lukmanaj/latam-pharma-atc-analysis",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 144,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Migration RecommendeR System",
+    "path": "ILIG-MESSINA/Migration-recommendeR",
+    "year": 2025,
+    "package": "reactable, DT, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/34",
+    "files": 2,
+    "url": "https://github.com/ILIG-MESSINA/Migration-recommendeR",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1575,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables",
+     "Table info"
+    ]
+   },
+   {
+    "title": "New York City Ballet's 75th Season",
+    "path": "kkakey/nycb-75th-season",
+    "year": 2025,
+    "package": "reactable, reactablefmtr",
+    "prize": "Best Reactablefmtr Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/21",
+    "files": 4,
+    "url": "https://github.com/kkakey/nycb-75th-season",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 319,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Number of Visits to Singapore’s Places of Interest from 2010 to 2024",
+    "path": "JauntyJJS/2025_table",
+    "year": 2025,
+    "package": "gt",
+    "prize": "Runner up",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/13",
+    "files": 1,
+    "url": "https://github.com/JauntyJJS/2025_table",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 597,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Paris 2024 Olympics: Medal Performance Analysis",
+    "path": "ramadatta/paris-2024-olympics-table",
+    "year": 2025,
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/14",
+    "files": 1,
+    "url": "https://github.com/ramadatta/paris-2024-olympics-table",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 157,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Pixel Art Using gt",
+    "path": "melissavanbussel/gt-pixel-art",
+    "year": 2025,
+    "package": "gt",
+    "prize": "Runner up",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/28",
+    "files": 1,
+    "url": "https://github.com/melissavanbussel/gt-pixel-art",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 54,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Extra CSS",
+     "Locations",
+     "Missing values and zeros",
+     "Sizes",
+     "Styles",
+     "Table options"
+    ]
+   },
+   {
+    "title": "Premier League 2024-25 Player Statistics",
+    "path": "sree1658/PL-Player-Performance-Analysis",
+    "year": 2025,
+    "package": "reactable, reactablefmtr, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/25",
+    "files": 1,
+    "url": "https://github.com/sree1658/PL-Player-Performance-Analysis",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 148,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Recreating All 24 Example Tables from the APA Publication Manual, Seventh Edition",
+    "path": "wjschne/wjschne.github.io",
+    "year": 2025,
+    "package": "flextable",
+    "prize": "Best Tutorial",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/15",
+    "files": 25,
+    "url": "https://github.com/wjschne/wjschne.github.io/tree/main/posts/apatables",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 1051,
+    "needs": {},
+    "uses": [
+     "Column selectors",
+     "Interactive tables"
+    ]
+   },
+   {
     "title": "S&P 500 monitoring dashboard",
     "path": "ozancanozdemir/2025-Posit-Table-Contest",
     "year": 2025,
     "by": "Ozancan Özdemir",
-    "package": "gt, Shiny",
+    "package": "gt, gtExtras, Shiny",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/31",
+    "files": 1,
     "url": "https://github.com/ozancanozdemir/2025-Posit-Table-Contest",
     "port": "port",
-    "note": "No licence: an idea only",
+    "note": "",
     "ready": "later",
     "calls": 1111,
     "needs": {
@@ -2049,14 +6620,234 @@
     ]
    },
    {
+    "title": "Scaling Free Book Distribution with Interactive Data",
+    "path": "leoohyama/posit_table_contest_2025",
+    "year": 2025,
+    "package": "reactable, reactablefmtr",
+    "prize": "Runner up",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/16",
+    "files": 1,
+    "url": "https://github.com/leoohyama/posit_table_contest_2025",
+    "port": "port",
+    "note": "",
+    "ready": "other",
+    "calls": 262,
+    "needs": {},
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Submission-Ready and Elegant Clinical Tables: Combining {gt} Styling with {gridify} Layout Control",
+    "path": "Polkas/tgcontest2025",
+    "year": 2025,
+    "package": "gt",
+    "prize": "Best Pharma Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/18",
+    "files": 1,
+    "url": "https://github.com/Polkas/tgcontest2025",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 78,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Sustainable milk comparison",
+    "path": "PablaOO7/Posit-Table-Contest-2025",
+    "year": 2025,
+    "by": "PablaOO7",
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/23",
+    "files": 1,
+    "url": "https://github.com/PablaOO7/Posit-Table-Contest-2025",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 318,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Extra CSS",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Multiple sequence alignments with gt",
+    "path": "wvictor14/2025-posit-table-contest-gt-msa",
+    "year": 2025,
+    "by": "Victor Yuan",
+    "package": "gt",
+    "prize": "Best gt Table",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/10",
+    "files": 3,
+    "url": "https://github.com/wvictor14/2025-posit-table-contest-gt-msa",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 1103,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Markdown",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Volleyball Analytics",
+    "path": "kevbaer/vb_tables_comp_entry",
+    "year": 2025,
+    "package": "gt, gtExtras",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/30",
+    "files": 4,
+    "url": "https://github.com/kevbaer/vb_tables_comp_entry",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 207,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ],
+     "0.5": [
+      "Groups of tables, split tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Groups of tables, split tables",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Remove parts",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Wind Farm SCADA-Based Reliability Evaluation",
+    "path": "jorgethomasm/forecasting-wind-power",
+    "year": 2025,
+    "package": "gt, Great Tables, kableExtra",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/8",
+    "files": 10,
+    "url": "https://github.com/jorgethomasm/forecasting-wind-power",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 1552,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Move",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Plots in cells",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
     "title": "gt tables for scientific projects (tutorial)",
     "path": "emaleckova/2025-Table-Contest",
     "year": 2025,
     "by": "E. Malečková",
     "package": "gt",
+    "prize": "Honourable mention",
+    "post": "https://github.com/rich-iannone/table-contest/discussions/26",
+    "files": 11,
     "url": "https://github.com/emaleckova/2025-Table-Contest",
     "port": "port",
-    "note": "No licence: an idea only",
+    "note": "",
     "ready": "0.4",
     "calls": 715,
     "needs": {
@@ -2093,6 +6884,37 @@
      "Text transforms",
      "Title and subtitle",
      "Widths"
+    ]
+   },
+   {
+    "title": "Gibraltar's weather, May 2023 (the example entry)",
+    "path": "rich-iannone/table-contest-example-entry",
+    "year": 2025,
+    "by": "Rich Iannone",
+    "licence": "CC0-1.0",
+    "package": "Great Tables, gt-extras",
+    "files": 1,
+    "url": "https://github.com/rich-iannone/table-contest-example-entry",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 48,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any CSS",
+     "Locations",
+     "Padding, outline, lines",
+     "Source notes",
+     "Styles",
+     "Text helpers",
+     "Times and datetimes",
+     "Title and subtitle"
     ]
    }
   ]

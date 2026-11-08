@@ -119,6 +119,8 @@ working rules that are easy to miss.
   `docs/coverage/gt.json` changes or a source is added; findings of a port go to `found`.
   `python3 book/plan/plan.py fmt_currency` (or words of a feature) lists the pages that show a
   feature, the help pages of gt and Great Tables first: start there when porting or building it.
+  The Table Contest entries are collected by `python3 book/plan/contest.py` (forum and winners
+  posts, cached; `--offline`) into the source `table-contest`; run it, then `plan.py`.
 
 ## Previews and PRs
 

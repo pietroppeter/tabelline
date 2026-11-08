@@ -29,12 +29,16 @@ for s in sources["sources"]:
   let id = s["id"].getStr
   var text = "## " & s["title"].getStr & "\n\n" & s["what"].getStr & ". By " & s["by"].getStr &
     ", " & s["licence"].getStr & " licence. [Read it](" & s["url"].getStr & ")."
-  if s.isReference:
+  if s.isContest:
+    # a few hundred entries: they have a page of their own
+    text.add "\n\nIts " & $pagesOf(id).len & " entries with code on GitHub, and which of them " &
+      "tabelline can redo, are in [The Table Contest](contest.html)."
+  elif s.isReference:
     # a help page per function: too many for a table here, so they are found by feature
     text.add "\n\nIts " & $pagesOf(id).len & " pages with examples, one per function, are found " &
       "by the features they show, in [Find an example by feature](features.html)."
   nbText: text
-  if not s.isReference:
+  if not s.isReference and not s.isContest:
     nbTable pagesTable(id, ported = s["status"].getStr == "ported")
 
 nbText: """

@@ -69,7 +69,8 @@ complex. For each, how many of its pages tabelline can port now and how many wai
 release, by the gt functions their code calls; [What the book will port](next.html) has every
 page and what it waits for. The last two are not read in order: they are the help pages of every
 function of Great Tables and gt, each with its examples, found by feature in
-[Find an example by feature](features.html).
+[Find an example by feature](features.html). The entries of the Posit Table Contest, with what
+each waits for, are in [The Table Contest](contest.html).
 """
 
 nbTable sourcesTable()
