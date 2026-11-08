@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Docs: the Great Explainer explains where a table goes (text, Markdown, HTML, none of it
+  needing nimib) before the first table step by step, and then `nbTable`, from the one module
+  that imports nimib (#33).
 - **Breaking (before 0.1):** `toHtmlPage` is removed; `toHtml(t, makePage = true)` returns the
   whole page, as Great Tables' `as_raw_html(make_page = True)`. `save` is unchanged.
 - `tableData:` takes `for` and `if`, and computed column names (`$j: [...]`, `(expr): [...]`), so
