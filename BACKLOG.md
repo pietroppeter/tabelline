@@ -25,6 +25,14 @@ Rough size: S (hours), M (a day or two), L (more).
   `quote = ""` option for `readCsv` (a `"` inside a field is taken as quoting and dropped);
   document that colours such as `fmtBar(color = "var(--x)")` can use the page's CSS variables.
 
+- **Gaps from the Milano Cortina post** (S each, 0.1 use-it thread): a `comment` option for
+  `readCsv` (`#` lines); a `head`/`rowsKeep` that cuts the rows after `rowOrder`, for a top ten
+  by another column; a rank helper; `fmtNumberSi` with a powered unit (`m³`) writes cubic
+  megametres; `textCaseMatch(cases, loc...)` needs `locations =` because `default` and `replace`
+  come first; say in the docs that text transforms run after `fmtMarkdown` (Markdown in a
+  replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
+  substitution).
+
 - **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
 - **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
   `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).

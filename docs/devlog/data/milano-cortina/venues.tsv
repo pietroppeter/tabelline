@@ -1,0 +1,24 @@
+# from https://en.wikipedia.org/wiki/2026_Winter_Olympics (revision 1376836261), CC BY-SA 4.0
+cluster	venue	events	capacity	status
+Milan	Milano San Siro Olympic Stadium	Opening ceremony	75817	Existing
+Milan	Milano Santa Giulia Ice Hockey Arena	Ice hockey (preliminaries and finals)	12000	New
+Milan	Milano Rho Ice Hockey Arena	Ice hockey (preliminaries)	6000	Existing with temporary stands
+Milan	Milano Speed Skating Stadium	Speed skating	7500	Existing with temporary stands
+Milan	Milano Ice Skating Arena	Figure skating	11500	Existing
+Milan	Milano Ice Skating Arena	Short track speed skating	11500	Existing
+Cortina d'Ampezzo	Tofane Alpine Skiing Centre	Alpine skiing (women)	7000	Existing
+Cortina d'Ampezzo	Anterselva Biathlon Arena	Biathlon	19000	Existing
+Cortina d'Ampezzo	Cortina Curling Olympic Stadium	Curling	3000	Existing
+Cortina d'Ampezzo	Cortina Sliding Centre	Bobsleigh	5500	New
+Cortina d'Ampezzo	Cortina Sliding Centre	Luge	5500	New
+Cortina d'Ampezzo	Cortina Sliding Centre	Skeleton	5500	New
+Valtellina	Stelvio Ski Centre	Alpine skiing (men)	7000	Existing
+Valtellina	Stelvio Ski Centre	Ski mountaineering	7000	Existing
+Valtellina	Livigno Snow Park	Snowboarding	2000	Existing
+Valtellina	Livigno Snow Park	Freestyle skiing	8400	Existing
+Valtellina	Livigno Aerials & Moguls Park	Freestyle skiing	3000	Existing
+Val di Fiemme	Predazzo Ski Jumping Stadium	Ski jumping	5000	Existing
+Val di Fiemme	Predazzo Ski Jumping Stadium	Nordic combined	5000	Existing
+Val di Fiemme	Tesero Cross-Country Skiing Stadium	Cross-country skiing	15000	Existing
+Val di Fiemme	Tesero Cross-Country Skiing Stadium	Nordic combined	15000	Existing
+Verona	Verona Olympic Arena	Closing ceremony	15000	Existing

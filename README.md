@@ -102,6 +102,10 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
   before it becomes the new Design Ref.
 - [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/)
   (8 Nov 2026 B): what porting the Great Tables guide into the book found, and 0.1 fixed.
+- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/devlog/milano-cortina/)
+  (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
+  the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
+  Wikipedia, Il Post and NOAA.
 - [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
   (7 Nov 2026 I): what an agent skill is, where skills live in an open source project, who does
   them well, how they work from the phone, how to test one, and what tabelline could do with them.

@@ -1,0 +1,5 @@
+# from https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.txt (NOAA GML and Scripps, file of Fri Oct  9 13:08:07 2026), monthly mean, February
+year	games	co2
+1959	first February measured	0.00031649
+2006	Turin 2006	0.00038240
+2026	Milano Cortina 2026	0.00042935
