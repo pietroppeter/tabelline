@@ -31,7 +31,8 @@ converting each value on its own; a name MAY have dots (`size.mass: [...]`, read
 (such as a `collect`). A `for` or `if` in the body SHALL add the columns of its own lines, and a
 name MAY be computed when the line runs: `$j: [...]`, or any expression in parentheses. `parseCsv` and `readCsv` SHALL read a CSV text with a header,
 inferring ints, floats, bools and missing values (empty, `NA`), and a column mixing ints and
-floats SHALL be a float column.
+floats SHALL be a float column. With `comment = "#"` (or any prefix) they SHALL skip the lines
+that start with it after any spaces; by default no line is a comment.
 
 ```nim
 type Pupil = object
@@ -47,7 +48,7 @@ let tavola = tableData:
   for j in 1 .. 3:
     $j: collect(for i in 1 .. 3: i * j)
 echo tabella(tavola, rownameCol = "×")
-echo tabella(parseCsv("a,b\n1,2.5\n2,3\n"))
+echo tabella(parseCsv("# from a notebook\na,b\n1,2.5\n2,3\n", comment = "#"))
 ```
 
 ```text
@@ -77,6 +78,10 @@ echo tabella(parseCsv("a,b\n1,2.5\n2,3\n"))
 │ 2 │ 3.0 │
 └───┴─────┘
 ```
+
+#### Scenario: Comment lines
+- **WHEN** a CSV text has lines starting with `#` and `comment = "#"` is given
+- **THEN** those lines are skipped, and a `#` inside a value is kept
 
 #### Scenario: No rows
 - **WHEN** an empty sequence of objects is given

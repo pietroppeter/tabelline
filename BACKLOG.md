@@ -23,10 +23,9 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Gaps from the month article** (S each, 0.1 use-it thread, [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/)): an `html()` cell format
   (`fmtMarkdown` escapes every tag but `<br>`); Markdown in row group labels; a TSV or
   `quote = ""` option for `readCsv` (a `"` inside a field is taken as quoting and dropped);
-  document that colours such as `fmtBar(color = "var(--x)")` can use the page's CSS variables.
+  document that colours such as `style.fill("var(--x)")` can use the page's CSS variables.
 
-- **Gaps from the Milano Cortina post** (S each, 0.1 use-it thread): a `comment` option for
-  `readCsv` (`#` lines); a `head`/`rowsKeep` that cuts the rows after `rowOrder`, for a top ten
+- **Gaps from the Milano Cortina post** (S each, 0.1 use-it thread): a `head`/`rowsKeep` that cuts the rows after `rowOrder`, for a top ten
   by another column; a rank helper; `fmtNumberSi` with a powered unit (`m³`) writes cubic
   megametres; `textCaseMatch(cases, loc...)` needs `locations =` because `default` and `replace`
   come first; say in the docs that text transforms run after `fmtMarkdown` (Markdown in a
@@ -44,9 +43,10 @@ Rough size: S (hours), M (a day or two), L (more).
 ## Plots in cells
 
 - **Nanoplots** (L). `fmtNanoplot` / `colsNanoplot`: line, bar and box plots in SVG, with
-  reference lines and areas, as in gt 0.10+. The tiny `fmtBar` is the first step.
-- **`fmtBar` layout** (S). Bar only, or the value before the bar: with the value after it, a
-  column of bars reads unevenly (diagrammari's series part 5).
+  reference lines and areas, as in gt 0.10+ and Great Tables (experimental in gt, so not in 0.1).
+  First step: one value per cell, a horizontal bar or line from a zero line shared by the rows,
+  the value shown on hover (Great Tables' `_utils_nanoplots.py`). A draft of that step, with
+  `nanoplotOptions`, was written on 8 Nov 2026 and set aside when `fmtBar` was removed before 0.1.
 
 ## Options and building
 
@@ -54,7 +54,7 @@ Rough size: S (hours), M (a day or two), L (more).
   with a legend: a way to learn the parts of a gt table on your own data.
 - **Option presets** (S-M). A page that styles every table the same way repeats six or seven
   `tabOptions` fields per table. A user-defined preset (`let sea = tabOptions(...)`, then
-  `tabOptions sea` or `optPreset sea`), like `optPageTheme` but your own; a docs theme would ship
+  `tabOptions sea` or `optPreset sea`), like `optCssTheme` but your own; a docs theme would ship
   one.
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.

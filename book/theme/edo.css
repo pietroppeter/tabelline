@@ -11,7 +11,7 @@
      --secondary 新橋 shinbashi, Shinbashi blue  the square: strings, the Python tab
      --warning   山吹 yamabuki, kerria flower    the triangle: highlights, the source box
      --success   萌黄 moegi, fresh sprouts       the fourth: numbers in code
-   and every other colour mixed from them (--n-0 … --n-9, --surface, --x-soft, --x-text).
+   and every other colour mixed from them (--neutral-0 … --neutral-9 and their names --shade, --line, --muted, --surface, --x-soft, --x-text).
    This file names no colour of its own. nimibook sets html to 62.5%, so 1rem is 10px here. */
 @font-face { font-family: "Jost"; src: url("../fonts-edo/jost-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Jost"; src: url("../fonts-edo/jost-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
@@ -24,14 +24,14 @@ html.light, html.rust, html.coal, html.navy, html.ayu {
   --bg: var(--paper); --fg: var(--ink); --links: var(--primary-text);
   --inline-code-color: var(--ink);
   --sidebar-bg: var(--paper); --sidebar-fg: var(--ink); --sidebar-active: var(--primary-text);
-  --sidebar-non-existant: var(--n-6); --sidebar-spacer: var(--n-3);
-  --scrollbar: var(--n-6); --icons: var(--ink); --icons-hover: var(--primary);
-  --theme-popup-bg: var(--surface); --theme-popup-border: var(--ink); --theme-hover: var(--n-1);
+  --sidebar-non-existant: var(--neutral-6); --sidebar-spacer: var(--line);
+  --scrollbar: var(--neutral-6); --icons: var(--ink); --icons-hover: var(--primary);
+  --theme-popup-bg: var(--surface); --theme-popup-border: var(--ink); --theme-hover: var(--shade);
   --quote-bg: transparent; --quote-border: var(--warning);
-  --table-border-color: var(--n-3); --table-header-bg: var(--n-1); --table-alternate-bg: transparent;
+  --table-border-color: var(--line); --table-header-bg: var(--shade); --table-alternate-bg: transparent;
   --searchbar-bg: var(--surface); --searchbar-fg: var(--ink); --searchbar-border-color: var(--ink);
-  --searchresults-header-fg: var(--n-6); --searchresults-border-color: var(--n-3);
-  --searchresults-li-bg: var(--n-1);
+  --searchresults-header-fg: var(--neutral-6); --searchresults-border-color: var(--line);
+  --searchresults-li-bg: var(--shade);
   --search-mark-bg: color-mix(in srgb, var(--warning) 55%, var(--paper));
   --content-max-width: 76rem;
   color-scheme: light;
@@ -44,7 +44,7 @@ body { font-size: 1.8rem; line-height: 1.6; }
 .chapter li.chapter-item { line-height: 1.35; }
 .chapter li a.active { font-weight: 700; }
 .chapter li.part-title { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 1.15rem; color: var(--primary-text); }
-.chapter li strong { color: var(--n-6); font-weight: 400; }
+.chapter li strong { color: var(--neutral-6); font-weight: 400; }
 #theme-toggle, #theme-list { display: none !important; }
 .menu-bar, .menu-bar.bordered { border-bottom: 2px solid var(--ink) !important; }
 .menu-title { font: 700 1.6rem/var(--menu-bar-height) var(--text-font); letter-spacing: .16em; text-transform: uppercase; }
@@ -71,18 +71,18 @@ blockquote { border-left: 6px solid var(--warning); border-top: 0; border-bottom
 
 /* code: a white sheet with a black edge; outputs on grey paper. Code is smaller than text. */
 code, pre, pre code, .hljs { font-family: var(--mono) !important; font-variant-ligatures: none; }
-:not(pre) > code { font-size: .84em; background: var(--n-1); padding: .1em .3em; border-radius: 0; color: var(--ink); }
+:not(pre) > code { font-size: .84em; background: var(--shade); padding: .1em .3em; border-radius: 0; color: var(--ink); }
 .content pre { margin: 1.2rem 0 0; position: relative; }
 body .content pre > code, body .content pre > code.hljs { display: block; background: var(--surface); color: var(--ink);
   border: 2px solid var(--ink); border-radius: 0; padding: 1.2rem 1.4rem; font-size: 1.3rem; line-height: 1.55;
   overflow-x: auto; }
-.content pre.nb-output { background: var(--n-1); border: 2px solid var(--ink); border-top: 0; margin: 0;
+.content pre.nb-output { background: var(--shade); border: 2px solid var(--ink); border-top: 0; margin: 0;
   padding: 1rem 1.4rem; font: 1.25rem/1.45 var(--mono); color: var(--ink); white-space: pre; overflow-x: auto; }
 .content pre.tb-error { color: var(--primary-text); }
 .content .hljs-keyword, .content .hljs-built_in { color: var(--primary-text); font-weight: 700; }
 .content .hljs-string { color: var(--secondary-text); }
 .content .hljs-number, .content .hljs-literal { color: var(--success-text); }
-.content .hljs-comment { color: var(--n-6); font-style: italic; }
+.content .hljs-comment { color: var(--neutral-6); font-style: italic; }
 .content .hljs-type { color: var(--ink); font-weight: 700; }
 .content .hljs-meta, .content .hljs-operator, .content .hljs-punctuation { color: var(--ink); }
 
@@ -91,7 +91,7 @@ body .content pre > code, body .content pre > code.hljs { display: block; backgr
   border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); display: block; overflow-x: auto;
   width: max-content; max-width: 100%; }
 .content table:not(.gt_table):not(.tb_table) td, .content table:not(.gt_table):not(.tb_table) th { padding: .5rem .9rem; border: 0;
-  border-bottom: 1px solid var(--n-3); text-align: left; }
+  border-bottom: 1px solid var(--line); text-align: left; }
 .content table:not(.gt_table):not(.tb_table) thead { background: transparent; }
 .content table:not(.gt_table):not(.tb_table) thead th { font-weight: 700; border-bottom: 2px solid var(--ink); }
 
@@ -102,7 +102,7 @@ body .content pre > code, body .content pre > code.hljs { display: block; backgr
 .content .tabella table, .gt-output table { margin-left: auto; margin-right: auto; }
 .gt-output > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 .gt-output table.dataframe { border-collapse: collapse; font: 1.3rem/1.4 var(--mono); }
-.gt-output table.dataframe td, .gt-output table.dataframe th { padding: .3rem .8rem; border: 0; border-bottom: 1px solid var(--n-3); text-align: right; }
+.gt-output table.dataframe td, .gt-output table.dataframe th { padding: .3rem .8rem; border: 0; border-bottom: 1px solid var(--line); text-align: right; }
 .gt-output table.dataframe thead { background: transparent; }
 
 /* 👑 Nim / 🐍 Python / 🏴‍☠️ R tabs: one flat sheet each, the chosen one with a coloured edge */
@@ -137,8 +137,8 @@ details.tb-source summary::-webkit-details-marker { display: none; }
 details.tb-source summary::before { content: "Show source"; }
 details.tb-source[open] summary::before { content: "Hide source"; }
 details.tb-source[open] summary { background: var(--ink); color: var(--paper); }
-details.tb-source .tb-source-link { font-size: 1.4rem; color: var(--n-6); margin: 1rem 0 0; }
-.tb-foot { margin-top: 3rem; padding-top: 1rem; border-top: 2px solid var(--ink); font-size: 1.4rem; color: var(--n-6); }
+details.tb-source .tb-source-link { font-size: 1.4rem; color: var(--neutral-6); margin: 1rem 0 0; }
+.tb-foot { margin-top: 3rem; padding-top: 1rem; border-top: 2px solid var(--ink); font-size: 1.4rem; color: var(--neutral-6); }
 .tb-foot .motto { display: block; font: 700 1.8rem/1.3 var(--text-font); color: var(--ink); margin: 0 0 .4rem; }
 
 /* the six premade styles side by side (Premade Themes), small */

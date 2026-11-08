@@ -108,6 +108,25 @@ suite "0.1 fixes from the book":
     for c in ["red", "blue", "pink", "green", "cyan", "gray"]:
       let h = tabella(tavolaPitagorica(2)).tabHeader("T").optStylize(2, c).toHtml
       check "color: #FFFFFF; }" in h
+  test "optCssTheme: the page's names, with fallbacks":
+    let o = tabella(tavolaPitagorica(2)).optCssTheme().options
+    check o.tableFontColor == "var(--ink, #1C1C1C)"
+    check o.tableBackgroundColor == "var(--paper, #FFFFFF)"
+    check o.rowGroupBackgroundColor == "var(--shade, color-mix(in oklab, var(--ink, #1C1C1C) 4%, var(--paper, #FFFFFF)))"
+    check o.headingBorderBottomColor == "var(--primary, var(--ink, #1C1C1C))"
+    check o.rowGroupBorderColor == "var(--ink, #1C1C1C)"
+    check o.tableFontNames == "var(--font, system-ui, sans-serif)"
+  test "optCssTheme: another name, or a value":
+    let o = tabella(tavolaPitagorica(2)).optCssTheme(ink = "--foreground", line = "#CCCCCC").options
+    check o.tableFontColor == "var(--foreground, #1C1C1C)"
+    check o.tableBodyHlinesColor == "#CCCCCC"
+    check o.rowGroupBackgroundColor == "var(--shade, color-mix(in oklab, var(--foreground, #1C1C1C) 4%, var(--paper, #FFFFFF)))"
+  test "optCssTheme: a theme to reuse":
+    let mine = cssTheme(paper = "--bg", primary = "red")
+    let o = tabella(tavolaPitagorica(2)).optCssTheme(mine).options
+    check o.tableBackgroundColor == "var(--bg, #FFFFFF)"
+    check o.headingBorderBottomColor == "red"
+    check "var(--bg, #FFFFFF)" in tabella(tavolaPitagorica(2)).optCssTheme(mine).toHtml
   test "the subtitle is not bold":
     check "font-weight: normal" in tabella(tavolaPitagorica(2)).tabHeader("T", "S").toHtml
   test "a part's style wins over its whole part's":

@@ -1,7 +1,7 @@
 """Regenerate the Wikipedia tables of the Milano Cortina post.
 
-    python3 docs/devlog/data/milano-cortina/fetch.py
-    FETCH_CACHE=/tmp/wp python3 docs/devlog/data/milano-cortina/fetch.py   # keeps the pages read
+    python3 docs/stories/data/milano-cortina/fetch.py
+    FETCH_CACHE=/tmp/wp python3 docs/stories/data/milano-cortina/fetch.py   # keeps the pages read
 
 Reads five English Wikipedia articles through the REST API (one page every few seconds,
 with retries: Wikipedia limits fast clients), and writes one TSV per table next to this file.
@@ -57,14 +57,7 @@ def write(name, df, title, rev):
 def clean(s):
     return str(s).split("[")[0].replace("*", "").strip()
 
-# Country codes for the flags (ISO 3166-1 alpha-2; "" when there is no flag to show).
-ISO = {"Norway": "NO", "United States": "US", "Netherlands": "NL", "Italy": "IT", "Germany": "DE",
-       "France": "FR", "Sweden": "SE", "Switzerland": "CH", "Austria": "AT", "Japan": "JP",
-       "Canada": "CA", "China": "CN", "South Korea": "KR", "Australia": "AU", "Great Britain": "GB",
-       "Czech Republic": "CZ", "Slovenia": "SI", "Spain": "ES", "Brazil": "BR", "Kazakhstan": "KZ",
-       "Poland": "PL", "New Zealand": "NZ", "Finland": "FI", "Latvia": "LV", "Denmark": "DK",
-       "Estonia": "EE", "Georgia": "GE", "Individual Neutral Athletes": "", "Bulgaria": "BG",
-       "Belgium": "BE", "Russia": "RU", "Ukraine": "UA", "Slovakia": "SK"}
+from iso import ISO   # country codes for the flags (ISO 3166-1 alpha-2)
 
 def medal_table(df, who):
     df = df[~df["Rank"].astype(str).str.startswith(("Totals", "11–"))].copy()

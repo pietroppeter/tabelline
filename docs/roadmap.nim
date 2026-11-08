@@ -1,6 +1,6 @@
 ## The roadmap, docs/roadmap/index.html: the releases from 0.1 to 0.5, and for each the three
-## threads that make it (build it, use it, port the references), with their status. A living
-## page: the data is docs/piano.nim, updated when a thread starts, ships or changes its plan.
+## threads that make it (build it, use it, port the references), with their status. Kept up
+## to date: the data is docs/piano.nim, updated when a thread starts, ships or changes its plan.
 import std/[os, strutils, strformat]
 import nimib except md
 import tabelline, tabelline/nimib
@@ -9,15 +9,15 @@ import blocchi, piano
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "roadmap" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Roadmap", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "Roadmap", classe = "kept up to date",
                title = "tabelline roadmap", homeHref = "../",
                description = "The releases of tabelline, and the three threads that make each one.")
 
-nbTitolo "Living document", "The roadmap", """
+nbTitolo "Roadmap · kept up to date", "The roadmap", """
 Five releases to cover most of gt, and three threads for each: one builds it, one uses it, one ports the code that already exists.
 """
 nbText: """
-What goes in each release comes from the [coverage map](../coverage/); why the work is split in
+What goes in each release comes from the [feature map](../coverage/); why the work is split in
 three is told in the devlog post [Three threads for every release](../devlog/three-threads/).
 This page says where each thread stands.
 """
@@ -34,7 +34,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: "## Releases"
@@ -49,14 +49,14 @@ block:
       for (key, i, name, does) in threadKinds:
         if key == th.kind: icon = i
       rows.add Row(release: &"{r.version} · {r.theme}", thread: &"{icon} **{th.title}**<br>{th.what}",
-                   output: th.output, status: th.status)
+                   output: (if th.href.len > 0: &"[{th.output}](../{th.href})" else: th.output), status: th.status)
   var t = tabella(rows, groupnameCol = "release"):
     tabHeader "Releases and their threads", "0.1 to 0.5"
     colsLabel {"thread": "thread, and what it does", "output": "makes"}
-    fmtMarkdown "thread"
+    fmtMarkdown ["thread", "output"]
     colsWidth {"output": "24%", "status": "5em"}
-    optPageTheme()
-  t = t.tabStyle(style.text(color = "var(--n-7)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
+    optCssTheme()
+  t = t.tabStyle(style.text(color = "var(--muted)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
   nbTable t
 
 nbText: """
@@ -83,7 +83,7 @@ block:
     colsLabel {"who": "by", "release": "for"}
     fmtMarkdown "source"
     tabSourceNote "The ports go in the tabelline book, a nimibook kept in this repository (in the Edo palette, made like the Nanuq Book), with the original Python or R next to the Nim."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: "## Left aside"
@@ -96,7 +96,7 @@ block:
   let t = tabella(rows, rownameCol = "what"):
     tabHeader "Not planned, for now"
     colsLabel {"why": ""}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbSave

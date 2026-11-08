@@ -9,10 +9,10 @@ with their parts and their verbs (in camelCase), written in plain Nim, and fits 
 [nimib](https://github.com/pietroppeter/nimib) notebooks.
 
 **Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with
-[The Great Explainer](https://pietroppeter.github.io/tabelline/explainer/), the
-[devlog](https://pietroppeter.github.io/tabelline/devlog/), the
-[Design Ref](https://pietroppeter.github.io/tabelline/design/), a page for
-[agents](https://pietroppeter.github.io/tabelline/agents/) and the
+the [Guide](https://pietroppeter.github.io/tabelline/explainer/), the
+[book](https://pietroppeter.github.io/tabelline/book/), the
+[roadmap](https://pietroppeter.github.io/tabelline/roadmap/), the
+[devlog](https://pietroppeter.github.io/tabelline/devlog/) and the
 [specs](https://pietroppeter.github.io/tabelline/specs/).
 
 ```nim
@@ -61,31 +61,51 @@ NASA Planetary Fact Sheet
 The same verbs chain, too: `tabella(planets()).tabHeader("The planets").fmtNumber("mass")`.
 In a nimib notebook, `import tabelline/nimib` and `nbTable t`.
 
-## Living documents
+## Stories
 
-Kept up to date as tabelline changes. The home page lists them in this order:
+Real subjects told in tables made with tabelline, one for every release, kept up to date
+([all the stories](https://pietroppeter.github.io/tabelline/stories/), sources in `docs/stories/`);
+the home page shows them as a gallery:
 
-1. [The Great Explainer](https://pietroppeter.github.io/tabelline/explainer/): what gt and Great
-   Tables are, how they work inside, who uses them (the Posit Table Contest and more), and
-   tabelline step by step.
-2. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): every post, newest first.
-3. [Book](https://pietroppeter.github.io/tabelline/book/): guides and examples of gt and Great
-   Tables ported to tabelline, with the original code and its table next to every example, [what
+- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/stories/milano-cortina/)
+  (tabelline 0.1): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
+  the money, what stays), learning from Il Post's coverage, on data from Wikipedia, Il Post and NOAA.
+
+## The site
+
+The home page groups the pages by the question a reader brings. They are kept up to date as
+tabelline changes; dated posts are in the devlog.
+
+**Learn tabelline**
+
+1. [Guide](https://pietroppeter.github.io/tabelline/explainer/) (*The Great Explainer*): what gt
+   and Great Tables are, how they work inside, who uses them (the Posit Table Contest and more),
+   and tabelline step by step.
+2. [Book](https://pietroppeter.github.io/tabelline/book/): guides and examples of gt and Great
+   Tables redone in Nim, with the original code and its table next to every example, [what
    the book will port](https://pietroppeter.github.io/tabelline/book/next.html) and [what the port
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
-4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
-   the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
-5. [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
-   and Great Tables, what tabelline has, and the releases that plan the rest (data in
+
+**Where it's going**
+
+3. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.5
+   adds and the real tables it is tried on, with the three threads of each (build it, use it,
+   port the references), from `docs/piano.nim`.
+4. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+   and Great Tables, whether tabelline has it, and the release that plans the rest (data in
    `docs/coverage/gt.json`).
-6. [Design Ref](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
-   colours, the type and every component, with when to use each.
-7. [Agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where things are,
-   and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
-8. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
+
+**How it's made**
+
+5. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): dated posts, newest first.
+6. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
    down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
    run against the code while the page is built.
+7. [Design guide](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
+   colours, the type and every component, with when to use each.
+8. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
+   things are, and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
@@ -99,10 +119,6 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
   before it becomes the new Design Ref.
 - [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/)
   (8 Nov 2026 B): what porting the Great Tables guide into the book found, and 0.1 fixed.
-- [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/devlog/milano-cortina/)
-  (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
-  the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
-  Wikipedia, Il Post and NOAA.
 - [Designing tabelline 0.1](https://pietroppeter.github.io/tabelline/devlog/designing-0-1/)
   (7 Nov 2026 F): the 24 small groups of gt in 0.1, how each became an OpenSpec change, R vs
   Python vs Nim, and the Nim sugar.

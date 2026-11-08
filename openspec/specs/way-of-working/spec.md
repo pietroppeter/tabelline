@@ -1,7 +1,7 @@
 # way-of-working Specification
 
 ## Purpose
-How tabelline is made: specs with examples that run, living documents and a devlog built as
+How tabelline is made: specs with examples that run, pages kept up to date, stories and a devlog built as
 nimib notebooks, previews before merges.
 
 ## Requirements
@@ -31,16 +31,29 @@ quaderno theme (`docs/quaderno.nim`), with the code that made each table shown n
 SHALL build all pages (`docs/all.nim`) and deploy them to GitHub Pages from `main`; the HTML SHALL
 NOT be committed.
 
-### Requirement: Living documents and a devlog
-The site SHALL have living documents, kept up to date as tabelline changes (the explainer, the
-specs page), and a devlog of dated posts, each telling one step as it happened and not updated
-afterwards. The devlog index SHALL list the living documents first, then the posts newest first,
+### Requirement: Pages kept up to date, and a devlog
+The site SHALL have pages kept up to date as tabelline changes (the Guide, the specs page and
+the others on the home page), and a devlog of dated posts, each telling one step as it happened
+and not updated afterwards. The home page SHALL list the pages in groups, by the question a reader
+brings, with names a newcomer can read. The devlog index SHALL list only the posts, newest first,
 read from the posts' sources. The specs page SHALL show every spec with its examples, their
 output and the HTML table each example makes.
 
 #### Scenario: A new post
 - **WHEN** a post `docs/devlog/<slug>.nim` is added
 - **THEN** it appears on the devlog index at the next build with nothing else to edit, and gets a line in the README
+
+### Requirement: Stories
+The site SHALL have a Stories section: every release's *use it* thread SHALL tell a real subject in
+tables made with tabelline, as a story in `docs/stories/<slug>.nim` whose first line is
+`## story: <release> | <title> | <lede>`. The home page and the stories page SHALL show every story
+in a gallery, newest release first, read from the stories' sources. Stories SHALL be kept up to date, and the roadmap SHALL link
+each *use it* thread to its story. A story that was published at another address SHALL keep it,
+forwarding to the story.
+
+#### Scenario: A new story
+- **WHEN** a story `docs/stories/<slug>.nim` is added
+- **THEN** it appears in the gallery of the home page and of the stories page at the next build with nothing else to edit, and gets a line in the README
 
 ### Requirement: English, preview first
 Specs, code, commits, PRs and the devlog SHALL be in English (Italian words are welcome as names).

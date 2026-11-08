@@ -46,6 +46,13 @@ suite "values and data":
     check d["c"].kindOf == vkString
     check d["d"].kindOf == vkBool
 
+  test "csv comment lines":
+    let text = "# source: somewhere\na,b\n# a note\n1,x\n  # indented\n2,#y\n"
+    let d = parseCsv(text, comment = "#")
+    check d.nrows == 2
+    check d["b", 1] == toValue("#y")
+    check parseCsv("a\n#1\n")["a", 0] == toValue("#1")
+
   test "datasets":
     check planets().nrows == 8
     check planets()["mass"].kindOf == vkFloat

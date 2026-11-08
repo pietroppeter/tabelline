@@ -133,7 +133,7 @@ block:
                "script": "<script>", "inline": "style=", "hex": "hex colours"}
     fmtMarkdown "file"
     tabSourceNote md("Counted in the sources on 8 November 2026; snapshot in `devlog/data/blocks-review/audit.tsv`. The theme and its helpers may hold CSS: that is their job. `style=` counts inline styles.")
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: &"""
@@ -180,7 +180,7 @@ block:
     tabHeader "Blocks for tabelline's pages", "proposed names; nbIndice and nbTabs exist"
     colsLabel {"what": "what it shows", "today": "how it is done today", "uses": "where"}
     fmtMarkdown ["block_name", "today"]
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """

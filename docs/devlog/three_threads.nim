@@ -47,7 +47,7 @@ block:
     colsLabel {"design": "🔨 Designing Nanuq 0.x", "explainer": "🧭 the explainer"}
     fmtMarkdown "explainer"
     tabSourceNote md("Alongside, the 📚 Nanuq Book ported the Polars user guide, *Polars: The Definitive Guide*, *Modern Polars*, a Polars cookbook, Real Python tutorials and three benchmarks (1BRC, PDS-H, db-benchmark), each chapter with its source and licence.")
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -70,7 +70,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -137,7 +137,8 @@ block:
     for th in r.threads:
       case th.kind
       of "build": row.build = th.what
-      of "use": row.use = th.title.replace("Use it: ", "")
+      of "use":
+        if row.use.len == 0: row.use = th.title.replace("Use it: ", "")  # the first, as when posted
       of "port": row.port = th.title.replace("Port ", "").capitalizeAscii
     rows.add row
   let t = tabella(rows, rownameCol = "release"):
@@ -145,7 +146,7 @@ block:
     colsLabel {"build": "🔨 build", "use": "🧭 use it on", "port": "📚 port"}
     fmtMarkdown "release"
     colsWidth {"build": "40%"}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """

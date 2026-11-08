@@ -1,6 +1,6 @@
-## The Agents page, docs/agents/index.html: what a coding agent (or a person new to the repository)
+## The page For coding agents, docs/agents/index.html: what a coding agent (or a person new to the repository)
 ## needs to work on tabelline: setup, the commands, where things are, and the working rules, read
-## from AGENTS.md when the page builds so the two never disagree. A living document. It also
+## from AGENTS.md when the page builds so the two never disagree. Kept up to date. It also
 ## writes docs/llms.txt, a short map of the site for language models (llmstxt.org).
 import std/[os, strformat, strutils]
 import nimib except md
@@ -11,11 +11,11 @@ let docs = currentSourcePath().parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "agents" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Agents", classe = "living document",
+nb.useTabelline(nome = "tabelline", materia = "For coding agents", classe = "kept up to date",
                title = "tabelline for agents", homeHref = "../",
                description = "For coding agents working on tabelline: setup, commands, where things are, and the working rules.")
 
-nbTitolo "Agents · living document · started 8 November 2026", "Working on tabelline, for agents", """
+nbTitolo "For coding agents · kept up to date · started 8 November 2026", "Working on tabelline, for agents", """
 What a coding agent needs to change tabelline: how to set up, the commands it will run, where things are, and the rules of the repository. People new to the code can read it too.
 """
 nbText: """
@@ -52,7 +52,7 @@ block:
     tabHeader "The commands"
     colsLabel {"does": "what it does"}
     fmtMarkdown "does"
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -64,7 +64,8 @@ nbText: """
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
 - `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim`; the look is `docs/stile.nim`,
-  explained in the [Design Ref](../design/). Posts are in `docs/devlog/`.
+  explained in the [Design guide](../design/). Posts are in `docs/devlog/`, stories (one for
+  every release, told with tabelline) in `docs/stories/`.
 - `book/`: the [book](../book/), a nimibook (`nim r book/bookbuild.nim`); its planned sources are
   in `book/plan/`.
 - `BACKLOG.md` (ideas), `CHANGELOG.md` (what shipped), `docs/coverage/gt.json` (what of gt is
@@ -84,21 +85,22 @@ nbText: """
 
 `docs/agents.nim` reads `AGENTS.md` from the repository when the pages are built, drops its
 title and turns its `##` sections into `###`, so the rules on this page are the file's. It also
-writes `docs/llms.txt` from the list of living documents below it in the same file; CI publishes
+writes `docs/llms.txt` from the list of pages below it in the same file; CI publishes
 it at the root of the site.
 """
 nbSave
 
 # llms.txt (llmstxt.org): a title, a summary, then links to what a model should read.
 let pages = [
-  ("The Great Explainer", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
-  ("Devlog", "devlog/", "every post, newest first"),
+  ("Guide", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
+  ("Stories", "stories/", "real subjects told in tables made with tabelline, one for every release"),
   ("Book", "book/", "the Great Tables and gt guides ported to tabelline, with what the book will port and what the port found"),
   ("Roadmap", "roadmap/", "the releases from 0.1 to 0.5"),
-  ("Coverage map", "coverage/", "what of gt and Great Tables tabelline has"),
-  ("Design Ref", "design/", "the look of the pages and every component"),
-  ("Agents", "agents/", "setup, commands and the working rules"),
-  ("Specs", "specs/", "every requirement, with examples that ran when the page was built"),
+  ("Feature map", "coverage/", "what of gt and Great Tables tabelline has"),
+  ("Devlog", "devlog/", "dated posts on how tabelline is made, newest first"),
+  ("Specs", "specs/", "every requirement, written with OpenSpec, with examples that ran when the page was built"),
+  ("Design guide", "design/", "the look of the pages and every component"),
+  ("For coding agents", "agents/", "setup, commands and the working rules"),
 ]
 var llms = """# tabelline
 
