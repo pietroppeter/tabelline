@@ -63,7 +63,7 @@ const releases*: seq[Release] = @[
   ]),
   Release(version: "0.4", theme: "Pictures in cells", threads: @[
     t("build", "Build tabelline 0.4",
-      "Images inlined as data URLs, a small set of SVG icons, nanoplots (lines, bars, boxes), fmtBar layouts.",
+      "Images inlined as data URLs, a small set of SVG icons, nanoplots (lines, bars, boxes).",
       "post Designing tabelline 0.4; tag v0.4.0"),
     t("use", "Use it: the moons of the Solar System",
       "The planets' moons with NASA images (public domain), icons for their kind, and nanoplots of their orbits and sizes.",

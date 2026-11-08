@@ -71,10 +71,6 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_sourcenote { font-size: [o.sourceNotesFontSize]; padding: 4px 5px; text-align: left; }
 [i] tfoot tr:first-child td { padding-top: 8px; }
 [i] .tb_footnote_marks { font-size: 75%; vertical-align: 0.4em; font-weight: normal; font-style: normal; }
-[i] .tb_bar { display: inline-flex; align-items: center; gap: 6px; }
-[i] .tb_bar_track { display: inline-block; height: 0.8em; }
-[i] .tb_bar_fill { display: block; height: 100%; border-radius: 2px; }
-[i] .tb_bar_label { min-width: 2.5em; text-align: right; }
 """, '[', ']') & vlines
   let extra = o.extraCss.strip
   if extra.len > 0:

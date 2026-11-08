@@ -6,7 +6,11 @@
   release, kept up to date (`docs/stories/`). *Milano Cortina 2026* moves there from the devlog,
   with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
   shows the stories as a gallery, and the roadmap links each *use it* thread to its story (#26).
-
+- Breaking (before 0.1): `fmtBar` is removed. It was tabelline's only format not in gt or Great
+  Tables, and it drew the bar before the number; bars come back with `fmtNanoplot`, after 0.1.
+  The Feature map lists everything in tabelline that is not from gt (#27).
+- `parseCsv` and `readCsv` take `comment = "#"` to skip comment lines, so a CSV file can say
+  where its data comes from (#27).
 - Docs: the home page groups its pages by the question a reader brings (Learn tabelline, Where
   it's going, How it's made) and names them in plain words: the Guide (The Great Explainer), the
   Feature map (was Coverage map), the Design guide (was Design Ref), For coding agents (was
