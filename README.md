@@ -71,19 +71,19 @@ Kept up to date as tabelline changes. The home page lists them in this order:
 1. [The Great Explainer](https://pietroppeter.github.io/tabelline/explainer/): what gt and Great
    Tables are, how they work inside, who uses them (the Posit Table Contest and more), and
    tabelline step by step.
-2. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): the plan, then every post. The plan
-   is two living documents:
-   - [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
-     the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
-   - [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
-     and Great Tables, what tabelline has, and the releases that plan the rest (data in
-     `docs/coverage/gt.json`).
-3. Book: the gt and Great Tables guides ported to tabelline (once `book/` is in the repository).
-4. [Design Ref](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
+2. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): every post, newest first.
+3. Book: the gt and Great Tables guides ported to tabelline (linked once `book/` is in the
+   repository).
+4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): the releases from 0.1 to 0.5 and
+   the three threads of each (build it, use it, port the references), from `docs/piano.nim`.
+5. [Coverage map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+   and Great Tables, what tabelline has, and the releases that plan the rest (data in
+   `docs/coverage/gt.json`).
+6. [Design Ref](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
    colours, the type and every component, with when to use each.
-5. [Agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where things are,
+7. [Agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where things are,
    and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
-6. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
+8. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
    down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
    run against the code while the page is built.
 

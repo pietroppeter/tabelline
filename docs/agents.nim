@@ -94,7 +94,9 @@ nbSave
 # llms.txt (llmstxt.org): a title, a summary, then links to what a model should read.
 let pages = [
   ("The Great Explainer", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
-  ("Devlog", "devlog/", "the roadmap, the coverage map and every post"),
+  ("Devlog", "devlog/", "every post, newest first"),
+  ("Roadmap", "roadmap/", "the releases from 0.1 to 0.5"),
+  ("Coverage map", "coverage/", "what of gt and Great Tables tabelline has"),
   ("Design Ref", "design/", "the look of the pages and every component"),
   ("Agents", "agents/", "setup, commands and the working rules"),
   ("Specs", "specs/", "every requirement, with examples that ran when the page was built"),
@@ -112,6 +114,4 @@ Source: https://github.com/pietroppeter/tabelline . Verbs are gt's in camelCase 
 """
 for (title, path, what) in pages:
   llms.add &"- [{title}]({siteUrl}{path}): {what}\n"
-llms.add &"\n## Optional\n\n- [Coverage map]({siteUrl}coverage/): what of gt tabelline has\n" &
-  &"- [Roadmap]({siteUrl}roadmap/): the releases from 0.1 to 0.5\n"
 writeFile(docs / "llms.txt", llms)

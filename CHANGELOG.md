@@ -3,8 +3,8 @@
 ## Unreleased
 
 - Docs: a new structure. The home page keeps one simple table and lists the living documents
-  in reading order (The Great Explainer, Devlog, Book, Design Ref, Agents, Specs); the devlog
-  opens with the plan (roadmap, coverage map); new pages Design Ref (`docs/design.nim`) and
+  in reading order (The Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref,
+  Agents, Specs); the devlog lists only posts; new pages Design Ref (`docs/design.nim`) and
   Agents (`docs/agents.nim`, with the rules from AGENTS.md and a `llms.txt`); the explainer is
   now The Great Explainer.
 - Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*

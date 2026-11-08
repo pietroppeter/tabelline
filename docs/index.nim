@@ -51,21 +51,24 @@ nbRawHtml: partsLegend() & """<p>The six parts of every gt table, explained in <
 </script>"""
 
 # The living documents, in the order to read them; each is kept up to date. Posts are in the devlog.
-# The book appears once its sources (book/) are in the repository.
+# Until the book's sources (book/) are in the repository, its card says it is coming, with no link.
 type Living = tuple[href, title, what: string]
 var living: seq[Living] = @[
   ("explainer/", "The Great Explainer", "gt and Great Tables from zero: what they are, how they work inside, who uses them; and tabelline, step by step."),
-  ("devlog/", "Devlog", "How tabelline is made: the roadmap and the coverage map, then every post, newest first. Bigger changes are tracked and explained here."),
+  ("devlog/", "Devlog", "How tabelline is made: every post, newest first. Bigger changes are tracked and explained here."),
   ("book/", "Book", "The Great Tables and gt guides ported to tabelline, page by page, with the original next to it."),
+  ("roadmap/", "Roadmap", "The releases from 0.1 to 0.5, and the three threads that make each one: build it, use it, port the references."),
+  ("coverage/", "Coverage map", "Every feature group of gt and Great Tables, what tabelline has, and the releases that plan the rest."),
   ("design/", "Design Ref", "The two looks, the shapes, the palette, the type and every component, with when to use each: the reference for writing a page."),
   ("agents/", "Agents", "For coding agents: setup, commands, the working rules and where things are."),
   ("specs/", "Specs", "How tabelline behaves today: requirements with examples that ran when the page was built."),
 ]
-if not dirExists(docs.parentDir / "book"):
-  living.delete(2)
+let bookReady = dirExists(docs.parentDir / "book")
 var cards = ""
 for i, d in living:
-  cards.add &"""<div class="nota azzurra"><small>{i + 1}</small><span class="titolo"><a href="{d.href}">{d.title}</a></span>{d.what}</div>"""
+  let title = if d.href == "book/" and not bookReady: d.title & " <small>(coming soon)</small>"
+              else: &"""<a href="{d.href}">{d.title}</a>"""
+  cards.add &"""<div class="nota azzurra"><small>{i + 1}</small><span class="titolo">{title}</span>{d.what}</div>"""
 
 nbRawHtml: &"""<h2 id="living-documents">Living documents</h2>
 <p>Kept up to date as tabelline changes, in the order to read them.</p>

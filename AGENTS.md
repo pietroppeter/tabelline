@@ -50,8 +50,8 @@ working rules that are easy to miss.
   builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
   `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
 - The home page shows the simplest example and links the living documents in this order: The
-  Great Explainer, Devlog (with the roadmap and coverage map as its plan), Book, Design Ref,
-  Agents, Specs. Posts are listed only in the devlog. A new living document gets a card there
+  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
+  lists only posts. A new living document gets a card there
   (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
 - The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
   change starts as a devlog post. The Agents page reads this file when it builds.
