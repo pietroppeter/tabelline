@@ -181,7 +181,7 @@ block:
     colsLabel {"what": "where it goes"}
     fmtMarkdown "what"
     tabSourceNote "From docs/munari.nim and the devlog post Munari meets Japan."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 # Fixed colours written in each source of the pages. Counted once, on 8 November 2026, and saved
@@ -223,7 +223,7 @@ block:
     tabHeader "Fixed colours in the sources of the pages", &"distinct hex values per file, {total} in all"
     colsLabel {"colours": "hex values"}
     tabSourceNote "Counted on 8 November 2026 (snapshot in devlog/data/design-review/); files with fewer than three are left out."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -399,7 +399,7 @@ block:
     tabStyle style.text(color = "var(--primary-text)", weight = "bold"), loc.body(cols = ["paper", "soft"], rows = where(it["paper"] < 4.5))
     tabStyle style.text(color = "var(--primary-text)", weight = "bold"), loc.body(cols = "soft", rows = where(it["soft"] < 4.5))
     tabSourceNote md("`--n-7` (grey text) is measured on `--n-1`. In bold: below 4.5. Computed when this page was built.")
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -461,7 +461,7 @@ block:
     colsLabel {"swatch": "", "token": "proposed", "today": "today"}
     fmtMarkdown ["token", "today"]
     fmtMarkdown "component"
-    optPageTheme()
+    optCssTheme()
   for i, row in rows:
     if row.token.startsWith("--"):
       t = t.tabStyle(style.fill(&"var({row.token})"), loc.body(cols = "swatch", rows = [i]))

@@ -29,7 +29,7 @@ nbCode:
     dataColor everything(), palette = palette("quaderno"), domain = (1.0, 100.0)
     tabStyle style.text(weight = "bold", color = "var(--primary-text)"), loc.stub(), loc.columnLabels()
     tabSourceNote md("Every cell is `row × column`. The squares are on the diagonal.")
-    optPageTheme()
+    optCssTheme()
     colsAlign alCenter
 nbTable pitagora
 
@@ -204,7 +204,7 @@ nbCode:
     tabHeader "Grand prizes of the Table Contest", "RStudio (2020-2022), then Posit (2024-2025); there was no 2023 edition"
     colsLabel {"winner": "grand prize", "entry": "the table", "tools": "made with", "note": "also"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "winner")
-    tabStyle style.text(size = "85%", color = "var(--n-7)"), loc.body(cols = "note")
+    tabStyle style.text(size = "85%", color = "var(--muted)"), loc.body(cols = "note")
     tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it["year"] == 2025))
     tabSourceNote md("Posit blog, [2020](https://www.r-bloggers.com/2020/12/winners-of-the-2020-rstudio-table-contest/), [2021](https://www.r-bloggers.com/2021/12/winners-of-the-2021-table-contest/), [2022](https://posit.co/blog/winners-of-the-2022-table-contest/), [2024](https://posit.co/blog/2024-table-contest-winners/), [2025](https://posit.co/blog/2025-table-contest-winners/)")
     optStylize(style = 1, color = "blue")
@@ -412,12 +412,12 @@ nbCode:
 nbTable t
 
 nbText: """
-Step 5: the same table with `optPageTheme()`, the preset of these pages: its colours are the page's
+Step 5: the same table with `optCssTheme()`, the preset of these pages: its colours are the page's
 own, so it follows the look you pick at the top ([Tables that follow the page](#tables-that-follow-the-page)
 explains it). Next to it, `optStylize`:
 """
 nbCode:
-  nbTable t.optPageTheme()
+  nbTable t.optCssTheme()
   nbTable t.optStylize(style = 2, color = "gray").tabOptions(headingAlign = "left", tableFontSize = "14px")
 
 nbText: """
@@ -431,7 +431,7 @@ let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "typ
   tabSpanner "Size", ["mass", "diameter"]
   fmtNumber "mass", decimals = 3, dropTrailingZeros = true
   dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
-  optPageTheme()
+  optCssTheme()
 ```
 
 ## A tour of the formats
@@ -525,7 +525,7 @@ nbCode:
     tabStubhead "×"
     for i in 1 .. 6:
       tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
-    optPageTheme()
+    optCssTheme()
 nbTable squares
 
 nbText: """
@@ -550,12 +550,12 @@ text table, a table printed in `nbCode` shows up in the output, as above.
 
 ## Tables that follow the page
 
-Every table on these pages ends with `optPageTheme()`. It is the one verb here that gt and Great
+Every table on these pages ends with `optCssTheme()`. It is the one verb here that gt and Great
 Tables do not have.
 
 ### One line
 
-Here is a small table twice: on the left as it comes, on the right with `optPageTheme()` added.
+Here is a small table twice: on the left as it comes, on the right with `optCssTheme()` added.
 Switch the look at the top of the page (Munari or quaderno): the right one changes with the page,
 the left one stays as it is.
 """
@@ -568,64 +568,88 @@ nbCode:
     tabHeader "Moons"
 nbAccanto:
   nbTable small
-  nbTable small.optPageTheme()
+  nbTable small.optCssTheme()
 
 nbText: """
 ### A preset of colours that are not colours
 
 In gt, every colour option takes any CSS colour: a name, `#1C1C1C`, and also `var(--ink)`, a CSS
-variable, whose value the browser looks up on the page when it draws the table. `optPageTheme()`
+variable, whose value the browser looks up on the page when it draws the table. `optCssTheme()`
 is a preset, like gt's `opt_stylize()`, but where `opt_stylize()` fills the options with fixed
 colours, it fills them with the page's variables. In R you could write the same by hand, one
-option at a time: `tab_options(table.font.color = "var(--n-9)", ...)`.
+option at a time: `tab_options(table.font.color = "var(--ink)", ...)`.
 
 These are the variables it reads, here in the look you picked:
 """
-nbTinte [("--n-9", "`--n-9`, the ink", "the text, the rules above and below, the rule under the column labels"),
-         ("--n-3", "`--n-3`, a light grey", "the rules between rows"),
-         ("--n-1", "`--n-1`, a lighter grey", "the row groups, and the stripes when rows are striped"),
-         ("--surface", "`--surface`, the sheet", "behind the table"),
+nbTinte [("--ink", "`--ink`, the ink", "the text, the rules above and below, the rule under the column labels"),
+         ("--paper", "`--paper`, the paper", "behind the table"),
+         ("--line", "`--line`, a light grey", "the rules between rows"),
+         ("--shade", "`--shade`, a lighter grey", "the row groups, and the stripes when rows are striped"),
          ("--primary", "`--primary`, the first colour", "the rule under the heading")]
 nbText: """
-and `--text`, the page's font. Each comes with a fallback, `var(--n-9, #1C1C1C)`: on a page that
-does not define them, the table is black and grey on white, a plain table, never a broken one.
+and `--font`, the page's font.
 
-### Changing one colour
+### Two are enough
 
-A preset only fills options, so any option set after it wins. Here the rule under the heading is
-the second colour, and the rules above and below are thinner:
+Each variable comes with a fallback, written in the option itself. Without `--ink` and `--paper`
+the table is black on white. Without `--line` and `--shade`, they are the ink mixed into the
+paper, by the browser; without `--primary`, it is the ink. So a page that
+sets only its ink and its paper already gets a whole table, and a page that sets nothing gets a
+plain one, never a broken one:
 """
 nbCode:
-  nbTable small.optPageTheme().tabOptions(headingBorderBottomColor = "var(--secondary)",
-    tableBorderTopWidth = "1px", tableBorderBottomWidth = "1px")
+  let o = small.optCssTheme().options
+  echo o.tableFontColor
+  echo o.tableBodyHlinesColor
+  echo o.headingBorderBottomColor
+
+nbText: """
+### Other names, or values
+
+Every name can be changed, in the call. An argument that starts with `--` is the variable to
+read; anything else is the colour itself, as in any gt option (`primary = "red"`). Here the rule
+under the heading takes the page's green, and the rules between rows its soft blue:
+"""
+nbCode:
+  nbTable small.optCssTheme(primary = "--success", line = "--secondary-soft")
+
+nbText: """
+A preset only fills options, so any option set after it still wins, for what the theme does not
+name, such as the width of the rules:
+"""
+nbCode:
+  nbTable small.optCssTheme().tabOptions(tableBorderTopWidth = "1px", tableBorderBottomWidth = "1px")
 
 nbText: """
 ### On your own page
 
-Give the variables a value in your page's CSS, once, and every table made with `optPageTheme()`
-takes it; change them, and every table changes:
+Give the variables a value in your page's CSS, once, and every table made with `optCssTheme()`
+takes it; change them, and every table changes. Two are enough:
 
 ```css
-:root {
-  --n-9: #102A43;  --n-3: #BCCCDC;  --n-1: #F0F4F8;
-  --surface: white;  --primary: #D64545;
-  --text: "Inter", system-ui, sans-serif;
-}
+:root { --ink: #102A43; --paper: #F0F4F8; }
 ```
 
-The names are the ones of these pages. A page whose theme has other names can map them
-(`--n-9: var(--my-ink)`).
+If your theme already has its own names, there is no need to copy them: pass them. A theme to
+keep, for every table of a site, is a `CssTheme`, made by `cssTheme` with the same arguments:
+
+```nim
+let site = cssTheme(ink = "--foreground", paper = "--background",
+                    line = "--border", shade = "--muted")
+nbTable tabella(planets()).optCssTheme(site)
+```
 
 ### How it is built
 
-**The preset** is a proc that sets fourteen options, as `opt_stylize()` does in gt. This is its
-code, read from `src/tabelline/verbs.nim` when this page was built:
+**The preset** is a proc that sets fourteen options, as `opt_stylize()` does in gt, and a small
+object that says where each colour comes from. `cssRef` writes a variable with its fallback, or a
+value as it is. This is the code, read from `src/tabelline/verbs.nim` when this page was built:
 """
 block:
   let verbs = readFile(root.parentDir / "src" / "tabelline" / "verbs.nim")
-  let a = verbs.find("proc optPageTheme*")
-  let b = verbs.find("\n\n", a)
-  nbText "```nim\n" & verbs[a ..< b] & "\n```"
+  let a = verbs.find("type CssTheme*")
+  let b = verbs.find("\nfunc px", a)
+  nbText "```nim\n" & verbs[a ..< b].strip & "\n```"
 
 nbText: """
 **The table's CSS.** Every table carries its own CSS, scoped to its id, and writes the value
@@ -634,7 +658,7 @@ that name them, in the CSS of the table on the right above:
 """
 nbCode:
   var seen: seq[string]
-  for declaration in small.optPageTheme().toHtml.split({'{', '}', ';'}):
+  for declaration in small.optCssTheme().toHtml.split({'{', '}', ';'}):
     let d = declaration.strip
     if "var(--" in d and d notin seen:
       seen.add d
@@ -643,13 +667,14 @@ nbCode:
 nbText: """
 **The page's variables.** On these pages they are not written one by one. `docs/stile.nim` gives
 each look six values (paper, ink, primary, secondary, warning, success), and mixes every other
-colour from them in the browser: `--n-0` (the paper) to `--n-9` (the ink) are the ink in the
-paper, step by step, and `--surface` is the paper with white. For Munari's palette, Haru:
+colour from them in the browser: `--neutral-0` (the paper) to `--neutral-9` (the ink) are the
+ink in the paper, step by step, `--shade` and `--line` are two of those steps, and `--surface` is
+the paper with white. For Munari's palette, Haru:
 """
 nbCode:
   for line in paletteCss(haru).splitLines:
-    if line.startsWith("--paper") or line.startsWith("--n-1:") or line.startsWith("--n-3:") or
-       line.startsWith("--n-9:") or line.startsWith("--surface"):
+    if line.startsWith("--paper") or line.startsWith("--neutral-1:") or line.startsWith("--neutral-3:") or
+       line.startsWith("--shade:") or line.startsWith("--surface"):
       echo line
 
 nbText: """

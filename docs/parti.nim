@@ -25,5 +25,5 @@ proc showParts*(t: sink Tabella): Tabella =
    .tabStyle(style.fill(partTints[2]), loc.stubhead())
    .tabStyle(style.fill(partTints[3]), loc.stub())
    .tabStyle(style.fill(partTints[4]), loc.rowGroups())
-   .tabStyle(style.fill(partTints[5]) & style.text(color = tinta("--n-9")), loc.body())   # over data colours too
+   .tabStyle(style.fill(partTints[5]) & style.text(color = tinta("--ink")), loc.body())   # over data colours too
    .tabStyle(style.fill(partTints[6]), loc.sourceNotes(), loc.footnotes())

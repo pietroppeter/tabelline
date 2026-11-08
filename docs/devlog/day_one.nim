@@ -64,7 +64,7 @@ nbCode:
     tabHeader "Design choices of day one", "and what gt and Great Tables do instead"
     colsLabel {"choice": "tabelline", "instead": "gt / Great Tables"}
     tabStyle style.text(color = "var(--n-7)", size = "90%"), loc.body(cols = "instead")
-    optPageTheme()
+    optCssTheme()
   nbTable choicesTable
 
 nbText: """

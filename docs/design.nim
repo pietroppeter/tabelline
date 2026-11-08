@@ -87,13 +87,15 @@ primary is its blue pen and its secondary the red pen.
 
 ### Neutral
 
-Ten steps from paper to ink (0, 4, 8, 14, 25, 40, 55, 65, 80 and 100% of ink), and
-`--surface`, a sheet a little whiter than the paper, for code and tables. They do most of the
-work: the page, the text, rules, code backgrounds, grey text.
+Ten steps from paper to ink, `--neutral-0` to `--neutral-9` (0, 4, 8, 14, 25, 40, 55, 65, 80
+and 100% of ink), and `--surface`, a sheet a little whiter than the paper. They do most of the
+work: the page, the text, rules, code backgrounds, grey text. The steps in use have a name that
+says what they are for: the paper and the ink themselves, the shade (step 1), the line (step 3)
+and muted, grey text (step 7). Use a name; a step by number only when no name fits.
 """
-nbTinte [("--n-0", "`--n-0`", "the page"), ("--n-1", "`--n-1`", "outputs, plain notes"),
-         ("--n-3", "`--n-3`", "rules, row lines"), ("--n-7", "`--n-7`", "grey text"),
-         ("--n-9", "`--n-9`", "text, edges"), ("--surface", "`--surface`", "code, tables")]
+nbTinte [("--paper", "`--paper`", "the page"), ("--shade", "`--shade`", "outputs, plain notes"),
+         ("--line", "`--line`", "rules, row lines"), ("--muted", "`--muted`", "grey text"),
+         ("--ink", "`--ink`", "text, edges"), ("--surface", "`--surface`", "code")]
 
 nbText: """
 ### Four roles
@@ -112,7 +114,7 @@ nbTinte [("--primary", "primary", "the circle: sections, kickers, link underline
 
 nbText: """
 **Data** colours come from the roles too: categorical (the seven tints of the parts of a table,
-`partTints`), sequential (from `--n-0` to `--secondary`) and diverging (from `--secondary`
+`partTints`), sequential (from `--paper` to `--secondary`) and diverging (from `--secondary`
 through the paper to `--primary`). A tabelline colour can be a CSS variable, so a table can use
 them directly: `style.fill("var(--secondary)")`.
 
@@ -203,7 +205,7 @@ nbShowCode:
 nbText: """
 ## Tables
 
-A tabelline table is placed with `nbTable` and takes `optPageTheme()`: its colours are the tokens,
+A tabelline table is placed with `nbTable` and takes `optCssTheme()`: its colours are the tokens,
 so it follows the look (Munari: an ink rule above and below, the primary under the heading; the
 quaderno: taped in, on squared paper). `nbShowCode` shows a table with its code folded under it,
 and `nbParti` adds a switch that shows the parts of the table in their colours.
@@ -214,7 +216,7 @@ nbShowCode:
     risultato: [6, 20, 42]
   let t = tabella(tre, rownameCol = "tabellina"):
     tabHeader "Three tabelline"
-    optPageTheme()
+    optCssTheme()
   nbParti t
 
 nbText: """
@@ -279,7 +281,8 @@ outside the blocks and the style; CI fails when a page has more than its count i
 **The palette.** `docs/stile.nim` holds every styling decision. Each look is six values (a
 `Look`): Munari's are CSS variables named after where they go (`--m-carta`, `--m-cerchio`, …) so a
 palette can be swapped on the page; the quaderno's are fixed. From them, one rule on `html`
-derives every token with `color-mix(in oklab, …)`: `--n-0` to `--n-9`, `--surface`, and a soft
+derives every token with `color-mix(in oklab, …)`: `--neutral-0` to `--neutral-9` and the names
+of the steps in use (`--shade`, `--line`, `--muted`), `--surface`, and a soft
 and a text version of each role. The CSS of both looks and of every block uses only the tokens;
 the quaderno keeps a few motifs of its own (the squares, the margin, the post-it, the tape).
 Munari's rules are written plain, as the page's own; the quaderno's are written once without a
@@ -300,7 +303,8 @@ highlights code fences. A few lines of script in the `<head>` set `data-tema` on
 the page is drawn (from `?tema=`, else `localStorage`, else `munari`); one script at the end makes
 the switch, the tabs, *Show the parts* and the specs filter work.
 
-**Tables.** `optPageTheme()` is a tabelline preset whose colours are the tokens, each with a plain
-fallback (`var(--n-9, #1C1C1C)`), so a table follows the page it is on.
+**Tables.** `optCssTheme()` is a tabelline preset that reads the tokens by name (`--ink`,
+`--paper`, `--line`, `--shade`, `--primary`, `--font`), each with a plain fallback
+(`var(--ink, #1C1C1C)`), so a table follows the page it is on with no arguments.
 """
 nbSave
