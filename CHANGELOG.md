@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Docs: devlog post *Blocks, not HTML*, and a first custom block module `docs/blocchi.nim`
+  (`nbGalleria`, `nbScheda`; their CSS in the theme).
 - Docs: devlog post *Reviewing the design: a palette by roles*, the proposal for the new
   Design Ref.
 - Docs: a new structure. The home page keeps one simple table and lists the living documents

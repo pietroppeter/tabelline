@@ -166,6 +166,15 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid #
   border-radius: 50%; width: 2.6rem; height: 2.6rem; text-align: center; line-height: 2.5rem; transform: rotate(-8deg); }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 1rem; margin: 1.2rem 0; }
 .cards .nota { margin: 0; }
+/* a gallery (nbGalleria, nbScheda in docs/blocchi.nim): cards to swipe sideways, numbered */
+.nb-galleria { display: flex; align-items: flex-start; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: .2rem 0 .8rem; counter-reset: nb-scheda; -webkit-overflow-scrolling: touch; }
+.nb-galleria::after { content: ""; flex: 0 0 .2rem; }
+.nb-galleria > .nb-scheda { flex: 0 0 min(84%, 24rem); scroll-snap-align: start; overflow-x: auto; padding: .7rem .9rem .8rem;
+  background: var(--card); border: 1px solid color-mix(in srgb, var(--pencil) 18%, transparent); counter-increment: nb-scheda; }
+.nb-galleria > .nb-scheda::before { content: counter(nb-scheda); display: block; font: 700 .72rem/1.2 var(--text); letter-spacing: .14em; color: var(--muted); }
+.nb-galleria > .nb-scheda > h3 { margin: .15rem 0 .4rem; font-size: 1.15rem; }
+.nb-galleria > .nb-scheda p { font-size: .94rem; line-height: 1.45; }
 /* tabs: the same example in Nim, Python and R; the choice holds for the whole page */
 .lingue { margin: 1.2rem 0; }
 .lingue-tab { display: flex; gap: 0; flex-wrap: wrap; }

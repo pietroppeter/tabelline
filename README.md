@@ -89,6 +89,10 @@ Kept up to date as tabelline changes. The home page lists them in this order:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Blocks, not HTML](https://pietroppeter.github.io/tabelline/devlog/blocks-review/)
+  (8 Nov 2026 D): how much HTML, CSS and colour the pages write by hand (measured at build), the
+  custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where
+  styles and colours should live, and what a nimib skill should teach against the drift.
 - [Reviewing the design: a palette by roles](https://pietroppeter.github.io/tabelline/devlog/design-review/)
   (8 Nov 2026 C): what the pages' six colours do today, a palette by roles (neutral, primary,
   secondary, status, data) for both looks, every component mapped to it, and six choices to make
