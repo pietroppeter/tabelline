@@ -338,7 +338,7 @@
     },
     {
      "feature": "Images",
-     "gt": "fmt_image(), local_image(), web_image()",
+     "gt": "fmt_image(), local_image(), web_image(), ggplot_image()",
      "status": "missing",
      "note": "Inlined as data URLs.",
      "plan": "0.4",

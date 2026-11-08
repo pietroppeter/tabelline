@@ -16,3 +16,4 @@ docs/llms.txt
 docs/book/
 book/gt/.venv/
 book/plan/cache/
+book/plan/__pycache__/

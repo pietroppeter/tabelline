@@ -56,6 +56,8 @@ nbText: """
   tabelline 0.4, when it gets them.
 - **What the book will port**: every source planned, page by page, with what each page needs
   and the release of tabelline that can port it.
+- **Find an example by feature**: for every feature of tabelline, the pages of the sources that
+  show it, the help pages of gt and Great Tables first.
 - **What the port found**: everything tabelline lacks to do what the guide does, in one list,
   for the next releases. What 0.1 gained from it is told in the devlog,
   [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/).
@@ -65,7 +67,9 @@ nbText: """
 The Get Started guide is the first source; these are the others, from the simplest to the most
 complex. For each, how many of its pages tabelline can port now and how many wait for a
 release, by the gt functions their code calls; [What the book will port](next.html) has every
-page and what it waits for.
+page and what it waits for. The last two are not read in order: they are the help pages of every
+function of Great Tables and gt, each with its examples, found by feature in
+[Find an example by feature](features.html).
 """
 
 nbTable sourcesTable()

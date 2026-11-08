@@ -1,606 +1,7886 @@
 {
- "gt-getstarted": [
-  {
-   "title": "Intro",
-   "url": "https://posit-dev.github.io/great-tables/get-started/index.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Overview",
-   "url": "https://posit-dev.github.io/great-tables/get-started/overview.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Header and Footer",
-   "url": "https://posit-dev.github.io/great-tables/get-started/basic-header.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Stub (Row Labels)",
-   "url": "https://posit-dev.github.io/great-tables/get-started/basic-stub.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Column Labels",
-   "url": "https://posit-dev.github.io/great-tables/get-started/basic-column-labels.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Formatting Values",
-   "url": "https://posit-dev.github.io/great-tables/get-started/basic-formatting.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
+ "gt-getstarted": {
+  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "pages": [
+   {
+    "title": "Column Labels",
+    "path": "docs/get-started/basic-column-labels.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/basic-column-labels.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 15,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Move",
+     "Spanners",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Formatting Values",
+    "path": "docs/get-started/basic-formatting.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/basic-formatting.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 24,
+    "needs": {
+     "0.3": [
+      "Currency",
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
      "Currency",
-     "Dates"
-    ]
-   }
-  },
-  {
-   "title": "Nanoplots",
-   "url": "https://posit-dev.github.io/great-tables/get-started/nanoplots.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Plots in cells"
-    ]
-   }
-  },
-  {
-   "title": "Styling the Table Body",
-   "url": "https://posit-dev.github.io/great-tables/get-started/basic-styling.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Body styles from a column"
-    ]
-   }
-  },
-  {
-   "title": "Styling the whole table",
-   "url": "https://posit-dev.github.io/great-tables/get-started/targeted-styles.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Summary rows"
-    ]
-   }
-  },
-  {
-   "title": "Colorizing with Data",
-   "url": "https://posit-dev.github.io/great-tables/get-started/colorizing-with-data.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Table Theme Options",
-   "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-options.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Summary rows",
-     "Table options"
-    ]
-   }
-  },
-  {
-   "title": "Premade Themes",
-   "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-premade.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
-     "Currency"
-    ]
-   }
-  },
-  {
-   "title": "Column Selection",
-   "url": "https://posit-dev.github.io/great-tables/get-started/column-selection.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Row Selection",
-   "url": "https://posit-dev.github.io/great-tables/get-started/row-selection.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
-     "Currency"
-    ]
-   }
-  },
-  {
-   "title": "Location selection",
-   "url": "https://posit-dev.github.io/great-tables/get-started/loc-selection.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Extending Great Tables",
-   "url": "https://posit-dev.github.io/great-tables/get-started/extensions.html",
-   "port": "skip",
-   "note": "About extending Great Tables in Python",
-   "ready": "0.1",
-   "needs": {}
-  }
- ],
- "r-gt-intro": [
-  {
-   "title": "Introduction to Creating gt Tables",
-   "url": "https://gt.rstudio.com/articles/gt.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  }
- ],
- "gt-blog": [
-  {
-   "title": "Introducing Great Tables",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
-     "Currency",
-     "Dates"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.2.0: Easy Data Coloring",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
-     "Currency"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.3.0: So Many Style Options!",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ],
-    "0.3": [
-     "Currency"
-    ],
-    "0.4": [
-     "Images"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.4.0: Nanoplots and More",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Plots in cells"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.12.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.13.0: Applying styles to all table locations",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.13.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ],
-    "0.3": [
-     "Currency"
-    ],
-    "0.4": [
-     "Icons"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
-   "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.3": [
-     "Rotated labels"
-    ]
-   }
-  },
-  {
-   "title": "The Design Philosophy of Great Tables",
-   "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ],
-    "0.3": [
-     "Dates"
-    ],
-    "0.4": [
-     "Plots in cells"
-    ]
-   }
-  },
-  {
-   "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
-   "url": "https://posit-dev.github.io/great-tables/blog/bring-your-own-df/",
-   "port": "adapt",
-   "note": "About Python's data frame libraries: the book tells what tabelline reads instead",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Great Tables: The Polars DataFrame Styler of Your Dreams",
-   "url": "https://posit-dev.github.io/great-tables/blog/polars-styling/",
-   "port": "adapt",
-   "note": "About Polars: the tables are ported, the Polars side is told in Nim",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Great Tables: Becoming the Polars .style Property",
-   "url": "https://posit-dev.github.io/great-tables/blog/polars-dot-style/",
-   "port": "adapt",
-   "note": "About Polars: the tables are ported, the Polars side is told in Nim",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Using Polars to Win at Super Bowl Squares",
-   "url": "https://posit-dev.github.io/great-tables/blog/superbowl-squares/",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "PyCon 2024: Making Beautiful, Publication Quality Tables is Possible in 2024",
-   "url": "https://posit-dev.github.io/great-tables/blog/pycon-2024-great-tables-are-possible/",
-   "port": "port",
-   "note": "",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Style Table Body with mask= in loc.body()",
-   "url": "https://posit-dev.github.io/great-tables/blog/locbody-mask/",
-   "port": "port",
-   "note": "",
-   "ready": "new",
-   "needs": {
-    "new": [
-     "A condition for each cell, loc.body(mask = ...)"
-    ]
-   }
-  },
-  {
-   "title": "Recreating Septa Transit Timetables in Python",
-   "url": "https://posit-dev.github.io/great-tables/blog/septa-timetables/",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ]
-   }
-  },
-  {
-   "title": "Contributing to Public Transit Data Analysis and Tooling",
-   "url": "https://posit-dev.github.io/great-tables/blog/open-transit-tools/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Images"
-    ]
-   }
-  },
-  {
-   "title": "Rendering images anywhere in Great Tables",
-   "url": "https://posit-dev.github.io/great-tables/blog/rendering-images/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Images"
-    ]
-   }
-  },
-  {
-   "title": "Adding Plots to Great Tables",
-   "url": "https://posit-dev.github.io/great-tables/blog/plots-in-tables/",
-   "port": "adapt",
-   "note": "The plots come from plotnine and ggplot: in Nim, from a Nim plotting library",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "Great Tables for Scientific Publishing",
-   "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.3": [
      "Dates",
-     "Units"
-    ],
-    "0.4": [
+     "Locales",
+     "Numbers and integers",
+     "Scientific",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "Header and Footer",
+    "path": "docs/get-started/basic-header.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/basic-header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 11,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Stub (Row Labels)",
+    "path": "docs/get-started/basic-stub.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/basic-stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "Styling the Table Body",
+    "path": "docs/get-started/basic-styling.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/basic-styling.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 70,
+    "needs": {
+     "0.2": [
+      "Body styles from a column"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Column selectors",
+     "Hide and unhide",
+     "Locations",
+     "Styles"
+    ]
+   },
+   {
+    "title": "Colorizing with Data",
+    "path": "docs/get-started/colorizing-with-data.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/colorizing-with-data.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 17,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Column Selection",
+    "path": "docs/get-started/column-selection.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/column-selection.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 11,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Move"
+    ]
+   },
+   {
+    "title": "Contributing Guidelines",
+    "path": "docs/get-started/contributing.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/contributing.html",
+    "port": "skip",
+    "note": "How to contribute to Great Tables",
+    "ready": "0.1",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Extending Great Tables",
+    "path": "docs/get-started/extensions.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/extensions.html",
+    "port": "skip",
+    "note": "About extending Great Tables in Python",
+    "ready": "0.1",
+    "calls": 22,
+    "needs": {},
+    "uses": [
+     "Any format",
+     "Fonts",
+     "Formats for single values",
+     "HTML",
+     "Locations",
+     "Presets",
+     "Styles"
+    ]
+   },
+   {
+    "title": "Intro",
+    "path": "docs/get-started/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 20,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Move",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Location selection",
+    "path": "docs/get-started/loc-selection.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/loc-selection.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 59,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Locations",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Nanoplots",
+    "path": "docs/get-started/nanoplots.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/nanoplots.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 24,
+    "needs": {
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
      "Plots in cells"
     ]
-   }
-  },
-  {
-   "title": "Great Tables: Generating LaTeX Output for PDF",
-   "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
-   "port": "port",
-   "note": "",
-   "ready": "0.5",
-   "needs": {
-    "0.2": [
-     "Table options"
-    ],
-    "0.3": [
+   },
+   {
+    "title": "Overview",
+    "path": "docs/get-started/overview.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/overview.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Row Selection",
+    "path": "docs/get-started/row-selection.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/row-selection.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 19,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
      "Currency",
-     "Units"
-    ],
-    "0.4": [
-     "Images",
-     "Plots in cells"
-    ],
-    "0.5": [
-     "LaTeX"
+     "Locations",
+     "Numbers and integers",
+     "Styles"
     ]
-   }
-  },
-  {
-   "title": "Great Tables + marimo = Interactive Tables",
-   "url": "https://posit-dev.github.io/great-tables/blog/marimo-and-great-tables/",
-   "port": "adapt",
-   "note": "About marimo: for when tabelline runs in Python notebooks",
-   "ready": "0.1",
-   "needs": {}
-  },
-  {
-   "title": "How We Used Great Tables to Supercharge Reporting in Pointblank",
-   "url": "https://posit-dev.github.io/great-tables/blog/pointblank-intro/",
-   "port": "adapt",
-   "note": "About Pointblank's reports: the tables are ported",
-   "ready": "0.1",
-   "needs": {}
-  }
- ],
- "gt-examples": [
-  {
-   "title": "Examples",
-   "url": "https://posit-dev.github.io/great-tables/examples/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.2": [
+   },
+   {
+    "title": "Table Theme Options",
+    "path": "docs/get-started/table-theme-options.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-options.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 20,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Table options",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Premade Themes",
+    "path": "docs/get-started/table-theme-premade.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/table-theme-premade.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 23,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "HTML",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Styling the whole table",
+    "path": "docs/get-started/targeted-styles.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/targeted-styles.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 112,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Technical notes",
+    "path": "docs/get-started/technical-notes.qmd",
+    "url": "https://posit-dev.github.io/great-tables/get-started/technical-notes.html",
+    "port": "skip",
+    "note": "Notes on Great Tables' own data structures",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head",
+     "Summary rows",
      "Table options"
-    ],
-    "0.4": [
+    ]
+   }
+  ]
+ },
+ "r-gt-intro": {
+  "commit": "76f9ba1a2ff62d51741555879037e05951b06e62",
+  "pages": [
+   {
+    "title": "Introduction to Creating gt Tables",
+    "path": "vignettes/gt.Rmd",
+    "url": "https://gt.rstudio.com/articles/gt.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 58,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Move",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   }
+  ]
+ },
+ "gt-blog": {
+  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "pages": [
+   {
+    "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
+    "path": "docs/blog/bring-your-own-df/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/bring-your-own-df/",
+    "port": "adapt",
+    "note": "About Python's data frame libraries: the book tells what tabelline reads instead",
+    "ready": "0.1",
+    "calls": 17,
+    "needs": {},
+    "uses": [
+     "A table from data"
+    ]
+   },
+   {
+    "title": "The Design Philosophy of Great Tables",
+    "path": "docs/blog/design-philosophy/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 31,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Dates"
+     ],
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Dates",
+     "Fonts",
+     "Labels",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Plots in cells",
+     "Presets",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
+    "path": "docs/blog/introduction-0.12.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.12.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 15,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Hide and unhide",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.13.0: Applying styles to all table locations",
+    "path": "docs/blog/introduction-0.13.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.13.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 83,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any CSS",
+     "Column selectors",
+     "Fonts",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Scientific",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
+    "path": "docs/blog/introduction-0.15.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 61,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Icons"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Flags",
+     "Fonts",
+     "Icons",
+     "Labels",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Presets",
+     "Spanners",
+     "Stub and stub head",
+     "Table options",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
+    "path": "docs/blog/introduction-0.18.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 71,
+    "needs": {
+     "0.3": [
+      "Rotated labels"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Booleans",
+     "Column selectors",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Rotated labels",
+     "Spanners from column names",
+     "Stub and stub head",
+     "Styles",
+     "Times and datetimes",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.2.0: Easy Data Coloring",
+    "path": "docs/blog/introduction-0.2.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 20,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Currency",
+     "Numbers and integers",
+     "Spanners",
+     "Stub and stub head",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables v0.3.0: So Many Style Options!",
+    "path": "docs/blog/introduction-0.3.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 23,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
      "Images",
-     "Plots in cells"
+     "Labels",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Great Tables v0.4.0: Nanoplots and More",
+    "path": "docs/blog/introduction-0.4.0/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 31,
+    "needs": {
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Labels",
+     "Plots in cells",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Introducing Great Tables",
+    "path": "docs/blog/introduction_great_tables.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 58,
+    "needs": {
+     "0.2": [
+      "Body styles from a column"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Move",
+     "Numbers and integers",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text helpers",
+     "Times and datetimes",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables: Generating LaTeX Output for PDF",
+    "path": "docs/blog/latex-output-tables/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 31,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Units"
+     ],
+     "0.4": [
+      "Images",
+      "Plots in cells"
+     ],
+     "0.5": [
+      "LaTeX"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Currency",
+     "Fonts",
+     "Images",
+     "LaTeX",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Plots in cells",
+     "Presets",
+     "Source notes",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Units"
+    ]
+   },
+   {
+    "title": "Style Table Body with mask= in loc.body()",
+    "path": "docs/blog/locbody-mask/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/locbody-mask/",
+    "port": "port",
+    "note": "",
+    "ready": "new",
+    "calls": 31,
+    "needs": {
+     "new": [
+      "A condition for each cell, loc.body(mask = ...)"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "Great Tables + marimo = Interactive Tables",
+    "path": "docs/blog/marimo-and-great-tables/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/marimo-and-great-tables/",
+    "port": "adapt",
+    "note": "About marimo: for when tabelline runs in Python notebooks",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Presets"
+    ]
+   },
+   {
+    "title": "Contributing to Public Transit Data Analysis and Tooling",
+    "path": "docs/blog/open-transit-tools/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/open-transit-tools/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 5,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "Adding Plots to Great Tables",
+    "path": "docs/blog/plots-in-tables/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/plots-in-tables/",
+    "port": "adapt",
+    "note": "The plots come from plotnine and ggplot: in Nim, from a Nim plotting library",
+    "ready": "0.1",
+    "calls": 26,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Any format"
+    ]
+   },
+   {
+    "title": "How We Used Great Tables to Supercharge Reporting in Pointblank",
+    "path": "docs/blog/pointblank-intro/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/pointblank-intro/",
+    "port": "adapt",
+    "note": "About Pointblank's reports: the tables are ported",
+    "ready": "0.1",
+    "calls": 14,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Great Tables: Becoming the Polars .style Property",
+    "path": "docs/blog/polars-dot-style/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/polars-dot-style/",
+    "port": "adapt",
+    "note": "About Polars: the tables are ported, the Polars side is told in Nim",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data"
+    ]
+   },
+   {
+    "title": "Great Tables: The Polars DataFrame Styler of Your Dreams",
+    "path": "docs/blog/polars-styling/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/polars-styling/",
+    "port": "adapt",
+    "note": "About Polars: the tables are ported, the Polars side is told in Nim",
+    "ready": "0.1",
+    "calls": 73,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Locations",
+     "Spanners",
+     "Styles",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "PyCon 2024: Making Beautiful, Publication Quality Tables is Possible in 2024",
+    "path": "docs/blog/pycon-2024-great-tables-are-possible/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/pycon-2024-great-tables-are-possible/",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Rendering images anywhere in Great Tables",
+    "path": "docs/blog/rendering-images/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/rendering-images/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 48,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Images",
+     "Presets",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Recreating Septa Transit Timetables in Python",
+    "path": "docs/blog/septa-timetables/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/septa-timetables/",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 131,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any CSS",
+     "Any format",
+     "Column selectors",
+     "Fonts",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Move",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Using Polars to Win at Super Bowl Squares",
+    "path": "docs/blog/superbowl-squares/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/superbowl-squares/",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 121,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Hide and unhide",
+     "Locations",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Great Tables for Scientific Publishing",
+    "path": "docs/blog/tables-for-scientific-publishing/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 39,
+    "needs": {
+     "0.3": [
+      "Dates",
+      "Units"
+     ],
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Dates",
+     "Hide and unhide",
+     "Labels",
+     "Missing values and zeros",
+     "Padding, outline, lines",
+     "Plots in cells",
+     "Presets",
+     "Scientific",
+     "Spanners",
+     "Stub and stub head",
+     "Title and subtitle",
+     "Units"
     ]
    }
-  },
-  {
-   "title": "Sports earnings",
-   "url": "https://posit-dev.github.io/great-tables/examples/sports-earnings/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Images"
+  ]
+ },
+ "gt-examples": {
+  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "pages": [
+   {
+    "title": "Gini coefficient (with gt-extras)",
+    "path": "docs/examples/gt-extras-gini/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/examples/gt-extras-gini/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 68,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Flags",
+     "Hide and unhide",
+     "Labels",
+     "Move",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Examples",
+    "path": "docs/examples/index.qmd",
+    "url": "https://posit-dev.github.io/great-tables/examples/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 109,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Move",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Plots in cells",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Sports earnings",
+    "path": "docs/examples/sports-earnings/index.ipynb",
+    "url": "https://posit-dev.github.io/great-tables/examples/sports-earnings/",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 26,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Images",
+     "Labels",
+     "Numbers and integers",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
     ]
    }
-  },
-  {
-   "title": "Gini coefficient (with gt-extras)",
-   "url": "https://posit-dev.github.io/great-tables/examples/gt-extras-gini/",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
-     "Plots, icons and themes from gt-extras"
-    ]
-   }
-  }
- ],
- "r-gt-vignettes": [
-  {
-   "title": "Case Study: gtcars",
-   "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.2": [
-     "Merge columns"
-    ],
-    "0.3": [
-     "Currency"
-    ]
-   }
-  },
-  {
-   "title": "Case Study: Clinical Tables",
-   "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.2",
-   "needs": {
-    "0.2": [
+  ]
+ },
+ "r-gt-vignettes": {
+  "commit": "76f9ba1a2ff62d51741555879037e05951b06e62",
+  "pages": [
+   {
+    "title": "Case Study: Clinical Tables",
+    "path": "vignettes/case-study-clinical-tables.Rmd",
+    "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 258,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Stub indent, multi-column stub",
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
      "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Order of rows and groups",
+     "Percent",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
      "Stub indent, multi-column stub",
+     "Styles",
      "Summary rows",
-     "Table options"
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
     ]
-   }
-  },
-  {
-   "title": "Creating Summary Lines",
-   "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.2": [
-     "Extract",
-     "Summary rows",
-     "Table options"
-    ],
-    "0.3": [
-     "Bins, auto format, passthrough",
-     "Currency"
-    ]
-   }
-  },
-  {
-   "title": "gt Datasets",
-   "url": "https://gt.rstudio.com/articles/gt-datasets.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.3",
-   "needs": {
-    "0.2": [
-     "Merge columns",
-     "Summary rows",
-     "Table options"
-    ],
-    "0.3": [
+   },
+   {
+    "title": "Case Study: gtcars",
+    "path": "vignettes/case-study-gtcars.Rmd",
+    "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 128,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
      "Currency",
-     "Dates"
+     "Footnotes",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Move",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
     ]
-   }
-  },
-  {
-   "title": "gt interactive tables",
-   "url": "https://gt.rstudio.com/articles/gt-interactive.html",
-   "port": "adapt",
-   "note": "Interactive tables are tabellone, a later idea",
-   "ready": "later",
-   "needs": {
-    "later": [
+   },
+   {
+    "title": "Creating Summary Lines",
+    "path": "vignettes/creating-summary-lines.Rmd",
+    "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 99,
+    "needs": {
+     "0.2": [
+      "Extract",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Bins, auto format, passthrough",
+      "Currency",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Bins, auto format, passthrough",
+     "Column selectors",
+     "Currency",
+     "Extract",
+     "Footnotes",
+     "Locales",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Row groups",
+     "Scientific",
+     "Stub and stub head",
+     "Summary rows",
+     "Table options",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "gt Datasets",
+    "path": "vignettes/gt-datasets.Rmd",
+    "url": "https://gt.rstudio.com/articles/gt-datasets.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 169,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Footnote marks",
+     "Footnotes",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "gt interactive tables",
+    "path": "vignettes/gt-interactive.qmd",
+    "url": "https://gt.rstudio.com/articles/gt-interactive.html",
+    "port": "adapt",
+    "note": "Interactive tables are tabellone, a later idea",
+    "ready": "later",
+    "calls": 6,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
      "Interactive tables"
     ]
+   },
+   {
+    "title": "gt visual tests",
+    "path": "vignettes/gt-visual.qmd",
+    "url": "https://gt.rstudio.com/articles/gt-visual.html",
+    "port": "skip",
+    "note": "gt's tests of its renderers side by side, not a guide",
+    "ready": "later",
+    "calls": 63,
+    "needs": {
+     "0.2": [
+      "Stub indent, multi-column stub",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Caption",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Interactive tables",
+     "Numbers and integers",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Title and subtitle"
+    ]
    }
-  }
- ],
- "gt-extras-py": [
-  {
-   "title": "Examples With Code",
-   "url": "https://posit-dev.github.io/gt-extras/examples/with-code.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.4": [
+  ]
+ },
+ "gt-extras-py": {
+  "commit": "704e7b13fa7bb503ab3c9593877d25d2acb6cd8b",
+  "pages": [
+   {
+    "title": "Introduction",
+    "path": "docs/articles/intro.qmd",
+    "url": "https://posit-dev.github.io/gt-extras/articles/intro.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 16,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Hide and unhide",
+     "Stub and stub head",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Examples",
+    "path": "docs/examples/index.qmd",
+    "url": "https://posit-dev.github.io/gt-extras/examples/",
+    "port": "skip",
+    "note": "The tables of Examples With Code, without the code",
+    "ready": "0.1",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "An NFL season",
+    "path": "docs/examples/nfl-season/index.ipynb",
+    "url": "https://posit-dev.github.io/gt-extras/examples/nfl-season/",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 30,
+    "needs": {},
+    "uses": []
+   },
+   {
+    "title": "Examples With Code",
+    "path": "docs/examples/with-code.qmd",
+    "url": "https://posit-dev.github.io/gt-extras/examples/with-code.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 285,
+    "needs": {
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Flags",
+     "Hide and unhide",
      "Images",
-     "Plots, icons and themes from gt-extras"
+     "Labels",
+     "Move",
+     "Move to end, reorder",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Get Started",
+    "path": "docs/get-started/index.qmd",
+    "url": "https://posit-dev.github.io/gt-extras/get-started/",
+    "port": "skip",
+    "note": "Empty for now",
+    "ready": "0.1",
+    "calls": 0,
+    "needs": {},
+    "uses": []
+   }
+  ]
+ },
+ "r-gtextras": {
+  "commit": "00150a480096e80e75c6fbc16590b11b59b93bce",
+  "pages": [
+   {
+    "title": "Plotting with gtExtras",
+    "path": "vignettes/articles/plotting-with-gtExtras.Rmd",
+    "url": "https://jthomasmock.github.io/gtExtras/articles/plotting-with-gtExtras.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 172,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Labels",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Table options",
+     "Title and subtitle",
+     "Widths"
     ]
    }
-  }
- ],
- "r-gtextras": [
-  {
-   "title": "Plotting with gtExtras",
-   "url": "https://jthomasmock.github.io/gtExtras/articles/plotting-with-gtExtras.html",
-   "port": "port",
-   "note": "",
-   "ready": "0.4",
-   "needs": {
-    "0.2": [
+  ]
+ },
+ "table-contest": {
+  "commit": "11671756672e1c5e73442b51dd2c5373097779b7",
+  "pages": [
+   {
+    "title": "Spending on Education in the US",
+    "path": "committedtotape/education-spending",
+    "year": 2020,
+    "by": "David Smale",
+    "package": "gt",
+    "url": "https://github.com/committedtotape/education-spending",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 292,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "A 3-way crosstab table with gt",
+    "path": "jdjohn215/2020-RStudio-Table-Contest",
+    "year": 2020,
+    "by": "John D. Johnson",
+    "package": "gt",
+    "url": "https://github.com/jdjohn215/2020-RStudio-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.3",
+    "calls": 263,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Footnotes",
+     "Locations",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Spanners from column names",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "An interactive table of the world",
+    "path": "gkaramanis/table-contest",
+    "year": 2020,
+    "by": "Georgios Karamanis",
+    "licence": "MIT",
+    "package": "reactable",
+    "url": "https://github.com/gkaramanis/table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 68,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "The world's most prestigious wines",
+    "path": "AbdoulMa/RStudio-Table-Contest-2021",
+    "year": 2021,
+    "by": "Abdoul Madjid",
+    "package": "gt",
+    "url": "https://github.com/AbdoulMa/RStudio-Table-Contest-2021",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 530,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Locales"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Air quality summaries with gt and openair (tutorial)",
+    "path": "jack-davison/rstudio_table-contest_2021",
+    "year": 2021,
+    "by": "Jack Davison",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/jack-davison/rstudio_table-contest_2021",
+    "port": "port",
+    "note": "Honourable mention. No licence: an idea only",
+    "ready": "0.4",
+    "calls": 919,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Premier League standings 2021",
+    "path": "ggapac/PL-table-shiny",
+    "year": 2021,
+    "by": "Greta Gašparac",
+    "package": "reactable, Shiny",
+    "url": "https://github.com/ggapac/PL-table-shiny",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 216,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables"
+    ]
+   },
+   {
+    "title": "Fast big data tables in Shiny (tutorial)",
+    "path": "rszymanski/table-contest",
+    "year": 2021,
+    "by": "Ryszard Szymański",
+    "package": "reactable, Shiny",
+    "url": "https://github.com/rszymanski/table-contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 529,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "Interactive tables",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "W.E.B. Du Bois's charts redone as tables",
+    "path": "jack-davison/rstudio_table-contest_2022",
+    "year": 2022,
+    "by": "Jack Davison",
+    "licence": "MIT",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/jack-davison/rstudio_table-contest_2022",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 1007,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Fonts",
+     "Footnotes",
+     "Formats for single values",
+     "HTML",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Lemurs at Duke Lemur Center",
+    "path": "nrennie/2022-table-contest",
+    "year": 2022,
+    "by": "Nicola Rennie",
+    "licence": "CC BY 4.0",
+    "package": "gt",
+    "url": "https://github.com/nrennie/2022-table-contest",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 182,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Images",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Creating beautiful tables in R with gt (tutorial)",
+    "path": "AlbertRapp/gt_book",
+    "year": 2022,
+    "by": "Albert Rapp",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/AlbertRapp/gt_book",
+    "port": "port",
+    "note": "Honourable mention. No licence: an idea only",
+    "ready": "later",
+    "calls": 2563,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates",
+      "Locales"
+     ],
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any format",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Extra CSS",
+     "Footnotes",
+     "HTML",
+     "Images",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Small, large and given values",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table info",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Top 20 golfers: Scottie Scheffler's 2024",
+    "path": "steodose/Table-Contest-2024",
+    "year": 2024,
+    "by": "Stephan Teodosescu",
+    "package": "Great Tables",
+    "url": "https://github.com/steodose/Table-Contest-2024",
+    "port": "port",
+    "note": "A 2024 winner. No licence: an idea only",
+    "ready": "0.4",
+    "calls": 80,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Images",
+     "Labels",
+     "Numbers and integers",
+     "Source notes",
+     "Spanners",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Carbon intensity of electricity",
+    "path": "chalg/posit_table_contest_2024",
+    "year": 2024,
+    "by": "Grant Chalmers",
+    "package": "gt",
+    "url": "https://github.com/chalg/posit_table_contest_2024",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.2",
+    "calls": 52,
+    "needs": {
+     "0.2": [
+      "Align on the decimal mark",
+      "Body styles from a column",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Align on the decimal mark",
+     "Body styles from a column",
+     "Colour by value",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Scottish football, season by season",
+    "path": "dplloyd/posit-table-comp-2024",
+    "year": 2024,
+    "by": "Diarmuid Lloyd",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/dplloyd/posit-table-comp-2024",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 169,
+    "needs": {
+     "0.4": [
+      "Images",
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Footnotes",
+     "Images",
+     "Interactive tables",
+     "Labels",
+     "Locations",
+     "Presets",
+     "Source notes",
+     "Spanners",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Gibraltar's weather, May 2023 (the example entry)",
+    "path": "rich-iannone/table-contest-example-entry",
+    "year": 2025,
+    "by": "Rich Iannone",
+    "licence": "CC0-1.0",
+    "package": "Great Tables, gt-extras",
+    "url": "https://github.com/rich-iannone/table-contest-example-entry",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 48,
+    "needs": {
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Any CSS",
+     "Locations",
+     "Padding, outline, lines",
+     "Source notes",
+     "Styles",
+     "Text helpers",
+     "Times and datetimes",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "Multiple sequence alignments with gt",
+    "path": "wvictor14/2025-posit-table-contest-gt-msa",
+    "year": 2025,
+    "by": "Victor Yuan",
+    "package": "gt",
+    "url": "https://github.com/wvictor14/2025-posit-table-contest-gt-msa",
+    "port": "port",
+    "note": "Best gt table of 2025. No licence: an idea only",
+    "ready": "0.2",
+    "calls": 1103,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Markdown",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "Sustainable milk comparison",
+    "path": "PablaOO7/Posit-Table-Contest-2025",
+    "year": 2025,
+    "by": "PablaOO7",
+    "package": "gt, gtExtras",
+    "url": "https://github.com/PablaOO7/Posit-Table-Contest-2025",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 318,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Extra CSS",
+     "Labels",
+     "Locations",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "S&P 500 monitoring dashboard",
+    "path": "ozancanozdemir/2025-Posit-Table-Contest",
+    "year": 2025,
+    "by": "Ozancan Özdemir",
+    "package": "gt, Shiny",
+    "url": "https://github.com/ozancanozdemir/2025-Posit-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "later",
+    "calls": 1111,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.4": [
+      "Plots, icons and themes from gt-extras"
+     ],
+     "later": [
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Numbers and integers",
+     "Percent",
+     "Presets",
+     "Sizes",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Times and datetimes",
+     "Title and subtitle",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "gt tables for scientific projects (tutorial)",
+    "path": "emaleckova/2025-Table-Contest",
+    "year": 2025,
+    "by": "E. Malečková",
+    "package": "gt",
+    "url": "https://github.com/emaleckova/2025-Table-Contest",
+    "port": "port",
+    "note": "No licence: an idea only",
+    "ready": "0.4",
+    "calls": 715,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Extra CSS",
+     "Fonts",
+     "Footnotes",
+     "Hide and unhide",
+     "Images",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   }
+  ]
+ },
+ "gt-reference": {
+  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "pages": [
+   {
+    "title": "GT()",
+    "path": "reference/GT",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Currency",
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Dates",
+     "Locales",
+     "Row groups",
+     "Scientific",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.tab_header()",
+    "path": "reference/GT.tab_header",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.tab_spanner()",
+    "path": "reference/GT.tab_spanner",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_spanner.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 12,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Spanners",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "GT.tab_spanner_delim()",
+    "path": "reference/GT.tab_spanner_delim",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_spanner_delim.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Spanners from column names"
+    ]
+   },
+   {
+    "title": "GT.tab_stub()",
+    "path": "reference/GT.tab_stub",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.tab_stubhead()",
+    "path": "reference/GT.tab_stubhead",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_stubhead.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Stub and stub head",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "GT.tab_footnote()",
+    "path": "reference/GT.tab_footnote",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_footnote.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 21,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Footnote marks",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.tab_source_note()",
+    "path": "reference/GT.tab_source_note",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_source_note.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.tab_style()",
+    "path": "reference/GT.tab_style",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_style.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 21,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "GT.text_transform()",
+    "path": "reference/GT.text_transform",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.text_transform.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 17,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Numbers and integers",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "GT.text_replace()",
+    "path": "reference/GT.text_replace",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.text_replace.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Stub and stub head",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "GT.text_case_match()",
+    "path": "reference/GT.text_case_match",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.text_case_match.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "GT.text_case_when()",
+    "path": "reference/GT.text_case_when",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.text_case_when.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Numbers and integers",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "GT.tab_options()",
+    "path": "reference/GT.tab_options",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_options.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 11,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.fmt_number()",
+    "path": "reference/GT.fmt_number",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_number.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.fmt_integer()",
+    "path": "reference/GT.fmt_integer",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_integer.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.fmt_percent()",
+    "path": "reference/GT.fmt_percent",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_percent.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Percent"
+    ]
+   },
+   {
+    "title": "GT.fmt_partsper()",
+    "path": "reference/GT.fmt_partsper",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_partsper.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Parts per"
+    ]
+   },
+   {
+    "title": "GT.fmt_scientific()",
+    "path": "reference/GT.fmt_scientific",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_scientific.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Scientific"
+    ]
+   },
+   {
+    "title": "GT.fmt_engineering()",
+    "path": "reference/GT.fmt_engineering",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_engineering.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 12,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Engineering, SI prefixes",
+     "Missing values and zeros",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.fmt_currency()",
+    "path": "reference/GT.fmt_currency",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_currency.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 3,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency"
+    ]
+   },
+   {
+    "title": "GT.fmt_bytes()",
+    "path": "reference/GT.fmt_bytes",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_bytes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Bytes"
+    ]
+   },
+   {
+    "title": "GT.fmt_duration()",
+    "path": "reference/GT.fmt_duration",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_duration.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 18,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Durations",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.fmt_roman()",
+    "path": "reference/GT.fmt_roman",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_roman.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 2,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Roman numerals",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.fmt_date()",
+    "path": "reference/GT.fmt_date",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_date.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 3,
+    "needs": {
+     "0.3": [
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Dates",
+     "Locales"
+    ]
+   },
+   {
+    "title": "GT.fmt_time()",
+    "path": "reference/GT.fmt_time",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_time.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 3,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locales",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "GT.fmt_tf()",
+    "path": "reference/GT.fmt_tf",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_tf.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 10,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Booleans",
+     "Currency",
+     "Labels",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.fmt_datetime()",
+    "path": "reference/GT.fmt_datetime",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_datetime.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 3,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locales",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "GT.fmt_units()",
+    "path": "reference/GT.fmt_units",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_units.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 33,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Scientific",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Title and subtitle",
+     "Units"
+    ]
+   },
+   {
+    "title": "GT.fmt_image()",
+    "path": "reference/GT.fmt_image",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_image.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 5,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.fmt_icon()",
+    "path": "reference/GT.fmt_icon",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_icon.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 30,
+    "needs": {
+     "0.4": [
+      "Icons"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Icons",
+     "Labels",
+     "Numbers and integers",
+     "Presets",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.fmt_flag()",
+    "path": "reference/GT.fmt_flag",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_flag.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 29,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Flags",
+     "Labels",
+     "Move",
+     "Numbers and integers",
+     "Spanners",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.fmt_nanoplot()",
+    "path": "reference/GT.fmt_nanoplot",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_nanoplot.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 27,
+    "needs": {
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Plots in cells",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.fmt()",
+    "path": "reference/GT.fmt",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Any format"
+    ]
+   },
+   {
+    "title": "GT.data_color()",
+    "path": "reference/GT.data_color",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.data_color.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 18,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Numbers and integers",
+     "Percent",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.sub_missing()",
+    "path": "reference/GT.sub_missing",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.sub_missing.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Missing values and zeros"
+    ]
+   },
+   {
+    "title": "GT.sub_zero()",
+    "path": "reference/GT.sub_zero",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.sub_zero.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Missing values and zeros",
+     "Scientific"
+    ]
+   },
+   {
+    "title": "GT.sub_small_vals()",
+    "path": "reference/GT.sub_small_vals",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.sub_small_vals.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "GT.sub_large_vals()",
+    "path": "reference/GT.sub_large_vals",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.sub_large_vals.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "GT.sub_values()",
+    "path": "reference/GT.sub_values",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.sub_values.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "GT.cols_align()",
+    "path": "reference/GT.cols_align",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_align.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Align",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.cols_align_decimal()",
+    "path": "reference/GT.cols_align_decimal",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_align_decimal.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 3,
+    "needs": {
+     "0.2": [
+      "Align on the decimal mark"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align on the decimal mark",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.cols_width()",
+    "path": "reference/GT.cols_width",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_width.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Stub and stub head",
+     "Widths"
+    ]
+   },
+   {
+    "title": "GT.cols_label()",
+    "path": "reference/GT.cols_label",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_label.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Missing values and zeros",
+     "Scientific",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "GT.cols_label_with()",
+    "path": "reference/GT.cols_label_with",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_label_with.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels from a function",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "GT.cols_label_rotate()",
+    "path": "reference/GT.cols_label_rotate",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_label_rotate.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Rotated labels"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any CSS",
+     "Labels",
+     "Rotated labels",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "GT.cols_move()",
+    "path": "reference/GT.cols_move",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_move.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Move"
+    ]
+   },
+   {
+    "title": "GT.cols_move_to_start()",
+    "path": "reference/GT.cols_move_to_start",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_move_to_start.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Move"
+    ]
+   },
+   {
+    "title": "GT.cols_move_to_end()",
+    "path": "reference/GT.cols_move_to_end",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_move_to_end.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Move to end, reorder"
+    ]
+   },
+   {
+    "title": "GT.cols_reorder()",
+    "path": "reference/GT.cols_reorder",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_reorder.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Move to end, reorder"
+    ]
+   },
+   {
+    "title": "GT.cols_hide()",
+    "path": "reference/GT.cols_hide",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_hide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Hide and unhide"
+    ]
+   },
+   {
+    "title": "GT.cols_unhide()",
+    "path": "reference/GT.cols_unhide",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_unhide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Hide and unhide"
+    ]
+   },
+   {
+    "title": "GT.cols_merge()",
+    "path": "reference/GT.cols_merge",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 18,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.cols_merge_uncert()",
+    "path": "reference/GT.cols_merge_uncert",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_uncert.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 10,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "GT.cols_merge_range()",
+    "path": "reference/GT.cols_merge_range",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_range.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 8,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Merge columns"
+    ]
+   },
+   {
+    "title": "GT.cols_merge_n_pct()",
+    "path": "reference/GT.cols_merge_n_pct",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_n_pct.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 7,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Merge columns",
+     "Percent"
+    ]
+   },
+   {
+    "title": "GT.summary_rows()",
+    "path": "reference/GT.summary_rows",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.summary_rows.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 49,
+    "needs": {
+     "0.2": [
+      "Summary rows",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
      "Table options"
-    ],
-    "0.4": [
-     "Plots, icons and themes from gt-extras"
+    ]
+   },
+   {
+    "title": "GT.grand_summary_rows()",
+    "path": "reference/GT.grand_summary_rows",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.grand_summary_rows.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 25,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "loc.header()",
+    "path": "reference/loc.header",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 8,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Styles",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "loc.title()",
+    "path": "reference/loc.title",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.title.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 8,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Locations",
+     "Styles",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "loc.subtitle()",
+    "path": "reference/loc.subtitle",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.subtitle.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 8,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Styles",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "loc.stubhead()",
+    "path": "reference/loc.stubhead",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.stubhead.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.column_header()",
+    "path": "reference/loc.column_header",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.column_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 11,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Spanners",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.spanner_labels()",
+    "path": "reference/loc.spanner_labels",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.spanner_labels.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 10,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Spanners",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.column_labels()",
+    "path": "reference/loc.column_labels",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.column_labels.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.grand_summary_stub()",
+    "path": "reference/loc.grand_summary_stub",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.grand_summary_stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 11,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "loc.summary_stub()",
+    "path": "reference/loc.summary_stub",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.summary_stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 13,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "loc.stub()",
+    "path": "reference/loc.stub",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 16,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.row_groups()",
+    "path": "reference/loc.row_groups",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.row_groups.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 10,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.grand_summary()",
+    "path": "reference/loc.grand_summary",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.grand_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 11,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "loc.summary()",
+    "path": "reference/loc.summary",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 13,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "loc.body()",
+    "path": "reference/loc.body",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.body.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 10,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.footer()",
+    "path": "reference/loc.footer",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.footer.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "loc.source_notes()",
+    "path": "reference/loc.source_notes",
+    "url": "https://posit-dev.github.io/great-tables/reference/loc.source_notes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "GT.with_id()",
+    "path": "reference/GT.with_id",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.with_id.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 2,
+    "needs": {},
+    "uses": [
+     "A table from data"
+    ]
+   },
+   {
+    "title": "GT.with_locale()",
+    "path": "reference/GT.with_locale",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.with_locale.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Currency",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Currency",
+     "Locales"
+    ]
+   },
+   {
+    "title": "from_column()",
+    "path": "reference/from_column",
+    "url": "https://posit-dev.github.io/great-tables/reference/from_column.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 15,
+    "needs": {
+     "0.2": [
+      "Body styles from a column"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Locations",
+     "Styles"
+    ]
+   },
+   {
+    "title": "google_font()",
+    "path": "reference/google_font",
+    "url": "https://posit-dev.github.io/great-tables/reference/google_font.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 14,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
+     "Locations",
+     "Missing values and zeros",
+     "Presets",
+     "Styles",
+     "Table options"
+    ]
+   },
+   {
+    "title": "system_fonts()",
+    "path": "reference/system_fonts",
+    "url": "https://posit-dev.github.io/great-tables/reference/system_fonts.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 11,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "define_units()",
+    "path": "reference/define_units",
+    "url": "https://posit-dev.github.io/great-tables/reference/define_units.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 23,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_align_table_header()",
+    "path": "reference/GT.opt_align_table_header",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_align_table_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_row_striping()",
+    "path": "reference/GT.opt_row_striping",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_row_striping.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_all_caps()",
+    "path": "reference/GT.opt_all_caps",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_all_caps.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 16,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_vertical_padding()",
+    "path": "reference/GT.opt_vertical_padding",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_vertical_padding.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_horizontal_padding()",
+    "path": "reference/GT.opt_horizontal_padding",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_horizontal_padding.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_table_outline()",
+    "path": "reference/GT.opt_table_outline",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_table_outline.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_table_font()",
+    "path": "reference/GT.opt_table_font",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_table_font.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 14,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Presets",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "GT.opt_stylize()",
+    "path": "reference/GT.opt_stylize",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_stylize.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.opt_css()",
+    "path": "reference/GT.opt_css",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_css.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Extra CSS",
+     "Scientific"
+    ]
+   },
+   {
+    "title": "GT.gtsave()",
+    "path": "reference/GT.gtsave",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.gtsave.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 11,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ],
+     "0.5": [
+      "Images and PDF"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Images and PDF",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "GT.show()",
+    "path": "reference/GT.show",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.show.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data"
+    ]
+   },
+   {
+    "title": "GT.as_latex()",
+    "path": "reference/GT.as_latex",
+    "url": "https://posit-dev.github.io/great-tables/reference/GT.as_latex.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 7,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ],
+     "0.5": [
+      "LaTeX"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "LaTeX",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "vals.fmt_number()",
+    "path": "reference/vals.fmt_number",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_number.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "vals.fmt_integer()",
+    "path": "reference/vals.fmt_integer",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_integer.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "vals.fmt_scientific()",
+    "path": "reference/vals.fmt_scientific",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_scientific.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Scientific"
+    ]
+   },
+   {
+    "title": "vals.fmt_engineering()",
+    "path": "reference/vals.fmt_engineering",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_engineering.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Engineering, SI prefixes"
+    ]
+   },
+   {
+    "title": "vals.fmt_percent()",
+    "path": "reference/vals.fmt_percent",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_percent.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Percent"
+    ]
+   },
+   {
+    "title": "vals.fmt_currency()",
+    "path": "reference/vals.fmt_currency",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_currency.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 1,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "Currency"
+    ]
+   },
+   {
+    "title": "vals.fmt_roman()",
+    "path": "reference/vals.fmt_roman",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_roman.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Roman numerals"
+    ]
+   },
+   {
+    "title": "vals.fmt_bytes()",
+    "path": "reference/vals.fmt_bytes",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_bytes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Bytes"
+    ]
+   },
+   {
+    "title": "vals.fmt_duration()",
+    "path": "reference/vals.fmt_duration",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_duration.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Durations"
+    ]
+   },
+   {
+    "title": "vals.fmt_date()",
+    "path": "reference/vals.fmt_date",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_date.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 1,
+    "needs": {
+     "0.3": [
+      "Dates"
+     ]
+    },
+    "uses": [
+     "Dates"
+    ]
+   },
+   {
+    "title": "vals.fmt_time()",
+    "path": "reference/vals.fmt_time",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_time.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "vals.fmt_markdown()",
+    "path": "reference/vals.fmt_markdown",
+    "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_markdown.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 1,
+    "needs": {},
+    "uses": [
+     "Markdown"
     ]
    }
-  }
- ]
+  ]
+ },
+ "r-gt-reference": {
+  "commit": "76f9ba1a2ff62d51741555879037e05951b06e62",
+  "pages": [
+   {
+    "title": "adjust_luminance()",
+    "path": "man/adjust_luminance.Rd",
+    "url": "https://gt.rstudio.com/reference/adjust_luminance.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 15,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Colour by value"
+    ]
+   },
+   {
+    "title": "as_latex()",
+    "path": "man/as_latex.Rd",
+    "url": "https://gt.rstudio.com/reference/as_latex.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 8,
+    "needs": {
+     "0.5": [
+      "LaTeX"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "LaTeX",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "as_raw_html()",
+    "path": "man/as_raw_html.Rd",
+    "url": "https://gt.rstudio.com/reference/as_raw_html.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "HTML",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "as_rtf()",
+    "path": "man/as_rtf.Rd",
+    "url": "https://gt.rstudio.com/reference/as_rtf.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 8,
+    "needs": {
+     "0.5": [
+      "RTF and Word"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "RTF and Word",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "as_word()",
+    "path": "man/as_word.Rd",
+    "url": "https://gt.rstudio.com/reference/as_word.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 8,
+    "needs": {
+     "0.5": [
+      "RTF and Word"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "RTF and Word",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "cell_borders()",
+    "path": "man/cell_borders.Rd",
+    "url": "https://gt.rstudio.com/reference/cell_borders.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 21,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Sizes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cell_fill()",
+    "path": "man/cell_fill.Rd",
+    "url": "https://gt.rstudio.com/reference/cell_fill.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 10,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Numbers and integers",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cell_text()",
+    "path": "man/cell_text.Rd",
+    "url": "https://gt.rstudio.com/reference/cell_text.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 10,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Numbers and integers",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cells_body()",
+    "path": "man/cells_body.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_body.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Footnote marks",
+     "Footnotes",
+     "Locations"
+    ]
+   },
+   {
+    "title": "cells_column_labels()",
+    "path": "man/cells_column_labels.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_column_labels.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Footnotes"
+    ]
+   },
+   {
+    "title": "cells_column_spanners()",
+    "path": "man/cells_column_spanners.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_column_spanners.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 24,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Spanners",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cells_footnotes()",
+    "path": "man/cells_footnotes.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_footnotes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 17,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Footnotes",
+     "Sizes",
+     "Styles",
+     "Table options"
+    ]
+   },
+   {
+    "title": "cells_grand_summary()",
+    "path": "man/cells_grand_summary.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_grand_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 15,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "cells_row_groups()",
+    "path": "man/cells_row_groups.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_row_groups.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "cells_source_notes()",
+    "path": "man/cells_source_notes.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_source_notes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cells_stub()",
+    "path": "man/cells_stub.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 40,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Missing values and zeros",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cells_stub_grand_summary()",
+    "path": "man/cells_stub_grand_summary.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_stub_grand_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 14,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "cells_stub_summary()",
+    "path": "man/cells_stub_summary.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_stub_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 17,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "cells_stubhead()",
+    "path": "man/cells_stubhead.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_stubhead.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "cells_summary()",
+    "path": "man/cells_summary.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 22,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "cells_title()",
+    "path": "man/cells_title.Rd",
+    "url": "https://gt.rstudio.com/reference/cells_title.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "cols_add()",
+    "path": "man/cols_add.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_add.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 36,
+    "needs": {
+     "0.2": [
+      "Add columns"
+     ],
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Column selectors",
+     "Flags",
+     "Formats for single values",
+     "Hide and unhide",
+     "Labels",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Scientific",
+     "Sizes",
+     "Stub and stub head",
+     "Units",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cols_align()",
+    "path": "man/cols_align.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_align.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "cols_align_decimal()",
+    "path": "man/cols_align_decimal.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_align_decimal.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 6,
+    "needs": {
+     "0.2": [
+      "Align on the decimal mark"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align on the decimal mark",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "cols_hide()",
+    "path": "man/cols_hide.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_hide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 11,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Hide and unhide",
+     "Locations"
+    ]
+   },
+   {
+    "title": "cols_label()",
+    "path": "man/cols_label.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_label.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 72,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Hide and unhide",
+     "Labels",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cols_label_with()",
+    "path": "man/cols_label_with.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_label_with.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 38,
+    "needs": {
+     "0.3": [
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Dates",
+     "Labels from a function",
+     "Locales",
+     "Move",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Stub and stub head",
+     "Text helpers",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cols_merge()",
+    "path": "man/cols_merge.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_merge.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 20,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "cols_merge_n_pct()",
+    "path": "man/cols_merge_n_pct.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_merge_n_pct.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 20,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Percent",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "cols_merge_range()",
+    "path": "man/cols_merge_range.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_merge_range.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 8,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Labels",
+     "Merge columns",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "cols_merge_uncert()",
+    "path": "man/cols_merge_uncert.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_merge_uncert.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 7,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "cols_move()",
+    "path": "man/cols_move.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_move.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Move",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "cols_move_to_end()",
+    "path": "man/cols_move_to_end.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_move_to_end.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 12,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Move to end, reorder"
+    ]
+   },
+   {
+    "title": "cols_move_to_start()",
+    "path": "man/cols_move_to_start.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_move_to_start.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 12,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Move"
+    ]
+   },
+   {
+    "title": "cols_nanoplot()",
+    "path": "man/cols_nanoplot.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_nanoplot.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 166,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Dates",
+      "Units"
+     ],
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Body styles from a column",
+     "Column selectors",
+     "Dates",
+     "Footnotes",
+     "Hide and unhide",
+     "Labels from a function",
+     "Locations",
+     "Merge columns",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Plots in cells",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Units",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cols_unhide()",
+    "path": "man/cols_unhide.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_unhide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Hide and unhide"
+    ]
+   },
+   {
+    "title": "cols_units()",
+    "path": "man/cols_units.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_units.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 70,
+    "needs": {
+     "0.3": [
+      "Currency",
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Text transforms",
+     "Units",
+     "Widths"
+    ]
+   },
+   {
+    "title": "cols_width()",
+    "path": "man/cols_width.Rd",
+    "url": "https://gt.rstudio.com/reference/cols_width.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 11,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Sizes",
+     "Widths"
+    ]
+   },
+   {
+    "title": "currency()",
+    "path": "man/currency.Rd",
+    "url": "https://gt.rstudio.com/reference/currency.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 4,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency"
+    ]
+   },
+   {
+    "title": "data_color()",
+    "path": "man/data_color.Rd",
+    "url": "https://gt.rstudio.com/reference/data_color.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 81,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Labels",
+     "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "default_fonts()",
+    "path": "man/default_fonts.Rd",
+    "url": "https://gt.rstudio.com/reference/default_fonts.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Fonts",
+     "Locations",
+     "Styles"
+    ]
+   },
+   {
+    "title": "extract_body()",
+    "path": "man/extract_body.Rd",
+    "url": "https://gt.rstudio.com/reference/extract_body.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 16,
+    "needs": {
+     "0.2": [
+      "Extract"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Dates",
+     "Extract",
+     "Hide and unhide",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "extract_cells()",
+    "path": "man/extract_cells.Rd",
+    "url": "https://gt.rstudio.com/reference/extract_cells.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 6,
+    "needs": {
+     "0.2": [
+      "Extract"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Extract",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "extract_summary()",
+    "path": "man/extract_summary.Rd",
+    "url": "https://gt.rstudio.com/reference/extract_summary.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 20,
+    "needs": {
+     "0.2": [
+      "Extract",
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Extract",
+     "Hide and unhide",
+     "Row groups",
+     "Stub and stub head",
+     "Summary rows"
+    ]
+   },
+   {
+    "title": "fmt()",
+    "path": "man/fmt.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Any format"
+    ]
+   },
+   {
+    "title": "fmt_auto()",
+    "path": "man/fmt_auto.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_auto.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Bins, auto format, passthrough"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Bins, auto format, passthrough",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "fmt_bins()",
+    "path": "man/fmt_bins.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_bins.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 23,
+    "needs": {
+     "0.3": [
+      "Bins, auto format, passthrough"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Bins, auto format, passthrough",
+     "Flags",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Styles",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_bytes()",
+    "path": "man/fmt_bytes.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_bytes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 7,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Bytes"
+    ]
+   },
+   {
+    "title": "fmt_chem()",
+    "path": "man/fmt_chem.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_chem.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 61,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ],
+     "0.3": [
+      "Chemistry"
+     ],
+     "0.4": [
+      "Plots in cells"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Chemistry",
+     "Colour by value",
+     "Column selectors",
+     "Hide and unhide",
+     "Labels",
+     "Labels from a function",
+     "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Plots in cells",
+     "Presets",
+     "Scientific",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_country()",
+    "path": "man/fmt_country.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_country.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 88,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Country names",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Align",
+     "Column selectors",
+     "Country names",
+     "Flags",
+     "Fonts",
+     "Labels",
+     "Locales",
+     "Locations",
+     "Merge columns",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Title and subtitle",
+     "URLs and emails"
+    ]
+   },
+   {
+    "title": "fmt_currency()",
+    "path": "man/fmt_currency.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_currency.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 44,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Merge columns",
+      "Summary rows"
+     ],
+     "0.3": [
+      "Currency",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Currency",
+     "Flags",
+     "Hide and unhide",
+     "Labels",
+     "Locales",
+     "Merge columns",
+     "Presets",
+     "Stub and stub head",
+     "Summary rows",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "fmt_date()",
+    "path": "man/fmt_date.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_date.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 11,
+    "needs": {
+     "0.3": [
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Dates",
+     "Locales"
+    ]
+   },
+   {
+    "title": "fmt_datetime()",
+    "path": "man/fmt_datetime.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_datetime.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locales",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "fmt_duration()",
+    "path": "man/fmt_duration.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_duration.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 10,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Durations",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "fmt_email()",
+    "path": "man/fmt_email.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_email.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 73,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Country names"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Body styles from a column",
+     "Column selectors",
+     "Country names",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Move",
+     "Presets",
+     "Sizes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Title and subtitle",
+     "URLs and emails",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_engineering()",
+    "path": "man/fmt_engineering.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_engineering.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 17,
+    "needs": {
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Engineering, SI prefixes",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Units"
+    ]
+   },
+   {
+    "title": "fmt_flag()",
+    "path": "man/fmt_flag.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_flag.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 44,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ],
+     "0.3": [
+      "Bins, auto format, passthrough",
+      "Country names"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Bins, auto format, passthrough",
+     "Column selectors",
+     "Country names",
+     "Flags",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_fraction()",
+    "path": "man/fmt_fraction.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_fraction.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 33,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Fractions"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Currency",
+     "Fractions",
+     "Labels",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "fmt_icon()",
+    "path": "man/fmt_icon.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_icon.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 69,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Body styles from a column",
+      "Merge columns"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates"
+     ],
+     "0.4": [
+      "Icons"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Align",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Hide and unhide",
+     "Icons",
+     "Labels",
+     "Merge columns",
+     "Move",
+     "Numbers and integers",
+     "Presets",
+     "Source notes",
+     "Stub and stub head",
+     "Text helpers",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "fmt_image()",
+    "path": "man/fmt_image.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_image.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 23,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Images",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Styles",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "fmt_index()",
+    "path": "man/fmt_index.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_index.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 21,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Index letters, spelled numbers",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers",
+     "Sizes",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "fmt_integer()",
+    "path": "man/fmt_integer.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_integer.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 27,
+    "needs": {
+     "0.2": [
+      "Add columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Column selectors",
+     "Labels from a function",
+     "Locations",
+     "Numbers and integers",
+     "Spanners",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "fmt_markdown()",
+    "path": "man/fmt_markdown.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_markdown.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 39,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Labels",
+     "Locations",
+     "Markdown",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_number()",
+    "path": "man/fmt_number.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_number.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 41,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Body styles from a column",
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Body styles from a column",
+     "Labels",
+     "Merge columns",
+     "Numbers and integers",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "fmt_number_si()",
+    "path": "man/fmt_number_si.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_number_si.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 25,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Merge columns"
+     ],
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Engineering, SI prefixes",
+     "Hide and unhide",
+     "Labels",
+     "Merge columns",
+     "Units"
+    ]
+   },
+   {
+    "title": "fmt_partsper()",
+    "path": "man/fmt_partsper.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_partsper.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Parts per",
+     "Scientific",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "fmt_passthrough()",
+    "path": "man/fmt_passthrough.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_passthrough.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Bins, auto format, passthrough"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Bins, auto format, passthrough"
+    ]
+   },
+   {
+    "title": "fmt_percent()",
+    "path": "man/fmt_percent.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_percent.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Percent",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "fmt_roman()",
+    "path": "man/fmt_roman.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_roman.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 18,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Merge columns"
+     ],
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Column selectors",
+     "Hide and unhide",
+     "Labels",
+     "Merge columns",
+     "Missing values and zeros",
+     "Roman numerals",
+     "Stub and stub head",
+     "Units"
+    ]
+   },
+   {
+    "title": "fmt_scientific()",
+    "path": "man/fmt_scientific.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_scientific.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 34,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Table options"
+     ],
+     "0.3": [
+      "Chemistry",
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Chemistry",
+     "Column selectors",
+     "Fonts",
+     "Hide and unhide",
+     "Labels",
+     "Missing values and zeros",
+     "Padding, outline, lines",
+     "Presets",
+     "Scientific",
+     "Spanners",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Units"
+    ]
+   },
+   {
+    "title": "fmt_spelled_num()",
+    "path": "man/fmt_spelled_num.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_spelled_num.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 64,
+    "needs": {
+     "0.2": [
+      "Stub indent, multi-column stub",
+      "Table options"
+     ],
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Index letters, spelled numbers",
+     "Labels",
+     "Labels from a function",
+     "Locales",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Table options",
+     "Text helpers",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_tf()",
+    "path": "man/fmt_tf.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_tf.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 70,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Body styles from a column",
+      "Merge columns",
+      "Stub indent, multi-column stub"
+     ],
+     "0.3": [
+      "Currency",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Body styles from a column",
+     "Booleans",
+     "Column selectors",
+     "Currency",
+     "Labels",
+     "Labels from a function",
+     "Locales",
+     "Merge columns",
+     "Padding, outline, lines",
+     "Row groups",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_time()",
+    "path": "man/fmt_time.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_time.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 11,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locales",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "fmt_units()",
+    "path": "man/fmt_units.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_units.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 45,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Hide and unhide",
+     "Labels",
+     "Labels from a function",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Scientific",
+     "Sizes",
+     "Small, large and given values",
+     "Spanners",
+     "Styles",
+     "Table options",
+     "Title and subtitle",
+     "Units",
+     "Widths"
+    ]
+   },
+   {
+    "title": "fmt_url()",
+    "path": "man/fmt_url.Rd",
+    "url": "https://gt.rstudio.com/reference/fmt_url.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 68,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Column selectors",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Move to end, reorder",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "URLs and emails",
+     "Widths"
+    ]
+   },
+   {
+    "title": "from_column()",
+    "path": "man/from_column.Rd",
+    "url": "https://gt.rstudio.com/reference/from_column.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 24,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Body styles from a column",
+     "Currency",
+     "Hide and unhide",
+     "Locations",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Styles",
+     "Table options"
+    ]
+   },
+   {
+    "title": "ggplot_image()",
+    "path": "man/ggplot_image.Rd",
+    "url": "https://gt.rstudio.com/reference/ggplot_image.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 13,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images",
+     "Locations",
+     "Sizes",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "google_font()",
+    "path": "man/google_font.Rd",
+    "url": "https://gt.rstudio.com/reference/google_font.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 19,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
+     "Locations",
+     "Missing values and zeros",
+     "Presets",
+     "Sizes",
+     "Styles",
+     "Table options"
+    ]
+   },
+   {
+    "title": "grand_summary_rows()",
+    "path": "man/grand_summary_rows.Rd",
+    "url": "https://gt.rstudio.com/reference/grand_summary_rows.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 32,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Row groups",
+     "Spanners",
+     "Stub and stub head",
+     "Styles",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "gt()",
+    "path": "man/gt.Rd",
+    "url": "https://gt.rstudio.com/reference/gt.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Dates",
+      "Locales"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Dates",
+     "Locales",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Times and datetimes"
+    ]
+   },
+   {
+    "title": "gt_output()",
+    "path": "man/gt_output.Rd",
+    "url": "https://gt.rstudio.com/reference/gt_output.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 14,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ],
+     "later": [
+      "Interactive tables",
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Interactive tables",
+     "Labels from a function",
+     "Missing values and zeros",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "gt_preview()",
+    "path": "man/gt_preview.Rd",
+    "url": "https://gt.rstudio.com/reference/gt_preview.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 2,
+    "needs": {
+     "0.2": [
+      "Preview of a big table"
+     ]
+    },
+    "uses": [
+     "Preview of a big table"
+    ]
+   },
+   {
+    "title": "gt_split()",
+    "path": "man/gt_split.Rd",
+    "url": "https://gt.rstudio.com/reference/gt_split.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 17,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ],
+     "0.5": [
+      "Groups of tables, split tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Groups of tables, split tables",
+     "Sizes",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "gtsave()",
+    "path": "man/gtsave.Rd",
+    "url": "https://gt.rstudio.com/reference/gtsave.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.5",
+    "calls": 11,
+    "needs": {
+     "0.5": [
+      "Images and PDF"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images and PDF",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "html()",
+    "path": "man/html.Rd",
+    "url": "https://gt.rstudio.com/reference/html.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "info_currencies()",
+    "path": "man/info_currencies.Rd",
+    "url": "https://gt.rstudio.com/reference/info_currencies.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 2,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_date_style()",
+    "path": "man/info_date_style.Rd",
+    "url": "https://gt.rstudio.com/reference/info_date_style.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_flags()",
+    "path": "man/info_flags.Rd",
+    "url": "https://gt.rstudio.com/reference/info_flags.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_google_fonts()",
+    "path": "man/info_google_fonts.Rd",
+    "url": "https://gt.rstudio.com/reference/info_google_fonts.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_icons()",
+    "path": "man/info_icons.Rd",
+    "url": "https://gt.rstudio.com/reference/info_icons.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_locales()",
+    "path": "man/info_locales.Rd",
+    "url": "https://gt.rstudio.com/reference/info_locales.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_paletteer()",
+    "path": "man/info_paletteer.Rd",
+    "url": "https://gt.rstudio.com/reference/info_paletteer.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_tf_style()",
+    "path": "man/info_tf_style.Rd",
+    "url": "https://gt.rstudio.com/reference/info_tf_style.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_time_style()",
+    "path": "man/info_time_style.Rd",
+    "url": "https://gt.rstudio.com/reference/info_time_style.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "info_unit_conversions()",
+    "path": "man/info_unit_conversions.Rd",
+    "url": "https://gt.rstudio.com/reference/info_unit_conversions.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 1,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "Table info"
+    ]
+   },
+   {
+    "title": "latex()",
+    "path": "man/latex.Rd",
+    "url": "https://gt.rstudio.com/reference/latex.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "local_image()",
+    "path": "man/local_image.Rd",
+    "url": "https://gt.rstudio.com/reference/local_image.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 12,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images",
+     "Locations",
+     "Sizes",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "md()",
+    "path": "man/md.Rd",
+    "url": "https://gt.rstudio.com/reference/md.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_align_table_header()",
+    "path": "man/opt_align_table_header.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_align_table_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_all_caps()",
+    "path": "man/opt_all_caps.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_all_caps.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_css()",
+    "path": "man/opt_css.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_css.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Extra CSS",
+     "Scientific"
+    ]
+   },
+   {
+    "title": "opt_footnote_marks()",
+    "path": "man/opt_footnote_marks.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_footnote_marks.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 24,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Footnote marks",
+     "Footnotes",
+     "Locations",
+     "Missing values and zeros",
+     "Spanners from column names",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "opt_footnote_order()",
+    "path": "man/opt_footnote_order.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_footnote_order.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 25,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Footnote marks",
+     "Footnotes",
+     "Locations",
+     "Missing values and zeros",
+     "Spanners from column names",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "opt_footnote_spec()",
+    "path": "man/opt_footnote_spec.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_footnote_spec.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 25,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Currency",
+     "Footnote marks",
+     "Footnotes",
+     "Formats for single values",
+     "Locations",
+     "Move",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Stub and stub head",
+     "Widths"
+    ]
+   },
+   {
+    "title": "opt_horizontal_padding()",
+    "path": "man/opt_horizontal_padding.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_horizontal_padding.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_interactive()",
+    "path": "man/opt_interactive.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_interactive.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 29,
+    "needs": {
+     "later": [
+      "Interactive tables"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Hide and unhide",
+     "Interactive tables",
+     "Labels from a function",
+     "Locations",
+     "Numbers and integers",
+     "Sizes",
+     "Source notes",
+     "Styles",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "opt_row_striping()",
+    "path": "man/opt_row_striping.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_row_striping.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_stylize()",
+    "path": "man/opt_stylize.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_stylize.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Presets",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_table_font()",
+    "path": "man/opt_table_font.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_table_font.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 14,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
+     "Presets"
+    ]
+   },
+   {
+    "title": "opt_table_lines()",
+    "path": "man/opt_table_lines.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_table_lines.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_table_outline()",
+    "path": "man/opt_table_outline.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_table_outline.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 13,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "opt_vertical_padding()",
+    "path": "man/opt_vertical_padding.Rd",
+    "url": "https://gt.rstudio.com/reference/opt_vertical_padding.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Locations",
+     "Padding, outline, lines",
+     "Row groups",
+     "Source notes",
+     "Stub and stub head",
+     "Summary rows",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "pct()",
+    "path": "man/pct.Rd",
+    "url": "https://gt.rstudio.com/reference/pct.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Sizes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "px()",
+    "path": "man/px.Rd",
+    "url": "https://gt.rstudio.com/reference/px.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Sizes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "render_gt()",
+    "path": "man/render_gt.Rd",
+    "url": "https://gt.rstudio.com/reference/render_gt.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 14,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ],
+     "later": [
+      "Interactive tables",
+      "grid graphics, Shiny"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Interactive tables",
+     "Labels from a function",
+     "Missing values and zeros",
+     "grid graphics, Shiny"
+    ]
+   },
+   {
+    "title": "rm_caption()",
+    "path": "man/rm_caption.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_caption.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 10,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Caption",
+     "Remove parts",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "rm_footnotes()",
+    "path": "man/rm_footnotes.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_footnotes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 18,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Footnotes",
+     "Remove parts",
+     "Sizes",
+     "Widths"
+    ]
+   },
+   {
+    "title": "rm_header()",
+    "path": "man/rm_header.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 8,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Remove parts",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "rm_source_notes()",
+    "path": "man/rm_source_notes.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_source_notes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 11,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Remove parts",
+     "Sizes",
+     "Source notes",
+     "Widths"
+    ]
+   },
+   {
+    "title": "rm_spanners()",
+    "path": "man/rm_spanners.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_spanners.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 16,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Remove parts",
+     "Spanners",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "rm_stubhead()",
+    "path": "man/rm_stubhead.Rd",
+    "url": "https://gt.rstudio.com/reference/rm_stubhead.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Remove parts",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "row_group()",
+    "path": "man/row_group.Rd",
+    "url": "https://gt.rstudio.com/reference/row_group.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 14,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Roman numerals",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Widths"
+    ]
+   },
+   {
+    "title": "row_group_order()",
+    "path": "man/row_group_order.Rd",
+    "url": "https://gt.rstudio.com/reference/row_group_order.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Order of rows and groups",
+     "Row groups",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "row_order()",
+    "path": "man/row_order.Rd",
+    "url": "https://gt.rstudio.com/reference/row_order.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 27,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Numbers and integers",
+     "Order of rows and groups",
+     "Padding, outline, lines",
+     "Row groups",
+     "Table options"
+    ]
+   },
+   {
+    "title": "rows_add()",
+    "path": "man/rows_add.Rd",
+    "url": "https://gt.rstudio.com/reference/rows_add.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 62,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Add rows"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Add rows",
+     "Column selectors",
+     "Currency",
+     "Locations",
+     "Missing values and zeros",
+     "Move to end, reorder",
+     "Padding, outline, lines",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "rows_hide()",
+    "path": "man/rows_hide.Rd",
+    "url": "https://gt.rstudio.com/reference/rows_hide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 12,
+    "needs": {
+     "0.2": [
+      "Hide rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Footnotes",
+     "Hide rows",
+     "Locations",
+     "Numbers and integers",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "rows_unhide()",
+    "path": "man/rows_unhide.Rd",
+    "url": "https://gt.rstudio.com/reference/rows_unhide.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 8,
+    "needs": {
+     "0.2": [
+      "Hide rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Hide rows",
+     "Numbers and integers",
+     "Stub and stub head"
+    ]
+   },
+   {
+    "title": "stub()",
+    "path": "man/stub.Rd",
+    "url": "https://gt.rstudio.com/reference/stub.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 29,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Roman numerals",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Table options",
+     "Widths"
+    ]
+   },
+   {
+    "title": "sub_large_vals()",
+    "path": "man/sub_large_vals.Rd",
+    "url": "https://gt.rstudio.com/reference/sub_large_vals.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "sub_missing()",
+    "path": "man/sub_missing.Rd",
+    "url": "https://gt.rstudio.com/reference/sub_missing.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Missing values and zeros"
+    ]
+   },
+   {
+    "title": "sub_small_vals()",
+    "path": "man/sub_small_vals.Rd",
+    "url": "https://gt.rstudio.com/reference/sub_small_vals.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 13,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "sub_values()",
+    "path": "man/sub_values.Rd",
+    "url": "https://gt.rstudio.com/reference/sub_values.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 14,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Small, large and given values"
+    ]
+   },
+   {
+    "title": "sub_zero()",
+    "path": "man/sub_zero.Rd",
+    "url": "https://gt.rstudio.com/reference/sub_zero.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 6,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Missing values and zeros",
+     "Numbers and integers"
+    ]
+   },
+   {
+    "title": "summary_columns()",
+    "path": "man/summary_columns.Rd",
+    "url": "https://gt.rstudio.com/reference/summary_columns.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 24,
+    "needs": {
+     "0.3": [
+      "Summary columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Hide and unhide",
+     "Labels",
+     "Numbers and integers",
+     "Summary columns",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "summary_rows()",
+    "path": "man/summary_rows.Rd",
+    "url": "https://gt.rstudio.com/reference/summary_rows.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 40,
+    "needs": {
+     "0.2": [
+      "Stub indent, multi-column stub",
+      "Summary rows"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Numbers and integers",
+     "Order of rows and groups",
+     "Row groups",
+     "Spanners",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Styles",
+     "Summary rows",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "system_fonts()",
+    "path": "man/system_fonts.Rd",
+    "url": "https://gt.rstudio.com/reference/system_fonts.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Fonts",
+     "Locations",
+     "Sizes",
+     "Styles"
+    ]
+   },
+   {
+    "title": "tab_caption()",
+    "path": "man/tab_caption.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_caption.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 9,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Caption",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "tab_footnote()",
+    "path": "man/tab_footnote.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_footnote.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 69,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency",
+      "Dates"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Dates",
+     "Footnote marks",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "tab_header()",
+    "path": "man/tab_header.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_header.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 53,
+    "needs": {
+     "0.2": [
+      "Merge columns",
+      "Stub indent, multi-column stub"
+     ],
+     "0.3": [
+      "Chemistry"
+     ],
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Any CSS",
+     "Chemistry",
+     "Column selectors",
+     "Images",
+     "Labels from a function",
+     "Merge columns",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Percent",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Text helpers",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "tab_info()",
+    "path": "man/tab_info.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_info.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 8,
+    "needs": {
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Spanners",
+     "Stub and stub head",
+     "Table info"
+    ]
+   },
+   {
+    "title": "tab_options()",
+    "path": "man/tab_options.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_options.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 22,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Currency",
+     "Footnotes",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Table options",
+     "Text helpers",
+     "Title and subtitle"
+    ]
+   },
+   {
+    "title": "tab_row_group()",
+    "path": "man/tab_row_group.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_row_group.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 50,
+    "needs": {
+     "0.2": [
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Order of rows and groups",
+     "Row groups",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers"
+    ]
+   },
+   {
+    "title": "tab_source_note()",
+    "path": "man/tab_source_note.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_source_note.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Source notes"
+    ]
+   },
+   {
+    "title": "tab_spanner()",
+    "path": "man/tab_spanner.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_spanner.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 64,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Column selectors",
+     "Labels",
+     "Numbers and integers",
+     "Percent",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Text helpers",
+     "Widths"
+    ]
+   },
+   {
+    "title": "tab_spanner_delim()",
+    "path": "man/tab_spanner_delim.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_spanner_delim.html",
+    "port": "port",
+    "note": "",
+    "ready": "later",
+    "calls": 57,
+    "needs": {
+     "0.3": [
+      "Currency"
+     ],
+     "later": [
+      "Table info"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Formats for single values",
+     "Labels from a function",
+     "Locations",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Row groups",
+     "Spanners from column names",
+     "Stub and stub head",
+     "Styles",
+     "Table info",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "tab_stub_indent()",
+    "path": "man/tab_stub_indent.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_stub_indent.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 55,
+    "needs": {
+     "0.2": [
+      "Body styles from a column",
+      "Stub indent, multi-column stub",
+      "Summary rows",
+      "Table options"
+     ],
+     "0.3": [
+      "Chemistry",
+      "Currency",
+      "Units"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Chemistry",
+     "Column selectors",
+     "Currency",
+     "Hide and unhide",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Row groups",
+     "Scientific",
+     "Sizes",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Styles",
+     "Summary rows",
+     "Table options",
+     "Title and subtitle",
+     "Units",
+     "Widths"
+    ]
+   },
+   {
+    "title": "tab_stubhead()",
+    "path": "man/tab_stubhead.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_stubhead.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 55,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Numbers and integers",
+     "Row groups",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "tab_style()",
+    "path": "man/tab_style.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_style.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 138,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Body styles from a column",
+      "Merge columns",
+      "Table options"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Align",
+     "Body styles from a column",
+     "Column selectors",
+     "Currency",
+     "Fonts",
+     "Footnote marks",
+     "Footnotes",
+     "Labels",
+     "Locations",
+     "Merge columns",
+     "Missing values and zeros",
+     "Numbers and integers",
+     "Presets",
+     "Sizes",
+     "Source notes",
+     "Stub and stub head",
+     "Styles",
+     "Table options",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "tab_style_body()",
+    "path": "man/tab_style_body.Rd",
+    "url": "https://gt.rstudio.com/reference/tab_style_body.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 34,
+    "needs": {
+     "0.2": [
+      "Body styles from a column"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Body styles from a column",
+     "Column selectors",
+     "Fonts",
+     "Missing values and zeros",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Styles"
+    ]
+   },
+   {
+    "title": "text_case_match()",
+    "path": "man/text_case_match.Rd",
+    "url": "https://gt.rstudio.com/reference/text_case_match.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 20,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Formats for single values",
+     "Labels",
+     "Locations",
+     "Numbers and integers",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "text_case_when()",
+    "path": "man/text_case_when.Rd",
+    "url": "https://gt.rstudio.com/reference/text_case_when.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 10,
+    "needs": {},
+    "uses": [
+     "A table from data",
+     "Labels",
+     "Locations",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "text_replace()",
+    "path": "man/text_replace.Rd",
+    "url": "https://gt.rstudio.com/reference/text_replace.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 8,
+    "needs": {
+     "0.2": [
+      "Merge columns"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Locations",
+     "Merge columns",
+     "Text transforms"
+    ]
+   },
+   {
+    "title": "text_transform()",
+    "path": "man/text_transform.Rd",
+    "url": "https://gt.rstudio.com/reference/text_transform.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 48,
+    "needs": {
+     "0.2": [
+      "Stub indent, multi-column stub"
+     ],
+     "0.3": [
+      "Currency"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Align",
+     "Colour by value",
+     "Column selectors",
+     "Currency",
+     "Formats for single values",
+     "Index letters, spelled numbers",
+     "Labels",
+     "Locations",
+     "Padding, outline, lines",
+     "Presets",
+     "Row groups",
+     "Sizes",
+     "Stub and stub head",
+     "Stub indent, multi-column stub",
+     "Text transforms",
+     "Widths"
+    ]
+   },
+   {
+    "title": "unit_conversion()",
+    "path": "man/unit_conversion.Rd",
+    "url": "https://gt.rstudio.com/reference/unit_conversion.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.2",
+    "calls": 31,
+    "needs": {
+     "0.2": [
+      "Add columns",
+      "Table options"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Add columns",
+     "Column selectors",
+     "Labels",
+     "Move",
+     "Numbers and integers",
+     "Padding, outline, lines",
+     "Presets",
+     "Sizes",
+     "Spanners",
+     "Stub and stub head",
+     "Table options",
+     "Title and subtitle",
+     "Widths"
+    ]
+   },
+   {
+    "title": "vec_fmt_bytes()",
+    "path": "man/vec_fmt_bytes.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_bytes.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_currency()",
+    "path": "man/vec_fmt_currency.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_currency.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_date()",
+    "path": "man/vec_fmt_date.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_date.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_datetime()",
+    "path": "man/vec_fmt_datetime.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_datetime.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 8,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_duration()",
+    "path": "man/vec_fmt_duration.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_duration.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 12,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_engineering()",
+    "path": "man/vec_fmt_engineering.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_engineering.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_fraction()",
+    "path": "man/vec_fmt_fraction.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_fraction.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "Formats for single values"
+    ]
+   },
+   {
+    "title": "vec_fmt_index()",
+    "path": "man/vec_fmt_index.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_index.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_integer()",
+    "path": "man/vec_fmt_integer.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_integer.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 5,
+    "needs": {},
+    "uses": [
+     "Formats for single values"
+    ]
+   },
+   {
+    "title": "vec_fmt_markdown()",
+    "path": "man/vec_fmt_markdown.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_markdown.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 3,
+    "needs": {},
+    "uses": [
+     "Formats for single values"
+    ]
+   },
+   {
+    "title": "vec_fmt_number()",
+    "path": "man/vec_fmt_number.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_number.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 7,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_number_si()",
+    "path": "man/vec_fmt_number_si.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_number_si.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 9,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_partsper()",
+    "path": "man/vec_fmt_partsper.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_partsper.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_percent()",
+    "path": "man/vec_fmt_percent.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_percent.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 7,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_roman()",
+    "path": "man/vec_fmt_roman.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_roman.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.1",
+    "calls": 4,
+    "needs": {},
+    "uses": [
+     "Formats for single values"
+    ]
+   },
+   {
+    "title": "vec_fmt_scientific()",
+    "path": "man/vec_fmt_scientific.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_scientific.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 6,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_spelled_num()",
+    "path": "man/vec_fmt_spelled_num.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_spelled_num.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 4,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "vec_fmt_time()",
+    "path": "man/vec_fmt_time.Rd",
+    "url": "https://gt.rstudio.com/reference/vec_fmt_time.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.3",
+    "calls": 5,
+    "needs": {
+     "0.3": [
+      "Locales"
+     ]
+    },
+    "uses": [
+     "Formats for single values",
+     "Locales"
+    ]
+   },
+   {
+    "title": "web_image()",
+    "path": "man/web_image.Rd",
+    "url": "https://gt.rstudio.com/reference/web_image.html",
+    "port": "port",
+    "note": "",
+    "ready": "0.4",
+    "calls": 24,
+    "needs": {
+     "0.4": [
+      "Images"
+     ]
+    },
+    "uses": [
+     "A table from data",
+     "Images",
+     "Locations",
+     "Sizes",
+     "Text helpers",
+     "Text transforms",
+     "Title and subtitle"
+    ]
+   }
+  ]
+ }
 }

@@ -84,7 +84,8 @@ tabelline changes; dated posts are in the devlog.
    and tabelline step by step.
 2. [Book](https://pietroppeter.github.io/tabelline/book/): guides and examples of gt and Great
    Tables redone in Nim, with the original code and its table next to every example, [what
-   the book will port](https://pietroppeter.github.io/tabelline/book/next.html) and [what the port
+   the book will port](https://pietroppeter.github.io/tabelline/book/next.html), [an example for
+   every feature](https://pietroppeter.github.io/tabelline/book/features.html) and [what the port
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
 
