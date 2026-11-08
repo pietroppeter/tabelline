@@ -38,7 +38,7 @@ trap 'rm -rf "$tmp"' EXIT
 if ! command -v nim >/dev/null 2>&1; then
   [ -n "$nimArchive" ] || { log "no Nim for $(uname -sm): install Nim 2.2 and rerun"; exit 1; }
   log "nim not found: downloading the $NIM_NIGHTLY nightly into $NIM_HOME"
-  curl -sSfL --retry 4 --retry-all-errors -o "$tmp/nim.tar.xz" \
+  curl -sSfL --retry 6 --retry-delay 15 --retry-all-errors -o "$tmp/nim.tar.xz" \
     "https://github.com/nim-lang/nightlies/releases/download/$NIM_NIGHTLY/$nimArchive"
   tar -xf "$tmp/nim.tar.xz" -C "$tmp"
   rm -rf "$NIM_HOME" && mkdir -p "$(dirname "$NIM_HOME")"
@@ -54,7 +54,7 @@ have=$(atlasVersion || true)
 if [ -z "$have" ] || older "$have" "$ATLAS_MIN"; then
   [ -n "$atlasArchive" ] || { log "no atlas release for $(uname -sm): install atlas $ATLAS_MIN or later"; exit 1; }
   log "atlas ${have:-not found}: downloading atlas $ATLAS_VERSION into ~/.local/bin"
-  curl -sSfL --retry 4 --retry-all-errors -o "$tmp/atlas.tar.gz" \
+  curl -sSfL --retry 6 --retry-delay 15 --retry-all-errors -o "$tmp/atlas.tar.gz" \
     "https://github.com/nim-lang/atlas/releases/download/$ATLAS_VERSION/$atlasArchive"
   tar -xzf "$tmp/atlas.tar.gz" -C "$tmp"
   mkdir -p "$HOME/.local/bin"
