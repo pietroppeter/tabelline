@@ -78,11 +78,25 @@ proc audit(path: string): Audit =
     else: inc k
   result.hex = found.deduplicate.len
 
+# The audit is a dated snapshot: counted once, on 8 November 2026, and saved in
+# devlog/data/blocks-review/audit.tsv, so this post keeps its numbers while the pages are
+# migrated. The live check is a separate tool. Delete the file to count again.
+let snapshot = docs / "devlog" / "data" / "blocks-review" / "audit.tsv"
+if not fileExists(snapshot):
+  var lines = @["file\tkind\tnbRawHtml\tnbTextWithHtml\tstyle\tscript\tinline\thex"]
+  for path in walkDirRec(docs):
+    if not path.endsWith(".nim") or path.endsWith("blocks_review.nim"): continue
+    let a = audit(path)
+    if a.kind != "data":
+      lines.add [a.file, a.kind, $a.raw, $a.textHtml, $a.style, $a.script, $a.inline, $a.hex].join("\t")
+  createDir(snapshot.parentDir)
+  writeFile(snapshot, lines.join("\n") & "\n")
+
 var audits: seq[Audit]
-for path in walkDirRec(docs):
-  if not path.endsWith(".nim") or path.endsWith("blocks_review.nim"): continue
-  let a = audit(path)
-  if a.kind != "data": audits.add a
+for line in readFile(snapshot).strip.splitLines[1 .. ^1]:
+  let f = line.split('\t')
+  audits.add Audit(file: f[0], kind: f[1], raw: parseInt(f[2]), textHtml: parseInt(f[3]), style: parseInt(f[4]),
+                   script: parseInt(f[5]), inline: parseInt(f[6]), hex: parseInt(f[7]))
 audits.sort(proc (a, b: Audit): int = cmp((a.kind, -(a.raw + a.textHtml + a.style + a.script)), (b.kind, -(b.raw + b.textHtml + b.style + b.script))))
 
 let totalRaw = audits.filterIt(it.kind != "theme and helpers").mapIt(it.raw).foldl(a + b, 0)
@@ -96,7 +110,8 @@ let stylePages = audits.filterIt(it.kind != "theme and helpers" and it.style > 0
 nbText: &"""
 ## How far it drifted
 
-Every `.nim` file under `docs/` was read when this page was built. Outside the theme, the
+Every `.nim` file under `docs/` was read on 8 November 2026 (the numbers are kept as a dated
+snapshot, so they stay what they were when this was written). Outside the theme, the
 {pages} pages call `nbRawHtml` **{totalRaw}** times, write HTML tags inside **{totalTextHtml}**
 `nbText` blocks, carry **{totalStyle}** `<style>` and **{totalScript}** `<script>` blocks of
 their own, and write **{totalHex}** distinct hex colours between them.
@@ -117,7 +132,7 @@ block:
     colsLabel {"raw": "nbRawHtml", "textHtml": "nbText with HTML", "style": "<style>",
                "script": "<script>", "inline": "style=", "hex": "hex colours"}
     fmtMarkdown "file"
-    tabSourceNote md("Counted in the sources when this page was built. The theme and its helpers may hold CSS: that is their job. `style=` counts inline styles.")
+    tabSourceNote md("Counted in the sources on 8 November 2026; snapshot in `devlog/data/blocks-review/audit.tsv`. The theme and its helpers may hold CSS: that is their job. `style=` counts inline styles.")
     optQuaderno()
   nbTable t
 
@@ -284,10 +299,13 @@ both looks. The skill is drafted alongside, in your skills repository.
 
 ## How it is built
 
-The audit reads every `.nim` file under `docs/` and counts, per file: calls of `nbRawHtml`;
+The audit read every `.nim` file under `docs/` and counted, per file: calls of `nbRawHtml`;
 `nbText` blocks whose triple-quoted text holds an HTML tag (`<div`, `<p`, `<span`, `<a href`, …);
 `<style` and `<script`; inline `style="`; and distinct `#RRGGBB` values. Files are grouped as
-living documents, posts, or theme and helpers (where CSS belongs); data modules are left out. The
+living documents, posts, or theme and helpers (where CSS belongs); data modules are left out. It
+ran once and was saved as `docs/devlog/data/blocks-review/audit.tsv`: the post is dated, so its
+numbers stay those of 8 November 2026 while the pages are migrated (the live count will be a
+check in CI, `tools/drift.nim`, that reads the pages every time). The
 code of `docs/blocchi.nim` above is read from the file when the page is built, so it is the code
 that drew the gallery.
 """
