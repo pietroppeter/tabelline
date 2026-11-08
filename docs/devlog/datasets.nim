@@ -419,11 +419,34 @@ year, so that one table shows both inflation (the same city, year after year) an
 between regions (the same year, north to south). It is also the dataset that is hardest to get:
 Il Post [wrote in 2023](https://www.ilpost.it/2023/02/24/pizza-prezzo-aumento/) that there is little
 data on what pizzerias charge, beyond the restaurant federation's estimates (+7.7% in a year, in
-January 2023) and ISTAT's indices for the ingredients and for ready-made pizza. The candidates are
-ISTAT's consumer price indices (by city, for restaurants and pizzerias: indices, not prices), the
-price observatory of the Ministry of Enterprises (average prices by provincial capital), and the
-surveys of consumer associations; all their sites are blocked from this sandbox, so which of them
-has a margherita in euros is still to be checked.
+January 2023) and ISTAT's indices for the ingredients and for ready-made pizza.
+
+A first piece arrived in January 2026: an observatory of Neapolitan pizza (the University of Naples
+Parthenope, the CNR, the Verace Pizza Napoletana association and FIPE Campania) surveyed 101
+pizzerias that follow the same rules, so the same pizza, and published the price of a margherita
+by area, with an index that sets Naples at 100.
+"""
+
+nbShowCode:
+  let pizza = readTsv(data / "pizza.tsv")
+  let t = tabella(pizza, rownameCol = "area"):
+    optPageTheme()
+    tabHeader "What a margherita costs", "a Neapolitan margherita in 101 pizzerias, presented in January 2026"
+    fmtCurrency "price", currency = "EUR", decimals = 2
+    fmtNumber "index", decimals = 1
+    subMissing missingText = ""
+    colsLabel {"price": "price", "index": "Naples = 100"}
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["area"] == "Italia"))
+    tabSourceNote md("Osservatorio Socio-Economico della Pizza Napoletana, *Indice Pizza Napoletana Margherita*, as reported by [FIPE](https://www.fipe.it/2026/01/16/comunicazione/notizie-dal-mondo-fipe/losservatorio-socio-economico-della-pizza-napoletana-presenta-lindice-pizza-napoletana-margherita-e-offre-un-quadro-del-comparto/), 16 January 2026.")
+  nbTable t
+
+nbText: """
+Fourteen percent more in the North than in Naples, and the South slightly cheaper than Naples.
+It is one year and four areas: the regional half of the dataset, not yet the inflation half. For
+that, ISTAT's consumer price indices have restaurants and pizzerias by city (indices, not euros;
+its data service was too slow to answer today), and FIPE's monthly notes on prices give the yearly
+change; the ministry's price observatory, with average prices by provincial capital, did not answer
+either. The observatory's index will come back every year, which is what a `pizza` dataset needs.
 
 ## A twin for gt's best known datasets
 
