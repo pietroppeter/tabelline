@@ -34,9 +34,10 @@
   labels get white text on dark backgrounds by contrast, so `optStylize(2, "red")` reads (found by
   the 0.1 port thread).
 
-- Docs: three devlog posts from the 0.1 use-it thread: *A month of building, as an operetta*
-  (Pietro's seven weeks of open source with Claude, from GitHub data), *Operetta, a first sketch*
-  and *Skills, from the beginning*; their data in `docs/mese.nim` and `docs/devlog/data/` (#9).
+- Docs: the three devlog posts of the 0.1 use-it thread (*A month of building, as an operetta*,
+  *Operetta, a first sketch*, *Skills, from the beginning*, #9) left the devlog: they are about the
+  way of working, not tabelline, and are now one article in three parts in claude-artifacts,
+  [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/) (#PR).
 
 The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec change each (#10):
 

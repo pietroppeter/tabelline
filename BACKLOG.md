@@ -20,7 +20,7 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Formats
 
-- **Gaps from the month post** (S each, 0.1 use-it thread): an `html()` cell format
+- **Gaps from the month article** (S each, 0.1 use-it thread, [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/)): an `html()` cell format
   (`fmtMarkdown` escapes every tag but `<br>`); Markdown in row group labels; a TSV or
   `quote = ""` option for `readCsv` (a `"` inside a field is taken as quoting and dropped);
   document that colours such as `fmtBar(color = "var(--x)")` can use the page's CSS variables.
@@ -91,7 +91,7 @@ Rough size: S (hours), M (a day or two), L (more).
 
 - **A skill for users** (M). `skill.md` and `llms.txt` written from the specs and their examples
   while the pages are built, served from the site, as Great Docs does for Great Tables. From the
-  skills post (0.1 use-it thread).
+  skills part of [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/#part-three) (0.1 use-it thread).
 - **A small skill benchmark** (S). Five tasks with and without the user skill, graded by building
   the result.
 - **Port the gt user guide** (M). A second part of the book: the guide of R's gt

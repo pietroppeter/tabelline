@@ -106,14 +106,6 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
   (8 Nov 2026 A): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
   the money, what stays), learning from Il Post's coverage; the 0.1 use-it post, on data from
   Wikipedia, Il Post and NOAA.
-- [Skills, from the beginning](https://pietroppeter.github.io/tabelline/devlog/skills/)
-  (7 Nov 2026 I): what an agent skill is, where skills live in an open source project, who does
-  them well, how they work from the phone, how to test one, and what tabelline could do with them.
-- [Operetta, a first sketch](https://pietroppeter.github.io/tabelline/devlog/operetta/)
-  (7 Nov 2026 H): the way of working of the month as parts a project picks by kind and stage.
-- [A month of building, as an operetta](https://pietroppeter.github.io/tabelline/devlog/month-of-building/)
-  (7 Nov 2026 G): seven weeks of open source with Claude in seven acts, and the parts of a way
-  of working that grew; the first use of tabelline on real data.
 - [Designing tabelline 0.1](https://pietroppeter.github.io/tabelline/devlog/designing-0-1/)
   (7 Nov 2026 F): the 24 small groups of gt in 0.1, how each became an OpenSpec change, R vs
   Python vs Nim, and the Nim sugar.
