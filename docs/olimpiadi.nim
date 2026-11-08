@@ -1,14 +1,14 @@
-## The data of the devlog post "Milano Cortina 2026, in small numbers" (docs/devlog/milano_cortina.nim).
+## The data of the story "Milano Cortina 2026, in small numbers" (docs/stories/milano_cortina.nim).
 ##
 ## Two kinds of data:
-## - tables from Wikipedia, in docs/devlog/data/milano-cortina/*.tsv, written by fetch.py
+## - tables from Wikipedia, in docs/stories/data/milano-cortina/*.tsv, written by fetch.py
 ##   beside them (CC BY-SA 4.0; each file names the article and revision it was read from);
 ## - facts reported by Il Post (https://www.ilpost.it), written here by hand, each with the
 ##   article it comes from. Only the numbers and the facts are taken, never the text.
 import std/[os, strutils, sequtils, algorithm]
 import tabelline
 
-const dataDir* = currentSourcePath().parentDir / "devlog" / "data" / "milano-cortina"
+const dataDir* = currentSourcePath().parentDir / "stories" / "data" / "milano-cortina"
 
 proc readTsv*(name: string): TableData =
   ## A TSV of dataDir, without its comment lines (the ones starting with `#`).
