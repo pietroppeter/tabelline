@@ -84,8 +84,11 @@ working rules that are easy to miss.
 ## The book
 
 - The book is `book/`, a nimibook built by `nim r book/bookbuild.nim` into `docs/book/` (see
-  README.md). One theme, the Munari look with the Edo palette (`book/theme/edo.css`); its
-  colours are the same six `--m-*` variables.
+  README.md). One theme, the Munari look with the Edo palette: the tokens of `docs/stile.nim` in
+  the values `edo`, written by the build before `book/theme/edo.css`, which names no colour of
+  its own. Its own tables (the sources) take `optTokens()`; the ported examples keep the colours
+  of the guide. Chapters are written with `book/tabbook.nim`'s blocks (`tabs`, `tabelline`,
+  `sideBySide`), not with HTML.
 - A ported page keeps the text of the original as it is; everything the book says about
   tabelline goes in `tabelline "..."` boxes, and every gap found goes to `book/gaps.md` (and to
   the build thread, or BACKLOG.md).

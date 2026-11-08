@@ -29,6 +29,7 @@ import std/[os, osproc, json, strutils, sequtils, tables, sets, strformat, times
 import std/sha1
 {.warning[Deprecated]: on.}
 import tabbook  # the theme of the pages
+import ../docs/stile  # the palette: the tokens of tabelline's pages, in the Edo values
 import nimibook/commands
 
 const recordVersion = 1
@@ -182,7 +183,7 @@ proc assets() =
   for cmd in [nim & " dump", nim & " update"]:
     if execCmd("cd " & quoteShell(bookDir) & " && " & cmd) != 0: quit 1
   let css = home / "assets" / "css" / "chrome.css"
-  writeFile css, readFile(css) & "\n" & readFile(bookDir / "theme" / "edo.css")
+  writeFile css, readFile(css) & "\n" & paletteCss(edo) & readFile(bookDir / "theme" / "edo.css")
   let js = home / "assets" / "js" / "book.js"
   writeFile js, readFile(js) & "\n" & readFile(bookDir / "theme" / "book.js")
   createDir home / "assets" / "fonts-edo"

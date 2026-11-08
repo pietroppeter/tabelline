@@ -3,29 +3,20 @@
 import std/os
 import nimib except md
 import tabelline, tabelline/nimib
-import ../quaderno
+import ../blocchi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "book-found" / "index.html"
-nb.useQuaderno(nome = "tabelline",
-               title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(nome = "tabelline",
+                title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-nbRawHtml: """<style>
-.coppia { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 18px; align-items: start; }
-.coppia .tabella table { font-size: 14px !important; }
-.tabella td code { overflow-wrap: anywhere; }
-</style>"""
+nbTitolo "8 November 2026", "What the book found for 0.1", """
+Porting the Great Tables guide into the tabelline book turned up two bugs and a dozen gaps; 0.1
+closed them. What the book found, from the simplest to the most complex, and what it still finds.
+"""
 
 nbText: """
-<p class="kicker">8 November 2026</p>
-
-# What the book found for 0.1
-
-<p class="lede">Porting the Great Tables guide into the tabelline book turned up two bugs and a
-dozen gaps; 0.1 closed them. What the book found, from the simplest to the most complex, and what
-it still finds.</p>
-
 While 0.1 was being built, a second piece of work ported the *Get Started* guide of Great Tables
 into [the tabelline book](../../book/): fourteen pages, every example in Nim next to the original
 Python and the same table in R with gt. Writing each example in tabelline is a test no spec
@@ -61,6 +52,7 @@ block:
   let t = tabella(rows, rownameCol = "", groupnameCol = "step"):
     colsLabel {"found": "What the book found", "now": "In 0.1"}
     fmtMarkdown ["found", "now"]
+    optTokens()
   nbTable t
 
 nbText: """
@@ -76,17 +68,17 @@ block:
     integer: [1, 2, 3, 4, 5]
     float: [2.3, 1.3, 5.1, nil, 4.4]
     category: ["one", "two", "three", "one", "three"]
-  nbRawHtml: "<div class=\"coppia\">"
-  nbTable tabella(simple).dataColor(everything(), palette = @["blue", "red"])
   let few = tableData:  # three rows of exibble
     num: [0.1111, 2.222, 5550.0]
     char: ["apricot", "banana", nil]
     fctr: ["one", "two", "five"]
-  nbTable tabella(few)
-    .tabSpanner("spanner", ["char", "fctr"])
-    .tabStyle(style.fill("lightblue"), loc.columnLabels(cols = "num"))
-    .tabStyle(style.fill("yellow"), loc.columnHeader())
-  nbRawHtml: "</div>"
+  # the colours of the book's examples, as the guide gives them (names, not the page's tokens)
+  nbAccanto:
+    nbTable tabella(simple).optTokens.dataColor(everything(), palette = @["blue", "red"])
+    nbTable tabella(few).optTokens
+      .tabSpanner("spanner", ["char", "fctr"])
+      .tabStyle(style.fill("lightblue"), loc.columnLabels(cols = "num"))
+      .tabStyle(style.fill("yellow"), loc.columnHeader())
 
 nbText: """
 ## How it worked
