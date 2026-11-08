@@ -42,8 +42,10 @@ elsewhere.
 - **Quaderno**, an Italian school exercise book: squared paper, a red margin, headings in blue
   pen with a highlighter stroke, code on index cards, outputs on sticky notes, tables taped in.
 
-Without JavaScript a page shows as a quaderno. Everything Munari changes is scoped by
-`html[data-tema="munari"]`.
+Munari is the page itself: its rules need no script, so a page without JavaScript (or before
+its script runs) is Munari. The quaderno is the other look, kept because it shows that a page and
+its tables work just as well in a very different theme: everything it changes is scoped by
+`html[data-tema="quaderno"]`.
 
 ## Three rules
 
@@ -278,6 +280,9 @@ palette can be swapped on the page; the quaderno's are fixed. From them, one rul
 derives every token with `color-mix(in oklab, …)`: `--n-0` to `--n-9`, `--surface`, and a soft
 and a text version of each role. The CSS of both looks and of every block uses only the tokens;
 the quaderno keeps a few motifs of its own (the squares, the margin, the post-it, the tape).
+Munari's rules are written plain, as the page's own; the quaderno's are written once without a
+scope, and `stile.nim` puts `html[data-tema="quaderno"]` in front of every selector when it builds
+the CSS, so they win over Munari only in the quaderno.
 
 **The blocks.** `docs/blocchi.nim` makes each block with nimib's `newNbBlock`: a type with
 fields and a `toHtml` that writes classes, never styles. A leaf block (`nbNota`, `nbTitolo`,
