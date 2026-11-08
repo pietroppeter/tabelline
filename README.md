@@ -89,6 +89,10 @@ Kept up to date as tabelline changes. The home page lists them in this order:
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Rethinking tabelline's datasets](https://pietroppeter.github.io/tabelline/devlog/datasets/)
+  (8 Nov 2026 E): the three ways to make a dataset, the datasets tabelline uses and where they come
+  from, the ones gt and Great Tables show first, and a brainstorm of three domains in three sizes
+  (a twin for gt's best known datasets, Italian World Heritage per person); a draft to decide from.
 - [Blocks, not HTML](https://pietroppeter.github.io/tabelline/devlog/blocks-review/)
   (8 Nov 2026 D): how much HTML, CSS and colour the pages write by hand (measured at build), the
   custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where

@@ -1,0 +1,562 @@
+## devlog: 08 Nov 2026 E | Rethinking tabelline's datasets | A table is for people, and people recognise the data before they read a number. Which datasets tabelline uses today and where they come from, which ones a reader of gt and Great Tables meets first, and a brainstorm of what tabelline could use instead: familiar from gt, with an Italian twist, in three domains and three sizes. A first draft, to decide from.
+## A dated post: the survey as it was on 8 November 2026, not updated afterwards. The counts of
+## tabelline's own datasets are taken from the sources when the page is first built and kept in
+## devlog/data/datasets/uses.tsv; the counts of gt and Great Tables were taken by survey.py there,
+## and the World Heritage table by unesco.py (both from public sources).
+import std/[os, strutils, strformat, sequtils, algorithm, tables]
+import nimib except md
+import tabelline, tabelline/nimib
+import ../blocchi
+
+let docs = currentSourcePath().parentDir.parentDir
+let root = docs.parentDir
+let data = docs / "devlog" / "data" / "datasets"
+nbInit
+nb.doc.filename = docs / "devlog" / "datasets" / "index.html"
+nb.useTabelline(nome = "tabelline",
+                title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+
+proc readTsv(path: string): TableData =
+  ## A TSV file whose `#` lines are comments (readCsv has no `comment` option yet).
+  parseCsv(readFile(path).splitLines.filterIt(not it.startsWith("#")).join("\n"), sep = '\t')
+
+nbTitolo "8 November 2026", "Rethinking tabelline's datasets", """
+A table is for people, and people recognise the data before they read a number. What tabelline
+uses today, what gt and Great Tables show first, and what tabelline could use instead.
+"""
+
+nbText: """
+tabelline takes data that is already processed and makes a display table from it: a table crafted
+for people to read. gt and Great Tables open their guides with the same distinction. They set
+*display tables* apart from *data tables* (data frames): display tables are the ones
+"you'd find in a web page, a journal article, or in a magazine", and they are "output only, where
+we'd not want to use them as input ever again" ([Great Tables, Get
+Started](https://posit-dev.github.io/great-tables/get-started/); gt's
+[introduction](https://gt.rstudio.com/articles/gt.html) says the same).
+
+If the table is for a reader, the data in it is half of what the reader gets. A reader who sees
+Mercury, or Italy, or a carbonara, knows what the row is before reading its numbers, and can look
+at what the table does with them. When the same few datasets come back from page to page, they
+become landmarks: whoever has read gt's guide knows `islands` and `exibble` by sight. tabelline's
+pages so far took whatever data was at hand. This post surveys it, in three parts:
+
+1. **What we have**: how a dataset is made in tabelline, the three it ships, and the many small
+   ones written inside the pages.
+2. **What gt and Great Tables show first**: the datasets of their READMEs, of their first guide,
+   and of their reference.
+3. **What we could have**: three domains in three sizes, a tabelline twin for gt's best known
+   datasets, and a first taste of one of them.
+
+It ends with recommendations, the choices to make, and how this page is built.
+"""
+
+nbIndice()
+
+# ======================================================================================== Part 1
+nbParte 1, "What we have", prPrimary
+
+nbText: """
+## Three ways to make a dataset
+
+A dataset in tabelline is a `TableData`: named columns of values (numbers, text, true or false,
+dates as text, missing). There are three ways to make one, from the simplest to write to the
+most useful in a program. Here is the same small table, three Italian dishes, made the three ways.
+"""
+
+nbGalleria "three ways to make the same table: swipe or scroll sideways":
+  nbScheda "Load it":
+    block:
+      nbText "From a file, with `readCsv` (or from a string, with `parseCsv`). Each value's type is guessed."
+      nbCode:
+        let ricette = readCsv(data / "ricette.csv")
+      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+  nbScheda "Write the columns":
+    block:
+      nbText "In the code, one line per column, with the `tableData:` macro."
+      nbCode:
+        let ricette = tableData:
+          dish: ["Carbonara", "Pesto alla genovese", "Risotto alla milanese"]
+          region: ["Lazio", "Liguria", "Lombardia"]
+          vegetarian: [false, true, false]
+      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+  nbScheda "From objects":
+    block:
+      nbText "From Nim objects or named tuples, one field per column: `tabella` takes them as they are."
+      nbCode:
+        type Ricetta = object
+          dish, region: string
+          vegetarian: bool
+        let ricette = @[
+          Ricetta(dish: "Carbonara", region: "Lazio", vegetarian: false),
+          Ricetta(dish: "Pesto alla genovese", region: "Liguria", vegetarian: true),
+          Ricetta(dish: "Risotto alla milanese", region: "Lombardia", vegetarian: false)]
+      nbTable tabella(ricette, rownameCol = "dish").optPageTheme()
+
+nbNota """
+**1 · Load it.** `readCsv(path, sep = ',')` reads a file; `parseCsv(text, sep)` reads a string,
+so a page can read its file when it is compiled with `staticRead` and carry it inside (the book
+does this for Great Tables' data). The built-in datasets are of this kind too: `planets()`
+parses a CSV string kept in `tabelline/datasets`.
+
+**2 · Write the columns.** `tableData:` is a macro: each line is `name: [values]`, a name may
+have dots (`size.mass`, for spanners) or be quoted, and `nil` is a missing value. For columns
+computed in a loop, the proc behind it takes pairs: `toTableData({"n": ns.toValues})`.
+
+**3 · From objects.** `toTableData(rows)` reads the fields of each object with `fieldPairs`,
+in their order; `tabella(rows)` calls it for you. This is the way for data that a program
+already has: rows parsed from somewhere else, or built with types of its own.
+""", nkDone, "Code"
+
+nbNota """
+**Missing.** `readCsv` has no `comment` option, so the Milano Cortina post and this one write
+their own `readTsv` to skip `#` lines; there is no reader for JSON, and no verbs on the data
+(filter, sort, head, join): the book writes its own `head`, `take` and `select`. Data frames
+are planned for 0.3.
+""", nkMissing
+
+# -------------------------------------------------------------------------- counted uses
+let snapshot = data / "uses.tsv"
+const builtins = ["planets()", "exibble()", "tavolaPitagorica(", "islands()", "airquality()", "sza()",
+                  "tableData:", "readCsv(", "readTsv("]
+
+proc area(rel: string): string =
+  if rel.startsWith("book/"): "book"
+  elif rel.startsWith("openspec/"): "specs"
+  elif rel.startsWith("tests/"): "tests"
+  elif rel.startsWith("docs/devlog/"): "posts"
+  elif rel.startsWith("docs/"): "living documents"
+  elif rel.startsWith("src/"): "library"
+  else: "README"
+
+# A dated snapshot: counted once, when the page was first built (8 November 2026), so the post
+# keeps its numbers as pages change. Delete the file to count again.
+if not fileExists(snapshot):
+  var counts = initOrderedTable[(string, string), int]()
+  for dir in ["docs", "book", "openspec/specs", "tests", "src"]:
+    for path in walkDirRec(root / dir):
+      if not (path.endsWith(".nim") or path.endsWith(".md")) or path.endsWith("datasets.nim") and "devlog" in path:
+        continue
+      let s = readFile(path)
+      let rel = path.relativePath(root)
+      for b in builtins:
+        let n = s.count(b)
+        if n > 0: counts.mgetOrPut((area(rel), b), 0) += n
+  for b in builtins:
+    let n = readFile(root / "README.md").count(b)
+    if n > 0: counts.mgetOrPut(("README", b), 0) += n
+  var lines = @["# Uses of each way to get a dataset, counted in tabelline's sources on 8 Nov 2026",
+                "area\tdataset\tuses"]
+  for k, v in counts: lines.add &"{k[0]}\t{k[1]}\t{v}"
+  writeFile(snapshot, lines.join("\n") & "\n")
+
+let uses = readTsv(snapshot)
+proc used(a, b: string): int =
+  for i in 0 ..< uses.nrows:
+    if $uses["area", i] == a and $uses["dataset", i] == b: return int(uses["uses", i].toFloat)
+
+nbText: """
+## The three it ships
+
+`tabelline/datasets` has three datasets, built into the module so that no file has to be found
+when a program runs. They are where every page and spec starts.
+"""
+
+nbShowCode:
+  type Shipped = object
+    dataset, what: string
+    docs, book, checks: int
+  proc row(name, call, what: string): Shipped =
+    Shipped(dataset: name, what: what,
+            docs: used("README", call) + used("living documents", call) + used("posts", call),
+            book: used("book", call), checks: used("specs", call) + used("tests", call))
+  let rows = @[
+    row("`planets`", "planets()", "8 planets × 12 facts, from NASA (public domain)"),
+    row("`tavolaPitagorica`", "tavolaPitagorica(", "the times table, made by the code"),
+    row("`exibble`", "exibble()", "gt's toy table, a column per type (MIT)")]
+  let t = tabella(rows, rownameCol = "dataset"):
+    optPageTheme()
+    tabHeader "The datasets tabelline ships", "and how many times the sources call them"
+    tabSpanner "calls in", ["docs", "book", "checks"]
+    colsLabel {"checks": "specs, tests"}
+    fmtMarkdown "dataset"
+    subZero zeroText = "·"
+    tabSourceNote md("Counted in the sources on 8 November 2026 (`devlog/data/datasets/uses.tsv`); *docs* are the README, the pages and the posts.")
+  nbTable t
+
+nbText: &"""
+The planets are the landmark today: the README and the home page start from them, and the Solar
+System is also where most small examples come from (below). In the specs and the tests the tavola
+pitagorica is called as often, as the simplest grid of numbers there is. `exibble` is there for the book, whose ported
+chapters must keep gt's data, and for the parts of the docs that compare with gt.
+
+## The ones written in the pages
+
+Most tables in the pages are not made from the datasets above: the sources write
+**{used("posts", "tableData:") + used("living documents", "tableData:")}** `tableData:` blocks in
+the docs and posts, **{used("book", "tableData:")}** in the book, **{used("specs", "tableData:")}**
+in the specs and **{used("tests", "tableData:")}** in the tests, and a few more tables come from
+objects. Grouped by what they are about, they fall in three families:
+"""
+
+nbShowCode:
+  type Small = object
+    family, theme, examples, where: string
+  let rows = @[
+    Small(family: "Made up for an example", theme: "🪐 the Solar System",
+          examples: "planets and moons, rocky and giant, mass and radius, distance and water",
+          where: "Designing 0.1 (ten), Three threads, explainer, specs"),
+    Small(family: "Made up for an example", theme: "🧮 school",
+          examples: "tabelline 2 × 3, 4 × 5, 6 × 7; a pagella with *materia* and *voto*",
+          where: "Design Ref, Blocks review, explainer"),
+    Small(family: "Made up for an example", theme: "🔧 one of each unit",
+          examples: "telescopes sold, file sizes, a kettle and a wind turbine, race times, Apollo 11, CO₂ in 1850 and 2025, three cities and their flags",
+          where: "Designing 0.1, specs"),
+    Small(family: "Taken from gt", theme: "🧪 gt's own",
+          examples: "`exibble`, the colorizing guide's small frame, four cars from `gtcars`, a palette frame",
+          where: "book, Designing 0.1, Book found"),
+    Small(family: "Taken from gt", theme: "🏝️ R's classics",
+          examples: "`islands`, `airquality`, `sza` (CSV files copied from Great Tables)",
+          where: "book"),
+    Small(family: "Read from real data", theme: "⛷️ a story",
+          examples: "Milano Cortina 2026: medals, venues, sports, athletes, history (Wikipedia), CO₂ (NOAA)",
+          where: "Milano Cortina post"),
+    Small(family: "Read from real data", theme: "📏 the docs themselves",
+          examples: "the commands of the repo, the choices of day one, the colours of the design, the audit of the pages, the Table Contest's winners",
+          where: "Agents, Day one, Design review, Blocks review, explainer")]
+  let t = tabella(rows, rownameCol = "theme", groupnameCol = "family"):
+    optPageTheme()
+    tabHeader "The small datasets, by what they are about", "written in the pages, 8 November 2026"
+    colsLabel {"examples": "for example", "where": "in"}
+    fmtMarkdown "examples"
+  nbTable t
+
+nbText: """
+Three things stand out. **The Solar System is already a theme**, the only one: it began with
+`planets()` and the small examples followed it. **The rest is ad hoc**: telescopes, kettles and a
+Ford GT were the first thing that fit the format to show, and none of them comes back. **Real data
+lives only in stories** (Milano Cortina) and in the book's copies of gt's data, in files next to
+the page that reads them.
+"""
+
+# ======================================================================================== Part 2
+nbParte 2, "What gt and Great Tables show first", prSecondary
+
+let survey = readTsv(data / "survey.tsv")
+
+nbText: """
+## The first table
+
+A reader meets gt or Great Tables in one of two places, and each shows a different first table.
+The **README** of both makes one table from **`sp500`**, a week of the S&P 500 index in June 2010,
+with a title, dates and currency: it shows off formats. The **first guide** (gt's introduction,
+Great Tables' *Get Started*) starts from **`islands`**, the ten largest landmasses of the world,
+two columns: it shows the parts of a table, one at a time, and moves on to **`airquality`**
+(New York, 1973) for column labels.
+"""
+
+nbShowCode:
+  type First = object
+    library, page, datasets: string
+  var rows: seq[First]
+  for i in 0 ..< survey.nrows:
+    let page = $survey["page", i]
+    if page == "reference examples" or page.startsWith("Get Started: ") and page != "Get Started: index": continue
+    rows.add First(library: $survey["library", i], page: page.replace("Get Started: index", "Get Started"),
+                   datasets: ($survey["datasets", i]).split(' ').mapIt("`" & it & "`").join(", "))
+  let t = tabella(rows, groupnameCol = "library"):
+    optPageTheme()
+    tabHeader "The first pages", "and the datasets their code uses, in order of appearance in the list of datasets"
+    fmtMarkdown "datasets"
+    colsLabel {"page": "page", "datasets": "datasets"}
+    tabSourceNote md("Counted in the sources on raw.githubusercontent.com on 8 November 2026 by `survey.py`.")
+  nbTable t
+
+nbText: """
+## The guide and the reference
+
+After the first page, Great Tables' guide settles on **`exibble`**: eight rows of one column per
+type, made to show what each format and selector does. It is the guide's dataset for formats,
+styles, themes and selections; `islands`, `airquality` and `sza` come back once or twice, and three
+pages build a small frame of their own. The reference is different: each function's examples pick
+a real dataset that fits, and a few come back again and again.
+"""
+
+nbShowCode:
+  type Page = object
+    page, datasets: string
+    frames: int
+  var guide: seq[Page]
+  var reference: seq[(string, int)]
+  for i in 0 ..< survey.nrows:
+    let page = $survey["page", i]
+    if page.startsWith("Get Started: ") and page != "Get Started: index":
+      guide.add Page(page: page["Get Started: ".len .. ^1],
+                     datasets: ($survey["datasets", i]).split(' ').filterIt(it.len > 0).mapIt("`" & it & "`").join(", "),
+                     frames: int(survey["inline", i].toFloat))
+    elif page == "reference examples":
+      reference.add ($survey["datasets", i], int(survey["inline", i].toFloat))
+  let g = tabella(guide, rownameCol = "page"):
+    optPageTheme()
+    tabHeader "Great Tables, Get Started", "after the first page"
+    colsLabel {"frames": "own frames"}
+    fmtMarkdown "datasets"
+    subZero zeroText = ""
+  let refData = tableData:
+    dataset: reference.mapIt("`" & it[0] & "`")
+    examples: reference.mapIt(it[1])
+  let r = tabella(refData, rownameCol = "dataset"):
+    optPageTheme()
+    tabHeader "gt's reference", "examples that start from each dataset"
+    fmtMarkdown "dataset"
+    tabSourceNote md("In four of gt's R files: `format_data`, `tab_create_modify`, `data_color`, `utils_render_html`.")
+  nbAccanto:
+    nbTable g
+    nbTable r
+
+nbText: """
+## Sixteen datasets, eighteen in R
+
+Both READMEs end with the datasets the package ships, as a row of badges: sixteen in Great
+Tables, eighteen in gt (two of them clinical, for pharma tables). `islands` and `airquality` are
+not among them: they are R's own datasets, from the 1970s, which Great Tables copies for its guide.
+"""
+
+nbShowCode:
+  type Ds = object
+    dataset, what: string
+    rows: int
+  let rows = @[
+    Ds(dataset: "countrypops", what: "yearly populations of countries, 1960 to 2024 (World Bank)", rows: 13975),
+    Ds(dataset: "sza", what: "solar zenith angles by month and latitude, twice an hour", rows: 816),
+    Ds(dataset: "gtcars", what: "deluxe cars of 2014 to 2017 (with Ferrari, Lamborghini, Maserati)", rows: 47),
+    Ds(dataset: "sp500", what: "the S&P 500 index, daily, 1950 to 2015", rows: 16607),
+    Ds(dataset: "pizzaplace", what: "a year of sales of a pizza place", rows: 49574),
+    Ds(dataset: "exibble", what: "a toy table, one column of each type", rows: 8),
+    Ds(dataset: "towny", what: "the municipalities of Ontario, 1996 to 2021", rows: 414),
+    Ds(dataset: "peeps", what: "people from all over the world, with addresses", rows: 100),
+    Ds(dataset: "films", what: "the films in competition at Cannes", rows: 1873),
+    Ds(dataset: "metro", what: "the stations of the Paris Métro", rows: 321),
+    Ds(dataset: "gibraltar", what: "the weather in Gibraltar, May 2023", rows: 1431),
+    Ds(dataset: "constants", what: "the fundamental physical constants", rows: 354),
+    Ds(dataset: "illness", what: "lab tests of one patient", rows: 39),
+    Ds(dataset: "reactions", what: "rates of gas-phase reactions of organic compounds", rows: 1683),
+    Ds(dataset: "photolysis", what: "photolysis rates of organic compounds", rows: 34),
+    Ds(dataset: "nuclides", what: "the nuclides", rows: 3383),
+    Ds(dataset: "rx_adsl", what: "a clinical trial's subjects (gt only)", rows: 182),
+    Ds(dataset: "rx_addv", what: "a clinical trial's protocol deviations (gt only)", rows: 291)]
+  let t = tabella(rows, rownameCol = "dataset"):
+    optPageTheme()
+    tabHeader "The datasets of gt and Great Tables", "in the order of their READMEs"
+    fmtInteger "rows"
+    tabSourceNote md("From gt's `R/datasets.R` and the READMEs, 8 November 2026.")
+  nbTable t
+
+nbNota """
+**Do gt and Great Tables start from the population of countries?** Not quite, but it is the
+dataset they put first. `countrypops` opens the list of datasets in both READMEs, its badge comes
+first, and it ties with `gtcars` as the dataset gt's reference uses most (14 examples each, in the
+four files counted). But the first table a reader sees is `sp500` in the README and `islands` in
+the guide, and Great Tables' guide uses `countrypops` only in its Examples page (the populations of
+Oceania).
+""", nkInfo
+
+nbText: """
+What gt does, in three: **familiar data with history** (R's own `islands` and `airquality`, the
+S&P 500, Cannes, the Paris Métro), **one toy table for every type** (`exibble`), and **a few rich
+datasets reused everywhere** (`countrypops`, `gtcars`, `towny`), so that the reader of the
+reference has seen the data before.
+"""
+
+# ======================================================================================== Part 3
+nbParte 3, "What we could have", prSuccess
+
+nbText: """
+## Three domains, three sizes
+
+The idea: take what is familiar from gt and Great Tables, and give it a twist that is tabelline's
+own: Italian, recognisable to anyone, and about things that are made to be looked at. The datasets
+fall in three domains, each in three sizes:
+
+- **tiny**: three to six rows, written in the example with `tableData:`, so the reader sees all of it;
+- **built in**: tens of rows, in `tabelline/datasets`, a landmark that comes back in every page;
+- **big**: hundreds of rows or more, read from files, for stories and the book.
+
+Three by three is a tavola pitagorica, so here it is as one.
+"""
+
+nbShowCode:
+  let grid = tableData:
+    domain: ["🍝 Casa: the kitchen and the school", "📐 Bottega: design", "🏔️ Mondo: geography and the sky"]
+    tiny: ["three dishes and their region; *tabelline* 2 × 3; a *pagella*",
+           "the steps of Munari's method, for a *risotto verde*",
+           "four planets and their moons"]
+    builtIn: ["`tavolaPitagorica`; `dispensa`, a pantry with one column of each type (an `exibble` you can eat)",
+              "`compasso`: the Compasso d'Oro of 1954, its designers, objects and makers",
+              "`planets`; `alpi`: the highest peaks of the Alps, and the countries they stand in"]
+    big: ["a pizzeria's year of orders (made up, as `pizzaplace` is)",
+          "every Compasso d'Oro, 1954 to 2024",
+          "`paesi`: countries, their population and their World Heritage Sites"]
+  let t = tabella(grid, rownameCol = "domain"):
+    optPageTheme()
+    tabHeader "Nine datasets", "three domains × three sizes"
+    colsLabel {"builtIn": "built in"}
+    fmtMarkdown ["tiny", "builtIn", "big"]
+  nbTable t
+
+nbText: """
+**Casa** is what everyone knows: Italian food for the small examples, which need no explaining
+(everyone knows a carbonara, and has an opinion on it), and school, where *tabelline* come from:
+the tavola pitagorica, a timetable, a report card. **Bottega** is design, where tabelline's looks
+come from: Bruno Munari, and the Compasso d'Oro, Italy's design award since 1954 (Munari won it
+that first year, with the toy monkey Zizì). It also bridges back to the kitchen: Munari explains
+his design method, in *Da cosa nasce cosa*, by designing a *risotto verde*. **Mondo** is the world
+seen from Italy: the planets stay, the Alps cross eight countries (their highest peaks stand between Italy, France
+and Switzerland), and the countries of the
+world come with a twist, below.
+
+## A twin for gt's best known datasets
+
+A reader who comes from gt should find a dataset that plays the same part, in the same place.
+"""
+
+nbShowCode:
+  type Twin = object
+    gt, twin, source: string
+  let rows = @[
+    Twin(gt: "`islands`", twin: "`alpi`: the highest peaks of the Alps, their height and countries",
+         source: "✅ Wikipedia, the 82 four-thousanders"),
+    Twin(gt: "`sp500`", twin: "`paesi`: World Heritage Sites and population, flags, ratios",
+         source: "✅ Wikipedia and `countrypops`"),
+    Twin(gt: "`exibble`", twin: "`dispensa`: a pantry, with dates, times, prices, missing values",
+         source: "✅ made up"),
+    Twin(gt: "`countrypops`", twin: "`paesi` in full: every country, every year", source: "🟡 World Bank"),
+    Twin(gt: "`sza`", twin: "`tavolaPitagorica`, coloured by value", source: "✅ the code"),
+    Twin(gt: "`airquality`", twin: "the air or the weather of an Italian city", source: "🟡 ARPA Lombardia"),
+    Twin(gt: "`gtcars`", twin: "the Compasso d'Oro: designer, object, maker, year", source: "✅ Italian Wikipedia"),
+    Twin(gt: "`pizzaplace`", twin: "a Neapolitan pizzeria's orders", source: "✅ made up"),
+    Twin(gt: "`towny`", twin: "the *comuni* of Italy", source: "🟡 ISTAT"),
+    Twin(gt: "`films`, `metro`", twin: "Venice's Golden Lions, Milan's metro", source: "🟡 Wikipedia, Comune di Milano")]
+  let t = tabella(rows, rownameCol = "gt"):
+    optPageTheme()
+    tabHeader "Twins", "a tabelline dataset for the part each gt dataset plays"
+    colsLabel {"twin": "tabelline's twin", "source": "from"}
+    fmtMarkdown ["gt", "twin", "source"]
+    tabSourceNote md("✅ read from this sandbox on 8 November 2026, or nothing to download; 🟡 a source exists, blocked here or not tried yet.")
+  nbTable t
+
+nbText: """
+The parts: `islands` is the guide's first table, a short list; `sp500` the README's showcase,
+with dates and formats; `exibble` the toy with one column of each type; `countrypops`, `gtcars`
+and `towny` the rich datasets of the reference; `sza` a grid to colour; `airquality` daily
+measures with gaps; `pizzaplace` a big table of sales.
+"""
+
+nbText: """
+## A first taste: the countries of the World Heritage
+
+The idea that started this post: gt starts from the population of countries; tabelline can too,
+and add the World Heritage Sites that UNESCO has recognised. By population Italy is not in the
+top ten (it is 25th in `countrypops` for 2022); by sites it is first. Here are the countries with the most sites, with
+the population from Great Tables' own `countrypops`, and the sites per ten million people.
+"""
+
+nbShowCode:
+  let raw = readTsv(data / "unesco.tsv")
+  type Paese = object
+    country, code: string
+    sites, population: int
+    perTenMillion: float
+  var rows: seq[Paese]
+  for i in 0 ..< raw.nrows:
+    let sites = int(raw["sites", i].toFloat)
+    let pop = int(raw["population", i].toFloat)
+    rows.add Paese(country: $raw["country", i], code: $raw["code", i], sites: sites, population: pop,
+                   perTenMillion: sites / pop * 1e7)
+  rows.sort(proc (a, b: Paese): int = cmp(b.perTenMillion, a.perTenMillion))
+  let t = tabella(rows[0 ..< 10], rownameCol = "country"):
+    optPageTheme()
+    tabHeader md("Where the **World Heritage** is dense"), "the countries with 15 sites or more, by sites per 10 million people"
+    fmtFlag "code"
+    fmtInteger ["sites", "population"]
+    fmtNumber "perTenMillion", decimals = 1
+    colsLabel {"code": "", "perTenMillion": "per 10 M people"}
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["country"] == "Italy"))
+    tabSourceNote md("Sites: Wikipedia, *World Heritage Site*, as of July 2026. Population: Great Tables' `countrypops` (World Bank), 2022. By `unesco.py`.")
+  nbTable t
+
+nbText: """
+Italy is first by sites (62, with China at 61) but sixth here: per person, Greece, Portugal and
+the Czech Republic have more. That is a finding of its own, and a warning for the dataset: a ratio
+favours small countries, and among all of them the microstates win (the Holy See is a site of its
+own). So `paesi` should carry both numbers, and its examples should say which they rank by.
+
+Two things the twist needs that tabelline does not have: **a join** (the names differ, *Russia*
+here, *Russian Federation* in `countrypops`, so the script joins on ISO codes), and **the data
+itself**: UNESCO's own list and the World Bank's API are blocked from this sandbox, Wikipedia
+answers slowly (it rate-limits) but answers.
+"""
+
+# ================================================================================== closing
+nbText: """
+## Recommendations
+
+Three, to discuss, each with its choices.
+
+### 1 · One first table, one landmark, one toy
+
+- **First table: `alpi`**, the twin of `islands`: the ten highest peaks of the Alps, two or three
+  columns, in the README's first lines, the home page and the explainer's opening. It is short,
+  Italian and not only Italian (the peaks stand between Italy, France and Switzerland), and grows
+  naturally into stubs (by massif), spanners (height, first ascent) and flags.
+- **Landmark: `paesi`**, the twin of `countrypops` and the README's showcase in the place of
+  `sp500`: flags, integers, ratios, a title, a bold row.
+- **Toy: `dispensa`**, the twin of `exibble`, for formats and selectors, while the book keeps
+  `exibble` itself.
+
+### 2 · Small examples come from the kitchen and the school
+
+Every tiny example is food or school, or the planets when the example is about science: no more
+telescopes and kettles. A dish has a region, a price, a cooking time, a date of harvest, a
+vegetarian flag: every format has a dish to show it on. Ported chapters keep gt's data, since
+the book keeps its sources as they are, and a `tabelline` box can show the twin beside them.
+
+### 3 · Three steps, in three PRs
+
+1. **Decide** the names and the nine cells (this post, with its review).
+2. **Build** (an OpenSpec change): `alpi`, `paesi` and `dispensa` in `tabelline/datasets`, each
+   with its source, licence and date in the module, and the scripts that made them; plus `readCsv`
+   with a `comment` option, which every data file here needs.
+3. **Migrate**: the README, the home page, the explainer and the specs' examples move to the new
+   datasets; the dated posts keep what they had.
+
+## Choices to make
+
+- **The first table**: `alpi` (recommended), `paesi`, the planets as today, or a small food table?
+- **Names**: Italian (`alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
+  English, as `planets` is? An Italian name is part of the twist; mixing both is what we have now.
+- **Bottega**: is Munari's *risotto verde* the right tiny example for design, and the Compasso
+  d'Oro the right bigger one? A dataset from Munari's own books needs care with what we take from
+  them (facts and names, in our own words).
+- **Sizes**: do built-in datasets stay small (tens of rows, inside the module), and the big ones
+  live as files in the docs, or should `paesi` ship whole?
+
+## How this page is built
+
+**1. The page** is a nimib notebook, `docs/devlog/datasets.nim`, written with the docs' blocks
+(`docs/blocchi.nim`): `nbGalleria` for the three ways, `nbShowCode` under every table, `nbAccanto`
+for the two tables side by side, `nbNota` for the notes, `nbParte` for the three parts. Every
+table takes `optPageTheme()`, so it follows the look you picked in the header.
+
+**2. The counts of tabelline** were taken from the sources the first time the page was built:
+every `.nim` and `.md` file in `docs/`, `book/`, `openspec/specs/`, `tests/` and `src/`, and the
+README, counting the calls of each dataset and the `tableData:` blocks. They are kept in
+`devlog/data/datasets/uses.tsv`, because a dated post keeps the numbers it had.
+
+**3. The data from outside** was fetched by two scripts beside it, run once: `survey.py` reads
+the READMEs, guides and reference files of gt and Great Tables from raw.githubusercontent.com and
+writes `survey.tsv`; `unesco.py` reads Wikipedia's *World Heritage Site* page as wikitext and Great
+Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`. The page reads both
+with a `readTsv` of its own, which skips the `#` lines naming the sources.
+"""
+
+nbSave

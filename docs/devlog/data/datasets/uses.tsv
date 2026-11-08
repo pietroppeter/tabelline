@@ -1,0 +1,29 @@
+# Uses of each way to get a dataset, counted in tabelline's sources on 8 Nov 2026
+area	dataset	uses
+living documents	planets()	5
+living documents	exibble()	2
+living documents	tavolaPitagorica(	2
+living documents	tableData:	8
+posts	tableData:	40
+posts	readTsv(	7
+posts	tavolaPitagorica(	1
+book	tavolaPitagorica(	2
+book	airquality()	4
+book	planets()	1
+book	sza()	1
+book	tableData:	5
+book	islands()	5
+book	exibble()	9
+specs	planets()	13
+specs	tavolaPitagorica(	15
+specs	tableData:	20
+specs	exibble()	1
+tests	tableData:	10
+tests	planets()	10
+tests	tavolaPitagorica(	11
+tests	exibble()	1
+library	tableData:	3
+library	planets()	1
+library	tavolaPitagorica(	1
+README	planets()	2
+README	tableData:	1

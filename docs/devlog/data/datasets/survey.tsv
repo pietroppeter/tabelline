@@ -1,0 +1,37 @@
+# The datasets used by the code of gt's and Great Tables' first pages, counted on 8 Nov 2026 by survey.py
+library	page	source	datasets	inline
+gt	README	rstudio/gt/master/README.md	sp500	0
+gt	Introduction (vignette)	rstudio/gt/master/vignettes/gt.Rmd	islands airquality	1
+Great Tables	README	posit-dev/great-tables/main/README.md	sp500	0
+Great Tables	Get Started: index	posit-dev/great-tables/main/docs/get-started/index.qmd	islands airquality	0
+Great Tables	Get Started: overview	posit-dev/great-tables/main/docs/get-started/overview.qmd		0
+Great Tables	Get Started: basic-header	posit-dev/great-tables/main/docs/get-started/basic-header.qmd	islands	0
+Great Tables	Get Started: basic-stub	posit-dev/great-tables/main/docs/get-started/basic-stub.qmd	islands	0
+Great Tables	Get Started: basic-column-labels	posit-dev/great-tables/main/docs/get-started/basic-column-labels.qmd	airquality	0
+Great Tables	Get Started: basic-formatting	posit-dev/great-tables/main/docs/get-started/basic-formatting.qmd	exibble	0
+Great Tables	Get Started: nanoplots	posit-dev/great-tables/main/docs/get-started/nanoplots.qmd		4
+Great Tables	Get Started: basic-styling	posit-dev/great-tables/main/docs/get-started/basic-styling.qmd	airquality	1
+Great Tables	Get Started: targeted-styles	posit-dev/great-tables/main/docs/get-started/targeted-styles.qmd	exibble	0
+Great Tables	Get Started: colorizing-with-data	posit-dev/great-tables/main/docs/get-started/colorizing-with-data.qmd	sza	1
+Great Tables	Get Started: table-theme-options	posit-dev/great-tables/main/docs/get-started/table-theme-options.qmd	exibble	0
+Great Tables	Get Started: table-theme-premade	posit-dev/great-tables/main/docs/get-started/table-theme-premade.qmd	exibble	0
+Great Tables	Get Started: column-selection	posit-dev/great-tables/main/docs/get-started/column-selection.qmd	exibble	0
+Great Tables	Get Started: row-selection	posit-dev/great-tables/main/docs/get-started/row-selection.qmd	exibble	0
+Great Tables	Get Started: loc-selection	posit-dev/great-tables/main/docs/get-started/loc-selection.qmd	exibble	1
+Great Tables	Examples	posit-dev/great-tables/main/docs/examples/index.qmd	countrypops sza towny islands airquality	0
+# gt's reference examples (R/format_data, tab_create_modify, data_color, utils_render_html): examples that start from each dataset
+gt	reference examples	gtcars	gtcars	14
+gt	reference examples	countrypops	countrypops	14
+gt	reference examples	towny	towny	11
+gt	reference examples	exibble	exibble	9
+gt	reference examples	pizzaplace	pizzaplace	7
+gt	reference examples	peeps	peeps	5
+gt	reference examples	reactions	reactions	3
+gt	reference examples	constants	constants	3
+gt	reference examples	sp500	sp500	3
+gt	reference examples	films	films	3
+gt	reference examples	illness	illness	2
+gt	reference examples	photolysis	photolysis	2
+gt	reference examples	nuclides	nuclides	2
+gt	reference examples	metro	metro	2
+gt	reference examples	sza	sza	1
