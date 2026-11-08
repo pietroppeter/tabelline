@@ -34,7 +34,7 @@ nbCode:
   let pitagora = tabella(tavolaPitagorica(10), rownameCol = "×"):
     tabHeader md("La *tavola pitagorica*"), "the times table, from 1 × 1 to 10 × 10"
     tabStubhead "×"
-    dataColor everything(), palette = palette("quaderno")
+    dataColor everything(), palette = palette("quaderno"), domain = (1.0, 100.0)
     tabStyle style.text(weight = "bold", color = "#C62828"), loc.stub(), loc.columnLabels()
     tabSourceNote md("Every cell is `row × column`. The squares are on the diagonal.")
     optQuaderno()

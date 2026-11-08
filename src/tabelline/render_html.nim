@@ -4,7 +4,7 @@
 ## Class names start with `tb_` (gt uses `gt_`).
 
 import std/[strutils, strformat, sequtils, tables, hashes]
-import core, formats, build
+import core, formats, build, colors
 
 func alignClass(a: Align): string =
   case a
@@ -22,12 +22,11 @@ proc tableCss*(id: string, o: TabOptions): string =
   let labelsBg = if o.columnLabelsBackgroundColor.len > 0: o.columnLabelsBackgroundColor else: o.tableBackgroundColor
   let groupBg = if o.rowGroupBackgroundColor.len > 0: o.rowGroupBackgroundColor else: o.tableBackgroundColor
   let stubBg = if o.stubBackgroundColor.len > 0: o.stubBackgroundColor else: "transparent"
-  let headingDark = o.headingBackgroundColor.len > 0 and o.headingBackgroundColor.startsWith("#") and
-                    o.headingBackgroundColor.len == 7 and parseHexInt(o.headingBackgroundColor[1..2]) < 128
-  let labelsDark = o.columnLabelsBackgroundColor.len == 7 and o.columnLabelsBackgroundColor.startsWith("#") and
-                   parseHexInt(o.columnLabelsBackgroundColor[1..2]) < 128
-  let headingColor = if headingDark: "#FFFFFF" else: o.tableFontColor
-  let labelsColor = if labelsDark: "#FFFFFF" else: o.tableFontColor
+  func onDark(bg: string): bool =
+    ## A background that white text reads better on (by contrast, not by one channel).
+    bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
+  let headingColor = if onDark(o.headingBackgroundColor): "#FFFFFF" else: o.tableFontColor
+  let labelsColor = if onDark(o.columnLabelsBackgroundColor): "#FFFFFF" else: o.tableFontColor
   let i = "#" & id
   let vlines = if o.tableBodyVlinesColor.len == 0: ""
                else: i & " .tb_row, " & i & " .tb_col_headings th { border-left: 1px solid " &

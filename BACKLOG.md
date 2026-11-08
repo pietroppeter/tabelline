@@ -93,6 +93,13 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## From the tabelline book (0.1 port thread, book/gaps.md in PR #11)
 
+- **Full Markdown in `md()`**: today `md()` reads inline marks only (bold, italic, code, links,
+  sub- and superscripts), with no lists, paragraphs or HTML entities; the book expected full
+  Markdown. Great Tables uses a Markdown library; tabelline would need a small block parser in the
+  core, or an optional module.
+- **`pattern`, `locale` and `expStyle` in the value functions**: the `formatX` functions lack
+  arguments their `fmtX` verbs or gt's `vec_fmt_*` have.
+
 - **Selectors** (S-M). Columns by position (also negative) and by a proc; combining rules
   (`|`, `&`, exclude); `matches()`; negative row indices; `loc.body(mask = ...)`; `loc.stub` by row
   label; `loc.rowGroups` by row index or condition.
