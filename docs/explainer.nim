@@ -19,7 +19,8 @@ nbTitolo "Guide · The Great Explainer · started 7 November 2026", "Great table
 """
 nbText: """
 Here is the first table every Italian pupil meets, *la tavola pitagorica*, made with tabelline.
-The code ran when this page was built:
+The code ran when this page was built, and one more line, `nbTable pitagora`, put the table in the
+page ([where a table goes](#where-a-table-goes) explains it):
 """
 
 nbCode:
@@ -241,7 +242,8 @@ the verbs, the formats and the hundreds of options, collected over eight years f
 A table library is mostly careful string building, which Nim does well, at compile time too.
 
 So tabelline is **written from scratch, in plain Nim**, with no dependencies: the core uses only
-the standard library, and nimib is needed only for the `nbTable` block. It copies the design of
+the standard library, and nimib is needed only for the `nbTable` block
+([where a table goes](#where-a-table-goes)). It copies the design of
 gt and Great Tables (the two layers, lazy building, the parts, scoped CSS) and their names, in
 camelCase, so that their documentation and gallery can be read as tabelline's: `tab_header`
 is `tabHeader`, `fmt_number` is `fmtNumber`, `loc.body()` and `style.fill()` are the same. Where
@@ -359,6 +361,51 @@ nbCode:
 nbTable rOrPythonTable
 
 nbText: """
+## Where a table goes
+
+A `Tabella` is a value: building it draws nothing. It becomes text, Markdown or HTML when you ask,
+and none of that needs nimib. Here is a small one, as text and as Markdown:
+"""
+
+nbCode:
+  let small3 = tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Up to 3 × 3")
+  echo small3              # text, as `$` gives
+  echo small3.toMarkdown   # Markdown
+
+nbText: """
+For HTML, `small3.toHtml` gives the table as a string to put in a page of your own, and
+`small3.save("tavola.html")` writes a whole standalone page:
+
+```nim
+import tabelline
+let small3 = tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Up to 3 × 3")
+small3.save("tavola.html")
+```
+
+Each table carries its own CSS, scoped to its id, so it looks the same on any page, unless you ask
+it to take the page's colours ([tables that follow the page](#tables-that-follow-the-page)).
+
+### In nimib
+
+This page is a [nimib](https://github.com/pietroppeter/nimib) notebook, and tabelline is made to
+live in them. `import tabelline/nimib`, the one module of tabelline that imports nimib, adds one
+block, `nbTable t`, which keeps the HTML of the table and its Markdown, so the same notebook renders
+to an HTML page and to a Markdown README:
+
+```nim
+import nimib, tabelline, tabelline/nimib
+nbInit                         # or nbInitMd, for a README.md
+nbCode:
+  let t = tabella(planets()).tabHeader("The planets")
+nbTable t
+nbSave
+```
+
+On this page, an `nbTable` line after the code puts each table in the page; it is usually left out
+of the code shown.
+"""
+
+nbText: """
 ## A first table, step by step
 
 The planets of the Solar System, from NASA's fact sheet, come with tabelline. Printed as they are,
@@ -371,8 +418,7 @@ nbCode:
   echo tabella(p).colsHide(["density", "gravity", "day_length", "orbital_period", "rings"])
 
 nbText: """
-`echo` draws a text table, which is what `$` does for a `Tabella`. In a page, `nbTable` shows the
-HTML. Step 1: name the planets as the stub, group them by type, and give the table a header.
+`echo` draws a text table. From here on, `nbTable t` shows the HTML after each step. Step 1: name the planets as the stub, group them by type, and give the table a header.
 """
 
 nbCode:
@@ -529,25 +575,6 @@ nbCode:
 nbTable squares
 
 nbText: """
-## In nimib
-
-tabelline is made to live in [nimib](https://github.com/pietroppeter/nimib) notebooks like this
-page. `import tabelline/nimib` adds one block, `nbTable t`, which keeps the HTML of the table and
-its Markdown, so the same notebook renders to an HTML page and to a Markdown README:
-
-```nim
-import nimib, tabelline, tabelline/nimib
-nbInit                         # or nbInitMd, for a README.md
-nbCode:
-  let t = tabella(planets()).tabHeader("The planets")
-nbTable t
-nbSave
-```
-
-Each table carries its own CSS, scoped to its id, so it looks the same in any nimib theme, unless
-you ask it to take the theme's colours, which is the next section. And because `echo` draws a
-text table, a table printed in `nbCode` shows up in the output, as above.
-
 ## Tables that follow the page
 
 Every table on these pages ends with `optPageTheme()`. It is the one verb here that gt and Great
