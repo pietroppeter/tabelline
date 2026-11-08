@@ -58,11 +58,17 @@ working rules that are easy to miss.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
 - The home page shows the simplest example and links the living documents in this order: The
-  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
+  Great Explainer, Stories, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
   lists only posts. A new living document gets a card there
   (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
 - The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
   change starts as a devlog post. The Agents page reads this file when it builds.
+- Stories are the *use it* threads' output, one for every release: a real subject told in
+  tables, as a user would. A story is `docs/stories/<slug>.nim` (first line `## story: <release> |
+  title | lede`, data in `docs/stories/data/<slug>/`); the stories page finds it, shows a small
+  table from it (`preview` in `docs/stories/index.nim`), and the roadmap's thread links it (`href`
+  in `docs/piano.nim`). A story is kept up to date, like a living document: when a release makes
+  one of its tables better, change the story.
 - Living documents are kept up to date. A devlog post
   (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter

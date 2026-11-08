@@ -64,7 +64,8 @@ nbText: """
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
 - `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim`; the look is `docs/stile.nim`,
-  explained in the [Design Ref](../design/). Posts are in `docs/devlog/`.
+  explained in the [Design Ref](../design/). Posts are in `docs/devlog/`, stories (one for
+  every release, told with tabelline) in `docs/stories/`.
 - `book/`: the [book](../book/), a nimibook (`nim r book/bookbuild.nim`); its planned sources are
   in `book/plan/`.
 - `BACKLOG.md` (ideas), `CHANGELOG.md` (what shipped), `docs/coverage/gt.json` (what of gt is
@@ -92,6 +93,7 @@ nbSave
 # llms.txt (llmstxt.org): a title, a summary, then links to what a model should read.
 let pages = [
   ("The Great Explainer", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
+  ("Stories", "stories/", "real subjects told in tables made with tabelline, one for every release"),
   ("Devlog", "devlog/", "every post, newest first"),
   ("Book", "book/", "the Great Tables and gt guides ported to tabelline, with what the book will port and what the port found"),
   ("Roadmap", "roadmap/", "the releases from 0.1 to 0.5"),

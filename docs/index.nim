@@ -44,6 +44,7 @@ page, so it changes with the look you pick at the top ([how it works](explainer/
 type Living = tuple[href, title, what: string]
 var living: seq[Living] = @[
   ("explainer/", "The Great Explainer", "gt and Great Tables from zero: what they are, how they work inside, who uses them; and tabelline, step by step."),
+  ("stories/", "Stories", "Real subjects told in tables made with tabelline, one for every release: the Winter Games of Milano Cortina 2026 first."),
   ("devlog/", "Devlog", "How tabelline is made: every post, newest first. Bigger changes are tracked and explained here."),
   ("book/", "Book", "The Great Tables and gt guides ported to tabelline, page by page, with the original next to it."),
   ("roadmap/", "Roadmap", "The releases from 0.1 to 0.5, and the three threads that make each one: build it, use it, port the references."),
