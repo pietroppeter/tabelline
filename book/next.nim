@@ -11,7 +11,7 @@ ones that can be ported now, then the ones that wait for a release. The
 
 How it is measured: `book/plan/plan.py` reads each page's code, finds the gt and Great Tables
 functions it calls, and looks each one up in the
-[coverage map](https://pietroppeter.github.io/tabelline/coverage/), where every gt feature
+[feature map](https://pietroppeter.github.io/tabelline/coverage/), where every gt feature
 has its status and the release it is planned for. A page can be ported in the first release
 that has every feature it calls. It is a first sieve: it sees the functions, not their
 arguments, so a page that can be ported "now" can still find gaps when it is ported, as the
