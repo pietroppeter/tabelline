@@ -654,8 +654,8 @@ nbCode:
       echo line
 
 nbText: """
-**The switch.** The look you pick sets `data-tema` on the page's `<html>`; Munari's six values
-replace the quaderno's, the browser works out every variable again, and every table follows. The
+**The switch.** The look you pick sets `data-tema` on the page's `<html>`; the quaderno's six
+values replace Munari's, the browser works out every variable again, and every table follows. The
 tables were made once, when the page was built: nothing runs on them when the look changes.
 
 ## What comes next

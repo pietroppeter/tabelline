@@ -44,10 +44,11 @@ working rules that are easy to miss.
 
 - Every page is a nimib notebook in `docs/` that calls `nb.useTabelline(...)` after `nbInit`
   and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
-  default (rules under `html[data-tema="munari"]`), and the quaderno; the header switches between
-  them and the choice is remembered. Check new page elements in both looks, at 390px. The HTML is
-  not committed: CI builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to
-  GitHub Pages from `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
+  default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
+  `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
+  Check new page elements in both looks, at 390px. The HTML is not committed: CI builds every
+  page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
+  Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
