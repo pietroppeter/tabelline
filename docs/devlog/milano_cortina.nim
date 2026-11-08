@@ -13,10 +13,10 @@ nb.doc.filename = docs / "devlog" / "milano-cortina" / "index.html"
 nb.useTabelline(nome = "tabelline",
                 title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-let bar {.used.} = tinta("--secondary")      # the page's secondary colour
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
 let gilt = tinta("--warning")                 # Italy's row
+let fresh = tinta("--success-soft")           # venues built for the Games
 
 proc link(path, label: string): string = &"[{label}]({post(path)})"
 
@@ -49,6 +49,13 @@ its questions the same way, takes the numbers Il Post reported (each table links
 and the rest from Wikipedia (and the air from NOAA). The words are this post's own.
 """
 
+nbNota("""
+Green cards like this one are about the code. Under every table, **show code** opens the Nim
+that made it, and a green card says which tabelline verbs do the work, and why. The
+rest of the text is about the Games: skip the green cards to read only the story. One table,
+the medal table, is also shown in Python and in R, to compare.
+""", nkCode, "Reading the code")
+
 nbIndice()
 
 nbText: """
@@ -76,11 +83,52 @@ nbShowCode:
     tabSourceNote md("From Wikipedia's [2026 Winter Olympics](https://en.wikipedia.org/wiki/2026_Winter_Olympics); 92 teams counting the neutral athletes.")
   nbTable t
 
+nbNota("""
+`fmtRoman` turns 25 into XXV. The dates are ISO dates in the data, `"2026-02-06"`, and `fmtDate`
+shows them as a reader wants them. Everything else in this post adds one idea at a time to a
+table like this one.
+""", nkCode)
+
 nbText: """
-They were the 25th Winter Games, and the roman numeral is how the Games count themselves:
-`fmtRoman` turns 25 into XXV. The dates are
-ISO dates in the data, `"2026-02-06"`, and `fmtDate` shows them as a reader wants them. Everything
-else in this post adds one idea at a time to a table like this one.
+They were the 25th Winter Games, and the roman numeral is how the Games count themselves.
+
+One row says little until there are others to set it beside. Here is the same row for every
+Winter Games held, from Chamonix 1924 (the Games of 1940 and 1944 were cancelled by the war,
+1944's in Cortina). The three in Italy are in yellow:
+"""
+
+nbShowCode:
+  var d = readTsv("history.tsv")
+  d.addColumn("n", toSeq(1 .. d.nrows).mapIt(toValue(it)))
+  let t = tabella(d, rownameCol = "year"):
+    optPageTheme()
+    tabHeader "Every Winter Games", "1924 to 2026"
+    colsHide "country"
+    colsMove ["n"], after = "year"
+    colsLabel {"n": "", "host": "", "nations": "nations", "athletes": "athletes", "events": "events"}
+    fmtRoman "n"
+    fmtInteger "athletes"
+    textReplace "Milan Cortina d'Ampezzo", "Milano Cortina", loc.body(cols("host"))
+    textReplace "Garmisch-Partenkirchen", "Garmisch", loc.body(cols("host"))
+    tabStyle style.fill(gilt), loc.body(rows = where(it["country"] == "Italy"))
+    tabStyle style.fill(gilt), loc.stub(rows = where(it["country"] == "Italy"))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(size = "11px"), loc.body(cols("n"))
+    tabFootnote "2,884 in the article on these Games, the first table's source.",
+      loc.body(cols("athletes"), rows = where(it["year"].toFloat == 2026))
+    tabSourceNote md("Wikipedia, [Winter Olympic Games § List](https://en.wikipedia.org/wiki/Winter_Olympic_Games).")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbNota("""
+Nothing in the data says "edition": the roman column is the row's number, `fmtRoman` again.
+""", nkCode)
+
+nbText: """
+Read down a column and the Games grow: 16 events in 1924, 24 when Cortina first had them in 1956,
+84 in Turin, 116 now; athletes from 258 to almost 3,000. Turin and Milano Cortina are twenty years
+apart, and the second has 32 events more.
 
 ## Three parts of three
 
@@ -104,9 +152,77 @@ nbShowCode:
     tabStyle style.text(weight = "bold"), loc.body(cols("part"))
   nbTable t
 
-nbText: """
+nbNota("""
 `fmtIndex` writes 1, 2, 3 as A, B, C, so the parts below are A, B and C.
+""", nkCode)
 
+nbText: """
+## Where the numbers come from
+
+Before the tables, the data they are made from. It comes in two shapes. Most of it is tables
+from Wikipedia, saved as files: the medal tables, the venues, the sports, every Winter Games.
+The rest are facts from Il Post's articles, typed by hand, one list per table: prices, costs,
+prizes, what happened after. A few numbers come from elsewhere, the air from NOAA and the
+carbon footprint from a report of two British groups.
+"""
+
+nbShowCode:
+  type Source = object
+    kind, data, `from`: string
+    rows: int
+  proc article(file: string): string =   # the first line of a file names its source
+    let url = readFile(dataDir / file).splitLines[0].split(" ")[2]
+    let name = if "wikipedia" in url: url.split("/wiki/")[1].replace("_", " ") else: "NOAA, Mauna Loa"
+    &"[{name}]({url})"
+  var rows: seq[Source]
+  for file in ["medals.tsv", "athletes.tsv", "paralympics.tsv", "italy-history.tsv", "italy-medals.tsv",
+               "venues.tsv", "sports.tsv", "history.tsv", "by-sport.tsv", "co2.tsv"]:
+    let src = if file == "by-sport.tsv": "the 16 *<sport> at the 2026 Winter Olympics*" else: article(file)
+    rows.add Source(kind: "files", data: file, `from`: src, rows: readTsv(file).nrows)
+  let ilpostRows = trips.len + channels.len + prices.len + ticketShares.len + prizes.len + metals.len +
+    estimates.len + trackSteps.len + trackYear.len + santaGiulia.len + snow.len + afterwards.len +
+    ioc.len + after.len + articles.len
+  rows.add Source(kind: "hand", data: "15 lists", `from`: "[Il Post](https://www.ilpost.it/tag/milano-cortina-2026/), one article each", rows: ilpostRows)
+  rows.add Source(kind: "hand", data: "sportFacts", `from`: "[2026 Winter Olympics § Sports](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Sports)", rows: sportFacts.len)
+  rows.add Source(kind: "hand", data: "footprint", `from`: &"[Scientists for Global Responsibility]({footprintSource})", rows: footprint.len)
+  let t = tabella(rows, rownameCol = "data", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "Where the numbers come from", "the files in docs/devlog/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
+    textCaseMatch {"files": "📄 files, from Wikipedia and NOAA", "hand": "✍️ typed by hand"}, locations = loc.rowGroups()
+    colsLabel {"from": "from", "rows": "rows"}
+    fmtMarkdown "from"
+    fmtInteger "rows"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    tabStyle style.text(size = "12px"), loc.body(cols("from"))
+    tabOptions(tableFontSize = "13px")
+  nbTable t
+
+nbText: """
+A file is a table as it was on the page, with a first line naming the article and its revision:
+"""
+
+nbCode:
+  for line in readFile(dataDir / "medals.tsv").splitLines[0 .. 3]: echo line
+
+nbText: """
+A fact typed by hand is a Nim object, with the article it comes from beside its list:
+"""
+
+nbCode:
+  echo trips[1]
+  echo post(tripsSource)
+
+nbNota("""
+`readTsv` (in `docs/olimpiadi.nim`) skips the comment line and calls `parseCsv`, which makes a
+`TableData`: one column per field, each value a number or a text. A `const` list of objects goes
+to `tabella` as it is, one field per column. Some tables are made in between: a `seq` of objects
+built in a loop (the venues, one row per venue with its sports joined; the table above), or a
+`TableData` built column by column with `addColumn` (the articles, at the end). The files are
+written by short Python scripts that read Wikipedia: how, in *How this post is built*.
+""", nkCode)
+
+nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
+nbText: """
 ## A · The Games
 
 ### Where were they?
@@ -114,9 +230,7 @@ nbText: """
 "The most spread out ever": over 22,000 km², in Milan, Cortina d'Ampezzo, Bormio, Livigno,
 Anterselva, Tesero, Predazzo, and Verona for the closing. Milan had the ice, the mountains had the
 snow. Each row of the table is a venue with its sports, grouped by cluster, as the organisers
-called the four areas of the races (Verona, with the closing ceremony, is a fifth). The data has
-one row per venue and sport, so the page joins them first; `textCaseMatch` rewrites the "before"
-column and `textReplace` drops "Milano" from the venue names, after formatting.
+called the four areas of the races (Verona, with the closing ceremony, is a fifth).
 """
 
 nbShowCode:
@@ -133,18 +247,28 @@ nbShowCode:
                             capacity: int(raw["capacity", i].toFloat), status: $raw["status", i])
   let t = tabella(rows, rownameCol = "venue", groupnameCol = "cluster"):
     optPageTheme()
-    tabHeader "Fourteen venues, five clusters", "and what each was before the Games"
+    tabHeader "Fourteen venues, five clusters", "and what each was before the Games; in green, the new ones"
     colsLabel {"events": "for", "capacity": "seats", "status": "before"}
     fmtInteger "capacity"
     textCaseMatch {"Existing": "existing", "New": "<b>new</b>", "Existing with temporary stands": "existing, temporary stands"},
       locations = loc.body(cols("status"))
     textReplace "Milano ", "", loc.stub()
+    textCaseMatch sportMarks(), replace = "partial", locations = loc.body(cols("events"))
+    tabStyle style.fill(fresh), loc.body(rows = where(it["status"] == "New"))
+    tabStyle style.fill(fresh), loc.stub(rows = where(it["status"] == "New"))
     rowGroupOrder ["Milan", "Valtellina", "Val di Fiemme", "Cortina d'Ampezzo", "Verona"]
     tabFootnote "Anterselva is in South Tyrol, but belongs to Cortina's cluster.",
       loc.stub(rows = where(it["venue"] == "Anterselva Biathlon Arena"))
     tabSourceNote md("Wikipedia, [2026 Winter Olympics § Venues](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Venues).")
     tabOptions(tableFontSize = "14px")
   nbTable t
+
+nbNota("""
+The data has one row per venue and sport, so the page joins them first. `textCaseMatch` rewrites
+the "before" column, and with `replace = "partial"` puts the emoji of each sport's kind in front
+of it, inside the joined list. `textReplace` drops "Milano" from the venue names, after
+formatting. The new venues are filled green with `tabStyle`, in the body and in the stub.
+""", nkCode)
 
 nbText: &"""
 Two venues are new, the hockey arena of Santa Giulia in Milan and the sliding track of Cortina;
@@ -155,7 +279,7 @@ spreading the Games is distance. Ester Ledecká, who won gold in skiing and in s
 """
 
 nbShowCode:
-  let t = tabella(@trips, rownameCol = "trip"):
+  let t = tabella(trips, rownameCol = "trip"):
     optPageTheme()
     tabHeader "How far apart"
     colsLabel {"by": "by", "low": "from", "high": "to"}
@@ -163,16 +287,61 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(tripsSource, \"7 March 2025\")} and {link(tripsSource2, \"29 October 2025\")}, after the organisers' tables and the Washington Post.")
   nbTable t
 
-nbText: """
+nbNota("""
 `fmtDuration` takes hours and writes them as a length of time, "10h", so it reads as a trip,
-not as a number. Ten hours on buses and trains, from the men's downhill to the women's.
+not as a number.
+""", nkCode)
+
+nbText: """
+Ten hours on buses and trains, from the men's downhill to the women's.
+
+### What was raced?
+
+116 events in 16 sports, seven more than four years before in Beijing. A sport is born on snow,
+on ice, or on a sled: grouped that way, the sports of 2026 with their events, and in green those
+with something new.
+"""
+
+nbShowCode:
+  let events = readTsv("sports.tsv")
+  type SportRow = object
+    kind, sport: string
+    events: int
+    new: string
+  var rows: seq[SportRow]
+  for f in sportFacts:   # the facts, in their order, with the events counted on Wikipedia
+    let i = toSeq(0 ..< events.nrows).filterIt($events["sport", it] == f.sport)[0]
+    rows.add SportRow(kind: f.kind, sport: f.sport, events: int(events["events", i].toFloat), new: f.new)
+  let t = tabella(rows, rownameCol = "sport", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "116 events, 16 sports", "in green, what is new in 2026"
+    colsLabel {"events": "events", "new": "new"}
+    textCaseMatch kindLabels, locations = loc.rowGroups()
+    tabStyle style.fill(fresh), loc.body(rows = where($it["new"] != ""))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it["new"] != ""))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["sport"] == "Ski mountaineering"))
+    tabStyle style.text(size = "12px"), loc.body(cols("new"))
+    tabSourceNote md("Wikipedia, [2026 Winter Olympics § Sports](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Sports).")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbNota("""
+The row groups come from a column, `groupnameCol = "kind"`, and
+`textCaseMatch(kindLabels, locations = loc.rowGroups())` gives each its emoji. The same emojis go
+in front of the sports in the other tables, with `sportMarks()`; both are in
+`docs/olimpiadi.nim`, with the facts.
+""", nkCode)
+
+nbText: """
+Eleven events are new and four were dropped, so 109 became 116. Ski mountaineering, racing up and
+down a mountain on skis, is a sport the Games had never had; luge split its open doubles into one
+for men and one for women.
 
 ### Who won?
 
 The medal table is the table everyone looks at, and the one the Olympic Charter says does not
 exist: the Games are "competitions between athletes, not between countries". Here is its top ten
-as Wikipedia gives it, in the three languages of tabelline's pages: Nim with tabelline, Python
-with Great Tables, R with gt.
+as Wikipedia gives it:
 """
 
 nbTabs(python = &"""
@@ -216,15 +385,28 @@ gt(head(medals, 10), rowname_col = "team") |>
       tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbText: """
+nbNota("""
+This is the only table of the post shown in three languages: Nim with tabelline, Python with
+Great Tables, R with gt. It is the table everyone knows, so it is the one to compare, verb by
+verb. The [Book](../../book/) does the same for the examples it ports from the gt and Great
+Tables guides.
+""", nkCode, "Three languages, once")
+
+nbNota("""
 `readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
-emoji, so nothing is loaded. `dataColor` shades each medal column on its own, from the page's
-paper to yellow (with tabelline 0.1 each column has its own range, as in gt).
+emoji, so nothing is loaded. `dataColor` shades each medal column on its own (with tabelline 0.1
+each column has its own range, as in gt), along `metal`, a palette of two colours defined at the
+top of the page: the paper and the yellow of the Munari look (`haru.paper` and `haru.warning`,
+from `docs/stile.nim`). They are written as values, not as the page's CSS variables, because
+`dataColor` mixes the colours itself while building the table, so the shading stays the same in
+the quaderno look. The blue scales below (`soft`) are made the same way, from Munari's blue.
+""", nkCode)
 
+nbText: """
 But a table of medals can be read two ways, Il Post explains: golds first, as the IOC (and Il
 Post, and China) do, or total first, as the United States do. At Milano Cortina Norway is first
-either way; below it, the order changes. The same data, two `rowOrder` calls:
+either way; below it, the order changes. The same data, both ways:
 """
 
 nbShowCode:
@@ -246,11 +428,57 @@ nbShowCode:
     nbTable topTen(false)
     nbTable topTen(true)
 
+nbNota("""
+Two `rowOrder` calls on the same data, side by side with `nbAccanto`.
+""", nkCode)
+
 nbText: &"""
 Italy is fourth by golds (ten, like the Netherlands, but one silver fewer) and third by total
 (thirty). The Netherlands drop from third to ninth: all their twenty medals came from two sports,
 speed skating and short track. Germany won nineteen in the three sliding sports, Japan
 twenty-one where judges give the score ({link("2026/02/23/criteri-classifica-olimpiadi-medaglie/", "Il Post")}).
+
+Every sport has a medal table of its own. Here is the first team of each, grouped as the events
+were, with Italy's medals beside it:
+"""
+
+nbShowCode:
+  let all = readTsv("by-sport.tsv")   # every row of the 16 sports' medal tables
+  type Leader = object
+    kind, sport, code, team: string
+    gold, italy: int
+  var rows: seq[Leader]
+  for f in sportFacts:
+    let mine = toSeq(0 ..< all.nrows).filterIt($all["sport", it] == f.sport)
+    let first = mine[0]   # each sport's table is in medal-table order
+    let italy = mine.filterIt($all["team", it] == "Italy")
+    rows.add Leader(kind: f.kind, sport: f.sport, code: $all["code", first], team: $all["team", first],
+                    gold: int(all["gold", first].toFloat),
+                    italy: (if italy.len > 0: int(all["total", italy[0]].toFloat) else: 0))
+  let t = tabella(rows, rownameCol = "sport", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "Who won each sport", "the first team of each sport's medal table"
+    fmtFlag "code"
+    colsLabel {"code": "", "team": "first", "gold": "🥇", "italy": "🇮🇹 🏅"}
+    textCaseMatch kindLabels, locations = loc.rowGroups()
+    subZero "italy", zeroText = "—"
+    tabStyle style.fill(gilt), loc.body(cols("italy"), rows = where(it["italy"].toFloat >= 4))
+    tabStyle style.text(size = "12px"), loc.body(cols("team"))
+    tabSourceNote md("Wikipedia, the 16 articles *<sport> at the 2026 Winter Olympics*, each with its medal table.")
+    tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
+  nbTable t
+
+nbNota("""
+The table is built from the one before: the same groups and emojis, and `fmtFlag` again. Italy's
+column is filled yellow with `tabStyle` where it has four or more.
+""", nkCode)
+
+nbText: &"""
+Nine countries share the sixteen firsts. Norway, first overall, leads three, all Nordic
+skiing (cross-country, ski jumping, Nordic combined); the United States lead three sports on ice
+and snow; the Netherlands both kinds of skating on a track; Germany two of the three sleds. Italy
+won something in ten sports, and four or more medals (in yellow) in four: alpine skiing, luge,
+short track and speed skating.
 
 ### How was Italy?
 
@@ -267,6 +495,7 @@ nbShowCode:
     tabHeader "Italy at the Winter Games", "since Lillehammer 1994, the old record"
     colsHide ["gold", "silver", "bronze"]
     colsLabel {"host": "", "athletes": "athletes", "total": "🏅", "rank": "rank"}
+    dataColor "total", palette = soft
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
     tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
     tabFootnote "At home, and fewer medals than four years before.",
@@ -293,11 +522,17 @@ nbShowCode:
     colsLabel {"date": "", "sport": "sport", "event": "event", "athletes": "who"}
     fmtDate "date", dateStyle = "d MMM"
     textTransform(medal, loc.rowGroups())
+    textCaseMatch sportMarks(), locations = loc.body(cols("sport"))
     tabStyle style.css("white-space: nowrap"), loc.body(cols("date"))
     tabStyle style.text(size = "12px"), loc.body(cols("athletes"))
     tabSourceNote md("Wikipedia, [Italy at the 2026 Winter Olympics § Medalists](https://en.wikipedia.org/wiki/Italy_at_the_2026_Winter_Olympics).")
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
+
+nbNota("""
+`textCaseMatch(sportMarks())` puts the emoji of each sport's kind in front of it; the row groups,
+the medal colours, get theirs from `textTransform`, with a small proc of this post.
+""", nkCode)
 
 nbText: """
 Ten sports out of sixteen gave a medal, from luge to curling to freestyle skiing: in 1994 nine
@@ -340,7 +575,7 @@ Games every race could be streamed.
 """
 
 nbShowCode:
-  let t = tabella(@channels, rownameCol = "channel"):
+  let t = tabella(channels, rownameCol = "channel"):
     optPageTheme()
     tabHeader "Where to watch, in Italy"
     colsLabel {"how": "", "free": "free", "allEvents": "every race"}
@@ -348,11 +583,16 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(channelsSource, \"6 February 2026\")}; NBC's audience from Il Post, {link(sharesSource, \"24 February 2026\")}.")
   nbTable t
 
-nbText: """
-`fmtTf` turns `true` and `false` into ✓ and ✗, one of gt's ten styles. The table could say more
-about media (Rai Sport's director left after his commentary of the opening was widely mocked) but
-a check mark is what the reader came for.
+nbNota("""
+`fmtTf` turns `true` and `false` into ✓ and ✗, one of gt's ten styles.
+""", nkCode)
 
+nbText: """
+The table could say more about media (Rai Sport's director left after his commentary of the opening was widely mocked) but
+a check mark is what the reader came for.
+"""
+
+nbText: """
 ## B · The money
 
 ### What did a seat cost?
@@ -364,7 +604,7 @@ A seat was cheap or very dear: €30 for the cheapest, €1,400 for the men's ho
 nbShowCode:
   nbAccanto:
     block:
-      let t = tabella(@prices, rownameCol = "what"):
+      let t = tabella(prices, rownameCol = "what"):
         optPageTheme()
         tabHeader "Prices"
         colsLabel {"euro": ""}
@@ -373,7 +613,7 @@ nbShowCode:
         tabOptions(tableFontSize = "13px")
       nbTable t
     block:
-      let t = tabella(@ticketShares, rownameCol = "what"):
+      let t = tabella(ticketShares, rownameCol = "what"):
         optPageTheme()
         tabHeader "Shares"
         colsLabel {"share": ""}
@@ -397,7 +637,7 @@ against the €4 million it had set aside.
 """
 
 nbShowCode:
-  let t = tabella(@prizes, rownameCol = "country"):
+  let t = tabella(prizes, rownameCol = "country"):
     optPageTheme()
     tabHeader "What a medal pays", "to the athlete, from their country's committee"
     colsHide "currency"
@@ -417,16 +657,19 @@ nbShowCode:
     tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbText: """
+nbNota("""
 The table mixes euros and dollars. `fmtCurrency` takes `rows`, so each row is formatted in its
-own currency, and `subZero` says "nothing" where a country pays nothing: Norway, first in the
-medal table, pays no prizes at all. Singapore and Hong Kong pay the most, and won nothing.
+own currency, and `subZero` says "nothing" where a country pays nothing.
+""", nkCode)
+
+nbText: """
+Norway, first in the medal table, pays no prizes at all. Singapore and Hong Kong pay the most, and won nothing.
 
 The medal itself is worth less than one would think. A gold medal is silver with six grams of gold:
 """
 
 nbShowCode:
-  let t = tabella(@metals, rownameCol = "medal"):
+  let t = tabella(metals, rownameCol = "medal"):
     optPageTheme()
     tabHeader "The medal as metal"
     colsLabel {"grams": "weighs", "goldGrams": "of gold", "euro": "worth"}
@@ -440,6 +683,15 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(prizesSource, \"23 February 2026\")}, at February's prices; the silver medal's weight is not given.")
   nbTable t
 
+nbNota("""
+The data has a 0 in three places, and each means something else. `subZero` says it column by
+column: in *weighs* the 0 is a number nobody gave, so it shows "—"; in *of gold* it is a true
+zero, "none"; in *worth* it is a value too small for the article to count, "a few euros". The data
+stays numbers (so it could be summed or sorted), and the words are only in what the reader sees.
+(A number nobody gave would be better as a missing value, blank by default or shown with
+`subMissing`; here it is a 0 so that the three meanings sit side by side.)
+""", nkCode)
+
 nbText: """
 ### What did the works cost?
 
@@ -449,7 +701,7 @@ the last, in millions of euros:
 """
 
 nbShowCode:
-  let t = tabella(@estimates, rownameCol = "work"):
+  let t = tabella(estimates, rownameCol = "work"):
     optPageTheme()
     tabHeader "From the first estimate to the last", "millions of euros"
     colsLabel {"place": "", "fate": "", "first": "first", "last": "last", "times": "×"}
@@ -472,12 +724,14 @@ Its cost, step by step:
 """
 
 nbShowCode:
-  let t = tabella(@trackSteps, rownameCol = "date"):
+  let t = tabella(trackSteps, rownameCol = "date"):
     optPageTheme()
     tabHeader "The sliding track of Cortina", "its cost, in millions of euros"
     colsLabel {"what": "", "millions": "€ m"}
     colsHide "path"
     fmtDate "date", dateStyle = "MMM yyyy"
+    fmtNumber "millions", decimals = 1
+    dataColor "millions", palette = soft
     colsReorder ["what", "millions"]
     tabSourceNote md(&"Italian Wikipedia ([XXV Giochi olimpici invernali](https://it.wikipedia.org/wiki/XXV_Giochi_olimpici_invernali)); Il Post, {link(\"2023/09/21/nessuno-costruire-pista-bob-cortina-olimpiadi/\", \"Sep 2023\")}, {link(\"2024/02/02/accordo-pista-bob-cortina/\", \"Feb 2024\")}, {link(\"2026/01/22/a-cortina-ci-sono-piu-cantieri-che-neve/\", \"Jan 2026\")}.")
   nbTable t
@@ -489,7 +743,7 @@ million. One line per item, in and out:
 """
 
 nbShowCode:
-  let t = tabella(@trackYear, rownameCol = "item", groupnameCol = "side"):
+  let t = tabella(trackYear, rownameCol = "item", groupnameCol = "side"):
     optPageTheme()
     tabHeader "One year of the sliding track", "2027, as planned"
     colsLabel {"euro": ""}
@@ -508,10 +762,12 @@ the state pays for its extra costs, and how much those are depends on who is ask
 """
 
 nbShowCode:
-  let t = tabella(@santaGiulia, rownameCol = "who"):
+  let t = tabella(santaGiulia, rownameCol = "who"):
     optPageTheme()
     tabHeader "Santa Giulia's extra costs", "millions of euros, as each side tells them"
     colsLabel {"says": "", "millions": "€ m"}
+    fmtInteger "millions"
+    dataColor "millions", palette = soft
     tabStyle style.text(style = "italic"), loc.body(rows = where(it.index == 0))
     tabSourceNote md(&"Il Post, {link(santaGiuliaSource, \"5 May 2026\")}; the Court of Auditors is investigating.")
   nbTable t
@@ -527,7 +783,7 @@ snow had been made.
 """
 
 nbShowCode:
-  let t = tabella(@snow, rownameCol = "what"):
+  let t = tabella(snow, rownameCol = "what"):
     optPageTheme()
     colsLabel {"value": "", "unit": "", "note": ""}
     fmtNumber "value", decimals = 1, compact = true
@@ -535,10 +791,12 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(snowSources[0], \"24 Feb 2026\")} and {link(snowSources[1], \"22 Jan 2026\")}. Over 90% of Italy's ski slopes were snowed artificially in 2025, 98% in the Dolomites (Legambiente, via {link(\"2025/03/07/olimpiadi-invernali-diffuse-2026-piu-luoghi-sostenibilita/\", \"Il Post\")}).")
   nbTable t
 
-nbText: """
+nbNota("""
 `fmtNumber(compact = true)` writes 1.6M. The unit stays in a column of its own:
 `fmtNumberSi(unit = "m³", decimals = 1)` would write "1.6 Mm³", which reads as cubic megametres (more about this at the end).
+""", nkCode)
 
+nbText: """
 ### Air
 
 Snow has to be made because winters are warmer, and the cause is in the air. Carbon dioxide is
@@ -567,9 +825,13 @@ nbShowCode:
     tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbText: """
+nbNota("""
 The data has the share as a fraction of the air, 0.00042935, which no one wants to read:
-`fmtPartsper(toUnits = "ppm")` writes it as 429 ppm. Between Turin and Milano Cortina, twenty
+`fmtPartsper(toUnits = "ppm")` writes it as 429 ppm.
+""", nkCode)
+
+nbText: """
+Between Turin and Milano Cortina, twenty
 years, the air gained 47 ppm; it took the forty-seven years before Turin to gain 66.
 
 How much did the Games themselves add? Il Post gives no figure. In January 2026 two British
@@ -580,7 +842,7 @@ advertising brings (an oil company, a carmaker, an airline), and what all of it 
 """
 
 nbShowCode:
-  let t = tabella(@footprint, rownameCol = "what", groupnameCol = "part"):
+  let t = tabella(footprint, rownameCol = "what", groupnameCol = "part"):
     optPageTheme()
     tabHeader "The Games' footprint", "estimated before the Games, and what it will melt"
     colsLabel {"tonnes": "CO₂e", "snowKm2": "snow cover", "iceMt": "glacier ice"}
@@ -595,11 +857,14 @@ nbShowCode:
     tabOptions(tableFontSize = "13px")
   nbTable t
 
+nbNota("""
+`fmtNumber(compact = true, pattern = "{x} t")` writes 930K t; the same `pattern` puts each unit after its number.
+""", nkCode)
+
 nbText: """
 The rows in italics are part of the row above. The sponsors add about 40% more than the Games'
 own footprint, and the report puts the total loss at 5.5 km² of snow cover and over 34 million
-tonnes of glacier ice. `fmtNumber(compact = true, pattern = "{x} t")` writes 930K t; the same
-`pattern` puts each unit after its number.
+tonnes of glacier ice.
 
 ### Buildings
 
@@ -618,26 +883,35 @@ nbShowCode:
     colsLabel {"venues": "", "share": ""}
     fmtPercent "share", decimals = 0
     subSmallVals "share", threshold = 0.05, smallPattern = "under 5%"
+    fmtInteger "venues"
+    dataColor "venues", palette = soft
     tabFootnote "Two of them from Turin 2006: the ski jumps of Pragelato and the sliding track of Cesana.",
       loc.stub(rows = where(it["fate"] == "Permanent, abandoned"))
     tabSourceNote md(&"The IOC, via Il Post, {link(iocSource, \"30 October 2025\")}.")
   nbTable t
 
-nbText: """
+nbNota("""
 `subSmallVals` hides the precise small shares behind "under 5%", gt's way to say a number is too
-small to matter, here used to say the abandoned venues are few. Few, but the ones that are
+small to matter.
+""", nkCode)
+
+nbText: """
+The abandoned venues are few. Few, but the ones that are
 abandoned are exactly the kind Milano Cortina built again: a ski jump and a sliding track.
 
-And what each new or rebuilt place becomes:
+And what each new or rebuilt place becomes, in green again what was built for the Games (Il Post
+calls the sliding track rebuilt: the old one, from 1923, was torn down):
 """
 
 nbShowCode:
-  let t = tabella(@afterwards, rownameCol = "venue"):
+  let t = tabella(afterwards, rownameCol = "venue"):
     optPageTheme()
     tabHeader "After the Games"
     colsLabel {"built": "", "becomes": "becomes"}
     textTransform(proc (s: string): string = s.toUpperAscii, loc.body(cols("built")))
     tabStyle style.text(size = "11px", weight = "bold"), loc.body(cols("built"))
+    tabStyle style.fill(fresh), loc.body(rows = where($it["built"] in ["new", "rebuilt"]))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it["built"] in ["new", "rebuilt"]))
     tabSourceNote md(&"Il Post, {link(afterwardsSources[0], \"25 Feb 2026\")}, {link(afterwardsSources[1], \"22 Jan 2026\")}, {link(afterwardsSources[2], \"8 Oct 2026\")}.")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -669,10 +943,13 @@ nbShowCode:
 nbText: """
 The last row is in the future: the cable car of Socrepes, built on a landslide that stopped the
 works in 2025, is due to open on 8 December, a month from today.
+"""
 
+nbParte 2, "", prSecondary   # the closing sections: the articles and the code
+nbText: """
 ## The articles
 
-The Il Post articles this post learned from, with the angle each takes. `fmtUrl` makes the links:
+The Il Post articles this post learned from, with the angle each takes:
 """
 
 nbShowCode:
@@ -693,16 +970,23 @@ nbShowCode:
     tabOptions(tableFontSize = "13px")
   nbTable t
 
+nbNota("""
+`fmtUrl` makes the links, from the paths in `docs/olimpiadi.nim`.
+""", nkCode)
+
 nbText: """
 ## How this post is built
 
 The page is a nimib notebook, `docs/devlog/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
 
-**1. The data from Wikipedia** is six TSV files in `docs/devlog/data/milano-cortina/`: the medal
-tables of the Olympics and the Paralympics, Italy at every Winter Games, Italy's thirty medals, the
-venues and the sports. A short Python script beside them, `fetch.py`, reads five Wikipedia articles
-through the REST API (slowly: Wikipedia limits fast clients) and writes the tables with pandas.
+**1. The data from Wikipedia** is nine TSV files in `docs/devlog/data/milano-cortina/` (the
+table in *Where the numbers come from* lists them): the medal tables of the Olympics and the
+Paralympics, the athletes of each team, Italy at every Winter Games, Italy's thirty medals, the
+venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short Python
+scripts beside them read the articles through the REST API (slowly: Wikipedia limits fast
+clients) and write the tables with pandas: `fetch.py` the first seven, `history.py` the
+history, `sports.py` the medal tables of the sports.
 Each file starts with a comment line naming the article and its revision, so the numbers can be
 checked against the exact page they came from. Wikipedia's text is under CC BY-SA 4.0. One more
 file, `co2.tsv`, comes from NOAA's public Mauna Loa record, written by `co2.py` beside it.
@@ -726,8 +1010,7 @@ to one column on a phone), and under every table *show code* opens the code that
 block's own source back with nimib's `getCode`, and folds it under the tables the block made.
 
 **4. Nothing is fetched while the page is built.** The TSV files and the facts are in the
-repository, so the page builds offline and the same way every time; `fetch.py` and `co2.py`
-are run by hand when the data should change.
+repository, so the page builds offline and the same way every time; the scripts are run by hand when the data should change.
 
 ## What tabelline was missing
 

@@ -1,0 +1,132 @@
+# from https://en.wikipedia.org/wiki/Alpine_skiing_at_the_2026_Winter_Olympics (revision 1376828727)
+# from https://en.wikipedia.org/wiki/Biathlon_at_the_2026_Winter_Olympics (revision 1340403236)
+# from https://en.wikipedia.org/wiki/Bobsleigh_at_the_2026_Winter_Olympics (revision 1377314667)
+# from https://en.wikipedia.org/wiki/Cross-country_skiing_at_the_2026_Winter_Olympics (revision 1364149325)
+# from https://en.wikipedia.org/wiki/Curling_at_the_2026_Winter_Olympics (revision 1376552023)
+# from https://en.wikipedia.org/wiki/Figure_skating_at_the_2026_Winter_Olympics (revision 1384090105)
+# from https://en.wikipedia.org/wiki/Freestyle_skiing_at_the_2026_Winter_Olympics (revision 1368469817)
+# from https://en.wikipedia.org/wiki/Ice_hockey_at_the_2026_Winter_Olympics (revision 1379167901)
+# from https://en.wikipedia.org/wiki/Luge_at_the_2026_Winter_Olympics (revision 1361755887)
+# from https://en.wikipedia.org/wiki/Nordic_combined_at_the_2026_Winter_Olympics (revision 1371929351)
+# from https://en.wikipedia.org/wiki/Short-track_speed_skating_at_the_2026_Winter_Olympics (revision 1376827999)
+# from https://en.wikipedia.org/wiki/Skeleton_at_the_2026_Winter_Olympics (revision 1355092154)
+# from https://en.wikipedia.org/wiki/Ski_jumping_at_the_2026_Winter_Olympics (revision 1340404089)
+# from https://en.wikipedia.org/wiki/Ski_mountaineering_at_the_2026_Winter_Olympics (revision 1363175415)
+# from https://en.wikipedia.org/wiki/Snowboarding_at_the_2026_Winter_Olympics (revision 1377314594)
+# from https://en.wikipedia.org/wiki/Speed_skating_at_the_2026_Winter_Olympics (revision 1340404392)
+# CC BY-SA 4.0
+sport	team	code	gold	silver	bronze	total
+Alpine skiing	Switzerland	CH	4	3	2	9
+Alpine skiing	Italy	IT	2	1	2	5
+Alpine skiing	United States	US	2	1	1	4
+Alpine skiing	Austria	AT	1	2	1	4
+Alpine skiing	Brazil	BR	1	0	0	1
+Alpine skiing	Germany	DE	0	2	0	2
+Alpine skiing	Norway	NO	0	1	1	2
+Alpine skiing	Sweden	SE	0	1	1	2
+Alpine skiing	France	FR	0	1	0	1
+Biathlon	France	FR	6	4	3	13
+Biathlon	Norway	NO	3	5	3	11
+Biathlon	Sweden	SE	1	1	1	3
+Biathlon	Italy	IT	1	1	0	2
+Biathlon	Bulgaria	BG	0	0	1	1
+Biathlon	Czech Republic	CZ	0	0	1	1
+Biathlon	Finland	FI	0	0	1	1
+Biathlon	Germany	DE	0	0	1	1
+Bobsleigh	Germany	DE	3	4	1	8
+Bobsleigh	United States	US	1	0	2	3
+Bobsleigh	Switzerland	CH	0	0	1	1
+Cross-country skiing	Norway	NO	7	2	5	14
+Cross-country skiing	Sweden	SE	5	4	1	10
+Cross-country skiing	France	FR	0	3	0	3
+Cross-country skiing	United States	US	0	2	1	3
+Cross-country skiing	Switzerland	CH	0	1	1	2
+Cross-country skiing	Italy	IT	0	0	2	2
+Cross-country skiing	Finland	FI	0	0	1	1
+Cross-country skiing	Germany	DE	0	0	1	1
+Curling	Sweden	SE	2	0	0	2
+Curling	Canada	CA	1	0	1	2
+Curling	Switzerland	CH	0	1	1	2
+Curling	Great Britain	GB	0	1	0	1
+Curling	United States	US	0	1	0	1
+Curling	Italy	IT	0	0	1	1
+Figure skating	United States	US	2	1	0	3
+Figure skating	Japan	JP	1	3	2	6
+Figure skating	France	FR	1	0	0	1
+Figure skating	Kazakhstan	KZ	1	0	0	1
+Figure skating	Georgia	GE	0	1	0	1
+Figure skating	Canada	CA	0	0	1	1
+Figure skating	Germany	DE	0	0	1	1
+Figure skating	Italy	IT	0	0	1	1
+Freestyle skiing	United States	US	3	4	1	8
+Freestyle skiing	China	CN	3	3	3	9
+Freestyle skiing	Canada	CA	2	1	2	5
+Freestyle skiing	Australia	AU	2	1	1	4
+Freestyle skiing	Norway	NO	2	0	0	2
+Freestyle skiing	Switzerland	CH	1	3	1	5
+Freestyle skiing	Italy	IT	1	1	1	3
+Freestyle skiing	Germany	DE	1	0	0	1
+Freestyle skiing	Japan	JP	0	1	1	2
+Freestyle skiing	Estonia	EE	0	1	0	1
+Freestyle skiing	Austria	AT	0	0	1	1
+Freestyle skiing	France	FR	0	0	1	1
+Freestyle skiing	Great Britain	GB	0	0	1	1
+Freestyle skiing	New Zealand	NZ	0	0	1	1
+Freestyle skiing	Sweden	SE	0	0	1	1
+Ice hockey	United States	US	2	0	0	2
+Ice hockey	Canada	CA	0	2	0	2
+Ice hockey	Finland	FI	0	0	1	1
+Ice hockey	Switzerland	CH	0	0	1	1
+Luge	Germany	DE	3	1	1	5
+Luge	Italy	IT	2	0	2	4
+Luge	Austria	AT	0	3	1	4
+Luge	Latvia	LV	0	1	0	1
+Luge	United States	US	0	0	1	1
+Nordic combined	Norway	NO	3	0	0	3
+Nordic combined	Austria	AT	0	2	1	3
+Nordic combined	Finland	FI	0	1	2	3
+Short-track speed skating	Netherlands	NL	5	1	1	7
+Short-track speed skating	South Korea	KR	2	3	2	7
+Short-track speed skating	Canada	CA	1	2	2	5
+Short-track speed skating	Italy	IT	1	2	1	4
+Short-track speed skating	China	CN	0	1	0	1
+Short-track speed skating	Belgium	BE	0	0	1	1
+Short-track speed skating	Latvia	LV	0	0	1	1
+Short-track speed skating	United States	US	0	0	1	1
+Skeleton	Great Britain	GB	2	0	0	2
+Skeleton	Austria	AT	1	0	0	1
+Skeleton	Germany	DE	0	3	3	6
+Ski jumping	Norway	NO	2	2	1	5
+Ski jumping	Slovenia	SI	2	1	1	4
+Ski jumping	Austria	AT	1	0	0	1
+Ski jumping	Germany	DE	1	0	0	1
+Ski jumping	Poland	PL	0	2	1	3
+Ski jumping	Japan	JP	0	1	3	4
+Ski jumping	Switzerland	CH	0	0	1	1
+Ski mountaineering	France	FR	1	1	1	3
+Ski mountaineering	Switzerland	CH	1	1	0	2
+Ski mountaineering	Spain	ES	1	0	2	3
+Ski mountaineering	Individual Neutral Athletes		0	1	0	1
+Snowboarding	Japan	JP	4	2	3	9
+Snowboarding	Austria	AT	2	1	1	4
+Snowboarding	South Korea	KR	1	1	1	3
+Snowboarding	Australia	AU	1	1	0	2
+Snowboarding	Czech Republic	CZ	1	1	0	2
+Snowboarding	China	CN	1	0	1	2
+Snowboarding	Great Britain	GB	1	0	0	1
+Snowboarding	New Zealand	NZ	0	2	0	2
+Snowboarding	Italy	IT	0	1	2	3
+Snowboarding	United States	US	0	1	1	2
+Snowboarding	Canada	CA	0	1	0	1
+Snowboarding	Bulgaria	BG	0	0	1	1
+Snowboarding	France	FR	0	0	1	1
+Speed skating	Netherlands	NL	5	6	2	13
+Speed skating	Italy	IT	3	0	2	5
+Speed skating	United States	US	2	2	1	5
+Speed skating	Norway	NO	1	2	1	4
+Speed skating	Canada	CA	1	1	3	5
+Speed skating	Czech Republic	CZ	1	1	0	2
+Speed skating	China	CN	1	0	2	3
+Speed skating	Denmark	DK	0	1	0	1
+Speed skating	Poland	PL	0	1	0	1
+Speed skating	Japan	JP	0	0	3	3
