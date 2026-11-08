@@ -1,4 +1,4 @@
-## devlog: 08 Nov 2026 C | Reviewing the design: a palette by roles | The pages grew faster than their palette: six colours named after shapes, a yellow that does five jobs while it should only warn, galleries copied from post to post. What we have, a palette by roles (neutral, primary, secondary, status, data) for both looks, every component mapped to it, and the choices to make before it becomes the new Design Ref.
+## devlog: 08 Nov 2026 C | Reviewing the design: a palette by roles | The pages grew faster than their palette: six colours named after shapes, a yellow that does five jobs while it should only warn, galleries copied from post to post. What we have, shape apart from colour, a palette by roles (neutral, primary, secondary, status, data) for both looks, every component mapped to it, and the choices to make before it becomes the new Design Ref.
 ## A dated post: the design review as it was proposed on 8 November 2026, not updated afterwards.
 ## What is decided goes to the Design Ref (docs/design.nim). The colour maths (OKLab mixes and
 ## WCAG contrast) runs when the page is built.
@@ -113,6 +113,9 @@ html[data-tema="munari"] {{ {css(munariTokens)} }}
   background: var(--warning); clip-path: polygon(50% 0, 100% 100%, 0 100%); }}
 .p-sec {{ font: 700 1.2rem/1.2 var(--text); color: var(--n-9); position: relative; padding-left: 1.6rem; margin: .4rem 0; }}
 .p-sec::before {{ content: ""; position: absolute; left: 0; top: .2em; width: 1rem; height: 1rem; border-radius: 50%; background: var(--primary); }}
+.forma {{ display: inline-block; width: 1.1rem; height: 1.1rem; vertical-align: -.15rem; margin-right: .45rem; }}
+.forma.c {{ border-radius: 50%; }} .forma.t {{ clip-path: polygon(50% 0, 100% 100%, 0 100%); }}
+.p-riga {{ margin: .35rem 0; font-size: .92rem; line-height: 1.4; }}
 .p-kicker {{ font: 700 .7rem/1 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); }}
 .p-muted {{ color: var(--n-7); }}
 .p-link {{ color: var(--n-9); text-decoration: underline; text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 2px; }}
@@ -245,6 +248,66 @@ Five things don't hold up:
 5. **The quaderno has fixed colours only**, so it can't follow a palette, and a few posts
    (the palettes post most of all) write their own hex values.
 
+## Shape is one thing, colour another
+
+Today shape and colour are welded together. Each shape has one colour (the circle is always the
+circle's colour) and the colours are named after the shapes (`--m-cerchio`), so a colour means
+"the circle's job" and a circle can only be one colour. They can be pulled apart: two channels,
+each saying one thing.
+
+- **Shape says what kind of thing it is.** The circle is a place in the page: a section, an entry
+  of the indice. The triangle is attention: a warning. The square is a sheet set apart: a note, a
+  card, a figure; it is the shape of the sheet itself (square corners, a straight top edge), never
+  a separate mark, so it can't be mistaken for a checkbox.
+- **Colour says which role it plays**: primary, secondary, a status (warning, success,
+  missing), a part of the page, a category of data.
+
+Each shape keeps a default colour (the circle primary, the triangle warning, the square
+secondary) and takes another only for a reason that can be said in words. Here is what that
+allows, drawn with the tokens below:
+"""
+
+nbRawHtml: """<div class="ruoli" style="grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))">
+<div><p class="p-kicker">Parts of a page</p>
+<p class="p-riga"><span class="forma c" style="background:var(--primary)"></span>Part 1: from zero</p>
+<p class="p-riga"><span class="forma c" style="background:var(--secondary)"></span>Part 2: the pieces</p>
+<p class="p-riga"><span class="forma c" style="background:var(--success)"></span>Part 3: how it is built</p>
+<p class="p-muted" style="font-size:.85rem">A page in three parts colours each section's circle by its part; the indice shows the parts at a glance.</p></div>
+<div><p class="p-kicker">How serious</p>
+<p class="p-riga"><span class="forma t" style="background:var(--warning)"></span>Careful: this may change</p>
+<p class="p-riga"><span class="forma t" style="background:var(--primary)"></span>This breaks: the API changed</p>
+<p class="p-muted" style="font-size:.85rem">Always a triangle, so always a warning; the colour says how serious.</p></div>
+<div><p class="p-kicker">Categories in data</p>
+<p class="p-riga"><span class="forma" style="background:var(--secondary)"></span><span class="forma c" style="background:var(--primary)"></span><span class="forma t" style="background:var(--success)"></span>three series</p>
+<p class="p-muted" style="font-size:.85rem">Colour and shape together tell series apart, and still do without colour.</p></div>
+</div>"""
+
+nbText: """
+**What it gains**
+
+1. **Meaning never rests on colour alone.** The kind of thing is in its shape, so a reader who
+   doesn't see the colours (colour blindness, a print in black and white) still gets it; WCAG's
+   *Use of Color* asks exactly this.
+2. **Colour is free to say more**: the part of a page (your three-part structure), how serious a
+   warning is, a category of data.
+3. **A palette changes colours only.** Swapping Haru for another palette, or the quaderno for
+   Munari, leaves every shape where it is; the tokens below are named by role, not by shape.
+4. **Shapes can mark data**: a legend or a column of markers can use shape and colour together.
+
+**What it costs**
+
+1. **It departs from Munari's covers**, where the three shapes come in three fixed colours. The
+   page cover can keep that as a picture; the rule is about what shapes and colours *mean*.
+2. **More combinations, more noise.** A shape in a colour with no reason is decoration, which
+   the pages forbid. Hence the rule: the default colour, unless the reason can be said.
+3. **The yellow triangle is a convention** the world reads as "warning". A triangle in another
+   colour reads a little less so; its colours stay among the status colours.
+4. **The square needs a job** or it is decoration. As the shape of the sheet itself it has one;
+   as a separate mark it would look like a checkbox, and is not allowed.
+
+So: **shape for kind, colour for role**, a default colour per shape, and another colour only with
+a reason.
+
 ## A palette by roles
 
 Design systems agree on a simple idea: name colours after what they do, and give every role the
@@ -362,7 +425,7 @@ block:
   r "Page", "text", "--n-9", "ink"
   r "Page", "grey text (captions, dates, footer)", "--n-7", "ink 62% in paper"
   r "Page", "rules and borders", "--n-3", "ink 12% in paper"
-  r "Text", "section marker, indice numbers", "--primary", "circle"
+  r "Text", "section marker, indice numbers (a circle)", "--primary", "circle"
   r "Text", "kicker, `###` headings", "--primary-text", "circle text"
   r "Text", "link underline", "--primary", "circle text"
   r "Text", "link hover", "--primary-soft", "triangle"
@@ -408,7 +471,8 @@ block:
   nbTable t
 
 nbText: """
-Four changes stand out. **The yellow is freed**: plain notes, quotes and group headings go
+Shapes keep their default colour in this table; a page in parts or a warning that breaks
+something may give them another, as above. Four changes stand out. **The yellow is freed**: plain notes, quotes and group headings go
 neutral, and link hover takes the primary's soft tint, so the triangle's colour is left to warnings
 (and to the highlighter pen, a choice below). **Notes get meanings**: info, done, missing, and a
 new warning note with the triangle. **Tables follow the page** instead of being painted twice.
@@ -469,9 +533,9 @@ Each has my recommendation first. What you pick goes into the next PR and the De
    `--primary-text`, …), the same in both looks, *or* Italian ones like the rest of the theme
    (`--neutro-*`, `--primario`, …). *Recommended: English*, since agents and other projects
    read them.
-2. **The square's job.** Secondary = information and navigation (living documents, strings,
-   bars), *or* the square is kept free for a meaning still to come and info gets a new hue.
-   *Recommended: secondary = the square.*
+2. **Shape apart from colour.** Shape says the kind (circle a place, triangle a warning, square a
+   sheet), colour says the role, each shape has a default colour and takes another only with a
+   reason, *or* each shape keeps its one colour as today. *Recommended: apart.*
 3. **"Missing / differs" notes.** The primary's soft tint (as the rosa note is today), *or* a
    separate accent (an orange such as 洒落柿 sharegaki) so primary stays only "this is tabelline".
    *Recommended: primary soft*: one colour fewer.
@@ -485,6 +549,9 @@ Each has my recommendation first. What you pick goes into the next PR and the De
    that needs a word with the 0.1 build thread.
 6. **The quaderno.** It gets the same tokens from its seven values (blue pen primary, red pen
    secondary), *or* stays as it is, frozen. *Recommended: tokens*, so new components work in both.
+7. **Coloured parts.** On a page in parts, each section's circle (and its entry in the indice)
+   takes the colour of its part, *or* every circle stays primary. *Recommended: try it on the
+   Design Ref first*, the first page written in three parts.
 
 ## What happens next
 
