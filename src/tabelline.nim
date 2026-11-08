@@ -68,27 +68,58 @@ proc columnName(n: NimNode): string =
   of nnkDotExpr: columnName(n[0]) & "." & columnName(n[1])
   else: (error("expected a column name", n); "")
 
+proc columnLines(body, data: NimNode): NimNode =
+  ## The lines of a `tableData:` body, each `name: values` becoming `data.addColumn(name, values)`;
+  ## `for` and `if` bodies are read the same way.
+  case body.kind
+  of nnkStmtList:
+    result = newStmtList()
+    for line in body: result.add columnLines(line, data)
+  of nnkForStmt:
+    result = body.copyNimTree
+    result[^1] = columnLines(body[^1], data)
+  of nnkIfStmt:
+    result = body.copyNimTree
+    for k in 0 ..< result.len: result[k][^1] = columnLines(body[k][^1], data)
+  else:
+    var name, vals: NimNode
+    if body.kind in {nnkCall, nnkCommand} and body.len == 2:
+      # `mass: [...]`, or `(expr): [...]` for a name computed when the line runs
+      name = (if body[0].kind == nnkPar: body[0][0] else: newLit(columnName(body[0])))
+      vals = body[1]
+    elif body.kind == nnkPrefix and body.len == 3:
+      # `$j: [...]`: Nim reads the colon's block as the prefix call's last argument
+      name = newCall(body[0], body[1])
+      vals = body[2]
+    else:
+      error("expected `name: [values]`, or a `for` or `if` of them", body)
+    if vals.kind == nnkStmtList: vals = vals[0]
+    var values: NimNode
+    if vals.kind == nnkBracket:
+      var vs = newNimNode(nnkBracket)
+      for v in vals: vs.add newCall(bindSym"toValue", v)
+      values = prefix(vs, "@")
+    else:
+      values = newCall(bindSym"toValues", vals)
+    result = newCall(bindSym"addColumn", data, name, values)
+
 macro tableData*(body: untyped): TableData =
   ## Columns as `name: [values]` lines, each value converted on its own, so a column can mix
-  ## numbers with `nil` (missing). A name can have dots, `size.mass: [...]`, or be quoted:
+  ## numbers with `nil` (missing). A name can have dots, `size.mass: [...]`, or be quoted.
+  ## Values can be any list, such as a `collect`. A `for` (or `if`) adds the columns in its body,
+  ## and their names can be computed: `$j: [...]`, or any expression in parentheses.
   ##
   ## ```nim
   ## let d = tableData:
   ##   planet: ["Mercury", "Venus"]
   ##   moons: [0, nil]
+  ## let tavola = tableData:
+  ##   `×`: collect(for i in 1 .. 3: i)
+  ##   for j in 1 .. 3:
+  ##     $j: collect(for i in 1 .. 3: i * j)
   ## ```
-  result = newCall(bindSym"toTableData")
-  var pairs = newNimNode(nnkBracket)
-  for line in body:
-    if line.kind notin {nnkCall, nnkCommand} or line.len != 2:
-      error("expected `name: [values]`", line)
-    let name = columnName(line[0])
-    var vals = line[1]
-    if vals.kind == nnkStmtList: vals = vals[0]
-    var vs = newNimNode(nnkBracket)
-    if vals.kind == nnkBracket:
-      for v in vals: vs.add newCall(bindSym"toValue", v)
-      pairs.add nnkTupleConstr.newTree(newLit(name), prefix(vs, "@"))
-    else:
-      pairs.add nnkTupleConstr.newTree(newLit(name), newCall(bindSym"toValues", vals))
-  result.add pairs
+  let data = genSym(nskVar, "data")
+  result = newBlockStmt(newStmtList(
+    newVarStmt(data, nnkObjConstr.newTree(bindSym"TableData")),
+    columnLines(body, data),
+    data))

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- `tableData:` takes `for` and `if`, and computed column names (`$j: [...]`, `(expr): [...]`), so
+  a column per item of a list is one call (#30).
+- Docs: The Great Explainer's first table builds *la tavola pitagorica* from scratch, with one
+  `tableData` call, `collect` from `std/sugar` and a `for` loop; `tavolaPitagorica(n)` is
+  introduced later, as the same data ready made (#30).
 - **Breaking (before 0.1):** `optPageTheme()` is replaced by `optCssTheme()`, beside `optCss()`.
   It reads six names that say what they are (`--ink`, `--paper`, `--line`, `--shade`,
   `--primary`, `--font`); two are enough, the rest are mixed from them; every name

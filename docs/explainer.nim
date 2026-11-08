@@ -18,12 +18,26 @@ nbTitolo "Guide · The Great Explainer · started 7 November 2026", "Great table
 *Tabelline* is what Italian children call the times tables, the little tables learned by heart in primary school. It is also the name of a new Nim library for making **display tables**: tables meant to be read by people, with a title, grouped rows, labels over columns, formatted numbers, colours and notes. This page explains where the idea comes from (R's **gt** and Python's **Great Tables**), how those libraries are built, who uses them, and then builds a first, small tabelline, step by step.
 """
 nbText: """
-Here is the first table every Italian pupil meets, *la tavola pitagorica*, made with tabelline.
-The code ran when this page was built:
+Here is the first table every Italian pupil meets, *la tavola pitagorica*, made with tabelline
+from scratch. The code ran when this page was built.
+
+First the data: a column `×` with the numbers 1 to 10, then one column for each factor.
+`collect`, from Nim's `std/sugar`, turns a `for` loop into a list, one value per turn, and
+inside `tableData:` a `for` loop adds a column per turn, named `$j`:
 """
 
 nbCode:
-  let pitagora = tabella(tavolaPitagorica(10), rownameCol = "×"):
+  let tavola = tableData:
+    `×`: collect(for i in 1 .. 10: i)
+    for j in 1 .. 10:
+      $j: collect(for i in 1 .. 10: i * j)
+
+nbText: """
+Then the table: `tabella` takes the data, and each line under it adds a part or a style.
+"""
+
+nbCode:
+  let pitagora = tabella(tavola, rownameCol = "×"):
     tabHeader md("La *tavola pitagorica*"), "the times table, from 1 × 1 to 10 × 10"
     tabStubhead "×"
     dataColor everything(), palette = palette("quaderno"), domain = (1.0, 100.0)
@@ -517,7 +531,8 @@ nbText: """
 ### Loops inside a recipe
 
 Inside `tabella(data): body`, any `for` or `if` works, and their verbs are rewritten too. One
-style per row of the times table, picking out the squares:
+style per row of the times table, picking out the squares. The data is the one built at the top
+of this page, ready made: `tavolaPitagorica(n)`, from `tabelline/datasets`, is the n × n times table.
 """
 nbCode:
   let squares = tabella(tavolaPitagorica(6), rownameCol = "×"):

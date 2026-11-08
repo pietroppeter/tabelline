@@ -58,9 +58,6 @@ Rough size: S (hours), M (a day or two), L (more).
   one.
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.
-- **Columns from computed lists** (S). Building a table with one column per item of a list takes
-  `TableData()` + `addColumn` + `toValue` today; a `withColumn(name, seq[T])` (or `tableData:`
-  accepting a loop) would make it one line.
 
 ## Interop
 
