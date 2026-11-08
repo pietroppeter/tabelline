@@ -49,11 +49,11 @@ block:
       for (key, i, name, does) in threadKinds:
         if key == th.kind: icon = i
       rows.add Row(release: &"{r.version} · {r.theme}", thread: &"{icon} **{th.title}**<br>{th.what}",
-                   output: th.output, status: th.status)
+                   output: (if th.href.len > 0: &"[{th.output}](../{th.href})" else: th.output), status: th.status)
   var t = tabella(rows, groupnameCol = "release"):
     tabHeader "Releases and their threads", "0.1 to 0.5"
     colsLabel {"thread": "thread, and what it does", "output": "makes"}
-    fmtMarkdown "thread"
+    fmtMarkdown ["thread", "output"]
     colsWidth {"output": "24%", "status": "5em"}
     optCssTheme()
   t = t.tabStyle(style.text(color = "var(--muted)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))

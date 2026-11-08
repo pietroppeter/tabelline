@@ -5,7 +5,7 @@
 import std/os
 import nimib except md
 import tabelline, tabelline/[datasets, nimib]
-import blocchi
+import blocchi, stories/storie
 
 let docs = currentSourcePath().parentDir
 nbInit
@@ -38,6 +38,13 @@ The six parts of every gt table are explained in the [Guide](explainer/#the-part
 The last line, `optCssTheme()`, is tabelline's own: the table takes its colours and font from the
 page, so it changes with the look you pick at the top ([how it works](explainer/#tables-that-follow-the-page)).
 """
+
+nbText: """
+## Stories
+
+Real subjects told in tables made with tabelline, one for every release. [All the stories](stories/).
+"""
+nbStorie "stories/"
 
 # The pages of the site, in three groups by the question a reader brings, each in reading order.
 # They are kept up to date as tabelline changes; dated posts are in the devlog.

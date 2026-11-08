@@ -1,7 +1,7 @@
 """Write by-sport.tsv: who won each of the 16 sports of Milano Cortina 2026.
 
-    python3 docs/devlog/data/milano-cortina/sports.py
-    FETCH_CACHE=/tmp/wp python3 docs/devlog/data/milano-cortina/sports.py   # keeps the pages read
+    python3 docs/stories/data/milano-cortina/sports.py
+    FETCH_CACHE=/tmp/wp python3 docs/stories/data/milano-cortina/sports.py   # keeps the pages read
 
 Reads "<sport> at the 2026 Winter Olympics" on English Wikipedia (REST API, CC BY-SA 4.0, slowly:
 Wikipedia limits fast clients) and keeps every row of each sport's medal table: sport, team, flag

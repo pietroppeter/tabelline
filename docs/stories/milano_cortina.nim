@@ -1,6 +1,6 @@
-## devlog: 08 Nov 2026 A | Milano Cortina 2026, in small numbers | The Winter Olympics and Paralympics of 2026 told in tables made with tabelline 0.1, in three parts of three: the Games, the money, what stays. Learning from Il Post's coverage, with data from Wikipedia and Il Post.
-## A dated post: it tells the Games as known on 8 November 2026, and is not updated afterwards.
-## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/devlog/data/milano-cortina/
+## story: 0.1 | Milano Cortina 2026, in small numbers | The Winter Olympics and Paralympics of 2026 told in tables made with tabelline 0.1, in three parts of three: the Games, the money, what stays. Learning from Il Post's coverage, with data from Wikipedia and Il Post.
+## A story, kept up to date: it tells the Games with tabelline 0.1 (first written on 8 November 2026).
+## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/stories/data/milano-cortina/
 ## (tables from Wikipedia, written by fetch.py there).
 import std/[os, strutils, strformat, sequtils, algorithm]
 import nimib except md
@@ -9,12 +9,15 @@ import ../blocchi, ../olimpiadi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
-nb.doc.filename = docs / "devlog" / "milano-cortina" / "index.html"
+nb.doc.filename = docs / "stories" / "milano-cortina" / "index.html"
 nb.useTabelline(nome = "tabelline",
-                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", nameHref = "../../")
 
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
-const metal = @[haru.paper, haru.warning]     # paper to rapeseed yellow
+proc blend(a, b: string, t: float): string = mix(parseColor(a), parseColor(b), t).toHex
+let gold = haru.warning                                                  # rapeseed yellow
+let silver = blend(haru.paper, haru.ink, 0.3)                            # paper and a little ink
+let bronze = blend(blend(haru.warning, haru.primary, 0.5), haru.ink, 0.2) # yellow, plum and ink
 let gilt = tinta("--warning")                 # Italy's row
 let fresh = tinta("--success-soft")           # venues built for the Games
 
@@ -29,7 +32,7 @@ proc medal(s: string): string =
     else: ""
   (if emoji.len > 0: emoji & " " else: "") & s.capitalizeAscii
 
-nbTitolo "8 November 2026", "Milano Cortina 2026, in small numbers", """
+nbTitolo "A story · tabelline 0.1", "Milano Cortina 2026, in small numbers", """
 The Winter Olympics and Paralympics of 2026, told in tables: in three parts of three, from the
 simplest fact to the bills that are still arriving.
 """
@@ -187,7 +190,7 @@ nbShowCode:
   rows.add Source(kind: "hand", data: "footprint", `from`: &"[Scientists for Global Responsibility]({footprintSource})", rows: footprint.len)
   let t = tabella(rows, rownameCol = "data", groupnameCol = "kind"):
     optCssTheme()
-    tabHeader "Where the numbers come from", "the files in docs/devlog/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
+    tabHeader "Where the numbers come from", "the files in docs/stories/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
     textCaseMatch {"files": "📄 files, from Wikipedia and NOAA", "hand": "✍️ typed by hand"}, locations = loc.rowGroups()
     colsLabel {"from": "from", "rows": "rows"}
     fmtMarkdown "from"
@@ -348,7 +351,7 @@ nbTabs(python = &"""
 import polars as pl
 from great_tables import GT, loc, style
 
-medals = pl.read_csv("docs/devlog/data/milano-cortina/medals.tsv",
+medals = pl.read_csv("docs/stories/data/milano-cortina/medals.tsv",
                      separator="\t", comment_prefix="#").head(10)
 (GT(medals, rowname_col="team")
     .tab_header("Medal table", "Milano Cortina 2026, top ten")
@@ -356,19 +359,23 @@ medals = pl.read_csv("docs/devlog/data/milano-cortina/medals.tsv",
     .fmt_flag("code")
     .cols_label(code="", gold="🥇", silver="🥈", bronze="🥉")
     .tab_spanner("medals", columns=["gold", "silver", "bronze"])
-    .data_color(["gold", "silver", "bronze"], palette=["{haru.paper}", "{haru.warning}"])
+    .data_color("gold", palette=["{haru.paper}", "{gold}"])
+    .data_color("silver", palette=["{haru.paper}", "{silver}"])
+    .data_color("bronze", palette=["{haru.paper}", "{bronze}"])
     .tab_style(style.text(weight="bold"), loc.body(columns="total")))
 """, r = &"""
 library(gt)
 
-medals <- read.delim("docs/devlog/data/milano-cortina/medals.tsv", comment.char = "#")
+medals <- read.delim("docs/stories/data/milano-cortina/medals.tsv", comment.char = "#")
 gt(head(medals, 10), rowname_col = "team") |>
   tab_header("Medal table", "Milano Cortina 2026, top ten") |>
   cols_hide(rank) |>
   fmt_flag(code) |>
   cols_label(code = "", gold = "🥇", silver = "🥈", bronze = "🥉") |>
   tab_spanner("medals", columns = c(gold, silver, bronze)) |>
-  data_color(c(gold, silver, bronze), palette = c("{haru.paper}", "{haru.warning}")) |>
+  data_color(gold, palette = c("{haru.paper}", "{gold}")) |>
+  data_color(silver, palette = c("{haru.paper}", "{silver}")) |>
+  data_color(bronze, palette = c("{haru.paper}", "{bronze}")) |>
   tab_style(cell_text(weight = "bold"), cells_body(columns = total))
 """):
   nbCode:
@@ -380,7 +387,9 @@ gt(head(medals, 10), rowname_col = "team") |>
       fmtFlag "code"
       colsLabel {"code": "", "gold": "🥇", "silver": "🥈", "bronze": "🥉"}
       tabSpanner "medals", ["gold", "silver", "bronze"]
-      dataColor ["gold", "silver", "bronze"], palette = metal
+      dataColor "gold", palette = @[haru.paper, gold]
+      dataColor "silver", palette = @[haru.paper, silver]
+      dataColor "bronze", palette = @[haru.paper, bronze]
       tabStyle style.text(weight = "bold"), loc.body(cols("total"))
       tabOptions(tableFontSize = "14px")
   nbTable t
@@ -395,12 +404,14 @@ Tables guides.
 nbNota("""
 `readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
-emoji, so nothing is loaded. `dataColor` shades each medal column on its own (with tabelline 0.1
-each column has its own range, as in gt), along `metal`, a palette of two colours defined at the
-top of the page: the paper and the yellow of the Munari look (`haru.paper` and `haru.warning`,
-from `docs/stile.nim`). They are written as values, not as the page's CSS variables, because
-`dataColor` mixes the colours itself while building the table, so the shading stays the same in
-the quaderno look. The blue scales below (`soft`) are made the same way, from Munari's blue.
+emoji, so nothing is loaded. `dataColor` shades each medal column in its own metal, from the paper
+to `gold`, `silver` or `bronze`, so the deepest cell of a column is the country with most of that
+medal (each column has its own range, as in gt). The three are mixed at the top of the page from
+the Munari look's colours (`docs/stile.nim`) with tabelline's `mix`: gold is its yellow
+(`haru.warning`), silver the paper with a little ink, bronze the yellow and the plum with a little
+ink. They are values, not the page's CSS variables, because `dataColor` mixes the colours itself
+while building the table, and picks a dark or light text for each cell so the numbers stay
+readable. The blue scales below (`soft`) are made the same way, from Munari's blue.
 """, nkCode)
 
 nbText: """
@@ -977,10 +988,10 @@ nbNota("""
 nbText: """
 ## How this post is built
 
-The page is a nimib notebook, `docs/devlog/milano_cortina.nim`, built with the others by
+The page is a nimib notebook, `docs/stories/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
 
-**1. The data from Wikipedia** is nine TSV files in `docs/devlog/data/milano-cortina/` (the
+**1. The data from Wikipedia** is nine TSV files in `docs/stories/data/milano-cortina/` (the
 table in *Where the numbers come from* lists them): the medal tables of the Olympics and the
 Paralympics, the athletes of each team, Italy at every Winter Games, Italy's thirty medals, the
 venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short Python

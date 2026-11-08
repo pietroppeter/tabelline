@@ -8,6 +8,10 @@
   can be changed, or replaced by a value, in the call, and `cssTheme(...)` keeps a theme to reuse.
   Docs: the tokens take the same names (`--n-1` is `--shade`, `--n-3` `--line`, `--n-7` `--muted`,
   the scale `--neutral-0` … `--neutral-9`, the font `--font`); tables sit on the paper (#29).
+- Docs: a new section, *Stories*: real subjects told in tables made with tabelline, one for every
+  release, kept up to date (`docs/stories/`). *Milano Cortina 2026* moves there from the devlog,
+  with its data (`docs/stories/data/milano-cortina/`); its old address forwards to it. The home page
+  shows the stories as a gallery, and the roadmap links each *use it* thread to its story (#26).
 - Breaking (before 0.1): `fmtBar` is removed. It was tabelline's only format not in gt or Great
   Tables, and it drew the bar before the number; bars come back with `fmtNanoplot`, after 0.1.
   The Feature map lists everything in tabelline that is not from gt (#27).
