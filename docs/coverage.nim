@@ -16,7 +16,7 @@ nb.useTabelline(nome = "tabelline", materia = "Feature map", classe = "kept up t
                description = "Every feature group of gt and Great Tables, what tabelline has, and the plan for the rest.")
 
 const labels = {"done": "has it", "partial": "partly", "missing": "missing", "no": "not planned"}.toTable
-const colours = {"done": "var(--success-text)", "partial": "var(--secondary-text)", "missing": "var(--primary-text)", "no": "var(--n-7)"}.toTable
+const colours = {"done": "var(--success-text)", "partial": "var(--secondary-text)", "missing": "var(--primary-text)", "no": "var(--muted)"}.toTable
 
 type Item = object
   area, feature, gt, status, plan, size, note, where: string
@@ -65,7 +65,7 @@ block:
     fmtNumber "share", decimals = 0, pattern = "{x}%"
     dataColor "share", palette = palette("greens"), domain = (0.0, 100.0)
     tabSourceNote "Covered: groups that tabelline has, plus half of those it has partly. Not counted: the groups it does not plan."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -91,7 +91,7 @@ block:
     tabSpanner "sizes", ["s", "m", "l"]
     subZero ["s", "m", "l"], zeroText = ""
     tabStyle style.text(weight = "bold"), loc.body(cols = "theme")
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -113,7 +113,7 @@ block:
     tabHeader "Built for 0.1", &"{rows.len} small groups, each a few hours"
     colsLabel {"feature": "group, gt names, what it is"}
     fmtMarkdown "feature"
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: """
@@ -138,7 +138,7 @@ block:
     colsLabel {"feature": "feature group, gt names, notes", "now": "today", "plan": "planned"}
     fmtMarkdown "feature"
     colsWidth {"now": "5.5em", "plan": "4.5em"}
-    optPageTheme()
+    optCssTheme()
   for s, label in labels:
     let c = colours[s]
     t = t.tabStyle(style.text(color = c, weight = "bold"), loc.body(cols = "now", rows = where(it["now"] == label)))
@@ -162,7 +162,7 @@ block:
     N(what: "`rowOrder`", why: "sorts the rows shown and leaves the data as it is; Nim has no dplyr", closest: "`dplyr::arrange()` or `df.sort()` before the table"),
     N(what: "`colsReorder`", why: "puts some columns in a new order in the places they hold, so two can swap", closest: "`cols_move()`, `cols_move_to_start()`"),
     N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
-    N(what: "`optPageTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
+    N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),
     N(what: "the datasets `planets` and `tavolaPitagorica`", why: "small examples for the docs (`exibble` is gt's)", closest: "gt's and Great Tables' datasets"),
   ]
@@ -171,7 +171,7 @@ block:
     colsLabel {"what": "in tabelline", "why": "why", "closest": "closest in gt or Great Tables"}
     fmtMarkdown everything()
     tabOptions(tableWidth = "100%", tableFontSize = "14px")
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbSave

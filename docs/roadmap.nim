@@ -34,7 +34,7 @@ block:
   let t = tabella(rows, rownameCol = "thread"):
     tabHeader "Three threads for every release"
     colsLabel {"does": ""}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: "## Releases"
@@ -55,8 +55,8 @@ block:
     colsLabel {"thread": "thread, and what it does", "output": "makes"}
     fmtMarkdown ["thread", "output"]
     colsWidth {"output": "24%", "status": "5em"}
-    optPageTheme()
-  t = t.tabStyle(style.text(color = "var(--n-7)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
+    optCssTheme()
+  t = t.tabStyle(style.text(color = "var(--muted)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
   nbTable t
 
 nbText: """
@@ -83,7 +83,7 @@ block:
     colsLabel {"who": "by", "release": "for"}
     fmtMarkdown "source"
     tabSourceNote "The ports go in the tabelline book, a nimibook kept in this repository (in the Edo palette, made like the Nanuq Book), with the original Python or R next to the Nim."
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbText: "## Left aside"
@@ -96,7 +96,7 @@ block:
   let t = tabella(rows, rownameCol = "what"):
     tabHeader "Not planned, for now"
     colsLabel {"why": ""}
-    optPageTheme()
+    optCssTheme()
   nbTable t
 
 nbSave
