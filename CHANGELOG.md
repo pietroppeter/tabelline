@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Docs: a new structure. The home page keeps one simple table and lists the living documents
+  in reading order (The Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref,
+  Agents, Specs); the devlog lists only posts; new pages Design Ref (`docs/design.nim`) and
+  Agents (`docs/agents.nim`, with the rules from AGENTS.md and a `llms.txt`); the explainer is
+  now The Great Explainer (#15).
 - Fix: `dataColor` colours each column on its own range, numbers as numbers next to a text
   column, and a domain from high to low runs the palette the other way; the heading and column
   labels get white text on dark backgrounds by contrast, so `optStylize(2, "red")` reads (found by

@@ -12,3 +12,4 @@ docs/*/all
 tools/specrun
 tools/specview
 tools/specsuite_gen.nim
+docs/llms.txt

@@ -49,7 +49,13 @@ working rules that are easy to miss.
   elements in both looks. The HTML is not committed: CI
   builds every page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from
   `main`. Notebooks that import nimib and tabelline use `import nimib except md`.
-- Living documents (the explainer, the specs page) are kept up to date. A devlog post
+- The home page shows the simplest example and links the living documents in this order: The
+  Great Explainer, Devlog, Book, Roadmap, Coverage map, Design Ref, Agents, Specs. The devlog
+  lists only posts. A new living document gets a card there
+  (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
+- The Design Ref (`docs/design.nim`) is updated in the PR that changes the look; a big design
+  change starts as a devlog post. The Agents page reads this file when it builds.
+- Living documents are kept up to date. A devlog post
   (`docs/devlog/<slug>.nim`, first line `## devlog: dd Mon yyyy X | title | lede`) is dated and not
   updated afterwards; the devlog index finds it, and it gets a line in the README. `X` is a letter
   for posts of the same day, in the order they were written (A, B, C, ...), so the index can
