@@ -140,6 +140,9 @@ block:
       of "use":
         if row.use.len == 0: row.use = th.title.replace("Use it: ", "")  # the first, as when posted
       of "port": row.port = th.title.replace("Port ", "").capitalizeAscii
+    # 0.1's first subject, as when posted: the roadmap dropped it when the article moved to
+    # claude-artifacts ("A month of building with Claude").
+    if r.version == "0.1": row.use = "a month of building with AI, and Operetta"
     rows.add row
   let t = tabella(rows, rownameCol = "release"):
     tabHeader "From 0.1 to 0.5", "what each thread of each release does"

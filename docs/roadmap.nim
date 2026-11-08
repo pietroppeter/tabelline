@@ -41,7 +41,7 @@ nbText: "## Releases"
 
 block:
   type Row = object
-    release, thread, what, output, status: string
+    release, thread, output, status: string
   var rows: seq[Row]
   for r in releases:
     for th in r.threads:

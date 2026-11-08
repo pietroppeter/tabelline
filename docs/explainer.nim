@@ -4,7 +4,7 @@
 import std/[os, strutils, sequtils, sugar]
 import nimib except md   # nimib's old `md` (deprecated) would clash with tabelline's
 import tabelline, tabelline/[datasets, nimib]
-import blocchi
+import blocchi, piano
 
 let root = currentSourcePath().parentDir
 nbInit
@@ -128,12 +128,12 @@ nbCode:
   let menu = @[
     Verb(family: "Create", verbs: "gt(), gt_preview(), gt_group()", does: "a table from a dataframe", tabelline: "tabella(), tableData:"),
     Verb(family: "Parts", verbs: "tab_header, tab_spanner, tab_stubhead, tab_row_group, tab_footnote, tab_source_note", does: "add the parts of a table", tabelline: "all six"),
-    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "11, and a tiny bar"),
-    Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "subMissing, subZero"),
-    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, align, width, hide, move"),
-    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "not yet"),
-    Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle, dataColor"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (40), 6 opt*"),
+    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "21, and fmt() for your own"),
+    Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "all five"),
+    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, align, width, hide, unhide, move, reorder"),
+    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder; summaries not yet"),
+    Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle, dataColor, textTransform"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (56), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word", does: "render", tabelline: "toHtml, toText, toMarkdown, save"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
@@ -142,10 +142,35 @@ nbCode:
     colsWidth {"verbs": "45%"}
     tabStyle style.text(font = "ui-monospace, Menlo, monospace", size = "85%"), loc.body(cols = "verbs")
     tabStyle style.text(color = "var(--success-text)", weight = "bold"), loc.body(cols = "tabelline")
-    tabStyle style.text(color = "var(--primary-text)", weight = "bold"),
-      loc.body(cols = "tabelline", rows = where(it["tabelline"] == "not yet"))
     optAllCaps()
 nbTable menuTable
+
+# The counts in the menu, checked against the sources when the page is built: a new format,
+# preset or option stops the build until the menu says so.
+let src = root.parentDir / "src" / "tabelline"
+proc countVerbs(file, prefix: string): int =
+  ## The exported procs named `prefix` and a capital, each name once (overloads count once).
+  var names: seq[string]
+  for line in readFile(src / file).splitLines:
+    if line.startsWith("proc " & prefix) and line[5 + prefix.len] in {'A'..'Z'}:
+      let name = line[5 ..< line.find('*')]
+      if name notin names: names.add name
+  names.len
+let nFormats = countVerbs("formats.nim", "fmt")
+let nOpts = countVerbs("verbs.nim", "opt")
+var nOptions = 0   # the fields of TabOptions, in core.nim
+block:
+  var inside = false
+  for line in readFile(src / "core.nim").splitLines:
+    if line.startsWith("  TabOptions* = object"): inside = true
+    elif inside and line.strip.len > 0:
+      if not line.startsWith("    "): break
+      if not line.strip.startsWith("#") and '*' in line: inc nOptions
+
+doAssert nFormats == 21, "the menu says 21 formats; there are " & $nFormats
+doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
+doAssert nOptions == 56, "the menu says 56 options; there are " & $nOptions
+
 
 nbText: """
 Beyond the verbs, both libraries ship datasets made for showing off tables (`exibble`,
@@ -333,12 +358,14 @@ nbText: """
   `where(it["type"] == "Gas giant")`, which reads like Nim's `filterIt`.
 - `loc` and `style` are empty objects used as namespaces, so `loc.body(cols = "mass")` and
   `style.fill("var(--warning-soft)") & style.text(weight = "bold")` read exactly like Great Tables.
-- `TabOptions` uses Nim 2's default field values for its 40 options.
+- `TabOptions` uses Nim 2's default field values for its options.
 
-### Two macros, and only where they help
+### Three macros, and only where they help
 
-- `tabOptions(rowStriping = true, ...)` sets options by name; a macro, because a proc with 40
-  optional parameters would be worse, and a typo is still a compile error.
+- `tabOptions(rowStriping = true, ...)` sets options by name; a macro, because a proc with dozens
+  of optional parameters would be worse, and a typo is still a compile error.
+- `tableData:` writes data as columns, one line each, converting every value on its own (so
+  `nil` can be a missing number), with `for` loops for columns made by rule.
 - `tabella(data): body` reads each line of `body` as a verb applied to the table, so a table
   reads like a recipe, with `for` loops and `if`s allowed in between. The verbs stay plain procs:
   the macro only rewrites `verb(args)` into `t = verb(t, args)`.
@@ -388,8 +415,9 @@ nbCode:
   echo small3.toMarkdown   # Markdown
 
 nbText: """
-For HTML, `small3.toHtml` gives the table as a string to put in a page of your own, and
-`small3.save("tavola.html")` writes a whole standalone page:
+For HTML, `small3.toHtml` gives the table as a string to put in a page of your own,
+`small3.toHtml(makePage = true)` the same table in a whole standalone page, and
+`small3.save("tavola.html")` writes that page to a file:
 
 ```nim
 import tabelline
@@ -727,22 +755,19 @@ tables were made once, when the page was built: nothing runs on them when the lo
 
 ## What comes next
 
-This is a first version, a proof of concept: it already makes tables worth showing, but most of
-gt is still ahead. The next steps are written down as specs in the repository (`openspec/`, shown
-on the [specs page](../specs/)) and in the backlog; the main ones:
-
-- **Summary rows** (`summaryRows`, `grandSummaryRows`), with aggregates from Nim procs.
-- **Nanoplots**: small SVG line and bar charts in cells, the gt way.
-- **More formats**: `fmtUnits` (`m^2`, `kg/m^3`), `fmtImage`, `fmtFlag`, `fmtDuration`, `fmtBytes`,
-  `fmtFraction`, with more locales.
-- **Column merges** (`colsMerge`, `colsMergeUncert`, `colsMergeRange`) and text transforms.
-- **Interop** with Nim dataframes: [nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim)
-  and [datamancer](https://github.com/SciNim/Datamancer), as optional modules.
-- **Other outputs**: LaTeX first, then images; and an interactive mode (sort and filter) compiled
-  from Nim to JavaScript.
-- **A gallery** that rebuilds famous gt tables, and an entry for the next Table Contest.
-
+This is tabelline 0.1: it has the basics of gt, and most of gt is still ahead. The
+[roadmap](../roadmap/) has four more releases, each tried on a real subject (a story) and on
+ported reference code (the [book](../book/)); the open steps are written down as specs
+(`openspec/`, on the [specs page](../specs/)) and in the backlog.
 """
+block:
+  var next = ""
+  for r in releases[1 .. ^1]:
+    for th in r.threads:
+      if th.kind == "build": next.add "- **" & r.version & ", " & r.theme & "**: " & th.what & "\n"
+  nbText next & "\nSome things are left aside for now, such as interactive tables: the " &
+    "[roadmap](../roadmap/#left-aside) says which, and why."
+
 nbNota("""
 This page is a nimib notebook, `docs/explainer.nim`: every table on it was made by the code shown, when the page was built. The research behind it read the sources of gt and Great Tables and the Posit blog. Corrections are welcome, as issues or pull requests.
 """, nkDone, "How this page was made")

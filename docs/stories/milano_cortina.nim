@@ -40,16 +40,16 @@ simplest fact to the bills that are still arriving.
 nbText: """
 Between 6 February and 15 March 2026 Italy held the Winter Olympics and then the Paralympics,
 in eight places from Milan to the Dolomites. Nine months later they can be told with numbers,
-and the numbers fit in tables. This post tells them, and makes every table with
-[tabelline](../../), whose 0.1 is about to be released: it is the *use it* post of 0.1 (see the
+and the numbers fit in tables. This story tells them, and makes every table with
+[tabelline](../../), whose 0.1 is about to be released: it is the *use it* story of 0.1 (see the
 [roadmap](../../roadmap/)), the one that uses the library as a user would, on data from outside.
 
 It learns from the coverage of [Il Post](https://www.ilpost.it/tag/milano-cortina-2026/), which
 followed the Games for seven years, from the bid to the Court of Auditors. Il Post explains with
 questions (*how did we get here?*, *why so many medals?*, *what is left?*), puts a number next
-to another that gives it a size, and comes back to a story when there is news. This post asks
+to another that gives it a size, and comes back to a story when there is news. This story asks
 its questions the same way, takes the numbers Il Post reported (each table links the article),
-and the rest from Wikipedia (and the air from NOAA). The words are this post's own.
+and the rest from Wikipedia (and the air from NOAA). The words are this story's own.
 """
 
 nbNota("""
@@ -88,7 +88,7 @@ nbShowCode:
 
 nbNota("""
 `fmtRoman` turns 25 into XXV. The dates are ISO dates in the data, `"2026-02-06"`, and `fmtDate`
-shows them as a reader wants them. Everything else in this post adds one idea at a time to a
+shows them as a reader wants them. Everything else in this story adds one idea at a time to a
 table like this one.
 """, nkCode)
 
@@ -135,7 +135,7 @@ apart, and the second has 32 events more.
 
 ## Three parts of three
 
-What happened is too much for one table, so the post splits it in three, and every part in three
+What happened is too much for one table, so the story splits it in three, and every part in three
 again: three questions each, nine tables to answer them, simplest first.
 """
 
@@ -221,7 +221,7 @@ nbNota("""
 to `tabella` as it is, one field per column. Some tables are made in between: a `seq` of objects
 built in a loop (the venues, one row per venue with its sports joined; the table above), or a
 `TableData` built column by column with `addColumn` (the articles, at the end). The files are
-written by short Python scripts that read Wikipedia: how, in *How this post is built*.
+written by short Python scripts that read Wikipedia: how, in *How this story is built*.
 """, nkCode)
 
 nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
@@ -395,14 +395,14 @@ gt(head(medals, 10), rowname_col = "team") |>
   nbTable t
 
 nbNota("""
-This is the only table of the post shown in three languages: Nim with tabelline, Python with
+This is the only table of the story shown in three languages: Nim with tabelline, Python with
 Great Tables, R with gt. It is the table everyone knows, so it is the one to compare, verb by
 verb. The [Book](../../book/) does the same for the examples it ports from the gt and Great
 Tables guides.
 """, nkCode, "Three languages, once")
 
 nbNota("""
-`readTsv` and `top` are this post's own: the first drops the comment lines naming the Wikipedia
+`readTsv` and `top` are this story's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
 emoji, so nothing is loaded. `dataColor` shades each medal column in its own metal, from the paper
 to `gold`, `silver` or `bronze`, so the deepest cell of a column is the country with most of that
@@ -542,7 +542,7 @@ nbShowCode:
 
 nbNota("""
 `textCaseMatch(sportMarks())` puts the emoji of each sport's kind in front of it; the row groups,
-the medal colours, get theirs from `textTransform`, with a small proc of this post.
+the medal colours, get theirs from `textTransform`, with a small proc of this story.
 """, nkCode)
 
 nbText: """
@@ -960,7 +960,7 @@ nbParte 2, "", prSecondary   # the closing sections: the articles and the code
 nbText: """
 ## The articles
 
-The Il Post articles this post learned from, with the angle each takes:
+The Il Post articles this story learned from, with the angle each takes:
 """
 
 nbShowCode:
@@ -986,7 +986,7 @@ nbNota("""
 """, nkCode)
 
 nbText: """
-## How this post is built
+## How this story is built
 
 The page is a nimib notebook, `docs/stories/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
@@ -1004,7 +1004,7 @@ file, `co2.tsv`, comes from NOAA's public Mauna Loa record, written by `co2.py` 
 
 **2. The facts from Il Post** are typed by hand in `docs/olimpiadi.nim`: Nim objects, one `const`
 array per table, each with the path of the article it comes from. Il Post is a newspaper and its
-articles are its own, so only facts and numbers are taken, each linked; the text of this post is
+articles are its own, so only facts and numbers are taken, each linked; the text of this story is
 written from scratch. Where an article gives no number (the silver medal's weight, Predazzo's
 final cost), the field is 0 and the table says so (`subZero`), rather than inventing one.
 
@@ -1052,7 +1052,7 @@ nbShowCode:
   ]
   let t = tabella(rows, rownameCol = "what"):
     optCssTheme()
-    tabHeader "Gaps found by this post"
+    tabHeader "Gaps found by this story"
     colsLabel {"how": ""}
     fmtMarkdown "how"
     colsWidth {"what": "30%"}
