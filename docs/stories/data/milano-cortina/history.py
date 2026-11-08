@@ -1,7 +1,7 @@
 """Write history.tsv: every Winter Games held, from Wikipedia's list.
 
-    python3 docs/devlog/data/milano-cortina/history.py
-    FETCH_CACHE=/tmp/wp python3 docs/devlog/data/milano-cortina/history.py   # reuses a page read before
+    python3 docs/stories/data/milano-cortina/history.py
+    FETCH_CACHE=/tmp/wp python3 docs/stories/data/milano-cortina/history.py   # reuses a page read before
 
 Reads the article "Winter Olympic Games" through the REST API (CC BY-SA 4.0) and keeps the Games
 that were held: edition, year, host, nations, athletes and events. The cancelled Games of 1940 and

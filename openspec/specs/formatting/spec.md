@@ -109,9 +109,8 @@ echo tabella(d, locale = "fr").fmtNumber("n", decimals = 2)
 
 ### Requirement: Other formats
 `fmtDate` SHALL format ISO dates in a named style or a std/times pattern; `fmtTf` SHALL show
-booleans as two texts; `fmtMarkdown` SHALL read cells as inline Markdown; `fmtBar` SHALL draw a
-bar scaled to the column's range; `fmt(columns, proc)` SHALL take any proc from a `Value` to a
-string.
+booleans as two texts; `fmtMarkdown` SHALL read cells as inline Markdown; `fmt(columns, proc)`
+SHALL take any proc from a `Value` to a string.
 
 ```nim
 let d = tableData:

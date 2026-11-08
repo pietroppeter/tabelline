@@ -35,7 +35,8 @@ nb.useTabelline(nome = "tabelline", materia = "Devlog", classe = "posts",
 nbTitolo "Devlog", "How tabelline is made", """
 Dated posts on the steps that made tabelline, newest first. Bigger changes are tracked and
 explained in a post. Each tells one step as it happened, and is not updated afterwards; the
-living documents, kept up to date, are on the [home page](../).
+living documents, kept up to date, are on the [home page](../), and the subjects told with
+tabelline are in [Stories](../stories/).
 """
 nbCards "the posts, newest first":
   for p in posts:

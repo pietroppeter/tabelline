@@ -114,7 +114,7 @@ nbText: """
 **Data** colours come from the roles too: categorical (the seven tints of the parts of a table,
 `partTints`), sequential (from `--n-0` to `--secondary`) and diverging (from `--secondary`
 through the paper to `--primary`). A tabelline colour can be a CSS variable, so a table can use
-them directly: `fmtBar(color = "var(--secondary)")`.
+them directly: `style.fill("var(--secondary)")`.
 
 **Rule:** never write a fixed colour in a page. Name a token; if none fits, the token is missing
 and goes in `docs/stile.nim`.
@@ -214,7 +214,6 @@ nbShowCode:
     risultato: [6, 20, 42]
   let t = tabella(tre, rownameCol = "tabellina"):
     tabHeader "Three tabelline"
-    fmtBar "risultato", color = "var(--secondary)", width = "4em"
     optPageTheme()
   nbParti t
 
