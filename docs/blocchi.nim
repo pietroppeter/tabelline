@@ -371,7 +371,11 @@ newNbBlock(NbTabs of NbContainer):
   python: string
   r: string
   toHtml:
-    let panels = [nbContainerToHtml(blk, nb), (if blk.python.len > 0: codeHtml(blk.python, "python") else: ""),
+    var nimCode, made = ""   # the Nim code goes in its tab; what it makes (a table) stays under the tabs
+    for b in blk.blocks:
+      if b of NbCode: nimCode.add nb.render(b).strip & "\n"
+      else: made.add nb.render(b).strip & "\n"
+    let panels = [nimCode.strip, (if blk.python.len > 0: codeHtml(blk.python, "python") else: ""),
                   (if blk.r.len > 0: codeHtml(blk.r, "r") else: "")]
     var res = """<div class="lingue"><div class="lingue-tab" role="tablist">"""
     var first = true
@@ -385,14 +389,15 @@ newNbBlock(NbTabs of NbContainer):
       if panels[i].len == 0: continue
       res.add &"""<div class="lingue-pannello" role="tabpanel" data-lingua="{key}"{(if first: "" else: " hidden")}>{panels[i]}</div>"""
       first = false
-    res & "</div>"
+    res & "</div>" & made.strip
 
 func tabsBlock(py, rr: string): NbTabs = newNbTabs(python = py, r = rr)
 
 template nbTabs*(python, r: string, body: untyped) =
   ## The Nim blocks `body` adds (code that runs, and its output), in a 👑 Nim tab next to the
   ## same example in 🐍 Python (Great Tables) and 🏴‍☠️ R (gt), shown and not run. The tab picked
-  ## holds for the whole page.
+  ## holds for the whole page. Only the code changes with the tab: what the Nim makes (a table,
+  ## any block that is not code) is shown under the tabs, whichever is picked.
   let tabs = tabsBlock(python, r)   # a proc: the parameters share the fields' names
   nb.withContainer(tabs):
     body

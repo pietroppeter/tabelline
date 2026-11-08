@@ -157,6 +157,71 @@ nbNota("""
 `fmtIndex` writes 1, 2, 3 as A, B, C, so the parts below are A, B and C.
 """, nkCode)
 
+nbText: """
+## Where the numbers come from
+
+Before the tables, the data they are made from. It comes in two shapes. Most of it is tables
+from Wikipedia, saved as files: the medal tables, the venues, the sports, every Winter Games.
+The rest are facts from Il Post's articles, typed by hand, one list per table: prices, costs,
+prizes, what happened after. A few numbers come from elsewhere, the air from NOAA and the
+carbon footprint from a report of two British groups.
+"""
+
+nbShowCode:
+  type Source = object
+    kind, data, `from`: string
+    rows: int
+  proc article(file: string): string =   # the first line of a file names its source
+    let url = readFile(dataDir / file).splitLines[0].split(" ")[2]
+    let name = if "wikipedia" in url: url.split("/wiki/")[1].replace("_", " ") else: "NOAA, Mauna Loa"
+    &"[{name}]({url})"
+  var rows: seq[Source]
+  for file in ["medals.tsv", "athletes.tsv", "paralympics.tsv", "italy-history.tsv", "italy-medals.tsv",
+               "venues.tsv", "sports.tsv", "history.tsv", "by-sport.tsv", "co2.tsv"]:
+    let src = if file == "by-sport.tsv": "the 16 *<sport> at the 2026 Winter Olympics*" else: article(file)
+    rows.add Source(kind: "files", data: file, `from`: src, rows: readTsv(file).nrows)
+  let ilpostRows = trips.len + channels.len + prices.len + ticketShares.len + prizes.len + metals.len +
+    estimates.len + trackSteps.len + trackYear.len + santaGiulia.len + snow.len + afterwards.len +
+    ioc.len + after.len + articles.len
+  rows.add Source(kind: "hand", data: "15 lists", `from`: "[Il Post](https://www.ilpost.it/tag/milano-cortina-2026/), one article each", rows: ilpostRows)
+  rows.add Source(kind: "hand", data: "sportFacts", `from`: "[2026 Winter Olympics § Sports](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Sports)", rows: sportFacts.len)
+  rows.add Source(kind: "hand", data: "footprint", `from`: &"[Scientists for Global Responsibility]({footprintSource})", rows: footprint.len)
+  let t = tabella(rows, rownameCol = "data", groupnameCol = "kind"):
+    optPageTheme()
+    tabHeader "Where the numbers come from", "the files in docs/devlog/data/milano-cortina/, and the lists in docs/olimpiadi.nim"
+    textCaseMatch {"files": "📄 files, from Wikipedia and NOAA", "hand": "✍️ typed by hand"}, locations = loc.rowGroups()
+    colsLabel {"from": "from", "rows": "rows"}
+    fmtMarkdown "from"
+    fmtInteger "rows"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    tabStyle style.text(size = "12px"), loc.body(cols("from"))
+    tabOptions(tableFontSize = "13px")
+  nbTable t
+
+nbText: """
+A file is a table as it was on the page, with a first line naming the article and its revision:
+"""
+
+nbCode:
+  for line in readFile(dataDir / "medals.tsv").splitLines[0 .. 3]: echo line
+
+nbText: """
+A fact typed by hand is a Nim object, with the article it comes from beside its list:
+"""
+
+nbCode:
+  echo trips[1]
+  echo post(tripsSource)
+
+nbNota("""
+`readTsv` (in `docs/olimpiadi.nim`) skips the comment line and calls `parseCsv`, which makes a
+`TableData`: one column per field, each value a number or a text. A `const` list of objects goes
+to `tabella` as it is, one field per column. Some tables are made in between: a `seq` of objects
+built in a loop (the venues, one row per venue with its sports joined; the table above), or a
+`TableData` built column by column with `addColumn` (the articles, at the end). The files are
+written by short Python scripts that read Wikipedia: how, in *How this post is built*.
+""", nkCode)
+
 nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
 nbText: """
 ## A · The Games
@@ -913,12 +978,13 @@ nbText: """
 The page is a nimib notebook, `docs/devlog/milano_cortina.nim`, built with the others by
 `nim r -d:release docs/all.nim`. From zero, in four layers.
 
-**1. The data from Wikipedia** is eight TSV files in `docs/devlog/data/milano-cortina/`: the
-medal tables of the Olympics and the Paralympics, Italy at every Winter Games, Italy's thirty
-medals, the venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short
-Python scripts beside them read the articles through the REST API (slowly: Wikipedia limits fast
-clients) and write the tables with pandas: `fetch.py` the first six, `history.py` the history,
-`sports.py` the sports.
+**1. The data from Wikipedia** is nine TSV files in `docs/devlog/data/milano-cortina/` (the
+table in *Where the numbers come from* lists them): the medal tables of the Olympics and the
+Paralympics, the athletes of each team, Italy at every Winter Games, Italy's thirty medals, the
+venues and the sports, every Winter Games, and the medal tables of the 16 sports. Short Python
+scripts beside them read the articles through the REST API (slowly: Wikipedia limits fast
+clients) and write the tables with pandas: `fetch.py` the first seven, `history.py` the
+history, `sports.py` the medal tables of the sports.
 Each file starts with a comment line naming the article and its revision, so the numbers can be
 checked against the exact page they came from. Wikipedia's text is under CC BY-SA 4.0. One more
 file, `co2.tsv`, comes from NOAA's public Mauna Loa record, written by `co2.py` beside it.
