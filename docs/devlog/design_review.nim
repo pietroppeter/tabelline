@@ -307,7 +307,10 @@ nbText: """
    sign, yellow with an ink edge: a yellow shape on its own pale yellow note has far less than
    the 3:1 contrast a graphic needs (WCAG 1.4.11).
 4. **The square needs a job** or it is decoration. As the shape of the sheet itself it has one;
-   as a separate mark it would look like a checkbox, and is not allowed.
+   as a separate mark it would look like a checkbox, and is not allowed. Today it is barely
+   visible: the cards of a gallery have only a pencil border. So every sheet set apart (a note,
+   a card, a card of a gallery) carries the square's straight top edge in its colour, secondary
+   unless a reason says otherwise.
 
 So: **shape for kind, colour for role**, a default colour per shape, and another colour only with
 a reason.
