@@ -1,4 +1,4 @@
-# Islands of the Mediterranean by area: Wikipedia, List of islands in the Mediterranean, read 8 Nov 2026 by isole.py
+# Islands of the Mediterranean by area: Wikipedia, List of islands in the Mediterranean, read 8 Nov 2026 by isole.nim
 island	country	area	population	city
 Sicily	Italy	25834	5010001	Palermo
 Sardinia	Italy	24100	1656000	Cagliari

@@ -1,4 +1,4 @@
-# EU cities by population within city limits: Wikipedia, read 8 Nov 2026 by citta.py
+# EU cities by population within city limits: Wikipedia, read 8 Nov 2026 by citta.nim
 city	state	population	counted
 Berlin	GER	3913644	2025-12-31
 Madrid	ESP	3506730	2025-01-01

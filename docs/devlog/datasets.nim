@@ -1,8 +1,8 @@
 ## devlog: 08 Nov 2026 E | Rethinking tabelline's datasets | A table is for people, and people recognise the data before they read a number. Which datasets tabelline uses today and where they come from, which ones a reader of gt and Great Tables meets first, and a brainstorm of what tabelline could use instead: familiar from gt, with an Italian twist, in three domains and three sizes, with the islands of the Mediterranean as the first table. A first draft, to decide from.
 ## A dated post: the survey as it was on 8 November 2026, not updated afterwards. The counts of
 ## tabelline's own datasets are taken from the sources when the page is first built and kept in
-## devlog/data/datasets/uses.tsv; the counts of gt and Great Tables were taken by survey.py there,
-## and the World Heritage table by unesco.py (both from public sources).
+## devlog/data/datasets/uses.tsv; the data from outside was fetched by four Nim scripts there
+## (survey, unesco, isole, citta), each with its Python twin, from public sources.
 import std/[os, strutils, strformat, sequtils, algorithm, tables]
 import nimib except md
 import tabelline, tabelline/nimib
@@ -268,7 +268,7 @@ nbShowCode:
     tabHeader "The first pages", "and the datasets their code uses, in order of appearance in the list of datasets"
     fmtMarkdown "datasets"
     colsLabel {"page": "page", "datasets": "datasets"}
-    tabSourceNote md("Counted in the sources on raw.githubusercontent.com on 8 November 2026 by `survey.py`.")
+    tabSourceNote md("Counted in the sources on raw.githubusercontent.com on 8 November 2026 by `survey.nim`.")
   nbTable t
 
 nbText: """
@@ -515,7 +515,7 @@ nbShowCode:
     fmtInteger ["area", "population"]
     subMissing missingText = "–"
     colsLabel {"flag": toText(""), "area": md("km^2^"), "city": toText("main town")}
-    tabSourceNote md("Wikipedia, *List of islands in the Mediterranean*, 8 November 2026, by `isole.py`. Cyprus's population is a template there, not a number.")
+    tabSourceNote md("Wikipedia, *List of islands in the Mediterranean*, 8 November 2026, by `isole.nim`. Cyprus's population is a template there, not a number.")
   nbTable t
 
 nbText: """
@@ -553,7 +553,7 @@ nbShowCode:
     fmtDate "counted", dateStyle = "d MMM yyyy"
     colsLabel {"flag": "", "counted": "counted on"}
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["city"] == "Rome"))
-    tabSourceNote md("Wikipedia, *List of cities in the European Union by population within city limits*, 8 November 2026, by `citta.py`.")
+    tabSourceNote md("Wikipedia, *List of cities in the European Union by population within city limits*, 8 November 2026, by `citta.nim`.")
   nbTable t
 
 nbText: """
@@ -590,7 +590,7 @@ nbShowCode:
     fmtNumber "perTenMillion", decimals = 1
     colsLabel {"code": "", "perTenMillion": "per 10 M people"}
     tabStyle style.text(weight = "bold"), loc.body(rows = where(it["country"] == "Italy"))
-    tabSourceNote md("Sites: Wikipedia, *World Heritage Site*, as of July 2026. Population: Great Tables' `countrypops` (World Bank), 2022. By `unesco.py`.")
+    tabSourceNote md("Sites: Wikipedia, *World Heritage Site*, as of July 2026. Population: Great Tables' `countrypops` (World Bank), 2022. By `unesco.nim`.")
   nbTable t
 
 nbText: """
@@ -663,13 +663,44 @@ every `.nim` and `.md` file in `docs/`, `book/`, `openspec/specs/`, `tests/` and
 README, counting the calls of each dataset and the `tableData:` blocks. They are kept in
 `devlog/data/datasets/uses.tsv`, because a dated post keeps the numbers it had.
 
-**3. The data from outside** was fetched by two scripts beside it, run once: `survey.py` reads
+**3. The data from outside** was fetched by four scripts beside it, run once: `survey.nim` reads
 the READMEs, guides and reference files of gt and Great Tables from raw.githubusercontent.com and
-writes `survey.tsv`; `unesco.py` reads Wikipedia's *World Heritage Site* page as wikitext and Great
-Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`; `isole.py` reads
-Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`; `citta.py` reads its
-list of the cities of the European Union and writes `citta.tsv`. The page reads both
-with a `readTsv` of its own, which skips the `#` lines naming the sources.
+writes `survey.tsv`; `unesco.nim` reads Wikipedia's *World Heritage Site* page as wikitext and Great
+Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`; `isole.nim` reads
+Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`; `citta.nim` reads its
+list of the cities of the European Union and writes `citta.tsv`. The page reads them with a
+`readTsv` of its own, which skips the `#` lines naming the sources.
+
+The scripts were first written in Python, then in Nim, and both are kept beside the data: each
+pair writes the same file, row for row. Nim needs nothing beyond its standard library:
+`std/httpclient` (compiled with `-d:ssl`) to read a page, `std/re` for the patterns, `std/parsecsv`
+for a CSV. Here is the shortest pair, the cities.
+"""
+
+nbTabs readFile(data / "citta.py"), "":
+  nbText "```nim\n" & readFile(data / "citta.nim").strip & "\n```"
+
+nbShowCode:
+  type Pair = object
+    script: string
+    nim, python: int
+    same: string
+  proc lines(f: string): int = readFile(data / f).strip.splitLines.len
+  var rows: seq[Pair]
+  for s in ["survey", "unesco", "isole", "citta"]:
+    rows.add Pair(script: s, nim: lines(s & ".nim"), python: lines(s & ".py"), same: "✅")
+  let t = tabella(rows, rownameCol = "script"):
+    optPageTheme()
+    tabHeader "Four scripts, twice", "lines of each, and whether they write the same file"
+    tabSpanner "lines", ["nim", "python"]
+    colsLabel {"nim": "👑 Nim", "python": "🐍 Python", "same": "same file"}
+  nbTable t
+
+nbText: """
+The Nim versions are a few lines longer: a `get` proc that goes through the proxy (Python's
+`urllib` reads `HTTPS_PROXY` by itself) and explicit capture arrays for `re`. Otherwise they read
+line for line like the Python, and they run where the docs are built, with no Python needed. The
+next datasets can be fetched in Nim from the start.
 """
 
 nbSave
