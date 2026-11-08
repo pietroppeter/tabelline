@@ -1,4 +1,4 @@
-## devlog: 08 Nov 2026 E | Rethinking tabelline's datasets | A table is for people, and people recognise the data before they read a number. Which datasets tabelline uses today and where they come from, which ones a reader of gt and Great Tables meets first, and a brainstorm of what tabelline could use instead: familiar from gt, with an Italian twist, in three domains and three sizes. A first draft, to decide from.
+## devlog: 08 Nov 2026 E | Rethinking tabelline's datasets | A table is for people, and people recognise the data before they read a number. Which datasets tabelline uses today and where they come from, which ones a reader of gt and Great Tables meets first, and a brainstorm of what tabelline could use instead: familiar from gt, with an Italian twist, in three domains and three sizes, with the islands of the Mediterranean as the first table. A first draft, to decide from.
 ## A dated post: the survey as it was on 8 November 2026, not updated afterwards. The counts of
 ## tabelline's own datasets are taken from the sources when the page is first built and kept in
 ## devlog/data/datasets/uses.tsv; the counts of gt and Great Tables were taken by survey.py there,
@@ -45,7 +45,7 @@ pages so far took whatever data was at hand. This post surveys it, in three part
 2. **What gt and Great Tables show first**: the datasets of their READMEs, of their first guide,
    and of their reference.
 3. **What we could have**: three domains in three sizes, a tabelline twin for gt's best known
-   datasets, and a first taste of one of them.
+   datasets, and a first taste of two of them.
 
 It ends with recommendations, the choices to make, and how this page is built.
 """
@@ -392,7 +392,7 @@ nbShowCode:
            "four planets and their moons"]
     builtIn: ["`tavolaPitagorica`; `dispensa`, a pantry with one column of each type (an `exibble` you can eat)",
               "`compasso`: the Compasso d'Oro of 1954, its designers, objects and makers",
-              "`planets`; `alpi`: the highest peaks of the Alps, and the countries they stand in"]
+              "`planets`; `isole`: the islands of the Mediterranean; `alpi`: the highest peaks of the Alps"]
     big: ["a pizzeria's year of orders (made up, as `pizzaplace` is)",
           "every Compasso d'Oro, 1954 to 2024",
           "`paesi`: countries, their population and their World Heritage Sites"]
@@ -410,9 +410,9 @@ the tavola pitagorica, a timetable, a report card. **Bottega** is design, where 
 come from: Bruno Munari, and the Compasso d'Oro, Italy's design award since 1954 (Munari won it
 that first year, with the toy monkey Zizì). It also bridges back to the kitchen: Munari explains
 his design method, in *Da cosa nasce cosa*, by designing a *risotto verde*. **Mondo** is the world
-seen from Italy: the planets stay, the Alps cross eight countries (their highest peaks stand between Italy, France
-and Switzerland), and the countries of the
-world come with a twist, below.
+seen from Italy: the planets stay, the islands of the Mediterranean (the sea Italy sits in), the
+Alps, which cross eight countries (their highest peaks stand between Italy, France and
+Switzerland), and the countries of the world, with a twist.
 
 ## A twin for gt's best known datasets
 
@@ -423,8 +423,8 @@ nbShowCode:
   type Twin = object
     gt, twin, source: string
   let rows = @[
-    Twin(gt: "`islands`", twin: "`alpi`: the highest peaks of the Alps, their height and countries",
-         source: "✅ Wikipedia, the 82 four-thousanders"),
+    Twin(gt: "`islands`", twin: "`isole`: the islands of the Mediterranean, their area, people and main town",
+         source: "✅ Wikipedia, 194 islands"),
     Twin(gt: "`sp500`", twin: "`paesi`: World Heritage Sites and population, flags, ratios",
          source: "✅ Wikipedia and `countrypops`"),
     Twin(gt: "`exibble`", twin: "`dispensa`: a pantry, with dates, times, prices, missing values",
@@ -452,7 +452,44 @@ measures with gaps; `pizzaplace` a big table of sales.
 """
 
 nbText: """
-## A first taste: the countries of the World Heritage
+## Two first tastes
+
+### The islands of the Mediterranean
+
+gt's guide opens with the largest landmasses of the world. tabelline can open with the islands
+of the sea it sits in: Wikipedia lists 194 of them by area, with their country, people and main
+town. The two largest are Italian, and the first ten are shared by five countries.
+"""
+
+nbShowCode:
+  let raw = readTsv(data / "isole.tsv")
+  const iso = {"Italy": "IT", "Cyprus": "CY", "France": "FR", "Greece": "GR", "Spain": "ES", "Croatia": "HR",
+               "Turkey": "TR", "Tunisia": "TN", "Malta": "MT", "Albania": "AL"}.toTable
+  type Isola = object
+    island, flag: string
+    area: float
+    population: Value
+    city: string
+  var rows: seq[Isola]
+  for i in 0 ..< 10:
+    rows.add Isola(island: $raw["island", i], flag: iso.getOrDefault($raw["country", i]),
+                   area: raw["area", i].toFloat, population: raw["population", i], city: $raw["city", i])
+  let t = tabella(rows, rownameCol = "island"):
+    optPageTheme()
+    tabHeader "Islands of the Mediterranean", "the ten largest"
+    fmtFlag "flag"
+    fmtInteger ["area", "population"]
+    subMissing missingText = "–"
+    colsLabel {"flag": toText(""), "area": md("km^2^"), "city": toText("main town")}
+    tabSourceNote md("Wikipedia, *List of islands in the Mediterranean*, 8 November 2026, by `isole.py`. Cyprus's population is a template there, not a number.")
+  nbTable t
+
+nbText: """
+Like `islands`, it is a list anyone can read, and it grows: area and people give a density, the
+countries give row groups (Greece has 101 of the 194, Croatia 41, Italy 27), and the flags come
+for free with `fmtFlag`.
+
+### The countries of the World Heritage
 
 The idea that started this post: gt starts from the population of countries; tabelline can too,
 and add the World Heritage Sites that UNESCO has recognised. By population Italy is not in the
@@ -504,10 +541,10 @@ Three, to discuss, each with its choices.
 
 ### 1 · One first table, one landmark, one toy
 
-- **First table: `alpi`**, the twin of `islands`: the ten highest peaks of the Alps, two or three
-  columns, in the README's first lines, the home page and the explainer's opening. It is short,
-  Italian and not only Italian (the peaks stand between Italy, France and Switzerland), and grows
-  naturally into stubs (by massif), spanners (height, first ascent) and flags.
+- **First table: `isole`**, the twin of `islands`: the ten largest islands of the Mediterranean,
+  in the README's first lines, the home page and the explainer's opening. It is short, Italian at
+  the top and shared by five countries, and grows naturally into groups (by country), a density
+  and flags. `alpi` follows it as the second geography dataset.
 - **Landmark: `paesi`**, the twin of `countrypops` and the README's showcase in the place of
   `sp500`: flags, integers, ratios, a title, a bold row.
 - **Toy: `dispensa`**, the twin of `exibble`, for formats and selectors, while the book keeps
@@ -523,7 +560,7 @@ the book keeps its sources as they are, and a `tabelline` box can show the twin 
 ### 3 · Three steps, in three PRs
 
 1. **Decide** the names and the nine cells (this post, with its review).
-2. **Build** (an OpenSpec change): `alpi`, `paesi` and `dispensa` in `tabelline/datasets`, each
+2. **Build** (an OpenSpec change): `isole`, `alpi`, `paesi` and `dispensa` in `tabelline/datasets`, each
    with its source, licence and date in the module, and the scripts that made them; plus `readCsv`
    with a `comment` option, which every data file here needs.
 3. **Migrate**: the README, the home page, the explainer and the specs' examples move to the new
@@ -531,8 +568,8 @@ the book keeps its sources as they are, and a `tabelline` box can show the twin 
 
 ## Choices to make
 
-- **The first table**: `alpi` (recommended), `paesi`, the planets as today, or a small food table?
-- **Names**: Italian (`alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
+- **The first table**: `isole` (recommended), `alpi`, `paesi`, the planets as today, or a small food table?
+- **Names**: Italian (`isole`, `alpi`, `paesi`, `dispensa`, `compasso`), as `tavolaPitagorica` is, or
   English, as `planets` is? An Italian name is part of the twist; mixing both is what we have now.
 - **Bottega**: is Munari's *risotto verde* the right tiny example for design, and the Compasso
   d'Oro the right bigger one? A dataset from Munari's own books needs care with what we take from
@@ -555,7 +592,8 @@ README, counting the calls of each dataset and the `tableData:` blocks. They are
 **3. The data from outside** was fetched by two scripts beside it, run once: `survey.py` reads
 the READMEs, guides and reference files of gt and Great Tables from raw.githubusercontent.com and
 writes `survey.tsv`; `unesco.py` reads Wikipedia's *World Heritage Site* page as wikitext and Great
-Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`. The page reads both
+Tables' `countrypops` CSV, joins them on ISO codes and writes `unesco.tsv`; `isole.py` reads
+Wikipedia's list of the islands of the Mediterranean and writes `isole.tsv`. The page reads both
 with a `readTsv` of its own, which skips the `#` lines naming the sources.
 """
 
