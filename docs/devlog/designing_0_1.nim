@@ -39,7 +39,7 @@ block:
     A(step: 3, idea: "3 · Parts", what: "title, notes and caption; a stub and row groups; spanners over columns; footnotes"),
     A(step: 4, idea: "4 · Columns", what: "labels, alignment, widths; hidden, moved, reordered"),
     A(step: 5, idea: "5 · Rows", what: "sorted and grouped, while the data stays as it is"),
-    A(step: 6, idea: "6 · Formats", what: "a value becomes text: 1,234.50, 25%, €3, ✓, 🇮🇹, links, ii, 2 kB, 5 kW, dates, 2h 5m, bars"),
+    A(step: 6, idea: "6 · Formats", what: "a value becomes text: 1,234.50, 25%, €3, ✓, 🇮🇹, links, ii, 2 kB, 5 kW, dates, 2h 5m"),
     A(step: 7, idea: "7 · Text", what: "**Markdown** and HTML; missing, zero, tiny or sentinel values replaced; the text changed last"),
     A(step: 8, idea: "8 · Options", what: "the whole table at once: size, padding, lines, footnote marks, ready-made looks, your CSS"),
     A(step: 9, idea: "9 · Styles", what: "one part at a time: a location (where) and a style (how), colours from the data"),
@@ -317,15 +317,6 @@ scheda "6 formats", "Durations", "A column of seconds becomes race times or run 
       seconds: [1145, 5400, 12_420]
     let t = tabella(d):
       fmtDuration "seconds"
-  nbTable t
-
-scheda "6 formats", "Bars", "A small bar beside each number, to compare them at a glance.":
-  nbCode:
-    let d = tableData:
-      planet: ["Earth", "Mars", "Jupiter", "Saturn"]
-      moons: [1, 2, 95, 146]
-    let t = tabella(d):
-      fmtBar "moons"
   nbTable t
 
 scheda "6 formats", "A format of your own", "Any proc from a value to a text is a format.":
@@ -872,7 +863,7 @@ gets an id from a hash of its content, and its CSS is scoped to that id, so two 
 page never touch each other.
 
 **In phases.** 0.1 came in two steps. The first version (#1) built the core: data, the table,
-parts, eleven formats and bars, styles and options. Then the [coverage map](../../coverage/)
+parts, eleven formats, styles and options. Then the [coverage map](../../coverage/)
 split gt and Great Tables into 85 feature groups, and the 24 that the core made cheap became
 one OpenSpec change each (#10): a proposal with its differences from gt and Great Tables, a
 requirement with an example that runs, and its tasks. The example was written first and its

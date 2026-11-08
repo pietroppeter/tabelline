@@ -29,7 +29,8 @@ column per field in field order. `tableData:` SHALL take one `name: [values]` li
 converting each value on its own; a name MAY have dots (`size.mass: [...]`, read whole, as
 `tabSpannerDelim` wants) or be quoted (`` `mass kg` ``, `"mass (kg)"`). `parseCsv` and `readCsv` SHALL read a CSV text with a header,
 inferring ints, floats, bools and missing values (empty, `NA`), and a column mixing ints and
-floats SHALL be a float column.
+floats SHALL be a float column. With `comment = "#"` (or any prefix) they SHALL skip the lines
+that start with it after any spaces; by default no line is a comment.
 
 ```nim
 type Pupil = object
@@ -40,7 +41,7 @@ let d = tableData:
   subject: ["maths", "art"]
   mark: [9, nil]
 echo tabella(d)
-echo tabella(parseCsv("a,b\n1,2.5\n2,3\n"))
+echo tabella(parseCsv("# from a notebook\na,b\n1,2.5\n2,3\n", comment = "#"))
 ```
 
 ```text
@@ -63,6 +64,10 @@ echo tabella(parseCsv("a,b\n1,2.5\n2,3\n"))
 │ 2 │ 3.0 │
 └───┴─────┘
 ```
+
+#### Scenario: Comment lines
+- **WHEN** a CSV text has lines starting with `#` and `comment = "#"` is given
+- **THEN** those lines are skipped, and a `#` inside a value is kept
 
 #### Scenario: No rows
 - **WHEN** an empty sequence of objects is given
