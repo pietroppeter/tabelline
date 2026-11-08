@@ -316,7 +316,7 @@ footer { font: 1.05rem var(--hand); color: var(--n-7); padding: 1rem 0 3rem; tex
 footer a { color: var(--primary); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
-details.source pre { max-height: 32rem; overflow: auto; }
+details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
 """
 
 # ---------------------------------------------------------------------------------------- Munari
