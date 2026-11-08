@@ -1,7 +1,7 @@
 """Regenerate the Wikipedia tables of the Milano Cortina post.
 
-    python3 docs/devlog/data/milano-cortina/fetch.py
-    FETCH_CACHE=/tmp/wp python3 docs/devlog/data/milano-cortina/fetch.py   # keeps the pages read
+    python3 docs/stories/data/milano-cortina/fetch.py
+    FETCH_CACHE=/tmp/wp python3 docs/stories/data/milano-cortina/fetch.py   # keeps the pages read
 
 Reads five English Wikipedia articles through the REST API (one page every few seconds,
 with retries: Wikipedia limits fast clients), and writes one TSV per table next to this file.
