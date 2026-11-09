@@ -209,29 +209,33 @@
   }
 
   // part: sheet
-  // Writing a comment: what it is about, its kind (a comment, a replacement or a cut), the text,
-  // and screenshots. A replacement starts from the quoted text, to be edited in place. While a
-  // sheet is open the page may not zoom, so a phone does not zoom in on the field typed in.
+  // Writing a comment, in a sheet that slides down from the top and stays small, so the words it
+  // is about stay in view under it, marked. One row: Cancel, the kind, Save. Then the note (and
+  // the new text, for a replacement, starting from the words selected), and screenshots: pasted
+  // (the usual way on a phone: take it, then paste) or picked. While a sheet is open the page may
+  // not zoom, so a phone does not zoom in on the field typed in.
   var viewport = document.querySelector('meta[name="viewport"]');
   var looseViewport = viewport ? viewport.content : '';
   function noZoom(on) {
     if (viewport) viewport.content = on ? looseViewport + ', maximum-scale=1' : looseViewport;
   }
   var sheet = document.createElement('dialog');
-  sheet.className = 'rv-sheet';
+  sheet.className = 'rv-sheet rv-compact';
   sheet.innerHTML =
     '<form method="dialog">' +
-    '<p class="rv-where"></p><blockquote class="rv-quote"></blockquote>' +
-    '<fieldset class="rv-kinds"><legend>Kind</legend>' +
-    '<label><input type="radio" name="kind" value="comment"> Comment</label>' +
-    '<label><input type="radio" name="kind" value="replace"> Replace</label>' +
-    '<label><input type="radio" name="kind" value="cut"> Cut</label></fieldset>' +
-    '<label class="rv-replacement">Replace with<textarea name="replacement" rows="3"></textarea></label>' +
-    '<label>Note<textarea name="text" rows="3" placeholder="What should change, and why"></textarea></label>' +
+    '<div class="rv-row"><button value="cancel" aria-label="Cancel">×</button>' +
+    '<span class="rv-kinds" role="radiogroup" aria-label="Kind">' +
+    '<label><input type="radio" name="kind" value="comment"><span>Comment</span></label>' +
+    '<label><input type="radio" name="kind" value="replace"><span>Replace</span></label>' +
+    '<label><input type="radio" name="kind" value="cut"><span>Cut</span></label></span>' +
+    '<span class="rv-whole">On the whole page</span>' +
+    '<button value="save" class="rv-save">Save</button></div>' +
+    '<textarea name="replacement" rows="2" class="rv-replacement" aria-label="Replace with"></textarea>' +
+    '<textarea name="text" rows="2" aria-label="Note" placeholder="Note: what should change, and why"></textarea>' +
     '<div class="rv-shots"><div class="rv-thumbs"></div>' +
-    '<label class="rv-attach">+ Screenshot<input type="file" accept="image/*" multiple></label></div>' +
-    '<div class="rv-actions"><button value="delete" class="rv-delete">Delete</button>' +
-    '<button value="cancel">Cancel</button><button value="save" class="rv-save">Save</button></div>' +
+    '<button type="button" class="rv-paste">Paste image</button>' +
+    '<label class="rv-attach">Pick<input type="file" accept="image/*" multiple></label>' +
+    '<button value="delete" class="rv-delete">Delete</button></div>' +
     '</form>';
   document.body.appendChild(sheet);
   var form = sheet.querySelector('form'), editing = null, shots = [];
@@ -239,19 +243,27 @@
     editing = note;
     shots = (note.images || []).slice();
     thumbs();
-    var where = note.section && note.section.title ? 'In “' + note.section.title + '”' : 'At the top of the page';
-    sheet.querySelector('.rv-where').textContent = note.quote ? where : 'On the whole page';
-    sheet.querySelector('.rv-quote').textContent = note.quote ? note.quote.replace(/\s+/g, ' ').trim() : '';
-    sheet.querySelector('.rv-quote').hidden = !note.quote;
     sheet.querySelector('.rv-kinds').hidden = !note.quote;
+    sheet.querySelector('.rv-whole').hidden = !!note.quote;
     form.elements.kind.value = note.kind || 'comment';
     form.elements.text.value = note.text || '';
     form.elements.replacement.value = note.replacement != null ? note.replacement : (note.quote || '').replace(/\s+/g, ' ').trim();
     sheet.querySelector('.rv-delete').hidden = !note.id;
+    sheet.querySelector('.rv-paste').hidden = !(navigator.clipboard && navigator.clipboard.read);
     kinds();
+    if (note.quote && !note.id) mark(Object.assign({}, note, { id: 'rv-new' }));   // the words, marked while writing
     noZoom(true);
     sheet.showModal();
+    keepInView(note.id || 'rv-new');
   }
+  function keepInView(id) {   // the marked words, just under the sheet
+    var m = root.querySelector('mark.rv-mark[data-id="' + id + '"]');
+    if (!m) return;
+    var under = sheet.offsetHeight + 24;   // its height, not its place: it is still sliding in
+    window.scrollBy(0, m.getBoundingClientRect().top - under);
+  }
+  function kinds() { form.elements.replacement.hidden = form.elements.kind.value !== 'replace' || !editing || !editing.quote; }
+  form.addEventListener('change', kinds);
   function thumbs() {
     var box = sheet.querySelector('.rv-thumbs');
     box.innerHTML = '';
@@ -264,31 +276,53 @@
       box.appendChild(t);
     });
   }
-  function shrink(file) {   // a screenshot as a JPEG at most 900 pixels wide, to keep storage small
+  function shrink(blob, width, quality) {   // an image as a JPEG at most `width` pixels wide
     return new Promise(function (ok, ko) {
-      var img = new Image(), url = URL.createObjectURL(file);
+      var img = new Image(), url = URL.createObjectURL(blob);
       img.onload = function () {
-        var k = Math.min(1, 900 / img.naturalWidth), c = document.createElement('canvas');
+        var k = Math.min(1, width / img.naturalWidth), c = document.createElement('canvas');
         c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
         c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
-        ok(c.toDataURL('image/jpeg', 0.72));
+        ok(c.toDataURL('image/jpeg', quality));
       };
       img.onerror = ko;
       img.src = url;
     });
   }
-  sheet.querySelector('input[type="file"]').addEventListener('change', function (e) {
-    Promise.all([].map.call(e.target.files, shrink)).then(function (srcs) {
-      shots = shots.concat(srcs); thumbs(); e.target.value = '';
+  function addImages(blobs) {
+    Promise.all(blobs.map(function (b) { return shrink(b, 900, 0.72); })).then(function (srcs) {
+      shots = shots.concat(srcs); thumbs();
     });
+  }
+  sheet.querySelector('input[type="file"]').addEventListener('change', function (e) {
+    addImages([].slice.call(e.target.files));
+    e.target.value = '';
   });
-  function kinds() { sheet.querySelector('.rv-replacement').hidden = form.elements.kind.value !== 'replace'; }
-  form.addEventListener('change', kinds);
+  sheet.addEventListener('paste', function (e) {   // an image pasted in the note
+    var files = [].filter.call(e.clipboardData.files || [], function (f) { return /^image\//.test(f.type); });
+    if (!files.length) return;
+    e.preventDefault();
+    addImages(files);
+  });
+  sheet.querySelector('.rv-paste').addEventListener('click', function () {
+    navigator.clipboard.read().then(function (items) {
+      var got = [];
+      items.forEach(function (item) {
+        var type = item.types.filter(function (t) { return /^image\//.test(t); })[0];
+        if (type) got.push(item.getType(type));
+      });
+      return Promise.all(got);
+    }).then(function (blobs) {
+      if (blobs.length) addImages(blobs);
+      else sheet.querySelector('.rv-paste').textContent = 'No image copied';
+    }, function () { sheet.querySelector('.rv-paste').textContent = 'Paste blocked: pick'; });
+  });
   sheet.addEventListener('close', function () {
     var act = sheet.returnValue, note = editing;
     editing = null;
     noZoom(false);
+    sheet.querySelector('.rv-paste').textContent = 'Paste image';
     if (act === 'save') {
       note.kind = note.quote ? form.elements.kind.value : 'comment';
       note.text = form.elements.text.value.trim();
@@ -303,7 +337,7 @@
       pending = null;
     } else if (act === 'delete') {
       notes = notes.filter(function (n) { return n !== note; });
-    } else { pending = null; show(); return; }
+    } else { pending = null; drawAll(); show(); return; }
     var saved = save();
     drawAll();
     current = notes.indexOf(note);
@@ -378,6 +412,16 @@
     for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
     return new File([arr], name, { type: 'image/jpeg' });
   }
+  function withSmallShots(text) {
+    var all = [];
+    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push([shotName(i, k), src]); }); });
+    if (!all.length) return Promise.resolve(text);
+    return Promise.all(all.map(function (a) { return shrink(fileOf(a[1], a[0]), 480, 0.6); })).then(function (small) {
+      return text + '\n## Screenshots, small\n\n' + small.map(function (src, j) {
+        return '![' + all[j][0] + '](' + src + ')';
+      }).join('\n\n') + '\n';
+    });
+  }
   function share() {
     var files = [new File([area.value], 'review-v' + page.version + '.md', { type: 'text/markdown' })];
     notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { files.push(fileOf(src, shotName(i, k))); }); });
@@ -392,9 +436,16 @@
       share().catch(function () {});
     } else if (act === 'copy') {
       e.preventDefault();
-      var done = function () { e.submitter.textContent = 'Copied ✓'; setTimeout(function () { e.submitter.textContent = 'Copy'; }, 1500); };
+      var button = e.submitter;
+      var done = function () { button.textContent = 'Copied ✓'; setTimeout(function () { button.textContent = 'Copy'; }, 1500); };
       var fallback = function () { area.select(); try { document.execCommand('copy'); done(); } catch (x) {} };
-      if (navigator.clipboard) navigator.clipboard.writeText(area.value).then(done, fallback); else fallback();
+      // Safari copies only inside the tap itself: give it a promise of the text, not the text later
+      var text = withSmallShots(area.value);
+      if (navigator.clipboard && window.ClipboardItem) {
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': text.then(function (t) { return new Blob([t], { type: 'text/plain' }); }) })])
+          .then(done, function () { text.then(function (t) { return navigator.clipboard.writeText(t); }).then(done, fallback); });
+      } else if (navigator.clipboard) text.then(function (t) { return navigator.clipboard.writeText(t); }).then(done, fallback);
+      else fallback();
     } else if (act === 'clear' && e.submitter.dataset.sure !== 'yes') {
       e.preventDefault();   // a second tap deletes: confirm() is blocked inside an artifact
       e.submitter.dataset.sure = 'yes';
