@@ -467,7 +467,6 @@
     },
     {
      "path": "docs/get-started/index.qmd",
-     "url": "https://posit-dev.github.io/great-tables/user-guide/introduction.html",
      "title": "Get Started",
      "port": "skip",
      "note": "Empty for now"
