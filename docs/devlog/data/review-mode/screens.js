@@ -33,15 +33,20 @@ const page_ = path.join(here, '..', '..', 'review-mode', 'index.html');
   // one comment saved, the arrows stopped on it
   await select('Ten comments are ten trips');
   await p.click('.rv-add');
-  await p.fill('textarea[name="text"]', 'Say how long a trip takes.');
+  await p.fill('.rv-note', 'Say how long a trip takes.');
   await p.click('.rv-compact .rv-save');
   await p.waitForTimeout(400);
   // a second one being written, with a screenshot
   await select('makes one trip at the end');
   await p.click('.rv-add');
-  await p.fill('textarea[name="text"]', 'Show it as a picture: before and after.');
-  const shot = await p.screenshot({ type: 'png' });
-  await p.setInputFiles('.rv-attach input', { name: 'shot.png', mimeType: 'image/png', buffer: shot });
+  await p.fill('.rv-note', 'Show it as a picture: before and after.');
+  const shot = (await p.screenshot({ type: 'png' })).toString('base64');
+  await p.evaluate((b64) => {   // a screenshot pasted in the note, as a phone pastes it
+    const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    const dt = new DataTransfer();
+    dt.items.add(new File([bytes], 'shot.png', { type: 'image/png' }));
+    document.querySelector('.rv-note').dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+  }, shot);
   await p.waitForSelector('.rv-thumb img');
   await p.waitForTimeout(400);
   const at = async (sel, where = 'corner') => {
@@ -57,8 +62,8 @@ const page_ = path.join(here, '..', '..', 'review-mode', 'index.html');
     { n: 4, ...(await at('.rv-add')) },
     { n: 5, ...(await at('[data-do="export"]')) },
     { n: 6, ...(await at('.rv-compact .rv-kinds')) },
-    { n: 7, ...(await at('.rv-compact textarea[name="text"]', 'corner')) },
-    { n: 8, ...(await at('.rv-compact .rv-paste')) },
+    { n: 7, ...(await at('.rv-compact .rv-note', 'corner')) },
+    { n: 8, ...(await at('.rv-compact .rv-thumb img', 'corner')) },
   ];
   await p.screenshot({ path: path.join(here, 'sheet.jpg'), type: 'jpeg', quality: 70 });
   fs.writeFileSync(path.join(here, 'sheet.json'), JSON.stringify({ points: sheetPoints }, null, 1) + '\n');

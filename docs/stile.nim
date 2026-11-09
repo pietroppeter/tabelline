@@ -547,8 +547,6 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, tran
 .rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
 .rv-sheet .rv-actions { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
 .rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
-.rv-shots { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem; margin-bottom: .8rem; }
-.rv-thumbs { display: contents; }
 /* the comment sheet: small, from the top, so the marked words stay in view under it */
 dialog.rv-sheet[open] { animation: rv-down .2s ease-out; }
 @keyframes rv-down { from { transform: translateY(-100%); } }
@@ -564,17 +562,22 @@ dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, tr
   border: 1px solid var(--line); margin-left: -1px; cursor: pointer; }
 .rv-kinds input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .rv-kinds input:focus-visible + span { outline: 2px solid var(--secondary); }
-.rv-compact textarea { margin: 0 0 .45rem; }
-.rv-compact .rv-shots { margin: 0; align-items: center; }
-.rv-compact .rv-shots button, .rv-compact label.rv-attach { font-size: .92rem; }
-.rv-compact .rv-delete { margin-left: auto; margin-right: 0; }
-
+.rv-sheet textarea, .rv-note { margin: 0 0 .45rem; }
+.rv-compact .rv-row .rv-delete { margin: 0; font-size: .92rem; padding: 0 .55rem; color: var(--primary-text); }
+/* the note: an editable box, so a phone offers to paste a screenshot in it */
+.rv-note { min-height: 3.2rem; max-height: 9rem; overflow-y: auto; padding: .5rem; font: 16px/1.4 var(--font);
+  background: var(--paper); border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; }
+.rv-note:empty::before { content: attr(data-placeholder); color: var(--muted); }
+.rv-note:focus { outline: 2px solid var(--secondary); outline-offset: -1px; }
+.rv-thumbs { display: flex; flex-wrap: wrap; gap: .5rem; }
 .rv-thumb { position: relative; }
 .rv-thumb img { display: block; height: 4.5rem; width: auto; border: 1px solid var(--line); }
 .rv-thumb button { position: absolute; top: 0; right: 0; min-height: 32px; min-width: 32px; padding: 0; font-size: 1.1rem; }
-.rv-sheet label.rv-attach { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .7rem; margin: 0;
-  border: 1px dashed var(--muted); cursor: pointer; }
-.rv-attach input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+/* the export: each screenshot with its own Copy */
+.rv-shotlist { display: flex; flex-direction: column; gap: .35rem; margin: 0 0 .6rem; }
+.rv-shot { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--muted); }
+.rv-shot img { height: 2.75rem; width: auto; border: 1px solid var(--line); }
+.rv-shot span { flex: 1; overflow-wrap: anywhere; }
 /* the versions of a page (nbVersioni) */
 .versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
 .versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }

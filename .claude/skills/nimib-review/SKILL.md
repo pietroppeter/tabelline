@@ -20,17 +20,18 @@ Markdown section per comment, in page order. This skill turns that text into cha
   - `Comment`: do what the note asks.
   - `Replace`: replace the quoted text with the text in the `~~~text` fence; the note, if any,
     says why.
-  - `Cut`: remove the quoted text and mend the sentence around it.
+  - `Remove` (`Cut` in exports of version 3 and before): remove the quoted text and mend the
+    sentence around it.
   - `on the whole page`: no quote, the note is about the page as a whole.
 - `> quote` is the exact text the reader selected, as the page shows it, whitespace collapsed.
   `Around it: “…before ⟦quote⟧ after…”` gives the words around it, to tell apart a quote found
   more than once. `(#id)` is the anchor of the heading the quote is under.
-- `Screenshots: review-v2-3-1.jpg, ...` names images sent with the export (Share sends the text as
-  `review-vN.md` with the images). Look at them before changing anything: they often show what the
-  words can't (a layout, a zoom, a colour). If they are named but missing, ask for them.
-- A copied export ends with `## Screenshots, small`: one Markdown image per screenshot, its
-  address the JPEG itself (`data:image/jpeg;base64,...`). Decode each to a file and look at it.
-  Don't commit them with the round's export: keep the text, drop that section.
+- `Screenshots: review-v2-3-1.jpg, ...` names images sent with the export: Share sends the text as
+  `review-vN.md` with the images; after Copy, the reviewer copies each image on its own and pastes
+  it in the chat, in the same message or the next ones. Look at them before changing anything:
+  they often show what the words can't (a layout, a zoom, a colour). If they are named but
+  missing, ask for them. An export of version 3 may end with `## Screenshots, small` (data-URL
+  images): decode them to look, and don't keep that section in the saved round.
 - The text may have been edited by hand before it was sent: trust what it says over the format.
 - `(Not found on the page any more.)`: the text changed after the comment was written. Apply it
   where it still makes sense, or ask.

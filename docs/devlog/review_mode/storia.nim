@@ -23,7 +23,15 @@ const storico* = [
   Versione(date: "9 Nov 2026", what: "Round 2: a compact comment sheet that slides down from the top and " &
              "leaves the words in view, screenshots pasted, the whole version box a link, an annotated " &
              "screenshot of the pieces of the screen.",
-           review: "Waiting for the third round.", comments: 0),
+           review: "[Round 3](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-3.md): " &
+             "the compact sheet is better; pasting an image should just work, with no buttons; Delete " &
+             "belongs at the top; *Cut* is not clear. And the copy with screenshots inside was too long " &
+             "for the chat.",
+           comments: 1),
+  Versione(date: "9 Nov 2026", what: "Round 3: an image pasted in the note just works, no buttons; " &
+             "Delete in the top row; no *Cut* (an empty replacement removes the words); Copy copies the " &
+             "text only, and each screenshot has its own Copy.",
+           review: "Waiting for the fourth round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =

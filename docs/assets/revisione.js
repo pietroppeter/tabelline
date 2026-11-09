@@ -210,10 +210,11 @@
 
   // part: sheet
   // Writing a comment, in a sheet that slides down from the top and stays small, so the words it
-  // is about stay in view under it, marked. One row: Cancel, the kind, Save. Then the note (and
-  // the new text, for a replacement, starting from the words selected), and screenshots: pasted
-  // (the usual way on a phone: take it, then paste) or picked. While a sheet is open the page may
-  // not zoom, so a phone does not zoom in on the field typed in.
+  // is about stay in view under it, marked. One row: Cancel, the kind, Delete (for a comment
+  // already saved), Save. Then the new text, for a replacement (starting from the words
+  // selected; empty, it removes them), and the note. A screenshot is pasted in the note, like
+  // text: the note is an editable box, not a text field, so a phone offers to paste an image
+  // there. While a sheet is open the page may not zoom, so a phone does not zoom in on it.
   var viewport = document.querySelector('meta[name="viewport"]');
   var looseViewport = viewport ? viewport.content : '';
   function noZoom(on) {
@@ -226,35 +227,34 @@
     '<div class="rv-row"><button value="cancel" aria-label="Cancel">×</button>' +
     '<span class="rv-kinds" role="radiogroup" aria-label="Kind">' +
     '<label><input type="radio" name="kind" value="comment"><span>Comment</span></label>' +
-    '<label><input type="radio" name="kind" value="replace"><span>Replace</span></label>' +
-    '<label><input type="radio" name="kind" value="cut"><span>Cut</span></label></span>' +
+    '<label><input type="radio" name="kind" value="replace"><span>Replace</span></label></span>' +
     '<span class="rv-whole">On the whole page</span>' +
+    '<button value="delete" class="rv-delete">Delete</button>' +
     '<button value="save" class="rv-save">Save</button></div>' +
-    '<textarea name="replacement" rows="2" class="rv-replacement" aria-label="Replace with"></textarea>' +
-    '<textarea name="text" rows="2" aria-label="Note" placeholder="Note: what should change, and why"></textarea>' +
-    '<div class="rv-shots"><div class="rv-thumbs"></div>' +
-    '<button type="button" class="rv-paste">Paste image</button>' +
-    '<label class="rv-attach">Pick<input type="file" accept="image/*" multiple></label>' +
-    '<button value="delete" class="rv-delete">Delete</button></div>' +
+    '<textarea name="replacement" rows="2" class="rv-replacement" aria-label="Replace with" placeholder="New text (empty: remove the words)"></textarea>' +
+    '<div class="rv-note" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Note"' +
+    ' data-placeholder="Note, or paste a screenshot"></div>' +
+    '<div class="rv-thumbs"></div>' +
     '</form>';
   document.body.appendChild(sheet);
-  var form = sheet.querySelector('form'), editing = null, shots = [];
-  function openSheet(note) {
-    editing = note;
-    shots = (note.images || []).slice();
+  var form = sheet.querySelector('form'), noteBox = sheet.querySelector('.rv-note');
+  var editing = null, shots = [];
+  function openSheet(n) {
+    editing = n;
+    shots = (n.images || []).slice();
     thumbs();
-    sheet.querySelector('.rv-kinds').hidden = !note.quote;
-    sheet.querySelector('.rv-whole').hidden = !!note.quote;
-    form.elements.kind.value = note.kind || 'comment';
-    form.elements.text.value = note.text || '';
-    form.elements.replacement.value = note.replacement != null ? note.replacement : (note.quote || '').replace(/\s+/g, ' ').trim();
-    sheet.querySelector('.rv-delete').hidden = !note.id;
-    sheet.querySelector('.rv-paste').hidden = !(navigator.clipboard && navigator.clipboard.read);
+    sheet.querySelector('.rv-kinds').hidden = !n.quote;
+    sheet.querySelector('.rv-whole').hidden = !!n.quote;
+    form.elements.kind.value = n.kind === 'cut' ? 'replace' : n.kind || 'comment';   // a cut of v3 is an empty replacement
+    noteBox.textContent = n.text || '';
+    form.elements.replacement.value = n.kind === 'cut' ? '' : n.replacement != null ? n.replacement
+                                    : (n.quote || '').replace(/\s+/g, ' ').trim();
+    sheet.querySelector('.rv-delete').hidden = !n.id;
     kinds();
-    if (note.quote && !note.id) mark(Object.assign({}, note, { id: 'rv-new' }));   // the words, marked while writing
+    if (n.quote && !n.id) mark(Object.assign({}, n, { id: 'rv-new' }));   // the words, marked while writing
     noZoom(true);
     sheet.showModal();
-    keepInView(note.id || 'rv-new');
+    keepInView(n.id || 'rv-new');
   }
   function keepInView(id) {   // the marked words, just under the sheet
     var m = root.querySelector('mark.rv-mark[data-id="' + id + '"]');
@@ -267,6 +267,7 @@
   function thumbs() {
     var box = sheet.querySelector('.rv-thumbs');
     box.innerHTML = '';
+    box.hidden = !shots.length;
     shots.forEach(function (src, i) {
       var t = document.createElement('div');
       t.className = 'rv-thumb';
@@ -276,6 +277,7 @@
       box.appendChild(t);
     });
   }
+  function grown() { if (sheet.open && editing) keepInView(editing.id || 'rv-new'); }   // a screenshot added: the words, still in view
   function shrink(blob, width, quality) {   // an image as a JPEG at most `width` pixels wide
     return new Promise(function (ok, ko) {
       var img = new Image(), url = URL.createObjectURL(blob);
@@ -290,57 +292,38 @@
       img.src = url;
     });
   }
-  function addImages(blobs) {
-    Promise.all(blobs.map(function (b) { return shrink(b, 900, 0.72); })).then(function (srcs) {
-      shots = shots.concat(srcs); thumbs();
-    });
-  }
-  sheet.querySelector('input[type="file"]').addEventListener('change', function (e) {
-    addImages([].slice.call(e.target.files));
-    e.target.value = '';
-  });
-  sheet.addEventListener('paste', function (e) {   // an image pasted in the note
-    var files = [].filter.call(e.clipboardData.files || [], function (f) { return /^image\//.test(f.type); });
-    if (!files.length) return;
+  noteBox.addEventListener('paste', function (e) {   // an image goes to the screenshots, text stays plain text
     e.preventDefault();
-    addImages(files);
+    var files = [].filter.call(e.clipboardData.files || [], function (f) { return /^image\//.test(f.type); });
+    Promise.all(files.map(function (b) { return shrink(b, 900, 0.72); })).then(function (srcs) {
+      shots = shots.concat(srcs); thumbs(); grown();
+    });
+    var text = e.clipboardData.getData('text/plain');
+    if (text) document.execCommand('insertText', false, text);
   });
-  sheet.querySelector('.rv-paste').addEventListener('click', function () {
-    navigator.clipboard.read().then(function (items) {
-      var got = [];
-      items.forEach(function (item) {
-        var type = item.types.filter(function (t) { return /^image\//.test(t); })[0];
-        if (type) got.push(item.getType(type));
-      });
-      return Promise.all(got);
-    }).then(function (blobs) {
-      if (blobs.length) addImages(blobs);
-      else sheet.querySelector('.rv-paste').textContent = 'No image copied';
-    }, function () { sheet.querySelector('.rv-paste').textContent = 'Paste blocked: pick'; });
-  });
+  noteBox.addEventListener('drop', function (e) { e.preventDefault(); });   // no images inside the text
   sheet.addEventListener('close', function () {
-    var act = sheet.returnValue, note = editing;
+    var act = sheet.returnValue, n = editing;
     editing = null;
     noZoom(false);
-    sheet.querySelector('.rv-paste').textContent = 'Paste image';
     if (act === 'save') {
-      note.kind = note.quote ? form.elements.kind.value : 'comment';
-      note.text = form.elements.text.value.trim();
-      note.replacement = note.kind === 'replace' ? form.elements.replacement.value : null;
-      note.images = shots.length ? shots : undefined;
-      if (!note.id) {
-        note.id = 'c' + Date.now().toString(36);
-        note.at = new Date().toISOString();
-        notes.push(note);
+      n.kind = n.quote ? form.elements.kind.value : 'comment';
+      n.text = noteBox.innerText.trim();
+      n.replacement = n.kind === 'replace' ? form.elements.replacement.value : null;
+      n.images = shots.length ? shots : undefined;
+      if (!n.id) {
+        n.id = 'c' + Date.now().toString(36);
+        n.at = new Date().toISOString();
+        notes.push(n);
       }
       document.getSelection().removeAllRanges();
       pending = null;
     } else if (act === 'delete') {
-      notes = notes.filter(function (n) { return n !== note; });
+      notes = notes.filter(function (x) { return x !== n; });
     } else { pending = null; drawAll(); show(); return; }
     var saved = save();
     drawAll();
-    current = notes.indexOf(note);
+    current = notes.indexOf(n);
     full = !saved;
     if (current >= 0) go(current); else show();
   });
@@ -348,8 +331,9 @@
   // part: export
   // The comments as one text, for a person and for an agent: a YAML front matter that says which
   // page, version and source they are on, then one Markdown section per comment, in page order.
-  // The text can be edited before it is copied or shared. Screenshots cannot travel in copied
-  // text: Share sends the text as a file with the screenshots, named as the text names them.
+  // The text can be edited before it is copied or shared. Copy copies the text only, short
+  // enough for a chat message; each screenshot has a Copy of its own, to paste after it. Share
+  // sends the text as a file with the screenshots, named as the text names them.
   function yaml(s) { return JSON.stringify(String(s)); }   // a JSON string is a YAML string
   function flat(s) { return s.replace(/\s+/g, ' '); }
   function quoted(s) { return flat(s).trim(); }
@@ -371,7 +355,8 @@
       '---', '',
       '# Review of “' + page.title + '”, version ' + page.version, ''];
     notes.forEach(function (n, i) {
-      var kind = { comment: 'Comment', replace: 'Replace', cut: 'Cut' }[n.kind] || 'Comment';
+      var cut = n.kind === 'cut' || (n.kind === 'replace' && !(n.replacement || '').trim());
+      var kind = cut ? 'Remove' : n.kind === 'replace' ? 'Replace' : 'Comment';
       var where = !n.quote ? 'on the whole page'
                 : n.section && n.section.title ? 'in “' + n.section.title + '”' + (n.section.id ? ' (#' + n.section.id + ')' : '')
                 : 'at the top';
@@ -381,8 +366,8 @@
         out.push('Around it: “…' + flat(n.prefix) + '⟦' + flat(n.quote) + '⟧' + flat(n.suffix) + '…”', '');
         if (n.found === false) out.push('(Not found on the page any more.)', '');
       }
-      if (n.kind === 'replace') out.push('Replace with:', '', fence(n.replacement || ''), '');
-      if (n.kind === 'cut') out.push('Cut it.', '');
+      if (cut) out.push('Remove these words.', '');
+      else if (n.kind === 'replace') out.push('Replace with:', '', fence(n.replacement), '');
       if (n.text) out.push(n.text, '');
       if (n.images) out.push('Screenshots: ' + n.images.map(function (src, k) { return shotName(i, k); }).join(', '), '');
     });
@@ -392,7 +377,7 @@
   box.className = 'rv-sheet rv-export';
   box.innerHTML =
     '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy or share it</p>' +
-    '<textarea rows="12" spellcheck="false"></textarea>' +
+    '<textarea rows="12" spellcheck="false"></textarea><div class="rv-shotlist"></div>' +
     '<div class="rv-actions"><button value="clear" class="rv-delete">Clear all</button>' +
     '<button value="close">Close</button><button value="share">Share</button>' +
     '<button value="copy" class="rv-save">Copy</button></div></form>';
@@ -403,6 +388,7 @@
     clear.dataset.sure = ''; clear.textContent = 'Clear all';
     area.value = exportText();
     box.querySelector('[value="share"]').hidden = !navigator.share;
+    shotList();
     noZoom(true);
     box.showModal();
   }
@@ -412,19 +398,52 @@
     for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
     return new File([arr], name, { type: 'image/jpeg' });
   }
-  function withSmallShots(text) {
+  function allShots() {
     var all = [];
-    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push([shotName(i, k), src]); }); });
-    if (!all.length) return Promise.resolve(text);
-    return Promise.all(all.map(function (a) { return shrink(fileOf(a[1], a[0]), 480, 0.6); })).then(function (small) {
-      return text + '\n## Screenshots, small\n\n' + small.map(function (src, j) {
-        return '![' + all[j][0] + '](' + src + ')';
-      }).join('\n\n') + '\n';
+    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(i, k), src: src }); }); });
+    return all;
+  }
+  function shotList() {   // each screenshot, with its own Copy: paste it in the chat after the text
+    var list = box.querySelector('.rv-shotlist');
+    list.innerHTML = '';
+    var all = allShots();
+    list.hidden = !all.length || !(navigator.clipboard && window.ClipboardItem);
+    all.forEach(function (shot) {
+      var row = document.createElement('div');
+      row.className = 'rv-shot';
+      row.innerHTML = '<img alt=""><span></span><button type="button">Copy image</button>';
+      row.querySelector('img').src = shot.src;
+      row.querySelector('span').textContent = shot.name;
+      var b = row.querySelector('button');
+      b.addEventListener('click', function () {
+        copied(b, navigator.clipboard.write([new ClipboardItem({ 'image/png': png(shot.src) })]));
+      });
+      list.appendChild(row);
     });
+  }
+  function png(src) {   // the clipboard takes PNG images everywhere, JPEG not always
+    return new Promise(function (ok, ko) {
+      var img = new Image();
+      img.onload = function () {
+        var c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        c.toBlob(ok, 'image/png');
+      };
+      img.onerror = ko;
+      img.src = src;
+    });
+  }
+  function copied(button, promise) {
+    var label = button.textContent;
+    return promise.then(function () {
+      button.textContent = 'Copied ✓';
+      setTimeout(function () { button.textContent = label; }, 1500);
+    }, function () { button.textContent = 'Blocked'; });
   }
   function share() {
     var files = [new File([area.value], 'review-v' + page.version + '.md', { type: 'text/markdown' })];
-    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { files.push(fileOf(src, shotName(i, k))); }); });
+    allShots().forEach(function (shot) { files.push(fileOf(shot.src, shot.name)); });
     var data = { title: 'Review of ' + page.title, files: files };
     if (!navigator.canShare || !navigator.canShare(data)) data = { title: data.title, text: area.value };
     return navigator.share(data);
@@ -437,15 +456,9 @@
     } else if (act === 'copy') {
       e.preventDefault();
       var button = e.submitter;
-      var done = function () { button.textContent = 'Copied ✓'; setTimeout(function () { button.textContent = 'Copy'; }, 1500); };
-      var fallback = function () { area.select(); try { document.execCommand('copy'); done(); } catch (x) {} };
-      // Safari copies only inside the tap itself: give it a promise of the text, not the text later
-      var text = withSmallShots(area.value);
-      if (navigator.clipboard && window.ClipboardItem) {
-        navigator.clipboard.write([new ClipboardItem({ 'text/plain': text.then(function (t) { return new Blob([t], { type: 'text/plain' }); }) })])
-          .then(done, function () { text.then(function (t) { return navigator.clipboard.writeText(t); }).then(done, fallback); });
-      } else if (navigator.clipboard) text.then(function (t) { return navigator.clipboard.writeText(t); }).then(done, fallback);
-      else fallback();
+      var fallback = function () { area.select(); document.execCommand('copy'); };
+      copied(button, navigator.clipboard ? navigator.clipboard.writeText(area.value).catch(fallback)
+                                         : Promise.resolve().then(fallback));
     } else if (act === 'clear' && e.submitter.dataset.sure !== 'yes') {
       e.preventDefault();   // a second tap deletes: confirm() is blocked inside an artifact
       e.submitter.dataset.sure = 'yes';
