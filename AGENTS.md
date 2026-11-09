@@ -92,6 +92,11 @@ working rules that are easy to miss.
 - The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
+- Review mode: a page that calls `nbRevisione` (after `useTabelline`) lets a reader select text,
+  comment, and export the comments as Markdown with a YAML front matter (`format:
+  nimib-review/1`). When such an export is pasted in the chat, follow the skill
+  `.claude/skills/nimib-review/`. The devlog post `review_mode` keeps one notebook per version in
+  `docs/devlog/review_mode/` and is updated round by round while the experiment runs.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
   (comma-separated, `name*` for a prefix, `all`, or the same after `#`).
 

@@ -17,7 +17,7 @@
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
-import std/[json, strutils, strformat, sequtils]
+import std/[json, os, strutils, strformat, sequtils]
 import nimib except md
 import tabelline, tabelline/nimib
 import stile, parti
@@ -91,19 +91,25 @@ const
   pythonKeywords = ["and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else",
     "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or",
     "pass", "raise", "return", "try", "while", "with", "yield"]
+  jsKeywords = ["var", "let", "const", "function", "return", "if", "else", "for", "while", "new",
+    "typeof", "in", "of", "try", "catch", "break", "continue", "this"]
   rKeywords = ["if", "else", "for", "while", "repeat", "function", "return", "next", "break", "in",
     "library", "require"]
   otherLiterals = ["True", "False", "None", "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"]
+  jsLiterals = ["true", "false", "null", "undefined", "Infinity"]
 
 func highlightOther*(code, lang: string): string =
-  ## A small highlighter for the R, Python (and YAML) code that pages show but do not run:
-  ## keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
-  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords else: @[]
+  ## A small highlighter for the R, Python, JavaScript (and YAML) code that pages show but do not
+  ## run: keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
+  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords
+                 elif lang == "js": @jsKeywords else: @[]
+  let literals = if lang == "js": @jsLiterals else: @otherLiterals
+  let comment = if lang == "js": "//" else: "#"
   func span(cls, s: string): string = "<span class=\"hljs-" & cls & "\">" & esc(s) & "</span>"
   var i = 0
   while i < code.len:
     let c = code[i]
-    if c == '#':
+    if code.continuesWith(comment, i):
       var j = i
       while j < code.len and code[j] != '\n': inc j
       result.add span("comment", code[i ..< j]); i = j
@@ -123,7 +129,7 @@ func highlightOther*(code, lang: string): string =
       while j < code.len and code[j] in {'a'..'z', 'A'..'Z', '0'..'9', '_', '.', '-'}: inc j
       let w = code[i ..< j]
       if w in keywords: result.add span("keyword", w)
-      elif w in otherLiterals: result.add span("literal", w)
+      elif w in literals: result.add span("literal", w)
       elif lang == "yaml" and j < code.len and code[j] == ':': result.add span("keyword", w)
       elif j < code.len and code[j] == '(' and w.strip(chars = {'.'}).len > 0:
         let lead = w.len - w.strip(leading = true, trailing = false, chars = {'.'}).len
@@ -137,9 +143,9 @@ func highlightOther*(code, lang: string): string =
 
 func highlightFences(html: string): string =
   ## Code fences in Markdown, highlighted like the code that ran: Nim with nimib's highlighter,
-  ## R, Python and YAML with `highlightOther`, shell with its comments.
+  ## R, Python, JavaScript and YAML with `highlightOther`, shell with its comments.
   result = html
-  for lang in ["nim", "r", "python", "yaml", "sh"]:
+  for lang in ["nim", "r", "python", "js", "yaml", "sh"]:
     let openTag = "<pre><code class=\"language-" & lang & "\">"
     const close = "</code></pre>"
     var res = ""
@@ -463,6 +469,58 @@ template nbTinte*(swatches: openArray[(string, string, string)]) =
   ## Swatches: a colour (a token such as `--primary`, or a CSS colour), its name and what it is
   ## for, in Markdown.
   nb.tinte(swatches)
+
+# ----------------------------------------------------------------------------------- review mode
+
+const revisioneJs* = staticRead(currentSourcePath().parentDir / "assets" / "revisione.js")
+  ## The script of the review mode, kept as a file of its own (docs/assets/revisione.js) so it can
+  ## be read, tested and shown; it is inlined in the page, nothing is loaded from elsewhere.
+
+newNbBlock(NbRevisione):
+  page: string
+  version: int
+  title: string
+  source: string
+  toHtml:
+    &"""<div id="revisione" hidden data-page="{esc(blk.page)}" data-version="{blk.version}" """ &
+      &"""data-title="{esc(blk.title)}" data-source="{esc(blk.source)}"></div>""" &
+      "<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n" & revisioneJs & "});\n</script>"
+
+proc revisione*(nb: var Nb, page: string, version: int, title, source: string) =
+  nb.doc.context["stylesheet"] = %(nb.doc.context["stylesheet"].getStr & "\n<style>\n" & revisioneCss & "</style>")
+  nb.add newNbRevisione(page = page, version = version, title = title, source = source)
+
+template nbRevisione*(tpage: string, tversion: int, ttitle, tsource: string) =
+  ## Review mode on this page: select text and comment on it, go through the comments with the bar at
+  ## the bottom, and export them (Markdown with a YAML front matter) to paste in a chat with an agent.
+  ## The comments stay in the browser (localStorage), one set per `tpage` and `tversion`; `ttitle`
+  ## and `tsource` (the notebook the page is built from) go in the export. After `useTabelline`.
+  nb.revisione(tpage, tversion, ttitle, tsource)
+
+newNbBlock(NbVersioni):
+  versioni: seq[(string, string)]
+  questa: int
+  toHtml:
+    let latest = blk.versioni.len
+    var items = ""
+    for i, (date, what) in blk.versioni:
+      let n = i + 1
+      let href = if n == blk.questa: ""
+                 elif blk.questa == latest: &"v{n}/"
+                 elif n == latest: "../"
+                 else: &"../v{n}/"
+      let name = if href.len > 0: &"""<a href="{href}">v{n}</a>""" else: &"v{n}"
+      let current = if n == blk.questa: " aria-current=\"page\"" else: ""
+      items.add &"""<li{current} title="{esc(what)}">{name}<span>{inline(date)}</span></li>"""
+    &"""<nav class="versioni" aria-label="Versions of this page"><span class="titolo">Versions</span><ol>{items}</ol></nav>"""
+
+proc versioni*(nb: var Nb, versions: openArray[(string, string)], this: int) =
+  nb.add newNbVersioni(versioni = @versions, questa = this)
+
+template nbVersioni*(tversions: openArray[(string, string)], tthis: int) =
+  ## The versions of a page that changes in rounds: `(date, what changed)` for each, oldest first,
+  ## and the number of this one. The newest is the page itself; version `n` is kept in `vn/`.
+  nb.versioni(tversions, tthis)
 
 # ------------------------------------------------------------------------------------- the page
 
