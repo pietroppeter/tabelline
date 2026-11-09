@@ -34,7 +34,17 @@ const storico* = [
              "text only, and each screenshot has its own Copy image; the export opens with a YAML block, " &
              "not a front matter, so it reads well in a chat; the strip shows only the newest version and " &
              "the one before it, and moving between them is a short slide.",
-           review: "Waiting for the fourth round.", comments: 0),
+           review: "[Round 4](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-4.md): " &
+             "pasting an image works on an iPhone; how to write a note on the whole page; number the " &
+             "changes of a version, without *Round 3*; a heading for the idea, with screenshots in it; " &
+             "the assumptions read like decision records, and their opening assumed the reader knew " &
+             "the rounds.",
+           comments: 6),
+  Versione(date: "9 Nov 2026", what: "With nothing selected, the comment button says *Page note*: a " &
+             "note on the whole page; the changes of a version are a numbered list; the idea has a " &
+             "heading of its own, *The idea*, and mentions screenshots; the assumptions are now " &
+             "*The decisions behind it*, each saying which round changed it.",
+           review: "Waiting for the fifth round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =
