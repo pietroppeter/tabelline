@@ -69,7 +69,8 @@ FOSDEM 2027 will be the earliest one yet, on 30 January as in 2016, and the 27th
 ## Three parts of three
 
 Twenty-six editions are too many for one table, so the story splits them in three, and every
-part in three again: three questions each, nine tables, simplest first.
+part in three again: three questions each, nine tables, simplest first. A coda, at the end, is
+about Nim.
 """
 
 nbShowR """
@@ -90,12 +91,12 @@ nbText: """
 FOSDEM publishes its schedule, and keeps every past one at archive.fosdem.org: since 2012 as an
 XML file of every event, before that as web pages. Its website's source keeps the calls for
 participation of each devroom, and its mailing list has been archived since 2006. From these,
-nine tables, in `docs/stories/data/fosdem/`:
+ten tables, in `docs/stories/data/fosdem/`:
 """
 
 nbShowR """
 files <- c("editions", "events", "event_speakers", "people", "tracks", "rooms",
-           "cfp_listings", "cfp_posts", "mailing_list_years")
+           "cfp_listings", "cfp_posts", "mailing_list_years", "stands")
 tables <- do.call(rbind, lapply(files, function(f) {
   path <- file.path("..", paste0(f, ".csv"))
   data.frame(table = paste0(f, ".csv"), rows = nrow(read.csv(path, comment.char = "#")),
@@ -103,7 +104,7 @@ tables <- do.call(rbind, lapply(files, function(f) {
 }))
 gt(tables, rowname_col = "table") |>
   opt_css_theme() |>
-  tab_header("The data", "nine tables, one row per ...") |>
+  tab_header("The data", "ten tables, one row per ...") |>
   fmt_integer(rows) |>
   cols_label(rows = "rows", about = "") |>
   tab_style(cell_text(size = "12px"), cells_body(about)) |>
@@ -139,10 +140,12 @@ dates <- read.csv("dates.csv", comment.char = "#")
 dates$in_window <- dates$in_window == "true"   # Polars writes true and false
 dates$era <- cut(dates$year, c(2000, 2003, 2008, 2010, 2030),
                  labels = c("the first ones", "late February", "moving", "the week of 1 February"))
-gt(dates, rowname_col = "year", groupname_col = "era") |>
+dates$edition_site <- sprintf("[%d](%s)", dates$year, dates$url)   # the year opens its site
+gt(dates, rowname_col = "edition_site", groupname_col = "era") |>
   opt_css_theme() |>
   tab_header("Every FOSDEM", "Saturday and Sunday, 2001 to 2027") |>
-  cols_hide(c(edition, venue, day_of_year, in_window)) |>
+  cols_hide(c(year, edition, venue, day_of_year, in_window, url)) |>
+  fmt_markdown(edition_site) |>
   fmt_date(c(start, end), date_style = "day_month") |>
   cols_merge_range(start, end, sep = " – ") |>
   text_case_match("in person" ~ "", .locations = cells_body(format)) |>
@@ -150,7 +153,7 @@ gt(dates, rowname_col = "year", groupname_col = "era") |>
   cols_label(name = "", start = "weekend", format = "") |>
   tab_style(cell_fill(tinta("--success-soft")), cells_body(rows = in_window)) |>
   tab_style(cell_fill(tinta("--success-soft")), cells_stub(rows = in_window)) |>
-  tab_source_note("FOSDEM's archived sites; 2027 from fosdem.org.") |>
+  tab_source_note(md("FOSDEM's archived sites ([archive.fosdem.org](https://archive.fosdem.org/)); 2027 from [fosdem.org](https://fosdem.org/2027/). A year opens its edition's site.")) |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
@@ -199,6 +202,33 @@ same person speaks in many years, so they do not add up.
 nbText: """
 The main tracks stayed small: 18 talks a year from 2007 to 2011, never more than 45. What grew,
 grew in the devrooms: a third of the events in 2004, more than eight in ten since 2010.
+
+The stands grew too: the halls where projects show themselves, hand out stickers and sell
+T-shirts. The archived stands pages list 23 in 2008 and 96 in 2026. A few have been there almost
+every year:
+"""
+
+nbShowR """
+stands <- read.csv("stands_top.csv", comment.char = "#")
+gt(stands, rowname_col = "stand") |>
+  opt_css_theme() |>
+  tab_header("The stands that keep coming", "present at the most editions, 2008 to 2026") |>
+  cols_merge_range(first, last, sep = "–") |>
+  cols_label(first = "years", editions = "editions") |>
+  tab_style(cell_text(weight = "bold"), cells_body(editions)) |>
+  tab_source_note(md("The stands pages of [archive.fosdem.org](https://archive.fosdem.org/2026/stands/), 2008–2026; a name matched across years with case folded.")) |>
+  tab_options(table.font.size = "13px", data_row.padding = px(2))
+"""
+
+nbNota("""
+The stands are a table of their own in the data, `stands.csv`, one row per stand and year:
+the pages were a list until 2012, tables by building from 2013, cards online in 2021 and 2022.
+`cols_merge_range` again for the years.
+""", nkCode)
+
+nbText: """
+Debian and PostgreSQL had a stand at all nineteen editions since 2008; GNOME, KDE and Mozilla
+missed one or two.
 
 ### What did the online years change?
 
@@ -257,17 +287,21 @@ rooms27 <- read.csv("devrooms_2027.csv", comment.char = "#")
 order <- c("since before 2013", "since 2013–2022", "since 2023 or later",
            "back after a pause", "new in 2027")
 rooms27 <- rooms27[order(match(rooms27$group, order), rooms27$first, rooms27$devroom), ]
+rooms27$devroom <- ifelse(rooms27$cfp == "", rooms27$devroom,
+                          sprintf("[%s](%s)", rooms27$devroom, rooms27$cfp))   # its call for talks
 gt(rooms27, rowname_col = "devroom", groupname_col = "group") |>
   opt_css_theme() |>
   tab_header("The devrooms of 2027", "and the year each first ran") |>
   row_group_order(order) |>
+  cols_hide(cfp) |>
+  fmt_markdown(devroom) |>
   cols_label(first = "since", editions = "editions", was = "in 2026") |>
   sub_missing(was, missing_text = "") |>
   summary_rows(groups = everything(), columns = editions,
                fns = list(devrooms = ~ length(.)), fmt = ~ fmt_integer(.)) |>
   tab_style(cell_fill(tinta("--success-soft")), cells_row_groups("new in 2027")) |>
   tab_style(cell_text(size = "12px"), cells_body(was)) |>
-  tab_source_note("fosdem.org, accepted developer rooms of 2027; earlier years from the schedules.") |>
+  tab_source_note(md("fosdem.org, [accepted developer rooms of 2027](https://fosdem.org/2027/news/accepted-developer-rooms/); a name opens its call for participation. Earlier years from the schedules.")) |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
@@ -395,66 +429,53 @@ nbText: """
 The first talk on Saturday morning, in Janson, the biggest hall of the ULB, after the
 welcome, opens FOSDEM. Richard Stallman gave the first, on software patents, and two
 more; then came the founders of O'Reilly, Wikipedia, the Software Freedom Law Center, Jenkins,
-systemd:
+systemd. It is not the only keynote: from 2007, when the schedule starts to mark them, to
+2025, Janson has one or two more on Saturday and usually one at the end of Sunday, before the
+closing. Here is every one, the opening keynote of each year shaded; a title opens the talk's
+page at FOSDEM, ▶ its recording:
 """
 
 nbShowR """
-openers <- read.csv("openers.csv", comment.char = "#")
-openers$by[openers$by == ""] <- NA   # an empty name is a missing one
-gt(openers, rowname_col = "year") |>
+keynotes <- read.csv("keynotes.csv", comment.char = "#")
+keynotes$opening <- keynotes$opening == "true"
+keynotes$by[keynotes$by == ""] <- NA            # an empty name is a missing one
+keynotes$video[keynotes$video == ""] <- NA
+keynotes$title <- sprintf("[%s](%s)", keynotes$title, keynotes$url)   # a link to the talk
+keynotes$day <- substr(keynotes$day, 1, 3)
+first_of_year <- !duplicated(keynotes$year)
+gt(keynotes, rowname_col = "year") |>
   opt_css_theme() |>
-  tab_header("Opening FOSDEM", "the first talk on Saturday, in the main room") |>
-  cols_hide(c(start, room)) |>
-  cols_label(title = "", by = "") |>
+  tab_header("The keynotes", "every edition; shaded, the one that opened it") |>
+  cols_hide(c(opening, start, room, url)) |>
   sub_missing(by, missing_text = "Richard Stallman") |>
-  tab_style(cell_text(weight = "bold"), cells_body(by)) |>
-  tab_style(cell_text(size = "12px"), cells_body(title)) |>
-  tab_style(cell_fill(tinta("--secondary-soft")), cells_body(rows = year %in% c(2021, 2022))) |>
-  tab_style(cell_fill(tinta("--secondary-soft")), cells_stub(rows = year %in% c(2021, 2022))) |>
-  tab_footnote("Online: the first talk of the day, in the community track.",
-               cells_stub(rows = year %in% c(2021, 2022))) |>
-  tab_footnote("The schedule says only \"RMS\".", cells_stub(rows = year == 2002)) |>
-  tab_source_note("FOSDEM's schedules: room A in 2001, Conference Room 1 in 2003, Janson otherwise.") |>
-  tab_options(table.font.size = "13px", data_row.padding = px(2))
+  fmt_markdown(title) |>
+  cols_merge(c(title, by), pattern = "{1}<br>{2}") |>
+  fmt_url(video, label = "▶") |>
+  sub_missing(video, missing_text = "") |>
+  text_transform(function(x) ifelse(first_of_year, x, ""), cells_stub()) |>
+  cols_label(day = "", title = "", video = "") |>
+  tab_style(cell_fill(tinta("--primary-soft")), cells_body(rows = opening)) |>
+  tab_style(cell_fill(tinta("--primary-soft")), cells_stub(rows = opening)) |>
+  tab_style(cell_text(size = "12px", color = tinta("--muted")), cells_body(day)) |>
+  tab_footnote("The schedule says only \"RMS\".", cells_body(title, rows = year == 2002)) |>
+  tab_footnote("Online: no keynotes; the first talk of the day, in the community track.",
+               cells_body(title, rows = year %in% c(2021, 2022))) |>
+  tab_source_note(md("FOSDEM's schedules ([archive.fosdem.org](https://archive.fosdem.org/)): talks of type keynote, 2007–2025, without the welcome, the closing and the quiz; before 2007 and in 2026, the opening talk only.")) |>
+  tab_options(table.font.size = "13px", data_row.padding = px(3))
 """
 
 nbNota("""
-`sub_missing` fills the one speaker the schedule of 2002 does not name; with `missing_text` it
-is a substitution, not a change to the data. The rule (first room of Saturday, first talk
-after the welcome) is in nanuq.
+A title becomes a link in R (`[title](url)`, then `fmt_markdown`), and `cols_merge` puts the
+speakers under it in the same cell, one of the merges of tabelline 0.2. `fmt_url` turns each
+recording into a ▶. The year is shown once, on the first keynote of each year
+(`text_transform` on the stub). nanuq picks the opening talk and joins it to the keynotes.
 """, nkCode)
 
 nbText: """
 The early openings were about freedom, patents and licences. From 2012 they are about how
 projects are made and kept (communities, money, the kernel), and in 2025 about how one learns
-to program.
-
-The opening is not the only keynote. From 2007, when the schedule starts to mark them, to 2025,
-Janson usually has one or two more on Saturday and one at the end of Sunday, before the closing:
-Greg Kroah-Hartman on a first kernel patch in 2010, Chris Lattner on LLVM in 2011, Poul-Henning
-Kamp on the NSA in 2014. 2025 had ten, Saturday and Sunday. The pretalx schedule of 2026 has no
-keynote type, and the online years had none.
-"""
-
-nbShowR """
-keynotes <- read.csv("keynotes_by_year.csv", comment.char = "#")
-gt(keynotes, rowname_col = "year") |>
-  opt_css_theme() |>
-  tab_header("The keynotes", "who gave them, 2007 to 2025") |>
-  cols_label(keynotes = "", saturday = "Saturday", sunday = "Sunday") |>
-  text_transform(function(x) gsub("; ", " · ", x), cells_body(c(saturday, sunday))) |>
-  tab_style(cell_text(size = "12px"), cells_body(c(saturday, sunday))) |>
-  tab_style(cell_text(weight = "bold"), cells_body(keynotes)) |>
-  tab_source_note("FOSDEM's schedules, events of type keynote; without the welcome, the closing and the quiz.") |>
-  tab_options(table.font.size = "13px", data_row.padding = px(3))
-"""
-
-nbNota("""
-`text_transform` turns the separator nanuq wrote between talks into a dot, and leaves the commas
-between the people of one talk. The keynotes are kept one per row in `story/keynotes.csv`; this
-table groups them by year and day, in nanuq.
-""", nkCode)
-nbText: """
+to program. Among the others: Greg Kroah-Hartman on a first kernel patch in 2010, Chris Lattner
+on LLVM in 2011, Poul-Henning Kamp on the NSA in 2014. 2025 had ten.
 
 ### Who keeps coming back?
 
@@ -532,6 +553,59 @@ FOSDEM grew from 176 speakers to 1,216 without becoming a club. Four calls in te
 someone who also speaks, the devroom's organisers giving a talk in their own room.
 """
 
+nbText: """
+## A coda · Nim at FOSDEM
+
+tabelline is written in Nim, so one last table: every FOSDEM talk about Nim, or about a project
+built with it. Before 2019 there is none. Then Nim found a home in the devroom of minimalistic
+and emerging languages, had a devroom of its own in 2022, online (its call went out on
+[nim-lang.org](https://nim-lang.org/blog.html), and the author of tabelline was among its
+organisers), and turned up in other rooms: Nimbus, an Ethereum client, in 2019; Chalk, the
+supply-chain tool written in Nim by John Viega's Crash Override, in the testing devroom in 2024;
+Nim for Pythonistas in the Python devroom in 2025. In 2018 Nim had a stand.
+"""
+
+nbShowR """
+nim <- read.csv("nim.csv", comment.char = "#")
+nim$video[nim$video == ""] <- NA
+stand <- nim$kind == "stand"
+nim$track[stand] <- paste0("building ", sub(" \\(level ", ", level ", sub("\\)$", "", nim$track[stand])))
+nim$how[nim$how %in% c("about Nim", "stand")] <- NA      # said only when the talk is not about Nim
+nim$title[stand] <- "The Nim stand"
+nim$by[nim$by == ""] <- NA
+nim$track <- sub(" devroom$", "", nim$track)
+nim$title <- sprintf("[%s](%s)", nim$title, nim$url)
+nim$track <- ifelse(is.na(nim$how), nim$track, sprintf("%s<br><em>%s</em>", nim$track, nim$how))
+gt(nim, groupname_col = "year") |>
+  opt_css_theme() |>
+  tab_header("Nim at FOSDEM", "the talks about Nim, or about projects built with it") |>
+  cols_hide(c(kind, url, how)) |>
+  cols_move_to_start(title) |>
+  fmt_markdown(title) |>
+  cols_merge(c(title, by), pattern = "{1}<<<br>{2}>>") |>
+  fmt(track, fns = function(x) x) |>
+  fmt_url(video, label = "▶") |>
+  sub_missing(video, missing_text = "") |>
+  cols_label(title = "talk", track = "devroom", video = "") |>
+  tab_style(cell_text(size = "12px"), cells_body(track)) |>
+  tab_style(cell_fill(tinta("--primary-soft")), cells_body(rows = track == "Nim Programming Language")) |>
+  tab_footnote("Online, with a devroom of its own.", cells_row_groups("2022")) |>
+  tab_source_note(md("FOSDEM's schedules: titles with \"Nim\", the 2022 Nim devroom, and abstracts read by hand (talks that only mention Nim are left out); the stand from [archive.fosdem.org/2018/stands](https://archive.fosdem.org/2018/stands/).")) |>
+  tab_options(table.font.size = "13px", data_row.padding = px(3))
+"""
+
+nbNota("""
+The pattern `{1}<<<br>{2}>>` of `cols_merge` writes the second value only when there is one
+(the stand has no speaker). The devroom gets a second line, in italics, only for the talks
+that are not about Nim itself. The list is made in nanuq: a regex on the titles, the 2022 devroom, four talks added
+by hand after reading the abstracts, and the stand from `stands.csv`.
+""", nkCode)
+
+nbText: """
+Nineteen talks in seven years, by fifteen speakers; Peter Munch-Ellingsen gave five of them, and
+Andreas Rumpf, who made Nim, two. Every one was recorded.
+"""
+
 nbParte 2, "", prSecondary   # the closing sections: how it is built
 nbText: """
 ## How this story is built
@@ -546,10 +620,10 @@ are not committed.
 
 **2. The tables** are made in two steps. Short Python scripts (standard library only) flatten
 each raw format into staging CSV files; then `src/process.nim`, written with nanuq (Polars for
-Nim), cleans, joins and counts them into the nine tables of `docs/stories/data/fosdem/`. Its
+Nim), cleans, joins and counts them into the ten tables of `docs/stories/data/fosdem/`. Its
 README says what is complete for each year. Two runs give the same files, byte for byte.
 
-**3. The story's small tables** come from those nine with nanuq again, in `src/insights.nim`:
+**3. The story's small tables** come from those ten with nanuq again, in `src/insights.nim`:
 the dates, the sizes, the online years, the devroom families (a folded name plus 49 renames
 typed by hand), the opening talks, the speakers. Each is a CSV in `story/`, with a `#` line
 saying what it is made from.

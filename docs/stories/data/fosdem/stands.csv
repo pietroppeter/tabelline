@@ -1,0 +1,997 @@
+# Stands at FOSDEM 2008-2026, one row per stand as the archived stands page lists it (archive.fosdem.org/<year>/stands.html until 2012, /<year>/stands/ after; online in 2021 and 2022). stand_key folds case and punctuation; a stand shared by projects is one row.
+year,stand,stand_key,building,theme
+2008,"*BSD: FreeBSD , NetBSD , MirBSD and BSDcertification.org",bsd freebsd netbsd mirbsd and bsdcertification org,"",""
+2008,CentOS,centos,"",""
+2008,Debian,debian,"",""
+2008,EJBCA,ejbca,"",""
+2008,Fedora,fedora,"",""
+2008,Free Knowledge Foundation,free knowledge foundation,"",""
+2008,Free Software Foundation Europe,free software foundation europe,"",""
+2008,GNOME,gnome,"",""
+2008,GOsa,gosa,"",""
+2008,Haiku OS + OpenAguila,haiku os openaguila,"",""
+2008,Jabber Software Foundation,jabber software foundation,"",""
+2008,KDE,kde,"",""
+2008,Mozilla,mozilla,"",""
+2008,O'Reilly,o reilly,"",""
+2008,OpenBSD + OpenSSH,openbsd openssh,"",""
+2008,OpenEmbedded,openembedded,"",""
+2008,OpenGroupware.org + GNUstep,opengroupware org gnustep,"",""
+2008,OpenJDK and OpenSolaris,openjdk and opensolaris,"",""
+2008,OpenOffice.org,openoffice org,"",""
+2008,openSUSE,opensuse,"",""
+2008,PostgreSQL,postgresql,"",""
+2008,Syllable,syllable,"",""
+2008,Ubuntu (Belgian LoCoMo team),ubuntu belgian locomo team,"",""
+2009,*BSD + Openmoko,bsd openmoko,"",""
+2009,CentOS,centos,"",""
+2009,Debian,debian,"",""
+2009,Fedora,fedora,"",""
+2009,Free Software Foundation Europe + Free Knowledge Foundation,free software foundation europe free knowledge foundation,"",""
+2009,Gentoo,gentoo,"",""
+2009,GNOME,gnome,"",""
+2009,Haiku,haiku,"",""
+2009,Jabber / XMPP,jabber xmpp,"",""
+2009,Joomla,joomla,"",""
+2009,KDE,kde,"",""
+2009,Mandriva,mandriva,"",""
+2009,Mozilla,mozilla,"",""
+2009,MySQL + OpenSolaris,mysql opensolaris,"",""
+2009,OpenEmbedded,openembedded,"",""
+2009,OpenOffice.org,openoffice org,"",""
+2009,openSUSE,opensuse,"",""
+2009,OpenWRT,openwrt,"",""
+2009,PHP,php,"",""
+2009,PostgreSQL,postgresql,"",""
+2009,ReactOS,reactos,"",""
+2009,SIP Communicator,sip communicator,"",""
+2009,Syllable,syllable,"",""
+2009,Ubuntu,ubuntu,"",""
+2010,CAcert,cacert,"",""
+2010,CentOS,centos,"",""
+2010,Debian,debian,"",""
+2010,EJBCA + SignServer,ejbca signserver,"",""
+2010,Fedora,fedora,"",""
+2010,FFmpeg,ffmpeg,"",""
+2010,Free Software Foundation Europe / GNU Project,free software foundation europe gnu project,"",""
+2010,FreeBSD,freebsd,"",""
+2010,GNOME,gnome,"",""
+2010,Jabber/XMPP,jabber xmpp,"",""
+2010,Jboss,jboss,"",""
+2010,KDE,kde,"",""
+2010,Makerbot RepRap,makerbot reprap,"",""
+2010,Mandriva Linux,mandriva linux,"",""
+2010,MariaDB + PBXT,mariadb pbxt,"",""
+2010,MirBSD,mirbsd,"",""
+2010,Mozilla,mozilla,"",""
+2010,NetBSD,netbsd,"",""
+2010,NLOSUG,nlosug,"",""
+2010,O'Reilly,o reilly,"",""
+2010,OpenEmbedded,openembedded,"",""
+2010,OpenOffice.org,openoffice org,"",""
+2010,openSUSE,opensuse,"",""
+2010,OSUNIX,osunix,"",""
+2010,Perl,perl,"",""
+2010,PostgreSQL,postgresql,"",""
+2010,QualiPSo,qualipso,"",""
+2010,SIP Communicator,sip communicator,"",""
+2010,Ubuntu,ubuntu,"",""
+2010,VideoLAN,videolan,"",""
+2010,Yate,yate,"",""
+2010,Zarafa Community,zarafa community,"",""
+2011,Beagleboard.org,beagleboard org,"",""
+2011,CAcert / sidux e.V.,cacert sidux e v,"",""
+2011,CentOS,centos,"",""
+2011,coreboot + flashrom,coreboot flashrom,"",""
+2011,Debian,debian,"",""
+2011,Enlightenment,enlightenment,"",""
+2011,Fedora Project,fedora project,"",""
+2011,Free Software Foundation,free software foundation,"",""
+2011,FreeBSD,freebsd,"",""
+2011,FreeSWITCH,freeswitch,"",""
+2011,GNOME,gnome,"",""
+2011,Hackable Devices,hackable devices,"",""
+2011,Haiku,haiku,"",""
+2011,KDE,kde,"",""
+2011,LibreOffice,libreoffice,"",""
+2011,Mandriva,mandriva,"",""
+2011,Manpremo,manpremo,"",""
+2011,Mozilla,mozilla,"",""
+2011,MuseScore,musescore,"",""
+2011,NetBSD,netbsd,"",""
+2011,netwaves,netwaves,"",""
+2011,O'Reilly,o reilly,"",""
+2011,OBM,obm,"",""
+2011,OpenEmbedded,openembedded,"",""
+2011,OpenStreetMap.org,openstreetmap org,"",""
+2011,openSUSE,opensuse,"",""
+2011,Perl,perl,"",""
+2011,PostgreSQL,postgresql,"",""
+2011,SIP Communicator,sip communicator,"",""
+2011,The MirOS Project,the miros project,"",""
+2011,Ubuntu,ubuntu,"",""
+2011,WebOS-Internals,webos internals,"",""
+2011,Yate,yate,"",""
+2011,Zarafa,zarafa,"",""
+2012,Asterisk,asterisk,AW,""
+2012,CAcert,cacert,"K, ground floor",""
+2012,CentOS,centos,"K, ground floor",""
+2012,Cloudstack,cloudstack,"K, first level",""
+2012,coreboot,coreboot,AW,""
+2012,Debian,debian,"K, ground floor",""
+2012,Eclipse,eclipse,"K, first level",""
+2012,Enlightenment,enlightenment,AW,""
+2012,Fedora Project,fedora project,"K, ground floor",""
+2012,FreeBSD,freebsd,"K, first level",""
+2012,FSFE,fsfe,"K, ground floor",""
+2012,GNOME,gnome,"K, ground floor",""
+2012,Hackable Devices,hackable devices,AW,""
+2012,Hacker Public Radio,hacker public radio,"K, ground floor",""
+2012,Illumos,illumos,"K, first level",""
+2012,Jabber/XMPP,jabber xmpp,AW,""
+2012,Jboss.org,jboss org,"K, first level",""
+2012,Jenkins,jenkins,"K, first level",""
+2012,Jitsi (formerly SIP Communicator),jitsi formerly sip communicator,"K, first level",""
+2012,KDE,kde,"K, ground floor",""
+2012,Libre Graphics magazine,libre graphics magazine,"K, first level",""
+2012,LibreOffice,libreoffice,"K, first level",""
+2012,Mageia,mageia,"K, ground floor",""
+2012,MirBSD,mirbsd,"K, first level",""
+2012,MongoDB,mongodb,"K, first level",""
+2012,Mozilla,mozilla,"K, ground floor",""
+2012,MuseScore,musescore,"K, first level",""
+2012,NetBSD,netbsd,"K, first level",""
+2012,OpenEmbedded,openembedded,AW,""
+2012,Openmoko,openmoko,AW,""
+2012,OpenStreetMap,openstreetmap,"K, first level",""
+2012,openSUSE,opensuse,"K, ground floor",""
+2012,Perl,perl,"K, first level",""
+2012,PostgreSQL,postgresql,"K, first level",""
+2012,Ubuntu,ubuntu,"K, ground floor",""
+2013,Aldebaran,aldebaran,AW,""
+2013,Announcements Corner,announcements corner,H,""
+2013,Apache OpenOffice,apache openoffice,K (level 2),""
+2013,BeagleBoard,beagleboard,AW,""
+2013,BSDs,bsds,K (level 2),""
+2013,CaCert,cacert,K (level 1),""
+2013,CentOS,centos,K (level 1),""
+2013,CodeBender,codebender,AW,""
+2013,CoreBoot+Flashrom,coreboot flashrom,AW,""
+2013,debian,debian,K (level 1),""
+2013,Eclipse,eclipse,K (level 2),""
+2013,Enlightenment,enlightenment,AW,""
+2013,Fedora,fedora,K (level 1),""
+2013,FSFe,fsfe,K (level 1),""
+2013,GlusterFS,glusterfs,K (level 1),""
+2013,Gnome,gnome,K (level 1),""
+2013,Hackable Devices,hackable devices,AW,""
+2013,Jabber-realtime,jabber realtime,K (level 2),""
+2013,Jenkins,jenkins,K (level 2),""
+2013,Jitsi,jitsi,K (level 2),""
+2013,Job Corner,job corner,H,""
+2013,Jolla/Sailfish,jolla sailfish,AW,""
+2013,KDE,kde,K (level 1),""
+2013,Libre Graphics Magazine,libre graphics magazine,K (level 1),""
+2013,LibreOffice,libreoffice,K (level 2),""
+2013,Mageia,mageia,K (level 1),""
+2013,MongoDB,mongodb,K (level 2),""
+2013,Mozilla,mozilla,K (level 1),""
+2013,MySQL,mysql,K (level 2),""
+2013,O'Reilly,o reilly,H,""
+2013,OpenEmbedded,openembedded,AW,""
+2013,OpenStreetMap,openstreetmap,K (level 1),""
+2013,openSuse,opensuse,K (level 1),""
+2013,oVirt,ovirt,K (level 1),""
+2013,OWASP,owasp,K (level 2),""
+2013,ownCloud,owncloud,K (level 1),""
+2013,Perl community,perl community,K (level 2),""
+2013,PostgreSQL,postgresql,K (level 2),""
+2013,Puppet,puppet,K (level 2),""
+2013,QT Project,qt project,K (level 1),""
+2013,Ubuntu,ubuntu,K (level 1),""
+2013,World of OpenPhoenux,world of openphoenux,AW,""
+2013,Xen.org,xen org,K (level 1),""
+2014,Announcements Corner,announcements corner,H,""
+2014,Apache OpenOffice,apache openoffice,K (level 2),""
+2014,Bareos,bareos,K (level 2),""
+2014,BSD,bsd,AW,""
+2014,CAcert and secure-u,cacert and secure u,K (level 1),""
+2014,CentOS,centos,K (level 1),""
+2014,CONFINE,confine,K (level 2),""
+2014,CoreBoot + Flashrom,coreboot flashrom,AW,""
+2014,Debian,debian,K (level 1),""
+2014,DoudouLinux,doudoulinux,K (level 2),""
+2014,Eclipse,eclipse,K (level 2),""
+2014,ElasticSearch,elasticsearch,K (level 2),""
+2014,Enlightenment,enlightenment,K (level 1),""
+2014,Fedora,fedora,K (level 1),""
+2014,FSFE,fsfe,K (level 1),""
+2014,GNOME,gnome,K (level 1),""
+2014,GsoC,gsoc,K (level 1),""
+2014,Jboss,jboss,K (level 2),""
+2014,Jenkins,jenkins,K (level 2),""
+2014,Jitsi,jitsi,K (level 2),""
+2014,Job Corner,job corner,H,""
+2014,KDE,kde,K (level 1),""
+2014,"Kolab, MyKolab, Roundcube",kolab mykolab roundcube,K (level 2),""
+2014,Libre Graphics magazine,libre graphics magazine,K (level 1),""
+2014,LibreOffice,libreoffice,K (level 2),""
+2014,MAGEEC,mageec,AW,""
+2014,Mageia,mageia,K (level 1),""
+2014,mbed,mbed,AW,""
+2014,Mozilla,mozilla,K (level 1),""
+2014,MySQL Community,mysql community,K (level 2),""
+2014,O'Reilly Media,o reilly media,H,""
+2014,OlinuXino + Hackable Devices,olinuxino hackable devices,AW,""
+2014,Open Source Geospatial Foundation (OSGeo),open source geospatial foundation osgeo,K (level 1),""
+2014,OpenEmbedded,openembedded,AW,""
+2014,OpenMandriva,openmandriva,K (level 1),""
+2014,OpenPandora,openpandora,AW,""
+2014,OpenShift Origin,openshift origin,K (level 1),""
+2014,OpenStack,openstack,K (level 1),""
+2014,OpenStreetMap,openstreetmap,K (level 1),""
+2014,openSUSE,opensuse,K (level 1),""
+2014,oVirt,ovirt,K (level 1),""
+2014,Perl Programming Language community,perl programming language community,K (level 2),""
+2014,PostgreSQL,postgresql,AW,""
+2014,Puppet,puppet,K (level 2),""
+2014,Python,python,K (level 2),""
+2014,Wikimedia,wikimedia,AW,""
+2014,Xen,xen,K (level 1),""
+2014,XMMP,xmmp,K (level 2),""
+2015,Agora Voting,agora voting,K (level 2),""
+2015,Announcements corner,announcements corner,H,""
+2015,Apache OpenOffice,apache openoffice,K (level 2),""
+2015,CAcert,cacert,AW,""
+2015,CentOS,centos,K (level 1),""
+2015,CoreBoot + Flashrom,coreboot flashrom,AW,""
+2015,CoreOS,coreos,AW,""
+2015,Debian,debian,K (level 1),""
+2015,Diaspora,diaspora,K (level 1),""
+2015,DIYBookScanner,diybookscanner,AW,""
+2015,DoudouLinux,doudoulinux,K (level 2),""
+2015,Eclipse,eclipse,K (level 2),""
+2015,ElasticSearch,elasticsearch,K (level 2),""
+2015,Enlightenment,enlightenment,K (level 1),""
+2015,Fedora,fedora,K (level 1),""
+2015,FSFE,fsfe,K (level 1),""
+2015,GNOME,gnome,K (level 1),""
+2015,GNURadio,gnuradio,AW,""
+2015,GsoC,gsoc,K (level 2),""
+2015,Hack the Knit,hack the knit,K (level 1),""
+2015,Illumos,illumos,K (level 2),""
+2015,Jabber,jabber,K (level 2),""
+2015,Jenkins,jenkins,K (level 2),""
+2015,Jitsi,jitsi,K (level 2),""
+2015,Job corner,job corner,H,""
+2015,KDE,kde,K (level 1),""
+2015,Kodi (formerly XBMC),kodi formerly xbmc,AW,""
+2015,"Kolab, MyKolab, Roundcube",kolab mykolab roundcube,K (level 2),""
+2015,Libre Graphics magazine,libre graphics magazine,K (level 1),""
+2015,LibreOffice,libreoffice,K (level 2),""
+2015,Mageia,mageia,K (level 1),""
+2015,Matrix,matrix,K (level 2),""
+2015,Mozilla,mozilla,K (level 1),""
+2015,MySQL Community,mysql community,K (level 2),""
+2015,NixOS,nixos,K (level 2),""
+2015,O'Reilly Media,o reilly media,H,""
+2015,OpenEmbedded,openembedded,AW,""
+2015,OpenMandriva,openmandriva,K (level 1),""
+2015,OpenStack,openstack,K (level 1),""
+2015,openSUSE,opensuse,K (level 1),""
+2015,OpenUI5,openui5,K (level 2),""
+2015,oVirt,ovirt,K (level 1),""
+2015,OwnCloud,owncloud,K (level 1),""
+2015,Perl Programming Language community,perl programming language community,K (level 2),""
+2015,PicoTCP,picotcp,AW,""
+2015,PostgreSQL,postgresql,AW,""
+2015,Puppet,puppet,K (level 1),""
+2015,Python,python,K (level 2),""
+2015,ReactOS,reactos,AW,""
+2015,Tor Project,tor project,K (level 1),""
+2015,Ultimaker,ultimaker,AW,""
+2015,Wikimedia,wikimedia,K (level 1),""
+2015,WolfSSL,wolfssl,AW,""
+2015,Xen,xen,K (level 1),""
+2015,XMMP,xmmp,K (level 2),""
+2016,3D Printing,3d printing,K (level 2),""
+2016,Apache Software Foundation,apache software foundation,K (level 2),""
+2016,BAREOS,bareos,"K (level 1, group B)",""
+2016,Barghest,barghest,K (level 2),""
+2016,BBC Open Source,bbc open source,H,""
+2016,Brain-Duino,brain duino,AW,""
+2016,CAcert,cacert,"K (level 1, group C)",""
+2016,CentOS,centos,"K (level 1, group A)",""
+2016,Coala,coala,K (level 2),""
+2016,Coreboot / Flashrom,coreboot flashrom,AW,""
+2016,CoreOS,coreos,H,""
+2016,Debian,debian,"K (level 1, group B)",""
+2016,Diaspora,diaspora,K (level 2),""
+2016,DRLM,drlm,"K (level 1, group C)",""
+2016,Eclipse Foundation,eclipse foundation,K (level 2),""
+2016,Enlightenment,enlightenment,"K (level 1, group A)",""
+2016,Fedora,fedora,"K (level 1, group A)",""
+2016,FSFE,fsfe,"K (level 1, group C)",""
+2016,Gentoo,gentoo,"K (level 1, group B)",""
+2016,Gluster,gluster,"K (level 1, group C)",""
+2016,GNOME,gnome,"K (level 1, group A)",""
+2016,Google Summer of Code,google summer of code,K (level 2),""
+2016,illumos,illumos,"K (level 1, group A)",""
+2016,JavaCard Pro,javacard pro,AW,""
+2016,Jenkins,jenkins,K (level 2),""
+2016,KDE,kde,"K (level 1, group A)",""
+2016,Kolab and Roundcube,kolab and roundcube,"K (level 1, group A)",""
+2016,LibreOffice,libreoffice,"K (level 1, group A)",""
+2016,Linux from scratch,linux from scratch,K (level 2),""
+2016,Mageia,mageia,"K (level 1, group B)",""
+2016,Matrix,matrix,K (level 2),""
+2016,MediaWiki,mediawiki,K (level 2),""
+2016,MongoDB,mongodb,H,""
+2016,Mozilla,mozilla,K (level 2),""
+2016,MySQL,mysql,H,""
+2016,O'Reilly Media,o reilly media,H,""
+2016,Open hardware laptops,open hardware laptops,AW,""
+2016,OpenEmbedded,openembedded,AW,""
+2016,OpenMandriva,openmandriva,"K (level 1, group B)",""
+2016,OpenStack,openstack,"K (level 1, group C)",""
+2016,OpenSuse,opensuse,"K (level 1, group A)",""
+2016,OpenVZ,openvz,"K (level 1, group C)",""
+2016,OSM / OpenArialMap,osm openarialmap,H,""
+2016,oVirt/Foreman,ovirt foreman,"K (level 1, group C)",""
+2016,ownCloud,owncloud,"K (level 1, group A)",""
+2016,Perl,perl,K (level 2),""
+2016,PicoTCP,picotcp,K (level 2),""
+2016,PostgreSQL,postgresql,"K (level 1, group B)",""
+2016,PTXdist and Barebox,ptxdist and barebox,AW,""
+2016,Python,python,H,""
+2016,ReactOS,reactos,"K (level 1, group B)",""
+2016,The Realtime Lounge,the realtime lounge,K (level 2),""
+2016,Wikis and CMS,wikis and cms,K (level 2),""
+2016,WolfSSL,wolfssl,H,""
+2016,Xen,xen,"K (level 1, group C)",""
+2017,Apache Software Foundation,apache software foundation,K (level 2),""
+2017,Automotive Grade Linux,automotive grade linux,AW,""
+2017,Bazel,bazel,"K (level 1, group B)",""
+2017,BBC Open Source,bbc open source,H,""
+2017,CAcert / secure-u,cacert secure u,"K (level 1, group C)",""
+2017,CentOS,centos,"K (level 1, group A)",""
+2017,CiviCRM,civicrm,"K (level 1, group A)",""
+2017,Coala,coala,K (level 2),""
+2017,coreboot,coreboot,AW,""
+2017,CoreOS Linux,coreos linux,"K (level 1, group B)",""
+2017,CorteXlab,cortexlab,AW,""
+2017,Debian,debian,"K (level 1, group B)",""
+2017,diaspora*,diaspora,K (level 2),""
+2017,Fedora Project,fedora project,"K (level 1, group A)",""
+2017,Free Software Foundation Europe (FSFE),free software foundation europe fsfe,"K (level 1, group C)",""
+2017,FreeBSD Project,freebsd project,"K (level 1, group A)",""
+2017,Gentoo,gentoo,"K (level 1, group B)",""
+2017,Gluster,gluster,"K (level 1, group C)",""
+2017,GNOME,gnome,"K (level 1, group A)",""
+2017,GNU GRUB,gnu grub,AW,""
+2017,GNU Taler / p≡p foundation,gnu taler p p foundation,"K (level 1, group A)",""
+2017,Godot Engine,godot engine,H,""
+2017,"Google Code-in, GSoC",google code in gsoc,K (level 2),""
+2017,GrimoireLab,grimoirelab,H,""
+2017,Ham radio,ham radio,AW,""
+2017,illumos,illumos,"K (level 1, group A)",""
+2017,Jenkins,jenkins,K (level 2),""
+2017,KDE,kde,"K (level 1, group A)",""
+2017,"Kolab, Kube and Roundcube (replaces Suricata IDS)",kolab kube and roundcube replaces suricata ids,K (level 2),""
+2017,Kopano,kopano,"K (level 1, group A)",""
+2017,LibreOffice,libreoffice,"K (level 1, group A)",""
+2017,Linux From Scratch,linux from scratch,K (level 2),""
+2017,Matrix,matrix,K (level 2),""
+2017,Mozilla,mozilla,K (level 2),""
+2017,MuseScore,musescore,K (level 2),""
+2017,MySQL,mysql,H,""
+2017,Nextcloud,nextcloud,"K (level 1, group B)",""
+2017,O'Reilly Media,o reilly media,H,""
+2017,Open Build Service / OpenQA,open build service openqa,"K (level 1, group B)",""
+2017,Open Smart Grid Platform,open smart grid platform,K (level 2),""
+2017,Open Source Hardware,open source hardware,AW,""
+2017,OpenEmbedded,openembedded,AW,""
+2017,OpenNMS,opennms,K (level 2),""
+2017,OpenStack,openstack,"K (level 1, group C)",""
+2017,OpenSUSE,opensuse,"K (level 1, group A)",""
+2017,oVirt / Foreman,ovirt foreman,"K (level 1, group C)",""
+2017,OW2,ow2,K (level 2),""
+2017,ownCloud,owncloud,"K (level 1, group C)",""
+2017,Perl Programming Language,perl programming language,K (level 2),""
+2017,PostgreSQL,postgresql,"K (level 1, group B)",""
+2017,Python,python,H,""
+2017,ReactOS / Haiku,reactos haiku,"K (level 1, group B)",""
+2017,SOFA,sofa,K (level 2),""
+2017,Software Freedom Conservancy,software freedom conservancy,H,""
+2017,The Realtime Lounge,the realtime lounge,K (level 2),""
+2017,"Tor Project, Tails Project, Frënn vun der Ënn, Nos oignons",tor project tails project frenn vun der enn nos oignons,"K (level 1, group C)",""
+2017,Turris Omnia,turris omnia,K (level 2),""
+2017,Ultimaker,ultimaker,K (level 2),""
+2017,Vikings,vikings,"K (level 1, group C)",""
+2017,Wikis and CMS,wikis and cms,K (level 2),""
+2017,WolfSSL,wolfssl,H,""
+2017,Xen Project,xen project,"K (level 1, group C)",""
+2018,0 A.D.,0 a d,K (level 2),""
+2018,Automotive Grade Linux,automotive grade linux,AW,""
+2018,Bazel,bazel,"K (level 1, group B)",""
+2018,CentOS,centos,"K (level 1, group A)",""
+2018,CiviCRM,civicrm,K (level 2),""
+2018,coala and GitMate,coala and gitmate,K (level 2),""
+2018,Debian,debian,"K (level 1, group B)",""
+2018,Eclipse Foundation,eclipse foundation,K (level 2),""
+2018,EOMA68,eoma68,AW,""
+2018,Fedora Project,fedora project,"K (level 1, group A)",""
+2018,Free Linux Foundation Training,free linux foundation training,K (level 2),""
+2018,Free Software Foundation Europe (FSFE),free software foundation europe fsfe,"K (level 1, group C)",""
+2018,FreeBSD Project,freebsd project,"K (level 1, group A)",""
+2018,Gentoo,gentoo,"K (level 1, group A)",""
+2018,Gluster/Ceph,gluster ceph,"K (level 1, group C)",""
+2018,GNOME,gnome,"K (level 1, group A)",""
+2018,Godot Engine,godot engine,K (level 2),""
+2018,"Google Summer of Code, GCI",google summer of code gci,K (level 2),""
+2018,"Grafana, Graphite and Prometheus",grafana graphite and prometheus,H,""
+2018,GrimoireLab,grimoirelab,H,""
+2018,GRUB,grub,"K (level 1, group B)",""
+2018,Haiku,haiku,"K (level 1, group B)",""
+2018,Ham radio and Libre Space Foundation,ham radio and libre space foundation,AW,""
+2018,illumos,illumos,"K (level 1, group A)",""
+2018,Jenkins,jenkins,K (level 2),""
+2018,KDE,kde,"K (level 1, group A)",""
+2018,Kopano,kopano,K (level 2),""
+2018,LibreOffice,libreoffice,"K (level 1, group A)",""
+2018,LizardFS,lizardfs,"K (level 1, group C)",""
+2018,MicroPython,micropython,AW,""
+2018,Mozilla,mozilla,K (level 2),""
+2018,MuseScore,musescore,K (level 2),""
+2018,Nextcloud,nextcloud,"K (level 1, group A)",""
+2018,Nim,nim,K (level 2),""
+2018,O'Reilly Media,o reilly media,H,""
+2018,Open Source Design,open source design,"K (level 1, group C)",""
+2018,Open Source Initiative,open source initiative,"K (level 1, group A)",""
+2018,OpenEmbedded,openembedded,AW,""
+2018,OpenStack,openstack,"K (level 1, group C)",""
+2018,openSUSE,opensuse,"K (level 1, group A)",""
+2018,oVirt / Foreman,ovirt foreman,"K (level 1, group C)",""
+2018,OW2 Open Source Community,ow2 open source community,K (level 2),""
+2018,OWASP,owasp,H,""
+2018,ownCloud,owncloud,"K (level 1, group B)",""
+2018,Percona,percona,H,""
+2018,Perl Programming Languages,perl programming languages,K (level 2),""
+2018,Pine64 ARMv8 Devices,pine64 armv8 devices,AW,""
+2018,PostgreSQL,postgresql,K (level 2),""
+2018,privacyIDEA,privacyidea,H,""
+2018,Python,python,"K (level 1, group B)",""
+2018,Qubes OS,qubes os,"K (level 1, group B)",""
+2018,ReactOS,reactos,"K (level 1, group B)",""
+2018,RIOT,riot,AW,""
+2018,Software Freedom Conservancy,software freedom conservancy,H,""
+2018,The Apache Software Foundation,the apache software foundation,K (level 2),""
+2018,The Realtime Lounge,the realtime lounge,K (level 2),""
+2018,"Tor Project, Nos oignons, SecureDrop",tor project nos oignons securedrop,"K (level 1, group C)",""
+2018,Turris Omnia,turris omnia,AW,""
+2018,VideoLAN,videolan,K (level 2),""
+2018,Vikings - Libre Hosting,vikings libre hosting,"K (level 1, group C)",""
+2018,Wikis and CMS,wikis and cms,K (level 2),""
+2018,WolfSSL,wolfssl,H,""
+2018,Xen Project,xen project,"K (level 1, group C)",""
+2019,0 A.D.,0 a d,K (level 2),""
+2019,App Inventor,app inventor,K (level 2),""
+2019,Bareos,bareos,H,""
+2019,Bazel,bazel,"K (level 1, group B)",""
+2019,CentOS,centos,"K (level 1, group A)",""
+2019,"Ceph, Gluster",ceph gluster,"K (level 1, group C)",""
+2019,"coreboot, flashrom, LinuxBoot",coreboot flashrom linuxboot,AW,""
+2019,DashboardHub,dashboardhub,K (level 2),""
+2019,Debian,debian,"K (level 1, group B)",""
+2019,Eclipse Foundation,eclipse foundation,K (level 2),""
+2019,Emitter,emitter,K (level 2),""
+2019,"Espruino, MicroPython",espruino micropython,AW,""
+2019,Fedora Project,fedora project,"K (level 1, group A)",""
+2019,FOSSASIA,fossasia,"K (level 1, group C)",""
+2019,"Free Software Foundation, Free Software Foundation Europe",free software foundation free software foundation europe,"K (level 1, group C)",""
+2019,FreeBSD Project,freebsd project,"K (level 1, group A)",""
+2019,Gentoo,gentoo,"K (level 1, group A)",""
+2019,GitLab,gitlab,K (level 2),""
+2019,GNOME,gnome,"K (level 1, group A)",""
+2019,Godot Engine,godot engine,K (level 2),""
+2019,Google Summer of Code,google summer of code,K (level 2),""
+2019,Grafana,grafana,H,""
+2019,GRUB Project,grub project,AW,""
+2019,Haiku,haiku,"K (level 1, group B)",""
+2019,Ham Radio,ham radio,AW,""
+2019,illumos,illumos,"K (level 1, group A)",""
+2019,IsardVDI,isardvdi,"K (level 1, group C)",""
+2019,JavaScript,javascript,K (level 2),""
+2019,KDE,kde,"K (level 1, group A)",""
+2019,Kopano,kopano,"K (level 1, group B)",""
+2019,LFS,lfs,"K (level 1, group A)",""
+2019,LibreOffice,libreoffice,"K (level 1, group A)",""
+2019,Linaro,linaro,AW,""
+2019,Linux Professional Institute (LPI),linux professional institute lpi,"K (level 1, group C)",""
+2019,Matrix.org,matrix org,K (level 2),""
+2019,Mender.io,mender io,H,""
+2019,Mozilla,mozilla,"K (level 1, group B)",""
+2019,MySQL,mysql,K (level 2),""
+2019,Nextcloud,nextcloud,"K (level 1, group A)",""
+2019,O'Reilly Media,o reilly media,H,""
+2019,Open Source Design,open source design,"K (level 1, group C)",""
+2019,Open Source Initiative,open source initiative,"K (level 1, group C)",""
+2019,Open Source Test Case Management,open source test case management,K (level 2),""
+2019,OpenEmbedded,openembedded,AW,""
+2019,openHAB,openhab,H,""
+2019,OpenLDAP,openldap,H,""
+2019,"OpenStack, RDO Community",openstack rdo community,"K (level 1, group C)",""
+2019,openSUSE Project,opensuse project,"K (level 1, group A)",""
+2019,"oVirt, Foreman",ovirt foreman,"K (level 1, group C)",""
+2019,ownCloud,owncloud,"K (level 1, group B)",""
+2019,Percona,percona,K (level 2),""
+2019,Perl Programming Languages,perl programming languages,K (level 2),""
+2019,PINE64 Community,pine64 community,AW,""
+2019,PostGraphile,postgraphile,K (level 2),""
+2019,PostgreSQL,postgresql,K (level 2),""
+2019,Project ACRN,project acrn,AW,""
+2019,Python,python,K (level 2),""
+2019,"Schul-frei, Teckids e.V.",schul frei teckids e v,K (level 2),""
+2019,SOFA Open Source Physics Engine,sofa open source physics engine,K (level 2),""
+2019,Software Freedom Conservancy,software freedom conservancy,"K (level 1, group C)",""
+2019,The Apache Software Foundation,the apache software foundation,"K (level 1, group B)",""
+2019,The Realtime Lounge,the realtime lounge,K (level 2),""
+2019,Turris,turris,H,""
+2019,VideoLAN,videolan,K (level 2),""
+2019,wolfSSL,wolfssl,H,""
+2019,"XWiki, Cryptpad",xwiki cryptpad,"K (level 1, group B)",""
+2020,0 A.D.,0 a d,K level 1 (group C),Gaming
+2020,AdoptOpenJDK (Saturday) — Pharo (Sunday),adoptopenjdk saturday pharo sunday,K level 1 (group C),Programming Environment
+2020,Apache Software Foundation,apache software foundation,K level 2 (group E),Community Advocacy
+2020,Automotive Grade Linux,automotive grade linux,K level 1 (group A),Operating Systems
+2020,CentOS,centos,K level 1 (group A),Operating Systems
+2020,Checkmk (Saturday) — ntopng (Sunday),checkmk saturday ntopng sunday,K level 2 (group E),System Administration
+2020,CiviCRM,civicrm,H level 1 (group B),Office Software
+2020,Coderdojo,coderdojo,K level 1 (group B),Education
+2020,Coreboot + Flashrom + LinuxBoot,coreboot flashrom linuxboot,AW level 1 (group A),Hardware
+2020,Debian,debian,K level 1 (group A),Operating Systems
+2020,Eclipse Foundation,eclipse foundation,K level 1 (group C),Community Advocacy
+2020,Free Software Foundation Europe,free software foundation europe,K level 2 (group E),Community Advocacy
+2020,FreeBSD Project,freebsd project,K level 1 (group A),Operating Systems
+2020,Gentoo Linux,gentoo linux,K level 1 (group A),Operating Systems
+2020,GitLab,gitlab,K level 1 (group C),System Administration
+2020,GNOME,gnome,K level 1 (group A),Desktop Environments
+2020,Godot Engine,godot engine,K level 1 (group C),Gaming
+2020,Google Summer of Code (Saturday) — Software Freedom Conservancy (Sunday),google summer of code saturday software freedom conservancy sunday,K level 2 (group E),Community Advocacy
+2020,Grafana,grafana,K level 2 (group E),System Administration
+2020,Haiku (Saturday) — ReactOS (Sunday),haiku saturday reactos sunday,K level 1 (group A),Operating Systems
+2020,illumos,illumos,K level 1 (group A),Operating Systems
+2020,Infobooth on amateur radio (HAM Radio),infobooth on amateur radio ham radio,AW level 1 (group B),Hardware
+2020,Integration Process Community,integration process community,K level 1 (group C),Programming Environment
+2020,Javascript,javascript,K level 1 (group C),Programming Environment
+2020,Jenkins,jenkins,K level 2 (group E),System Administration
+2020,KDE,kde,K level 1 (group A),Desktop Environments
+2020,Kopano,kopano,H level 1 (group B),Office Software
+2020,Kubevirt & Metal3,kubevirt metal3,K level 2 (group E),System Administration
+2020,LibreOffice,libreoffice,H level 1 (group A),Office Software
+2020,Linphone,linphone,K level 2 (group D),World Wide Web
+2020,Linux Professional Institute (Saturday) — Open Source Design (Sunday),linux professional institute saturday open source design sunday,K level 1 (group B),Education
+2020,Matrix,matrix,K level 2 (group D),World Wide Web
+2020,Mattermost,mattermost,K level 2 (group D),World Wide Web
+2020,Mautic (Saturday) — 3Box (Sunday),mautic saturday 3box sunday,K level 2 (group E),World Wide Web
+2020,Micropython & Espruino,micropython espruino,AW level 1 (group A),Hardware
+2020,Mozilla,mozilla,K level 2 (group E),World Wide Web
+2020,Musescore (Saturday) — Free Culture Podcasts (Sunday),musescore saturday free culture podcasts sunday,H level 1 (group B),Office Software
+2020,"Nextcloud, Davx & ONLYOFFICE",nextcloud davx onlyoffice,H level 1 (group A),Office Software
+2020,Nuspell,nuspell,K level 1 (group C),Programming Environment
+2020,OpenEmbedded,openembedded,AW level 1 (group B),Hardware
+2020,openHAB,openhab,AW level 1 (group A),Hardware
+2020,OpenMandriva,openmandriva,K level 1 (group A),Operating Systems
+2020,OpenStack Foundation,openstack foundation,K level 2 (group E),System Administration
+2020,openSUSE Project,opensuse project,K level 1 (group A),Operating Systems
+2020,OpenTAP (Saturday) — Open Source Test Management (Sunday),opentap saturday open source test management sunday,K level 2 (group E),System Administration
+2020,OpenUK (Saturday) — FOSSASIA (Sunday),openuk saturday fossasia sunday,K level 2 (group E),Community Advocacy
+2020,openWifi,openwifi,AW level 1 (group A),Hardware
+2020,oVirt & Foreman,ovirt foreman,K level 2 (group E),System Administration
+2020,OW2 Open Source Community,ow2 open source community,K level 2 (group E),Community Advocacy
+2020,OWASP,owasp,K level 2 (group E),World Wide Web
+2020,Percona,percona,K level 1 (group B),Databases
+2020,Perl and Raku,perl and raku,K level 1 (group C),Programming Environment
+2020,PostGraphile,postgraphile,K level 1 (group B),Databases
+2020,PostgreSQL,postgresql,K level 1 (group B),Databases
+2020,Realtime Lounge,realtime lounge,K level 2 (group D),World Wide Web
+2020,Skolelinux / AlekSIS / Teckids,skolelinux aleksis teckids,K level 1 (group B),Education
+2020,Sugar Labs (Saturday) — MIT App Inventor (Sunday),sugar labs saturday mit app inventor sunday,K level 1 (group B),Education
+2020,Technoethical (Saturday) — PINE64 (Sunday),technoethical saturday pine64 sunday,AW level 1 (group B),Hardware
+2020,The Fedora Project,the fedora project,K level 1 (group A),Operating Systems
+2020,Tine 2.0 (Saturday) — Tracim (Sunday),tine 2 0 saturday tracim sunday,H level 1 (group A),Office Software
+2020,wolfSSL,wolfssl,K level 2 (group D),World Wide Web
+2020,XCP-ng,xcp ng,K level 2 (group E),System Administration
+2020,YottaDB,yottadb,K level 1 (group B),Databases
+2021,Box86,box86,online,""
+2021,Checkmk,checkmk,online,""
+2021,CiviCRM,civicrm,online,""
+2021,Coderdojo Belgium,coderdojo belgium,online,""
+2021,Debian,debian,online,""
+2021,Foreman,foreman,online,""
+2021,FOSSASIA,fossasia,online,""
+2021,Free Software Foundation Europe,free software foundation europe,online,""
+2021,FreeBSD Project,freebsd project,online,""
+2021,GitLab,gitlab,online,""
+2021,Google Summer of Code,google summer of code,online,""
+2021,Haiku,haiku,online,""
+2021,Illumos,illumos,online,""
+2021,Jenkins,jenkins,online,""
+2021,KDE Community,kde community,online,""
+2021,Kiwi TCMS,kiwi tcms,online,""
+2021,Kopano,kopano,online,""
+2021,LibreOffice,libreoffice,online,""
+2021,MariaDB Foundation,mariadb foundation,online,""
+2021,Matrix,matrix,online,""
+2021,Mautic,mautic,online,""
+2021,MIT App Inventor,mit app inventor,online,""
+2021,Nextcloud Hub,nextcloud hub,online,""
+2021,ntop,ntop,online,""
+2021,ONLYOFFICE,onlyoffice,online,""
+2021,Open Source Initiative,open source initiative,online,""
+2021,OpenEmbedded,openembedded,online,""
+2021,OpenHarmony Project,openharmony project,online,""
+2021,OpenMandriva,openmandriva,online,""
+2021,OpenTAP,opentap,online,""
+2021,OpenUK,openuk,online,""
+2021,openwifi,openwifi,online,""
+2021,OW2 Open Source Community,ow2 open source community,online,""
+2021,Pharo,pharo,online,""
+2021,PostgreSQL,postgresql,online,""
+2021,Pulp,pulp,online,""
+2021,ReactOS,reactos,online,""
+2021,RefPerSys,refpersys,online,""
+2021,School of AI Port Haarcourt,school of ai port haarcourt,online,""
+2021,schul-frei,schul frei,online,""
+2021,Sesame Discovery,sesame discovery,online,""
+2021,The Apache Software Foundation,the apache software foundation,online,""
+2021,The Eclipse Foundation,the eclipse foundation,online,""
+2021,The Fedora Project,the fedora project,online,""
+2021,The GNOME Foundation,the gnome foundation,online,""
+2021,The LibreSOC Project,the libresoc project,online,""
+2021,Thola and NESi,thola and nesi,online,""
+2021,Tracim,tracim,online,""
+2021,Unikraft,unikraft,online,""
+2021,XCP-ng,xcp ng,online,""
+2021,XWiki & CryptPad,xwiki cryptpad,online,""
+2021,YottaDB,yottadb,online,""
+2022,Box86,box86,online,""
+2022,Checkmk,checkmk,online,""
+2022,CiviCRM,civicrm,online,""
+2022,Debian,debian,online,""
+2022,Eclipse Foundation,eclipse foundation,online,""
+2022,Fedora Project,fedora project,online,""
+2022,Foreman,foreman,online,""
+2022,FOSSASIA,fossasia,online,""
+2022,Free Software Foundation Europe,free software foundation europe,online,""
+2022,FreeBSD Project,freebsd project,online,""
+2022,GNOME,gnome,online,""
+2022,Google Summer of Code,google summer of code,online,""
+2022,Haiku,haiku,online,""
+2022,illumos,illumos,online,""
+2022,KDE Community,kde community,online,""
+2022,Kiwi TCMS,kiwi tcms,online,""
+2022,LibreOffice,libreoffice,online,""
+2022,LibreSOC Project,libresoc project,online,""
+2022,MariaDB Foundation,mariadb foundation,online,""
+2022,Matrix,matrix,online,""
+2022,Mautic,mautic,online,""
+2022,Nextcloud Hub,nextcloud hub,online,""
+2022,ntop,ntop,online,""
+2022,Oniro Project,oniro project,online,""
+2022,ONLYOFFICE,onlyoffice,online,""
+2022,OpenMandriva,openmandriva,online,""
+2022,openSUSE,opensuse,online,""
+2022,OpenTAP,opentap,online,""
+2022,OpenUK,openuk,online,""
+2022,openwifi,openwifi,online,""
+2022,OW2 Open Source Community,ow2 open source community,online,""
+2022,Pharo,pharo,online,""
+2022,PostgreSQL,postgresql,online,""
+2022,Pulp,pulp,online,""
+2022,ReactOS,reactos,online,""
+2022,RefPerSys,refpersys,online,""
+2022,schul-frei,schul frei,online,""
+2022,The Apache Software Foundation,the apache software foundation,online,""
+2022,Ubuntu,ubuntu,online,""
+2022,XCP-ng,xcp ng,online,""
+2022,XWiki & CryptPad,xwiki cryptpad,online,""
+2023,AlekSIS,aleksis,K level 2 (group A),Education
+2023,AlmaLinux OS,almalinux os,H level 1 (group A),Operating systems
+2023,Ansible,ansible,K level 1 (group B),System administration
+2023,Audacity and MuseScore (Saturday) — IsardVDI (Sunday),audacity and musescore saturday isardvdi sunday,K level 2 (group A),Education
+2023,Bareos,bareos,K level 1 (group B),System administration
+2023,CentOS and RDO,centos and rdo,H level 1 (group A),Operating systems
+2023,Chamilo,chamilo,K level 2 (group A),Education
+2023,CiviCRM,civicrm,K level 1 (group C),Office suites and productivity
+2023,coreboot/flashrom,coreboot flashrom,AW level 1 (group A),Hardware
+2023,DAVx5 – CalDAV / CardDAV / WebDAV client for Android + jtx Board,davx5 caldav carddav webdav client for android jtx board,K level 1 (group C),Office suites and productivity
+2023,Debian,debian,H level 1 (group A),Operating systems
+2023,DRLM (Disaster Recovery Linux Manager),drlm disaster recovery linux manager,K level 1 (group B),System administration
+2023,Eclipse Foundation,eclipse foundation,K level 1 (group A),Community advocacy
+2023,Embedded JavaScript: Moddable SDK & Node-RED MCU Edition,embedded javascript moddable sdk node red mcu edition,AW level 1 (group A),IoT
+2023,Fedora Project,fedora project,H level 1 (group A),Operating systems
+2023,Fluence,fluence,K level 2 (group A),Developer environment
+2023,Foreman,foreman,K level 1 (group B),System administration
+2023,FOSSASIA,fossasia,K level 1 (group A),Community advocacy
+2023,Free Culture Podcasts,free culture podcasts,K level 1 (group A),Community advocacy
+2023,Free Software Foundation Europe,free software foundation europe,K level 1 (group A),Community advocacy
+2023,FreeBSD Project,freebsd project,H level 1 (group A),Operating systems
+2023,Gentoo,gentoo,H level 1 (group A),Operating systems
+2023,GitLab,gitlab,K level 2 (group A),Developer environment
+2023,GNOME,gnome,K level 2 (group A),Desktop environments
+2023,GNU GRUB - CANCELLED DUE TO ILLNESS,gnu grub cancelled due to illness,AW level 1 (group A),Operating systems
+2023,Grafana,grafana,K level 1 (group B),System administration
+2023,Homebrew,homebrew,K level 2 (group A),Developer environment
+2023,IEEE SA Open,ieee sa open,K level 2 (group A),Education
+2023,infobooth on amateur radio (hamradio),infobooth on amateur radio hamradio,AW level 1 (group A),HAM Radio
+2023,It's time to learn Ada!,it s time to learn ada,K level 2 (group A),Education
+2023,Jenkins,jenkins,K level 2 (group A),Developer environment
+2023,KDE,kde,K level 2 (group A),Desktop environments
+2023,La Contre-Voie,la contre voie,K level 2 (group A),Education
+2023,Libreoffice,libreoffice,K level 1 (group C),Office suites and productivity
+2023,"Linux on Mobile (Sailfish OS, Ubuntu Touch, postmarketOS, Mobian and more)",linux on mobile sailfish os ubuntu touch postmarketos mobian and more,H level 1 (group A),Operating systems
+2023,MariaDB Server,mariadb server,K level 1 (group B),Database engines
+2023,Matrix.org Foundation,matrix org foundation,K level 1 (group A),Community advocacy
+2023,MicroPython & Espruino,micropython espruino,AW level 1 (group A),IoT
+2023,Mozilla,mozilla,K level 2 (group A),World wide web
+2023,"Nextcloud: Self-hosted, open file sync & communication platform",nextcloud self hosted open file sync communication platform,K level 2 (group A),World wide web
+2023,Open Culture Foundation + COSCUP,open culture foundation coscup,K level 1 (group A),Community advocacy
+2023,Open Toolchain Foundation,open toolchain foundation,K level 1 (group A),Community advocacy
+2023,Open UK and Book Signing Stand,open uk and book signing stand,K level 1 (group A),Community advocacy
+2023,OpenEmbedded + AGL,openembedded agl,AW level 1 (group A),Operating systems
+2023,openHAB,openhab,AW level 1 (group A),IoT
+2023,OpenNebula,opennebula,K level 1 (group B),System administration
+2023,openSUSE Project,opensuse project,H level 1 (group A),Operating systems
+2023,PINE64,pine64,AW level 1 (group A),Hardware
+2023,PostgreSQL,postgresql,K level 1 (group B),Database engines
+2023,Realtime Lounge,realtime lounge,K level 1 (group A),Community advocacy
+2023,Software Freedom Conservancy,software freedom conservancy,K level 1 (group A),Community advocacy
+2023,The Apache Software Foundation,the apache software foundation,K level 1 (group A),Community advocacy
+2023,The Perl/Raku Foundation,the perl raku foundation,K level 2 (group A),Developer environment
+2023,Ubuntu Ecosystem,ubuntu ecosystem,H level 1 (group A),Operating systems
+2023,VideoLAN,videolan,K level 2 (group A),Multimedia and graphics
+2023,wolfSSL,wolfssl,AW level 1 (group A),IoT
+2023,XWiki & CryptPad,xwiki cryptpad,K level 1 (group C),Office suites and productivity
+2024,AlmaLinux,almalinux,AW level 1 (group A),Operating System
+2024,Ansible,ansible,K level 1 (group A),System administration
+2024,Automotive Grade Linux,automotive grade linux,AW level 1 (group A),Operating System
+2024,Badge.Team,badge team,K level 1 (group A),IoT
+2024,"CentOS, RDO and OKD",centos rdo and okd,AW level 1 (group A),Operating System
+2024,CERN Open Source,cern open source,K level 2 (group A),Community advocacy
+2024,Checkmk,checkmk,K level 1 (group A),System administration
+2024,CiviCRM,civicrm,K level 1 (group B),Office suite and productivity
+2024,Code Your Future,code your future,H level 1 (group A),Education
+2024,Codeberg,codeberg,K level 1 (group C),Developer environment
+2024,coreboot / flashrom / EDKII / OpenBMC,coreboot flashrom edkii openbmc,K level 2 (group A),Community advocacy
+2024,Debian,debian,AW level 1 (group A),Operating System
+2024,Droidian Linux + CalyxOS,droidian linux calyxos,AW level 1 (group A),Operating System
+2024,Fedora Project,fedora project,AW level 1 (group A),Operating System
+2024,FOSSASIA,fossasia,K level 2 (group A),Community advocacy
+2024,Free Software Foundation Europe,free software foundation europe,K level 2 (group A),Community advocacy
+2024,FreeCAD,freecad,K level 1 (group A),Hardware
+2024,GNOME,gnome,H level 1 (group A),Desktop environment
+2024,GNU HEALTH PROJECT,gnu health project,K level 2 (group A),Community advocacy
+2024,GNU Radio + IQEngine,gnu radio iqengine,K level 1 (group C),Developer environment
+2024,Google Summer of Code 20th year stand,google summer of code 20th year stand,H level 1 (group A),Education
+2024,Grafana,grafana,K level 1 (group A),System administration
+2024,Homebrew,homebrew,K level 1 (group C),Developer environment
+2024,Infostand on amateur radio (hamradio),infostand on amateur radio hamradio,AW level 1 (group A),HAM Radio
+2024,"ISRG - Let's Encrypt, Prossimo & Divvi Up",isrg let s encrypt prossimo divvi up,K level 2 (group A),Community advocacy
+2024,Jenkins,jenkins,K level 1 (group C),Developer environment
+2024,Joplin,joplin,K level 1 (group B),Office suite and productivity
+2024,KDE,kde,H level 1 (group A),Desktop environment
+2024,Kodi,kodi,H level 1 (group A),Multimedia and graphics
+2024,La Contre-Voie,la contre voie,H level 1 (group A),Education
+2024,LibreOffice,libreoffice,K level 1 (group B),Office suite and productivity
+2024,Linux Foundation Europe,linux foundation europe,K level 2 (group A),Community advocacy
+2024,"Linux on Mobile (Mobian, Sailfish OS, PureOS, UBports, MNT Research, postmarketOS) + Ubports",linux on mobile mobian sailfish os pureos ubports mnt research postmarketos ubports,AW level 1 (group A),Operating System
+2024,MariaDB Server,mariadb server,K level 1 (group B),Database engines
+2024,Mastodon,mastodon,H level 1 (group A),World wide web
+2024,Matrix.org Foundation,matrix org foundation,K level 2 (group A),Community advocacy
+2024,Mautic,mautic,H level 1 (group A),World wide web
+2024,Minetest,minetest,K level 1 (group A),Gaming
+2024,Mozilla,mozilla,H level 1 (group A),World wide web
+2024,"Nextcloud: Self-hosted, open file sync & communication platform",nextcloud self hosted open file sync communication platform,K level 1 (group B),Office suite and productivity
+2024,Nix and NIxOS,nix and nixos,AW level 1 (group A),Operating System
+2024,NLnet Foundation,nlnet foundation,K level 2 (group A),Community advocacy
+2024,Open Culture Foundation+ Taiwan open source community,open culture foundation taiwan open source community,K level 2 (group A),Community advocacy
+2024,Open Source Design,open source design,K level 2 (group A),Community advocacy
+2024,Open-source fitness: wger + Feeel,open source fitness wger feeel,K level 2 (group A),Community advocacy
+2024,openHAB,openhab,K level 1 (group A),IoT
+2024,OpenTofu,opentofu,K level 2 (group A),Community advocacy
+2024,Percona LLC,percona llc,K level 1 (group B),Database engines
+2024,PINE64,pine64,K level 1 (group A),Hardware
+2024,PostgreSQL,postgresql,K level 1 (group B),Database engines
+2024,Proxmox Virtual Environment,proxmox virtual environment,K level 1 (group A),System administration
+2024,Prusa Research,prusa research,K level 1 (group A),Hardware
+2024,Realtime Lounge,realtime lounge,K level 2 (group A),Community advocacy
+2024,Rocky Linux / Rocky Enterprise,rocky linux rocky enterprise,AW level 1 (group A),Operating System
+2024,Software Freedom Conservancy,software freedom conservancy,K level 2 (group A),Community advocacy
+2024,The OpenSSL Project,the openssl project,K level 2 (group A),Community advocacy
+2024,Thunderbird,thunderbird,K level 1 (group B),Office suite and productivity
+2024,wolfSSL,wolfssl,K level 1 (group A),IoT
+2025,0 A.D. Empires Ascendant,0 a d empires ascendant,K level 1 (group ),""
+2025,AlekSIS and Teckids,aleksis and teckids,F level 2 (group ),""
+2025,AlmaLinux OS (SAT) - Rocky Linux (SUN),almalinux os sat rocky linux sun,K level 1 (group ),""
+2025,CalyxOS,calyxos,K level 1 (group ),""
+2025,Ceph,ceph,K level 2 (group ),""
+2025,Chamilo,chamilo,F level 2 (group ),""
+2025,CISO Assistant,ciso assistant,K level 1 (group ),""
+2025,Cloud Native Computing Foundation (CNCF),cloud native computing foundation cncf,K level 2 (group ),""
+2025,Codeberg + Forgejo,codeberg forgejo,UA level 2 (group ),""
+2025,coreboot / flashprog / EDKII / OpenBMC,coreboot flashprog edkii openbmc,K level 2 (group ),""
+2025,Debian,debian,K level 1 (group ),""
+2025,DeepComputing's DC-ROMA RISC-V Mainboard with Framework Laptop 13,deepcomputing s dc roma risc v mainboard with framework laptop 13,H level 1 (group ),""
+2025,DevPod,devpod,AW level 1 (group ),""
+2025,Digital Public Goods,digital public goods,H level 1 (group ),""
+2025,Dolibarr ERP CRM,dolibarr erp crm,K level 1 (group ),""
+2025,Drupal,drupal,H level 1 (group ),""
+2025,Eclipse Foundation,eclipse foundation,K level 2 (group ),""
+2025,Fedora Project,fedora project,K level 1 (group ),""
+2025,FerretDB,ferretdb,UA level 2 (group ),""
+2025,Firefly Zero,firefly zero,K level 1 (group ),""
+2025,FOSSASIA,fossasia,K level 2 (group ),""
+2025,Free Software Foundation Europe,free software foundation europe,K level 2 (group ),""
+2025,FreeBSD Project,freebsd project,K level 1 (group ),""
+2025,FreeCAD + KiCAD,freecad kicad,AW level 1 (group ),""
+2025,Furi Labs,furi labs,AW level 1 (group ),""
+2025,GÉANT & NRENs - the Research and Education community,geant nrens the research and education community,F level 2 (group ),""
+2025,Gentoo Linux & Flatcar Container Linux,gentoo linux flatcar container linux,K level 1 (group ),""
+2025,GitLab,gitlab,UA level 2 (group ),""
+2025,GNOME,gnome,AW level 1 (group ),""
+2025,GNU Radio,gnu radio,AW level 1 (group ),""
+2025,Grafana,grafana,H level 1 (group ),""
+2025,GraphQL and Graphile (SAT) - Software Heritage (SUN),graphql and graphile sat software heritage sun,H level 1 (group ),""
+2025,Haiku,haiku,K level 1 (group ),""
+2025,Hex sticker booth by NLnet Foundation,hex sticker booth by nlnet foundation,K level 2 (group ),""
+2025,Homebrew,homebrew,K level 1 (group ),""
+2025,Infostand on amateur radio,infostand on amateur radio,AW level 1 (group ),""
+2025,Jenkins,jenkins,K level 2 (group ),""
+2025,Joplin,joplin,K level 1 (group ),""
+2025,KDE,kde,AW level 1 (group ),""
+2025,Kotlin community stand,kotlin community stand,F level 2 (group ),""
+2025,Let's Encrypt & Prossimo,let s encrypt prossimo,K level 2 (group ),""
+2025,Libre Space Foundation,libre space foundation,K level 2 (group ),""
+2025,LibreOffice Community,libreoffice community,K level 1 (group ),""
+2025,Linphone,linphone,K level 2 (group ),""
+2025,Linux on Mobile,linux on mobile,K level 1 (group ),""
+2025,Luanti (formerly Minetest),luanti formerly minetest,K level 1 (group ),""
+2025,MariaDB Foundation,mariadb foundation,UA level 2 (group ),""
+2025,Mastodon,mastodon,H level 1 (group ),""
+2025,Matrix.org Foundation,matrix org foundation,K level 2 (group ),""
+2025,Mattermost (SAT) - Immich (SUN),mattermost sat immich sun,K level 2 (group ),""
+2025,Meshtastic,meshtastic,AW level 1 (group ),""
+2025,metal-stack,metal stack,H level 1 (group ),""
+2025,MicroPython & Espruino,micropython espruino,AW level 1 (group ),""
+2025,Mozilla,mozilla,K level 1 (group ),""
+2025,MySQL,mysql,UA level 2 (group ),""
+2025,Nostr,nostr,H level 1 (group ),""
+2025,Open Culture Foundation + Taiwan Open Source community,open culture foundation taiwan open source community,K level 2 (group ),""
+2025,Open Food Facts,open food facts,K level 2 (group ),""
+2025,Open Source Analytics Community,open source analytics community,UA level 2 (group ),""
+2025,Open Source at CERN,open source at cern,F level 2 (group ),""
+2025,OpenFlexure Microscope,openflexure microscope,H level 1 (group ),""
+2025,openHAB,openhab,AW level 1 (group ),""
+2025,OpenRemote,openremote,AW level 1 (group ),""
+2025,openSUSE Project,opensuse project,K level 1 (group ),""
+2025,Overte,overte,J level 1 (group ),""
+2025,Panoramax,panoramax,K level 2 (group ),""
+2025,Percona,percona,UA level 2 (group ),""
+2025,Perl and Raku Stand,perl and raku stand,F level 2 (group ),""
+2025,PostgreSQL,postgresql,UA level 2 (group ),""
+2025,postmarketOS,postmarketos,K level 1 (group ),""
+2025,privacyIDEA,privacyidea,H level 1 (group ),""
+2025,Proxmox Virtual Environment,proxmox virtual environment,H level 1 (group ),""
+2025,Prusa Research,prusa research,H level 1 (group ),""
+2025,Qt Project,qt project,K level 1 (group ),""
+2025,Qubes OS + Genode OS,qubes os genode os,K level 1 (group ),""
+2025,Realtime Lounge,realtime lounge,K level 2 (group ),""
+2025,Software Freedom Conservancy,software freedom conservancy,K level 2 (group ),""
+2025,SOGo Webmail,sogo webmail,K level 1 (group ),""
+2025,The Zephyr Project,the zephyr project,K level 1 (group ),""
+2025,Thunderbird,thunderbird,K level 1 (group ),""
+2025,"TinyGo, Mechanoid & WasmVision",tinygo mechanoid wasmvision,AW level 1 (group ),""
+2025,Ubuntu Community,ubuntu community,K level 1 (group ),""
+2025,Vates Virtualization and Management Stack,vates virtualization and management stack,H level 1 (group ),""
+2025,VideoLAN,videolan,K level 2 (group ),""
+2025,WHY2025 (hacker camp),why2025 hacker camp,K level 2 (group ),""
+2025,WireGuard / Linux Kernel RNG,wireguard linux kernel rng,K level 1 (group ),""
+2025,Wireshark,wireshark,H level 1 (group ),""
+2025,XWiki & CryptPad,xwiki cryptpad,K level 1 (group ),""
+2026,ASF Community,asf community,K level 2 (group A),Community advocacy
+2026,BSD + FreeBSD Project,bsd freebsd project,H level 1 (group A),Operating Systems
+2026,Checkmk,checkmk,K level 1 (group A),Monitoring and Observability
+2026,CiviCRM,civicrm,F level 1 (group A),Office suites and productivity
+2026,Cloud Native Computing Foundation + OpenInfra & the Linux Foundation,cloud native computing foundation openinfra the linux foundation,K level 2 (group A),Community advocacy
+2026,Codeberg and Forgejo,codeberg and forgejo,K level 1 (group A),Developer environment
+2026,"Computer networks with BIRD, KNOT and Turris",computer networks with bird knot and turris,K level 1 (group C),System administration
+2026,Debian,debian,H level 1 (group A),Operating Systems
+2026,Delta Chat (Sunday),delta chat sunday,AW level 1 (group AW1124),Instant Messaging
+2026,Digital Public Goods,digital public goods,H level 1 (group A),World wide web
+2026,Dolibar ERP CRM + Odoo Community Association (OCA),dolibar erp crm odoo community association oca,F level 1 (group A),Office suites and productivity
+2026,Dronecode Foundation + The Zephyr Project,dronecode foundation the zephyr project,AW level 1 (group A),IoT
+2026,Eclipse Foundation,eclipse foundation,K level 2 (group A),Community advocacy
+2026,F-Droid and /e/OS + OW2 FOSS community / Murena degooglized phones and suite,f droid and e os ow2 foss community murena degooglized phones and suite,UD level 2 (group A),Mobile Operating System
+2026,Fedora Project,fedora project,H level 1 (group A),Operating Systems
+2026,Firefly Zero,firefly zero,K level 2 (group B),Gaming
+2026,Foreman,foreman,K level 1 (group C),System administration
+2026,FOSS United + fundingjson (and FLOSS/fund),foss united fundingjson and floss fund,K level 2 (group A),Community advocacy
+2026,FOSSASIA,fossasia,K level 2 (group A),Community advocacy
+2026,Framework Computer,framework computer,AW level 1 (group A),Hardware
+2026,"Free Android World - From Hardware to Apps - An Open, Sustainable Ecosystem (BlissLabs, IzzyOnDroid & SHIFTphone)",free android world from hardware to apps an open sustainable ecosystem blisslabs izzyondroid shiftphone,UD level 2 (group A),Mobile Operating System
+2026,Free Software Foundation Europe,free software foundation europe,K level 2 (group A),Community advocacy
+2026,Furi Labs,furi labs,UD level 2 (group A),Mobile Operating System
+2026,Gentoo Linux,gentoo linux,H level 1 (group A),Operating Systems
+2026,GitLab,gitlab,K level 1 (group A),Developer environment
+2026,GNOME,gnome,K level 2 (group B),Desktop environments
+2026,GNU Radio,gnu radio,AW level 1 (group A),Developer environment
+2026,Google Summer of Code,google summer of code,K level 2 (group A),Community advocacy
+2026,Grafana,grafana,K level 1 (group A),Monitoring and Observability
+2026,Hex sticker booth by NLnet Foundation,hex sticker booth by nlnet foundation,K level 2 (group A),Community advocacy
+2026,Homebrew,homebrew,K level 1 (group A),Developer environment
+2026,Infostand on amateur radio,infostand on amateur radio,AW level 1 (group A),HAM Radio
+2026,Internet Archive Europe (SAT),internet archive europe sat,K level 2 (group A),World wide web
+2026,"ISRG (Let's Encrypt, Prossimo, Divvi Up)",isrg let s encrypt prossimo divvi up,F level 1 (group A),World wide web
+2026,Jenkins,jenkins,K level 1 (group A),Developer environment
+2026,Joplin,joplin,F level 1 (group A),Office suites and productivity
+2026,KAIYUANSHE (China Open Source Alliance),kaiyuanshe china open source alliance,K level 2 (group A),Community advocacy
+2026,KDE,kde,K level 2 (group B),Desktop environments
+2026,KiCAD + FreeCAD,kicad freecad,AW level 1 (group A),Hardware
+2026,Kiwi TCMS (SAT),kiwi tcms sat,K level 1 (group A),Programming languages
+2026,Kotlin Community Stand,kotlin community stand,K level 1 (group A),Programming languages
+2026,LibreOffice,libreoffice,F level 1 (group A),Office suites and productivity
+2026,Linphone,linphone,AW level 1 (group AW1124),Instant Messaging
+2026,Linux Foundation Europe + Open Source Security Foundation,linux foundation europe open source security foundation,K level 2 (group A),Community advocacy
+2026,Linux on Mobile,linux on mobile,UD level 2 (group A),Mobile Operating System
+2026,Luanti (formerly Minetest),luanti formerly minetest,K level 2 (group B),Gaming
+2026,MapLibre,maplibre,K level 1 (group B),World wide web
+2026,MariaDB Server,mariadb server,K level 1 (group B),Database engines
+2026,Mastodon,mastodon,F level 1 (group A),Community advocacy
+2026,metal-stack,metal stack,K level 1 (group B),System administration
+2026,Mozilla,mozilla,F level 1 (group A),Office suites and productivity
+2026,MySQL,mysql,K level 1 (group B),Database engines
+2026,Nextcloud,nextcloud,F level 1 (group A),Office suites and productivity
+2026,Nix and NixOS,nix and nixos,H level 1 (group A),Operating Systems
+2026,Open Culture Foundation + Taiwan Open Source community,open culture foundation taiwan open source community,K level 2 (group A),Community advocacy
+2026,Open Source at CERN,open source at cern,K level 1 (group A),Education
+2026,Open-Source Firmware Foundation,open source firmware foundation,K level 2 (group A),Community advocacy
+2026,OpenAgri Software Services,openagri software services,K level 2 (group A),Community advocacy
+2026,OpenFlexure Microscope,openflexure microscope,AW level 1 (group A),Hardware
+2026,openHAB,openhab,AW level 1 (group A),IoT
+2026,OpenMandriva,openmandriva,H level 1 (group A),Operating Systems
+2026,OpenNebula,opennebula,K level 1 (group C),System administration
+2026,OpenPrinting,openprinting,AW level 1 (group A),Hardware
+2026,OpenRemote,openremote,AW level 1 (group A),IoT
+2026,OpenSSL Foundation,openssl foundation,K level 2 (group A),Community advocacy
+2026,openSUSE Project,opensuse project,H level 1 (group A),Operating Systems
+2026,OpenTofu & OpenBao,opentofu openbao,K level 1 (group C),System administration
+2026,Percona,percona,K level 1 (group B),Database engines
+2026,PINE64 Community (SUN),pine64 community sun,K level 1 (group A),Hardware
+2026,PostgreSQL,postgresql,K level 1 (group B),Database engines
+2026,postmarketOS,postmarketos,UD level 2 (group A),Mobile Operating System
+2026,privacyIDEA,privacyidea,K level 1 (group C),System administration
+2026,Proxmox VE,proxmox ve,K level 1 (group B),System administration
+2026,Python & Django,python django,K level 1 (group A),Programming languages
+2026,Qubes OS + Genode OS,qubes os genode os,H level 1 (group A),Operating Systems
+2026,RISC-V International,risc v international,AW level 1 (group A),Hardware
+2026,Rocky Linux,rocky linux,H level 1 (group A),Operating Systems
+2026,Software Freedom Conservancy,software freedom conservancy,K level 2 (group A),Community advocacy
+2026,Software Heritage (SUN),software heritage sun,K level 2 (group A),Community advocacy
+2026,SOGo Webmail,sogo webmail,F level 1 (group A),Office suites and productivity
+2026,"Sovereign Identity for server, desktop, and a cloud Keycloak, FreeIPA, SSSD, OpenWallet (SAT)",sovereign identity for server desktop and a cloud keycloak freeipa sssd openwallet sat,K level 1 (group C),System administration
+2026,Sovereign Tech Agency (SUN),sovereign tech agency sun,K level 1 (group C),Community advocacy
+2026,T2 SDE Linux,t2 sde linux,H level 1 (group A),Operating Systems
+2026,The Matrix.org Foundation,the matrix org foundation,AW level 1 (group AW1124),Instant Messaging
+2026,the Perl & Raku Foundation,the perl raku foundation,K level 1 (group A),Programming languages
+2026,Thunderbird,thunderbird,F level 1 (group A),Office suites and productivity
+2026,"TinyGo, Mechanoid & WasmVision",tinygo mechanoid wasmvision,AW level 1 (group A),IoT
+2026,"Tor, Tails, NoScript",tor tails noscript,K level 1 (group B),World wide web
+2026,Ubuntu Community booth,ubuntu community booth,H level 1 (group A),Operating Systems
+2026,VideoLAN,videolan,K level 1 (group C),Multimedia and graphics
+2026,Weblate,weblate,F level 1 (group A),Office suites and productivity
+2026,Wireshark,wireshark,K level 1 (group C),System administration
+2026,wolfSSL,wolfssl,AW level 1 (group A),IoT
+2026,XCP-ng and Xen Orchestra,xcp ng and xen orchestra,H level 1 (group A),Operating Systems
+2026,Xen Project,xen project,H level 1 (group A),Operating Systems
+2026,XMPP & Realtime Lounge,xmpp realtime lounge,AW level 1 (group AW1124),Instant Messaging

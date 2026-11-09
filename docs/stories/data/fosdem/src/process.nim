@@ -58,7 +58,14 @@ let xmlEvents = rd("xml_events.csv").withColumns(
   hhmm(col.start_min + col.duration_min).alias("end"),
   col.event_id.cast(String),
 ).select(col.year, col.event_id, col.source, col.day, col.start, col.end, col.duration_min,
-         col.room, col.track, col("type"), col.title, col.subtitle, col.language, col.videos, col.slides)
+         col.room, col.track, col("type"), col.title, col.subtitle, col.language, col.videos, col.slides,
+         format("https://archive.fosdem.org/{}/schedule/event/{}/", col.year, col.slug).alias("url"))
+  # the first recording of each event: the MP4 when there is one
+  .join(rd("xml_links.csv").filter(col.href.str.contains(r"^https?://video\.fosdem\.org/.*\.(mp4|webm)$"))
+          .withColumns(col.event_id.cast(String), col.href.str.endsWith(".mp4").not.alias("not_mp4"))
+          .sort(["year", "event_id", "not_mp4", "href"])
+          .groupBy(col.year, col.event_id).agg(col.href.first.alias("video")),
+        on = ["year", "event_id"], how = JoinType.Left)
 
 # 2007-2011: the event index of the old site (main tracks only until 2010, all of 2011).
 let idxEvents = rd("html_events.csv").withColumns(
@@ -66,6 +73,8 @@ let idxEvents = rd("html_events.csv").withColumns(
   (minutesOf(col("end")) - minutesOf(col.start)).alias("duration_min"),
   choose(if col.year == 2011: "" else: "maintrack").alias("type"),
   lit("").alias("language"), lit(0).alias("slides"),
+  choose(if col.year == 2011: format("https://archive.fosdem.org/{}/schedule/event/{}.html", col.year, col.slug)
+         else: format("https://archive.fosdem.org/{}/schedule/events/{}.html", col.year, col.slug)).alias("url"),
 )
 # 2007-2010: devroom pages (named after the devroom index of the same year).
 let devroomNames = rd("html_devrooms.csv").select(col.year, col.devroom_key, col.devroom)
@@ -77,6 +86,11 @@ let devEvents = rd("html_devroom_events.csv")
     choose(if col.devroom_key == "lightningtalks": "lightningtalk" else: "devroom").alias("type"),
     (minutesOf(col("end")) - minutesOf(col.start)).alias("duration_min"),
     lit("").alias("subtitle"), lit("").alias("language"), lit(0).alias("videos"), lit(0).alias("slides"),
+    # these talks have no page of their own: the devroom's page
+    choose(if col.devroom_key == "lightningtalks": format("https://archive.fosdem.org/{}/schedule/tracks/lightningtalks.html", col.year)
+           elif col.year <= 2008: format("https://archive.fosdem.org/{}/schedule/devroom/{}.html", col.year, col.devroom_key)
+           else: format("https://archive.fosdem.org/{}/schedule/devrooms/{}.html", col.year, col.devroom_key)).alias("url"),
+    lit("").alias("video"),
   )
 # 2001-2006: the printed main schedule grid, and the devroom pages of 2004-2006.
 let earlyMain = rd("early_events.csv").withColumns(
@@ -88,6 +102,7 @@ let earlyMain = rd("early_events.csv").withColumns(
   lit("").alias("track"),
   (minutesOf(col("end")) - minutesOf(col.start)).alias("duration_min"),
   lit("").alias("subtitle"), lit("").alias("language"), lit(0).alias("videos"), lit(0).alias("slides"),
+  lit("").alias("url"), lit("").alias("video"),
 )
 let earlyDevNames = rd("early_devrooms.csv")
 let earlyDev = rd("early_devroom_events.csv")
@@ -99,10 +114,11 @@ let earlyDev = rd("early_devroom_events.csv")
     col.devroom.alias("track"), lit("devroom").alias("type"), lit("").alias("room"),
     (minutesOf(col("end")) - minutesOf(col.start)).alias("duration_min"),
     lit("").alias("subtitle"), lit("").alias("language"), lit(0).alias("videos"), lit(0).alias("slides"),
+    lit("").alias("url"), lit("").alias("video"),
   )
 
 let cols = @["year", "event_id", "source", "day", "start", "end", "duration_min", "room", "track",
-             "type", "title", "subtitle", "language", "videos", "slides"]
+             "type", "title", "subtitle", "language", "videos", "slides", "url", "video"]
 proc pick(lf: LazyFrame): LazyFrame =
   var es: seq[Expr]
   for c in cols:
@@ -168,7 +184,7 @@ let eventsOut = events.lazy.join(nSpeakers, on = ["year", "event_id"], how = Joi
   .withColumns(col.speakers.fillNull(0))
   .select(col.year, col.event_id, col.kind, col.track, col.title, col.subtitle, col.day, col.start,
           col("end"), col.duration_min, col.room, col.speakers, col.language, col.videos, col.slides,
-          col("type").alias("source_type"), col.source)
+          col("type").alias("source_type"), col.source, col.url.fillNull(""), col.video.fillNull(""))
   .sort(["year", "day", "start", "room", "title", "event_id"])
   .collect
 
@@ -392,3 +408,13 @@ let editions = concat([early.lazy.withColumns(col.year.cast(Int64)), conf.withCo
           col.coverage, col.sources)
   .sort("year").collect
 editions.save("editions.csv", "FOSDEM editions 2001-2027 (OSDEM in 2001; 2027 as announced on fosdem.org): dates, venue and counts derived from events.csv. 2021 and 2022 were online. coverage says how complete the schedule is for that year; see README.md.")
+
+# ---------------------------------------------------------------- stands
+
+# 2008-2026: the stands pages (a list until 2012, tables by building after, cards online).
+rd("stands.csv")
+  .withColumns(col.stand.str.replaceAll(r"\s+", " ").str.stripChars, nameKey(col.stand).alias("stand_key"),
+               col.building.fillNull(""), col.theme.fillNull(""))
+  .select(col.year, col.stand, col.stand_key, col.building, col.theme)
+  .sort(["year", "stand_key", "stand"]).collect
+  .save("stands.csv", "Stands at FOSDEM 2008-2026, one row per stand as the archived stands page lists it (archive.fosdem.org/<year>/stands.html until 2012, /<year>/stands/ after; online in 2021 and 2022). stand_key folds case and punctuation; a stand shared by projects is one row.")

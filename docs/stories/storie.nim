@@ -12,7 +12,7 @@ type Story* = object
   slug*, release*, title*, lede*: string
 
 proc stories*(): seq[Story] =
-  ## Every story, newest release first.
+  ## Every story, in release order (the first release first).
   for kind, path in walkDir(currentSourcePath().parentDir):
     let (_, name, ext) = path.splitFile
     if kind != pcFile or ext != ".nim": continue
@@ -22,7 +22,7 @@ proc stories*(): seq[Story] =
     if parts.len < 3: continue
     result.add Story(slug: name.replace('_', '-'), release: parts[0].strip, title: parts[1].strip,
                      lede: parts[2 .. ^1].join("|").strip)
-  result.sort(proc (a, b: Story): int = cmp(b.release, a.release))
+  result.sort(proc (a, b: Story): int = cmp(a.release, b.release))
 
 proc preview*(slug: string): Option[Tabella] =
   ## One small table of the story, for its card, if it has one.
@@ -56,7 +56,7 @@ proc next*(): string =
 template nbStorie*(base: string) =
   ## The gallery of the stories: one card for each, linked (`base` is the path to docs/stories/
   ## from the page), and a last card for the stories to come.
-  nbGalleria "the stories, newest release first":
+  nbGalleria "the stories, in release order":
     for s in stories():
       nbScheda("[" & s.title & "](" & base & s.slug & "/)", "tabelline " & s.release):
         nbText s.lede

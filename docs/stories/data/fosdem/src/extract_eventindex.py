@@ -41,16 +41,17 @@ for y in range(2007, 2012):
             dd = re.search(r'event day">(.*?)</td>', tr, re.S)
             day, start, end = DAYS.get(text(dd.group(1)) if dd else "", ""), st.group(1), en.group(1) if en else ""
         media = re.search(r'<td class="event-media">(.*?)</td>', tr, re.S)
-        videos = len(re.findall(r'href="https?://video\.fosdem\.org', media.group(1))) if media else 0
+        hrefs = re.findall(r'href="(https?://video\.fosdem\.org[^"]*)"', media.group(1)) if media else []
+        videos = len(hrefs)
         eid = f"{y}-{slug}"
         events.append([y, eid, day, start, end, text(room.group(1)) if room else "", slug, title,
-                       text(sub.group(1)) if sub else "", track, videos])
+                       text(sub.group(1)) if sub else "", track, videos, hrefs[0] if hrefs else ""])
         for i, n in enumerate(names):
             persons.append([y, eid, n, i + 1])
 
 with open(os.path.join(out, "html_events.csv"), "w", newline="") as f:
     cw = csv.writer(f)
-    cw.writerow(["year", "event_id", "day", "start", "end", "room", "slug", "title", "subtitle", "track", "videos"])
+    cw.writerow(["year", "event_id", "day", "start", "end", "room", "slug", "title", "subtitle", "track", "videos", "video"])
     cw.writerows(events)
 with open(os.path.join(out, "html_event_persons.csv"), "w", newline="") as f:
     cw = csv.writer(f)

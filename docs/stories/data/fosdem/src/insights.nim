@@ -6,7 +6,7 @@
 ## Every output is a CSV with a `#` line naming what it is made from, read by the story with
 ## `readCsv(path, comment = "#")`. The devroom families (renames) are written here by hand.
 
-import std/os
+import std/[os, sequtils]
 import nanuq
 
 let data = paramStr(1)
@@ -45,7 +45,10 @@ editions.withColumns(
     # since 2011 the Saturday falls between 30 January (day 30) and 5 February (day 36)
     (col.d.dt.ordinalDay >= 30 and col.d.dt.ordinalDay <= 36).alias("in_window"),
   ).select(col.year, col.edition, col.name, col.start, col("end"), col.format, col.venue,
-           col.day_of_year, col.in_window)
+           col.day_of_year, col.in_window,
+           # the edition's site: archived, or fosdem.org for the next one
+           choose(if col.year > lastHeld: format("https://fosdem.org/{}/", col.year)
+                  else: format("https://archive.fosdem.org/{}/", col.year)).alias("url"))
   .sort("year").collect
   .save("dates.csv", "The dates of every FOSDEM edition, from editions.csv; day_of_year is the day of the year of the Saturday; in_window: it falls between 30 January and 5 February.")
 
@@ -169,7 +172,9 @@ rooms.lazy.filter(col.year == lastYear)
       else: "since before 2013").alias("group"),
     choose(if col.name_last_year.isNotNull and trackKey(col.name_last_year) != trackKey(col.name): col.name_last_year
            else: "").alias("was"))
-  .select(col.group, col.name.alias("devroom"), col.first, col.editions, col.was)
+  .join(rd("tracks.csv").filter(col.year == lastYear).select(col.track.alias("name"), col.cfp.fillNull("")),
+        on = ["name"], how = JoinType.Left)
+  .select(col.group, col.name.alias("devroom"), col.first, col.editions, col.was, col.cfp.fillNull(""))
   .sort(["first", "devroom"]).collect
   .save("devrooms_2027.csv", "The 78 devrooms accepted for FOSDEM 2027 and their history, from tracks.csv; a family is a devroom under its names (the renames matched in insights.nim).")
 
@@ -234,45 +239,38 @@ rooms.lazy.withColumns(
 let speakers = rd("event_speakers.csv")
 let people = rd("people.csv")
 
-# C1: who opens FOSDEM. The main room is the room of the first talk on Saturday morning (A in
-# 2001, Janson from 2002, K.fosdem online); the opening talk is the first one there that is not
-# the welcome.
+# C1: the keynotes. The opening talk of every edition is the first talk on Saturday in the main
+# room (the room of the first talk of the day: A in 2001, Janson from 2002) that is not the
+# welcome; online (2021, 2022), where the main room had only the welcome, the first talk of
+# Saturday. From 2007 to 2025 the schedule marks the other keynotes too.
 let saturday = events.filter(col.day == "Saturday" and col.kind.isIn(["keynote", "main track"]))
 let mainRoom = saturday.sort(["year", "start", "room"]).groupBy(col.year)
   .agg(col.room.first.alias("main_room"))
 let welcome = r"(?i)^(welcome|opening|introduction)( (talk|to fosdem( 20\d\d)?|and opening))?$|^(?i)welcome to fosdem"
 let names = speakers.sort(["year", "event_id", "position"]).groupBy(col.year, col.event_id)
   .agg(col.person.str.join(", ").alias("by"))
-# Online, the main room had only the welcome: then the first talk of Saturday in any room.
-saturday.join(mainRoom, on = ["year"]).filter(col.title.str.contains(welcome).not)
+let opening = saturday.join(mainRoom, on = ["year"]).filter(col.title.str.contains(welcome).not)
   .withColumns((col.room != col.main_room).alias("elsewhere"))
   .sort(["year", "elsewhere", "start", "room", "event_id"])
-  .groupBy(col.year).agg(col.event_id.first, col.title.first, col.start.first, col.room.first)
-  .join(names, on = ["year", "event_id"], how = JoinType.Left)
-  .withColumns(col.by.fillNull(""))
-  .select(col.year, col.start, col.room, col.title, col.by)
-  .sort("year").collect
-  .save("openers.csv", "The first talk in the main room on Saturday of every edition (after the welcome), from events.csv and event_speakers.csv.")
-
-# C1b: the keynotes, where the schedule has them (2007-2025): the opening talk is the first, and
-# most years one more on Saturday morning and one at the end of Sunday, before the closing.
+  .groupBy(col.year).agg(col.event_id.first)
+  .withColumns(lit(true).alias("opening"))
 let notKeynote = r"(?i)^(welcome|closing|donators return|the endgame)|highlights|quiz"
-events.filter(col.kind == "keynote" and col.title.str.contains(notKeynote).not)
+let others = events.filter(col.kind == "keynote" and col.title.str.contains(notKeynote).not)
   .join(names, on = ["year", "event_id"], how = JoinType.Left)
   .filter(col.by.isNotNull and col.by != "FOSDEM" and col.by != "FOSDEM Staff")
-  .withColumns(choose(if col.day == "Saturday": 1 else: 2).alias("d"))
-  .sort(["year", "d", "start", "event_id"])
-  .select(col.year, col.day, col.start, col.title, col.by)
+  .select(col.year, col.event_id)
+concat([opening.select(col.year, col.event_id), others])
+  .unique(["year", "event_id"], keep = UniqueKeepStrategy.First, maintainOrder = true)
+  .join(events, on = ["year", "event_id"])
+  .join(names, on = ["year", "event_id"], how = JoinType.Left)
+  .join(opening, on = ["year", "event_id"], how = JoinType.Left)
+  .withColumns(col.opening.fillNull(false), col.by.fillNull(""),
+               choose(if col.day == "Saturday": 1 else: 2).alias("d"))
+  .sort(["year", "opening", "d", "start", "event_id"], descending = [false, true, false, false, false])
+  .withColumns(choose(if col.url == "": format("https://archive.fosdem.org/{}/", col.year) else: col.url).alias("url"))
+  .select(col.year, col.opening, col.day, col.start, col.title, col.by, col.room, col.url, col.video)
   .collect
-  .save("keynotes.csv", "Every keynote of FOSDEM's schedules (2007-2025; earlier years and 2026 have no keynote type), without the welcome, closing and quiz, from events.csv and event_speakers.csv.")
-
-# C1c: the keynotes of each year, Saturday's and Sunday's, by who gave them.
-readCsv(outDir / "keynotes.csv", commentPrefix = "#").lazy.groupBy(col.year)
-  .agg(len().alias("keynotes"),
-       col.by.filter(col.day == "Saturday").str.join("; ").alias("saturday"),
-       col.by.filter(col.day == "Sunday").str.join("; ").alias("sunday"))
-  .sort("year").collect
-  .save("keynotes_by_year.csv", "The keynotes of every year that has them (2007-2025), by who gave them, Saturday's and Sunday's, from keynotes.csv.")
+  .save("keynotes.csv", "The keynotes of every edition: the opening talk (first talk on Saturday in the main room after the welcome) of every year, and the other keynotes the schedule marks (2007-2025), without the welcome, closing and quiz; with links to each talk's page and video, from events.csv and event_speakers.csv.")
 
 # C2: the people who spoke at the most editions.
 people.filter(col.is_person)
@@ -296,3 +294,41 @@ editions.filter(col.year >= 2007 and col.year <= lastHeld)
           col.first_time_share, col.cfp_posts, col.cfp_by_speaker)
   .sort("year").collect
   .save("newcomers.csv", "Speakers of every edition from 2007 (the first with full main tracks and devroom pages), how many spoke for the first time, and the devroom calls posted to the fosdem@ list, from editions.csv, people.csv and cfp_posts.csv.")
+
+# ---------------------------------------------------------------- D. Nim at FOSDEM
+
+# Talks about Nim: the title says so, or the Nim devroom of 2022. Talks found in the abstracts
+# of the schedule (2012-2026) are read and sorted by hand: about Nim, or about a project built
+# with Nim. Talks that only name Nim in a list of languages are left out.
+const nimByHand = [
+  (2021, "11334", "about Nim"),          # Optimising for humans: Nim on micro-controllers
+  (2019, "8698", "built with Nim"),      # Nimbus, Status' Ethereum client
+  (2024, "2877", "built with Nim"),      # Chalk, by Crash Override
+  (2025, "5848", "uses Nim"),            # transpiling to C with Nim and prescheme
+]
+let byHand = newDataFrame(series("year", nimByHand.mapIt(it[0])), series("event_id", nimByHand.mapIt(it[1])),
+                         series("how", nimByHand.mapIt(it[2]))).lazy
+let nimTalks = events
+  .join(byHand, on = ["year", "event_id"], how = JoinType.Left)
+  .filter(col.how.isNotNull or col.title.str.contains(r"\bNim\b") or col.track == "Nim Programming Language")
+  .withColumns(col.how.fillNull("about Nim"))
+  .join(names, on = ["year", "event_id"], how = JoinType.Left)
+  .select(col.year, col.kind, col.track, col.title, col.by.fillNull(""), col.how, col.url, col.video)
+let nimStand = rd("stands.csv").filter(col.stand_key == "nim")
+  .select(col.year, lit("stand").alias("kind"), col.building.alias("track"), lit("Nim").alias("title"),
+          lit("").alias("by"), lit("stand").alias("how"),
+          format("https://archive.fosdem.org/{}/stands/", col.year).alias("url"), lit("").alias("video"))
+concat([nimTalks, nimStand], how = ConcatMethod.VerticalRelaxed)
+  .sort(["year", "kind", "track", "title"]).collect
+  .save("nim.csv", "Nim at FOSDEM: talks about Nim or about projects built with it (titles, the 2022 Nim devroom, and abstracts read by hand), and the Nim stand, from events.csv, event_speakers.csv and stands.csv.")
+
+# A. the stands: how many every year, and the projects with a stand in the most editions.
+let stands = rd("stands.csv")
+stands.groupBy(col.year).agg(len().alias("stands")).sort("year").collect
+  .save("stands_by_year.csv", "Stands of every edition from 2008, from stands.csv.")
+stands.sort(["stand_key", "year"]).groupBy(col.stand_key)
+  .agg(col.stand.last.alias("stand"), col.year.nUnique.alias("editions"),
+       col.year.min.alias("first"), col.year.max.alias("last"))
+  .sort(["editions", "first", "stand"], descending = [true, false, false]).head(12)
+  .select(col.stand, col.first, col.last, col.editions).collect
+  .save("stands_top.csv", "The stands present at the most editions (2008-2026), by name folded to a key, from stands.csv.")

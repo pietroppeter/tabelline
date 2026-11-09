@@ -39,6 +39,11 @@ for y in $(seq 2013 2026); do
   done
 done
 
+# 2008-2026: the stands of every edition.
+mkdir -p "$RAW/stands"
+for y in $(seq 2008 2012); do curl -sSf -o "$RAW/stands/$y.html" "$A/$y/stands.html"; done
+for y in $(seq 2013 2026); do curl -sSf -o "$RAW/stands/$y.html" "$A/$y/stands/"; done
+
 # The fosdem@lists.fosdem.org archive (2006-), as one mbox.
 curl -sSf -o "$RAW/lists/fosdem.mbox.gz" \
   "https://lists.fosdem.org/hyperkitty/list/fosdem@lists.fosdem.org/export/fosdem.mbox.gz?start=2000-01-01&end=2030-12-31"

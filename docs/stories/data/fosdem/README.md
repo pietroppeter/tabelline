@@ -12,7 +12,7 @@ Every table is a CSV whose first line is a `#` comment naming its sources, so it
 | file | rows | one row per |
 |---|---:|---|
 | `editions.csv` | 27 | edition (2027 as announced): dates, format (2021 and 2022 were online), counts of events, keynotes, main-track, devroom and lightning talks, devrooms, rooms, speakers, first-time speakers, events with video, and how complete the year is (`coverage`) |
-| `events.csv` | 12,686 | scheduled event: `kind` (keynote, main track, devroom, lightning talk, BOF, stand, junior, workshop, certification, other), track, title, subtitle, day, start, end, minutes, room, number of speakers, language, videos and slides linked, the schedule's own type and the source |
+| `events.csv` | 12,686 | scheduled event: `kind` (keynote, main track, devroom, lightning talk, BOF, stand, junior, workshop, certification, other), track, title, subtitle, day, start, end, minutes, room, number of speakers, language, videos and slides linked, the schedule's own type, the source, the talk's page on archive.fosdem.org (`url`) and its first recording (`video`) |
 | `event_speakers.csv` | 14,566 | speaker of an event (year, event_id as in `events.csv`, position, name as printed, `person_key`) |
 | `people.csv` | 7,561 | person (by `person_key`): name as last printed, `is_person` (false for "FOSDEM Staff", "LPI Team" and the like), first and last year, editions, talks, keynotes, main-track and devroom talks, the years |
 | `tracks.csv` | 1,210 | track or devroom in an edition (2027: the accepted devrooms): kind, the site's group (Main tracks, Developer rooms, ...), events, speaker slots, events with video, rooms, room capacity (2007–2010), days, CfP link and deadline, and where an otherwise empty devroom is listed |
@@ -20,6 +20,7 @@ Every table is a CSV whose first line is a `#` comment naming its sources, so it
 | `cfp_listings.csv` | 669 | devroom CfP as FOSDEM listed it: the website's `devrooms-cfp.yaml` (editions 2013–2020: day, link, deadline, when it was first listed) and the CfP link of each track page (2021–2026) |
 | `cfp_posts.csv` | 734 | call for participation posted to the fosdem@ mailing list (2007–2027): edition, date, kind (devroom cfp, fosdem call, other cfp), devroom name read from the subject, subject, sender, `sender_key` and whether the sender also spoke that year |
 | `mailing_list_years.csv` | 21 | year of the fosdem@ list: messages, threads, senders, CfP posts |
+| `stands.csv` | 995 | stand of an edition (2008–2026, from the archived stands pages): name as listed, `stand_key`, building, theme (2026) |
 
 `person_key` folds case, accents, punctuation and nicknames in quotes ("Richard "RichiH" Hartmann"
 is `richard hartmann`), so the same person matches across years. It does not know that "RMS",
