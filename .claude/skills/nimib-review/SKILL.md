@@ -25,6 +25,10 @@ Markdown section per comment, in page order. This skill turns that text into cha
 - `> quote` is the exact text the reader selected, as the page shows it, whitespace collapsed.
   `Around it: “…before ⟦quote⟧ after…”` gives the words around it, to tell apart a quote found
   more than once. `(#id)` is the anchor of the heading the quote is under.
+- `Screenshots: review-v2-3-1.jpg, ...` names images sent with the export (Share sends the text as
+  `review-vN.md` with the images). Look at them before changing anything: they often show what the
+  words can't (a layout, a zoom, a colour). If they are named but missing, ask for them.
+- The text may have been edited by hand before it was sent: trust what it says over the format.
 - `(Not found on the page any more.)`: the text changed after the comment was written. Apply it
   where it still makes sense, or ask.
 

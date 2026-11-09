@@ -542,9 +542,17 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 35%, tran
 .rv-sheet fieldset label { display: inline-flex; align-items: center; gap: .3rem; margin: 0; min-height: 44px; }
 .rv-sheet textarea { display: block; width: 100%; margin-top: .2rem; font: 16px/1.4 var(--font); color: var(--ink);
   background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
-.rv-export textarea { font: 12.5px/1.45 var(--mono); white-space: pre-wrap; }
-.rv-sheet .rv-actions { display: flex; gap: .4rem; justify-content: flex-end; }
+.rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
+.rv-sheet .rv-actions { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
 .rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
+.rv-shots { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem; margin-bottom: .8rem; }
+.rv-thumbs { display: contents; }
+.rv-thumb { position: relative; }
+.rv-thumb img { display: block; height: 4.5rem; width: auto; border: 1px solid var(--line); }
+.rv-thumb button { position: absolute; top: 0; right: 0; min-height: 32px; min-width: 32px; padding: 0; font-size: 1.1rem; }
+.rv-sheet label.rv-attach { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .7rem; margin: 0;
+  border: 1px dashed var(--muted); cursor: pointer; }
+.rv-attach input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
 /* the versions of a page (nbVersioni) */
 .versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
 .versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }

@@ -9,7 +9,13 @@ type Versione* = object
 
 const storico* = [
   Versione(date: "9 Nov 2026", what: "The first draft: the review mode and this post, before any review.",
-           review: "Waiting for the first round.", comments: 0),
+           review: "[Round 1](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-1.md): " &
+             "a section on the pieces of the screen is missing; typing a comment zooms the page; a comment " &
+             "should take screenshots; what **Edit** opens was unclear; the export should be editable.",
+           comments: 3),
+  Versione(date: "9 Nov 2026", what: "Round 1: a section on the pieces of the screen, no zoom while typing, " &
+             "screenshots in a comment, an export to edit before copying or sharing, **Edit** explained.",
+           review: "Waiting for the second round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =
