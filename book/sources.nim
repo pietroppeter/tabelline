@@ -1,7 +1,7 @@
 ## The sources the book plans to port, as tables: book/plan/sources.json (written by hand) and
 ## book/plan/pages.json (written by book/plan/plan.py, which searches each source's repository
-## for its pages), read when the chapter compiles. `featuresTable` turns them around: for every
-## feature of the coverage map (docs/coverage/gt.json), the pages that show it.
+## for its pages), read when the chapter compiles. `featureButtons` and `featurePages` turn them
+## around: for every feature of the coverage map (docs/coverage/gt.json), the pages that show it.
 import std/[json, strutils, sequtils, algorithm, tables, sets]
 import tabelline
 export json
@@ -175,7 +175,7 @@ proc gtNames(gt: string): HashSet[string] =
 
 type Shown = object
   page: JsonNode
-  lang: string
+  lang, source: string
   own: bool  ## the help page of one of the feature's own functions
 
 proc byFeature(): Table[string, seq[Shown]] =
@@ -193,7 +193,7 @@ proc byFeature(): Table[string, seq[Shown]] =
       if p["port"].getStr == "skip": continue
       let name = p["title"].getStr.replace("()", "").split(".")[^1]
       for f in p["uses"]:
-        result[f.getStr].add Shown(page: p, lang: lang[id], own: name in own[f.getStr])
+        result[f.getStr].add Shown(page: p, lang: lang[id], source: id, own: name in own[f.getStr])
   for f, ps in result.mpairs:
     ps.sort(proc (a, b: Shown): int =
       result = cmp(b.own, a.own)
@@ -203,29 +203,78 @@ proc byFeature(): Table[string, seq[Shown]] =
 proc removePrefix2(s, prefix: string): string =
   if s.startsWith(prefix): s[prefix.len .. ^1] else: s
 
-type FeatureRow = object
-  area, feature, examples: string
+proc featureId*(feature: string): string =
+  ## The anchor of a feature's pages: `f-` and its name in lower case, words joined by `-`.
+  result = "f"
+  for w in feature.toLowerAscii.split({' ', ',', '(', ')', '/', '.', '\'', '`'}):
+    if w.len > 0: result.add "-" & w
 
-proc featuresTable*(shown = 3): Tabella =
-  ## One row per feature of the coverage map, by area: the release of tabelline that has it, how many pages of the sources show it, and the `shown` best of them.
-  let index = byFeature()
-  var rows: seq[FeatureRow]
+proc features*(): seq[string] =
+  ## Every feature of the coverage map, in its order.
+  for a in coverage["areas"]:
+    for r in a["rows"]: result.add r["feature"].getStr
+
+let featureIndex = byFeature()
+
+proc button(feature: string): string =
+  ## A feature as a link to its pages, with how many there are: drawn as a plain button.
+  "[" & feature & " **" & $featureIndex[feature].len & "**](#" & featureId(feature) & ")"
+
+type FinderRow = object
+  area, release, features: string
+
+proc featureButtons*(): Tabella =
+  ## The features of the coverage map by area: the ones in tabelline now, then the ones to come,
+  ## each a button that shows the pages using it.
+  var rows: seq[FinderRow]
+  for a in coverage["areas"]:
+    var now, coming: seq[string]
+    for r in a["rows"]:
+      if planOf(r) == "0.1": now.add button(r["feature"].getStr)
+      else: coming.add button(r["feature"].getStr)
+    if now.len > 0: rows.add FinderRow(area: a["title"].getStr, release: "Now", features: now.join(" "))
+    if coming.len > 0: rows.add FinderRow(area: a["title"].getStr, release: "Coming", features: coming.join(" "))
+  tabella(rows, rownameCol = "release", groupnameCol = "area"):
+    colsLabel {"features": "Features, with how many pages show each"}
+    fmtMarkdown ["features"]
+    optCssTheme()
+
+proc featureTitle*(feature: string): string =
+  ## The heading of a feature's pages: its name, the release that has it and how many pages.
+  var row: JsonNode
   for a in coverage["areas"]:
     for r in a["rows"]:
-      let f = r["feature"].getStr
-      let ps = index[f]
-      # its gt functions are not shown: the help pages of its own functions come first
-      var feature = "**" & f & "**"
-      feature.add "<br>*" & whenLabel(planOf(r)).capitalizeAscii & " · " &
-        (if ps.len == 1: "1 page" else: $ps.len & " pages") & "*"
-      let ex = ps[0 ..< min(shown, ps.len)].mapIt(
-        mdLink(it.page["title"].getStr.replace("()", "").removePrefix2("GT."), it.page["url"].getStr) &
-          " " & (case it.lang
-                 of "R": "🏴‍☠️"
-                 of "Python": "🐍"
-                 else: "🏆"))
-      rows.add FeatureRow(area: a["title"].getStr, feature: feature, examples: ex.join("<br>"))
-  tabella(rows, rownameCol = "", groupnameCol = "area"):
-    colsLabel {"feature": "Feature", "examples": "Where to start"}
-    fmtMarkdown ["feature", "examples"]
+      if r["feature"].getStr == feature: row = r
+  let n = featureIndex[feature].len
+  feature & " (" & whenLabel(planOf(row)) & ", " & (if n == 1: "1 page" else: $n & " pages") & ")"
+
+type FoundRow = object
+  source, page: string
+
+proc featurePages*(feature: string): Tabella =
+  ## Every page that uses `feature`, by source (in the order of sources.json), the help pages of
+  ## the feature's own functions first, then from the smallest: what to port with it. Under each
+  ## page, when it can be ported and how many calls its code makes.
+  var bySource: Table[string, seq[Shown]]
+  for sh in featureIndex[feature]: bySource.mgetOrPut(sh.source, @[]).add sh
+  var rows: seq[FoundRow]
+  for s in sources["sources"]:
+    let id = s["id"].getStr
+    if id notin bySource: continue
+    let emoji = (case s["lang"].getStr
+                 of "R": " 🏴‍☠️"
+                 of "Python": " 🐍"
+                 else: " 🏆")
+    for sh in bySource[id]:
+      let p = sh.page
+      var ready = whenLabel(p["ready"].getStr).capitalizeAscii
+      if p{"book"}.getStr != "" or s["status"].getStr == "ported": ready = "Ported"
+      let calls = p["calls"].getInt
+      var page = mdLink(p["title"].getStr, p["url"].getStr) & "<br>*" & ready & " · " &
+        (if calls == 1: "1 call" else: $calls & " calls") & "*"
+      if p{"book"}.getStr != "": page.add " · **[In this book](" & p["book"].getStr & ")**"
+      rows.add FoundRow(source: s["title"].getStr & emoji, page: page)
+  tabella(rows, rownameCol = "", groupnameCol = "source"):
+    colsLabel {"page": "Page"}
+    fmtMarkdown ["page"]
     optCssTheme()
