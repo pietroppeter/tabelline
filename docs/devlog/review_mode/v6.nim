@@ -296,14 +296,14 @@ the text it was written on.
 
 block:
   type Riga = object
-    version, date, what, review: string
+    day, version, date, what, review: string
     comments: int
-  # when: the first version of a day gives the day and the time, the others how long after the
-  # one before (hours and minutes)
+  # when: the versions are grouped by day; the first of a day gives its time, the others how long
+  # after the one before (hours and minutes)
   proc moment(v: Versione): DateTime = parse(v.date & " " & v.time, "d MMM yyyy HH:mm")
   proc published(i: int): string =
     let v = storico[i]
-    if i == 0 or storico[i - 1].date != v.date: return &"{v.date}, {v.time}"
+    if i == 0 or storico[i - 1].date != v.date: return v.time
     let minutes = (moment(v) - moment(storico[i - 1])).inMinutes
     if minutes < 60: &"+{minutes} min" else: &"+{minutes div 60} h {minutes mod 60:02} min"
   var rows: seq[Riga]
@@ -311,8 +311,8 @@ block:
     let v = storico[i]
     let href = versioneHref(i + 1, questa, storico.len)   # every version, linked: the strip shows two
     let name = if href.len > 0: &"[v{i + 1}]({href})" else: &"v{i + 1}"
-    rows.add Riga(version: name, date: published(i), what: v.what, review: v.review, comments: v.comments)
-  let t = tabella(rows, rownameCol = "version"):
+    rows.add Riga(day: v.date, version: name, date: published(i), what: v.what, review: v.review, comments: v.comments)
+  let t = tabella(rows, rownameCol = "version", groupnameCol = "day"):
     colsLabel {"date": "Published (Italian time)", "what": "What it changed", "review": "What its review found", "comments": "Comments"}
     fmtMarkdown ["version", "what", "review"]
     optCssTheme()

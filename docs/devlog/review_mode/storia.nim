@@ -49,7 +49,7 @@ const storico* = [
              "every heading of the site should lead back to the contents; the problem assumed the reader " &
              "knew these threads; the versions should say the time, and how long after the one before.",
            comments: 3),
-  Versione(date: "9 Nov 2026", time: "16:09", what: "Every heading of the site has an arrow back to the contents; " &
+  Versione(date: "9 Nov 2026", time: "16:04", what: "Every heading of the site has an arrow back to the contents; " &
              "the problem says who makes the pages (coding agents, Claude Code from a phone); the table of " &
              "versions gives the day and time of the first of each day, then how long after the one before.",
            review: "Waiting for the sixth round.", comments: 0),

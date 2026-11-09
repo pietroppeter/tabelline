@@ -48,7 +48,8 @@ working rules that are easy to miss.
   and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
-  Check new page elements in both looks, at 390px. The HTML is not committed: CI builds every
+  Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
+  broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
   Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
@@ -135,7 +136,8 @@ working rules that are easy to miss.
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.
-- When a change is visual, put before and after screenshots (phone width, both looks) in the reply
+- When a change is visual, put before and after screenshots (phone width, Munari; the quaderno
+  only when the change might affect it) in the reply
   to Pietro, and only the after shots of what changed in the PR description. To show them in the
   PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
   in the next commit.
