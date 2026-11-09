@@ -587,6 +587,16 @@ dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, tr
 .versioni li[aria-current] { border-color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
 .versioni .titolo { font-weight: 700; margin-right: .5rem; }
 .versioni li span span, .versioni li a span { color: var(--muted); margin-left: .35rem; }
+/* moving between versions: a short slide, the bar stays where it is */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: versione-out .22s ease-in both; }
+::view-transition-new(root) { animation: versione-in .26s ease-out both; }
+@keyframes versione-out { to { opacity: 0; transform: translateX(-1.5rem); } }
+@keyframes versione-in { from { opacity: 0; transform: translateX(1.5rem); } }
+.rv-bar { view-transition-name: rv-bar; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
 """
 
 const revisioneQuaderno = """

@@ -24,14 +24,16 @@ const storico* = [
              "leaves the words in view, screenshots pasted, the whole version box a link, an annotated " &
              "screenshot of the pieces of the screen.",
            review: "[Round 3](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-3.md): " &
+             "the strip should show only the newest version and the one before, with a short animation; " &
              "the compact sheet is better; pasting an image should just work, with no buttons; Delete " &
              "belongs at the top; *Cut* is not clear. And the copy with screenshots inside was too long " &
              "for the chat, where the front matter of the text showed as loose lines.",
-           comments: 1),
+           comments: 2),
   Versione(date: "9 Nov 2026", what: "Round 3: an image pasted in the note just works, no buttons; " &
              "Delete in the top row; no *Cut* (an empty replacement removes the words); Copy copies the " &
              "text only, and each screenshot has its own Copy image; the export opens with a YAML block, " &
-             "not a front matter, so it reads well in a chat.",
+             "not a front matter, so it reads well in a chat; the strip shows only the newest version and " &
+             "the one before it, and moving between them is a short slide.",
            review: "Waiting for the fourth round.", comments: 0),
 ]
 
