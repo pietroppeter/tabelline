@@ -460,7 +460,7 @@ def main(offline):
             if not hand and s["kind"] != "reference":
                 report.append(f"  new page in {s['id']}: {path} ({title})")
             page = {"title": (hand or {}).get("title", title), "path": path,
-                    **{k: hand[k] for k in ("year", "by", "licence", "package", "prize", "post", "kind", "files")
+                    **{k: hand[k] for k in ("year", "by", "licence", "package", "prize", "post", "kind", "files", "book")
                        if hand and hand.get(k)},
                     "url": (hand or {}).get("url", url), "port": port,
                     "note": (hand or {}).get("note", ""), "ready": ready,

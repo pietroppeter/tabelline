@@ -20,7 +20,8 @@ var book = initBookWithToc:
     entry("Row Selection", "row_selection")
     entry("Location selection", "loc_selection")
   entry("What the book will port", "next", numbered = false)
-  entry("The Table Contest", "contest", numbered = false)
+  section("The Table Contest", "contest.nim"):
+    entry("Guide to table making, with table.glue", "contest/table_glue")
   entry("Find an example by feature", "features", numbered = false)
   entry("What the port found", "gaps.md", numbered = false)
   entry("Sources and licences", "licences.md", numbered = false)

@@ -797,7 +797,9 @@
       "year": 2020,
       "title": "rounding, tabulation, and inline presentation with table.glue",
       "by": "Byron Jaeger",
-      "post": "https://forum.posit.co/t/rounding-tabulation-and-inline-presentation-with-table-glue-table-contest-submission/85851"
+      "post": "https://forum.posit.co/t/rounding-tabulation-and-inline-presentation-with-table-glue-table-contest-submission/85851",
+      "port": "ported",
+      "book": "contest/table_glue.html"
      },
      {
       "repo": "mattkumar/flexdiff",

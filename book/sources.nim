@@ -111,6 +111,7 @@ proc entryCell(p: JsonNode): string =
   result.add "<br>*" & facts.join(" · ") & "*"
   if p["note"].getStr != "": result.add "<br>" & p["note"].getStr
   if p{"post"}.getStr != "": result.add "<br>[The post](" & p["post"].getStr & ")"
+  if p{"book"}.getStr != "": result.add " · **[In this book](" & p["book"].getStr & ")**"
 
 proc contestEntries*(id: string, upTo = "", since = "", other = false): seq[JsonNode] =
   ## The entries of a contest source made with gt, ready by `upTo` (or from `since` on), or the
@@ -137,7 +138,8 @@ proc contestTable*(entries: seq[JsonNode]): Tabella =
     for r in releases:
       if p["needs"].hasKey(r):
         needs.add "*" & whenLabel(r).capitalizeAscii & ":* " & p["needs"][r].getElems.mapIt(it.getStr).join(", ")
-    rows.add EntryRow(entry: entryCell(p), ready: whenLabel(p["ready"].getStr).capitalizeAscii,
+    let ready = if p{"book"}.getStr != "": "Done" else: whenLabel(p["ready"].getStr).capitalizeAscii
+    rows.add EntryRow(entry: entryCell(p), ready: ready,
                       needs: needs.join("<br>"))
   tabella(rows, rownameCol = "", groupnameCol = ""):
     colsLabel {"entry": "Entry", "ready": "Can be done", "needs": "What it waits for"}

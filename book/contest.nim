@@ -34,6 +34,7 @@ nbText: """
 ## Can be done with 0.1 to 0.3
 
 The first ones to redo, from the ones that need the fewest new features; the awarded ones first.
+*Done* marks the ones already redone in this book, in the chapters that follow this page.
 """
 nbTable contestTable(soon)
 

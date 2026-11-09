@@ -15,7 +15,7 @@ Where the entries are:
 An entry is the repository its post links first (with the folder, when the link points inside
 it), the year, the title of the post, its author and its prize. Entries with no repository on
 GitHub are left out: there is no code to read. What is already in sources.json for an entry,
-written by hand (a title, a note, `port`, `found`, a licence), is kept. `plan.py` then reads
+written by hand (a title, a note, `port`, `found`, a licence, `book`: its chapter), is kept. `plan.py` then reads
 each entry's code and measures it like any other page.
 """
 import collections, html, json, os, re, sys, time, urllib.request
@@ -208,7 +208,7 @@ def main(offline):
         out["post"] = e["post"]
         if e.get("prize") and not re.search(r"closing", e["prize"], re.I):
             out["prize"] = label(e["prize"])
-        for k in ("package", "licence", "note", "port", "found"):
+        for k in ("package", "licence", "note", "port", "found", "book"):
             if k in hand:
                 out[k] = hand[k]
         entries.append(out)

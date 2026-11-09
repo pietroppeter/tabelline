@@ -24,6 +24,7 @@ type Source* = object
   authors*: string
   license*, licenseUrl*: string
   changes*: string           ## what this port changes, in a sentence or two
+  fromR*: bool               ## the original is R with gt (a Table Contest entry), not Great Tables
 
 const gtLicenseUrl* = "https://github.com/posit-dev/great-tables/blob/main/LICENSE"
 
@@ -38,6 +39,21 @@ proc noteHtml(label, text: string): string =
   "<aside class=\"tb-note\"><p class=\"tb-note-label\">" & label & "</p>" &
     markdown(text, config = initGfmConfig()) & "</aside>"
 
+proc contestEntry*(title, url, authors, license, licenseUrl, changes: string): Source =
+  ## An entry of the Posit Table Contest, made with gt in R (see the page The Table Contest).
+  Source(title: "“" & title & "”, a Posit Table Contest entry", url: url, authors: authors,
+         license: license, licenseUrl: licenseUrl, changes: changes, fromR: true)
+
+proc tabsText(s: Source): string =
+  if s.fromR:
+    "Every example shows tabelline in the 👑 Nim tab, the original R code with gt, with the " &
+      "table it makes, in the 🏴‍☠️ R tab, and the same example with Great Tables, gt's Python " &
+      "twin, in the 🐍 Python tab (written for this book). "
+  else:
+    "Every example shows tabelline in the 👑 Nim tab, the original Great Tables code, " &
+      "with the table it makes, in the 🐍 Python tab, and the same example with gt, the R " &
+      "package Great Tables comes from, in the 🏴‍☠️ R tab (written for this book). "
+
 template tabelline*(text: string) =
   ## A remark of the book (how tabelline differs, what it lacks yet), set apart from the text of
   ## the original page.
@@ -48,9 +64,7 @@ template attribution*(s: Source) =
   nbRawHtml: noteHtml("× About this port", "**Ported from** [" & s.title & "](" & s.url &
     ") by " & s.authors & ", licensed under [" & s.license & "](" & s.licenseUrl & "). " &
     "The text of the original is kept as it is; the book's own remarks are in boxes like this " &
-    "one. Every example shows tabelline in the 👑 Nim tab, the original Great Tables code, " &
-    "with the table it makes, in the 🐍 Python tab, and the same example with gt, the R " &
-    "package Great Tables comes from, in the 🏴‍☠️ R tab (written for this book). " & s.changes)
+    "one. " & tabsText(s) & s.changes)
 
 # ------------------------------------------------------------------------------- python and r
 
