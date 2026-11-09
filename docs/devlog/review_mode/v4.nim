@@ -269,7 +269,9 @@ agent what to do with one, `.claude/skills/nimib-review/SKILL.md` in this reposi
 ## Versions and rounds
 
 This post changes in rounds: a review of version 1 makes version 2, and so on. The strip at the
-top switches between them. Each version is a notebook of its own, `review_mode/v1.nim`,
+top shows two versions, the newest first: the newest and the one before it (on an older
+version, the newest and that one), and moving between them is a short slide. Every version is
+in the table below, linked. Each version is a notebook of its own, `review_mode/v1.nim`,
 `review_mode/v2.nim`: a new round copies the newest to the next number and changes the copy, so
 every version that was read is kept as it was, and a comment of a round can be checked against
 the text it was written on.
@@ -282,10 +284,12 @@ block:
   var rows: seq[Riga]
   for i in 0 ..< questa:
     let v = storico[i]
-    rows.add Riga(version: &"v{i + 1}", date: v.date, what: v.what, review: v.review, comments: v.comments)
+    let href = versioneHref(i + 1, questa, storico.len)   # every version, linked: the strip shows two
+    let name = if href.len > 0: &"[v{i + 1}]({href})" else: &"v{i + 1}"
+    rows.add Riga(version: name, date: v.date, what: v.what, review: v.review, comments: v.comments)
   let t = tabella(rows, rownameCol = "version"):
     colsLabel {"date": "Written", "what": "What it changed", "review": "What its review found", "comments": "Comments"}
-    fmtMarkdown ["what", "review"]
+    fmtMarkdown ["version", "what", "review"]
     optCssTheme()
   nbTable t
 
@@ -332,7 +336,9 @@ nbText: """
 ### The versions
 
 `nbVersioni` draws the strip at the top from a list of `(date, what changed)`, oldest first,
-and the number of the version shown. A version's notebook knows its number from its file name
+and the number of the version shown, and keeps two boxes of it. Moving from one version to
+another is a view transition (`@view-transition` in the styles): the old page slides out, the
+new one slides in, the review bar stays put. A version's notebook knows its number from its file name
 (`v1.nim` is 1) and whether it is the newest from the length of that list, `storia.nim`: the
 newest builds into `devlog/review-mode/`, an older one into `devlog/review-mode/v1/`. The post's
 own file, `review_mode.nim`, holds only the first line the devlog reads and the import of every

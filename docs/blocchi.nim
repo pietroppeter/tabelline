@@ -497,18 +497,28 @@ template nbRevisione*(tpage: string, tversion: int, ttitle, tsource: string) =
   ## and `tsource` (the notebook the page is built from) go in the export. After `useTabelline`.
   nb.revisione(tpage, tversion, ttitle, tsource)
 
+func versioneHref*(n, questa, latest: int): string =
+  ## The link from the page of version `questa` to version `n`: the newest is the page itself,
+  ## version `n` is kept in `vn/` beside it.
+  if n == questa: ""
+  elif questa == latest: &"v{n}/"
+  elif n == latest: "../"
+  else: &"../v{n}/"
+
 newNbBlock(NbVersioni):
   versioni: seq[(string, string)]
   questa: int
   toHtml:
+    # two boxes, the newest first: the newest and the one before it, or, on an older version,
+    # the newest and this one. Every version is in the page's own table of versions.
     let latest = blk.versioni.len
+    var shown = @[latest]
+    let other = if blk.questa == latest: latest - 1 else: blk.questa
+    if other >= 1: shown.add other
     var items = ""
-    for i, (date, what) in blk.versioni:
-      let n = i + 1
-      let href = if n == blk.questa: ""
-                 elif blk.questa == latest: &"v{n}/"
-                 elif n == latest: "../"
-                 else: &"../v{n}/"
+    for n in shown:
+      let (date, what) = blk.versioni[n - 1]
+      let href = versioneHref(n, blk.questa, latest)
       let inside = &"""<b>v{n}</b> <span>{inline(date)}</span>"""   # the whole box is the link
       let box = if href.len > 0: &"""<a href="{href}">{inside}</a>""" else: &"""<span class="voce">{inside}</span>"""
       let current = if n == blk.questa: " aria-current=\"page\"" else: ""
@@ -520,7 +530,8 @@ proc versioni*(nb: var Nb, versions: openArray[(string, string)], this: int) =
 
 template nbVersioni*(tversions: openArray[(string, string)], tthis: int) =
   ## The versions of a page that changes in rounds: `(date, what changed)` for each, oldest first,
-  ## and the number of this one. The newest is the page itself; version `n` is kept in `vn/`.
+  ## and the number of this one. Shows two, the newest first; the newest is the page itself,
+  ## version `n` is kept in `vn/`. Moving between them is a short slide (a view transition).
   nb.versioni(tversions, tthis)
 
 # ---------------------------------------------------------------------------- annotated screens
