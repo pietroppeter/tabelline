@@ -2,25 +2,26 @@
 ## Every version's notebook (v1.nim, v2.nim, ...) reads this, so an old version links the newer ones.
 
 type Versione* = object
-  date*: string      ## when the version was written
+  date*: string      ## the day the version was published
+  time*: string      ## and the time, Italian time (HH:MM): when its pull request was merged
   what*: string      ## what it changed, in Markdown
   review*: string    ## what the round that read it found, in Markdown ("" while it waits)
   comments*: int     ## how many comments that round had
 
 const storico* = [
-  Versione(date: "9 Nov 2026", what: "The first draft: the review mode and this post, before any review.",
+  Versione(date: "9 Nov 2026", time: "09:37", what: "The first draft: the review mode and this post, before any review.",
            review: "[Round 1](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-1.md): " &
              "a section on the pieces of the screen is missing; typing a comment zooms the page; a comment " &
              "should take screenshots; what **Edit** opens was unclear; the export should be editable.",
            comments: 3),
-  Versione(date: "9 Nov 2026", what: "Round 1: a section on the pieces of the screen, no zoom while typing, " &
+  Versione(date: "9 Nov 2026", time: "11:36", what: "Round 1: a section on the pieces of the screen, no zoom while typing, " &
              "screenshots in a comment, an export to edit before copying or sharing, **Edit** explained.",
            review: "[Round 2](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-2.md): " &
              "no zoom works; tapping an older version should open it; a screenshot should be pasted, not " &
              "picked; the comment sheet hides the words it is about and takes too much room; the pieces of " &
              "the screen should start from an annotated screenshot.",
            comments: 4),
-  Versione(date: "9 Nov 2026", what: "Round 2: a compact comment sheet that slides down from the top and " &
+  Versione(date: "9 Nov 2026", time: "11:56", what: "Round 2: a compact comment sheet that slides down from the top and " &
              "leaves the words in view, screenshots pasted, the whole version box a link, an annotated " &
              "screenshot of the pieces of the screen.",
            review: "[Round 3](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-3.md): " &
@@ -29,7 +30,7 @@ const storico* = [
              "belongs at the top; *Cut* is not clear. And the copy with screenshots inside was too long " &
              "for the chat, where the front matter of the text showed as loose lines.",
            comments: 2),
-  Versione(date: "9 Nov 2026", what: "Round 3: an image pasted in the note just works, no buttons; " &
+  Versione(date: "9 Nov 2026", time: "13:17", what: "Round 3: an image pasted in the note just works, no buttons; " &
              "Delete in the top row; no *Cut* (an empty replacement removes the words); Copy copies the " &
              "text only, and each screenshot has its own Copy image; the export opens with a YAML block, " &
              "not a front matter, so it reads well in a chat; the strip shows only the newest version and " &
@@ -40,11 +41,18 @@ const storico* = [
              "the assumptions read like decision records, and their opening assumed the reader knew " &
              "the rounds.",
            comments: 6),
-  Versione(date: "9 Nov 2026", what: "With nothing selected, the comment button says *Page note*: a " &
+  Versione(date: "9 Nov 2026", time: "14:54", what: "With nothing selected, the comment button says *Page note*: a " &
              "note on the whole page; the changes of a version are a numbered list; the idea has a " &
              "heading of its own, *The idea*, and mentions screenshots; the assumptions are now " &
              "*The decisions behind it*, each saying which round changed it.",
-           review: "Waiting for the fifth round.", comments: 0),
+           review: "[Round 5](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-5.md): " &
+             "every heading of the site should lead back to the contents; the problem assumed the reader " &
+             "knew these threads; the versions should say the time, and how long after the one before.",
+           comments: 3),
+  Versione(date: "9 Nov 2026", time: "16:09", what: "Every heading of the site has an arrow back to the contents; " &
+             "the problem says who makes the pages (coding agents, Claude Code from a phone); the table of " &
+             "versions gives the day and time of the first of each day, then how long after the one before.",
+           review: "Waiting for the sixth round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =
