@@ -48,7 +48,6 @@ nbStorie "stories/"
 
 # The pages of the site, in three groups by the question a reader brings, each in reading order.
 # They are kept up to date as tabelline changes; dated posts are in the devlog.
-# Until the book's sources (book/) are in the repository, its card says it is coming, with no link.
 type
   Page = tuple[href, title, what: string]
   Group = tuple[heading, lede: string, pages: seq[Page]]
@@ -68,13 +67,11 @@ let groups: seq[Group] = @[
     ("agents/", "For coding agents", "Setup, commands, where things are and the working rules, for a coding agent or a person new to the code."),
   ]),
 ]
-let bookReady = dirExists(docs.parentDir / "book")
 
 for g in groups:
   nbText "## " & g.heading & "\n\n" & g.lede
   nbCards g.heading:
     for d in g.pages:
-      let ready = d.href != "book/" or bookReady
-      nbCard(d.title & (if ready: "" else: " (coming soon)"), (if ready: d.href else: ""), ""):
+      nbCard(d.title, d.href, ""):
         nbText d.what
 nbSave

@@ -42,11 +42,13 @@ Then these are the commands an agent runs, in the order a change needs them:
 block:
   let cmds = tableData:
     command: ["nim r tests/all.nim", "nim r tools/specexamples.nim", "nim r tools/specexamples.nim --update",
-              "nim r tools/drift.nim", "nim r -d:release docs/all.nim", "python3 tools/preview.py"]
+              "nim r tools/drift.nim", "nim r -d:release docs/all.nim", "nim r book/bookbuild.nim",
+              "python3 tools/preview.py"]
     does: ["runs the tests", "runs every example in the specs and checks its output",
            "rewrites the outputs after a change is built (`--changes` adds open changes)",
            "checks that no page adds HTML, styles or colours (`--update` lowers the baseline)",
            "builds every page into docs/ (the HTML is not committed)",
+           "builds the book into docs/book/ (only the chapters that changed)",
            "copies the built pages to ../tabelline-preview, for an artifact to show Pietro"]
   let t = tabella(cmds, rownameCol = "command"):
     tabHeader "The commands"

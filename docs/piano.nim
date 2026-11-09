@@ -28,16 +28,13 @@ const releases*: seq[Release] = @[
   Release(version: "0.1", theme: "The basics", threads: @[
     t("build", "Build tabelline 0.1",
       "The 24 small groups proposed in the coverage map (formats, substitutions, caption, rm verbs, order of rows, options, locations), then the release.",
-      "post Designing tabelline 0.1; tag v0.1.0"),
-    t("use", "Use it: a month of building with AI, and Operetta",
-      "A simple, conceptual explainer of a month of open source work on GitHub with Claude (libraries, talks, explainers in claude-artifacts), and from it the first design of Operetta: a modular way to build AI-native libraries (living documents, devlog, OpenSpec, coverage, roadmap, book, skills), each part picked by a project's kind and maturity. Includes what skills are and where they live.",
-      "an article in three parts in claude-artifacts: the month, Operetta, skills; 👑 🐍 🏴‍☠️ tabs", "in review"),
+      "post Designing tabelline 0.1; tag v0.1.0", "in review"),
     t("use", "Use it: Milano Cortina 2026",
       "The Winter Olympics and Paralympics of 2026 in tables, in three parts of three (the Games, the money, what stays), learning from Il Post, with data from Wikipedia and NOAA.",
       "story", "done", "stories/milano-cortina/"),
     t("port", "Port the Great Tables guide, Get Started",
       "The first section of the Great Tables user guide (header and footer, stub, column labels, formats, styles, selections) and gt's Introduction to creating gt tables. Both MIT.",
-      "tabelline book (nimibook, Edo), first chapters"),
+      "tabelline book (nimibook, Edo), first chapters", "in progress", "book/"),
   ]),
   Release(version: "0.2", theme: "Rows and merges", threads: @[
     t("build", "Build tabelline 0.2",

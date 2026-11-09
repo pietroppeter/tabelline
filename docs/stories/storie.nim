@@ -28,11 +28,11 @@ proc preview*(slug: string): Option[Tabella] =
   ## One small table of the story, for its card, if it has one.
   case slug
   of "milano-cortina":
-    let d = readTsv("medals.tsv").top(3, ["gold", "silver", "bronze"])
+    let d = readTsv("medals.tsv").top(3, ["total", "gold", "silver"])
     let t = tabella(d, rownameCol = "team"):
-      tabHeader "The medal table, top three"
-      colsHide ["rank", "code", "total"]
-      colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉"}
+      tabHeader "Most medals, top three"
+      colsHide ["rank", "code"]
+      colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉", "total": "all"}
       optCssTheme()
     some t
   of "fosdem":
@@ -47,10 +47,10 @@ proc preview*(slug: string): Option[Tabella] =
   else: none(Tabella)
 
 proc next*(): string =
-  ## The next story on the roadmap: the first *use it* thread still planned, with its release.
+  ## The next story on the roadmap: the first *use it* thread not done yet, with its release.
   for r in releases:
     for th in r.threads:
-      if th.kind == "use" and th.status == "planned":
+      if th.kind == "use" and th.status != "done":
         return th.title.replace("Use it: ", "") & " (tabelline " & r.version & ")"
 
 template nbStorie*(base: string) =

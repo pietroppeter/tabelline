@@ -1,0 +1,22 @@
+# dplyr::starwars (dplyr 1.2.1, MIT; from SWAPI): the characters with no missing value (na.omit) and blue, brown or hazel eyes, as table.glue's guide uses them
+"name","sex","eye_color","height","mass"
+"Luke Skywalker","male","blue",172,77
+"Leia Organa","female","brown",150,49
+"Owen Lars","male","blue",178,120
+"Beru Whitesun Lars","female","blue",165,75
+"Biggs Darklighter","male","brown",183,84
+"Anakin Skywalker","male","blue",188,84
+"Chewbacca","male","blue",228,112
+"Han Solo","male","brown",180,80
+"Wedge Antilles","male","hazel",170,77
+"Boba Fett","male","brown",183,78.2
+"Lando Calrissian","male","brown",177,79
+"Lobot","male","blue",175,79
+"Wicket Systri Warrick","male","brown",88,20
+"Padmé Amidala","female","brown",185,45
+"Ayla Secura","female","hazel",178,55
+"Mace Windu","male","brown",188,84
+"Luminara Unduli","female","blue",170,56.2
+"Barriss Offee","female","blue",166,50
+"Dooku","male","brown",193,80
+"Jango Fett","male","brown",183,79

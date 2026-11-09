@@ -9,6 +9,12 @@ port it. Sources go from the simplest to the most complex, and so do their pages
 ones that can be ported now, then the ones that wait for a release. The
 [first page](index.html) has the sources in one table.
 
+How the pages are found: each source says where its pages are, a GitHub repository and the
+paths of its pages, and `book/plan/plan.py` lists the repository, so a page added there shows
+up here (marked *To triage* until someone reads it), and a page that is gone is reported. The
+Table Contest entries are listed by hand, one repository each, and their code is read whole;
+saving the table as a picture (`gtsave`) does not count.
+
 How it is measured: `book/plan/plan.py` reads each page's code, finds the gt and Great Tables
 functions it calls, and looks each one up in the
 [feature map](https://pietroppeter.github.io/tabelline/coverage/), where every gt feature
@@ -21,9 +27,19 @@ build of the next release.
 
 for s in sources["sources"]:
   let id = s["id"].getStr
-  nbText: "## " & s["title"].getStr & "\n\n" & s["what"].getStr & ". By " & s["by"].getStr &
+  var text = "## " & s["title"].getStr & "\n\n" & s["what"].getStr & ". By " & s["by"].getStr &
     ", " & s["licence"].getStr & " licence. [Read it](" & s["url"].getStr & ")."
-  nbTable pagesTable(id, ported = s["status"].getStr == "ported")
+  if s.isContest:
+    # a few hundred entries: they have a page of their own
+    text.add "\n\nIts " & $pagesOf(id).len & " entries with code on GitHub, and which of them " &
+      "tabelline can redo, are in [The Table Contest](contest.html)."
+  elif s.isReference:
+    # a help page per function: too many for a table here, so they are found by feature
+    text.add "\n\nIts " & $pagesOf(id).len & " pages with examples, one per function, are found " &
+      "by the features they show, in [Find an example by feature](features.html)."
+  nbText: text
+  if not s.isReference and not s.isContest:
+    nbTable pagesTable(id, ported = s["status"].getStr == "ported")
 
 nbText: """
 ## Not yet mapped

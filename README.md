@@ -10,6 +10,7 @@ with their parts and their verbs (in camelCase), written in plain Nim, and fits 
 
 **Site:** [pietroppeter.github.io/tabelline](https://pietroppeter.github.io/tabelline/), with
 the [Guide](https://pietroppeter.github.io/tabelline/explainer/), the
+[stories](https://pietroppeter.github.io/tabelline/stories/), the
 [book](https://pietroppeter.github.io/tabelline/book/), the
 [roadmap](https://pietroppeter.github.io/tabelline/roadmap/), the
 [devlog](https://pietroppeter.github.io/tabelline/devlog/) and the
@@ -86,7 +87,9 @@ tabelline changes; dated posts are in the devlog.
    and tabelline step by step.
 2. [Book](https://pietroppeter.github.io/tabelline/book/): guides and examples of gt and Great
    Tables redone in Nim, with the original code and its table next to every example, [what
-   the book will port](https://pietroppeter.github.io/tabelline/book/next.html) and [what the port
+   the book will port](https://pietroppeter.github.io/tabelline/book/next.html), [an example for
+   every feature](https://pietroppeter.github.io/tabelline/book/features.html), [the Table Contest
+   entries](https://pietroppeter.github.io/tabelline/book/contest.html) and [what the port
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
 
@@ -112,6 +115,11 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Rethinking tabelline's datasets](https://pietroppeter.github.io/tabelline/devlog/datasets/)
+  (8 Nov 2026 E): the three ways to make a dataset, the datasets tabelline uses and where they come
+  from, the ones gt and Great Tables show first, and a brainstorm of three domains in three sizes
+  (a twin for gt's best known datasets, the islands of the Mediterranean, World Heritage per person); a
+  draft to decide from.
 - [Blocks, not HTML](https://pietroppeter.github.io/tabelline/devlog/blocks-review/)
   (8 Nov 2026 D): how much HTML, CSS and colour the pages write by hand (measured at build), the
   custom blocks that would replace it (a gallery block works already, `docs/blocchi.nim`), where
@@ -142,7 +150,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 
 ## Files
 
-- `src/tabelline.nim`: the module to import, with the two macros (`tabella(data): body`, `tableData:`).
+- `src/tabelline.nim`: the module to import, with two of the three macros (`tabella(data): body`, `tableData:`; `tabOptions` is in `verbs.nim`).
 - `src/tabelline/core.nim`: the data model (`Value`, `TableData`, `Text`, selectors, styles, `Tabella`).
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
