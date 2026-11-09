@@ -28,6 +28,9 @@ Markdown section per comment, in page order. This skill turns that text into cha
 - `Screenshots: review-v2-3-1.jpg, ...` names images sent with the export (Share sends the text as
   `review-vN.md` with the images). Look at them before changing anything: they often show what the
   words can't (a layout, a zoom, a colour). If they are named but missing, ask for them.
+- A copied export ends with `## Screenshots, small`: one Markdown image per screenshot, its
+  address the JPEG itself (`data:image/jpeg;base64,...`). Decode each to a file and look at it.
+  Don't commit them with the round's export: keep the text, drop that section.
 - The text may have been edited by hand before it was sent: trust what it says over the format.
 - `(Not found on the page any more.)`: the text changed after the comment was written. Apply it
   where it still makes sense, or ask.

@@ -341,6 +341,14 @@ footer a { color: var(--ink); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
 details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
+/* a screenshot with numbered circles (nbSchermata): the circle is a place */
+.schermata { margin: 1rem 0; width: min(47%, 15rem); }
+.schermata > div { position: relative; }
+.schermata img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.schermata .punto { position: absolute; transform: translate(-50%, -50%); width: 1.25rem; height: 1.25rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font: 700 .72rem/1 var(--font);
+  background: var(--primary); color: var(--paper); box-shadow: 0 0 0 2px var(--paper); }
+.schermata figcaption { font-size: .8rem; line-height: 1.35; color: var(--muted); margin-top: .3rem; }
 """
 
 # ------------------------------------------------------------------------------------ the quaderno
@@ -532,14 +540,8 @@ mark.rv-mark.rv-current { background: var(--secondary); }
 dialog.rv-sheet { width: 100%; max-width: 40rem; margin: 0 auto auto; padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) 1rem max(1rem, env(safe-area-inset-left, 0px));
   border: 0; border-bottom: 3px solid var(--ink); background: var(--surface); color: var(--ink); font: 400 16px/1.45 var(--font);
   max-height: 90vh; overflow-y: auto; }
-dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 35%, transparent); }
+dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, transparent); }
 .rv-sheet .rv-where { margin: 0 0 .4rem; font-weight: 700; }
-.rv-sheet .rv-quote { margin: 0 0 .7rem; padding: .4rem .7rem; background: var(--secondary-soft); border-left: 3px solid var(--secondary);
-  max-height: 6.5em; overflow-y: auto; }
-.rv-sheet fieldset { border: 0; padding: 0; margin: 0 0 .6rem; display: flex; gap: 1rem; flex-wrap: wrap; }
-.rv-sheet legend { padding: 0; margin-bottom: .2rem; color: var(--muted); font-size: .85rem; }
-.rv-sheet label { display: block; margin-bottom: .6rem; }
-.rv-sheet fieldset label { display: inline-flex; align-items: center; gap: .3rem; margin: 0; min-height: 44px; }
 .rv-sheet textarea { display: block; width: 100%; margin-top: .2rem; font: 16px/1.4 var(--font); color: var(--ink);
   background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
 .rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
@@ -547,6 +549,26 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 35%, tran
 .rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
 .rv-shots { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem; margin-bottom: .8rem; }
 .rv-thumbs { display: contents; }
+/* the comment sheet: small, from the top, so the marked words stay in view under it */
+dialog.rv-sheet[open] { animation: rv-down .2s ease-out; }
+@keyframes rv-down { from { transform: translateY(-100%); } }
+dialog.rv-sheet.rv-compact { padding: .5rem max(.6rem, env(safe-area-inset-right, 0px)) .6rem max(.6rem, env(safe-area-inset-left, 0px)); }
+dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, transparent); }
+.rv-row { display: flex; align-items: center; gap: .35rem; margin-bottom: .45rem; }
+.rv-row > button[value="cancel"] { font-size: 1.5rem; padding: 0; }
+.rv-kinds, .rv-whole { flex: 1; display: flex; justify-content: center; }
+.rv-whole { color: var(--muted); font-size: .9rem; }
+.rv-sheet .rv-kinds label { display: inline-flex; margin: 0; }
+.rv-kinds input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rv-kinds span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .55rem; font-size: .92rem;
+  border: 1px solid var(--line); margin-left: -1px; cursor: pointer; }
+.rv-kinds input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.rv-kinds input:focus-visible + span { outline: 2px solid var(--secondary); }
+.rv-compact textarea { margin: 0 0 .45rem; }
+.rv-compact .rv-shots { margin: 0; align-items: center; }
+.rv-compact .rv-shots button, .rv-compact label.rv-attach { font-size: .92rem; }
+.rv-compact .rv-delete { margin-left: auto; margin-right: 0; }
+
 .rv-thumb { position: relative; }
 .rv-thumb img { display: block; height: 4.5rem; width: auto; border: 1px solid var(--line); }
 .rv-thumb button { position: absolute; top: 0; right: 0; min-height: 32px; min-width: 32px; padding: 0; font-size: 1.1rem; }
@@ -556,10 +578,12 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 35%, tran
 /* the versions of a page (nbVersioni) */
 .versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
 .versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
-.versioni li { border: 1px solid var(--line); background: var(--surface); padding: .25rem .6rem; }
+.versioni li { border: 1px solid var(--line); background: var(--surface); }
+.versioni li > a, .versioni li > .voce { display: flex; align-items: center; min-height: 44px; padding: 0 .7rem; color: var(--ink); text-decoration: none; }
+.versioni li > a:hover b { text-decoration: underline; }
 .versioni li[aria-current] { border-color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
 .versioni .titolo { font-weight: 700; margin-right: .5rem; }
-.versioni li span { color: var(--muted); margin-left: .35rem; }
+.versioni li span span, .versioni li a span { color: var(--muted); margin-left: .35rem; }
 """
 
 const revisioneQuaderno = """

@@ -17,7 +17,7 @@
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
-import std/[json, os, strutils, strformat, sequtils]
+import std/[json, os, strutils, strformat, sequtils, base64]
 import nimib except md
 import tabelline, tabelline/nimib
 import stile, parti
@@ -509,9 +509,10 @@ newNbBlock(NbVersioni):
                  elif blk.questa == latest: &"v{n}/"
                  elif n == latest: "../"
                  else: &"../v{n}/"
-      let name = if href.len > 0: &"""<a href="{href}">v{n}</a>""" else: &"v{n}"
+      let inside = &"""<b>v{n}</b> <span>{inline(date)}</span>"""   # the whole box is the link
+      let box = if href.len > 0: &"""<a href="{href}">{inside}</a>""" else: &"""<span class="voce">{inside}</span>"""
       let current = if n == blk.questa: " aria-current=\"page\"" else: ""
-      items.add &"""<li{current} title="{esc(what)}">{name}<span>{inline(date)}</span></li>"""
+      items.add &"""<li{current} title="{esc(what)}">{box}</li>"""
     &"""<nav class="versioni" aria-label="Versions of this page"><span class="titolo">Versions</span><ol>{items}</ol></nav>"""
 
 proc versioni*(nb: var Nb, versions: openArray[(string, string)], this: int) =
@@ -521,6 +522,32 @@ template nbVersioni*(tversions: openArray[(string, string)], tthis: int) =
   ## The versions of a page that changes in rounds: `(date, what changed)` for each, oldest first,
   ## and the number of this one. The newest is the page itself; version `n` is kept in `vn/`.
   nb.versioni(tversions, tthis)
+
+# ---------------------------------------------------------------------------- annotated screens
+
+newNbBlock(NbSchermata):
+  src: string
+  alt: string
+  punti: seq[(int, float, float)]
+  toHtml:
+    var marks = ""
+    for (n, x, y) in blk.punti:
+      marks.add &"""<span class="punto" style="left:{x:.1f}%;top:{y:.1f}%" aria-hidden="true">{n}</span>"""
+    &"""<figure class="schermata"><div><img src="{blk.src}" alt="{esc(blk.alt)}">{marks}</div>""" &
+      &"""<figcaption>{inline(blk.alt)}</figcaption></figure>"""
+
+proc schermata*(nb: var Nb, image, points, alt: string) =
+  let j = parseJson(readFile(points))
+  var punti: seq[(int, float, float)]
+  for p in j["points"]: punti.add (p["n"].getInt, p["x"].getFloat, p["y"].getFloat)
+  let mime = if image.endsWith(".png"): "image/png" else: "image/jpeg"
+  nb.add newNbSchermata(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti)
+
+template nbSchermata*(timage, tpoints, talt: string) =
+  ## A screenshot with numbered circles on it, to name its pieces in the text or a table: the
+  ## image (inlined), a JSON of points (`{"points": [{"n": 1, "x": 12.5, "y": 40}]}`, in % of the
+  ## width and height) and a caption in Markdown. Put two side by side with `nbAccanto`.
+  nb.schermata(timage, tpoints, talt)
 
 # ------------------------------------------------------------------------------------- the page
 
