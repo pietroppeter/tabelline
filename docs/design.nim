@@ -237,6 +237,18 @@ nbShowCode:
       nbText "On a phone, one card and the edge of the next are in view."
 
 nbText: """
+## Review mode and versions
+
+`nbRevisione` puts a page in review mode (tried in [Review mode](../devlog/review-mode/)): a
+bar fixed at the bottom, in the surface colour under a rule of ink, with buttons at least 44
+pixels high, the one to comment in ink; the sheet to write in opens at the top, where the
+phone's keyboard does not cover it. A commented text is marked in the secondary's soft colour
+with a line under it, a note set apart; the one shown is in the secondary itself. In the
+quaderno, marks are the highlighter, underlined in red pen. `nbVersioni` is the strip of a
+page's versions: plain boxes, the one shown with a line of ink under it.
+"""
+
+nbText: """
 ## Swatches, quotes and highlights
 
 `nbTinte` shows colours beside their names, as in the palette above: a token or any CSS colour,

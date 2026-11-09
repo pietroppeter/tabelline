@@ -511,3 +511,54 @@ func tintaMix*(token: string, share: int, other = "--paper"): string =
   ## `share`% of a token in another (the paper by default), for a scale drawn from the palette.
   doAssert token in tokenColours and other in tokenColours
   &"color-mix(in oklab, var({token}) {share}%, var({other}))"
+
+# ----------------------------------------------------------------------------------- review mode
+
+const revisioneRules = """
+/* the review mode (blocchi.nim, nbRevisione): marks on the text, a bar at the bottom, sheets */
+body.rv-on { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)); }
+mark.rv-mark { background: var(--secondary-soft); color: inherit; box-shadow: 0 2px 0 var(--secondary); cursor: pointer; }
+mark.rv-mark.rv-current { background: var(--secondary); }
+.rv-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: .3rem;
+  justify-content: center; padding: .45rem max(.5rem, env(safe-area-inset-right, 0px)) calc(.45rem + env(safe-area-inset-bottom, 0px)) max(.5rem, env(safe-area-inset-left, 0px));
+  background: var(--surface); border-top: 3px solid var(--ink); font: 400 15px/1.2 var(--font); }
+.rv-bar button, .rv-sheet button { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 0; min-height: 44px; min-width: 44px; padding: 0 .7rem; cursor: pointer; white-space: nowrap; }
+.rv-bar button:disabled { color: var(--muted); border-color: var(--shade); cursor: default; }
+.rv-bar button[data-do="prev"], .rv-bar button[data-do="next"] { font-size: 1.4rem; padding: 0; }
+.rv-bar .rv-count { min-width: 3.2rem; text-align: center; color: var(--muted); font-size: .85rem; }
+.rv-bar .rv-add, .rv-sheet .rv-save { background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 700; }
+.rv-bar .rv-add.rv-selected { background: var(--secondary); color: var(--ink); border-color: var(--ink); }
+dialog.rv-sheet { width: 100%; max-width: 40rem; margin: 0 auto auto; padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) 1rem max(1rem, env(safe-area-inset-left, 0px));
+  border: 0; border-bottom: 3px solid var(--ink); background: var(--surface); color: var(--ink); font: 400 16px/1.45 var(--font);
+  max-height: 90vh; overflow-y: auto; }
+dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 35%, transparent); }
+.rv-sheet .rv-where { margin: 0 0 .4rem; font-weight: 700; }
+.rv-sheet .rv-quote { margin: 0 0 .7rem; padding: .4rem .7rem; background: var(--secondary-soft); border-left: 3px solid var(--secondary);
+  max-height: 6.5em; overflow-y: auto; }
+.rv-sheet fieldset { border: 0; padding: 0; margin: 0 0 .6rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.rv-sheet legend { padding: 0; margin-bottom: .2rem; color: var(--muted); font-size: .85rem; }
+.rv-sheet label { display: block; margin-bottom: .6rem; }
+.rv-sheet fieldset label { display: inline-flex; align-items: center; gap: .3rem; margin: 0; min-height: 44px; }
+.rv-sheet textarea { display: block; width: 100%; margin-top: .2rem; font: 16px/1.4 var(--font); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
+.rv-export textarea { font: 12.5px/1.45 var(--mono); white-space: pre-wrap; }
+.rv-sheet .rv-actions { display: flex; gap: .4rem; justify-content: flex-end; }
+.rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
+/* the versions of a page (nbVersioni) */
+.versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
+.versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.versioni li { border: 1px solid var(--line); background: var(--surface); padding: .25rem .6rem; }
+.versioni li[aria-current] { border-color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
+.versioni .titolo { font-weight: 700; margin-right: .5rem; }
+.versioni li span { color: var(--muted); margin-left: .35rem; }
+"""
+
+const revisioneQuaderno = """
+mark.rv-mark { background: var(--highlight); box-shadow: 0 2px 0 var(--red-pen); }
+mark.rv-mark.rv-current { background: var(--postit); box-shadow: 0 2px 0 var(--red-pen), 0 0 0 2px var(--red-pen); }
+.rv-bar { font-family: var(--font); }
+"""
+
+const revisioneCss* = revisioneRules & scoped(revisioneQuaderno, "html[data-tema=\"quaderno\"]")
+  ## The CSS of the review mode and of the versions strip, added only to the pages that use them.
