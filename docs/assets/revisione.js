@@ -142,9 +142,9 @@
 
   // part: bar
   // The bar stays at the bottom of the screen, where a thumb reaches on a phone: the previous and
-  // next comment, which one this is, edit it, comment (on the selected text, or on the page when
-  // nothing is selected), and export. A selection is kept as soon as it is made, because tapping
-  // a button can clear it on a phone.
+  // next comment, which one this is, edit it, a new one (*Page note* when nothing is selected, a
+  // note on the whole page; *Comment ✓* on the words selected), and export. A selection is kept
+  // as soon as it is made, because tapping a button can clear it on a phone.
   var bar = document.createElement('div');
   bar.className = 'rv-bar';
   bar.setAttribute('role', 'toolbar');
@@ -154,7 +154,7 @@
     '<span class="rv-count" aria-live="polite"></span>' +
     '<button type="button" data-do="next" aria-label="Next comment">›</button>' +
     '<button type="button" data-do="edit" aria-label="Edit this comment">Edit</button>' +
-    '<button type="button" data-do="add" class="rv-add">Comment</button>' +
+    '<button type="button" data-do="add" class="rv-add">Page note</button>' +
     '<button type="button" data-do="export">Export</button>';
   document.body.appendChild(bar);
   document.body.classList.add('rv-on');
@@ -203,7 +203,7 @@
     bar.querySelector('[data-do="next"]').disabled = !notes.length;
     bar.querySelector('[data-do="edit"]').disabled = current < 0;
     var add = bar.querySelector('.rv-add');
-    add.textContent = pending ? 'Comment ✓' : 'Comment';
+    add.textContent = pending ? 'Comment ✓' : 'Page note';   // says what it will do: on the words, or on the page
     add.classList.toggle('rv-selected', !!pending);
     add.setAttribute('aria-label', pending ? 'Comment on the selected text' : 'Comment on the whole page');
   }
