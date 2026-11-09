@@ -33,7 +33,7 @@ waits for (`needs`) and every feature of the map it shows (`uses`). The book rea
 does the search by feature (the command with words), which lists first the help pages of the
 feature's own functions, then the other pages from the smallest.
 """
-import ast, collections, fnmatch, json, os, re, signal, subprocess, sys, urllib.request
+import ast, collections, fnmatch, json, os, re, signal, subprocess, sys, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -41,7 +41,8 @@ CACHE = os.path.join(HERE, "cache")
 RELEASES = ["0.1", "0.2", "0.3", "0.4", "0.5"]
 LATER = "later"  # not planned for a release yet
 NEW = "new"  # a gap the coverage map does not have yet
-ORDER = RELEASES + [NEW, LATER]
+OTHER_TOOL = "other"  # a contest entry made with another table package than gt: the map does not measure it
+ORDER = RELEASES + [NEW, LATER, OTHER_TOOL]
 
 # gt-extras and gtExtras functions: plots, icons and themes in cells, planned with nanoplots.
 EXTRAS = re.compile(r"\bgte\.\w+|\b(?:gte\.)?(gt_plt_\w+|gt_theme_\w+|gt_color_\w+|gt_fa_\w+|gt_highlight_\w+|"
@@ -128,11 +129,12 @@ def listing(repo, ref, offline):
             os.makedirs(os.path.dirname(d), exist_ok=True)
             branch = ["--branch", ref] if ref != "HEAD" else []  # HEAD: the default branch
             subprocess.run(["git", "clone", "-q", "--depth", "1", "--filter=blob:none", "--no-checkout",
-                            *branch, f"https://github.com/{repo}", d], check=True)
+                            *branch, f"https://github.com/{repo}", d], check=True,
+                           stderr=subprocess.DEVNULL, env=dict(os.environ, GIT_TERMINAL_PROMPT="0"))
         else:
             git("fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", ref)
             git("update-ref", "HEAD", "FETCH_HEAD")
-    return git("rev-parse", "HEAD").strip(), git("ls-tree", "-r", "--name-only", "HEAD").split("\n")
+    return git("rev-parse", "HEAD").strip(), [f for f in git("ls-tree", "-r", "-z", "--name-only", "HEAD").split("\0") if f]
 
 
 def read(repo, commit, path, offline):
@@ -142,7 +144,7 @@ def read(repo, commit, path, offline):
         if offline:
             raise SystemExit(f"not in the cache: {repo} {path} (run without --offline)")
         os.makedirs(os.path.dirname(f), exist_ok=True)
-        url = f"https://raw.githubusercontent.com/{repo}/{commit}/{path}"
+        url = f"https://raw.githubusercontent.com/{repo}/{commit}/{urllib.parse.quote(path)}"
         with urllib.request.urlopen(url, timeout=30) as r:
             open(f, "wb").write(r.read())
     return open(f, encoding="utf-8", errors="replace").read()
@@ -334,22 +336,76 @@ CODE = re.compile(r"\.(R|r|py)$")
 CHUNKS = re.compile(r"\.(Rmd|rmd|qmd|ipynb)$")
 
 
+LICENCES = [("MIT", r"\bMIT License|Permission is hereby granted, free of charge"),
+            ("Apache-2.0", r"Apache License"), ("CC0-1.0", r"CC0|Creative Commons Zero|CC0 1\.0"),
+            ("CC BY-SA 4.0", r"Attribution-ShareAlike 4\.0"), ("CC BY 4.0", r"Attribution 4\.0"),
+            ("CC BY-NC-ND 4.0", r"NonCommercial-NoDeriv"), ("CC BY-NC 4.0", r"Attribution-NonCommercial"),
+            ("GPL-3.0", r"(?i)GNU GENERAL PUBLIC LICENSE\W+Version 3"), ("GPL-2.0", r"(?i)GNU GENERAL PUBLIC LICENSE\W+Version 2"),
+            ("AGPL-3.0", r"GNU AFFERO"), ("LGPL", r"GNU LESSER"), ("BSD-3-Clause", r"Redistribution and use in source"),
+            ("Unlicense", r"unlicense\.org"), ("MPL-2.0", r"Mozilla Public License")]
+PACKAGES = [("gt", r"(?:library|require)\([\"']?gt[\"']?\)|\bgt::|p_load\([^)]*\bgt\b|\bgt\s*\("), ("gtExtras", r"gtExtras"),
+            ("Great Tables", r"great_tables"), ("gt-extras", r"gt_extras"),
+            ("reactable", r"\breactable\b"), ("reactablefmtr", r"reactablefmtr"), ("DT", r"\bDT::|library\(DT\)"),
+            ("flextable", r"flextable"), ("kableExtra", r"kableExtra"), ("gtsummary", r"gtsummary"),
+            ("rtables", r"library\(rtables\)|\brtables::"), ("tfrmt", r"\btfrmt\b"), ("Shiny", r"library\(shiny\)|\bshiny::|shinyApp\("),
+            ("pandas Styler", r"\.style\."), ("formattable", r"\bformattable\b"), ("huxtable", r"\bhuxtable\b"),
+            ("tinytable", r"\btinytable\b"), ("kable", r"\bkable\s*\(")]
+
+
+def licence_of(repo, commit, files, offline):
+    """The licence of a repository, from its LICENSE file (or the DESCRIPTION of an R package)."""
+    if "DESCRIPTION" in files:  # an R package says it in its DESCRIPTION (LICENSE is then a stub)
+        m = re.search(r"^License:\s*(.+)$", read(repo, commit, "DESCRIPTION", offline), re.M)
+        if m and re.match(r"(MIT|GPL|LGPL|AGPL|Apache|BSD|CC|MPL)", m.group(1).strip()):
+            return re.sub(r"\s*\+\s*file LICEN[CS]E", "", m.group(1)).strip()
+    for f in files:
+        if re.fullmatch(r"(?i)(licen[cs]e|copying)(\.md|\.txt)?", f):
+            text = read(repo, commit, f, offline)
+            for name, pat in LICENCES:
+                if re.search(pat, text, re.I if name == "Unlicense" else 0):
+                    return name
+            return "a licence file"
+    return ""
+
+
+GONE = []
+
+
 def repo_pages(find, commit, files, offline):
     """One page per repository: an entry with all its code. `find.entries` lists them; `listing`
-    and `read` are called again for each entry's own repository."""
+    and `read` are called again for each entry's own repository. A link to a folder keeps the
+    entry to that folder (moving up until it has code: links often point to the picture); an
+    R package is read by its vignettes, what its users would write. What is found (licence,
+    packages, how much code) is written on the entry, for the page."""
     for e in find["entries"]:
-        c, fs = listing(e["repo"], e.get("ref", "HEAD"), offline)
+        try:
+            c, fs = listing(e["repo"], e.get("ref") or "HEAD", offline)
+        except subprocess.CalledProcessError:
+            GONE.append(e["repo"])  # deleted, renamed or made private since the contest
+            continue
+        e["licence"] = e.get("licence") or licence_of(e["repo"], c, fs, offline)
+        coded = [f for f in fs if (CODE.search(f) or CHUNKS.search(f))
+                 and not os.path.basename(f).lower().startswith("readme")]  # how the repository presents itself
+        base = e.get("path", "")
+        while base and not any(f.startswith(base + "/") for f in coded):
+            base = os.path.dirname(base)
+        if base:
+            coded = [f for f in coded if f.startswith(base + "/")]
+        elif "DESCRIPTION" in fs and any(f.startswith("R/") for f in fs):
+            e["kind"] = "package"
+            coded = [f for f in coded if f.startswith(("vignettes/", "inst/examples/", "inst/app/", "examples/"))]
+        e["files"] = len(coded)
         code = []
-        for f in fs:
-            if os.path.basename(f).lower().startswith("readme"):
-                continue  # how the repository presents itself, not the entry
-            if CODE.search(f):
-                code.append(read(e["repo"], c, f, offline))
-            elif CHUNKS.search(f):
-                code.append(code_of(f, read(e["repo"], c, f, offline)))
+        for f in coded[:150]:  # a repository of many projects is linked with its folder
+            text = read(e["repo"], c, f, offline)
+            code.append(text if CODE.search(f) else code_of(f, text))
+        code = "\n".join(code)
+        e["package"] = e.get("package") or ", ".join(n for n, pat in PACKAGES if re.search(pat, code))
         # saving the table as a picture (gtsave) is how it was shared, not what the table needs
-        code = re.sub(r"\bgtsave\s*\(", "saved(", "\n".join(code))
-        yield e["repo"], e["title"], e.get("url", "https://github.com/" + e["repo"]), code
+        code = re.sub(r"\bgtsave\s*\(", "saved(", code)
+        url = e.get("url") or "https://github.com/" + e["repo"] + \
+            (f"/tree/{e.get('ref') or 'HEAD'}/{base}" if base else "")
+        yield e["repo"], e["title"], url, code
 
 
 KINDS = {"pages": guide_pages, "rd": rd_pages, "quartodoc": py_pages, "repos": repo_pages}
@@ -392,17 +448,29 @@ def main(offline):
             for f in (hand or {}).get("found", []):  # gaps the map does not have, found by reading the page
                 needs[NEW].add(f)
             ready = max((r for r in needs), key=ORDER.index, default="0.1")
+            if hand and find.get("kind") == "repos":
+                if re.search(r"gtsummary|rtables|tfrmt", hand.get("package", "")):
+                    needs[LATER].add("Statistical summary tables (gtsummary, rtables, tfrmt)")
+                    ready = LATER if ready != OTHER_TOOL else ready
+                if not re.search(r"\bgt\b|Great Tables", hand.get("package", "")):
+                    ready, needs = OTHER_TOOL, collections.defaultdict(set)  # no gt: nothing to measure
+                    if not hand.get("files"):
+                        hand["note"] = hand.get("note") or "No code found in the repository"
             port = hand.get("port", "port") if hand else ("port" if s["kind"] == "reference" else "triage")
             if not hand and s["kind"] != "reference":
                 report.append(f"  new page in {s['id']}: {path} ({title})")
             page = {"title": (hand or {}).get("title", title), "path": path,
-                    **{k: hand[k] for k in ("year", "by", "licence", "package") if hand and k in hand},
+                    **{k: hand[k] for k in ("year", "by", "licence", "package", "prize", "post", "kind", "files", "book")
+                       if hand and hand.get(k)},
                     "url": (hand or {}).get("url", url), "port": port,
                     "note": (hand or {}).get("note", ""), "ready": ready,
                     "calls": sum(n.values()),
                     "needs": {r: sorted(needs[r]) for r in ORDER if r in needs and r != "0.1"},
                     "uses": sorted(rows[i]["feature"] for i in uses)}
             pages.append(page)
+        for repo in GONE:
+            report.append(f"  gone from {s['id']}: {repo} (the repository cannot be cloned)")
+        GONE.clear()
         for path in listed:
             report.append(f"  gone from {s['id']}: {path} (listed in sources.json, not in {find['repo']})")
         out[s["id"]] = {"commit": commit, "pages": pages}

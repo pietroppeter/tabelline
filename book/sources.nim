@@ -10,7 +10,7 @@ const
   sourcesJson = staticRead("plan/sources.json")
   pagesJson = staticRead("plan/pages.json")
   coverageJson = staticRead("../docs/coverage/gt.json")
-  releases = ["0.1", "0.2", "0.3", "0.4", "0.5", "new", "later"]
+  releases = ["0.1", "0.2", "0.3", "0.4", "0.5", "new", "later", "other"]
 
 let
   sources* = parseJson(sourcesJson)
@@ -21,11 +21,14 @@ proc pagesOf*(id: string): seq[JsonNode] = pages[id]["pages"].getElems
 
 proc isReference*(s: JsonNode): bool = s["kind"].getStr == "reference"
 
+proc isContest*(s: JsonNode): bool = s["kind"].getStr == "contest"
+
 proc whenLabel(r: string): string =
   case r
   of "0.1": "now"
   of "new": "a new gap"
   of "later": "later"
+  of "other": "not with gt"
   else: "in " & r
 
 proc mdLink(title, url: string): string = "[" & title & "](" & url & ")"
@@ -84,9 +87,6 @@ proc pagesTable*(id: string, ported = false): Tabella =
       if p["needs"].hasKey(r):
         needs.add "*" & whenLabel(r).capitalizeAscii & ":* " & p["needs"][r].getElems.mapIt(it.getStr).join(", ")
     var page = mdLink(p["title"].getStr, p["url"].getStr)
-    if p.hasKey("year"):  # a contest entry: when, who, with what, and its licence
-      page.add "<br>*" & $p["year"].getInt & ", " & p["by"].getStr & ", " & p["package"].getStr &
-        (if p.hasKey("licence"): ", " & p["licence"].getStr else: "") & "*"
     if p["note"].getStr != "": page.add "<br>" & p["note"].getStr
     var ready = whenLabel(p["ready"].getStr).capitalizeAscii
     if p["port"].getStr == "skip": ready = "Left out"
@@ -98,6 +98,65 @@ proc pagesTable*(id: string, ported = false): Tabella =
     colsLabel {"page": "Page", "ready": "Can be ported", "needs": "What it waits for"}
     fmtMarkdown ["page", "needs"]
     optCssTheme()
+
+# ---------------------------------------------------------------- the Table Contest
+
+proc entryCell(p: JsonNode): string =
+  ## An entry: its title (to its code), then year, author, prize, what it is made with, licence.
+  result = mdLink(p["title"].getStr, p["url"].getStr)
+  var facts = @[$p["year"].getInt & ", " & p{"by"}.getStr]
+  if p{"prize"}.getStr != "": facts.add "**" & p["prize"].getStr & "**"
+  if p{"package"}.getStr != "": facts.add p["package"].getStr
+  facts.add(if p{"licence"}.getStr != "": p["licence"].getStr else: "no licence")
+  result.add "<br>*" & facts.join(" · ") & "*"
+  if p["note"].getStr != "": result.add "<br>" & p["note"].getStr
+  if p{"post"}.getStr != "": result.add "<br>[The post](" & p["post"].getStr & ")"
+  if p{"book"}.getStr != "": result.add " · **[In this book](" & p["book"].getStr & ")**"
+
+proc contestEntries*(id: string, upTo = "", since = "", other = false): seq[JsonNode] =
+  ## The entries of a contest source made with gt, ready by `upTo` (or from `since` on), or the
+  ## ones made with another package (`other`): by readiness, then awarded first, then by year.
+  for p in pagesOf(id):
+    let r = releases.find(p["ready"].getStr)
+    if other != (p["ready"].getStr == "other"): continue
+    if upTo != "" and r > releases.find(upTo): continue
+    if since != "" and r < releases.find(since): continue
+    result.add p
+  result.sort(proc (a, b: JsonNode): int =
+    result = cmp(releases.find(a["ready"].getStr), releases.find(b["ready"].getStr))
+    if result == 0: result = cmp(b{"prize"}.getStr != "", a{"prize"}.getStr != "")
+    if result == 0: result = cmp(b["year"].getInt, a["year"].getInt))
+
+type EntryRow = object
+  entry, ready, needs: string
+
+proc contestTable*(entries: seq[JsonNode]): Tabella =
+  ## Entries made with gt: the release that can redo each, and what it waits for.
+  var rows: seq[EntryRow]
+  for p in entries:
+    var needs: seq[string]
+    for r in releases:
+      if p["needs"].hasKey(r):
+        needs.add "*" & whenLabel(r).capitalizeAscii & ":* " & p["needs"][r].getElems.mapIt(it.getStr).join(", ")
+    let ready = if p{"book"}.getStr != "": "Done" else: whenLabel(p["ready"].getStr).capitalizeAscii
+    rows.add EntryRow(entry: entryCell(p), ready: ready,
+                      needs: needs.join("<br>"))
+  tabella(rows, rownameCol = "", groupnameCol = ""):
+    colsLabel {"entry": "Entry", "ready": "Can be done", "needs": "What it waits for"}
+    fmtMarkdown ["entry", "needs"]
+    optCssTheme()
+
+type OtherRow = object
+  entry: string
+
+proc otherTable*(entries: seq[JsonNode]): Tabella =
+  ## Entries made without gt: what they are, and what they are made with.
+  tabella(entries.mapIt(OtherRow(entry: entryCell(it))), rownameCol = "", groupnameCol = ""):
+    colsLabel {"entry": "Entry"}
+    fmtMarkdown ["entry"]
+    optCssTheme()
+
+proc countReady*(entries: seq[JsonNode], r: string): int = entries.countIt(it["ready"].getStr == r)
 
 # ---------------------------------------------------------------- by feature
 

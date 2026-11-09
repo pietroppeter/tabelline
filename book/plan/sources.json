@@ -494,155 +494,1633 @@
    "kind": "contest",
    "lang": "R and Python",
    "status": "planned",
-   "what": "Tables made to win, one entry at a time, from 2020 to 2025: the ones whose code is on GitHub. Most have no licence, so they are ideas to redo, not code to port; the 2025 entries are GitHub Discussions, read here only when they link a repository",
+   "what": "Tables made to win, one entry at a time, from 2020 to 2025: every entry with its code on GitHub (book/plan/contest.py collects them from Posit Community and the winners posts). An entry with no licence is an idea to redo, not code to port",
    "find": {
     "kind": "repos",
     "repo": "rich-iannone/table-contest",
     "ref": "main",
     "entries": [
      {
-      "repo": "committedtotape/education-spending",
+      "repo": "awconway/table-contest-2020",
       "year": 2020,
-      "title": "Spending on Education in the US",
-      "by": "David Smale",
-      "package": "gt",
-      "note": "No licence: an idea only"
+      "title": "'Graphical' study characteristics table for a systematic review",
+      "by": "Aaron Conway",
+      "post": "https://forum.posit.co/t/graphical-study-characteristics-table-for-a-systematic-review-table-contest-submission/85939"
+     },
+     {
+      "repo": "tongakuot/rstudio_table_contest_2020",
+      "year": 2020,
+      "title": "2020 RStudio Table Contest",
+      "by": "Alier Reng",
+      "post": "https://forum.posit.co/t/2020-rstudio-table-contest-table-contest-submission/85980"
+     },
+     {
+      "repo": "smadaplaysfantasy/TeamProspectBoard",
+      "year": 2020,
+      "title": "2021 Seattle Mariners Top Prospects List",
+      "by": "Mat",
+      "post": "https://forum.posit.co/t/2021-seattle-mariners-top-prospects-list-table-contest-submission/87896"
      },
      {
       "repo": "jdjohn215/2020-RStudio-Table-Contest",
       "year": 2020,
       "title": "A 3-way crosstab table with gt",
       "by": "John D. Johnson",
-      "package": "gt",
-      "note": "No licence: an idea only"
+      "post": "https://forum.posit.co/t/a-3-way-crosstab-table-with-gt-table-contest-submission/82062"
+     },
+     {
+      "repo": "waddella/RStudioTableContest2020",
+      "year": 2020,
+      "title": "A Not So Short Introduction to rtables",
+      "by": "Adrian Waddella",
+      "post": "https://forum.posit.co/t/a-not-so-short-introduction-to-rtables-table-contest-submission/86538",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "mattkumar/react_calendar",
+      "ref": "main",
+      "year": 2020,
+      "title": "A Reactable-based Calendar",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/a-reactable-based-calendar-table-contest-submission/86582"
+     },
+     {
+      "repo": "jimtheflash/rstudio.tablecontest.2020",
+      "year": 2020,
+      "title": "A Year of 311 Service Requests in Chicago, in {gt} Tables",
+      "by": "Jim Kloet",
+      "post": "https://forum.posit.co/t/a-year-of-311-service-requests-in-chicago-in-gt-tables-table-contest-submission/87957"
+     },
+     {
+      "repo": "soroosj/TidyTuesday",
+      "ref": "master",
+      "path": "2020-09-01/output",
+      "year": 2020,
+      "title": "Banana Crop Yields Over Time",
+      "by": "Joel Soroos",
+      "post": "https://forum.posit.co/t/banana-crop-yields-over-time-table-contest-submission/86137"
+     },
+     {
+      "repo": "gkaramanis/tidytuesday",
+      "ref": "master",
+      "path": "2020/2020-week40/plots",
+      "year": 2020,
+      "title": "Beyoncé and Taylor Swift Albums",
+      "by": "Georgios Karamanis",
+      "post": "https://forum.posit.co/t/beyonce-and-taylor-swift-albums/86399",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "coolbutuseless/emphatic",
+      "year": 2020,
+      "title": "Challenger Disaster O-ring Table",
+      "by": "mikefc",
+      "post": "https://forum.posit.co/t/challenger-disaster-o-ring-table-table-contest-submission/86358"
+     },
+     {
+      "repo": "EvaMaeRey/tables",
+      "year": 2020,
+      "title": "Comparison Tutorial",
+      "by": "Gina Reynolds",
+      "post": "https://forum.posit.co/t/comparison-tutorial-table-contest-submission/87978",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "nvelden/table-race",
+      "year": 2020,
+      "title": "COVID-19 Table Race",
+      "by": "noveld",
+      "post": "https://forum.posit.co/t/covid-19-table-race/87912"
+     },
+     {
+      "repo": "DillonHammill/DataEditR",
+      "year": 2020,
+      "title": "DataEditR: Interactive Editor for Viewing, Filtering, Entering & Editing Data",
+      "by": "Dillon Hammill",
+      "post": "https://forum.posit.co/t/dataeditr-interactive-editor-for-viewing-filtering-entering-editing-data-table-contest-submission/87976",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "neilhatfield/dataTableExample",
+      "year": 2020,
+      "title": "DT Examples",
+      "by": "Neil Hatfield",
+      "post": "https://forum.posit.co/t/dt-examples-table-contest-submission/86110"
+     },
+     {
+      "repo": "nvelden/sql_table",
+      "year": 2020,
+      "title": "Editable DataTables in R shiny using SQL",
+      "by": "noveld",
+      "post": "https://forum.posit.co/t/editable-datatables-in-r-shiny-using-sql/81401"
+     },
+     {
+      "repo": "nvelden/Employee_Directory_CRUD",
+      "year": 2020,
+      "title": "Employee Directory editable DT",
+      "by": "noveld",
+      "post": "https://forum.posit.co/t/employee-directory-editable-dt/81403",
+      "prize": "Winner"
+     },
+     {
+      "repo": "bstaton1/pdf-tables",
+      "ref": "main",
+      "path": "large-table",
+      "year": 2020,
+      "title": "Example Large Multi-page Table",
+      "by": "bstaton1",
+      "post": "https://forum.posit.co/t/example-large-multi-page-table-table-contest-submission/86381"
+     },
+     {
+      "repo": "Ryo-N7/soccer_gt_timelines",
+      "year": 2020,
+      "title": "Expected Goals (xG) & Shot Timeline for Soccer/Football with {gt}",
+      "by": "Ryo Nakagawara",
+      "post": "https://forum.posit.co/t/expected-goals-xg-shot-timeline-for-soccer-football-with-gt/86449"
+     },
+     {
+      "repo": "atusy/ftExtra",
+      "ref": "master",
+      "path": "vignettes",
+      "year": 2020,
+      "title": "Format columns as markdown with the flextable and ftExtra packages",
+      "by": "atusy",
+      "post": "https://forum.posit.co/t/format-columns-as-markdown-with-the-flextable-and-ftextra-packages-table-contest-submission/86497"
+     },
+     {
+      "repo": "beeb22/tidytuesday",
+      "ref": "master",
+      "path": "visualisations",
+      "year": 2020,
+      "title": "Friends data visualisation for a #tidytuesday challenge",
+      "by": "Bee",
+      "post": "https://forum.posit.co/t/friends-data-visualisation-for-a-tidytuesday-challenge-table-contest-submission/86308"
+     },
+     {
+      "repo": "bobfromspace/rstudio_table_contest",
+      "ref": "master",
+      "year": 2020,
+      "title": "Hierarchically Structured Tables using V-Party Dataset",
+      "by": "Nina Ilchenko",
+      "post": "https://forum.posit.co/t/hierarchically-structured-tables-using-v-party-dataset-table-contest-submission/86501"
+     },
+     {
+      "repo": "another-smith/meanSE",
+      "ref": "main",
+      "year": 2020,
+      "title": "How to make a table of means plus/minus standar errors and other functions",
+      "by": "Eric Smith",
+      "post": "https://forum.posit.co/t/how-to-make-a-table-of-means-plus-minus-standar-errors-and-other-functions-table-contest-submission/87607"
+     },
+     {
+      "repo": "schmid07/R-Studio-Table-Contest-Submission",
+      "year": 2020,
+      "title": "Imperial March - static {gt} table",
+      "by": "schmid",
+      "post": "https://forum.posit.co/t/imperial-march-static-gt-table/86345",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "kcuilla/2020-RStudio-Table-Contest",
+      "year": 2020,
+      "title": "Interactive HTML Table of NFL Team Ratings",
+      "by": "Kyle Cuilla",
+      "post": "https://forum.posit.co/t/interactive-html-table-of-nfl-team-ratings/81205",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "SteEcker/SurvivalTable",
+      "year": 2020,
+      "title": "Interactive Outcome Table",
+      "by": "Stefan Ecker",
+      "post": "https://forum.posit.co/t/interactive-outcome-table-table-contest-submission/87820"
+     },
+     {
+      "repo": "mattkumar/react_surv_tables",
+      "year": 2020,
+      "title": "Interactive Survival Tables",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/interactive-survival-tables-table-contest-submission/81216"
+     },
+     {
+      "repo": "kcuilla/fantasy_football_receiving_opps",
+      "year": 2020,
+      "title": "Interactive table with drill down - Fantasy Football Receiving Stats & Opportunities",
+      "by": "Kyle Cuilla",
+      "post": "https://forum.posit.co/t/interactive-table-with-drill-down-fantasy-football-receiving-stats-opportunities/86430"
+     },
+     {
+      "repo": "EmilHvitfeldt/github-issue-table",
+      "year": 2020,
+      "title": "Manage Github Issues from Multiple Repositories",
+      "by": "Emil Hvitfeldt Hansen",
+      "post": "https://forum.posit.co/t/manage-github-issues-from-multiple-repositories-table-contest-submission/84383"
+     },
+     {
+      "repo": "esmith78/nys-hospital-compare",
+      "ref": "main",
+      "year": 2020,
+      "title": "New York State Hospital Performance Comparison Tool",
+      "by": "Erica Smith",
+      "post": "https://forum.posit.co/t/new-york-state-hospital-performance-comparison-tool-table-contest-submission/87962"
+     },
+     {
+      "repo": "cyyllam/ofm-wa-estimates",
+      "year": 2020,
+      "title": "Office of Financial Management (OFM) Estimates for the Central Puget Sound Region",
+      "by": "malcmalc",
+      "post": "https://forum.posit.co/t/office-of-financial-management-ofm-estimates-for-the-central-puget-sound-region-table-contest-submission/85929"
+     },
+     {
+      "repo": "ty-sanders/gold_medal_table",
+      "year": 2020,
+      "title": "Olympic Medals: Building an Award Winning Table",
+      "by": "Tyler Sanders",
+      "post": "https://forum.posit.co/t/olympic-medals-building-an-award-winning-table-table-contest-submission/86230"
+     },
+     {
+      "repo": "nischalshrestha/pandas-rmarkdown",
+      "year": 2020,
+      "title": "Pretty Printing Python DataFrames in RMarkdown using `reticulate` and `kableExtra`",
+      "by": "Nischal Shrestha",
+      "post": "https://forum.posit.co/t/pretty-printing-python-dataframes-in-rmarkdown-using-reticulate-and-kableextra-table-contest-submission/87981"
+     },
+     {
+      "repo": "choux130/RPackageDownloadTracker",
+      "year": 2020,
+      "title": "R Package Download Tracker",
+      "by": "Yin-Ting Chou",
+      "post": "https://forum.posit.co/t/r-package-download-tracker-table-contest-submission/86134"
+     },
+     {
+      "repo": "rcatlord/classical_music",
+      "year": 2020,
+      "title": "Recommended classical music recordings",
+      "by": "Henry Partridge",
+      "post": "https://forum.posit.co/t/recommended-classical-music-recordings-table-contest-submission/82680"
+     },
+     {
+      "repo": "rdboyes/forestable",
+      "year": 2020,
+      "title": "Recreating a NEJM forest plot/table hybrid",
+      "by": "Randy Boyes",
+      "post": "https://forum.posit.co/t/recreating-a-nejm-forest-plot-table-hybrid-table-contest-submission/86111"
+     },
+     {
+      "repo": "connorrothschild/economist-table-replication",
+      "year": 2020,
+      "title": "Recreating a Table by The Economist with Reactable",
+      "by": "Connor Rothschild",
+      "post": "https://forum.posit.co/t/recreating-a-table-by-the-economist-with-reactable-table-contest-submission/84725",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "malcolmbarrett/malco.io",
+      "ref": "master",
+      "path": "content/post/2020-05-16-replicating-an-nyt-table-of-swedish-covid-deaths-with-gt",
+      "year": 2020,
+      "title": "Replicating a New York Times Table of Swedish COVID-19 deaths with gt",
+      "by": "Malcolm Barrett",
+      "post": "https://forum.posit.co/t/replicating-a-new-york-times-table-of-swedish-covid-19-deaths-with-gt-table-contest-submission/82423",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "etiennebacher/periodic-table",
+      "ref": "main",
+      "year": 2020,
+      "title": "Reproducing the Periodic Table of Elements",
+      "by": "bretauv",
+      "post": "https://forum.posit.co/t/reproducing-the-periodic-table-of-elements/85701"
+     },
+     {
+      "repo": "bcjaeger/table.glue",
+      "year": 2020,
+      "title": "rounding, tabulation, and inline presentation with table.glue",
+      "by": "Byron Jaeger",
+      "post": "https://forum.posit.co/t/rounding-tabulation-and-inline-presentation-with-table-glue-table-contest-submission/85851",
+      "port": "ported",
+      "book": "contest/table_glue.html"
+     },
+     {
+      "repo": "mattkumar/flexdiff",
+      "year": 2020,
+      "title": "Spotting the Difference",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/spotting-the-difference-table-contest-submission/83285"
+     },
+     {
+      "repo": "rmwoody/stock-table",
+      "year": 2020,
+      "title": "Stock Table",
+      "by": "Robert Woody",
+      "post": "https://forum.posit.co/t/stock-table-table-contest-submission/85872"
+     },
+     {
+      "repo": "xari/transit",
+      "year": 2020,
+      "title": "Swiss Public Transit Travel Planner",
+      "by": "Harry",
+      "post": "https://forum.posit.co/t/swiss-public-transit-travel-planner-table-contest-submission/87918"
+     },
+     {
+      "repo": "BiostatsReportAutomation/Table1_R_Excel_Output",
+      "ref": "master",
+      "year": 2020,
+      "title": "Table 1 : Summary of baseline demographics across treatment groups",
+      "by": "Steve Boateng Ampah",
+      "post": "https://forum.posit.co/t/table-1-summary-of-baseline-demographics-across-treatment-groups-table-contest-submission/86487"
      },
      {
       "repo": "gkaramanis/table-contest",
       "year": 2020,
       "title": "An interactive table of the world",
       "by": "Georgios Karamanis",
-      "package": "reactable",
-      "licence": "MIT"
+      "post": "https://forum.posit.co/t/table-of-the-table-contest-submission-table-contest-submissions/86480"
+     },
+     {
+      "repo": "ironwest/egsummary",
+      "year": 2020,
+      "title": "Table summarization app",
+      "by": "Norimitsu Nishida",
+      "post": "https://forum.posit.co/t/table-summarization-app-table-contest-submission/87971"
+     },
+     {
+      "repo": "parmsam/rstudio-table-contest",
+      "year": 2020,
+      "title": "Tables of USA COVID-19 Policy Orders",
+      "by": "Sam",
+      "post": "https://forum.posit.co/t/tables-of-usa-covid-19-policy-orders-table-contest-submission/85728"
+     },
+     {
+      "repo": "bstaton1/useful-keystrokes",
+      "year": 2020,
+      "title": "Tables with a Subset of RStudio Keyboard Shortcuts",
+      "by": "bstaton1",
+      "post": "https://forum.posit.co/t/tables-with-a-subset-of-rstudio-keyboard-shortcuts-table-contest-submission/86383"
+     },
+     {
+      "repo": "FlorianHandke/RStudio_Table_Contest_2020",
+      "year": 2020,
+      "title": "Technology Figures of the EU",
+      "by": "Florian Handke",
+      "post": "https://forum.posit.co/t/technology-figures-of-the-eu-table-contest-submission/87855",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "agstn/RStudio_table_contest_2020",
+      "year": 2020,
+      "title": "The Big Mac Index Table",
+      "by": "Agustin Calatroni",
+      "post": "https://forum.posit.co/t/the-big-mac-index-table-table-contest-submission/86123",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "richardvogg/Data-Simulation",
+      "ref": "master",
+      "path": "Beta%20distribution",
+      "year": 2020,
+      "title": "The different faces of the Beta distribution",
+      "by": "Richard Vogg",
+      "post": "https://forum.posit.co/t/the-different-faces-of-the-beta-distribution-table-contest-submission/84958"
+     },
+     {
+      "repo": "kevin-m-kent/Rstudio-table-contest-2020",
+      "year": 2020,
+      "title": "The Modern Baseball Card",
+      "by": "Kevin Kent",
+      "post": "https://forum.posit.co/t/the-modern-baseball-card-table-contest-submission/87898"
+     },
+     {
+      "repo": "kcuilla/fourth_down_go_rates",
+      "year": 2020,
+      "title": "The NFL Analytics Say \"Go For It!\"",
+      "by": "Kyle Cuilla",
+      "post": "https://forum.posit.co/t/the-nfl-analytics-say-go-for-it/87145"
+     },
+     {
+      "repo": "feddelegrand7/RSContest",
+      "year": 2020,
+      "title": "The Office US - pivta",
+      "by": "Mohamed El Fodil Ihaddaden",
+      "post": "https://forum.posit.co/t/the-office-us-pivta-table-contest-submission/81128"
+     },
+     {
+      "repo": "rasmusab/tidyverse-in-a-table",
+      "year": 2020,
+      "title": "The Tidyverse in a Table",
+      "by": "Rasmus Bååth",
+      "post": "https://forum.posit.co/t/the-tidyverse-in-a-table-table-contest-submission/86543"
+     },
+     {
+      "repo": "biogen-inc/tidycdisc",
+      "ref": "table-contest",
+      "year": 2020,
+      "title": "tidyCDISC",
+      "by": "Maya Gans",
+      "post": "https://forum.posit.co/t/tidycdisc-table-contest-submission/86688",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "AndriSignorell/TOne",
+      "year": 2020,
+      "title": "TOne - a flexible 'Table 1'",
+      "by": "Signorell",
+      "post": "https://forum.posit.co/t/tone-a-flexible-table-1-table-contest-submission/86504"
+     },
+     {
+      "repo": "Anavoron/Rstudio-table-contest-2020",
+      "ref": "main",
+      "year": 2020,
+      "title": "Top and bottom 5 UK areas by pet population",
+      "by": "Anastasia Voronkova",
+      "post": "https://forum.posit.co/t/top-and-bottom-5-uk-areas-by-pet-population-table-contest-submission/87737"
+     },
+     {
+      "repo": "ekholme/viz_portfolio",
+      "ref": "master",
+      "path": "R",
+      "year": 2020,
+      "title": "Top Earning Broadway Shows",
+      "by": "Eric Ekholm",
+      "post": "https://forum.posit.co/t/top-earning-broadway-shows-table-contest-submission/85976"
+     },
+     {
+      "repo": "committedtotape/education-spending",
+      "year": 2020,
+      "title": "Spending on Education in the US",
+      "by": "David Smale",
+      "post": "https://forum.posit.co/t/top-of-the-class-public-spending-on-education/86113",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "andrewjdyck/fisheries-subsidies-rstudio-table-competition",
+      "year": 2020,
+      "title": "Top ten fishing countries by total government subsidies",
+      "by": "Andy",
+      "post": "https://forum.posit.co/t/top-ten-fishing-countries-by-total-government-subsidies-table-contest-submission/85828"
+     },
+     {
+      "repo": "PaulApivat/tidytuesday",
+      "ref": "master",
+      "path": "2020/table/table_comp",
+      "year": 2020,
+      "title": "Top-100 Vintage NBA Seasons with {reactable}",
+      "by": "Paul Apivat Hanvongse",
+      "post": "https://forum.posit.co/t/top-100-vintage-nba-seasons-with-reactable-table-contest-submission/86165"
+     },
+     {
+      "repo": "RichardHooijmaijers/tutorial-R3port",
+      "year": 2020,
+      "title": "Tutorial reporting tables with the R3port package",
+      "by": "richardh",
+      "post": "https://forum.posit.co/t/tutorial-reporting-tables-with-the-r3port-package-table-contest-submission/86280"
+     },
+     {
+      "repo": "PWPiranha/US_Elections_Draft",
+      "year": 2020,
+      "title": "US Elections - Interactive Shiny",
+      "by": "Piranha",
+      "post": "https://forum.posit.co/t/us-elections-interactive-shiny-table-contest-submission/87980"
+     },
+     {
+      "repo": "jared-fowler/prettyglm",
+      "year": 2020,
+      "title": "Visualise Fitted Glm Coefficients With Base Levels",
+      "by": "Jared",
+      "post": "https://forum.posit.co/t/visualise-fitted-glm-coefficients-with-base-levels-table-contest-submission/87569"
+     },
+     {
+      "repo": "Z3tt/Rstudio_TableContest_2020",
+      "year": 2020,
+      "title": "What do I binge next? An overview of the top IMDb TV shows",
+      "by": "Cedric Scherer",
+      "post": "https://forum.posit.co/t/what-do-i-binge-next-an-overview-of-the-top-imdb-tv-shows-table-contest-submission/86409",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "VaibhavSingh033/Weekly-Analysis---R-Open-Source-Contribution",
+      "ref": "master",
+      "year": 2020,
+      "title": "World's most powerful media franchise",
+      "by": "Vaibhav",
+      "post": "https://forum.posit.co/t/worlds-most-powerful-media-franchise-table-contest-submission/83686"
+     },
+     {
+      "repo": "steodose/RStudio-Table-Contest",
+      "ref": "main",
+      "year": 2021,
+      "title": "2021-22 English Premier League Standings",
+      "by": "Stephen C Teodosescu",
+      "post": "https://forum.posit.co/t/2021-22-english-premier-league-standings/119430"
+     },
+     {
+      "repo": "robkempOFM/rstudio_table_competition",
+      "year": 2021,
+      "title": "Age by Spanish Origin - 1980 U.S. Census",
+      "by": "Rob Kemp",
+      "post": "https://forum.posit.co/t/age-by-spanish-origin-1980-u-s-census-table-contest-submission/121561"
+     },
+     {
+      "repo": "michaelbgarcia/rstudiotablecontest_2021",
+      "year": 2021,
+      "title": "Apex Legends",
+      "by": "Michael Garcia",
+      "post": "https://forum.posit.co/t/apex-legends-table-contest-submission/120776"
+     },
+     {
+      "repo": "schmid07/NBA-R",
+      "year": 2021,
+      "title": "Average Distance of 3-PT FGA across 2008-2021 NBA Seasons {reactable} {reactablefmtr}",
+      "by": "schmid",
+      "post": "https://forum.posit.co/t/average-distance-of-3-pt-fga-across-2008-2021-nba-seasons-reactable-reactablefmtr-table-contest-submission/121595"
+     },
+     {
+      "repo": "IcaroBernardes/table-contest",
+      "year": 2021,
+      "title": "BGG Explorer",
+      "by": "Ícaro Bernardes",
+      "post": "https://forum.posit.co/t/bgg-explorer-table-contest-submission/121478"
+     },
+     {
+      "repo": "pablobernabeu/Data-is-present",
+      "ref": "master",
+      "path": "examples-documents-dashboards/Dashboards/Flexdashboard",
+      "year": 2021,
+      "title": "Butterfly species richness in LA: various sources",
+      "by": "Pablo Bernabeu",
+      "post": "https://forum.posit.co/t/butterfly-species-richness-in-la-various-sources-table-contest-submission/118572"
+     },
+     {
+      "repo": "mthomas-ketchbrook/migrate_table",
+      "year": 2021,
+      "title": "Conditionally Formatted State Transition Matrices",
+      "by": "Michael Thomas",
+      "post": "https://forum.posit.co/t/conditionally-formatted-state-transition-matrices/120336"
+     },
+     {
+      "repo": "DanChaltiel/crosstable",
+      "year": 2021,
+      "title": "Crosstable, easily describe your dataset",
+      "by": "Dan Chaltiel",
+      "post": "https://forum.posit.co/t/crosstable-easily-describe-your-dataset-table-contest-submission/120496",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "agstn/describer",
+      "year": 2021,
+      "title": "dataxray: an interactive table interface for data summaries",
+      "by": "Agustin Calatroni",
+      "post": "https://forum.posit.co/t/dataxray-an-interactive-table-interface-for-data-summaries/121483",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "rodserr/logbook",
+      "ref": "master",
+      "path": "_posts/2021-10-27-epl-standings-table-contest-2021/epl-standings",
+      "year": 2021,
+      "title": "EPL Standings - Selectable & Editable DT in shiny",
+      "by": "Rodrigo Serrano",
+      "post": "https://forum.posit.co/t/epl-standings-selectable-editable-dt-in-shiny-table-contest-submission/119160"
+     },
+     {
+      "repo": "rszymanski/table-contest",
+      "ref": "main",
+      "year": 2021,
+      "title": "Fast big data tables in Shiny (tutorial)",
+      "by": "Ryszard Szymański",
+      "post": "https://forum.posit.co/t/fast-big-data-tables-in-shiny/121358",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "andrew-block/tidy-vizzies",
+      "ref": "main",
+      "path": "fcs_power_rankings",
+      "year": 2021,
+      "title": "FCS Meta Power Rankings",
+      "by": "Andrew Block",
+      "post": "https://forum.posit.co/t/fcs-meta-power-rankings-table-contest-submission/117889"
+     },
+     {
+      "repo": "harikrishna19/RStudio-Table-Contest",
+      "year": 2021,
+      "title": "FIFA 22 Player Card INFO",
+      "by": "Hari Krishna",
+      "post": "https://forum.posit.co/t/fifa-22-player-card-info-table-contest-submission/121371"
      },
      {
       "repo": "AbdoulMa/RStudio-Table-Contest-2021",
       "year": 2021,
       "title": "The world's most prestigious wines",
       "by": "Abdoul Madjid",
-      "package": "gt",
-      "note": "No licence: an idea only"
+      "post": "https://forum.posit.co/t/from-vines-to-wines-the-most-exceptional-wines-from-all-over-the-world/121492",
+      "prize": "Honourable mention"
      },
      {
-      "repo": "jack-davison/rstudio_table-contest_2021",
+      "repo": "milosvil/histable",
       "year": 2021,
-      "title": "Air quality summaries with gt and openair (tutorial)",
-      "by": "Jack Davison",
-      "package": "gt, gtExtras",
-      "note": "Honourable mention. No licence: an idea only"
+      "title": "Histable - visualize the distribution of variables in a data table",
+      "by": "Milos Vilotic",
+      "post": "https://forum.posit.co/t/histable-visualize-the-distribution-of-variables-in-a-data-table/121002",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "elong0527/forestly",
+      "year": 2021,
+      "title": "Interactive Forest Plot in Clinical Trials for DMC Safety Monitoring",
+      "by": "Yujie Zhao",
+      "post": "https://forum.posit.co/t/interactive-forest-plot-in-clinical-trials-for-dmc-safety-monitoring-table-contest-submission/120178"
      },
      {
       "repo": "ggapac/PL-table-shiny",
       "year": 2021,
       "title": "Premier League standings 2021",
       "by": "Greta Gašparac",
-      "package": "reactable, Shiny",
-      "note": "No licence: an idea only"
+      "post": "https://forum.posit.co/t/interactive-shiny-table-premier-league-standings-2021/121418",
+      "prize": "Honourable mention"
      },
      {
-      "repo": "rszymanski/table-contest",
+      "repo": "jcheng5/d3scatter",
       "year": 2021,
-      "title": "Fast big data tables in Shiny (tutorial)",
-      "by": "Ryszard Szymański",
-      "package": "reactable, Shiny",
-      "note": "No licence: an idea only"
+      "title": "Interactivity with the deluxe cars dataset",
+      "by": "Sam",
+      "post": "https://forum.posit.co/t/interactivity-with-the-deluxe-cars-dataset-table-contest-submission/119272"
+     },
+     {
+      "repo": "BlackieOBrien/SerieADataTable",
+      "ref": "main",
+      "year": 2021,
+      "title": "Italian Serie A Final Table 2020/21",
+      "by": "Paul Ankers",
+      "post": "https://forum.posit.co/t/italian-serie-a-final-table-2020-21-table-contest-submission/121519"
+     },
+     {
+      "repo": "ericnewkirk/ml_evaluation_table",
+      "year": 2021,
+      "title": "ML Image Classification Evaluation",
+      "by": "Eric Newkirk",
+      "post": "https://forum.posit.co/t/ml-image-classification-evaluation-table-contest-submission/119413"
+     },
+     {
+      "repo": "Edgar-Zamora/My-Work",
+      "ref": "master",
+      "path": "Tidyverse/RStudio%20Table%20Contest/2021",
+      "year": 2021,
+      "title": "MLB's Biggest Teams",
+      "by": "Edgar Zamora",
+      "post": "https://forum.posit.co/t/mlbs-biggest-teams/120527"
+     },
+     {
+      "repo": "kkakey/dog_breeds_table",
+      "year": 2021,
+      "title": "Most Popular Dog Breeds of 2020",
+      "by": "Kristen",
+      "post": "https://forum.posit.co/t/most-popular-dog-breeds-of-2020-table-contest-submission/121364"
+     },
+     {
+      "repo": "BjnNowak/CultivatedPlanet",
+      "ref": "main",
+      "year": 2021,
+      "title": "One Farm - Creating Our Cultivated Planet & The Big Barnyard Tables",
+      "by": "Benjamin",
+      "post": "https://forum.posit.co/t/one-farm-creating-our-cultivated-planet-the-big-barnyard-tables/117744",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "kylebutts/RStudio_2021_Table_Comp",
+      "year": 2021,
+      "title": "Pokemon Red/Blue/Yellow Information Table",
+      "by": "Kyle Butts",
+      "post": "https://forum.posit.co/t/pokemon-red-blue-yellow-information-table-table-contest-submission/121448",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "gpilgrim2670/VerticalTable",
+      "year": 2021,
+      "title": "Pole vault & high jump results: Clearing a new bar",
+      "by": "George M. Perry",
+      "post": "https://forum.posit.co/t/pole-vault-high-jump-results-clearing-a-new-bar-table-contest-submission/121458"
+     },
+     {
+      "repo": "elong0527/r4csr",
+      "year": 2021,
+      "title": "R for Clinical Study Reports and Submission",
+      "by": "Yilong Zhang",
+      "post": "https://forum.posit.co/t/r-for-clinical-study-reports-and-submission-table-contest-submission/116788",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "BjnNowak/BjnNowak",
+      "ref": "main",
+      "path": "content/post/2021-10-04-r-beautiful-tables-with-gt-and-gtextras",
+      "year": 2021,
+      "title": "Riding tables with {gt} and {gtExtras}",
+      "by": "Benjamin",
+      "post": "https://forum.posit.co/t/riding-tables-with-gt-and-gtextras/117184",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "vfridkin/satellite_table",
+      "year": 2021,
+      "title": "Satellites currently orbiting the Earth",
+      "by": "Vladislav Fridkin",
+      "post": "https://forum.posit.co/t/satellites-currently-orbiting-the-earth/120539",
+      "prize": "Winner"
+     },
+     {
+      "repo": "b4billy/R_Studio_Table_Contest_2021",
+      "ref": "main",
+      "year": 2021,
+      "title": "Top Ten Greatest Summer Olympic Performances",
+      "by": "Billy Fryer",
+      "post": "https://forum.posit.co/t/top-ten-greatest-summer-olympic-performances/119172"
+     },
+     {
+      "repo": "jack-davison/rstudio_table-contest_2021",
+      "year": 2021,
+      "title": "Air quality summaries with gt and openair (tutorial)",
+      "by": "Jack Davison",
+      "post": "https://forum.posit.co/t/using-gt-and-openair-to-present-air-quality-data/119603",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "pablobernabeu/Experimental-data-simulation",
+      "ref": "master",
+      "year": 2021,
+      "title": "Web application to simulate experimental data",
+      "by": "Pablo Bernabeu",
+      "post": "https://forum.posit.co/t/web-application-to-simulate-experimental-data-table-contest-submission/118584"
+     },
+     {
+      "repo": "pablobernabeu/Dutch-modality-exclusivity-norms-Bernabeu-2018",
+      "ref": "master",
+      "path": "Shiny-app",
+      "year": 2021,
+      "title": "Web application: Dutch modality exclusivity norms",
+      "by": "Pablo Bernabeu",
+      "post": "https://forum.posit.co/t/web-application-dutch-modality-exclusivity-norms-table-contest-submission/118593"
+     },
+     {
+      "repo": "jtlawren67/data_visualizations",
+      "ref": "main",
+      "path": "20211003_MostAmericanMovie",
+      "year": 2021,
+      "title": "What's the Most American of American Films?",
+      "by": "jtlawren",
+      "post": "https://forum.posit.co/t/whats-the-most-american-of-american-films-table-contest-submission/117258"
      },
      {
       "repo": "jack-davison/rstudio_table-contest_2022",
       "year": 2022,
       "title": "W.E.B. Du Bois's charts redone as tables",
       "by": "Jack Davison",
-      "package": "gt, gtExtras",
-      "licence": "MIT"
+      "post": "https://forum.posit.co/t/tabulating-dubois-historical-data-viz-with-gt-table-contest/149570",
+      "prize": "Runner up"
      },
      {
-      "repo": "nrennie/2022-table-contest",
+      "repo": "GeorgeNAL/Diamond-League-Earnings",
       "year": 2022,
-      "title": "Lemurs at Duke Lemur Center",
-      "by": "Nicola Rennie",
-      "package": "gt",
-      "licence": "CC BY 4.0"
+      "title": "2022 Diamond League: Top 5 money earners per event",
+      "by": "George M. Perry",
+      "post": "https://forum.posit.co/t/2022-diamond-league-top-5-money-earners-per-event-table-contest/154063"
+     },
+     {
+      "repo": "svalvaro/war_table",
+      "year": 2022,
+      "title": "A Hostile World",
+      "by": "Alvaro",
+      "post": "https://forum.posit.co/t/a-hostile-world-table-contest/154182"
+     },
+     {
+      "repo": "jfangmeier/table-contest-2022",
+      "year": 2022,
+      "title": "All Aboard! Exploring the Amtrak Passenger Rail System",
+      "by": "jfangmeier",
+      "post": "https://forum.posit.co/t/all-aboard-exploring-the-amtrak-passenger-rail-system-table-contest/154203",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "a-drumm/table-contest-2022",
+      "year": 2022,
+      "title": "Basic gt Styling Reference",
+      "by": "Abigail",
+      "post": "https://forum.posit.co/t/basic-gt-styling-reference-table-contest/154198",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "blam3/blam_table_comp22",
+      "ref": "main",
+      "year": 2022,
+      "title": "Basketball Players – Regular Season vs. Playoffs",
+      "by": "Brendan Lam",
+      "post": "https://forum.posit.co/t/basketball-players-regular-season-vs-playoffs-table-contest/153115"
+     },
+     {
+      "repo": "alecrsf/rstudio_table_contest2022",
+      "year": 2022,
+      "title": "Best Airbnb in Ragusa, Sicily",
+      "by": "Alessio",
+      "post": "https://forum.posit.co/t/best-airbnb-in-ragusa-sicily-table-contest/153184"
+     },
+     {
+      "repo": "ji53ll/Posit-2022-Table-Contest",
+      "year": 2022,
+      "title": "Construction Spending in the United States",
+      "by": "Jisell Howe",
+      "post": "https://forum.posit.co/t/construction-spending-in-the-united-states-table-contest/154209"
      },
      {
       "repo": "AlbertRapp/gt_book",
       "year": 2022,
       "title": "Creating beautiful tables in R with gt (tutorial)",
       "by": "Albert Rapp",
-      "package": "gt, gtExtras",
-      "note": "Honourable mention. No licence: an idea only"
+      "post": "https://forum.posit.co/t/creating-beautiful-tables-in-r-with-gt-table-contest/153738",
+      "prize": "Honourable mention"
      },
      {
-      "repo": "steodose/Table-Contest-2024",
-      "year": 2024,
-      "title": "Top 20 golfers: Scottie Scheffler's 2024",
-      "by": "Stephan Teodosescu",
-      "package": "Great Tables",
-      "note": "A 2024 winner. No licence: an idea only"
+      "repo": "shaf1430/Currency-Crisis",
+      "ref": "main",
+      "year": 2022,
+      "title": "Currency Crisis",
+      "by": "HS2022",
+      "post": "https://forum.posit.co/t/currency-crisis-table-contest/154060",
+      "prize": "Honourable mention"
      },
      {
-      "repo": "chalg/posit_table_contest_2024",
-      "year": 2024,
-      "title": "Carbon intensity of electricity",
-      "by": "Grant Chalmers",
-      "package": "gt",
-      "note": "No licence: an idea only"
+      "repo": "mattkumar/dynamic-tlf",
+      "year": 2022,
+      "title": "Dynamic and Interactive Tables, Listings and Figures",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/dynamic-and-interactive-tables-listings-and-figures-table-contest/151405",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "ramamet/posit_fifa2022",
+      "year": 2022,
+      "title": "FIFA22 ⚽ - R Markdown Dashboard",
+      "by": "Ramanathan Perumal",
+      "post": "https://forum.posit.co/t/fifa22-r-markdown-dashboard-table-contest/154129"
+     },
+     {
+      "repo": "vfridkin/fret_table",
+      "year": 2022,
+      "title": "FretTable🎸 - Learn & play a Shiny guitar",
+      "by": "Vladislav Fridkin",
+      "post": "https://forum.posit.co/t/frettable-learn-play-a-shiny-guitar-table-contest/153606",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "tashapiro/tanya-data-viz",
+      "ref": "main",
+      "path": "tennis",
+      "year": 2022,
+      "title": "Grand Slam Legends",
+      "by": "Tanya Shapiro",
+      "post": "https://forum.posit.co/t/grand-slam-legends-table-contest/154257"
+     },
+     {
+      "repo": "michaelBane/hsDecklistScraper",
+      "year": 2022,
+      "title": "Hearthstone Deck Database",
+      "by": "bane",
+      "post": "https://forum.posit.co/t/hearthstone-deck-database-table-contest/149241"
+     },
+     {
+      "repo": "gdatascience/tidytuesday",
+      "ref": "master",
+      "year": 2022,
+      "title": "Highest Rated Horror Movies",
+      "by": "Anthony Galvan",
+      "post": "https://forum.posit.co/t/highest-rated-horror-movies-table-contest/153022"
+     },
+     {
+      "repo": "rjake/one-off-projects",
+      "ref": "main",
+      "path": "R/posit-table-contest-2022",
+      "year": 2022,
+      "title": "Highlight matching regex filters with reactable",
+      "by": "Jake",
+      "post": "https://forum.posit.co/t/highlight-matching-regex-filters-with-reactable-table-contest/154100"
+     },
+     {
+      "repo": "schmid07/2022-Table-Contest",
+      "year": 2022,
+      "title": "How often do NBA teams attempt more 3 than 2-point shots?",
+      "by": "schmid",
+      "post": "https://forum.posit.co/t/how-often-do-nba-teams-attempt-more-3-than-2-point-shots-table-contest/153620"
+     },
+     {
+      "repo": "AlexB4891/income_tax_calculator_table",
+      "year": 2022,
+      "title": "Income tax calculator table for labor contracts in Ecuador",
+      "by": "Alex Bajaña",
+      "post": "https://forum.posit.co/t/income-tax-calculator-table-for-labor-contracts-in-ecuador-table-contest/154259"
+     },
+     {
+      "repo": "mattkumar/jeopardy-game-contest",
+      "year": 2022,
+      "title": "Jeopardy!",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/jeopardy-table-contest/148574",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "nrennie/2022-table-contest",
+      "year": 2022,
+      "title": "Lemurs at Duke Lemur Center",
+      "by": "Nicola Rennie",
+      "post": "https://forum.posit.co/t/lemurs-at-duke-lemur-center-table-contest/153662",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "bamattre/tidytuesday",
+      "ref": "master",
+      "path": "code",
+      "year": 2022,
+      "title": "Most common crossword answers with lots of vowels",
+      "by": "Richard Bamattre",
+      "post": "https://forum.posit.co/t/most-common-crossword-answers-with-lots-of-vowels-table-contest/152689"
+     },
+     {
+      "repo": "mustberuss/tablesubmission",
+      "ref": "master",
+      "path": "data-raw",
+      "year": 2022,
+      "title": "Patent Assignees whose titles contain \"databases\"",
+      "by": "Russ Allen",
+      "post": "https://forum.posit.co/t/patent-assignees-whose-titles-contain-databases-table-contest/154071"
+     },
+     {
+      "repo": "tashapiro/peloton-stats",
+      "ref": "main",
+      "path": "code",
+      "year": 2022,
+      "title": "Personal Peloton Instructor Leaderboard",
+      "by": "Tanya Shapiro",
+      "post": "https://forum.posit.co/t/personal-peloton-instructor-leaderboard-table-contest/154250"
+     },
+     {
+      "repo": "richardjtelford/quarto-chunk-options",
+      "year": 2022,
+      "title": "Quarto Code Block Options",
+      "by": "Richard Telford",
+      "post": "https://forum.posit.co/t/quarto-code-block-options-table-contest/150198"
+     },
+     {
+      "repo": "leeolney3/2022_Table_Contest",
+      "year": 2022,
+      "title": "Ratings of Plain Dark Chocolate Bar",
+      "by": "Lee Olney",
+      "post": "https://forum.posit.co/t/ratings-of-plain-dark-chocolate-bar-table-contest/152700",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "sschmutz/PangoLineageTranslator",
+      "year": 2022,
+      "title": "SARS-CoV-2 Pango Lineage Translator",
+      "by": "Stefan Schmutz",
+      "post": "https://forum.posit.co/t/sars-cov-2-pango-lineage-translator-table-contest/151380"
+     },
+     {
+      "repo": "Jorge-hercas/table-contest-bees",
+      "year": 2022,
+      "title": "Some things about bees...",
+      "by": "Jorge Hernández ",
+      "post": "https://forum.posit.co/t/some-things-about-bees-table-contest/154260"
+     },
+     {
+      "repo": "DaVo82/AntiMicrobialResistance",
+      "year": 2022,
+      "title": "The burden of bacterial antimicrobial resistance in Germany in 2019",
+      "by": "DanielaV",
+      "post": "https://forum.posit.co/t/the-burden-of-bacterial-antimicrobial-resistance-in-germany-in-2019-table-contest/152155"
+     },
+     {
+      "repo": "karbartolome/quartopub",
+      "ref": "main",
+      "path": "01_tables_r_python",
+      "year": 2022,
+      "title": "The grammar of tables in python (pandas) and R (gt)",
+      "by": "Karina Bartolomé",
+      "post": "https://forum.posit.co/t/the-grammar-of-tables-in-python-pandas-and-r-gt-table-contest/150150",
+      "prize": "Winner"
+     },
+     {
+      "repo": "tashapiro/TidyTuesday",
+      "ref": "master",
+      "path": "2022/W19",
+      "year": 2022,
+      "title": "The New York Times Best Selling Authors",
+      "by": "Tanya Shapiro",
+      "post": "https://forum.posit.co/t/the-new-york-times-best-selling-authors-table-contest/154246",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "bradlindblad/QuotableOffice",
+      "year": 2022,
+      "title": "The Quotable Office: Easily Find Your Favorite Quotes From the Office",
+      "by": "Brad Lindblad",
+      "post": "https://forum.posit.co/t/the-quotable-office-easily-find-your-favorite-quotes-from-the-office-table-contest/150284"
+     },
+     {
+      "repo": "szymanskir/table-contest-2022",
+      "year": 2022,
+      "title": "Tidyverse in Numbers",
+      "by": "Ryszard Szymański",
+      "post": "https://forum.posit.co/t/tidyverse-in-numbers-table-contest/152592",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "mattkumar/time-travel-contest",
+      "year": 2022,
+      "title": "Time Travel Machine",
+      "by": "Matthew Kumar",
+      "post": "https://forum.posit.co/t/time-travel-machine-table-contest/150861",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "qagentur/table-contest-2022",
+      "year": 2022,
+      "title": "Top songs in beauty-related TikToks Summer 2022",
+      "by": "Swen Sieben",
+      "post": "https://forum.posit.co/t/top-songs-in-beauty-related-tiktoks-summer-2022-table-contest/153079",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "Mosk915/RStudioTableContest2022",
+      "year": 2022,
+      "title": "Triangular Tables",
+      "by": "Michael Moskowitz",
+      "post": "https://forum.posit.co/t/triangular-tables-table-contest/151614"
+     },
+     {
+      "repo": "gsmolinski/tableboom",
+      "year": 2022,
+      "title": "{tableboom}: inspect calls and (de)construct table",
+      "by": "Grzegorz",
+      "post": "https://forum.posit.co/t/tableboom-inspect-calls-and-de-construct-table-table-contest/152161",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "thebioengineer/tfrmt_posit_table_contest_2022",
+      "year": 2022,
+      "title": "{tfrmt} Tutorial",
+      "by": "ELLIS H HUGHES",
+      "post": "https://forum.posit.co/t/tfrmt-tutorial-table-contest/154268",
+      "prize": "Honourable mention"
      },
      {
       "repo": "dplloyd/posit-table-comp-2024",
       "year": 2024,
       "title": "Scottish football, season by season",
       "by": "Diarmuid Lloyd",
-      "package": "gt, gtExtras",
-      "note": "No licence: an idea only"
+      "post": "https://forum.posit.co/t/2023-24-scottish-premiership-table-contest/188024"
      },
      {
-      "repo": "rich-iannone/table-contest-example-entry",
-      "year": 2025,
-      "title": "Gibraltar's weather, May 2023 (the example entry)",
-      "by": "Rich Iannone",
-      "package": "Great Tables, gt-extras",
-      "licence": "CC0-1.0"
+      "repo": "gallochris/hellogallo",
+      "ref": "main",
+      "path": "posit_2024_table_contest",
+      "year": 2024,
+      "title": "2024 ACC Baseball Standings and Tournament Seeding",
+      "by": "Chris Gallo",
+      "post": "https://forum.posit.co/t/2024-acc-baseball-standings-and-tournament-seeding-table-contest/187114"
      },
      {
-      "repo": "wvictor14/2025-posit-table-contest-gt-msa",
-      "year": 2025,
-      "title": "Multiple sequence alignments with gt",
-      "by": "Victor Yuan",
-      "package": "gt",
-      "note": "Best gt table of 2025. No licence: an idea only"
+      "repo": "MonyakeR/africa-explorer",
+      "year": 2024,
+      "title": "Africa Explorer",
+      "by": "Retselisitsoe Monyake",
+      "post": "https://forum.posit.co/t/africa-explorer-table-contest/188186",
+      "prize": "Honourable mention"
      },
      {
-      "repo": "PablaOO7/Posit-Table-Contest-2025",
+      "repo": "nvietto/Table-Contest-2024",
+      "year": 2024,
+      "title": "All Mocks are Wrong, but Some are Useful",
+      "by": "Nicholas ",
+      "post": "https://forum.posit.co/t/all-mocks-are-wrong-but-some-are-useful-table-contest/187787"
+     },
+     {
+      "repo": "Gchism94/posit-table-2024",
+      "year": 2024,
+      "title": "Arizona Indigenous Tribal Water Rights",
+      "by": "Greg Chism",
+      "post": "https://forum.posit.co/t/arizona-indigenous-tribal-water-rights-table-contest/188140",
+      "prize": "Best Single-Table Example"
+     },
+     {
+      "repo": "chalg/posit_table_contest_2024",
+      "year": 2024,
+      "title": "Carbon intensity of electricity",
+      "by": "Grant Chalmers",
+      "post": "https://forum.posit.co/t/carbon-intensity-of-electricity-consumption-table-contest/186032",
+      "prize": "Special Prize for Going Viral with a Table"
+     },
+     {
+      "repo": "IJayC/table_contest",
+      "year": 2024,
+      "title": "Chain Reaction game based on Shiny based interactive table",
+      "by": "Jayachandra N",
+      "post": "https://forum.posit.co/t/chain-reaction-game-based-on-shiny-based-interactive-table-table-contest/188144"
+     },
+     {
+      "repo": "agstn/CPR_gtsummary",
+      "year": 2024,
+      "title": "Complete Clinical Study Report Tables with gtsummary",
+      "by": "Agustin Calatroni",
+      "post": "https://forum.posit.co/t/complete-clinical-study-report-tables-with-gtsummary-table-contest/187465",
+      "prize": "Best Pharma Table"
+     },
+     {
+      "repo": "matthewcurrier/PositTableContest2024",
+      "year": 2024,
+      "title": "Cost Per Click for Paid Search",
+      "by": "matthew currier",
+      "post": "https://forum.posit.co/t/cost-per-click-for-paid-search-table-contest/187561"
+     },
+     {
+      "repo": "ixpantia/cran-rank",
+      "year": 2024,
+      "title": "cran-rank",
+      "by": "Andrés Quintero",
+      "post": "https://forum.posit.co/t/cran-rank-table-contest/188194"
+     },
+     {
+      "repo": "Merck/forestly",
+      "year": 2024,
+      "title": "Create a Interactive Table for Adverse Events Analysis for Clinical Trials",
+      "by": "Bingjun Wang",
+      "post": "https://forum.posit.co/t/create-a-interactive-table-for-adverse-events-analysis-for-clinical-trials-table-contest/188200",
+      "prize": "Best {reactable} Table"
+     },
+     {
+      "repo": "EvaMaeRey/tidytitanic",
+      "year": 2024,
+      "title": "declarative basic pivot table construction",
+      "by": "Gina Reynolds",
+      "post": "https://forum.posit.co/t/declarative-basic-pivot-table-construction-table-contest/188205"
+     },
+     {
+      "repo": "nguyennico/planr",
+      "year": 2024,
+      "title": "Display of calculated Replenishment Plan for Supply Chain",
+      "by": "Nicolas NGUYEN",
+      "post": "https://forum.posit.co/t/display-of-calculated-replenishment-plan-for-supply-chain-table-contest/185995"
+     },
+     {
+      "repo": "AbdulrahamanMusa/PyshinyDataTable",
+      "year": 2024,
+      "title": "Enhancing Data Collection and Display with PyShinyDataTable",
+      "by": "Abdulrahaman A Musa",
+      "post": "https://forum.posit.co/t/enhancing-data-collection-and-display-with-pyshinydatatable-table-contest/186085"
+     },
+     {
+      "repo": "ahasoplakus/nuclearweapons",
+      "year": 2024,
+      "title": "Estimated Nuclear Warhead Inventories, 2023",
+      "by": "Sukalpo Saha",
+      "post": "https://forum.posit.co/t/estimated-nuclear-warhead-inventories-2023-table-contest/187436"
+     },
+     {
+      "repo": "jrycw/posit-gt-2024",
+      "year": 2024,
+      "title": "Euro NCAP Safety Ratings - 2023",
+      "by": "Jerry Wu",
+      "post": "https://forum.posit.co/t/euro-ncap-safety-ratings-2023-table-contest/187584",
+      "prize": "Best Table that Uses Polars"
+     },
+     {
+      "repo": "freierson/coffee-table",
+      "year": 2024,
+      "title": "Exploring Coffee Flavour Notes in The Great American Taste Test",
+      "by": "Filip Reierson",
+      "post": "https://forum.posit.co/t/exploring-coffee-flavour-notes-in-the-great-american-taste-test-table-contest/188063"
+     },
+     {
+      "repo": "landeranalytics/faketables",
+      "ref": "main",
+      "path": "vignettes",
+      "year": 2024,
+      "title": "Favorite Pizza Places, powered by {faketables}",
+      "by": "Gus Lipkin",
+      "post": "https://forum.posit.co/t/favorite-pizza-places-powered-by-faketables-table-contest/188196"
+     },
+     {
+      "repo": "atusy/fuzzyhelp-shinyapp",
+      "year": 2024,
+      "title": "felp::fuzzyhelp() for Fuzzy Search and Preview of R Documentation",
+      "by": "atusy",
+      "post": "https://forum.posit.co/t/felp-fuzzyhelp-for-fuzzy-search-and-preview-of-r-documentation-table-contest/186465",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "brouwern/posit_tables_2024",
+      "year": 2024,
+      "title": "Genetic similarities and differences between humans",
+      "by": "Nathan Brouwer",
+      "post": "https://forum.posit.co/t/genetic-similarities-and-differences-between-humans-table-contest/188178"
+     },
+     {
+      "repo": "JidduAlexander/posit_2024_table_contest",
+      "year": 2024,
+      "title": "Global and National Greenhouse Gas Emissions",
+      "by": "JidduAlexander",
+      "post": "https://forum.posit.co/t/global-and-national-greenhouse-gas-emissions-table-contest/188162",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "ATL2001/great_GPX",
+      "ref": "main",
+      "year": 2024,
+      "title": "Great GPX",
+      "by": "Aaron T Leese",
+      "post": "https://forum.posit.co/t/great-gpx-table-contest/188138"
+     },
+     {
+      "repo": "tiffanychu90/great-tables-contest",
+      "year": 2024,
+      "title": "Hourly Transit Service Patterns",
+      "by": "tiffanychu90",
+      "post": "https://forum.posit.co/t/hourly-transit-service-patterns-table-contest/187805",
+      "prize": "Greatest Great Tables Table"
+     },
+     {
+      "repo": "samrit2442/posit_table_contest_2024",
+      "year": 2024,
+      "title": "Indian Club Football Records",
+      "by": "Samrit Pramanik",
+      "post": "https://forum.posit.co/t/indian-club-football-records-table-contest/188133",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "PablaOO7/Posit-Table-Contest-2024",
+      "ref": "main",
+      "year": 2024,
+      "title": "Indian States Meteorological Data Table",
+      "by": "Jaspreet",
+      "post": "https://forum.posit.co/t/indian-states-meteorological-data-table-table-contest/188134",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "JBC-Inc/jbcTableContest",
+      "year": 2024,
+      "title": "Interactive Exploration and Analysis of Oil Wells",
+      "by": "Jeff",
+      "post": "https://forum.posit.co/t/interactive-exploration-and-analysis-of-oil-wells-table-contest/188169"
+     },
+     {
+      "repo": "sree1658/PlayerPerformanceAnalysis",
+      "year": 2024,
+      "title": "IPL Player Analysis",
+      "by": "Sreeram",
+      "post": "https://forum.posit.co/t/ipl-player-analysis-table-contest/188136",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "brendensm/misuvi_table",
+      "year": 2024,
+      "title": "Michigan Substance Use Vulnerability Index (MI-SUVI) Exploration Table",
+      "by": "Brenden Smith",
+      "post": "https://forum.posit.co/t/michigan-substance-use-vulnerability-index-mi-suvi-exploration-table-table-contest/188198"
+     },
+     {
+      "repo": "jhk0530/mine.tables",
+      "year": 2024,
+      "title": "Minesweeper with Tables and Gemini",
+      "by": "Jinhwan Kim",
+      "post": "https://forum.posit.co/t/minesweeper-with-tables-and-gemini-table-contest/187968"
+     },
+     {
+      "repo": "rpodcast/pod-db-dash",
+      "year": 2024,
+      "title": "Podcast Index Database Dashboard",
+      "by": "Eric Nantz",
+      "post": "https://forum.posit.co/t/podcast-index-database-dashboard-table-contest/188177",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "mccarthy-m-g/tidytales",
+      "ref": "main",
+      "path": "posts/2023-05-03_r-developers",
+      "year": 2024,
+      "title": "R Developer Contributions",
+      "by": "Michael McCarthy",
+      "post": "https://forum.posit.co/t/r-developer-contributions-table-contest/187259"
+     },
+     {
+      "repo": "illak/prueba_quarto_blog",
+      "ref": "main",
+      "path": "posts/tabla_gt_se",
+      "year": 2024,
+      "title": "Resumen Sistema Educativo en Córdoba Capital",
+      "by": "Illak Zapata",
+      "post": "https://forum.posit.co/t/resumen-sistema-educativo-en-cordoba-capital-table-contest/186606",
+      "prize": "Best {gt} Table"
+     },
+     {
+      "repo": "ahasoplakus/rollingstones",
+      "year": 2024,
+      "title": "Rolling Stone's Greatest Albums of All Time",
+      "by": "Sukalpo Saha",
+      "post": "https://forum.posit.co/t/rolling-stones-greatest-albums-of-all-time-table-contest/186660",
+      "prize": "Best Static Table"
+     },
+     {
+      "repo": "steodose/Table-Contest-2024",
+      "year": 2024,
+      "title": "Top 20 golfers: Scottie Scheffler's 2024",
+      "by": "Stephan Teodosescu",
+      "post": "https://forum.posit.co/t/scottie-schefflers-dominance-table-contest/188181",
+      "prize": "Best Sports Table"
+     },
+     {
+      "repo": "ahasoplakus/shifter",
+      "year": 2024,
+      "title": "shiftR: Tidy Shift Tables in R",
+      "by": "Sukalpo Saha",
+      "post": "https://forum.posit.co/t/shiftr-tidy-shift-tables-in-r-table-contest/186105",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "teima90/SingleCellTable",
+      "year": 2024,
+      "title": "SingleCellTable",
+      "by": "Maite",
+      "post": "https://forum.posit.co/t/singlecelltable-table-contest/188166"
+     },
+     {
+      "repo": "christophscheuch/app-stock-analyzer",
+      "year": 2024,
+      "title": "Stock-specific summaries and optimal portfolio weights",
+      "by": "Christoph Scheuch",
+      "post": "https://forum.posit.co/t/stock-specific-summaries-and-optimal-portfolio-weights-table-contest/187594",
+      "prize": "Best Shiny Table"
+     },
+     {
+      "repo": "Shuhanstack/table-of-birds",
+      "year": 2024,
+      "title": "Table of Birds",
+      "by": "Shuhan Song",
+      "post": "https://forum.posit.co/t/table-of-birds-table-contest/187908",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "DeepanshKhurana/PositTableContest2024",
+      "year": 2024,
+      "title": "Tables for Personal Finance (Ebenezer)",
+      "by": "Deepansh Khurana",
+      "post": "https://forum.posit.co/t/tables-for-personal-finance-ebenezer-table-contest/187529",
+      "prize": "Best Finance Table"
+     },
+     {
+      "repo": "Merck/gsdesign2",
+      "year": 2024,
+      "title": "Tabulating Group Sequential Designs for Clinical Trials: Lucid, Structured, and Compact Summaries",
+      "by": "Yujie Zhao",
+      "post": "https://forum.posit.co/t/tabulating-group-sequential-designs-for-clinical-trials-lucid-structured-and-compact-summaries-table-contest/188202",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "AKostiv8/threejstable",
+      "year": 2024,
+      "title": "Three.js Table with Country Geographic Information - Shiny Package",
+      "by": "Anastasiia Kostiv",
+      "post": "https://forum.posit.co/t/three-js-table-with-country-geographic-information-shiny-package-table-contest/188098",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "fralfaro/Titanic-Challenge",
+      "year": 2024,
+      "title": "Titanic Challenge: Data Analysis to Predict Passenger Survival",
+      "by": "Francisco Alfaro Medina",
+      "post": "https://forum.posit.co/t/titanic-challenge-data-analysis-to-predict-passenger-survival-table-contest/187768",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "melissavanbussel/spotify-dashboard",
+      "ref": "main",
+      "year": 2024,
+      "title": "Today's Top Hits - Spotify Dashboard",
+      "by": "Melissa Van Bussel",
+      "post": "https://forum.posit.co/t/todays-top-hits-spotify-dashboard-table-contest/187538",
+      "prize": "Winner"
+     },
+     {
+      "repo": "arnavchauhan7/top_ai_stock_analysis",
+      "year": 2024,
+      "title": "Top AI Companies Stock Performance",
+      "by": "Arnav Chauhan",
+      "post": "https://forum.posit.co/t/top-ai-companies-stock-performance-table-contest/188153",
+      "prize": "Outstanding Novice Submission"
+     },
+     {
+      "repo": "bamattre/posit_table_2024",
+      "year": 2024,
+      "title": "Top Ranked Board Games",
+      "by": "Richard Bamattre",
+      "post": "https://forum.posit.co/t/top-ranked-board-games-table-contest/187897",
+      "prize": "Best Interactive Table"
+     },
+     {
+      "repo": "neelloc28/Posit-2024-table-contest",
+      "ref": "main",
+      "year": 2024,
+      "title": "Top Word Board Games by Year",
+      "by": "Colleen M.",
+      "post": "https://forum.posit.co/t/top-word-board-games-by-year-table-contest/188093"
+     },
+     {
+      "repo": "EkremBayar/2024-Posit-Table-Contest",
+      "year": 2024,
+      "title": "Transfermarkt Contract Detector Shiny Application",
+      "by": "Ekrem Bayar",
+      "post": "https://forum.posit.co/t/transfermarkt-contract-detector-shiny-application-table-contest/186348",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "jorammutenge/contest",
+      "year": 2024,
+      "title": "TSA Airport Checkings on Major Holidays",
+      "by": "Joram",
+      "post": "https://forum.posit.co/t/tsa-airport-checkings-on-major-holidays-table-contest/187965",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "dy1395/edson",
+      "year": 2024,
+      "title": "World Cup 2022 Recap",
+      "by": "Day Yi",
+      "post": "https://forum.posit.co/t/world-cup-2022-recap-table-contest/188070",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "juleswg23/baseball",
       "year": 2025,
-      "title": "Sustainable milk comparison",
-      "by": "PablaOO7",
-      "package": "gt, gtExtras",
-      "note": "No licence: an idea only"
+      "title": "Baseball Pitchers: Luck vs. Skill",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/5",
+      "prize": "Greatest Great Tables Table"
+     },
+     {
+      "repo": "deepdk/table_2025",
+      "year": 2025,
+      "title": "Culinary Collection Dashboard",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/4",
+      "prize": "Best Reactable Table"
+     },
+     {
+      "repo": "mitchhenderson/2025-Table-Contest",
+      "year": 2025,
+      "title": "Estimating National Rugby League Finals Probabilities with Monte Carlo Simulation",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/27",
+      "prize": "Best Sports Table"
+     },
+     {
+      "repo": "mstavro/fleetR",
+      "year": 2025,
+      "title": "Exploring United’s Fleet Using fleetR: An Airline Fleet Dashboard",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/19",
+      "prize": "Winner"
+     },
+     {
+      "repo": "lukmanaj/latam-pharma-atc-analysis",
+      "year": 2025,
+      "title": "Mapping the Latin American Pharmaceutical Landscape",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/33",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "ILIG-MESSINA/Migration-recommendeR",
+      "ref": "main",
+      "year": 2025,
+      "title": "Migration RecommendeR System",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/34",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "kkakey/nycb-75th-season",
+      "year": 2025,
+      "title": "New York City Ballet's 75th Season",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/21",
+      "prize": "Best Reactablefmtr Table"
+     },
+     {
+      "repo": "JauntyJJS/2025_table",
+      "year": 2025,
+      "title": "Number of Visits to Singapore’s Places of Interest from 2010 to 2024",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/13",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "ramadatta/paris-2024-olympics-table",
+      "year": 2025,
+      "title": "Paris 2024 Olympics: Medal Performance Analysis",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/14",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "melissavanbussel/gt-pixel-art",
+      "year": 2025,
+      "title": "Pixel Art Using gt",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/28",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "sree1658/PL-Player-Performance-Analysis",
+      "year": 2025,
+      "title": "Premier League 2024-25 Player Statistics",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/25",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "wjschne/wjschne.github.io",
+      "ref": "main",
+      "path": "posts/apatables",
+      "year": 2025,
+      "title": "Recreating All 24 Example Tables from the APA Publication Manual, Seventh Edition",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/15",
+      "prize": "Best Tutorial"
      },
      {
       "repo": "ozancanozdemir/2025-Posit-Table-Contest",
       "year": 2025,
       "title": "S&P 500 monitoring dashboard",
       "by": "Ozancan Özdemir",
-      "package": "gt, Shiny",
-      "note": "No licence: an idea only"
+      "post": "https://github.com/rich-iannone/table-contest/discussions/31",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "leoohyama/posit_table_contest_2025",
+      "year": 2025,
+      "title": "Scaling Free Book Distribution with Interactive Data",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/16",
+      "prize": "Runner up"
+     },
+     {
+      "repo": "Polkas/tgcontest2025",
+      "year": 2025,
+      "title": "Submission-Ready and Elegant Clinical Tables: Combining {gt} Styling with {gridify} Layout Control",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/18",
+      "prize": "Best Pharma Table"
+     },
+     {
+      "repo": "PablaOO7/Posit-Table-Contest-2025",
+      "year": 2025,
+      "title": "Sustainable milk comparison",
+      "by": "PablaOO7",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/23",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "wvictor14/2025-posit-table-contest-gt-msa",
+      "year": 2025,
+      "title": "Multiple sequence alignments with gt",
+      "by": "Victor Yuan",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/10",
+      "prize": "Best gt Table"
+     },
+     {
+      "repo": "kevbaer/vb_tables_comp_entry",
+      "year": 2025,
+      "title": "Volleyball Analytics",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/30",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "jorgethomasm/forecasting-wind-power",
+      "ref": "main",
+      "year": 2025,
+      "title": "Wind Farm SCADA-Based Reliability Evaluation",
+      "by": "",
+      "post": "https://github.com/rich-iannone/table-contest/discussions/8",
+      "prize": "Honourable mention"
      },
      {
       "repo": "emaleckova/2025-Table-Contest",
       "year": 2025,
       "title": "gt tables for scientific projects (tutorial)",
       "by": "E. Malečková",
-      "package": "gt",
-      "note": "No licence: an idea only"
+      "post": "https://github.com/rich-iannone/table-contest/discussions/26",
+      "prize": "Honourable mention"
+     },
+     {
+      "repo": "rich-iannone/table-contest-example-entry",
+      "year": 2025,
+      "title": "Gibraltar's weather, May 2023 (the example entry)",
+      "by": "Rich Iannone"
      }
     ]
    },
