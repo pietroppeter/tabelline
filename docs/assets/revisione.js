@@ -13,8 +13,10 @@
   // selector does), and the heading it is under. Not at an element: the page is rebuilt from its
   // source, and the text is what stays. The text of the page is its text nodes, in order.
   var CONTEXT = 32;
+  var BLOCKS = 'p, li, h1, h2, h3, h4, pre, td, th, caption, blockquote, summary, dt, dd, div, nav';
   function textIndex() {
-    var nodes = [], text = '';
+    // a line break between blocks, so the words around a quote read "page Select", not "pageSelect"
+    var nodes = [], text = '', last = null;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         var p = n.parentNode.closest('script, style, #revisione');
@@ -22,6 +24,9 @@
       }
     });
     for (var n = walker.nextNode(); n; n = walker.nextNode()) {
+      var block = n.parentNode.closest(BLOCKS);
+      if (nodes.length && block !== last) text += '\n';
+      last = block;
       nodes.push({ node: n, start: text.length });
       text += n.data;
     }
@@ -127,12 +132,13 @@
     try {
       localStorage.setItem(KEY, JSON.stringify(notes.map(function (n) {
         return { id: n.id, kind: n.kind, quote: n.quote, prefix: n.prefix, suffix: n.suffix,
-                 section: n.section, text: n.text, replacement: n.replacement, at: n.at };
+                 section: n.section, text: n.text, replacement: n.replacement, at: n.at, images: n.images };
       })));
-    } catch (e) {}
+      return true;
+    } catch (e) { return false; }   // the browser's storage is full: screenshots take the most
   }
   var notes = load();
-  var current = -1;
+  var current = -1, full = false;
 
   // part: bar
   // The bar stays at the bottom of the screen, where a thumb reaches on a phone: the previous and
@@ -191,6 +197,7 @@
   }
   function show() {
     var c = bar.querySelector('.rv-count');
+    if (full) { c.textContent = 'storage full: export'; return; }
     c.textContent = notes.length ? (current >= 0 ? (current + 1) + '/' : '') + notes.length : 'none';
     bar.querySelector('[data-do="prev"]').disabled = !notes.length;
     bar.querySelector('[data-do="next"]').disabled = !notes.length;
@@ -202,8 +209,14 @@
   }
 
   // part: sheet
-  // Writing a comment: what it is about, its kind (a comment, a replacement or a cut), and the
-  // text. A replacement starts from the quoted text, to be edited in place.
+  // Writing a comment: what it is about, its kind (a comment, a replacement or a cut), the text,
+  // and screenshots. A replacement starts from the quoted text, to be edited in place. While a
+  // sheet is open the page may not zoom, so a phone does not zoom in on the field typed in.
+  var viewport = document.querySelector('meta[name="viewport"]');
+  var looseViewport = viewport ? viewport.content : '';
+  function noZoom(on) {
+    if (viewport) viewport.content = on ? looseViewport + ', maximum-scale=1' : looseViewport;
+  }
   var sheet = document.createElement('dialog');
   sheet.className = 'rv-sheet';
   sheet.innerHTML =
@@ -214,14 +227,18 @@
     '<label><input type="radio" name="kind" value="replace"> Replace</label>' +
     '<label><input type="radio" name="kind" value="cut"> Cut</label></fieldset>' +
     '<label class="rv-replacement">Replace with<textarea name="replacement" rows="3"></textarea></label>' +
-    '<label>Note<textarea name="text" rows="4" placeholder="What should change, and why"></textarea></label>' +
+    '<label>Note<textarea name="text" rows="3" placeholder="What should change, and why"></textarea></label>' +
+    '<div class="rv-shots"><div class="rv-thumbs"></div>' +
+    '<label class="rv-attach">+ Screenshot<input type="file" accept="image/*" multiple></label></div>' +
     '<div class="rv-actions"><button value="delete" class="rv-delete">Delete</button>' +
     '<button value="cancel">Cancel</button><button value="save" class="rv-save">Save</button></div>' +
     '</form>';
   document.body.appendChild(sheet);
-  var form = sheet.querySelector('form'), editing = null;
+  var form = sheet.querySelector('form'), editing = null, shots = [];
   function openSheet(note) {
     editing = note;
+    shots = (note.images || []).slice();
+    thumbs();
     var where = note.section && note.section.title ? 'In “' + note.section.title + '”' : 'At the top of the page';
     sheet.querySelector('.rv-where').textContent = note.quote ? where : 'On the whole page';
     sheet.querySelector('.rv-quote').textContent = note.quote ? note.quote.replace(/\s+/g, ' ').trim() : '';
@@ -232,17 +249,51 @@
     form.elements.replacement.value = note.replacement != null ? note.replacement : (note.quote || '').replace(/\s+/g, ' ').trim();
     sheet.querySelector('.rv-delete').hidden = !note.id;
     kinds();
+    noZoom(true);
     sheet.showModal();
   }
+  function thumbs() {
+    var box = sheet.querySelector('.rv-thumbs');
+    box.innerHTML = '';
+    shots.forEach(function (src, i) {
+      var t = document.createElement('div');
+      t.className = 'rv-thumb';
+      t.innerHTML = '<img alt="screenshot ' + (i + 1) + '"><button type="button" aria-label="Remove screenshot ' + (i + 1) + '">×</button>';
+      t.querySelector('img').src = src;
+      t.querySelector('button').addEventListener('click', function () { shots.splice(i, 1); thumbs(); });
+      box.appendChild(t);
+    });
+  }
+  function shrink(file) {   // a screenshot as a JPEG at most 900 pixels wide, to keep storage small
+    return new Promise(function (ok, ko) {
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function () {
+        var k = Math.min(1, 900 / img.naturalWidth), c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        ok(c.toDataURL('image/jpeg', 0.72));
+      };
+      img.onerror = ko;
+      img.src = url;
+    });
+  }
+  sheet.querySelector('input[type="file"]').addEventListener('change', function (e) {
+    Promise.all([].map.call(e.target.files, shrink)).then(function (srcs) {
+      shots = shots.concat(srcs); thumbs(); e.target.value = '';
+    });
+  });
   function kinds() { sheet.querySelector('.rv-replacement').hidden = form.elements.kind.value !== 'replace'; }
   form.addEventListener('change', kinds);
   sheet.addEventListener('close', function () {
     var act = sheet.returnValue, note = editing;
     editing = null;
+    noZoom(false);
     if (act === 'save') {
       note.kind = note.quote ? form.elements.kind.value : 'comment';
       note.text = form.elements.text.value.trim();
       note.replacement = note.kind === 'replace' ? form.elements.replacement.value : null;
+      note.images = shots.length ? shots : undefined;
       if (!note.id) {
         note.id = 'c' + Date.now().toString(36);
         note.at = new Date().toISOString();
@@ -253,15 +304,18 @@
     } else if (act === 'delete') {
       notes = notes.filter(function (n) { return n !== note; });
     } else { pending = null; show(); return; }
-    save();
+    var saved = save();
     drawAll();
     current = notes.indexOf(note);
+    full = !saved;
     if (current >= 0) go(current); else show();
   });
 
   // part: export
   // The comments as one text, for a person and for an agent: a YAML front matter that says which
   // page, version and source they are on, then one Markdown section per comment, in page order.
+  // The text can be edited before it is copied or shared. Screenshots cannot travel in copied
+  // text: Share sends the text as a file with the screenshots, named as the text names them.
   function yaml(s) { return JSON.stringify(String(s)); }   // a JSON string is a YAML string
   function flat(s) { return s.replace(/\s+/g, ' '); }
   function quoted(s) { return flat(s).trim(); }
@@ -270,6 +324,7 @@
     while (s.indexOf(f) >= 0) f += '~';
     return f + 'text\n' + s.trim() + '\n' + f;
   }
+  function shotName(i, k) { return 'review-v' + page.version + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
   function exportText() {
     var out = ['---',
       'format: nimib-review/1',
@@ -295,27 +350,47 @@
       if (n.kind === 'replace') out.push('Replace with:', '', fence(n.replacement || ''), '');
       if (n.kind === 'cut') out.push('Cut it.', '');
       if (n.text) out.push(n.text, '');
+      if (n.images) out.push('Screenshots: ' + n.images.map(function (src, k) { return shotName(i, k); }).join(', '), '');
     });
     return out.join('\n');
   }
   var box = document.createElement('dialog');
   box.className = 'rv-sheet rv-export';
   box.innerHTML =
-    '<form method="dialog"><p class="rv-where">Export: paste it in the chat</p>' +
-    '<textarea readonly rows="12"></textarea>' +
+    '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy or share it</p>' +
+    '<textarea rows="12" spellcheck="false"></textarea>' +
     '<div class="rv-actions"><button value="clear" class="rv-delete">Clear all</button>' +
-    '<button value="close">Close</button><button value="copy" class="rv-save">Copy</button></div></form>';
+    '<button value="close">Close</button><button value="share">Share</button>' +
+    '<button value="copy" class="rv-save">Copy</button></div></form>';
   document.body.appendChild(box);
   var area = box.querySelector('textarea');
   function openExport() {
     var clear = box.querySelector('[value="clear"]');
     clear.dataset.sure = ''; clear.textContent = 'Clear all';
     area.value = exportText();
+    box.querySelector('[value="share"]').hidden = !navigator.share;
+    noZoom(true);
     box.showModal();
+  }
+  box.addEventListener('close', function () { noZoom(false); });
+  function fileOf(src, name) {   // a data: URL as a File, without fetch (an artifact may block it)
+    var bytes = atob(src.split(',')[1]), arr = new Uint8Array(bytes.length);
+    for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+    return new File([arr], name, { type: 'image/jpeg' });
+  }
+  function share() {
+    var files = [new File([area.value], 'review-v' + page.version + '.md', { type: 'text/markdown' })];
+    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { files.push(fileOf(src, shotName(i, k))); }); });
+    var data = { title: 'Review of ' + page.title, files: files };
+    if (!navigator.canShare || !navigator.canShare(data)) data = { title: data.title, text: area.value };
+    return navigator.share(data);
   }
   box.querySelector('form').addEventListener('submit', function (e) {
     var act = e.submitter && e.submitter.value;
-    if (act === 'copy') {
+    if (act === 'share') {
+      e.preventDefault();
+      share().catch(function () {});
+    } else if (act === 'copy') {
       e.preventDefault();
       var done = function () { e.submitter.textContent = 'Copied ✓'; setTimeout(function () { e.submitter.textContent = 'Copy'; }, 1500); };
       var fallback = function () { area.select(); try { document.execCommand('copy'); done(); } catch (x) {} };
@@ -325,7 +400,7 @@
       e.submitter.dataset.sure = 'yes';
       e.submitter.textContent = 'Delete ' + notes.length + '?';
     } else if (act === 'clear') {
-      notes = []; current = -1; save(); drawAll(); show();
+      notes = []; current = -1; full = !save(); drawAll(); show();
     }
   });
 
