@@ -4,4 +4,4 @@
 ## is kept as it was in devlog/review-mode/vN/. A new round: copy the newest to the next number,
 ## add its line to review_mode/storia.nim and import it here.
 {.warning[UnusedImport]: off.}
-import review_mode/[v1, v2, v3, v4, v5]
+import review_mode/[v1, v2, v3, v4, v5, v6]

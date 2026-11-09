@@ -219,6 +219,12 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid v
 .indice > ol > li.parte-secondary::before { background: var(--secondary); color: var(--ink); }
 .indice > ol > li.parte-success::before { background: var(--success); color: var(--ink); }
 .indice ol ol { font: 400 .95rem/1.45 var(--font); padding-left: 0; margin: .15rem 0 .3rem; list-style: none; }
+/* back to the indice: an arrow at the end of every heading, on the pages that have an indice */
+.su { display: none; margin-left: .45rem; padding: .2em .45em; font-size: .55em; vertical-align: .25em;
+  color: var(--muted); text-decoration: none; border: 1px solid var(--line); line-height: 1; }
+.su::before { content: "↑"; }
+.su:hover, .su:focus-visible { color: var(--ink); border-color: var(--ink); }
+body:has(#indice) .su { display: inline-block; }
 .indice ol ol li::before { content: "— "; color: var(--muted); }
 .indice a { text-decoration-line: none; color: var(--ink); }
 .indice a:hover { text-decoration-line: underline; }

@@ -152,6 +152,10 @@ primary's text colour, indented in the indice. `nbIndice` puts the indice where 
 usually right after the title. Don't go deeper than `###`. A long page can be split in parts
 with `nbParte(number, title, role)`: from there on, its sections take the part's colour.
 
+On a page with an indice, every heading ends with a small **↑** in a square: it goes back to the
+indice, so a long page on a phone is never more than a tap from its contents. It is drawn by
+the CSS (`.su`), so the heading's text, its anchor and a review quote stay the same.
+
 ## Notes
 
 A note is a sheet set apart, beside the text, in Markdown. Its kind is an enum, `NotaKind`, so a

@@ -64,7 +64,8 @@ func headingsOf*(markdownText: string): seq[(int, string)] =
     elif line.startsWith("### "): result.add (3, line[4 .. ^1].strip.stripInline)
 
 func addHeadingIds(html: string): string =
-  ## `<h2>Text</h2>` becomes `<h2 id="text">Text</h2>`, matching `slugify` of the indice.
+  ## `<h2>Text</h2>` becomes `<h2 id="text">Text<a class="su" href="#indice"></a></h2>`: an id
+  ## matching `slugify` of the indice, and a way back to it.
   result = html
   for tag in ["h2", "h3"]:
     var res = ""
@@ -77,7 +78,10 @@ func addHeadingIds(html: string): string =
       let b = result.find(close, a)
       if b < 0: break
       let inner = result[a + open.len ..< b]
-      res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner & close
+      # an arrow back to the indice, shown only on pages that have one (CSS, `.su`); drawn by
+      # CSS too, so the heading's text stays the same for anchors and quotes
+      res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner &
+        "<a class=\"su\" href=\"#indice\" aria-label=\"Back to the contents\"></a>" & close
       i = b + close.len
     res.add result[i .. ^1]
     result = res
@@ -231,7 +235,7 @@ newNbBlock(NbIndice):
           items.add "<li>" & link & "</li>"
     if openSub: items.add "</ol>"
     if items.len > 0: items.add "</li>"
-    &"""<nav class="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
+    &"""<nav class="indice" id="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
 
 proc indice*(nb: var Nb, title = "Indice") =
   nb.add newNbIndice(title = title)
