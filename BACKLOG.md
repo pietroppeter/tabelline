@@ -104,6 +104,9 @@ Rough size: S (hours), M (a day or two), L (more).
   links to its page from the commit that published it (a new field in `storia.nim`); keep the
   round exports as the record. Do it when the experiment ends, or when the build passes about 2
   minutes.
+  Pietro's ideas (9 Nov): store a version as nimib's JSON dump of the document, and a later one
+  as a delta of blocks from it, so a frozen version renders without compiling; later, see what a
+  NIF file would give instead of JSON (a nimib change, not a tabelline one).
 - **Review-mode rounds made site-wide changes outside a change** (S). The ↑ link back to the
   indice on every page (#46) and the review-mode lines in AGENTS.md: check them against the specs
   and the design guide, and write a change if they stay. Review-mode PRs now stay open until this
