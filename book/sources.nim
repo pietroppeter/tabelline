@@ -1,5 +1,5 @@
 ## The sources the book plans to port, as tables: book/plan/sources.json (written by hand) and
-## book/plan/pages.json (written by book/plan/plan.py, which searches each source's repository
+## book/plan/pages.json (written by book/plan/plan.nim, which searches each source's repository
 ## for its pages), read when the chapter compiles. `featureButtons` and `featurePages` turn them
 ## around: for every feature of the coverage map (docs/coverage/gt.json), the pages that show it.
 import std/[json, strutils, sequtils, algorithm, tables, sets]
@@ -161,7 +161,7 @@ proc countReady*(entries: seq[JsonNode], r: string): int = entries.countIt(it["r
 # ---------------------------------------------------------------- by feature
 
 proc planOf(row: JsonNode): string =
-  ## The release a row of the coverage map is ready in (as `plan_of` in book/plan/plan.py).
+  ## The release a row of the coverage map is ready in (as `planOf` in book/plan/plan.nim).
   case row["status"].getStr
   of "done": "0.1"
   of "partial": (if row.hasKey("plan"): row["plan"].getStr else: "0.1")
@@ -180,7 +180,7 @@ type Shown = object
 
 proc byFeature(): Table[string, seq[Shown]] =
   ## For every feature, the pages that show it: the help pages of its own functions first, then
-  ## the others from the smallest (fewest calls), as `plan.py <feature>` lists them.
+  ## the others from the smallest (fewest calls), as `plan.nim <feature>` lists them.
   var lang: Table[string, string]
   for s in sources["sources"]: lang[s["id"].getStr] = s["lang"].getStr
   var own: Table[string, HashSet[string]]

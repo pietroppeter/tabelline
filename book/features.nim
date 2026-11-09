@@ -37,7 +37,7 @@ feature come by source; in each, the help pages of the feature's own functions f
 others from the smallest, the one with fewest calls. 🐍 is for Python, 🏴‍☠️ for R, as in the tabs
 of the chapters, 🏆 for an entry of the Posit Table Contest.
 
-All of them, from the repository: `python3 book/plan/plan.py fmt_currency` (a gt function, or
+All of them, from the repository: `nim r book/plan/plan.nim fmt_currency` (a gt function, or
 words of the feature's name, `"row groups"`) prints every page that shows it, with its link and
 the release it can be ported in.
 """
