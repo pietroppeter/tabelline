@@ -173,7 +173,7 @@ block:
           does: "Pasted in the note, like text, they show small under it, with × to remove one. The row is there only when there are some.",
           open: "Draw on a screenshot, to circle what is wrong?"),
     Pezzo(n: 9, piece: "The export text",
-          does: "Every comment as Markdown with a YAML front matter, to edit before it goes.", open: ""),
+          does: "Every comment as Markdown, after a block of YAML, to edit before it goes.", open: ""),
     Pezzo(n: 10, piece: "Copy",
           does: "Copies the text only. Each screenshot is listed above, with a *Copy image* of its own, to paste after the text.", open: ""),
     Pezzo(n: 11, piece: "Share",
@@ -210,23 +210,25 @@ made.
 ## The export
 
 The export is for two readers, the reviewer who checks it before pasting it, and the agent that
-applies it. JSON would be easy for the second and tiring for the first. Markdown with a YAML
-front matter is easy for both: the front matter holds what a program needs (which page, which
-source file, which version), and each comment is a short section with its kind and its place in
-the heading, the words as a quote, the replacement in a fence of its own.
+applies it. JSON would be easy for the second and tiring for the first. Markdown is easy for
+both, and a chat shows it well: a title, a block of YAML that holds what a program needs (which
+page, which source file, which version), and each comment a short section with its kind and its
+place in the heading, the words as a quote, the replacement in a fence of its own. Up to version 3
+the YAML was a front matter, between two `---` lines: round 3 found that a chat shows those as a
+rule and a pile of loose lines, so from version 4 it is a `yaml` block (`format: nimib-review/2`).
 
-```text
----
-format: nimib-review/1
+````text
+# Review of “Review mode”, version 4
+
+```yaml
+format: nimib-review/2
 title: "Review mode"
 page: "https://pietroppeter.github.io/tabelline/devlog/review-mode/"
 source: "docs/devlog/review_mode/v4.nim"
 version: 4
 exported: "2026-11-09T09:40:00.000Z"
 comments: 2
----
-
-# Review of “Review mode”, version 4
+```
 
 ## 1. Comment, on the whole page
 
@@ -241,7 +243,7 @@ Around it: “…nts, to edit, copy or share. ⟦Every button is at least 44 pix
 Remove these words.
 
 Screenshots: review-v4-2-1.jpg
-```
+````
 
 The quote is the text as the page shows it, so the agent searches the source for it (without
 the Markdown marks) and uses the words around it when it appears more than once. A comment with
@@ -256,7 +258,7 @@ An export pasted in the chat should be enough: no instructions around it. A skil
 agent what to do with one, `.claude/skills/nimib-review/SKILL.md` in this repository for now
 (it can move to Pietro's skills once it works). In short:
 
-1. read the front matter, and check that the number of comments matches;
+1. read the YAML block (or the front matter, before version 4), and check that the number of comments matches;
 2. find each quote in the source, knowing that it is rendered text (no Markdown marks, and the
    text of a table is made by code, not written in the notebook);
 3. keep the version that was reviewed, and make the changes in a new one;

@@ -329,7 +329,7 @@
   });
 
   // part: export
-  // The comments as one text, for a person and for an agent: a YAML front matter that says which
+  // The comments as one text, for a person and for an agent: a title, a YAML block that says which
   // page, version and source they are on, then one Markdown section per comment, in page order.
   // The text can be edited before it is copied or shared. Copy copies the text only, short
   // enough for a chat message; each screenshot has a Copy of its own, to paste after it. Share
@@ -344,16 +344,18 @@
   }
   function shotName(i, k) { return 'review-v' + page.version + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
   function exportText() {
-    var out = ['---',
-      'format: nimib-review/1',
+    // a chat shows a pasted text as Markdown: a front matter there is a rule and loose lines,
+    // a yaml fence is a tidy box, so the settings go in one, under the title
+    var out = ['# Review of “' + page.title + '”, version ' + page.version, '',
+      '```yaml',
+      'format: nimib-review/2',
       'title: ' + yaml(page.title),
       'page: ' + yaml(location.origin + location.pathname),
       'source: ' + yaml(page.source),
       'version: ' + page.version,
       'exported: ' + yaml(new Date().toISOString()),
       'comments: ' + notes.length,
-      '---', '',
-      '# Review of “' + page.title + '”, version ' + page.version, ''];
+      '```', ''];
     notes.forEach(function (n, i) {
       var cut = n.kind === 'cut' || (n.kind === 'replace' && !(n.replacement || '').trim());
       var kind = cut ? 'Remove' : n.kind === 'replace' ? 'Replace' : 'Comment';

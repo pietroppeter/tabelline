@@ -1,6 +1,6 @@
 ---
 name: nimib-review
-description: Use when a review export from a nimib page is pasted in the chat (text that starts with a YAML front matter holding `format: nimib-review/1`), to apply each comment to the page's source and close the review round.
+description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` or `/2`), to apply each comment to the page's source and close the review round.
 metadata:
   status: draft
 ---
@@ -8,12 +8,13 @@ metadata:
 # Apply a review export
 
 The review mode of a nimib page (`nbRevisione` in tabelline's `docs/blocchi.nim`) lets a reader
-select text, comment on it, and export every comment as one text: a YAML front matter, then one
-Markdown section per comment, in page order. This skill turns that text into changes.
+select text, comment on it, and export every comment as one text: a title, a YAML block (a ```yaml fence in
+`nimib-review/2`; a front matter between `---` lines in `nimib-review/1`), then one Markdown
+section per comment, in page order. This skill turns that text into changes.
 
 ## 1. Read the export
 
-- The front matter says which page (`page`, its URL), which notebook builds it (`source`, a path
+- The YAML says which page (`page`, its URL), which notebook builds it (`source`, a path
   in the repository), which `version` was read, and how many `comments` there are. Check that the
   count matches the `## n.` sections; if not, part of the export was lost in the paste: say so.
 - Each section is `## n. Kind, where`:
