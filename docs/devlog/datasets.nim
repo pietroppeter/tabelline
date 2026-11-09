@@ -31,7 +31,7 @@ for people to read. gt and Great Tables open their guides with the same distinct
 *display tables* apart from *data tables* (data frames): display tables are the ones
 "you'd find in a web page, a journal article, or in a magazine", and they are "output only, where
 we'd not want to use them as input ever again" ([Great Tables, Get
-Started](https://posit-dev.github.io/great-tables/get-started/); gt's
+Started](https://posit-dev.github.io/great-tables/user-guide/introduction.html); gt's
 [introduction](https://gt.rstudio.com/articles/gt.html) says the same).
 
 If the table is for a reader, the data in it is half of what the reader gets. A reader who sees

@@ -51,7 +51,7 @@ nbText: """
 ## What is here
 
 - **Great Tables: Get Started**: the first section of the
-  [Great Tables user guide](https://posit-dev.github.io/great-tables/get-started/), page by
+  [Great Tables user guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html), page by
   page, from the parts of a table to styles, themes and selections. *Nanoplots* is left for
   tabelline 0.4, when it gets them.
 - **What the book will port**: every source planned, page by page, with what each page needs

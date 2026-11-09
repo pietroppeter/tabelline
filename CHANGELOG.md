@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Docs: links to the Great Tables guide work again (Great Tables made its *Get Started* guide into
+  its *User Guide*, with new page names), and so does the link to the 2024 Table Contest winners.
+  `tools/links.nim` checks every link of the pages and the book, inside the site and out; CI runs
+  it on every PR and once a week.
 - Docs: a review for stale content. The roadmap drops the month/Operetta thread (moved to
   claude-artifacts) and its empty *what* column, and gives 0.1's threads their status; the
   Guide's menu counts what 0.1 has (21 formats, all five substitutions, 14 `opt*`, 56 options,

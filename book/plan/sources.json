@@ -4,7 +4,7 @@
    "id": "gt-getstarted",
    "title": "Great Tables: Get Started",
    "by": "Rich Iannone, Michael Chow and the Great Tables contributors (Posit)",
-   "url": "https://posit-dev.github.io/great-tables/get-started/",
+   "url": "https://posit-dev.github.io/great-tables/user-guide/introduction.html",
    "licence": "MIT",
    "kind": "guide",
    "lang": "Python",
@@ -24,93 +24,111 @@
    "pages": [
     {
      "path": "docs/get-started/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/introduction.html",
      "title": "Intro",
      "port": "port"
     },
     {
      "path": "docs/get-started/overview.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/introduction.html#the-anatomy-of-a-table",
      "title": "Overview",
      "port": "port"
     },
     {
      "path": "docs/get-started/basic-header.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/header-footer-stub.html",
      "title": "Header and Footer",
      "port": "port"
     },
     {
      "path": "docs/get-started/basic-stub.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/header-footer-stub.html#the-stub-row-labels",
      "title": "Stub (Row Labels)",
      "port": "port"
     },
     {
      "path": "docs/get-started/basic-column-labels.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/column-labels.html",
      "title": "Column Labels",
      "port": "port"
     },
     {
      "path": "docs/get-started/basic-formatting.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/formatting-values.html",
      "title": "Formatting Values",
      "port": "port"
     },
     {
      "path": "docs/get-started/nanoplots.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/nanoplots.html",
      "title": "Nanoplots",
      "port": "port"
     },
     {
      "path": "docs/get-started/basic-styling.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/styling-the-table-body.html",
      "title": "Styling the Table Body",
      "port": "port"
     },
     {
      "path": "docs/get-started/targeted-styles.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/styling-the-whole-table.html",
      "title": "Styling the whole table",
      "port": "port"
     },
     {
      "path": "docs/get-started/colorizing-with-data.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/colorizing-with-data.html",
      "title": "Colorizing with Data",
      "port": "port"
     },
     {
      "path": "docs/get-started/table-theme-options.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/table-theme-options.html",
      "title": "Table Theme Options",
      "port": "port"
     },
     {
      "path": "docs/get-started/table-theme-premade.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/premade-themes.html",
      "title": "Premade Themes",
      "port": "port"
     },
     {
      "path": "docs/get-started/column-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/column-selection.html",
      "title": "Column Selection",
      "port": "port"
     },
     {
      "path": "docs/get-started/row-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/row-selection.html",
      "title": "Row Selection",
      "port": "port"
     },
     {
      "path": "docs/get-started/loc-selection.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/location-selection.html",
      "title": "Location selection",
      "port": "port"
     },
     {
      "path": "docs/get-started/extensions.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/extensions.html",
      "title": "Extending Great Tables",
      "port": "skip",
      "note": "About extending Great Tables in Python"
     },
     {
      "path": "docs/get-started/contributing.qmd",
+     "url": "https://github.com/posit-dev/great-tables/blob/main/docs/get-started/contributing.qmd",
      "title": "Contributing Guidelines",
      "port": "skip",
      "note": "How to contribute to Great Tables"
     },
     {
      "path": "docs/get-started/technical-notes.qmd",
+     "url": "https://github.com/posit-dev/great-tables/blob/main/docs/get-started/technical-notes.qmd",
      "title": "Technical notes",
      "port": "skip",
      "note": "Notes on Great Tables' own data structures"
@@ -449,6 +467,7 @@
     },
     {
      "path": "docs/get-started/index.qmd",
+     "url": "https://posit-dev.github.io/great-tables/user-guide/introduction.html",
      "title": "Get Started",
      "port": "skip",
      "note": "Empty for now"
