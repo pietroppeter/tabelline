@@ -128,9 +128,9 @@ nbCode:
   let menu = @[
     Verb(family: "Create", verbs: "gt(), gt_preview(), gt_group()", does: "a table from a dataframe", tabelline: "tabella(), tableData:, tabellaPreview()"),
     Verb(family: "Parts", verbs: "tab_header, tab_spanner, tab_stubhead, tab_row_group, tab_footnote, tab_source_note", does: "add the parts of a table", tabelline: "all six"),
-    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "28, and fmt() for your own"),
+    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "31, and fmt() for your own"),
     Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "all five"),
-    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns"),
+    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns, nanoplot"),
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
     Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (142), 14 opt*"),
@@ -156,7 +156,8 @@ proc countVerbs(file, prefix: string): int =
       let name = line[5 ..< line.find('*')]
       if name notin names: names.add name
   names.len
-let nFormats = countVerbs("formats.nim", "fmt") + countVerbs("units.nim", "fmt")
+let nFormats = countVerbs("formats.nim", "fmt") + countVerbs("units.nim", "fmt") +
+  countVerbs("pictures.nim", "fmt") + countVerbs("nanoplots.nim", "fmt")
 let nOpts = countVerbs("verbs.nim", "opt")
 var nOptions = 0   # the fields of TabOptions, in core.nim
 block:
@@ -167,7 +168,7 @@ block:
       if not line.startsWith("    "): break
       if not line.strip.startsWith("#") and '*' in line: inc nOptions
 
-doAssert nFormats == 28, "the menu says 28 formats; there are " & $nFormats
+doAssert nFormats == 31, "the menu says 31 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
 doAssert nOptions == 142, "the menu says 142 options; there are " & $nOptions
 
@@ -647,6 +648,55 @@ nbCode:
 
 nbNote("""
 `tabellaPreview` makes a table, and `tabella(table): body` adds verbs to it. `tabStyleBody` finds the cells whose value is "ITA" and styles their row; `extractCells` gives back what the reader sees, in order, as text.
+""", nkCode)
+
+nbText: """
+## Pictures in cells
+
+A cell can hold a picture: an icon (any of the 2,163 of Font Awesome Free, drawn from its name),
+an image (a file, inlined into the page), or a *nanoplot*, a plot as small as a word. A column of
+numbers becomes one bar per row, from a zero line they share; the temperatures of the planets go
+both ways:
+"""
+
+nbCode:
+  let warm = tabella(planets(), rownameCol = "planet"):
+    colsAdd "kind", proc (r: Row): Value =
+      toValue(case r["type"].s
+        of "Terrestrial": "mountain"
+        of "Gas giant": "cloud"
+        else: "snowflake")
+    colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "rings"]
+    fmtIcon "kind"
+    fmtNanoplot "mean_temp", plotType = "bar",
+      options = nanoplotOptions(dataBarFillColor = "var(--primary)", dataBarStrokeColor = "var(--primary)",
+                                dataBarNegativeFillColor = "var(--secondary)", dataBarNegativeStrokeColor = "var(--secondary)")
+    colsLabel:
+      mean_temp: "mean temperature, °C"
+    optCssTheme()
+  nbTable warm
+
+nbNote("""
+`fmtIcon` reads the names in the column and draws the icons as SVG, in the colour of the text. `fmtNanoplot` on a column of numbers draws one bar per row; `nanoplotOptions` gives its colours, here the page's own. Point at a bar, or tap it, to read its value.
+""", nkCode)
+
+nbText: """
+A cell can also hold many values, and then it is a line, bar or box plot. `colsNanoplot` makes
+one from several columns: here each row of the times table, all on the same axis
+(`autoscale`), with a dashed line at its mean.
+"""
+
+nbCode:
+  let rowsOf = tabella(tavolaPitagorica(6), rownameCol = "×"):
+    colsNanoplot ["1", "2", "3", "4", "5", "6"], newColLabel = "the row", autoscale = true,
+      referenceLine = "mean",
+      options = nanoplotOptions(dataLineStrokeColor = "var(--primary)", dataPointFillColor = "var(--secondary)",
+                                dataAreaFillColor = "var(--secondary)")
+    optCssTheme()
+  nbTable rowsOf
+
+nbNote("""
+`colsNanoplot` joins the six columns of each row into one cell, "1 2 3 4 5 6", hides them, and draws the new column with `fmtNanoplot`. `echo rowsOf` prints it as text, with a sparkline (▁▂▄▆█) in each row.
 """, nkCode)
 
 nbText: """

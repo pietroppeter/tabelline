@@ -28,19 +28,16 @@ Rough size: S (hours), M (a day or two), L (more).
   replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
   substitution).
 
-- **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
-  `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
+- **Images and icons** (M, *in progress*: `add-pictures`). Left: SVG flags (emoji flags are in
+  0.1); gt's `local_image()`, `web_image()`, `ggplot_image()`.
 - **Locales** (M, *in progress*: `add-locales`). Every CLDR locale for numbers, currencies and dates. Left: country names in other languages, `system = "ind"`, flexible styles with a time zone.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
   half away from zero as gt does in some cases.
 
 ## Plots in cells
 
-- **Nanoplots** (L). `fmtNanoplot` / `colsNanoplot`: line, bar and box plots in SVG, with
-  reference lines and areas, as in gt 0.10+ and Great Tables (experimental in gt, so not in 0.1).
-  First step: one value per cell, a horizontal bar or line from a zero line shared by the rows,
-  the value shown on hover (Great Tables' `_utils_nanoplots.py`). A draft of that step, with
-  `nanoplotOptions`, was written on 8 Nov 2026 and set aside when `fmtBar` was removed before 0.1.
+- **Nanoplots** (L, *in progress*: `add-pictures`). Left: x values (gt's `columns_x_vals`, a
+  cell with x and y), per-point options (a list of colours), `alt` from a column.
 
 ## Options and building
 

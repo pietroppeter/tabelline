@@ -1,6 +1,6 @@
 ## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2 takes in what was planned for 0.3 and 0.4: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
 ## A dated post, written while 0.2 is built: each group is added when its PR is ready for review.
-import std/[os, sugar]
+import std/[os, sugar, strutils, sequtils, tables, algorithm]
 import nimib
 import tabelline, tabelline/[nimib, datasets]
 import ../blocks
@@ -566,8 +566,136 @@ from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `
 
 ## 5 · Pictures in cells
 
-*Planned, PR 5.* Icons and images inlined in the page, and nanoplots: lines, bars and boxes in
-SVG inside a cell.
+### An icon for a word
+
+The simplest picture is an icon: a cell says its name, and the table draws it. gt and Great
+Tables both take the icons of Font Awesome, and so does tabelline, all 2,163 free ones:
+"""
+
+nbCode:
+  let outputs = tableData:
+    output: ["HTML", "text", "Markdown"]
+    icon: ["globe", "terminal", "fab fa-markdown"]
+    verb: ["toHtml", "toText", "toMarkdown"]
+  let goes = tabella(outputs, rownameCol = "output"):
+    fmtIcon "icon", height = "1.5em"
+    optCssTheme()
+  nbTable goes
+
+nbNote("""
+A name is a short name ("globe": the regular style when there are two), a full one ("fab fa-markdown", the brands style) or an older name ("user-large" is "user"). An icon takes the colour of the text unless `fillColor` says otherwise; `fillColors` colours each name its own way. In a text table the names stay.
+""", nkCode)
+
+nbText: """
+### A picture of your own
+
+A file is a picture too. `fmtImage` reads it when the verb is called and puts it in the page
+as a data URL, so the page still needs nothing else:
+"""
+
+nbCode:
+  let pictures = tableData:
+    what: ["la tavola pitagorica, to 3"]
+    picture: ["tavola"]
+  let own = tabella(pictures, rownameCol = "what"):
+    fmtImage "picture", path = "docs/devlog/data/designing-0-2", filePattern = "{x}.svg", height = "3em"
+    optCssTheme()
+  nbTable own
+
+nbNote("""
+`path` and `filePattern` turn the cell "tavola" into the file `docs/devlog/data/designing-0-2/tavola.svg`. An address (`https://...`) is left as it is: tabelline loads nothing remote.
+""", nkCode)
+
+nbText: """
+### A plot as small as a word
+
+A nanoplot is a plot in a cell. With one number per row it is a bar, and the bars of a column
+share their zero line, so they can be compared up and down the column. Here the five largest
+cities of the EU, by people:
+"""
+
+nbCode:
+  let big = tabella(tabellaPreview(citta(), topN = 5, bottomN = 0, inclRownums = false)):
+    colsHide "counted"
+    colsAdd "bar", proc (r: Row): Value = r["population"]
+    fmtInteger "population"
+    fmtNanoplot "bar", plotType = "bar",
+      options = nanoplotOptions(dataBarFillColor = "var(--primary)", dataBarStrokeColor = "var(--primary)")
+    colsLabel:
+      bar: ""
+    optCssTheme()
+  nbTable big
+
+nbNote("""
+`fmtNanoplot` on a column of numbers draws one bar per row. The bar shows its value when the pointer is over it (or a finger taps it): the SVG carries the text, and the table's CSS shows it on `:hover`, without JavaScript.
+""", nkCode)
+
+nbText: """
+### Many values in a cell
+
+A cell can hold many values, "1 4 2 8", and then a nanoplot is a line, a bar or a box plot of
+them. The box plot is the one that says most about a group: here the people of the large cities
+of each country, in thousands. The box holds the middle half, the whiskers the rest, and each
+dot far away is a capital:
+"""
+
+nbCode:
+  type Country = object
+    state: string
+    cities: int
+    people: string
+  var byState: OrderedTable[string, seq[string]]
+  let eu = citta()
+  for i in 0 ..< eu.nrows:
+    byState.mgetOrPut(eu["state", i].s, @[]).add $(eu["population", i].toFloat / 1000)
+  var countries: seq[Country]
+  for state, people in byState:
+    if people.len >= 4: countries.add Country(state: state, cities: people.len, people: people.join(" "))
+  countries.sort((a, b) => cmp(b.cities, a.cities))
+  let boxes = tabella(countries, rownameCol = "state"):
+    fmtNanoplot "people", plotType = "boxplot",
+      options = nanoplotOptions(dataBarStrokeColor = "var(--primary)")
+    colsLabel:
+      people: "people, thousands"
+    optCssTheme()
+  nbTable boxes
+  echo boxes
+
+nbNote("""
+A cell of nanoplot values is a text of numbers separated by spaces, commas or semicolons, with `NA` for a missing one. The box plots of a column share their scale. `echo` prints the table as text, where a box plot is its five numbers: whisker, quartile, median, quartile, whisker.
+""", nkCode)
+
+nbText: """
+`colsNanoplot` makes such a cell from several columns of a row, and hides them; a line or bar
+plot can have a reference line (a number, or "mean", "median", "q1" ...) and a reference area,
+and with `autoscale` every plot of the column shares its y axis. The [guide](../../explainer/#pictures-in-cells)
+draws the times table that way.
+
+### Choices
+
+- **Every free icon, inlined.** `tools/fontawesome.nim` reads the npm package of Font Awesome
+  Free 7 and writes `fontawesome.tsv` (1.5 MB: 2,163 icons and 614 older names), read when
+  compiling and only by a program that draws icons. *gt:* the fontawesome R package.
+  *Great Tables:* the same icons, in its own CSV files.
+- **The regular style first.** "star" is the outlined star; "fas fa-star" the solid one. *gt:*
+  the same (fontawesome's `prefer_type = "regular"`). *Great Tables:* the same.
+- **Icons are read aloud.** By default a screen reader says the icon's label ("Star").
+  *gt:* the same (`a11y = "semantic"`). *Great Tables:* hidden from screen readers.
+- **Images inlined, addresses kept.** A local file becomes a data URL; an address stays an
+  address, never downloaded. *gt:* `encode = TRUE` inlines local files too. *Great Tables:* the
+  same.
+- **Nanoplots ported, not redrawn.** The SVG is Great Tables' (`_utils_nanoplots.py`, MIT): the
+  same sizes, colours, labels and box plot, so a nanoplot looks the same in both. Its hover rules
+  go once in the table's CSS, not in every SVG, and a colour can be a CSS variable. *gt:*
+  `fmt_nanoplot()` and `cols_nanoplot()`, experimental. *Great Tables:* `fmt_nanoplot()` only.
+- **Missing values make a gap.** `missingVals = "gap"` by default. *gt:* "gap". *Great
+  Tables:* "marker".
+- **A reference is text.** `referenceLine = "mean"` or `"10"`, one type for both. *gt:* a
+  number or a keyword. *Great Tables:* the same.
+- **Sparklines in text.** A text table draws a nanoplot with blocks (`▁▃▅█`), so it still says
+  something in a terminal or a test. *gt:* nothing in text. *Great Tables:* nothing.
+- **Not yet:** x values (gt's `columns_x_vals`), a colour per point, `alt` from a column, SVG
+  flags, gt's `local_image()` and `web_image()`.
 
 ## How it is built
 
@@ -611,6 +739,18 @@ gives a `Locale` object: marks, patterns, names. A format reads it once, when it
 called. Dates are written by `formatPattern`, which reads a CLDR pattern a letter at a time:
 `y` the year, `MMMM` the month's name, `LLLL` its name standing alone (Russian has both),
 `EEE` the short weekday, `h` and `a` the hour and AM or PM, and text between quotes as it is.
+
+The pictures of group 5 are formats too, so they also run in step 1. An icon is a line of
+`fontawesome.tsv` (name, style, width, label, the SVG path), found by name in a table built the
+first time an icon is needed (`findIcon`), and written as an `<svg>` as high as the text and as
+wide as its shape (`iconSvg`). An image is read and encoded in base64 when its verb is called
+(`imageDataUrl`), once per file. A nanoplot is drawn in `nanoplots.nim` as Great Tables draws it:
+the values are scaled to a box 100 units high, with the reference line, the area and zero in the
+same scale; then layer after layer is written from the bottom up (the reference area, the area
+under the line, the line, as Bézier curves, the bars, the reference line, the points, and last
+the guides that show a value on hover). A box plot computes its quartiles by linear
+interpolation and its whiskers by Tukey's rule (the farthest values within 1.5 boxes). The verb
+reads every cell of the column first, so the plots of a column share their scale.
 """
 
 nbSave
