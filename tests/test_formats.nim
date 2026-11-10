@@ -50,6 +50,11 @@ suite "fmt verbs":
     let t = tabella(d).fmtInteger("n").subZero("n", zeroText = "none")
     check t.formatCell(0, "n", rcText) == "1,000"
     check t.formatCell(1, "n", rcText) == "none"
+  test "a substitution can empty a cell":
+    let t = tabella(d).subZero("n", zeroText = "").subValues("n", values = [3], replacement = "")
+    check t.formatCell(0, "n", rcText) == "1000"
+    check t.formatCell(1, "n", rcText) == ""
+    check t.formatCell(2, "n", rcText) == ""
   test "table locale":
     let t = tabella(d, locale = "it").fmtNumber("x", decimals = 2).fmtInteger("n")
     check t.formatCell(1, "x", rcText) == "2,25"

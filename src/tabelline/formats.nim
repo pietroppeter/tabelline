@@ -574,8 +574,8 @@ proc subZero*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), ze
   result = t
   let txt = zeroText
   result.substitutions.add FormatRule(columns: columns.resolve(result.data), rows: result.targetRows(rows),
-    fn: proc (v: Value, ctx: RenderContext): string =
-      if v.isNumber and v.toFloat == 0: (if ctx == rcHtml: escapeHtml(txt) else: txt) else: "")
+    applies: proc (v: Value): bool = v.isNumber and v.toFloat == 0,
+    fn: proc (v: Value, ctx: RenderContext): string = (if ctx == rcHtml: escapeHtml(txt) else: txt))
 
 
 proc fmtEngineering*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), decimals = 2,
@@ -703,11 +703,9 @@ proc subSmallVals*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(
   let neg = sign == "-"
   let txt = smallPattern.replace("{x}", (if neg: "−" else: "") & thresholdText(threshold))
   result.substitutions.add FormatRule(columns: columns.resolve(result.data), rows: result.targetRows(rows),
-    fn: proc (v: Value, ctx: RenderContext): string =
-      if not v.isNumber: return ""
-      let x = v.toFloat
-      if x != 0 and abs(x) < threshold and (x < 0) == neg: (if ctx == rcHtml: escapeHtml(txt) else: txt)
-      else: "")
+    applies: proc (v: Value): bool =
+      v.isNumber and v.toFloat != 0 and abs(v.toFloat) < threshold and (v.toFloat < 0) == neg,
+    fn: proc (v: Value, ctx: RenderContext): string = (if ctx == rcHtml: escapeHtml(txt) else: txt))
 
 proc subLargeVals*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), threshold = 1e12,
                    largePattern = ">={x}", sign = "+"): Tabella =
@@ -717,11 +715,9 @@ proc subLargeVals*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(
   let neg = sign == "-"
   let txt = largePattern.replace("{x}", (if neg: "−" else: "") & thresholdText(threshold))
   result.substitutions.add FormatRule(columns: columns.resolve(result.data), rows: result.targetRows(rows),
-    fn: proc (v: Value, ctx: RenderContext): string =
-      if not v.isNumber: return ""
-      let x = v.toFloat
-      if (not neg and x >= threshold) or (neg and x <= -threshold): (if ctx == rcHtml: escapeHtml(txt) else: txt)
-      else: "")
+    applies: proc (v: Value): bool =
+      v.isNumber and ((not neg and v.toFloat >= threshold) or (neg and v.toFloat <= -threshold)),
+    fn: proc (v: Value, ctx: RenderContext): string = (if ctx == rcHtml: escapeHtml(txt) else: txt))
 
 proc subValues*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
                 fn: proc (v: Value): bool, replacement: string): Tabella =
@@ -729,8 +725,8 @@ proc subValues*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(
   result = t
   let (f, txt) = (fn, replacement)
   result.substitutions.add FormatRule(columns: columns.resolve(result.data), rows: result.targetRows(rows),
-    fn: proc (v: Value, ctx: RenderContext): string =
-      if f(v): (if ctx == rcHtml: escapeHtml(txt) else: txt) else: "")
+    applies: f,
+    fn: proc (v: Value, ctx: RenderContext): string = (if ctx == rcHtml: escapeHtml(txt) else: txt))
 
 proc subValues*[T](t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
                    values: openArray[T], replacement: string): Tabella =
