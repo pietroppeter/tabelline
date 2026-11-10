@@ -70,12 +70,12 @@ block:
   type Source = object
     source, who, licence, release: string
   let rows = @[
-    Source(source: "[Great Tables user guide](https://posit-dev.github.io/great-tables/get-started/)", who: "Posit (Rich Iannone, Michael Chow)", licence: "MIT", release: "0.1, 0.2, 0.4"),
+    Source(source: "[Great Tables user guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html)", who: "Posit (Rich Iannone, Michael Chow)", licence: "MIT", release: "0.1, 0.2, 0.4"),
     Source(source: "[gt articles](https://gt.rstudio.com/articles/)", who: "Posit (Rich Iannone)", licence: "MIT", release: "0.1, 0.2"),
     Source(source: "[Great Tables examples](https://posit-dev.github.io/great-tables/examples/)", who: "Posit", licence: "MIT", release: "0.2"),
     Source(source: "gt reference examples", who: "Posit", licence: "MIT", release: "0.3, 0.5"),
     Source(source: "[Great Tables blog](https://posit-dev.github.io/great-tables/blog/)", who: "Posit", licence: "MIT", release: "0.4"),
-    Source(source: "[Posit Table Contest](https://posit.co/blog/announcing-the-2024-table-contest-winners/)", who: "the entrants", licence: "each entry its own", release: "0.3"),
+    Source(source: "[Posit Table Contest](https://posit.co/blog/2024-table-contest-winners/)", who: "the entrants", licence: "each entry its own", release: "0.3"),
     Source(source: "[pharmaverse examples](https://pharmaverse.github.io/examples/)", who: "pharmaverse", licence: "to check", release: "0.5"),
   ]
   let t = tabella(rows, rownameCol = "source"):

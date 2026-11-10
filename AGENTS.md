@@ -63,6 +63,10 @@ working rules that are easy to miss.
   `optCssTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
+- Every link leads somewhere. After building the pages and the book, `nim r tools/links.nim` checks
+  the links inside the site (files and `#anchors`), and `nim r -d:ssl tools/links.nim --external`
+  the links to other sites too (404 and 410 fail). CI runs both on every PR and once a week, so a
+  page that moves upstream (Great Tables' Get Started became its User Guide) is caught.
 - The home page shows the simplest example, then the gallery of the stories, and links the pages in three groups, by the question
   a reader brings: Learn tabelline (Guide, Book), Where it's going (Roadmap, Feature map), How
   it's made (Devlog, Specs, Design guide, For coding agents). Name pages in plain words a newcomer

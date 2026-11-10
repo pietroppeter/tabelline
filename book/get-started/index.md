@@ -1,7 +1,8 @@
 # Great Tables: Get Started
 
-The first section of the [Great Tables user guide](https://posit-dev.github.io/great-tables/get-started/),
-by Rich Iannone, Michael Chow and the Great Tables contributors, MIT licensed. The pages follow
+The *Get Started* guide of Great Tables, which has since grown into its
+[User Guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html) (where the pages
+have other names), by Rich Iannone, Michael Chow and the Great Tables contributors, MIT licensed. The pages follow
 the original closely: same text, same examples, same data, same order. The book's own remarks
 (how tabelline differs, what it does not have yet) are in boxes marked “× tabelline”.
 
