@@ -80,8 +80,6 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## nimib
 
-- **Remove nimib's deprecated `md`** (S, in nimib). It clashes with `md` here; notebooks need
-  `import nimib except md` until then.
 - **nimibook and nimiSlides** (S). Check that tables look right in their themes.
 
 ## Docs
