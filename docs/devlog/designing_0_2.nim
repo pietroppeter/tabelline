@@ -430,7 +430,21 @@ thousands, which one starts the decimals. A table takes a locale, and every form
 nbCode:
   let amounts = tableData:
     n: [1234567.891, 0.5]
+    share: [0.256, 0.5]
+  let italian = tabella(amounts, locale = "it"):
+    fmtNumber "n", decimals = 2
+    fmtPercent "share"
+    optCssTheme()
+  nbTable italian
+
+nbText: """
+A format can also take a locale of its own, which wins over the table's. That is how one table
+can show the same number in four languages, one column each:
+"""
+
+nbCode:
   let marks = tabella(amounts):
+    colsHide "share"
     colsAdd "it", amounts["n"].values
     colsAdd "de_CH", amounts["n"].values
     colsAdd "fr", amounts["n"].values
@@ -504,22 +518,38 @@ nbText: """
 ### Big tables, and tables as data
 
 The rest of the group is small tools that gt has and 0.1 did not. A long table can be previewed,
-its first and last rows with a row that names the rows left out; a style can come from the data;
-narrow columns can have their labels on their side:
+its first and last rows with a row that names the rows left out; and a style can
+come from the data:
 """
 
 nbCode:
-  let islands = tabella(tabellaPreview(isole(), topN = 5, bottomN = 1)):
+  let islands = tabellaPreview(isole(), topN = 5, bottomN = 1):
     colsHide "city"
     fmtInteger ["area", "population"]
     tabStyleBody style.text(weight = "bold"), columns = "country", values = ["Italy"], targets = "row"
-    colsLabelRotate "area"
     optCssTheme()
   nbTable islands
 
 nbNote("""
-`tabellaPreview` makes a table, and `tabella(table): body` adds verbs to it. `tabStyleBody` styles the cells whose value is one of `values` (or contains a `pattern`, or makes a proc true), or here their whole row. `fromColumn("colour")` inside any style takes the value from another column of the same row: `style.fill(fromColumn("colour"))`.
+`tabellaPreview` takes a body of verbs, as `tabella` does. `tabStyleBody` styles the cells whose value is one of `values` (or contains a `pattern`, or makes a proc true), or here their whole row. `fromColumn("colour")` inside any style takes the value from another column of the same row: `style.fill(fromColumn("colour"))`.
 """, nkCode)
+
+nbText: """
+A label can lie on its side where many narrow columns have long names: a column of check marks
+needs one character, its label a word or two.
+"""
+
+nbCode:
+  let traits = tabella(planets(), rownameCol = "planet"):
+    colsAdd "rocky", proc (r: Row): Value = toValue(r["type"].s == "Terrestrial")
+    colsAdd "has moons", proc (r: Row): Value = toValue(r["moons"].i > 0)
+    colsAdd "has rings", proc (r: Row): Value = r["rings"]
+    colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "moons", "rings"]
+    fmtTf ["rocky", "has moons", "has rings"]
+    colsAlign alCenter, ["rocky", "has moons", "has rings"]
+    colsLabelRotate ["rocky", "has moons", "has rings"]
+    optCssTheme()
+  nbTable traits
 
 nbText: """
 Once built, a table can be read back as data: `extractCells` gives the shown text of some cells,
@@ -541,9 +571,12 @@ from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `
 
 - **CLDR, generated once.** `tools/cldr.nim` reads CLDR 49 and writes `locales.nim` (657
   locales) and `currencies.nim`, committed with the code: nothing is read when you build or run.
-  A locale keeps only what differs from its parent (`en-AU` from `en-001`, from `en`), so the
-  data of 657 locales is 290 KB. *gt:* its own tables, from CLDR, for 574 locales. *Great
-  Tables:* 574 locales for numbers, dates in a few languages.
+  A locale keeps only what differs from its parent (`en-AU` from `en-001`, from `en`), and each
+  value is written once, however many locales share it (10,209 values for 27,287 fields), so the
+  data of 657 locales is 199 KB in a program (290 KB before the values were shared). *gt:* its
+  own tables from CLDR, 574 locales, in its internal data (576 KB compressed, with its other
+  tables). *Great Tables:* 574 locales for numbers, in a CSV of 256 KB; the names and patterns
+  of dates come from Babel, a package of about 10 MB.
 - **The symbol where the language puts it.** `fmtCurrency` follows the locale's pattern; `placement`
   chooses. *gt:* the symbol on the left unless `placement = "right"`. *Great Tables:* the same.
 - **ISO codes.** `currency` is a code ("EUR"). *gt:* a code or a name ("euro"). *Great Tables:*
@@ -557,7 +590,7 @@ from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `
   too.
 - **`pattern` is plain text.** `tabStyleBody` looks for it in the value; a regular expression
   would need PCRE. *gt:* a regular expression. *Great Tables:* no `tab_style_body`.
-- **The preview is a table.** `tabellaPreview` returns a `Tabella`, so more verbs can follow.
+- **The preview is a table.** `tabellaPreview` returns a `Tabella` and takes a body of verbs, as `tabella`.
   *gt:* `gt_preview()` returns a gt table too. *Great Tables:* no preview.
 - **`agg.std`.** The name of Great Tables and Polars, short and plain. *gt:* `"sd"`, R's name.
   *Great Tables:* `std`, through Polars.
@@ -604,9 +637,11 @@ as subscripts and a sign at the end as a charge. A superscript or a subscript is
 `renderLabel`, which formats what is between `{{` and `}}` and leaves the rest to the label's
 own kind of text (plain or Markdown).
 
-The locales of group 4 are a table of strings, one record of 120 fields per locale, joined by a
-separator, with empty fields where a locale says what its parent says (`locales.nim`).
-`getLocale` finds the record by binary search, fills the empty fields from the parents, and
+The locales of group 4 are three tables (`locales.nim`): every value once, in one long string
+(`localeValues`); for each locale, the fields it says differently from its parent, each a field
+number and a value number (`localeCellField`, `localeCellValue`); and where each locale's fields
+start (`localeTable`). `getLocale` finds the locale by binary search, fills the fields it does
+not have from its parents, and
 gives a `Locale` object: marks, patterns, names. A format reads it once, when its verb is
 called. Dates are written by `formatPattern`, which reads a CLDR pattern a letter at a time:
 `y` the year, `MMMM` the month's name, `LLLL` its name standing alone (Russian has both),

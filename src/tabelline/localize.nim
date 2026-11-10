@@ -39,7 +39,19 @@ func normalizeTag*(tag: string): string =
                else: p)
 
 func findRecord(tag: string): int =
-  localeTable.binarySearch(tag, proc (a: (string, string), b: string): int = cmp(a[0], b))
+  localeTable.binarySearch(tag, proc (a: (string, int), b: string): int = cmp(a[0], b))
+
+var valueStarts: seq[int]
+
+func localeValue(k: int): string =
+  ## The `k`th value of `localeValues`, found through the starts of the values, computed once.
+  {.cast(noSideEffect), cast(gcsafe).}:
+    if valueStarts.len == 0:
+      valueStarts.add 0
+      for i, c in localeValues:
+        if c == '\x1F': valueStarts.add i + 1
+      valueStarts.add localeValues.len + 1
+    localeValues[valueStarts[k] ..< valueStarts[k + 1] - 1]
 
 func hasLocale*(tag: string): bool =
   ## Whether CLDR has data for this tag (after `normalizeTag`).
@@ -71,9 +83,11 @@ func resolved(tag: string): seq[string] =
   while t.len > 0:
     let i = findRecord(t)
     if i >= 0:
-      let parts = localeTable[i][1].split('\x1F')
-      for k, v in parts:
-        if k < result.len and not have[k] and v.len > 0:
+      let last = if i + 1 < localeTable.len: localeTable[i + 1][1] else: localeCellField.len
+      for c in localeTable[i][1] ..< last:
+        let k = localeCellField[c].int
+        if not have[k]:
+          let v = localeValue(localeCellValue[c].int)
           result[k] = (if v == "\x1E": "" else: v)
           have[k] = true
     t = parentLocale(t)

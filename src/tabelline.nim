@@ -109,6 +109,15 @@ proc rewriteVerbs(body, it: NimNode): NimNode =
   else:
     result = body
 
+proc withBody(init, args: NimNode): NimNode =
+  ## `init(args)`, and when the last argument is a body, that table changed by the body's verbs.
+  let hasBody = args.len >= 2 and args[^1].kind == nnkStmtList
+  var create = newCall(init)
+  for k in 0 ..< args.len - (if hasBody: 1 else: 0): create.add args[k]
+  if not hasBody: return create
+  let it = genSym(nskVar, "tabella")
+  result = newBlockStmt(newStmtList(newVarStmt(it, create), rewriteVerbs(args[^1], it), it))
+
 macro tabella*(args: varargs[untyped]): untyped =
   ## `tabella(data, rownameCol = "name")` is a table for `data` (see `initTabella`), and with a body,
   ## `tabella(data): body` is that table changed by the verbs in `body`, one per line, without
@@ -131,12 +140,17 @@ macro tabella*(args: varargs[untyped]): untyped =
   ##     fmtNumber(decimals = 1)
   ## ```
   ## (A macro, not a proc: a proc overload would make Nim check the body before rewriting it.)
-  let hasBody = args.len >= 2 and args[^1].kind == nnkStmtList
-  var create = newCall(bindSym("initTabella", brOpen))
-  for k in 0 ..< args.len - (if hasBody: 1 else: 0): create.add args[k]
-  if not hasBody: return create
-  let it = genSym(nskVar, "tabella")
-  result = newBlockStmt(newStmtList(newVarStmt(it, create), rewriteVerbs(args[^1], it), it))
+  withBody(bindSym("initTabella", brOpen), args)
+
+macro tabellaPreview*(args: varargs[untyped]): untyped =
+  ## `tabellaPreview(data, topN = 5, bottomN = 1)` is a preview of a big table (see
+  ## `initTabellaPreview`), and with a body it is changed by the verbs in the body, as in `tabella`:
+  ##
+  ## ```nim
+  ## let t = tabellaPreview(citta(), topN = 3):
+  ##   fmtInteger "population"
+  ## ```
+  withBody(bindSym("initTabellaPreview", brOpen), args)
 
 proc columnName(n: NimNode): string =
   ## The name of a `tableData:` column: `mass`, `size.mass` (a dotted name, for `tabSpannerDelim`)

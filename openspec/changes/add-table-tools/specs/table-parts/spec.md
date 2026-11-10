@@ -21,10 +21,10 @@ echo t.toHtml.count("writing-mode: vertical-rl; transform: rotate(180deg)")
 `tabellaPreview(data, topN, bottomN, inclRownums)` SHALL make a table of the first `topN` rows
 and the last `bottomN` rows of `data`, with a shaded row between them that names the rows left
 out ("6..99"), and the row numbers (from 1) in the stub when `inclRownums`. A table with no more
-than `topN + bottomN + 1` rows SHALL be shown whole.
+than `topN + bottomN + 1` rows SHALL be shown whole. Like `tabella`, it SHALL take a body of verbs.
 
 ```nim
-let preview = tabella(tabellaPreview(planets(), topN = 2, bottomN = 1)):
+let preview = tabellaPreview(planets(), topN = 2, bottomN = 1):
   colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
 echo preview
 ```
