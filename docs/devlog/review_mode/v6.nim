@@ -4,7 +4,7 @@
 import std/[os, strutils, strformat, times]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../../blocchi
+import ../../[blocchi, review]
 import storia
 
 const
@@ -18,7 +18,7 @@ nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{que
 nb.useTabelline(nome = "tabelline", title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
                 nameHref = (if newest: "../../" else: "../../../"))
-nbRevisione("devlog/review-mode", questa, title, source)
+nbReview(questa, "devlog/review-mode", title, source)
 
 nbTitolo &"9 November 2026 · version {questa}", title, """
 Reviewing a page on a phone takes screenshots, notes, and many trips between the page and the
@@ -27,7 +27,7 @@ bar, and export them all in one text to paste in the chat, where an agent makes 
 post is reviewed with its own review mode, round by round, and keeps every version.
 """
 
-nbVersioni storico.lista, questa
+nbVersions storico.lista, questa
 
 if not newest:
   nbNota &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
@@ -296,23 +296,23 @@ the text it was written on.
 
 block:
   type Riga = object
-    version, date, what, review: string
+    day, version, date, what, review: string
     comments: int
-  # when: the first version of a day gives the day and the time, the others how long after the
-  # one before (hours and minutes)
+  # when: the versions are grouped by day; the first of a day gives its time, the others how long
+  # after the one before (hours and minutes)
   proc moment(v: Versione): DateTime = parse(v.date & " " & v.time, "d MMM yyyy HH:mm")
   proc published(i: int): string =
     let v = storico[i]
-    if i == 0 or storico[i - 1].date != v.date: return &"{v.date}, {v.time}"
+    if i == 0 or storico[i - 1].date != v.date: return v.time
     let minutes = (moment(v) - moment(storico[i - 1])).inMinutes
     if minutes < 60: &"+{minutes} min" else: &"+{minutes div 60} h {minutes mod 60:02} min"
   var rows: seq[Riga]
   for i in 0 ..< questa:
     let v = storico[i]
-    let href = versioneHref(i + 1, questa, storico.len)   # every version, linked: the strip shows two
+    let href = versionHref(i + 1, questa, storico.len)   # every version, linked: the strip shows two
     let name = if href.len > 0: &"[v{i + 1}]({href})" else: &"v{i + 1}"
-    rows.add Riga(version: name, date: published(i), what: v.what, review: v.review, comments: v.comments)
-  let t = tabella(rows, rownameCol = "version"):
+    rows.add Riga(day: v.date, version: name, date: published(i), what: v.what, review: v.review, comments: v.comments)
+  let t = tabella(rows, rownameCol = "version", groupnameCol = "day"):
     colsLabel {"date": "Published (Italian time)", "what": "What it changed", "review": "What its review found", "comments": "Comments"}
     fmtMarkdown ["version", "what", "review"]
     optCssTheme()
@@ -334,8 +334,8 @@ its styles (`revisioneCss` in `docs/stile.nim`, from the tokens) go in the head,
 without review mode don't carry them.
 """
 
-let blocchiSrc = readFile(docs / "blocchi.nim")
-let blockCode = blocchiSrc[blocchiSrc.find("newNbBlock(NbRevisione):") ..< blocchiSrc.find("newNbBlock(NbVersioni):")]
+let blocchiSrc = readFile(docs / "review.nim")
+let blockCode = blocchiSrc[blocchiSrc.find("newNbBlock(NbReview):") ..< blocchiSrc.find("newNbBlock(NbVersions):")]
 nbText "```nim\n" & blockCode.strip & "\n```"
 
 nbText: """
@@ -348,7 +348,7 @@ in six parts. Each starts with what it does.
 const headings = [("anchor", "Where a comment points"), ("mark", "Marking the text"),
                   ("store", "Keeping the comments"), ("bar", "The bar"), ("sheet", "Writing a comment"),
                   ("export", "The export")]
-let script = readFile(docs / "assets" / "revisione.js")
+let script = readFile(docs / "assets" / "review.js")
 for chunk in script.split("  // part: ")[1 .. ^1]:
   let lines = chunk.splitLines
   var heading = lines[0].strip

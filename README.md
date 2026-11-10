@@ -168,7 +168,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
-- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/stile.nim` is the style of both looks, from the tokens, and `docs/blocchi.nim` the blocks every page is made of).
+- `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/stile.nim` is the style of both looks, from the tokens, and `docs/blocchi.nim` the blocks every page is made of; `docs/review.nim` is the review mode, blocks and styles in one module that can move to nimib).
 - `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).
 - `openspec/`: specs and open changes; `openspec/config.yaml` has the rules. `BACKLOG.md`, `CHANGELOG.md`, `AGENTS.md`.
 

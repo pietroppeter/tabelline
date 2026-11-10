@@ -572,70 +572,6 @@ template nbTinte*(swatches: openArray[(string, string, string)]) =
   ## for, in Markdown.
   nb.tinte(swatches)
 
-# ----------------------------------------------------------------------------------- review mode
-
-const revisioneJs* = staticRead(currentSourcePath().parentDir / "assets" / "revisione.js")
-  ## The script of the review mode, kept as a file of its own (docs/assets/revisione.js) so it can
-  ## be read, tested and shown; it is inlined in the page, nothing is loaded from elsewhere.
-
-newNbBlock(NbRevisione):
-  page: string
-  version: int
-  title: string
-  source: string
-  toHtml:
-    &"""<div id="revisione" hidden data-page="{esc(blk.page)}" data-version="{blk.version}" """ &
-      &"""data-title="{esc(blk.title)}" data-source="{esc(blk.source)}"></div>""" &
-      "<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n" & revisioneJs & "});\n</script>"
-
-proc revisione*(nb: var Nb, page: string, version: int, title, source: string) =
-  nb.doc.context["stylesheet"] = %(nb.doc.context["stylesheet"].getStr & "\n<style>\n" & revisioneCss & "</style>")
-  nb.add newNbRevisione(page = page, version = version, title = title, source = source)
-
-template nbRevisione*(tpage: string, tversion: int, ttitle, tsource: string) =
-  ## Review mode on this page: select text and comment on it, go through the comments with the bar at
-  ## the bottom, and export them (Markdown with a YAML front matter) to paste in a chat with an agent.
-  ## The comments stay in the browser (localStorage), one set per `tpage` and `tversion`; `ttitle`
-  ## and `tsource` (the notebook the page is built from) go in the export. After `useTabelline`.
-  nb.revisione(tpage, tversion, ttitle, tsource)
-
-func versioneHref*(n, questa, latest: int): string =
-  ## The link from the page of version `questa` to version `n`: the newest is the page itself,
-  ## version `n` is kept in `vn/` beside it.
-  if n == questa: ""
-  elif questa == latest: &"v{n}/"
-  elif n == latest: "../"
-  else: &"../v{n}/"
-
-newNbBlock(NbVersioni):
-  versioni: seq[(string, string)]
-  questa: int
-  toHtml:
-    # two boxes, the newest first: the newest and the one before it, or, on an older version,
-    # the newest and this one. Every version is in the page's own table of versions.
-    let latest = blk.versioni.len
-    var shown = @[latest]
-    let other = if blk.questa == latest: latest - 1 else: blk.questa
-    if other >= 1: shown.add other
-    var items = ""
-    for n in shown:
-      let (date, what) = blk.versioni[n - 1]
-      let href = versioneHref(n, blk.questa, latest)
-      let inside = &"""<b>v{n}</b> <span>{inline(date)}</span>"""   # the whole box is the link
-      let box = if href.len > 0: &"""<a href="{href}">{inside}</a>""" else: &"""<span class="voce">{inside}</span>"""
-      let current = if n == blk.questa: " aria-current=\"page\"" else: ""
-      items.add &"""<li{current} title="{esc(what)}">{box}</li>"""
-    &"""<nav class="versioni" aria-label="Versions of this page"><span class="titolo">Versions</span><ol>{items}</ol></nav>"""
-
-proc versioni*(nb: var Nb, versions: openArray[(string, string)], this: int) =
-  nb.add newNbVersioni(versioni = @versions, questa = this)
-
-template nbVersioni*(tversions: openArray[(string, string)], tthis: int) =
-  ## The versions of a page that changes in rounds: `(date, what changed)` for each, oldest first,
-  ## and the number of this one. Shows two, the newest first; the newest is the page itself,
-  ## version `n` is kept in `vn/`. Moving between them is a short slide (a view transition).
-  nb.versioni(tversions, tthis)
-
 # ---------------------------------------------------------------------------- annotated screens
 
 newNbBlock(NbSchermata):
@@ -661,6 +597,38 @@ template nbSchermata*(timage, tpoints, talt: string) =
   ## image (inlined), a JSON of points (`{"points": [{"n": 1, "x": 12.5, "y": 40}]}`, in % of the
   ## width and height) and a caption in Markdown. Put two side by side with `nbAccanto`.
   nb.schermata(timage, tpoints, talt)
+
+newNbBlock(NbDisegno):
+  svg: string
+  alt: string
+  toHtml:
+    &"""<figure class="disegno" role="img" aria-label="{esc(blk.alt)}">{blk.svg}<figcaption>{inline(blk.alt)}</figcaption></figure>"""
+
+proc disegno*(nb: var Nb, svgFile, alt: string) =
+  nb.add newNbDisegno(svg = readFile(svgFile).strip, alt = alt)
+
+template nbDisegno*(tsvg, talt: string) =
+  ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
+  ## in the page's colours, with a caption in Markdown.
+  nb.disegno(tsvg, talt)
+
+newNbBlock(NbPiega):
+  title: string
+  code: string
+  lang: string
+  toHtml:
+    let inside = if blk.lang == "nim": """<pre><code class="nohighlight nim hljs">""" & highlightNim(blk.code) & "</code></pre>"
+                 else: codeHtml(blk.code, blk.lang)
+    &"""<details class="piega"><summary><span>show code: {esc(blk.title)}</span></summary>{inside}</details>"""
+
+proc piega*(nb: var Nb, title, code: string, lang = "nim") =
+  nb.add newNbPiega(title = title, code = code.strip(chars = {'\n'}), lang = lang)
+
+template nbPiega*(ttitle, tcode: string, tlang = "nim") =
+  ## Code that is shown, not run, folded under a plain-text title, like the code under a table
+  ## (`nbShowCode`): *+ show code: title* opens it. For code a reader opens only when the text
+  ## above it is not enough.
+  nb.piega(ttitle, tcode, tlang)
 
 # ------------------------------------------------------------------------------------- the page
 

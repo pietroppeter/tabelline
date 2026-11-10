@@ -65,7 +65,7 @@ nbText: """
 - `openspec/specs/`: how tabelline behaves, requirement by requirement, each with an example.
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
-- `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim`; the look is `docs/stile.nim`,
+- `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim` (the review mode's are in `docs/review.nim`); the look is `docs/stile.nim`,
   explained in the [Design guide](../design/). Posts are in `docs/devlog/`, stories (one for
   every release, told with tabelline) in `docs/stories/`.
 - `book/`: the [book](../book/), a nimibook (`nim r book/bookbuild.nim`); its planned sources are
