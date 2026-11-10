@@ -45,7 +45,9 @@ gt(simple_df) |> data_color()
       float: [2.3, 1.3, 5.1, nil, 4.4]
       category: ["one", "two", "three", "one", "three"]
 
-    nbTable tabella(simpleDf).dataColor(everything())
+    let colored = tabella(simpleDf):
+      dataColor everything()
+    nbTable colored
 
 tabelline """
 `dataColor()` with no arguments colours the numeric columns only, where Great Tables colours
@@ -69,7 +71,9 @@ GT(simple_df).data_color(palette=["blue", "red"])
 gt(simple_df) |> data_color(palette = c("blue", "red"))
 """:
   nbCode:
-    nbTable tabella(simpleDf).dataColor(everything(), palette = @["blue", "red"])
+    let blueRed = tabella(simpleDf):
+      dataColor everything(), palette = @["blue", "red"]
+    nbTable blueRed
 
 tabelline """
 `dataColor` takes `autoColorText`, as `autocolor_text=`. Colours are CSS names or hex codes in
@@ -90,7 +94,9 @@ GT(simple_df).data_color(palette=["blue", "red"], na_color="#FFE4C4")
 gt(simple_df) |> data_color(palette = c("blue", "red"), na_color = "#FFE4C4")
 """:
   nbCode:
-    nbTable tabella(simpleDf).dataColor(everything(), palette = @["blue", "red"], naColor = "#FFE4C4")
+    let bisque = tabella(simpleDf):
+      dataColor everything(), palette = @["blue", "red"], naColor = "#FFE4C4"
+    nbTable bisque
 
 nbText: """
 Now, the gray color has been changed to Bisque. Note that when it comes to colors, you can use any combination of CSS/X11 color names and hexadecimal color codes.
@@ -120,11 +126,12 @@ gt(simple_df) |>
   )
 """:
   nbCode:
-    nbTable tabella(simpleDf).dataColor(
-      columns = ["integer", "float"],
-      palette = @["blue", "red"],
-      domain = (0.0, 10.0),
-      naColor = "white")
+    let domained = tabella(simpleDf):
+      dataColor columns = ["integer", "float"],
+                palette = @["blue", "red"],
+                domain = (0.0, 10.0),
+                naColor = "white"
+    nbTable domained
 
 tabelline """
 `domain` is a pair of floats, `(from, to)`.
@@ -210,14 +217,13 @@ gt(sza_pivot, rowname_col = "month") |>
       for m in months: col.add angle.getOrDefault((m, t), null())
       szaPivot.addColumn(align($t, 4, '0'), col)
 
-    nbTable tabella(szaPivot, rownameCol = "month")
-      .dataColor(
-        domain = (90.0, 0.0),
-        palette = @["#663399", "white", "orange"],  # rebeccapurple
-        naColor = "white")
-      .tabHeader(
-        title = "Solar Zenith Angles from 05:30 to 12:00",
-        subtitle = html"Average monthly values at latitude of 20&deg;N.")
+    let zenith = tabella(szaPivot, rownameCol = "month"):
+      dataColor domain = (90.0, 0.0),
+                palette = @["#663399", "white", "orange"],  # rebeccapurple
+                naColor = "white"
+      tabHeader title = "Solar Zenith Angles from 05:30 to 12:00",
+                subtitle = html"Average monthly values at latitude of 20&deg;N."
+    nbTable zenith
 
 tabelline """
 Two differences. tabelline knows only 17 colour names (`rebeccapurple` is not one of them,

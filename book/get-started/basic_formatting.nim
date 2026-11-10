@@ -3,8 +3,7 @@ bookInit()
 
 nbText: "# Formatting Values"
 
-attribution gtGuide("Formatting Values", "basic-formatting",
-  "tabelline has no `fmtTime` yet: the times are left as they are in the Nim tab.")
+attribution gtGuide("Formatting Values", "basic-formatting", "")
 
 nbText: """
 The values within the table body, specifically those within the body cells, can be formatted with a large selection of `fmt_*()` methods like `GT.fmt_number()`, `GT.fmt_integer()`, `GT.fmt_scientific()`, and more. Let's use a portion of the `exibble` dataset and introduce some formatting to the cell values. First, we'll generate the basic GT object and take a look at the table without any cell formatting applied.
@@ -53,7 +52,9 @@ gt_ex <- gt_ex |> fmt_number(columns = num, decimals = 2) |> fmt_currency(column
 gt_ex
 """:
   nbCode:
-    gtEx = gtEx.fmtNumber("num", decimals = 2).fmtCurrency("currency")
+    gtEx = tabella(gtEx):
+      fmtNumber "num", decimals = 2
+      fmtCurrency "currency"
 
     nbTable gtEx
 
@@ -76,16 +77,17 @@ gt_ex <- gt_ex |>
 gt_ex
 """:
   nbCode:
-    gtEx = gtEx.fmtDate("date", dateStyle = "m_day_year")
-      .fmtTime("time", timeStyle = "h_m_p")
+    gtEx = tabella(gtEx):
+      fmtDate "date", dateStyle = "m_day_year"
+      fmtTime "time", timeStyle = "h_m_p"
 
     nbTable gtEx
 
 tabelline """
-`fmtTime` knows gt's named time styles (`fmtDatetime` takes both), and `fmtDate` knows nine
-of gt's 41 date styles, in English only (all of them, in every language, are for 0.3). A style it does not
-know is read as a [std/times](https://nim-lang.org/docs/times.html) pattern, as in the next
-example.
+`fmtDate` knows all 41 of gt's date styles and `fmtTime` its time styles (`fmtDatetime`
+takes both), in every language of CLDR: the table's `locale` (`tabella(data, locale = "it")`)
+or the verb's own. A style it does not know is read as a CLDR skeleton (`"yMMMd"`) or a
+[std/times](https://nim-lang.org/docs/times.html) pattern.
 """
 
 nbText: """
@@ -102,7 +104,8 @@ gt_ex <- gt_ex |> fmt_date(columns = date, date_style = "wday_day_month_year")
 gt_ex
 """:
   nbCode:
-    gtEx = gtEx.fmtDate("date", dateStyle = "dddd d MMMM yyyy")  # no wday_day_month_year
+    gtEx = tabella(gtEx):
+      fmtDate "date", dateStyle = "wday_day_month_year"
 
     nbTable gtEx
 
@@ -120,7 +123,8 @@ gt_ex <- gt_ex |> fmt_currency(columns = currency, rows = 3:5, currency = "GBP")
 gt_ex
 """:
   nbCode:
-    gtEx = gtEx.fmtCurrency("currency", rows = [2, 3, 4], currency = "GBP")
+    gtEx = tabella(gtEx):
+      fmtCurrency "currency", rows = [2, 3, 4], currency = "GBP"
 
     nbTable gtEx
 
