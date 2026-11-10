@@ -817,3 +817,214 @@ proc optCss*(t: sink Tabella, css: string, add = true): Tabella =
   ## replaces what was given before.
   result = t
   result.options.extraCss = (if add and result.options.extraCss.len > 0: result.options.extraCss & "\n" else: "") & css
+
+# ------------------------------------------------------------------------------------ merges
+
+proc addMerge(t: var Tabella, kind: MergeKind, columns: seq[string], rows: RowSel, pattern: string,
+              autohide: bool) =
+  for c in columns: discard t.data[c]       # raises on a column that does not exist
+  let ix = if rows.kind == rsAll: @[] else: rows.resolve(t.data)
+  t.merges.add MergeRule(kind: kind, columns: columns, rows: ix, pattern: pattern)
+  if autohide:
+    for c in t.boxhead.mitems:
+      if c.name in columns[1 .. ^1]: c.hidden = true
+
+proc colsMerge*(t: sink Tabella, columns: openArray[string], rows = allRows(), pattern = "",
+                autohide = true): Tabella =
+  ## Shows the formatted values of `columns` together, in the first one, with `pattern`:
+  ## `{1}`, `{2}`, ... are the columns, and a part between `<<` and `>>` is left out when a value
+  ## it names is missing: `colsMerge(["city", "country"], pattern = "{1}<< ({2})>>")`. Without a
+  ## pattern the values are joined by spaces. The other columns are hidden (unless `autohide =
+  ## false`).
+  result = t
+  var p = pattern
+  if p.len == 0:
+    for k in 1 .. columns.len: p.add (if k > 1: " " else: "") & "{" & $k & "}"
+  result.addMerge(mkPattern, @columns, rows, p, autohide)
+
+proc colsMergeUncert*(t: sink Tabella, colVal, colUncert: string, rows = allRows(), sep = " ± ",
+                      autohide = true): Tabella =
+  ## A value and its uncertainty in one cell: `12.3 ± 0.4` (just the value when the uncertainty
+  ## is missing).
+  result = t
+  result.addMerge(mkUncert, @[colVal, colUncert], rows, "{1}<<" & sep & "{2}>>", autohide)
+
+proc colsMergeRange*(t: sink Tabella, colBegin, colEnd: string, rows = allRows(), sep = "–",
+                     autohide = true): Tabella =
+  ## A range in one cell, with an en dash: `1990–2000` (just the start when the end is missing).
+  result = t
+  result.addMerge(mkRange, @[colBegin, colEnd], rows, "{1}<<" & sep & "{2}>>", autohide)
+
+proc colsMergeNPct*(t: sink Tabella, colN, colPct: string, rows = allRows(), autohide = true): Tabella =
+  ## A count and its percentage in one cell: `12 (4.5%)`; a zero count shows no percentage.
+  ## Format the percentage column first (`fmtPercent`).
+  result = t
+  result.addMerge(mkNPct, @[colN, colPct], rows, "{1}<< ({2})>>", autohide)
+
+# ------------------------------------------------------------------------------ adding columns
+
+proc withData(t: var Tabella, d: TableData) =
+  ## Replaces the data with a new one that has the same rows and more columns or more rows. The
+  ## old data is never changed, so other tables made from it stay as they were.
+  t.data = d
+
+proc copyData(d: TableData): TableData = TableData(columns: d.columns)
+
+proc colsAdd*(t: sink Tabella, name: string, values: seq[Value], before = "", after = ""): Tabella =
+  ## Adds a column: at the end, or `before` or `after` another one. `colsAdd("ratio", ratios)`.
+  result = t
+  let names = result.boxhead.mapIt(it.name)
+  var at = names.len
+  if before.len > 0: at = names.find(before)
+  elif after.len > 0: at = names.find(after) + (if names.find(after) >= 0: 1 else: -names.len - 1)
+  if at < 0: raise newException(KeyError, "no column named " & (before & after).escape)
+  let d = copyData(result.data)
+  d.addColumn(name, values)
+  result.withData d
+  let info = ColInfo(name: name, label: toText(name),
+                     align: if d[name].isNumeric: alRight else: alLeft)
+  result.boxhead.insert(info, at)
+
+proc colsAdd*[T](t: sink Tabella, name: string, values: openArray[T], before = "", after = ""): Tabella =
+  ## A column from Nim values: `colsAdd("visited", [true, false, ...])`.
+  colsAdd(t, name, toValues(values), before, after)
+
+proc colsAdd*(t: sink Tabella, name: string, fn: proc (r: Row): Value, before = "", after = ""): Tabella =
+  ## A column computed from each row: `colsAdd("density", proc (r: Row): Value =
+  ## toValue(r["mass"].toFloat / r["volume"].toFloat))`.
+  var vs: seq[Value]
+  for i in 0 ..< t.data.nrows: vs.add fn(Row(data: t.data, index: i))
+  colsAdd(t, name, vs, before, after)
+
+proc addSummaryColumns(t: var Tabella, columns: ColSel, fns: openArray[(string, Aggregate)],
+                       fmt: FormatFn, side: Side, missingText: string) =
+  if fns.len == 0: raise newException(ValueError, "no aggregates in fns")
+  if side notin {sLeft, sRight}: raise newException(ValueError, "summary columns go at the left or the right")
+  let names = columns.resolve(t.data).filterIt(it != t.rownameCol and it != t.groupnameCol)
+  # the format of the new columns: the call's, or the last one of the first summed-up column
+  var f = fmt
+  if f == nil and names.len > 0:
+    for k in countdown(t.formats.high, 0):
+      if names[0] in t.formats[k].columns and t.formats[k].rows.len == 0:
+        f = t.formats[k].fn
+        break
+  let firstData = block:
+    var k = 0
+    while k < t.boxhead.len and t.boxhead[k].role != crData: inc k
+    k
+  for k, (label, agg) in fns:
+    var vs: seq[Value]
+    for i in 0 ..< t.data.nrows:
+      var row: seq[Value]
+      for n in names:
+        let v = t.data[n, i]
+        if not v.isNull: row.add v
+      vs.add agg.fn(row)
+    let d = copyData(t.data)
+    d.addColumn(label, vs)
+    t.withData d
+    let info = ColInfo(name: label, label: toText(label), align: alRight)
+    if side == sRight: t.boxhead.add info
+    else: t.boxhead.insert(info, firstData + k)
+    if f != nil and agg.name != "count":
+      t.formats.add FormatRule(columns: @[label], fn: f)
+    let mt = missingText
+    t.substitutions.add FormatRule(columns: @[label], nullsToo: true,
+      fn: proc (v: Value, ctx: RenderContext): string = mt)
+
+proc summaryColumns*(t: sink Tabella, fns: openArray[(string, Aggregate)], columns: ColSel = numeric(),
+                     side = sRight, missingText = "—"): Tabella =
+  ## Adds a column for each aggregate in `fns`, summing up `columns` across each row:
+  ## `summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])`, at the
+  ## right of the table (or at the left of the data with `side = sLeft`). The new column is
+  ## formatted like the first column it sums up, or by `fmt`; summary rows sum it up like any
+  ## other column, so a table of totals gets its grand total.
+  result = t
+  result.addSummaryColumns(columns, fns, nil, side, missingText)
+
+proc summaryColumns*[P: proc](t: sink Tabella, fns: openArray[(string, Aggregate)], fmt: P,
+                              columns: ColSel = numeric(), side = sRight, missingText = "—"): Tabella =
+  ## Summary columns formatted by `fmt` (see `summaryRows`).
+  result = t
+  result.addSummaryColumns(columns, fns, toFormatFn(fmt), side, missingText)
+
+# --------------------------------------------------------------------------------- adding rows
+
+proc rowsAdd*(t: sink Tabella, rows: TableData, before = -1, after = -1): Tabella =
+  ## Adds rows, given as a table of some of the columns (the others are missing): at the end, or
+  ## `before` or `after` a row (by its index in the data). A value of `groupnameCol` puts the row
+  ## in that group (made when new). `rowsAdd(tableData(planet = ["Pluto"], moons = [5]))`.
+  result = t
+  let old = result.data
+  for c in rows.columns:
+    if not old.hasColumn(c.name):
+      raise newException(KeyError, "no column named " & c.name.escape & " (columns: " & old.names.join(", ") & ")")
+  let n0 = old.nrows
+  let n = rows.nrows
+  let d = copyData(old)
+  for col in d.columns.mitems:
+    let k = rows.colIndex(col.name)
+    for i in 0 ..< n: col.values.add(if k >= 0: rows.columns[k].values[i] else: null())
+  result.withData d
+  var order = if result.rowOrder.len > 0: result.rowOrder else: toSeq(0 ..< n0)
+  let newRows = toSeq(n0 ..< n0 + n)
+  let at = if before >= 0: order.find(before)
+           elif after >= 0: order.find(after) + 1
+           else: order.len
+  if (before >= 0 and at < 0) or (after >= 0 and at < 1):
+    raise newException(IndexDefect, "row " & $(max(before, after)) & " out of 0..<" & $n0)
+  order.insert(newRows, at)
+  result.rowOrder = order
+  for i in newRows:
+    var g = ""
+    if result.groupnameCol.len > 0: g = $d[result.groupnameCol, i]
+    result.rowGroups.add g
+    if g.len > 0 and g notin result.groupLabels: result.groupLabels[g] = toText(g)
+
+proc rowsAdd*[T: object | tuple](t: sink Tabella, rows: openArray[T], before = -1, after = -1): Tabella =
+  ## Rows as Nim objects or named tuples: `rowsAdd([(planet: "Pluto", moons: 5)])`.
+  rowsAdd(t, toTableData(rows), before, after)
+
+proc rowsHide*(t: sink Tabella, rows: RowSel): Tabella =
+  ## Hides rows: they are not shown, nor summed up by summary rows, but stay in the data.
+  result = t
+  for i in rows.resolve(result.data):
+    if i notin result.hiddenRows: result.hiddenRows.add i
+
+proc rowsUnhide*(t: sink Tabella, rows = allRows()): Tabella =
+  ## Shows hidden rows again (all of them, by default).
+  result = t
+  let ix = rows.resolve(result.data)
+  result.hiddenRows.keepItIf(it notin ix)
+
+# ------------------------------------------------------------------------- stub and alignment
+
+proc tabStubIndent*(t: sink Tabella, rows: RowSel, indent: int): Tabella =
+  ## Indents the stub cells of `rows` at a level from 0 (none) to 5.
+  result = t
+  for i in rows.resolve(result.data): result.indents[i] = clamp(indent, 0, 5)
+
+proc tabStubIndent*(t: sink Tabella, rows: RowSel, indent = "increase"): Tabella =
+  ## Indents the stub cells of `rows` one level more (`"increase"`) or less (`"decrease"`).
+  if indent notin ["increase", "decrease"]:
+    raise newException(ValueError, "indent is \"increase\", \"decrease\" or a level from 0 to 5")
+  result = t
+  for i in rows.resolve(result.data):
+    let now = result.indents.getOrDefault(i, 0)
+    result.indents[i] = clamp(now + (if indent == "increase": 1 else: -1), 0, 5)
+
+proc colsAlignDecimal*(t: sink Tabella, columns: ColSel = numeric(), decMark = "", locale = ""): Tabella =
+  ## Aligns the numbers of `columns` on their decimal mark, by padding each formatted cell on the
+  ## right with figure spaces (a number without decimals gets a space for the mark, too). The
+  ## columns are aligned right. The mark is `decMark`, or the locale's (`"."` by default).
+  result = t
+  let mark = if decMark.len > 0: decMark
+             else: localeMarks(if locale.len > 0: locale else: result.locale).dec
+  for n in columns.resolve(result.data):
+    let k = result.decimalAligned.find(n)
+    if k >= 0: result.decimalMarks[k] = mark
+    else:
+      result.decimalAligned.add n
+      result.decimalMarks.add mark
+    for c in result.boxhead.mitems:
+      if c.name == n: c.align = alRight

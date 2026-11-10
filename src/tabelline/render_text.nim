@@ -22,10 +22,10 @@ proc toText*(t: Tabella): string =
   var headers: seq[string]
   var aligns: seq[Align]
   if t.hasStub:
-    headers.add t.stubhead.renderText(rcText) & b.marksText("stubhead", m)
+    headers.add t.stubhead.renderLabel(rcText) & b.marksText("stubhead", m)
     aligns.add alLeft
   for c in b.columns:
-    headers.add c.label.renderText(rcText) & b.marksText(colKey(c.name), m)
+    headers.add c.columnLabel(rcText) & b.marksText(colKey(c.name), m)
     aligns.add c.align
   # the body as a list of lines to draw: rows of cells, group labels, and rules
   type
@@ -54,7 +54,7 @@ proc toText*(t: Tabella): string =
       entries.add Entry(kind: ekRule, text: "dots")
     for r in g.rows:
       var cells: seq[string]
-      if t.hasStub: cells.add r.stub & b.marksText(cellKey(r.index, t.rownameCol), m)
+      if t.hasStub: cells.add "  ".repeat(r.indent) & r.stub & b.marksText(cellKey(r.index, t.rownameCol), m)
       for j, c in b.columns: cells.add r.cells[j] & b.marksText(cellKey(r.index, c.name), m)
       entries.add Entry(kind: ekRow, cells: cells)
     if g.summaryBottom.len > 0:
@@ -79,7 +79,7 @@ proc toText*(t: Tabella): string =
       let k = t.spannerAt(b.columns[j].name, lv)
       var span = 1
       while j + span < b.columns.len and t.spannerAt(b.columns[j + span].name, lv) == k: inc span
-      let label = if k >= 0: t.spanners[k].label.renderText(rcText) else: ""
+      let label = if k >= 0: t.spanners[k].label.renderLabel(rcText) else: ""
       line.add (label, span)
       j += span
     spannerLines.add line
@@ -145,9 +145,9 @@ proc toMarkdown*(t: Tabella): string =
   if subtitle.len > 0: lines.add "*" & subtitle & "*"
   if lines.len > 0: lines.add ""
   var header, sep: seq[string]
-  if t.hasStub: (header.add mdEscape(t.stubhead.renderText(rcText)); sep.add ":--")
+  if t.hasStub: (header.add mdEscape(t.stubhead.renderLabel(rcText)); sep.add ":--")
   for c in b.columns:
-    header.add mdEscape(c.label.renderText(rcText) & b.marksText(colKey(c.name), m))
+    header.add mdEscape(c.columnLabel(rcText) & b.marksText(colKey(c.name), m))
     sep.add(case c.align
             of alRight: "--:"
             of alCenter: ":-:"
@@ -169,7 +169,7 @@ proc toMarkdown*(t: Tabella): string =
     summaryLines(g.summaryTop, "*")
     for r in g.rows:
       var cells: seq[string]
-      if t.hasStub: cells.add mdEscape(r.stub)
+      if t.hasStub: cells.add "\u00A0\u00A0".repeat(r.indent) & mdEscape(r.stub)
       for j, c in b.columns: cells.add mdEscape(r.cells[j] & b.marksText(cellKey(r.index, c.name), m))
       lines.add "| " & cells.join(" | ") & " |"
     summaryLines(g.summaryBottom, "*")

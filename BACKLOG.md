@@ -9,14 +9,10 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Parts
 
-- **Summary rows** (M, *in progress*: `add-summary-rows`). `summaryRows`, `grandSummaryRows`.
-- **Column merges** (M). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
-  (value ± error), `colsMergeRange`, `colsMergeNPct`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
-- **Stub indent and multi-column stubs** (S). `tabStubIndent`, `rownameCol` with several columns.
-- **Rows** (S). `rowsAdd`, hidden rows.
+- **Multi-column stubs** (S). `rownameCol` with several columns (`tabStubIndent` is in 0.2).
 
 ## Formats
 
@@ -32,7 +28,6 @@ Rough size: S (hours), M (a day or two), L (more).
   replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
   substitution).
 
-- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
 - **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
   `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
 - **Locales** (M). Month and day names and number marks for more locales, from CLDR data
@@ -65,6 +60,11 @@ Rough size: S (hours), M (a day or two), L (more).
   `tabelline/nanuq`, so the core keeps no dependencies.
 - **datamancer** (S). The same for SciNim's datamancer.
 - **Arraymancer tensors** (S). A 2D tensor as a table.
+- **unchained** (S-M). Vindaar's unchained (units checked at compile time) as an optional
+  module `tabelline/unchained`: a column of `KiloGram` or `Meter•Second⁻¹` values becomes a column
+  of floats whose unit, read from the type, is set as with `colsUnits` (written in gt's notation,
+  so it shows as kg or m s⁻¹ in every output); `toUnit` converts a column before it is shown.
+  From the 0.2 review (Pietro, 10 Nov 2026).
 
 ## Outputs
 

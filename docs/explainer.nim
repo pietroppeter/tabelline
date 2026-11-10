@@ -128,10 +128,10 @@ nbCode:
   let menu = @[
     Verb(family: "Create", verbs: "gt(), gt_preview(), gt_group()", does: "a table from a dataframe", tabelline: "tabella(), tableData:"),
     Verb(family: "Parts", verbs: "tab_header, tab_spanner, tab_stubhead, tab_row_group, tab_footnote, tab_source_note", does: "add the parts of a table", tabelline: "all six"),
-    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "21, and fmt() for your own"),
+    Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "28, and fmt() for your own"),
     Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "all five"),
-    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, align, width, hide, unhide, move, reorder"),
-    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows"),
+    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns"),
+    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle, dataColor, textTransform"),
     Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (70), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word", does: "render", tabelline: "toHtml, toText, toMarkdown, save"),
@@ -156,7 +156,7 @@ proc countVerbs(file, prefix: string): int =
       let name = line[5 ..< line.find('*')]
       if name notin names: names.add name
   names.len
-let nFormats = countVerbs("formats.nim", "fmt")
+let nFormats = countVerbs("formats.nim", "fmt") + countVerbs("units.nim", "fmt")
 let nOpts = countVerbs("verbs.nim", "opt")
 var nOptions = 0   # the fields of TabOptions, in core.nim
 block:
@@ -167,7 +167,7 @@ block:
       if not line.startsWith("    "): break
       if not line.strip.startsWith("#") and '*' in line: inc nOptions
 
-doAssert nFormats == 21, "the menu says 21 formats; there are " & $nFormats
+doAssert nFormats == 28, "the menu says 28 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
 doAssert nOptions == 70, "the menu says 70 options; there are " & $nOptions
 
@@ -577,6 +577,48 @@ nbCode:
     .fmtCurrency("currency", currency = "EUR")
     .tabHeader("Numeri all'italiana")
   nbTable italiano
+
+nbText: """
+Units, chemical formulas and fractions are written as text, in gt's notation, and shown with
+superscripts and subscripts, in labels (between `{{` and `}}`) and in cells:
+"""
+nbCode:
+  let lab = tableData:
+    substance: ["water", "ethanol", "table salt"]
+    formula: ["H2O", "C2H5OH", "NaCl"]
+    density: [997.0, 789.0, 2160.0]
+    cups: [1.0, 0.75, 0.125]
+    origin: ["IT", "FR", "DE"]
+  nbTable tabella(lab, rownameCol = "substance")
+    .fmtChem("formula")
+    .fmtInteger("density")
+    .colsLabel({"density": "density, {{kg m^-3}}"})
+    .fmtFraction("cups")
+    .fmtCountry("origin")
+    .optCssTheme()
+
+nbText: """
+## Rows and columns of your own
+
+A table can show more than its data: columns merged into one cell, columns and rows added, totals
+across each row (`summaryColumns`) and down each column (`grandSummaryRows`), indented row labels
+and numbers lined up on their decimal mark:
+"""
+
+nbCode:
+  let medals = tableData:
+    country: ["Norway", "Germany", "Italy"]
+    gold: [16, 12, 7]
+    silver: [8, 10, 8]
+    bronze: [13, 5, 9]
+    first: [1924, 1928, 1936]
+    last: [2026, 2026, 2026]
+  nbTable tabella(medals, rownameCol = "country")
+    .colsMergeRange("first", "last")
+    .colsLabel("first", "medals since")
+    .summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])
+    .grandSummaryRows(fns = {"all": agg.sum}, columns = ["gold", "silver", "bronze", "total"])
+    .optCssTheme()
 
 nbText: """
 ## Nim sugar

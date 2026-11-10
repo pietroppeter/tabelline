@@ -119,6 +119,9 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [Designing tabelline 0.2](https://pietroppeter.github.io/tabelline/devlog/designing-0-2/)
+  (10 Nov 2026 A): 0.2 takes in 0.3 and 0.4, in five groups, each from zero with its choices;
+  written while 0.2 is built.
 - [Review mode](https://pietroppeter.github.io/tabelline/devlog/review-mode/)
   (9 Nov 2026 A): select text on a page, comment on it, go through the comments with a bar at the
   bottom, and export them as Markdown with a YAML block for an agent. Every page of the site has
@@ -161,6 +164,8 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - `src/tabelline.nim`: the module to import, with two of the three macros (`tabella(data): body`, `tableData:`; `tabOptions` is in `verbs.nim`).
 - `src/tabelline/core.nim`: the data model (`Value`, `TableData`, `Text`, selectors, styles, `Tabella`).
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
+- `src/tabelline/units.nim`: units and chemical formulas in gt's notation (`fmtUnits`, `fmtChem`, `colsUnits`).
+- `src/tabelline/countries.nim`: country names and codes from Unicode CLDR, written by `tools/cldr.nim` (licence in `licenses/`).
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
 - `src/tabelline/colors.nim`: palettes, interpolation, text contrast.
 - `src/tabelline/build.nim`: the build step all renderers share.

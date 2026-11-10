@@ -12,7 +12,9 @@ with `&`. Locations SHALL be `loc.header()` (title and subtitle), `loc.title()`,
 `loc.columnHeader()` (stub head, spanners and column labels), `loc.stubhead()`,
 `loc.columnLabels(cols)`, `loc.spanners(labels)` (also `loc.spannerLabels`), `loc.stub(rows)`,
 `loc.rowGroups(groups)`, `loc.body(cols, rows)`, `loc.footer()` (footnotes and source notes),
-`loc.footnotes()` and `loc.sourceNotes()`, as in Great Tables; `loc.body` SHALL target the data
+`loc.footnotes()`, `loc.sourceNotes()`, and for summary rows `loc.summary(groups, columns, rows)`,
+`loc.summaryStub(groups, rows)`, `loc.grandSummary(columns, rows)` and `loc.grandSummaryStub(rows)`
+(rows by their labels), as in Great Tables; `loc.body` SHALL target the data
 cells only, not the stub (that is `loc.stub`). A later style SHALL win over an earlier one for the
 same property, but a style at one part SHALL win over a style at a whole part that holds it
 (header, column header, footer), as in Great Tables. A footnote at a whole part SHALL be marked on
