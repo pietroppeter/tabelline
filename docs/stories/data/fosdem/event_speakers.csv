@@ -358,7 +358,7 @@ year,event_id,position,person,person_key
 2006,2006-xorg-206,1,Luc Verhaegen,luc verhaegen
 2006,2006-xorg-207,1,Jay Hobson,jay hobson
 2006,2006-xorg-208,1,Egbert Eich,egbert eich
-2007,2007-aiglx,1,Kristian Høgsberg,kristian h gsberg
+2007,2007-aiglx,1,Kristian Høgsberg,kristian hogsberg
 2007,2007-bacula,1,Kern Sibbald,kern sibbald
 2007,2007-beyond_gpl3,1,Georg Greve,georg greve
 2007,2007-centos_contributing,1,Karanbir Singh,karanbir singh
@@ -412,9 +412,9 @@ year,event_id,position,person,person_key
 2007,2007-fedora_plans,1,Max Spevack,max spevack
 2007,2007-fedora_systemtap,1,Bryn Reeves,bryn reeves
 2007,2007-gdb_tracepoints,1,Jim Blandy,jim blandy
-2007,2007-gegl,1,Øyvind Kolås,yvind kolas
+2007,2007-gegl,1,Øyvind Kolås,oyvind kolas
 2007,2007-gentoo_alt_prefix_project,1,Fabian Groffen,fabian groffen
-2007,2007-gentoo_bugday,1,Alexander Færøy,alexander f r y
+2007,2007-gentoo_bugday,1,Alexander Færøy,alexander faeroy
 2007,2007-gentoo_community_distro,1,Christel Dahlksjaer,christel dahlksjaer
 2007,2007-gentoo_council,1,Mike Frysinger,mike frysinger
 2007,2007-gentoo_future_discussion,1,Dimitry Bradt,dimitry bradt
@@ -422,7 +422,7 @@ year,event_id,position,person,person_key
 2007,2007-gentoo_java,1,Joshua Nichols,joshua nichols
 2007,2007-gentoo_portage,1,Marius Mauch,marius mauch
 2007,2007-gentoo_programming_with_paludis,1,Danny van Dyk,danny van dyk
-2007,2007-gentoo_selinux_intro,1,Bryan Østergaard,bryan stergaard
+2007,2007-gentoo_selinux_intro,1,Bryan Østergaard,bryan ostergaard
 2007,2007-gentoo_tinderbox_testing,1,Chris Gianelloni,chris gianelloni
 2007,2007-gentoo_welcome,1,Dimitry Bradt,dimitry bradt
 2007,2007-gnome_bling,1,Mirco Müller,mirco muller
@@ -557,7 +557,7 @@ year,event_id,position,person,person_key
 2007,2007-welcome,1,FOSDEM,fosdem
 2007,2007-xorg,1,Keith Packard,keith packard
 2007,2007-xorg_build_env,1,Egbert Eich,egbert eich
-2007,2007-xorg_composite,1,Kristian Høgsberg,kristian h gsberg
+2007,2007-xorg_composite,1,Kristian Høgsberg,kristian hogsberg
 2007,2007-xorg_ggi_kgi,1,Olaf Buddenhagen,olaf buddenhagen
 2007,2007-xorg_myths,1,Stéphane Marchesin,stephane marchesin
 2007,2007-xorg_nouveau,1,Stéphane Marchesin,stephane marchesin
@@ -586,7 +586,7 @@ year,event_id,position,person,person_key
 2008,2008-crossdesktop_deb_intro,1,Jonathan Riddell,jonathan riddell
 2008,2008-crossdesktop_education,1,Knut Yrvyn,knut yrvyn
 2008,2008-crossdesktop_farsight2,1,Olivier Crête,olivier crete
-2008,2008-crossdesktop_gegl,1,Øyvind Kolås,yvind kolas
+2008,2008-crossdesktop_gegl,1,Øyvind Kolås,oyvind kolas
 2008,2008-crossdesktop_kde4,1,Jos Poortvliet,jos poortvliet
 2008,2008-crossdesktop_klik,1,Simon Peter,simon peter
 2008,2008-crossdesktop_klik,2,Kurt Pfeifle,kurt pfeifle
@@ -837,7 +837,7 @@ year,event_id,position,person,person_key
 2008,2008-xorg_vga,1,Michael Meeuwisse,michael meeuwisse
 2008,2008-xorg_xaudio,1,Helge Bahmann,helge bahmann
 2009,2009-643,1,Matteo Meucci,matteo meucci
-2009,2009-644,1,Bryan Østergaard,bryan stergaard
+2009,2009-644,1,Bryan Østergaard,bryan ostergaard
 2009,2009-ada_annex_e,1,Thomas Quinot,thomas quinot
 2009,2009-ada_ast2cfg,1,Georg Kienesberger,georg kienesberger
 2009,2009-ada_bof_0,1,Valentine Reboul,valentine reboul
@@ -858,7 +858,7 @@ year,event_id,position,person,person_key
 2009,2009-bsd_porting_freebsd,1,Rodrigo Osorio,rodrigo osorio
 2009,2009-bsd_syscalls,1,Gregory Holland,gregory holland
 2009,2009-bsd_utf8,1,Ed Schouten,ed schouten
-2009,2009-caldav,1,Helge Heß,helge he
+2009,2009-caldav,1,Helge Heß,helge hess
 2009,2009-centos_desktop,1,Toshaan Bharvani,toshaan bharvani
 2009,2009-centos_el_landscape,1,Dag Wieers,dag wieers
 2009,2009-centos_intro,1,Fabian Arrotin,fabian arrotin
@@ -931,7 +931,7 @@ year,event_id,position,person,person_key
 2009,2009-geo_gap_price,1,Riccardo Mottola,riccardo mottola
 2009,2009-geo_gc_objc,1,Richard Frith-Macdonald,richard frith macdonald
 2009,2009-geo_pragmatic_smalltalk,1,Nicolas Roard,nicolas roard
-2009,2009-geo_scalable_ogo,1,Helge Heß,helge he
+2009,2009-geo_scalable_ogo,1,Helge Heß,helge hess
 2009,2009-geo_server_apps,1,Nicola Pero,nicola pero
 2009,2009-geo_ws_objc,1,Riccardo Mottola,riccardo mottola
 2009,2009-geo_ws_objc,2,Richard Frith-Macdonald,richard frith macdonald
@@ -946,7 +946,7 @@ year,event_id,position,person,person_key
 2009,2009-gnome_welcome,1,Christophe Fergeau,christophe fergeau
 2009,2009-goe_gnustep_theming,1,Richard Frith-Macdonald,richard frith macdonald
 2009,2009-goe_objc_gnustep,1,Nicola Pero,nicola pero
-2009,2009-groupdav_caldav_meet,1,Helge Heß,helge he
+2009,2009-groupdav_caldav_meet,1,Helge Heß,helge hess
 2009,2009-gsoc,1,Leslie Hawthorn,leslie hawthorn
 2009,2009-jabber_deploy_jingle,1,Diana Cionoiu,diana cionoiu
 2009,2009-jabber_flow,1,Dave Cridland,dave cridland
@@ -2189,7 +2189,7 @@ year,event_id,position,person,person_key
 2012,914,1,Stefan Hornburg,stefan hornburg
 2012,915,1,Emil Ivov,emil ivov
 2012,916,1,Jérôme Poisson,jerome poisson
-2012,917,1,Ævar Arnfjörð Bjarmason,var arnfjor bjarmason
+2012,917,1,Ævar Arnfjörð Bjarmason,aevar arnfjord bjarmason
 2012,918,1,Florian Zeitz,florian zeitz
 2012,918,2,Jonathan Schleifer,jonathan schleifer
 2012,919,1,Mark Overmeer,mark overmeer
@@ -2199,7 +2199,7 @@ year,event_id,position,person,person_key
 2012,923,1,Neil Roberts,neil roberts
 2012,923,2,Robert Bragg,robert bragg
 2012,924,1,Kai-Uwe Behrmann,kai uwe behrmann
-2012,925,1,Kristian Høgsberg,kristian h gsberg
+2012,925,1,Kristian Høgsberg,kristian hogsberg
 2012,925,2,Rob Bradford,rob bradford
 2012,926,1,Chris Wilson,chris wilson
 2012,927,1,Eric Anholt,eric anholt
@@ -2274,7 +2274,7 @@ year,event_id,position,person,person_key
 2013,1134,1,Ole Michaelis,ole michaelis
 2013,1135,1,Volker Dusch,volker dusch
 2013,1136,1,Robert Lemke,robert lemke
-2013,1137,1,Helgi Þorbjörnsson,helgi orbjornsson
+2013,1137,1,Helgi Þorbjörnsson,helgi thorbjornsson
 2013,1138,1,Daniel Kucharski,daniel kucharski
 2013,1139,1,Sara Golemon,sara golemon
 2013,1140,1,Vincent Povirk,vincent povirk
@@ -2425,7 +2425,7 @@ year,event_id,position,person,person_key
 2013,1274,2,Kenneth Hoste,kenneth hoste
 2013,1275,1,Lars Thalmann,lars thalmann
 2013,1276,1,Andrew Morgan,andrew morgan
-2013,1277,1,Øystein Grøvlen,ystein gr vlen
+2013,1277,1,Øystein Grøvlen,oystein grovlen
 2013,1278,1,Tom Marble,tom marble
 2013,1278,2,Bradley M. Kuhn,bradley m kuhn
 2013,1278,3,Karen Sandler,karen sandler
@@ -2523,7 +2523,7 @@ year,event_id,position,person,person_key
 2013,1360,1,Sean Coffey,sean coffey
 2013,1362,1,Raoul-Gabriel Urma,raoul gabriel urma
 2013,1363,1,Stanislav Ochotnicky,stanislav ochotnicky
-2013,1363,2,Mikołaj Izdebski,miko aj izdebski
+2013,1363,2,Mikołaj Izdebski,mikolaj izdebski
 2013,1364,1,Josh Matthews,josh matthews
 2013,1365,1,Lucas Rocha,lucas rocha
 2013,1365,2,Chris Lord,chris lord
@@ -2682,7 +2682,7 @@ year,event_id,position,person,person_key
 2013,1501,1,Eike Rathke,eike rathke
 2013,1502,1,Jan Holesovsky,jan holesovsky
 2013,1503,1,Zbigniew Braniecki,zbigniew braniecki
-2013,1503,2,Staś Małolepszy,stas ma olepszy
+2013,1503,2,Staś Małolepszy,stas malolepszy
 2013,1504,1,Thorsten Behrens,thorsten behrens
 2013,1505,1,Markus Mohrhard,markus mohrhard
 2013,1506,1,Nicolas Silva,nicolas silva
@@ -3479,7 +3479,7 @@ year,event_id,position,person,person_key
 2015,2771,1,Kaspar Emanuel,kaspar emanuel
 2015,2775,1,Emmanuel Aldeguer,emmanuel aldeguer
 2015,2779,1,Frédéric Descamps,frederic descamps
-2015,2782,1,Øyvind Kolås,yvind kolas
+2015,2782,1,Øyvind Kolås,oyvind kolas
 2015,2783,1,Saúl Ibarra Corretgé,saul ibarra corretge
 2015,2784,1,Saúl Ibarra Corretgé,saul ibarra corretge
 2015,2785,1,Sebastian Noack,sebastian noack
@@ -3757,7 +3757,7 @@ year,event_id,position,person,person_key
 2015,3278,1,Harm Boertien,harm boertien
 2015,3280,1,Colin Charles,colin charles
 2015,3284,1,Tobias Mueller,tobias mueller
-2015,3286,1,Michał Sawicz,micha sawicz
+2015,3286,1,Michał Sawicz,michal sawicz
 2015,3287,1,Martin Paljak,martin paljak
 2015,3288,1,Thomas Oulevey,thomas oulevey
 2015,3289,1,Olivier Cochard-Labbé,olivier cochard labbe
@@ -4031,7 +4031,7 @@ year,event_id,position,person,person_key
 2016,3685,1,Sander van Geloven,sander van geloven
 2016,3687,1,Philipp Wagner,philipp wagner
 2016,3688,1,Martin Braun,martin braun
-2016,3689,1,Łukasz Szczęsny,ukasz szczesny
+2016,3689,1,Łukasz Szczęsny,lukasz szczesny
 2016,3689,2,Marcin Zajączkowski,marcin zajaczkowski
 2016,3691,1,Jean-Jacques Pitrolle,jean jacques pitrolle
 2016,3697,1,Mike McQuaid,mike mcquaid
@@ -4079,7 +4079,7 @@ year,event_id,position,person,person_key
 2016,3813,1,Milo Casagrande,milo casagrande
 2016,3814,1,Dave Stokes,dave stokes
 2016,3815,1,Jonathan Riddell,jonathan riddell
-2016,3816,1,Arda Yalçıner,arda yalc ner
+2016,3816,1,Arda Yalçıner,arda yalciner
 2016,3822,1,Lorenzo Mangani,lorenzo mangani
 2016,3824,1,Luis Lopez,luis lopez
 2016,3828,1,Hans de Goede,hans de goede
@@ -4923,7 +4923,7 @@ year,event_id,position,person,person_key
 2017,5225,1,Paul Girard,paul girard
 2017,5226,1,Robert Kaiser,robert kaiser
 2017,5227,1,Mike Milinkovich,mike milinkovich
-2017,5229,1,Björn Schießle,bjorn schie le
+2017,5229,1,Björn Schießle,bjorn schiessle
 2017,5232,1,Christophe Massiot,christophe massiot
 2017,5237,1,Matthieu Totet,matthieu totet
 2017,5238,1,JC Brand,jc brand
@@ -4952,12 +4952,12 @@ year,event_id,position,person,person_key
 2017,5293,1,Jelle van der Waa,jelle van der waa
 2017,5296,1,Stefan Schmidt,stefan schmidt
 2017,5297,1,Martin Junghanns,martin junghanns
-2017,5297,2,Max Kießling,max kie ling
+2017,5297,2,Max Kießling,max kiessling
 2017,5298,1,Hernâni Marques,hernani marques
 2017,5302,1,André Petermann,andre petermann
 2017,5305,1,Jeremie Garnier,jeremie garnier
 2017,5309,1,Greg Sutcliffe,greg sutcliffe
-2017,5310,1,Malte Reißig,malte rei ig
+2017,5310,1,Malte Reißig,malte reissig
 2017,5311,1,Michael Bauer,michael bauer
 2017,5314,1,Colin Charles,colin charles
 2017,5321,1,Ludovic Dubost,ludovic dubost
@@ -5238,7 +5238,7 @@ year,event_id,position,person,person_key
 2017,5701,1,LibreOffice Team,libreoffice team
 2017,5703,1,Enrico Jörns,enrico jorns
 2017,5705,1,Zeeshan Ali,zeeshan ali
-2017,5707,1,Paweł Wieczorek,pawe wieczorek
+2017,5707,1,Paweł Wieczorek,pawel wieczorek
 2017,5708,1,Michael Tretter,michael tretter
 2017,5709,1,Jonathan Slenders,jonathan slenders
 2017,5711,1,Krzysztof Opasiak,krzysztof opasiak
@@ -5327,7 +5327,7 @@ year,event_id,position,person,person_key
 2017,5802,1,Mario Torre,mario torre
 2017,5803,1,Christoph Moench-Tegeder,christoph moench tegeder
 2017,5804,1,Andreas Scherbaum (ads),andreas scherbaum ads
-2017,5806,1,Gülçin Yıldırım,gulcin y ld r m
+2017,5806,1,Gülçin Yıldırım,gulcin yildirim
 2017,5807,1,Steven Simpson,steven simpson
 2017,5808,1,Gunnar Bluth (Nick),gunnar bluth nick
 2017,5811,1,Ron Evans,ron evans
@@ -5601,7 +5601,7 @@ year,event_id,position,person,person_key
 2018,6450,1,Jakub Jelen,jakub jelen
 2018,6452,1,Lennart Poettering,lennart poettering
 2018,6453,1,Fabian Stäber,fabian staber
-2018,6456,1,Ole Trøan,ole tr an
+2018,6456,1,Ole Trøan,ole troan
 2018,6458,1,Rob van Kranenburg,rob van kranenburg
 2018,6458,2,Michiel Leenaars,michiel leenaars
 2018,6458,3,Marietje Schaake,marietje schaake
@@ -5702,7 +5702,7 @@ year,event_id,position,person,person_key
 2018,6655,1,Luca Barbato,luca barbato
 2018,6657,1,Luc Didry (Framasky),luc didry framasky
 2018,6658,1,Torkel Ödegaard,torkel odegaard
-2018,6661,1,Bartłomiej Święcki,bart omiej swiecki
+2018,6661,1,Bartłomiej Święcki,bartlomiej swiecki
 2018,6663,1,Valerio Cosentino,valerio cosentino
 2018,6665,1,Frank Rehberger,frank rehberger
 2018,6666,1,Julien Viard de Galbert,julien viard de galbert
@@ -5750,7 +5750,7 @@ year,event_id,position,person,person_key
 2018,6740,1,Gildas Chabot,gildas chabot
 2018,6741,1,Cristina Rosu,cristina rosu
 2018,6742,1,Kaspar Emanuel,kaspar emanuel
-2018,6750,1,Paweł Wieczorek,pawe wieczorek
+2018,6750,1,Paweł Wieczorek,pawel wieczorek
 2018,6754,1,Kaspar Emanuel,kaspar emanuel
 2018,6755,1,Brett Smith,brett smith
 2018,6757,1,Kenneth Hoste,kenneth hoste
@@ -5816,7 +5816,7 @@ year,event_id,position,person,person_key
 2018,6860,1,Fabian Deutsch,fabian deutsch
 2018,6862,1,Kashyap Chamarthy,kashyap chamarthy
 2018,6866,1,Martin Junghanns,martin junghanns
-2018,6866,2,Max Kießling,max kie ling
+2018,6866,2,Max Kießling,max kiessling
 2018,6867,1,Stef Walter,stef walter
 2018,6871,1,Lars Kurth,lars kurth
 2018,6873,1,Nik Vaessen,nik vaessen
@@ -5842,7 +5842,7 @@ year,event_id,position,person,person_key
 2018,6907,1,Peter Czanik,peter czanik
 2018,6908,1,Alejandro Piñeiro,alejandro pineiro
 2018,6909,1,Hartmut Holzgraefe,hartmut holzgraefe
-2018,6911,1,Michał Piotrowski,micha piotrowski
+2018,6911,1,Michał Piotrowski,michal piotrowski
 2018,6912,1,Jean-Pierre Ledure,jean pierre ledure
 2018,6913,1,Juan Gonzalez-Gomez (Obijuan),juan gonzalez gomez obijuan
 2018,6914,1,Norvald H. Ryeng,norvald h ryeng
@@ -5864,7 +5864,7 @@ year,event_id,position,person,person_key
 2018,6945,1,Johan Fabry,johan fabry
 2018,6946,1,Simon Morlat,simon morlat
 2018,6947,1,Xisco Fauli,xisco fauli
-2018,6948,1,Bartłomiej Górny,bart omiej gorny
+2018,6948,1,Bartłomiej Górny,bartlomiej gorny
 2018,6949,1,Julien Chavanton,julien chavanton
 2018,6950,1,Ziran Sun,ziran sun
 2018,6951,1,Miklos Vajna,miklos vajna
@@ -5881,7 +5881,7 @@ year,event_id,position,person,person_key
 2018,6971,1,John Brant,john brant
 2018,6973,1,Matt Bostock,matt bostock
 2018,6975,1,Matthew Coles,matthew coles
-2018,6976,1,Øystein Grøvlen,ystein gr vlen
+2018,6976,1,Øystein Grøvlen,oystein grovlen
 2018,6978,1,Matthew Hodgson,matthew hodgson
 2018,6980,1,Joris Van den Bossche,joris van den bossche
 2018,6983,1,Jesús Arroyo Torrens,jesus arroyo torrens
@@ -6030,7 +6030,7 @@ year,event_id,position,person,person_key
 2018,7184,1,Enrico Jörns,enrico jorns
 2018,7185,1,Teodoro Vadalà,teodoro vadala
 2018,7185,2,Alberto Panizzo,alberto panizzo
-2018,7186,1,Paweł Wieczorek,pawe wieczorek
+2018,7186,1,Paweł Wieczorek,pawel wieczorek
 2018,7187,1,Manolis Surligas,manolis surligas
 2018,7189,1,Krzysztof Opasiak,krzysztof opasiak
 2018,7191,1,Johannes Demel,johannes demel
@@ -6089,7 +6089,7 @@ year,event_id,position,person,person_key
 2018,7264,1,Bryan Boreham,bryan boreham
 2018,7268,1,Alex Hagen-Zanker,alex hagen zanker
 2018,7269,1,Richard Hartmann,richard hartmann
-2018,7270,1,Lætitia Avrot,l titia avrot
+2018,7270,1,Lætitia Avrot,laetitia avrot
 2018,7271,1,Joe Conway,joe conway
 2018,7272,1,Magnus Hagander,magnus hagander
 2018,7273,1,Andres Freund,andres freund
@@ -6244,7 +6244,7 @@ year,event_id,position,person,person_key
 2019,7679,1,Veronika Nad,veronika nad
 2019,7680,1,Lenz Grimmer,lenz grimmer
 2019,7682,1,Brian Proffitt,brian proffitt
-2019,7685,1,Björn Schießle,bjorn schie le
+2019,7685,1,Björn Schießle,bjorn schiessle
 2019,7687,1,Gorka Eguileor,gorka eguileor
 2019,7692,1,Alexander Todorov,alexander todorov
 2019,7693,1,Eyal Ron,eyal ron
@@ -6346,7 +6346,7 @@ year,event_id,position,person,person_key
 2019,7910,2,Ludovico de Nittis,ludovico de nittis
 2019,7914,1,Peter Karich,peter karich
 2019,7915,1,Tushar Sharma,tushar sharma
-2019,7918,1,Sławomir Maludziński,s awomir maludzinski
+2019,7918,1,Sławomir Maludziński,slawomir maludzinski
 2019,7919,1,Morgan Tocker,morgan tocker
 2019,7928,1,Yoshinori Matsunobu,yoshinori matsunobu
 2019,7929,1,Wish Shi,wish shi
@@ -7248,14 +7248,14 @@ year,event_id,position,person,person_key
 2020,10433,1,Vittorio Bertola,vittorio bertola
 2020,10436,1,Rob Hagemans,rob hagemans
 2020,10438,1,Jan Grewe,jan grewe
-2020,10440,1,Alexander Færøy,alexander f r y
+2020,10440,1,Alexander Færøy,alexander faeroy
 2020,10441,1,Astor Nummelin Carlberg,astor nummelin carlberg
 2020,10441,2,Paula Grzegorzewska,paula grzegorzewska
 2020,10446,1,Suraj Shah,suraj shah
 2020,10448,1,Michael Hanke,michael hanke
 2020,10450,1,Daniel Kiper,daniel kiper
 2020,10450,2,Piotr Król,piotr krol
-2020,10452,1,Michał Żygowski,micha zygowski
+2020,10452,1,Michał Żygowski,michal zygowski
 2020,10453,1,Christophe Beyls,christophe beyls
 2020,10456,1,Paul Chaignon,paul chaignon
 2020,10463,1,Anastassios Nanos,anastassios nanos
@@ -7339,7 +7339,7 @@ year,event_id,position,person,person_key
 2020,10581,1,Todd Gamblin,todd gamblin
 2020,10582,1,Jon Lopez Garcia,jon lopez garcia
 2020,10583,1,Andre Puschmann,andre puschmann
-2020,10584,1,Łukasz Wcisło,ukasz wcis o
+2020,10584,1,Łukasz Wcisło,lukasz wcislo
 2020,10585,1,Florent Revest,florent revest
 2020,10586,1,Jeroen Baten,jeroen baten
 2020,10590,1,Leon Anavi,leon anavi
@@ -7472,7 +7472,7 @@ year,event_id,position,person,person_key
 2020,10739,2,Bradley M. Kuhn,bradley m kuhn
 2020,10739,3,Karen Sandler,karen sandler
 2020,10739,4,Richard Fontana,richard fontana
-2020,10741,1,Nazım Can Altınova,naz m can alt nova
+2020,10741,1,Nazım Can Altınova,nazim can altinova
 2020,10742,1,Richard Hartmann,richard hartmann
 2020,10743,1,Claire Giordano,claire giordano
 2020,10744,1,Stephen Frost,stephen frost
@@ -7541,7 +7541,7 @@ year,event_id,position,person,person_key
 2020,10825,2,Hannah Walther,hannah walther
 2020,9008,1,Daniel Stenberg,daniel stenberg
 2020,9010,1,Drew DeVault,drew devault
-2020,9014,1,Geir Høydalsvik,geir h ydalsvik
+2020,9014,1,Geir Høydalsvik,geir hoydalsvik
 2020,9015,1,Teddy Hogeborn,teddy hogeborn
 2020,9024,1,FOSDEM Staff,fosdem staff
 2020,9025,1,FOSDEM Staff,fosdem staff
@@ -7809,8 +7809,8 @@ year,event_id,position,person,person_key
 2020,9682,1,Shahzeb Siddiqui,shahzeb siddiqui
 2020,9683,1,Hisham Muhammad,hisham muhammad
 2020,9684,1,Hrvoje Matijakovic,hrvoje matijakovic
-2020,9688,1,Łukasz Stelmach,ukasz stelmach
-2020,9690,1,Erik Frøseth,erik fr seth
+2020,9688,1,Łukasz Stelmach,lukasz stelmach
+2020,9690,1,Erik Frøseth,erik froseth
 2020,9691,1,Maddish Falzoni (MaadiX),maddish falzoni maadix
 2020,9697,1,Benoit Aubas,benoit aubas
 2020,9699,1,Luca Pizzamiglio,luca pizzamiglio
@@ -7881,14 +7881,14 @@ year,event_id,position,person,person_key
 2020,9819,1,Sander van Geloven,sander van geloven
 2020,9823,1,Stephan Schwichtenberg,stephan schwichtenberg
 2020,9824,1,Marcin Czenko,marcin czenko
-2020,9826,1,Max Kießling,max kie ling
+2020,9826,1,Max Kießling,max kiessling
 2020,9827,1,Alexandre Halbach,alexandre halbach
 2020,9831,1,Ilmari Lauhakangas,ilmari lauhakangas
 2020,9834,1,Marko Mäkelä,marko makela
 2020,9842,1,Jonathan Slenders,jonathan slenders
 2020,9843,1,Pedro Figueiredo,pedro figueiredo
 2020,9847,1,Mickael Istria,mickael istria
-2020,9849,1,Björn Schießle,bjorn schie le
+2020,9849,1,Björn Schießle,bjorn schiessle
 2020,9850,1,Lasse Mönch,lasse monch
 2020,9851,1,Apostolos Spanakis-Misirlis,apostolos spanakis misirlis
 2020,9852,1,Jeff Mendoza,jeff mendoza
@@ -7998,7 +7998,7 @@ year,event_id,position,person,person_key
 2021,10882,1,Lionel LONKAP TSAMBA,lionel lonkap tsamba
 2021,10884,1,Alejandro Saucedo,alejandro saucedo
 2021,10886,1,Philip Konrath,philip konrath
-2021,10886,2,Janis Groß,janis gro
+2021,10886,2,Janis Groß,janis gross
 2021,10887,1,Colin Dean,colin dean
 2021,10888,1,Sanja Bonic,sanja bonic
 2021,10888,2,Janos Pasztor,janos pasztor
@@ -8162,7 +8162,7 @@ year,event_id,position,person,person_key
 2021,11105,1,Rudy De Busscher,rudy de busscher
 2021,11109,1,Piotr Król,piotr krol
 2021,11109,2,Marek Kasiewicz,marek kasiewicz
-2021,11110,1,Michał Żygowski,micha zygowski
+2021,11110,1,Michał Żygowski,michal zygowski
 2021,11111,1,Noam Rosenthal,noam rosenthal
 2021,11112,1,Michael Tretter,michael tretter
 2021,11113,1,Dmitry Chuyko,dmitry chuyko
@@ -8318,10 +8318,10 @@ year,event_id,position,person,person_key
 2021,11285,1,Tim Panton,tim panton
 2021,11286,1,Dave Stokes,dave stokes
 2021,11287,1,Morten Linderud,morten linderud
-2021,11287,2,Jakub Łęcki,jakub ecki
+2021,11287,2,Jakub Łęcki,jakub lecki
 2021,11288,1,Victor Martinez,victor martinez
 2021,11288,2,Ivan Fernandez Calvo,ivan fernandez calvo
-2021,11289,1,Øystein Grøvlen,ystein gr vlen
+2021,11289,1,Øystein Grøvlen,oystein grovlen
 2021,11290,1,Joshua Mack,joshua mack
 2021,11291,1,Dario Faggioli,dario faggioli
 2021,11292,1,Florian PASTEUR,florian pasteur
@@ -8445,7 +8445,7 @@ year,event_id,position,person,person_key
 2021,11443,1,Dmitriy Kostiuk,dmitriy kostiuk
 2021,11444,1,Dmitrii Kuvaiskii,dmitrii kuvaiskii
 2021,11445,1,Daniel Wessolek,daniel wessolek
-2021,11446,1,Lætitia Avrot,l titia avrot
+2021,11446,1,Lætitia Avrot,laetitia avrot
 2021,11447,1,Christophe Pettus,christophe pettus
 2021,11450,1,Benedict Suska,benedict suska
 2021,11451,1,Simon Meggle,simon meggle
@@ -8468,7 +8468,7 @@ year,event_id,position,person,person_key
 2021,11465,1,Bernhard Rosenkränzer,bernhard rosenkranzer
 2021,11466,1,Pritha Srivastava,pritha srivastava
 2021,11466,2,Shilpa Jagannath,shilpa jagannath
-2021,11467,1,Nazım Can Altınova,naz m can alt nova
+2021,11467,1,Nazım Can Altınova,nazim can altinova
 2021,11470,1,Sixtus Chizaram Isaac,sixtus chizaram isaac
 2021,11472,1,Thorsten Behrens,thorsten behrens
 2021,11473,1,Thorsten Behrens,thorsten behrens
@@ -8542,7 +8542,7 @@ year,event_id,position,person,person_key
 2021,11541,1,Marco Gomiero,marco gomiero
 2021,11542,1,Abhishesh Srivastava,abhishesh srivastava
 2021,11543,1,Tomaž Vajngerl,tomaz vajngerl
-2021,11544,1,Rafał Manhart,rafa manhart
+2021,11544,1,Rafał Manhart,rafal manhart
 2021,11546,1,Belen Barros Pena,belen barros pena
 2021,11548,1,Italo Vignoli,italo vignoli
 2021,11550,1,Vipin Sharma,vipin sharma
@@ -8583,7 +8583,7 @@ year,event_id,position,person,person_key
 2021,11597,1,Christophe Ponsard,christophe ponsard
 2021,11598,1,Stephan Bergmann,stephan bergmann
 2021,11600,1,Jakub Konka,jakub konka
-2021,11601,1,"Felix ""xq"" Queißner",felix quei ner
+2021,11601,1,"Felix ""xq"" Queißner",felix queissner
 2021,11602,1,Michael Stahl,michael stahl
 2021,11603,1,Holger Steinhauer,holger steinhauer
 2021,11604,1,Zygmunt Krynicki,zygmunt krynicki
@@ -8668,7 +8668,7 @@ year,event_id,position,person,person_key
 2021,11683,1,Cornelia Davis,cornelia davis
 2021,11685,1,Matthias Valvekens,matthias valvekens
 2021,11687,1,Christian Walter,christian walter
-2021,11687,2,Jakub Łęcki,jakub ecki
+2021,11687,2,Jakub Łęcki,jakub lecki
 2021,11688,1,Daniel Schaefer,daniel schaefer
 2021,11689,1,Johannes Demel,johannes demel
 2021,11690,1,Paul Frazee,paul frazee
@@ -9101,7 +9101,7 @@ year,event_id,position,person,person_key
 2022,12704,1,Julian Coccia,julian coccia
 2022,12705,1,Ilya Zverev,ilya zverev
 2022,12707,1,Jan Holesovsky,jan holesovsky
-2022,12708,1,Gökay Şatır,gokay sat r
+2022,12708,1,Gökay Şatır,gokay satir
 2022,12709,1,Oli Sennhauser,oli sennhauser
 2022,12710,1,Oli Sennhauser,oli sennhauser
 2022,12711,1,Oli Sennhauser,oli sennhauser
@@ -9301,7 +9301,7 @@ year,event_id,position,person,person_key
 2022,12942,1,Drew DeVault,drew devault
 2022,12945,1,Igor  Lukanin,igor lukanin
 2022,12946,1,Hisham Muhammad,hisham muhammad
-2022,12947,1,Szymon Kłos,szymon k os
+2022,12947,1,Szymon Kłos,szymon klos
 2022,12950,1,Huy Ngo,huy ngo
 2022,12951,1,kevin o'dwyer,kevin o dwyer
 2022,12954,1,Sayan Chowdhury,sayan chowdhury
@@ -9416,7 +9416,7 @@ year,event_id,position,person,person_key
 2022,13052,1,Anita Ihuman,anita ihuman
 2022,13053,1,Hyunjun Ko,hyunjun ko
 2022,13054,1,Charles Lehner,charles lehner
-2022,13056,1,Bartłomiej Święcki,bart omiej swiecki
+2022,13056,1,Bartłomiej Święcki,bartlomiej swiecki
 2022,13057,1,Peter Kovacs,peter kovacs
 2022,13058,1,Jan Cizmar,jan cizmar
 2022,13059,1,Fridtjof Siebert,fridtjof siebert
@@ -9427,7 +9427,7 @@ year,event_id,position,person,person_key
 2022,13065,1,Valerii Kravchuk,valerii kravchuk
 2022,13066,1,Anthony Giuliano,anthony giuliano
 2022,13069,1,Pep Pla,pep pla
-2022,13070,1,Øystein Grøvlen,ystein gr vlen
+2022,13070,1,Øystein Grøvlen,oystein grovlen
 2022,13071,1,Carl Johnson,carl johnson
 2022,13072,1,Mechtilde Stehmann,mechtilde stehmann
 2022,13073,1,Sean Levin,sean levin
@@ -9450,7 +9450,7 @@ year,event_id,position,person,person_key
 2022,13095,1,René Cannaò,rene cannao
 2022,13097,1,Amanda Brock,amanda brock
 2022,13098,1,Mary Grygleski,mary grygleski
-2022,13101,1,Michał Żygowski,micha zygowski
+2022,13101,1,Michał Żygowski,michal zygowski
 2022,13102,1,Adolfo Sanz De Diego,adolfo sanz de diego
 2022,13103,1,Lorenzo Miniero,lorenzo miniero
 2022,13104,1,Daniel Kiper,daniel kiper
@@ -9905,7 +9905,7 @@ year,event_id,position,person,person_key
 2023,14186,1,Guillaume Desforges,guillaume desforges
 2023,14187,1,Nelson Vides,nelson vides
 2023,14188,1,Erwann Roussy,erwann roussy
-2023,14189,1,Nazım Can Altınova,naz m can alt nova
+2023,14189,1,Nazım Can Altınova,nazim can altinova
 2023,14190,1,Matteo Lodi,matteo lodi
 2023,14191,1,Roman Volosatovs,roman volosatovs
 2023,14193,1,Javier Ramírez,javier ramirez
@@ -10207,7 +10207,7 @@ year,event_id,position,person,person_key
 2023,14666,1,Vibhoothi .,vibhoothi
 2023,14667,1,Pranam Lashkari,pranam lashkari
 2023,14670,1,Peter Smith,peter smith
-2023,14673,1,Szymon Kłos,szymon k os
+2023,14673,1,Szymon Kłos,szymon klos
 2023,14674,1,Nir Soffer,nir soffer
 2023,14682,1,Julia Lawall,julia lawall
 2023,14683,1,Joao Eduardo Luis,joao eduardo luis
@@ -10247,7 +10247,7 @@ year,event_id,position,person,person_key
 2023,14756,1,Kiran Chandramohan,kiran chandramohan
 2023,14758,1,Hossein Nourikhah,hossein nourikhah
 2023,14760,1,Maximilian Blatt,maximilian blatt
-2023,14761,1,Michał Żygowski,micha zygowski
+2023,14761,1,Michał Żygowski,michal zygowski
 2023,14763,1,Maciej Pijanowski,maciej pijanowski
 2023,14764,1,Tonći Galić,tonci galic
 2023,14767,1,Francis Laniel,francis laniel
@@ -10282,7 +10282,7 @@ year,event_id,position,person,person_key
 2023,14811,1,Francois Nollen,francois nollen
 2023,14812,1,Thierry Laurion,thierry laurion
 2023,14814,1,Mackenzie Morgan,mackenzie morgan
-2023,14815,1,Troels Brødsgaard,troels br dsgaard
+2023,14815,1,Troels Brødsgaard,troels brodsgaard
 2023,14816,1,Marius Gripsgard,marius gripsgard
 2023,14818,1,Joel Savitz,joel savitz
 2023,14819,1,Evangelos Ribeiro Tzaras,evangelos ribeiro tzaras
@@ -10660,7 +10660,7 @@ year,event_id,position,person,person_key
 2024,1927,1,Maciej Mionskowski,maciej mionskowski
 2024,1930,1,Till Kamppeter,till kamppeter
 2024,1931,1,Daniel Stenberg,daniel stenberg
-2024,1934,1,Orhun Parmaksız,orhun parmaks z
+2024,1934,1,Orhun Parmaksız,orhun parmaksiz
 2024,1935,1,Christopher Allen,christopher allen
 2024,1936,1,Thijs Schreijer,thijs schreijer
 2024,1938,1,Dawn M Foster,dawn m foster
@@ -11101,7 +11101,7 @@ year,event_id,position,person,person_key
 2024,2804,3,Xianjun Jiao,xianjun jiao
 2024,2805,1,Stefano Maffulli,stefano maffulli
 2024,2812,1,Michael Estner,michael estner
-2024,2812,2,Simone Weiß,simone wei
+2024,2812,2,Simone Weiß,simone weiss
 2024,2817,1,Marco,marco
 2024,2818,1,Marco,marco
 2024,2820,1,Kryspin Varys,kryspin varys
@@ -11157,7 +11157,7 @@ year,event_id,position,person,person_key
 2024,2930,1,Daniel-Constantin Mierla,daniel constantin mierla
 2024,2930,2,Federico Cabiddu,federico cabiddu
 2024,2931,1,Thibault Raffaillac,thibault raffaillac
-2024,2936,1,Michał Żygowski,micha zygowski
+2024,2936,1,Michał Żygowski,michal zygowski
 2024,2939,1,Vasu Chandrasekhara,vasu chandrasekhara
 2024,2943,1,Mathieu Tortuyaux,mathieu tortuyaux
 2024,2945,1,Dan Čermák,dan cermak
@@ -11346,7 +11346,7 @@ year,event_id,position,person,person_key
 2024,3274,1,Clément Aubin,clement aubin
 2024,3274,2,Wieland Lindenthal,wieland lindenthal
 2024,3276,1,Philippe Ombredanne,philippe ombredanne
-2024,3278,1,Paweł Chrząszcz,pawe chrzaszcz
+2024,3278,1,Paweł Chrząszcz,pawel chrzaszcz
 2024,3281,1,Sirisha Guduru,sirisha guduru
 2024,3282,1,Luca Boccassi,luca boccassi
 2024,3283,1,Benjamin Bouvier,benjamin bouvier
@@ -11378,7 +11378,7 @@ year,event_id,position,person,person_key
 2024,3331,1,Hadi Rayan Al-Sandid,hadi rayan al sandid
 2024,3331,2,Nathan Skrzypczak,nathan skrzypczak
 2024,3331,3,Hedi Bouattour,hedi bouattour
-2024,3337,1,Asbjørn Sloth Tønnesen,asbj rn sloth t nnesen
+2024,3337,1,Asbjørn Sloth Tønnesen,asbjorn sloth tonnesen
 2024,3342,1,Jan Mensch,jan mensch
 2024,3345,1,Matthew Hodgson,matthew hodgson
 2024,3348,1,Nevin Daniel,nevin daniel
@@ -11429,7 +11429,7 @@ year,event_id,position,person,person_key
 2024,3468,1,Thomas Nyman,thomas nyman
 2024,3472,1,Johan Van de Wauw,johan van de wauw
 2024,3473,1,Tonći,tonci
-2024,3475,1,Paweł Wieczorek,pawe wieczorek
+2024,3475,1,Paweł Wieczorek,pawel wieczorek
 2024,3479,1,Violeta Menéndez González,violeta menendez gonzalez
 2024,3479,2,Danielle Kurtin,danielle kurtin
 2024,3483,1,Waldemar Kozaczuk,waldemar kozaczuk
@@ -11607,7 +11607,7 @@ year,event_id,position,person,person_key
 2024,3713,1,Gijs Hillenius,gijs hillenius
 2024,3713,2,Saranjit Arora,saranjit arora
 2024,3714,1,Axel Thévenet,axel thevenet
-2024,3715,1,Bartłomiej Piotrowski,bart omiej piotrowski
+2024,3715,1,Bartłomiej Piotrowski,bartlomiej piotrowski
 2024,3715,2,razze,razze
 2024,3716,1,Enzo Ribagnac,enzo ribagnac
 2024,3717,1,Alexander Sander,alexander sander
@@ -11860,7 +11860,7 @@ year,event_id,position,person,person_key
 2025,4681,1,Árpád Bűrmen,arpad burmen
 2025,4684,1,Francesco Pham,francesco pham
 2025,4685,1,Didi Hoffmann,didi hoffmann
-2025,4687,1,Simone Weiß,simone wei
+2025,4687,1,Simone Weiß,simone weiss
 2025,4694,1,Vladimir Vitkov,vladimir vitkov
 2025,4695,1,Jan Kiszka,jan kiszka
 2025,4696,1,Shuai Liang,shuai liang
@@ -12271,9 +12271,9 @@ year,event_id,position,person,person_key
 2025,5491,2,Peter Hedenskog,peter hedenskog
 2025,5493,1,Richard Lyu,richard lyu
 2025,5495,1,Mitchell Baker,mitchell baker
-2025,5496,1,Orhun Parmaksız,orhun parmaks z
+2025,5496,1,Orhun Parmaksız,orhun parmaksiz
 2025,5497,1,Emilien SCHULTZ,emilien schultz
-2025,5498,1,Orhun Parmaksız,orhun parmaks z
+2025,5498,1,Orhun Parmaksız,orhun parmaksiz
 2025,5499,1,Daniel Estévez,daniel estevez
 2025,5502,1,James Belchamber,james belchamber
 2025,5508,1,Jehan Monnier,jehan monnier
@@ -12368,7 +12368,7 @@ year,event_id,position,person,person_key
 2025,5680,1,Georg Link,georg link
 2025,5680,2,Johan Linåker,johan linaker
 2025,5680,3,Kevin Lumbard,kevin lumbard
-2025,5682,1,Michał @Saviq Sawicz,micha saviq sawicz
+2025,5682,1,Michał @Saviq Sawicz,michal saviq sawicz
 2025,5684,1,Jeremy Bennett,jeremy bennett
 2025,5687,1,Amreen Taneja,amreen taneja
 2025,5687,2,omar,omar
@@ -12459,7 +12459,7 @@ year,event_id,position,person,person_key
 2025,5877,1,Ludovic Dubost,ludovic dubost
 2025,5877,2,Wieland Lindenthal,wieland lindenthal
 2025,5877,3,Ingo Steuwer,ingo steuwer
-2025,5877,4,Björn Schießle,bjorn schie le
+2025,5877,4,Björn Schießle,bjorn schiessle
 2025,5879,1,Anna Zanchetta,anna zanchetta
 2025,5880,1,Felix,felix
 2025,5881,1,Shriya Mulay,shriya mulay
@@ -12547,7 +12547,7 @@ year,event_id,position,person,person_key
 2025,6039,1,Marcus Hähnel,marcus hahnel
 2025,6042,1,Geert-Jan,geert jan
 2025,6042,2,Raoul Kramer,raoul kramer
-2025,6045,1,Asbjørn Olling,asbj rn olling
+2025,6045,1,Asbjørn Olling,asbjorn olling
 2025,6049,1,Bryan Boreham,bryan boreham
 2025,6051,1,Frantisek (Frank) Borsik_LibreQoS,frantisek frank borsik libreqos
 2025,6052,1,Jaron Viëtor,jaron vietor
@@ -12573,12 +12573,12 @@ year,event_id,position,person,person_key
 2025,6079,1,Paul Cercueil,paul cercueil
 2025,6081,1,Nima Sahraneshinsamani,nima sahraneshinsamani
 2025,6084,1,Marek Vasut,marek vasut
-2025,6090,1,Szymon Kłos,szymon k os
+2025,6090,1,Szymon Kłos,szymon klos
 2025,6092,1,Rok Mihevc,rok mihevc
 2025,6092,2,Alenka Frim,alenka frim
 2025,6096,1,Rok Mihevc,rok mihevc
 2025,6096,2,Alenka Frim,alenka frim
-2025,6097,1,Szymon Kłos,szymon k os
+2025,6097,1,Szymon Kłos,szymon klos
 2025,6099,1,Evan Prodromou,evan prodromou
 2025,6099,2,Milan Gruner,milan gruner
 2025,6100,1,Mattias Jonsson,mattias jonsson
@@ -12740,7 +12740,7 @@ year,event_id,position,person,person_key
 2025,6353,1,Ramon Roche,ramon roche
 2025,6354,1,Carlos Henrique Lima Melara,carlos henrique lima melara
 2025,6355,1,Serban Constantinescu,serban constantinescu
-2025,6356,1,Asbjørn Sloth Tønnesen,asbj rn sloth t nnesen
+2025,6356,1,Asbjørn Sloth Tønnesen,asbjorn sloth tonnesen
 2025,6360,1,Carsten Rosenberg,carsten rosenberg
 2025,6370,1,Jehan,jehan
 2025,6370,2,Aryeom,aryeom
@@ -12798,7 +12798,7 @@ year,event_id,position,person,person_key
 2025,6479,3,kpcyrd,kpcyrd
 2025,6481,1,Karen Sandler,karen sandler
 2025,6483,1,Salve J. Nilsen,salve j nilsen
-2025,6487,1,Paweł Wieczorek,pawe wieczorek
+2025,6487,1,Paweł Wieczorek,pawel wieczorek
 2025,6492,1,Stefano Pampaloni,stefano pampaloni
 2025,6495,1,Erik Wrede,erik wrede
 2025,6497,1,Stefan Johansson,stefan johansson
@@ -12819,7 +12819,7 @@ year,event_id,position,person,person_key
 2025,6519,2,Luca Casonato,luca casonato
 2025,6520,1,Alex Domingo,alex domingo
 2025,6523,1,"Jann Traschewski, DG8NGN",jann traschewski dg8ngn
-2025,6528,1,Davíð Berman,davi berman
+2025,6528,1,Davíð Berman,david berman
 2025,6529,1,Veronica Lopez,veronica lopez
 2025,6530,1,Mary Grygleski,mary grygleski
 2025,6531,1,nate stemen,nate stemen
@@ -12846,7 +12846,7 @@ year,event_id,position,person,person_key
 2025,6571,1,Jan Fajerski,jan fajerski
 2025,6571,2,Bryan Boreham,bryan boreham
 2025,6572,1,Mark Overmeer,mark overmeer
-2025,6575,1,Sebastian Kałuzinśki,sebastian ka uzinski
+2025,6575,1,Sebastian Kałuzinśki,sebastian kaluzinski
 2025,6578,1,Xavier Antoviaque,xavier antoviaque
 2025,6578,2,Rémi SHARROCK,remi sharrock
 2025,6578,3,Marc Jeanmougin,marc jeanmougin
@@ -13022,7 +13022,7 @@ year,event_id,position,person,person_key
 2025,6729,2,"Richard ""RichiH"" Hartmann",richard hartmann
 2025,6729,3,Raphaël Bauduin,raphael bauduin
 2025,6731,1,Benjamin Alan Jamie,benjamin alan jamie
-2025,6738,1,Nazım Can Altınova,naz m can alt nova
+2025,6738,1,Nazım Can Altınova,nazim can altinova
 2025,6739,1,Alexander Richards,alexander richards
 2025,6742,1,Dietrich Ayala,dietrich ayala
 2025,6744,1,Paulo Henrique de Lima Santana,paulo henrique de lima santana
@@ -13260,7 +13260,7 @@ year,event_id,position,person,person_key
 2026,7668,1,Ivan Mincik,ivan mincik
 2026,7670,1,Virgile Deville,virgile deville
 2026,7671,1,Bonnie Mehring,bonnie mehring
-2026,7671,2,Øjvind Fritjof Arnfred,jvind fritjof arnfred
+2026,7671,2,Øjvind Fritjof Arnfred,ojvind fritjof arnfred
 2026,7673,1,Vanya Sergeev,vanya sergeev
 2026,7675,1,"Roman ""Hedin"" Storozhenko",roman storozhenko
 2026,7676,1,Polarian,polarian
@@ -13272,7 +13272,7 @@ year,event_id,position,person,person_key
 2026,7700,1,Ray Paik,ray paik
 2026,7700,2,Fatih Degirmenci,fatih degirmenci
 2026,7703,1,yingqi.ge,yingqi ge
-2026,7703,2,胡玮文,""
+2026,7703,2,胡玮文,胡玮文
 2026,7705,1,Ruben Pieters,ruben pieters
 2026,7706,1,Venky Shankar,venky shankar
 2026,7706,2,Dhairya Parmar,dhairya parmar
@@ -13902,16 +13902,16 @@ year,event_id,position,person,person_key
 2026,8891,1,Ron Evans,ron evans
 2026,8894,1,Dan Čermák,dan cermak
 2026,8896,1,Lukas Trippe,lukas trippe
-2026,8897,1,Marek Pikuła,marek piku a
+2026,8897,1,Marek Pikuła,marek pikula
 2026,8899,1,Fra - OpenForFuture,fra openforfuture
 2026,8899,2,Filippo Della Bianca,filippo della bianca
 2026,8899,3,Michele Agostinelli,michele agostinelli
 2026,8902,1,Himadri CHHAYA-SHAILESH,himadri chhaya shailesh
-2026,8903,1,Æva Black,va black
+2026,8903,1,Æva Black,aeva black
 2026,8903,2,Michael Schuster,michael schuster
 2026,8903,3,Greg Wallace,greg wallace
 2026,8903,4,Tommaso Bernabo',tommaso bernabo
-2026,8904,1,Æva Black,va black
+2026,8904,1,Æva Black,aeva black
 2026,8905,1,Arne Baeyens,arne baeyens
 2026,8907,1,Pavel Machek,pavel machek
 2026,8911,1,Thibault Payet,thibault payet
@@ -14055,7 +14055,7 @@ year,event_id,position,person,person_key
 2026,9173,4,Rasmus Frey,rasmus frey
 2026,9173,5,Julian Schauder,julian schauder
 2026,9173,6,Emma Ghariani,emma ghariani
-2026,9174,1,Michał Żygowski,micha zygowski
+2026,9174,1,Michał Żygowski,michal zygowski
 2026,9174,2,Piotr Król,piotr krol
 2026,9175,1,Yorik van Havre,yorik van havre
 2026,9178,1,Philip Homburg,philip homburg
@@ -14551,7 +14551,7 @@ year,event_id,position,person,person_key
 2026,9978,1,Benjamin Cabé,benjamin cabe
 2026,9980,1,Bonnie Mehring,bonnie mehring
 2026,9980,2,Lucas Lasota,lucas lasota
-2026,9981,1,Alexander Hansen Færøy,alexander hansen f r y
+2026,9981,1,Alexander Hansen Færøy,alexander hansen faeroy
 2026,9982,1,Kate Stewart,kate stewart
 2026,9982,2,Philipp Ahmann,philipp ahmann
 2026,9982,3,Susan Remmert,susan remmert

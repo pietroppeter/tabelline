@@ -1,0 +1,101 @@
+# What each column of the FOSDEM data means, written by hand for the post "FOSDEM's data, made with nanuq" (docs/devlog/fosdem_data.nim).
+table,column,meaning
+editions,year,the edition's year (the key)
+editions,edition,"its number: 1 for OSDEM 2001, 27 for 2027"
+editions,name,OSDEM or FOSDEM
+editions,start,first day
+editions,end,last day
+editions,format,in person or online
+editions,venue,"the ULB, or Online"
+editions,city,Brussels
+editions,events,events in the schedule
+editions,keynotes,events of kind keynote
+editions,main_track_talks,events of kind main track
+editions,devroom_talks,events of kind devroom
+editions,lightning_talks,events of kind lightning talk
+editions,devrooms,tracks of kind devroom
+editions,rooms,rooms with at least one event
+editions,speakers,distinct people who spoke
+editions,first_time_speakers,people whose first year is this one
+editions,events_with_video,events with a recording
+editions,coverage,how complete the year's schedule is
+editions,sources,the raw formats the year's events come from
+tracks,year,the edition
+tracks,track,the track or devroom's name that year
+tracks,kind,"devroom, main track, keynote, lightning talk, ..."
+tracks,site_group,"the site's group above the track, like Developer rooms"
+tracks,events,its events
+tracks,speaker_slots,its speakers summed over events
+tracks,events_with_video,its events with a recording
+tracks,rooms,the rooms it used
+tracks,capacity,"the room's seats, where listed (2007–2010)"
+tracks,days,the days it ran
+tracks,cfp,its call for participation
+tracks,cfp_deadline,the call's deadline (2013–2020)
+tracks,listed_on,where a devroom without talks is listed
+rooms,year,the edition
+rooms,room,the room's name that year
+rooms,events,events held there
+rooms,tracks,tracks that used it
+rooms,scheduled_minutes,minutes of scheduled events
+events,year,the edition
+events,event_id,"the schedule's id: unique within a year, with year"
+events,kind,"keynote, main track, devroom, lightning talk, BOF, stand, ..."
+events,track,the track or devroom
+events,title,the title
+events,subtitle,the subtitle
+events,day,"Saturday, Sunday (Friday for a few)"
+events,start,start time
+events,end,end time
+events,duration_min,minutes
+events,room,the room
+events,speakers,how many speakers
+events,language,"the talk's language, from 2012"
+events,videos,recordings linked
+events,slides,slides linked
+events,source_type,the schedule's own type
+events,source,the raw format it comes from
+events,url,its page on archive.fosdem.org
+events,video,its first recording (MP4 if there is one)
+event_speakers,year,the edition
+event_speakers,event_id,the event (with year)
+event_speakers,position,order among the event's speakers
+event_speakers,person,the name as printed
+event_speakers,person_key,the folded name that matches across years
+people,person,the name as last printed
+people,person_key,the folded name (the key)
+people,is_person,"false for FOSDEM Staff, teams, panels"
+people,first_year,first year spoken
+people,last_year,last year spoken
+people,editions,years spoken
+people,talks,events spoken at
+people,keynotes,of which keynotes
+people,main_track_talks,of which main track
+people,devroom_talks,of which in a devroom
+people,years,the years
+cfp_listings,year,the edition
+cfp_listings,devroom,the devroom's name as listed
+cfp_listings,day,the day it was given (2013–2020)
+cfp_listings,announcement,the call's link
+cfp_listings,deadline,the call's deadline
+cfp_listings,first_listed,when the website first listed it
+cfp_listings,source,"the website's YAML, or the track page"
+cfp_posts,edition,"the edition the post is for"
+cfp_posts,date,date posted
+cfp_posts,kind,"devroom cfp, fosdem call or other cfp"
+cfp_posts,devroom_from_subject,the devroom read from the subject
+cfp_posts,subject,the subject
+cfp_posts,sender,the sender's name (no address)
+cfp_posts,sender_key,the folded name
+cfp_posts,sender_spoke,whether the sender spoke that year
+cfp_posts,pretalx_link,the first pretalx link in the post
+mailing_list_years,year,the year
+mailing_list_years,messages,messages
+mailing_list_years,threads,first posts
+mailing_list_years,senders,distinct senders
+mailing_list_years,cfp_posts,calls posted
+stands,year,the edition
+stands,stand,the stand as listed
+stands,stand_key,the folded name
+stands,building,"its building, from 2013"
+stands,theme,"its theme, 2026"

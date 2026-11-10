@@ -542,13 +542,13 @@ gt(newcomers, rowname_col = "year", groupname_col = "decade") |>
 """
 
 nbNota("""
-`cols_merge_n_pct` writes the share beside the count, "720 (59%)": merged columns, tabelline
+`cols_merge_n_pct` writes the share beside the count, "719 (59%)": merged columns, tabelline
 0.2. A call is "by a speaker" when its sender spoke at the same edition: FOSDEM publishes no
 list of who runs a devroom, so the sender is the closest trace.
 """, nkCode)
 
 nbText: """
-Six speakers in ten are new every year, and the share hardly moves: 60% in 2009, 59% in 2026.
+Six speakers in ten are new every year, and the share hardly moves: 59% in 2009, and again in 2026.
 FOSDEM grew from 176 speakers to 1,216 without becoming a club. Four calls in ten come from
 someone who also speaks, the devroom's organisers giving a talk in their own room.
 """

@@ -323,6 +323,7 @@ Guilherme Brondani Torri,guilherme brondani torri,true,2015,2018,4,6,0,0,6,2015 
 Guillaume Plique,guillaume plique,true,2017,2026,6,6,0,0,6,2017 2018 2019 2020 2023 2026
 Hans Verkuil,hans verkuil,true,2014,2019,4,6,0,0,6,2014 2015 2016 2019
 Heikki Linnakangas,heikki linnakangas,true,2008,2015,6,6,0,0,6,2008 2009 2010 2011 2012 2015
+Helge Heß,helge hess,true,2005,2009,3,6,0,1,5,2005 2007 2009
 Holger Vogt,holger vogt,true,2019,2025,6,6,0,0,6,2019 2020 2021 2022 2024 2025
 Ian Romanick,ian romanick,true,2013,2026,6,6,0,0,6,2013 2014 2016 2019 2020 2026
 Jacob Sparre Andersen,jacob sparre andersen,true,2012,2018,5,6,0,0,6,2012 2014 2015 2016 2018
@@ -346,8 +347,8 @@ Matteo Bertucci,matteo bertucci,true,2021,2021,1,6,0,0,6,2021
 Mauro Morales,mauro morales,true,2016,2026,5,6,0,0,4,2016 2023 2024 2025 2026
 Maximilian Huber,maximilian huber,true,2018,2026,5,6,0,0,5,2018 2021 2022 2024 2026
 Mechiel Lukkien,mechiel lukkien,true,2024,2026,3,6,0,0,5,2024 2025 2026
-Michał Żygowski,micha zygowski,true,2020,2026,6,6,0,0,6,2020 2021 2022 2023 2024 2026
 Michael Opdenacker,michael opdenacker,true,2006,2026,4,6,0,0,4,2006 2021 2025 2026
+Michał Żygowski,michal zygowski,true,2020,2026,6,6,0,0,6,2020 2021 2022 2023 2024 2026
 Moritz Fischer,moritz fischer,true,2014,2018,4,6,0,0,6,2014 2016 2017 2018
 Nicola Corti,nicola corti,true,2020,2023,4,6,0,0,6,2020 2021 2022 2023
 Nikolaus Schaller,nikolaus schaller,true,2007,2012,5,6,0,0,6,2007 2008 2010 2011 2012
@@ -492,7 +493,7 @@ Nicolas Roard,nicolas roard,true,2005,2010,4,5,0,0,5,2005 2007 2009 2010
 Olivier Goffart,olivier goffart,true,2009,2023,5,5,0,0,5,2009 2013 2014 2019 2023
 Olivier Lambert,olivier lambert,true,2013,2022,5,5,0,0,5,2013 2015 2019 2020 2022
 Pablo Ruiz-Múzquiz,pablo ruiz muzquiz,true,2020,2026,5,5,0,1,4,2020 2021 2023 2024 2026
-Paweł Wieczorek,pawe wieczorek,true,2017,2025,4,5,0,0,5,2017 2018 2024 2025
+Paweł Wieczorek,pawel wieczorek,true,2017,2025,4,5,0,0,5,2017 2018 2024 2025
 Peter Munch-Ellingsen,peter munch ellingsen,true,2019,2025,5,5,0,0,4,2019 2020 2021 2022 2025
 Philipp Ahmann,philipp ahmann,true,2023,2026,3,5,0,3,0,2023 2024 2026
 Philippe Caseiro,philippe caseiro,true,2012,2017,5,5,0,0,5,2012 2014 2015 2016 2017
@@ -528,6 +529,7 @@ Yousef El-Dardiry,yousef el dardiry,true,2025,2026,2,5,0,0,5,2025 2026
 Zbigniew Braniecki,zbigniew braniecki,true,2006,2013,5,5,0,0,5,2006 2007 2009 2010 2013
 Abhishek Lekshmanan,abhishek lekshmanan,true,2018,2025,4,4,0,0,4,2018 2019 2024 2025
 Abigail Cabunoc Mayes,abigail cabunoc mayes,true,2023,2026,3,4,0,1,2,2023 2025 2026
+Æva Black,aeva black,true,2024,2026,3,4,0,0,4,2024 2025 2026
 Aleix Pol,aleix pol,true,2010,2026,3,4,0,1,3,2010 2011 2026
 Aleksandr Mikhalitsyn,aleksandr mikhalitsyn,true,2024,2026,2,4,0,0,4,2024 2026
 Alex Denisov,alex denisov,true,2016,2020,4,4,0,0,4,2016 2017 2019 2020
@@ -554,7 +556,7 @@ Béatrice Mazoyer,beatrice mazoyer,true,2021,2026,3,4,0,0,4,2021 2023 2026
 Benjamin Bellamy,benjamin bellamy,true,2023,2026,3,4,0,1,2,2023 2025 2026
 Benjamin Ooghe-Tabanou,benjamin ooghe tabanou,true,2021,2026,2,4,0,0,4,2021 2026
 Bill Hoffman,bill hoffman,true,2008,2013,3,4,0,2,2,2008 2012 2013
-Björn Schießle,bjorn schie le,true,2017,2025,4,4,0,0,4,2017 2019 2020 2025
+Björn Schießle,bjorn schiessle,true,2017,2025,4,4,0,0,4,2017 2019 2020 2025
 blinry,blinry,true,2021,2026,4,4,0,0,2,2021 2022 2025 2026
 Boriss Mejías,boriss mejias,true,2021,2025,4,4,0,0,3,2021 2022 2024 2025
 Brendan Abolivier,brendan abolivier,true,2021,2026,4,4,0,0,4,2021 2022 2024 2026
@@ -689,7 +691,7 @@ Mickaël Salaün,mickael salaun,true,2018,2026,4,4,0,0,4,2018 2023 2025 2026
 Mickael Scherer,mickael scherer,true,2017,2017,1,4,0,0,4,2017
 Muhammet Kara,muhammet kara,true,2018,2021,3,4,0,0,4,2018 2019 2021
 Nathan Willis,nathan willis,true,2018,2023,3,4,0,0,4,2018 2020 2023
-Nazım Can Altınova,naz m can alt nova,true,2020,2025,4,4,0,0,4,2020 2021 2023 2025
+Nazım Can Altınova,nazim can altinova,true,2020,2025,4,4,0,0,4,2020 2021 2023 2025
 Nicholas Gates,nicholas gates,true,2025,2026,2,4,0,0,4,2025 2026
 Nick Vidal,nick vidal,true,2019,2023,3,4,1,0,3,2019 2022 2023
 Nicola Pero,nicola pero,true,2007,2011,3,4,0,0,4,2007 2009 2011
@@ -701,6 +703,7 @@ Nils Kneuper,nils kneuper,true,2012,2014,3,4,0,0,4,2012 2013 2014
 Nir Soffer,nir soffer,true,2020,2024,3,4,0,0,4,2020 2023 2024
 Norbert Kamiński,norbert kaminski,true,2021,2022,2,4,0,0,4,2021 2022
 Ondřej Surý,ondrej sury,true,2016,2025,4,4,0,0,3,2016 2018 2020 2025
+Øystein Grøvlen,oystein grovlen,true,2013,2022,4,4,0,0,4,2013 2018 2021 2022
 Patrick Donnelly,patrick donnelly,true,2020,2025,4,4,0,0,4,2020 2023 2024 2025
 Patrick Franken,patrick franken,true,2017,2019,3,4,0,0,4,2017 2018 2019
 Paul Kocialkowski,paul kocialkowski,true,2015,2024,4,4,0,0,3,2015 2016 2023 2024
@@ -757,7 +760,7 @@ Stephan Schwichtenberg,stephan schwichtenberg,true,2019,2025,4,4,0,0,2,2019 2020
 Stéphane Delcroix,stephane delcroix,true,2010,2019,2,4,0,0,4,2010 2019
 Stephen Chin,stephen chin,true,2016,2024,3,4,0,0,3,2016 2021 2024
 Sylwester Arabas,sylwester arabas,true,2011,2024,4,4,0,0,4,2011 2013 2023 2024
-Szymon Kłos,szymon k os,true,2022,2025,3,4,0,0,4,2022 2023 2025
+Szymon Kłos,szymon klos,true,2022,2025,3,4,0,0,4,2022 2023 2025
 Teresa Gomez-Diaz,teresa gomez diaz,true,2021,2025,3,4,0,0,4,2021 2022 2025
 Thanos Stratikopoulos,thanos stratikopoulos,true,2020,2024,4,4,0,0,4,2020 2022 2023 2024
 Thierry Berger,thierry berger,true,2024,2026,3,4,0,1,0,2024 2025 2026
@@ -787,7 +790,6 @@ Xavier Delaruelle,xavier delaruelle,true,2018,2026,4,4,0,0,3,2018 2019 2025 2026
 Xianjun Jiao,xianjun jiao,true,2020,2024,4,4,0,0,4,2020 2021 2022 2024
 Yannick Moy,yannick moy,true,2017,2022,4,4,0,0,3,2017 2018 2019 2022
 YASH PANCHAL,yash panchal,true,2025,2026,2,4,0,0,4,2025 2026
-Øystein Grøvlen,ystein gr vlen,true,2013,2022,4,4,0,0,4,2013 2018 2021 2022
 Yvan Sraka,yvan sraka,true,2023,2026,3,4,0,0,4,2023 2024 2026
 Zbigniew Jędrzejewski-Szmek,zbigniew jedrzejewski szmek,true,2020,2025,4,4,0,0,4,2020 2023 2024 2025
 Zeeshan Ali (Khattak),zeeshan ali khattak,true,2011,2016,4,4,0,0,4,2011 2012 2013 2016
@@ -962,8 +964,6 @@ Hajime Tazaki,hajime tazaki,true,2020,2026,3,3,0,0,3,2020 2021 2026
 Hanno Böck,hanno bock,true,2015,2017,3,3,0,0,3,2015 2016 2017
 Harald Welte,harald welte,true,2003,2013,3,3,0,2,1,2003 2005 2013
 Hayleigh Thompson,hayleigh thompson,true,2023,2026,3,3,0,0,3,2023 2024 2026
-Helge Heß,helge he,true,2009,2009,1,3,0,1,2,2009
-Helge Hess,helge hess,true,2005,2007,2,3,0,0,3,2005 2007
 Helio Cola,helio cola,true,2016,2024,3,3,0,0,3,2016 2017 2024
 Hendrik Vogelsang,hendrik vogelsang,true,2006,2009,3,3,0,0,3,2006 2007 2009
 Hugo Lefeuvre,hugo lefeuvre,true,2022,2023,2,3,0,0,3,2022 2023
@@ -1037,7 +1037,7 @@ Kevin Schulmeister,kevin schulmeister,true,2026,2026,1,3,0,0,3,2026
 Knut Yrvyn,knut yrvyn,true,2008,2008,1,3,0,0,3,2008
 Koen Martens,koen martens,true,2009,2012,3,3,0,0,3,2009 2010 2012
 Koen Van der Auwera,koen van der auwera,true,2008,2009,2,3,0,0,3,2008 2009
-Kristian Høgsberg,kristian h gsberg,true,2007,2012,2,3,0,1,2,2007 2012
+Kristian Høgsberg,kristian hogsberg,true,2007,2012,2,3,0,1,2,2007 2012
 Kristof Van Tomme,kristof van tomme,true,2010,2026,3,3,0,0,3,2010 2017 2026
 Krzysztof Cieslak,krzysztof cieslak,true,2019,2019,1,3,0,0,3,2019
 Krzysztof Opasiak,krzysztof opasiak,true,2016,2018,3,3,0,0,3,2016 2017 2018
@@ -1101,7 +1101,7 @@ Matthias Loibl,matthias loibl,true,2019,2024,3,3,0,0,3,2019 2022 2024
 Matthieu Herrb,matthieu herrb,true,2007,2013,3,3,0,0,3,2007 2008 2013
 Mattias Jonsson,mattias jonsson,true,2023,2026,3,3,0,0,2,2023 2025 2026
 Max Inden,max inden,true,2025,2026,2,3,0,0,3,2025 2026
-Max Kießling,max kie ling,true,2017,2020,3,3,0,0,3,2017 2018 2020
+Max Kießling,max kiessling,true,2017,2020,3,3,0,0,3,2017 2018 2020
 Max Rottenkolber,max rottenkolber,true,2020,2023,2,3,0,0,3,2020 2023
 Mehdi Medjaoui,mehdi medjaoui,true,2020,2024,2,3,0,0,3,2020 2024
 Merlijn Sebrechts,merlijn sebrechts,true,2023,2025,2,3,0,0,3,2023 2025
@@ -1149,8 +1149,9 @@ Olivier Hallot,olivier hallot,true,2017,2019,3,3,0,0,3,2017 2018 2019
 Olivier Vernin,olivier vernin,true,2023,2025,3,3,0,0,3,2023 2024 2025
 Open Source Design Collective,open source design collective,true,2019,2019,1,3,0,0,3,2019
 Oren Klopfer,oren klopfer,true,2024,2026,3,3,0,0,3,2024 2025 2026
-Orhun Parmaksız,orhun parmaks z,true,2024,2025,2,3,0,0,3,2024 2025
+Orhun Parmaksız,orhun parmaksiz,true,2024,2025,2,3,0,0,3,2024 2025
 Orit Wasserman,orit wasserman,true,2016,2017,2,3,0,0,3,2016 2017
+Øyvind Kolås,oyvind kolas,true,2007,2015,3,3,0,1,2,2007 2008 2015
 Özcan Oğuz,ozcan oguz,true,2026,2026,1,3,0,0,3,2026
 Pascal Chevrel,pascal chevrel,true,2008,2017,3,3,0,0,3,2008 2009 2017
 Paul Chaignon,paul chaignon,true,2019,2020,2,3,0,0,3,2019 2020
@@ -1282,7 +1283,6 @@ Vlad Bogolin,vlad bogolin,true,2021,2022,2,3,0,0,3,2021 2022
 Volker Lendecke,volker lendecke,true,2018,2025,3,3,0,0,3,2018 2024 2025
 William Byrd,william byrd,true,2021,2023,3,3,0,0,3,2021 2022 2023
 Yo Yehudi,yo yehudi,true,2021,2022,2,3,0,0,3,2021 2022
-Øyvind Kolås,yvind kolas,true,2007,2015,3,3,0,1,2,2007 2008 2015
 Ziran Sun,ziran sun,true,2016,2019,3,3,0,0,3,2016 2018 2019
 Zygmunt Krynicki,zygmunt krynicki,true,2021,2022,2,3,0,0,2,2021 2022
 1peter10,1peter10,true,2024,2026,2,2,0,0,2,2024 2026
@@ -1303,7 +1303,6 @@ Adnan Rahic,adnan rahic,true,2023,2024,2,2,0,0,2,2023 2024
 Adrian Schröter,adrian schroter,true,2012,2012,1,2,0,0,2,2012
 Adrien Beraud,adrien beraud,true,2016,2018,2,2,0,1,1,2016 2018
 Adrien Nader,adrien nader,true,2014,2017,2,2,0,0,2,2014 2017
-Aeva Black,aeva black,true,2024,2025,2,2,0,0,2,2024 2025
 Ahmed Rida Sekkat,ahmed rida sekkat,true,2017,2018,2,2,0,0,2,2017 2018
 Alan Griffiths,alan griffiths,true,2018,2026,2,2,0,0,2,2018 2026
 Alan Pope,alan pope,true,2019,2024,2,2,0,0,1,2019 2024
@@ -1323,7 +1322,7 @@ Alex Markuze,alex markuze,true,2026,2026,1,2,0,0,2,2026
 Alex Sassmannshausen,alex sassmannshausen,true,2016,2017,2,2,0,0,2,2016 2017
 Alexander Boettcher,alexander boettcher,true,2019,2025,2,2,0,0,2,2019 2025
 Alexander Condello,alexander condello,true,2019,2019,1,2,0,0,2,2019
-Alexander Færøy,alexander f r y,true,2007,2020,2,2,0,0,2,2007 2020
+Alexander Færøy,alexander faeroy,true,2007,2020,2,2,0,0,2,2007 2020
 Alexander Gladysh,alexander gladysh,true,2017,2017,1,2,0,0,2,2017
 Alexander Hück,alexander huck,true,2021,2023,2,2,0,0,2,2021 2023
 Alexander Jung,alexander jung,true,2021,2022,2,2,0,0,2,2021 2022
@@ -1410,7 +1409,7 @@ Arnaud Vandyck,arnaud vandyck,true,2004,2008,2,2,0,0,2,2004 2008
 Arne Baeyens,arne baeyens,true,2025,2026,2,2,0,0,2,2025 2026
 Arthur Cohen,arthur cohen,true,2023,2024,2,2,0,0,2,2023 2024
 Arun Thomas,arun thomas,true,2012,2017,2,2,0,1,1,2012 2017
-Asbjørn Sloth Tønnesen,asbj rn sloth t nnesen,true,2024,2025,2,2,0,0,2,2024 2025
+Asbjørn Sloth Tønnesen,asbjorn sloth tonnesen,true,2024,2025,2,2,0,0,2,2024 2025
 Asura Enkhbayar,asura enkhbayar,true,2021,2021,1,2,0,0,2,2021
 Atilla Filiz,atilla filiz,true,2014,2015,2,2,0,0,2,2014 2015
 Atish Patra,atish patra,true,2019,2020,2,2,0,0,2,2019 2020
@@ -1423,7 +1422,7 @@ Ayke van Laethem,ayke van laethem,true,2024,2025,2,2,0,0,2,2024 2025
 Bader Ladjemi,bader ladjemi,true,2007,2007,1,2,0,0,2,2007
 Balázs Varga,balazs varga,true,2023,2025,2,2,0,0,2,2023 2025
 Bart Oldeman,bart oldeman,true,2018,2018,1,2,0,0,2,2018
-Bartłomiej Święcki,bart omiej swiecki,true,2018,2022,2,2,0,0,2,2018 2022
+Bartłomiej Święcki,bartlomiej swiecki,true,2018,2022,2,2,0,0,2,2018 2022
 Batuhan Taşkaya,batuhan taskaya,true,2019,2020,2,2,0,0,2,2019 2020
 Baurzhan Ismagulov,baurzhan ismagulov,true,2009,2017,2,2,0,0,2,2009 2017
 Bee Padalkar,bee padalkar,true,2017,2017,1,2,0,0,2,2017
@@ -1468,7 +1467,7 @@ Bruce Gain,bruce gain,true,2026,2026,1,2,0,0,2,2026
 Bruce Richardson,bruce richardson,true,2019,2020,2,2,0,0,2,2019 2020
 Bruno Coudoin,bruno coudoin,true,2015,2015,1,2,0,0,1,2015
 Bryan O'Donoghue,bryan o donoghue,true,2024,2026,2,2,0,0,2,2024 2026
-Bryan Østergaard,bryan stergaard,true,2007,2009,2,2,0,1,1,2007 2009
+Bryan Østergaard,bryan ostergaard,true,2007,2009,2,2,0,1,1,2007 2009
 Caleb James DeLisle,caleb james delisle,true,2016,2018,2,2,0,0,2,2016 2018
 Camille Moulin,camille moulin,true,2016,2023,2,2,0,0,2,2016 2023
 Carl Bergquist,carl bergquist,true,2017,2019,2,2,0,0,2,2017 2019
@@ -1813,10 +1812,10 @@ Jakob Bornecrantz,jakob bornecrantz,true,2019,2020,2,2,0,0,2,2019 2020
 Jakov Petrina Trnski,jakov petrina trnski,true,2023,2026,2,2,0,0,2,2023 2026
 Jakov Smolić,jakov smolic,true,2023,2023,1,2,0,0,2,2023
 Jakub Dżon,jakub dzon,true,2021,2021,1,2,0,0,2,2021
-Jakub Łęcki,jakub ecki,true,2021,2021,1,2,0,0,2,2021
 Jakub Hrozek,jakub hrozek,true,2016,2018,2,2,0,0,2,2016 2018
 Jakub Jelen,jakub jelen,true,2018,2019,2,2,0,0,2,2018 2019
 Jakub Konka,jakub konka,true,2020,2021,2,2,0,0,2,2020 2021
+Jakub Łęcki,jakub lecki,true,2021,2021,1,2,0,0,2,2021
 James Belchamber,james belchamber,true,2024,2025,2,2,0,0,2,2024 2025
 James Page,james page,true,2013,2017,2,2,0,0,2,2013 2017
 James (purpleidea),james purpleidea,true,2024,2025,2,2,0,0,2,2024 2025
@@ -1955,7 +1954,7 @@ Krunal Bauskar,krunal bauskar,true,2021,2021,1,2,0,0,2,2021
 Kurt Pfeifle,kurt pfeifle,true,2008,2008,1,2,0,1,1,2008
 Kyle Robbertze,kyle robbertze,true,2022,2022,1,2,0,0,2,2022
 Kyriakos Georgiou,kyriakos georgiou,true,2014,2014,1,2,0,0,2,2014
-Lætitia Avrot,l titia avrot,true,2018,2021,2,2,0,0,2,2018 2021
+Lætitia Avrot,laetitia avrot,true,2018,2021,2,2,0,0,2,2018 2021
 Lancelot SIX,lancelot six,true,2024,2026,2,2,0,0,2,2024 2026
 Larry Stefonic,larry stefonic,true,2011,2011,1,2,0,0,1,2011
 Lars,lars,true,2026,2026,1,2,0,0,2,2026
@@ -2393,7 +2392,7 @@ Simeon Vincent,simeon vincent,true,2024,2025,2,2,0,0,2,2024 2025
 Simon Hoinkis,simon hoinkis,true,2020,2021,2,2,0,0,2,2020 2021
 Simon Hollis,simon hollis,true,2014,2014,1,2,0,0,2,2014
 Simone Mainardi,simone mainardi,true,2019,2020,2,2,0,0,2,2019 2020
-Simone Weiß,simone wei,true,2024,2025,2,2,0,0,2,2024 2025
+Simone Weiß,simone weiss,true,2024,2025,2,2,0,0,2,2024 2025
 Sina Karvandi,sina karvandi,true,2026,2026,1,2,0,0,2,2026
 Sirisha Guduru,sirisha guduru,true,2024,2025,2,2,0,0,2,2024 2025
 SJ,sj,true,2025,2025,1,2,0,0,1,2025
@@ -2496,7 +2495,6 @@ Tugdual Grall,tugdual grall,true,2013,2016,2,2,0,0,2,2013 2016
 UK),uk,true,2006,2006,1,2,0,0,2,2006
 Ulrika Vincent,ulrika vincent,true,2026,2026,1,2,0,0,2,2026
 Ümit Seren,umit seren,true,2020,2026,2,2,0,0,2,2020 2026
-Æva Black,va black,true,2026,2026,1,2,0,0,2,2026
 Vadim Belman,vadim belman,true,2022,2022,1,2,0,1,1,2022
 Vadim Markovtsev,vadim markovtsev,true,2019,2023,2,2,0,0,2,2019 2023
 Vadim Troshchinskiy,vadim troshchinskiy,true,2015,2021,2,2,0,1,0,2015 2021
@@ -2561,7 +2559,6 @@ Zohar Babin,zohar babin,true,2015,2017,2,2,0,0,2,2015 2017
 Zoran Regvart,zoran regvart,true,2019,2020,2,2,0,0,0,2019 2020
 Zoran Sevarac,zoran sevarac,true,2021,2022,2,2,0,0,2,2021 2022
 Zughy,zughy,true,2025,2026,2,2,0,0,2,2025 2026
-胡玮文,"",true,2026,2026,1,1,0,0,1,2026
 6543,6543,true,2026,2026,1,1,0,0,0,2026
 A.J.,a j,true,2025,2025,1,1,0,0,1,2025
 Aaron Boxer,aaron boxer,true,2020,2020,1,1,0,0,1,2020
@@ -2625,6 +2622,7 @@ Adrien Kunysz,adrien kunysz,true,2011,2011,1,1,0,0,1,2011
 Adrien Renault,adrien renault,true,2015,2015,1,1,0,0,1,2015
 Adrien Thebo,adrien thebo,true,2015,2015,1,1,0,0,1,2015
 Adrin Jalali,adrin jalali,true,2020,2020,1,1,0,0,1,2020
+Ævar Arnfjörð Bjarmason,aevar arnfjord bjarmason,true,2012,2012,1,1,0,0,1,2012
 Affe Null,affe null,true,2026,2026,1,1,0,0,1,2026
 Agate,agate,true,2019,2019,1,1,0,0,1,2019
 Agnes Crepet,agnes crepet,true,2024,2024,1,1,0,1,0,2024
@@ -2745,7 +2743,7 @@ Alexander Gabert,alexander gabert,true,2007,2007,1,1,0,0,1,2007
 Alexander Gall,alexander gall,true,2023,2023,1,1,0,0,1,2023
 Alexander Garnett,alexander garnett,true,2026,2026,1,1,0,0,1,2026
 Alexander Gschrei,alexander gschrei,true,2023,2023,1,1,0,0,1,2023
-Alexander Hansen Færøy,alexander hansen f r y,true,2026,2026,1,1,0,0,0,2026
+Alexander Hansen Færøy,alexander hansen faeroy,true,2026,2026,1,1,0,0,0,2026
 Alexander Kukushkin,alexander kukushkin,true,2020,2020,1,1,0,0,1,2020
 Alexander Kurtakov,alexander kurtakov,true,2020,2020,1,1,0,0,1,2020
 Alexander Matern,alexander matern,true,2026,2026,1,1,0,0,1,2026
@@ -3055,7 +3053,7 @@ Aram Hăvărnanu,aram havarnanu,true,2014,2014,1,1,0,0,1,2014
 Arber Katellari,arber katellari,true,2024,2024,1,1,0,0,1,2024
 Archana Choudhary,archana choudhary,true,2025,2025,1,1,0,0,1,2025
 Archita Gorle,archita gorle,true,2026,2026,1,1,0,0,1,2026
-Arda Yalçıner,arda yalc ner,true,2016,2016,1,1,0,0,1,2016
+Arda Yalçıner,arda yalciner,true,2016,2016,1,1,0,0,1,2016
 Arfon Smith,arfon smith,true,2025,2025,1,1,0,0,1,2025
 Ari Carmody,ari carmody,true,2026,2026,1,1,0,0,0,2026
 Ariadne Conill,ariadne conill,true,2026,2026,1,1,0,0,1,2026
@@ -3105,7 +3103,7 @@ Arvind S Raj,arvind s raj,true,2014,2014,1,1,0,1,0,2014
 Arya,arya,true,2026,2026,1,1,0,0,1,2026
 Aryeom,aryeom,true,2025,2025,1,1,1,0,0,2025
 Arzhel Younsi,arzhel younsi,true,2012,2012,1,1,0,0,1,2012
-Asbjørn Olling,asbj rn olling,true,2025,2025,1,1,0,0,0,2025
+Asbjørn Olling,asbjorn olling,true,2025,2025,1,1,0,0,0,2025
 Asep Bagja Priandana,asep bagja priandana,true,2026,2026,1,1,0,0,1,2026
 Ashish Choudhary,ashish choudhary,true,2021,2021,1,1,0,0,1,2021
 Ashish Kumar Singh,ashish kumar singh,true,2024,2024,1,1,0,0,1,2024
@@ -3161,13 +3159,13 @@ Bart Hanssens,bart hanssens,true,2010,2010,1,1,0,0,1,2010
 Bart Janssens,bart janssens,true,2018,2018,1,1,0,0,1,2018
 Bart Louwers,bart louwers,true,2026,2026,1,1,0,0,1,2026
 Bart Mathijssen,bart mathijssen,true,2024,2024,1,1,0,0,0,2024
-Bartłomiej Górny,bart omiej gorny,true,2018,2018,1,1,0,0,1,2018
-Bartłomiej Piotrowski,bart omiej piotrowski,true,2024,2024,1,1,0,0,0,2024
 Bart Pleiter,bart pleiter,true,2026,2026,1,1,0,0,1,2026
 Bart Ribbers,bart ribbers,true,2020,2020,1,1,0,1,0,2020
 Bart Samwel,bart samwel,true,2006,2006,1,1,0,0,1,2006
 Bart van den Akker,bart van den akker,true,2022,2022,1,1,0,0,1,2022
 Bart Wiegmans,bart wiegmans,true,2016,2016,1,1,0,0,1,2016
+Bartłomiej Górny,bartlomiej gorny,true,2018,2018,1,1,0,0,1,2018
+Bartłomiej Piotrowski,bartlomiej piotrowski,true,2024,2024,1,1,0,0,0,2024
 Bartosz Sypytkowski,bartosz sypytkowski,true,2026,2026,1,1,0,0,1,2026
 Bas Bloemsaat,bas bloemsaat,true,2013,2013,1,1,0,0,1,2013
 Bas Wijnen,bas wijnen,true,2010,2010,1,1,0,0,1,2010
@@ -3612,10 +3610,10 @@ Dave Lambley,dave lambley,true,2018,2018,1,1,0,0,1,2018
 Dave Rice,dave rice,true,2015,2015,1,1,0,0,1,2015
 Dave Tucker,dave tucker,true,2024,2024,1,1,0,0,1,2024
 Dave Walker,dave walker,true,2012,2012,1,1,0,0,1,2012
-Davíð Berman,davi berman,true,2025,2025,1,1,0,0,1,2025
 David,david,true,2025,2025,1,1,0,0,1,2025
 David Ascher,david ascher,true,2009,2009,1,1,0,0,1,2009
 David Baker,david baker,true,2026,2026,1,1,0,0,1,2026
+Davíð Berman,david berman,true,2025,2025,1,1,0,0,1,2025
 David Bernard,david bernard,true,2026,2026,1,1,0,0,1,2026
 David Boyne,david boyne,true,2025,2025,1,1,0,0,1,2025
 David Brayford,david brayford,true,2021,2021,1,1,0,0,1,2021
@@ -3928,7 +3926,7 @@ Erico Nunes,erico nunes,true,2018,2018,1,1,0,0,1,2018
 Erik,erik,true,2026,2026,1,1,0,0,1,2026
 Erik Albers,erik albers,true,2013,2013,1,1,0,0,0,2013
 Erik Costlow,erik costlow,true,2022,2022,1,1,0,0,1,2022
-Erik Frøseth,erik fr seth,true,2020,2020,1,1,0,0,1,2020
+Erik Frøseth,erik froseth,true,2020,2020,1,1,0,0,1,2020
 Erik Hellman,erik hellman,true,2020,2020,1,1,0,0,1,2020
 Erik Huelsmann,erik huelsmann,true,2012,2012,1,1,0,0,1,2012
 Erik Johnston,erik johnston,true,2025,2025,1,1,0,0,1,2025
@@ -4028,7 +4026,7 @@ Felix Hlatky,felix hlatky,true,2026,2026,1,1,0,0,1,2026
 Felix LeClair,felix leclair,true,2025,2025,1,1,0,0,1,2025
 Felix Matouschek,felix matouschek,true,2025,2025,1,1,0,0,1,2025
 Felix Moessbauer,felix moessbauer,true,2026,2026,1,1,0,0,1,2026
-"Felix ""xq"" Queißner",felix quei ner,true,2021,2021,1,1,0,0,1,2021
+"Felix ""xq"" Queißner",felix queissner,true,2021,2021,1,1,0,0,1,2021
 Felix Rehmann,felix rehmann,true,2023,2023,1,1,0,0,1,2023
 Felix Schuster,felix schuster,true,2022,2022,1,1,0,0,1,2022
 Felix Tripier,felix tripier,true,2020,2020,1,1,0,0,1,2020
@@ -4201,7 +4199,7 @@ Gautier Berthou,gautier berthou,true,2017,2017,1,1,0,0,1,2017
 Geert Bevin,geert bevin,true,2006,2006,1,1,0,1,0,2006
 Geert Custers,geert custers,true,2025,2025,1,1,0,0,1,2025
 Geert-Jan,geert jan,true,2025,2025,1,1,0,0,1,2025
-Geir Høydalsvik,geir h ydalsvik,true,2020,2020,1,1,0,1,0,2020
+Geir Høydalsvik,geir hoydalsvik,true,2020,2020,1,1,0,1,0,2020
 Geoffrey Broadwell,geoffrey broadwell,true,2022,2022,1,1,0,0,1,2022
 Geoffroy Couprie,geoffroy couprie,true,2019,2019,1,1,0,0,1,2019
 Georg C.F. Greve,georg c f greve,true,2026,2026,1,1,0,0,1,2026
@@ -4275,7 +4273,7 @@ Glenn Eriksson,glenn eriksson,true,2026,2026,1,1,0,0,1,2026
 Gnome Community,gnome community,false,2006,2006,1,1,0,0,1,2006
 GNU Classpath Hackers,gnu classpath hackers,true,2005,2005,1,1,0,0,1,2005
 Gnuxie,gnuxie,true,2026,2026,1,1,0,0,1,2026
-Gökay Şatır,gokay sat r,true,2022,2022,1,1,0,0,1,2022
+Gökay Şatır,gokay satir,true,2022,2022,1,1,0,0,1,2022
 Gökçen Eraslan,gokcen eraslan,true,2011,2011,1,1,0,0,1,2011
 Gökmen Göksel,gokmen goksel,true,2011,2011,1,1,0,0,1,2011
 Gonzalo José Carracedo Carballal,gonzalo jose carracedo carballal,true,2021,2021,1,1,0,0,1,2021
@@ -4341,7 +4339,7 @@ Guillem Jover,guillem jover,true,2005,2005,1,1,0,0,1,2005
 Guillermo Sanchez,guillermo sanchez,true,2026,2026,1,1,0,0,1,2026
 Guinevere Larsen,guinevere larsen,true,2024,2024,1,1,0,0,1,2024
 Guinness,guinness,true,2019,2019,1,1,0,0,1,2019
-Gülçin Yıldırım,gulcin y ld r m,true,2017,2017,1,1,0,0,1,2017
+Gülçin Yıldırım,gulcin yildirim,true,2017,2017,1,1,0,0,1,2017
 Gulcin Yildirim Jelinek,gulcin yildirim jelinek,true,2025,2025,1,1,0,0,1,2025
 Gülşah Köse,gulsah kose,true,2022,2022,1,1,0,0,1,2022
 Gunnar Bluth (Nick),gunnar bluth nick,true,2017,2017,1,1,0,0,1,2017
@@ -4414,8 +4412,8 @@ Heinrich Schuchardt,heinrich schuchardt,true,2020,2020,1,1,0,0,1,2020
 Heinz Kabutz,heinz kabutz,true,2021,2021,1,1,0,0,1,2021
 Helena Vela Beltran,helena vela beltran,true,2026,2026,1,1,0,0,1,2026
 Helene Astier,helene astier,true,2015,2015,1,1,0,0,1,2015
-Helgi Þorbjörnsson,helgi orbjornsson,true,2013,2013,1,1,0,0,1,2013
 Helgi Thorbergsson,helgi thorbergsson,true,2008,2008,1,1,0,0,1,2008
+Helgi Þorbjörnsson,helgi thorbjornsson,true,2013,2013,1,1,0,0,1,2013
 hellekin (how),hellekin how,true,2018,2018,1,1,0,0,1,2018
 hemant dangi,hemant dangi,true,2021,2021,1,1,0,0,1,2021
 Hendrik,hendrik,true,2026,2026,1,1,0,0,1,2026
@@ -4618,7 +4616,7 @@ Jan Vlčinský,jan vlcinsky,true,2026,2026,1,1,0,0,1,2026
 Jan Willies,jan willies,true,2024,2024,1,1,0,0,1,2024
 Janet Swisher,janet swisher,true,2013,2013,1,1,0,0,1,2013
 Janina Voigt,janina voigt,true,2012,2012,1,1,0,0,1,2012
-Janis Groß,janis gro,true,2021,2021,1,1,0,0,1,2021
+Janis Groß,janis gross,true,2021,2021,1,1,0,0,1,2021
 "Jann Traschewski, DG8NGN",jann traschewski dg8ngn,true,2025,2025,1,1,0,0,1,2025
 Jannetta Steyn,jannetta steyn,true,2024,2024,1,1,0,0,1,2024
 Jaromir Hamala,jaromir hamala,true,2025,2025,1,1,0,0,1,2025
@@ -5002,7 +5000,6 @@ Justin Mclean,justin mclean,true,2026,2026,1,1,0,0,1,2026
 Justin Stoller,justin stoller,true,2015,2015,1,1,0,0,1,2015
 Justin Wheeler,justin wheeler,true,2026,2026,1,1,0,0,1,2026
 Justus Winter,justus winter,true,2017,2017,1,1,0,0,1,2017
-Øjvind Fritjof Arnfred,jvind fritjof arnfred,true,2026,2026,1,1,0,0,1,2026
 jzb,jzb,true,2015,2015,1,1,0,0,1,2015
 K. Merker,k merker,true,2019,2019,1,1,0,0,1,2019
 K Rain Leander,k rain leander,true,2016,2016,1,1,0,0,1,2016
@@ -5324,7 +5321,10 @@ Lukas Trippe,lukas trippe,true,2026,2026,1,1,0,0,1,2026
 Lukáš Tyrychtr,lukas tyrychtr,true,2024,2024,1,1,0,0,1,2024
 Lukas Vrabec,lukas vrabec,true,2020,2020,1,1,0,0,1,2020
 Lukasz Gornicki,lukasz gornicki,true,2025,2025,1,1,0,0,1,2025
+Łukasz Stelmach,lukasz stelmach,true,2020,2020,1,1,0,0,1,2020
+Łukasz Szczęsny,lukasz szczesny,true,2016,2016,1,1,0,0,1,2016
 Lukasz Towarek,lukasz towarek,true,2026,2026,1,1,0,0,1,2026
+Łukasz Wcisło,lukasz wcislo,true,2020,2020,1,1,0,0,1,2020
 Luke Serné,luke serne,true,2024,2024,1,1,0,0,1,2024
 lumi,lumi,true,2026,2026,1,1,0,0,0,2026
 Luna Duclos,luna duclos,true,2016,2016,1,1,0,0,1,2016
@@ -5353,7 +5353,7 @@ Maja Bystrom,maja bystrom,true,2025,2025,1,1,0,0,1,2025
 Makapuf,makapuf,true,2016,2016,1,1,0,0,1,2016
 Maks Graczyk,maks graczyk,true,2026,2026,1,1,0,0,1,2026
 Maksim Samoilov,maksim samoilov,true,2026,2026,1,1,0,0,1,2026
-Malte Reißig,malte rei ig,true,2017,2017,1,1,0,0,1,2017
+Malte Reißig,malte reissig,true,2017,2017,1,1,0,0,1,2017
 Malte Schrader,malte schrader,true,2026,2026,1,1,0,0,1,2026
 Malte Timmermann,malte timmermann,true,2011,2011,1,1,0,0,1,2011
 Mamy Ratsimbazafy,mamy ratsimbazafy,true,2020,2020,1,1,0,0,1,2020
@@ -5439,7 +5439,7 @@ Marcus Rueckert,marcus rueckert,true,2006,2006,1,1,0,0,1,2006
 Marek Behún,marek behun,true,2019,2019,1,1,0,0,1,2019
 Marek Goldmann,marek goldmann,true,2012,2012,1,1,0,0,1,2012
 Marek Hulán,marek hulan,true,2014,2014,1,1,0,0,1,2014
-Marek Pikuła,marek piku a,true,2026,2026,1,1,0,0,1,2026
+Marek Pikuła,marek pikula,true,2026,2026,1,1,0,0,1,2026
 Marga Manterola,marga manterola,true,2026,2026,1,1,0,1,0,2026
 Margaret Leibovic,margaret leibovic,true,2015,2015,1,1,0,0,1,2015
 Margaret Martonosi,margaret martonosi,true,2020,2020,1,1,0,0,1,2020
@@ -5696,9 +5696,6 @@ Merlijn Wajer,merlijn wajer,true,2013,2013,1,1,0,0,0,2013
 Mert Tümer,mert tumer,true,2022,2022,1,1,0,0,1,2022
 Merve Gülmez,merve gulmez,true,2024,2024,1,1,0,0,1,2024
 Metin Cakircali,metin cakircali,true,2024,2024,1,1,0,0,1,2024
-Michał Piotrowski,micha piotrowski,true,2018,2018,1,1,0,0,1,2018
-Michał @Saviq Sawicz,micha saviq sawicz,true,2025,2025,1,1,0,0,0,2025
-Michał Sawicz,micha sawicz,true,2015,2015,1,1,0,0,1,2015
 Michael Banck,michael banck,true,2005,2005,1,1,0,0,1,2005
 Michael Biebl,michael biebl,true,2013,2013,1,1,0,0,1,2013
 Michael Bohn,michael bohn,true,2008,2008,1,1,0,0,1,2008
@@ -5756,6 +5753,9 @@ Michal Bachman,michal bachman,true,2015,2015,1,1,0,0,1,2015
 Michal Dziewonski,michal dziewonski,true,2016,2016,1,1,0,0,1,2016
 Michal Jireš,michal jires,true,2025,2025,1,1,0,0,1,2025
 Michal Kohútek,michal kohutek,true,2025,2025,1,1,0,0,1,2025
+Michał Piotrowski,michal piotrowski,true,2018,2018,1,1,0,0,1,2018
+Michał @Saviq Sawicz,michal saviq sawicz,true,2025,2025,1,1,0,0,0,2025
+Michał Sawicz,michal sawicz,true,2015,2015,1,1,0,0,1,2015
 Michal Slaski,michal slaski,true,2015,2015,1,1,0,0,1,2015
 Michel Cervello,michel cervello,true,2013,2013,1,1,0,0,1,2013
 Michel Gauzins,michel gauzins,true,2020,2020,1,1,0,0,1,2020
@@ -5803,8 +5803,8 @@ Mikhail Yakshin (GreyCat),mikhail yakshin greycat,true,2017,2017,1,1,0,0,1,2017
 Mikkel Kamstrup,mikkel kamstrup,true,2007,2007,1,1,0,0,1,2007
 Mikko Murto,mikko murto,true,2021,2021,1,1,0,0,1,2021
 Miklos Mukka Szel,miklos mukka szel,true,2017,2017,1,1,0,0,1,2017
-Mikołaj Izdebski,miko aj izdebski,true,2013,2013,1,1,0,0,1,2013
 Mikolai Gütschow,mikolai gutschow,true,2024,2024,1,1,0,0,1,2024
+Mikołaj Izdebski,mikolaj izdebski,true,2013,2013,1,1,0,0,1,2013
 Mikolaj Leszczynski,mikolaj leszczynski,true,2021,2021,1,1,0,0,1,2021
 Milan Broz,milan broz,true,2018,2018,1,1,0,1,0,2018
 Milan Gruner,milan gruner,true,2025,2025,1,1,0,0,1,2025
@@ -6033,11 +6033,12 @@ Obey Arthur Liu,obey arthur liu,true,2009,2009,1,1,0,0,1,2009
 oco,oco,true,2026,2026,1,1,0,0,0,2026
 Ofer Shinaar,ofer shinaar,true,2020,2020,1,1,0,0,1,2020
 Ognyan Chikov,ognyan chikov,true,2019,2019,1,1,0,0,1,2019
+Øjvind Fritjof Arnfred,ojvind fritjof arnfred,true,2026,2026,1,1,0,0,1,2026
 Ole André Vadla Ravnås,ole andre vadla ravnas,true,2016,2016,1,1,0,0,1,2016
 Ole Mathias Heggem,ole mathias heggem,true,2026,2026,1,1,0,0,1,2026
 Ole Michaelis,ole michaelis,true,2013,2013,1,1,0,0,1,2013
 Ole Tange,ole tange,true,2011,2011,1,1,0,0,1,2011
-Ole Trøan,ole tr an,true,2018,2018,1,1,0,0,1,2018
+Ole Trøan,ole troan,true,2018,2018,1,1,0,0,1,2018
 Oleg Fiksel,oleg fiksel,true,2022,2022,1,1,0,0,1,2022
 Oleg Ivanov,oleg ivanov,true,2021,2021,1,1,0,0,1,2021
 Oleksandr Byelkin,oleksandr byelkin,true,2021,2021,1,1,0,0,1,2021
@@ -6203,7 +6204,7 @@ Pavel Šimerda,pavel simerda,true,2013,2013,1,1,0,0,1,2013
 Pavel Zhukov,pavel zhukov,true,2014,2014,1,1,0,0,1,2014
 Pavlo  Golub,pavlo golub,true,2023,2023,1,1,0,0,1,2023
 Pavol Rusnak,pavol rusnak,true,2010,2010,1,1,0,0,1,2010
-Paweł Chrząszcz,pawe chrzaszcz,true,2024,2024,1,1,0,0,1,2024
+Paweł Chrząszcz,pawel chrzaszcz,true,2024,2024,1,1,0,0,1,2024
 Pawel Cyrta,pawel cyrta,true,2025,2025,1,1,0,0,1,2025
 Payton Yau,payton yau,true,2026,2026,1,1,0,0,1,2026
 pdelacroix,pdelacroix,true,2023,2023,1,1,0,0,1,2023
@@ -6370,7 +6371,6 @@ Radek Pazdera,radek pazdera,true,2013,2013,1,1,0,0,1,2013
 Radim Hrazdil,radim hrazdil,true,2022,2022,1,1,0,0,1,2022
 Radomir Stevanovic,radomir stevanovic,true,2019,2019,1,1,0,0,1,2019
 Radu Pop,radu pop,true,2007,2007,1,1,0,0,1,2007
-Rafał Manhart,rafa manhart,true,2021,2021,1,1,0,0,1,2021
 Rafaël Carré,rafael carre,true,2018,2018,1,1,0,0,1,2018
 Rafael Epplée,rafael epplee,true,2026,2026,1,1,0,0,1,2026
 Rafael Fernández López,rafael fernandez lopez,true,2022,2022,1,1,0,0,1,2022
@@ -6378,6 +6378,7 @@ Rafael Granados,rafael granados,true,2025,2025,1,1,0,0,1,2025
 Rafael Jeffman,rafael jeffman,true,2024,2024,1,1,0,0,1,2024
 Rafael Martins,rafael martins,true,2017,2017,1,1,0,0,1,2017
 Rafael Roquetto,rafael roquetto,true,2025,2025,1,1,0,0,1,2025
+Rafał Manhart,rafal manhart,true,2021,2021,1,1,0,0,1,2021
 Raffaele Recalcati,raffaele recalcati,true,2011,2011,1,1,0,0,1,2011
 Raffaele Tranquillini,raffaele tranquillini,true,2025,2025,1,1,0,0,1,2025
 Raffaella Suardini,raffaella suardini,true,2025,2025,1,1,0,0,1,2025
@@ -6648,7 +6649,6 @@ Ryan O'Leary,ryan o leary,true,2020,2020,1,1,0,0,1,2020
 Ryan Perry,ryan perry,true,2022,2022,1,1,0,0,1,2022
 Ryan Sipes,ryan sipes,true,2024,2024,1,1,0,1,0,2024
 Ryan Walker,ryan walker,true,2026,2026,1,1,0,0,1,2026
-Sławomir Maludziński,s awomir maludzinski,true,2019,2019,1,1,0,0,1,2019
 S1m,s1m,true,2026,2026,1,1,0,0,1,2026
 s2s,s2s,true,2024,2024,1,1,0,0,1,2024
 Sabine Schmaltz,sabine schmaltz,true,2025,2025,1,1,0,0,0,2025
@@ -6760,7 +6760,7 @@ Sebastian Gajek,sebastian gajek,true,2023,2023,1,1,0,0,1,2023
 Sebastian Hagens,sebastian hagens,true,2026,2026,1,1,0,0,1,2026
 Sebastian Holzapfel,sebastian holzapfel,true,2023,2023,1,1,0,0,0,2023
 Sebastian Humenda,sebastian humenda,true,2018,2018,1,1,0,0,1,2018
-Sebastian Kałuzinśki,sebastian ka uzinski,true,2025,2025,1,1,0,0,1,2025
+Sebastian Kałuzinśki,sebastian kaluzinski,true,2025,2025,1,1,0,0,1,2025
 Sebastian Kawelke,sebastian kawelke,true,2026,2026,1,1,0,0,1,2026
 Sebastian Koslowski,sebastian koslowski,true,2016,2016,1,1,0,0,1,2016
 Sebastian Kreutzer,sebastian kreutzer,true,2023,2023,1,1,0,0,1,2023
@@ -6891,6 +6891,7 @@ Slavek Kabrda,slavek kabrda,true,2014,2014,1,1,0,0,1,2014
 Slavek Licehammer,slavek licehammer,true,2024,2024,1,1,0,0,1,2024
 Slavey Karadzhov,slavey karadzhov,true,2020,2020,1,1,0,0,1,2020
 Slavina Stefanova,slavina stefanova,true,2023,2023,1,1,0,0,0,2023
+Sławomir Maludziński,slawomir maludzinski,true,2019,2019,1,1,0,0,1,2019
 Smith Ellis,smith ellis,true,2024,2024,1,1,0,0,1,2024
 Smruti Prakash Sahoo,smruti prakash sahoo,true,2021,2021,1,1,0,0,1,2021
 Sofía Celi,sofia celi,true,2019,2019,1,1,0,0,1,2019
@@ -6925,7 +6926,7 @@ Stanislav Kinsbursky,stanislav kinsbursky,true,2016,2016,1,1,0,0,1,2016
 Stanislav Pankevich,stanislav pankevich,true,2024,2024,1,1,0,0,1,2024
 Stanislaw Malolepszy,stanislaw malolepszy,true,2008,2008,1,1,0,0,1,2008
 Stany van Gelder,stany van gelder,true,2009,2009,1,1,0,0,1,2009
-Staś Małolepszy,stas ma olepszy,true,2013,2013,1,1,0,0,1,2013
+Staś Małolepszy,stas malolepszy,true,2013,2013,1,1,0,0,1,2013
 Stavros Kaparelos,stavros kaparelos,true,2015,2015,1,1,0,0,1,2015
 Stavros Korokithakis,stavros korokithakis,true,2018,2018,1,1,0,1,0,2018
 Stef Bon,stef bon,true,2016,2016,1,1,0,0,1,2016
@@ -7303,7 +7304,7 @@ Trevor Carlson,trevor carlson,true,2014,2014,1,1,0,0,1,2014
 Trey Darley,trey darley,true,2026,2026,1,1,0,0,0,2026
 Tristan Van Berkom,tristan van berkom,true,2018,2018,1,1,0,0,1,2018
 Tristram Gräbener,tristram grabener,true,2024,2024,1,1,0,0,1,2024
-Troels Brødsgaard,troels br dsgaard,true,2023,2023,1,1,0,0,1,2023
+Troels Brødsgaard,troels brodsgaard,true,2023,2023,1,1,0,0,1,2023
 Troy Dawson,troy dawson,true,2025,2025,1,1,0,0,1,2025
 Tryggvi Bjorgvinsson,tryggvi bjorgvinsson,true,2008,2008,1,1,0,0,1,2008
 Tsvetan Stoychev,tsvetan stoychev,true,2024,2024,1,1,0,0,1,2024
@@ -7319,9 +7320,6 @@ Tyler Duzan,tyler duzan,true,2020,2020,1,1,0,0,1,2020
 Tyler Neely,tyler neely,true,2020,2020,1,1,0,0,1,2020
 Tymoteusz Burak,tymoteusz burak,true,2024,2024,1,1,0,0,1,2024
 TYPO3,typo3,true,2012,2012,1,1,0,0,0,2012
-Łukasz Stelmach,ukasz stelmach,true,2020,2020,1,1,0,0,1,2020
-Łukasz Szczęsny,ukasz szczesny,true,2016,2016,1,1,0,0,1,2016
-Łukasz Wcisło,ukasz wcis o,true,2020,2020,1,1,0,0,1,2020
 Ulf Bjorkengren,ulf bjorkengren,true,2021,2021,1,1,0,0,1,2021
 Ulf Samuelsson,ulf samuelsson,true,2011,2011,1,1,0,0,1,2011
 Ullrich Hafner,ullrich hafner,true,2026,2026,1,1,0,0,1,2026
@@ -7355,7 +7353,6 @@ Valerio Bozzolan,valerio bozzolan,true,2024,2024,1,1,0,0,0,2024
 Vanessa Sochat,vanessa sochat,true,2024,2024,1,1,0,0,1,2024
 Vangelis Sakkopoulos,vangelis sakkopoulos,true,2025,2025,1,1,0,0,1,2025
 Vanya Sergeev,vanya sergeev,true,2026,2026,1,1,0,0,1,2026
-Ævar Arnfjörð Bjarmason,var arnfjor bjarmason,true,2012,2012,1,1,0,0,1,2012
 Varun Gupta,varun gupta,true,2020,2020,1,1,0,0,1,2020
 Varun R Mallya,varun r mallya,true,2026,2026,1,1,0,0,1,2026
 Varun Rapelly,varun rapelly,true,2025,2025,1,1,0,0,1,2025
@@ -7561,3 +7558,4 @@ Zhenyu Zheng,zhenyu zheng,true,2021,2021,1,1,0,0,1,2021
 Zhivko Vasilev,zhivko vasilev,true,2025,2025,1,1,0,0,1,2025
 ZITAI CHEN,zitai chen,true,2021,2021,1,1,0,0,1,2021
 Zoe Steinkamp,zoe steinkamp,true,2023,2023,1,1,0,1,0,2023
+胡玮文,胡玮文,true,2026,2026,1,1,0,0,1,2026

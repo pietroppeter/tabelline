@@ -314,7 +314,7 @@ edition,date,kind,devroom_from_subject,subject,sender,sender_key,sender_spoke,pr
 2020,2019-10-13,devroom cfp,Testing and Automation,FOSDEM 2020 Testing and Automation devroom CfP,Alexander Todorov,alexander todorov,false,https://penta.fosdem.org/submission/FOSDEM20
 2020,2019-10-13,devroom cfp,Open Source Computer Aided Design and Modeling,[CfP] Open Source Computer Aided Design and Modeling devroom at FOSDEM 2020,Seth Hillbrand,seth hillbrand,true,https://penta.fosdem.org/submission/FOSDEM20
 2020,2019-10-14,devroom cfp,"Erlang, Elixir and friends","[CFP] Erlang, Elixir and friends devroom at FOSDEM 2020",Riccardo Binetti,riccardo binetti,false,https://penta.fosdem.org/submission/FOSDEM20
-2020,2019-10-14,devroom cfp,Graph Systems and Algorithms,[CFP] Graph Systems and Algorithms Devroom,Max Kiessling,max kiessling,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-14,devroom cfp,Graph Systems and Algorithms,[CFP] Graph Systems and Algorithms Devroom,Max Kiessling,max kiessling,true,https://penta.fosdem.org/submission/FOSDEM20
 2020,2019-10-14,devroom cfp,Coding Language Communities,[CfP] Coding for Language Communities Devroom at FOSDEM 2020,Don Pedro,don pedro,false,https://penta.fosdem.org/submission/FOSDEM20
 2020,2019-10-14,devroom cfp,Coding Language Communities,[CfP] Coding for Language Communities Devroom at FOSDEM 2020,Peter Bouda,peter bouda,true,https://penta.fosdem.org/submission/FOSDEM20
 2020,2019-10-15,devroom cfp,Decentralized Internet & Privacy,[CFP] Decentralized Internet & Privacy devroom @ FOSDEM 2020,brabo,brabo,false,https://penta.fosdem.org/submission/FOSDEM20
@@ -365,7 +365,7 @@ edition,date,kind,devroom_from_subject,subject,sender,sender_key,sender_spoke,pr
 2021,2020-12-08,devroom cfp,Software Defined Storage,CfP Software Defined Storage devroom,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM21
 2021,2020-12-08,devroom cfp,JavaScript,CfP: FOSDEM 2021 - JavaScript Devroom,Ludovic Gasc Lemaire,ludovic gasc lemaire,false,https://penta.fosdem.org/submission/FOSDEM21
 2021,2020-12-08,devroom cfp,Microkernel,CfP: FOSDEM 2021 - Microkernel Devroom,Martin Decky,martin decky,true,https://penta.fosdem.org/submission/FOSDEM21/
-2021,2020-12-08,devroom cfp,"Open Source Firmware, BMC and Bootloader","Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,micha zygowski,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-08,devroom cfp,"Open Source Firmware, BMC and Bootloader","Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,michal zygowski,true,https://penta.fosdem.org/submission/FOSDEM21
 2021,2020-12-09,devroom cfp,Open Research Tools and Technologies,[CFP] Open Research Tools and Technologies devroom,Paul,paul,false,https://penta.fosdem.org/submission/FOSDEM21
 2021,2020-12-10,other cfp,,CfP Safety and Open Source,Shaun Mooney,shaun mooney,false,https://penta.fosdem.org/submission/FOSDEM21
 2021,2020-12-11,devroom cfp,Friends of OpenJDK,[CFP] Friends of OpenJDK devroom,Geertjan Wielenga,geertjan wielenga,false,https://penta.fosdem.org/submission/FOSDEM21.
@@ -399,7 +399,7 @@ edition,date,kind,devroom_from_subject,subject,sender,sender_key,sender_spoke,pr
 2022,2021-12-06,devroom cfp,Open Source Design,"CFP: Open Source Design devroom, FOSDEM'22",belen barros pena,belen barros pena,false,https://penta.fosdem.org/submission/
 2022,2021-12-06,devroom cfp,Testing and Automation,"CFP: Testing and Automation devroom, FOSDEM'22",Alexander Todorov,alexander todorov,true,
 2022,2021-12-06,other cfp,,CfP FOSDEM 22 Software Defined Storage,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM22
-2022,2021-12-06,devroom cfp,"Open Source Firmware, BMC and Bootloader","FOSDEM'22 Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,micha zygowski,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-06,devroom cfp,"Open Source Firmware, BMC and Bootloader","FOSDEM'22 Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,michal zygowski,true,https://penta.fosdem.org/submission/FOSDEM22
 2022,2021-12-06,other cfp,,Matrix.org Foundation and Community 2022 - Call for Participations,Thibault Martin,thibault martin,false,https://penta.fosdem.org/submission/FOSDEM22
 2022,2021-12-06,devroom cfp,Microkernel and Component based OS,Microkernel and Component-based OS Devroom CfP,Martin Decky,martin decky,true,
 2022,2021-12-06,devroom cfp,Free Software Radio,[CFP] Free Software Radio DevRoom 2022,Andrej Rode,andrej rode,true,https://penta.fosdem.org/submission/FOSDEM22

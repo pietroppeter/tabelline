@@ -8,7 +8,7 @@ year,edition,name,start,end,format,venue,city,events,keynotes,main_track_talks,d
 2006,6,FOSDEM,2006-02-25,2006-02-26,in person,ULB (Université Libre de Bruxelles),Brussels,139,0,22,112,0,16,4,119,98,0,main grid + most devroom pages,devroom page html; schedule grid html
 2007,7,FOSDEM,2007-02-24,2007-02-25,in person,ULB (Université Libre de Bruxelles),Brussels,207,6,18,155,28,15,16,176,140,23,main tracks + devroom pages,devroom page html; event index html
 2008,8,FOSDEM,2008-02-23,2008-02-24,in person,ULB (Université Libre de Bruxelles),Brussels,228,5,18,170,35,16,15,231,170,22,main tracks + devroom pages,devroom page html; event index html
-2009,9,FOSDEM,2009-02-07,2009-02-08,in person,ULB (Université Libre de Bruxelles),Brussels,276,4,18,226,28,19,15,239,143,0,main tracks + devroom pages,devroom page html; event index html
+2009,9,FOSDEM,2009-02-07,2009-02-08,in person,ULB (Université Libre de Bruxelles),Brussels,276,4,18,226,28,19,15,239,142,0,main tracks + devroom pages,devroom page html; event index html
 2010,10,FOSDEM,2010-02-06,2010-02-07,in person,ULB (Université Libre de Bruxelles),Brussels,293,4,18,239,32,22,12,233,146,22,main tracks + devroom pages,devroom page html; event index html
 2011,11,FOSDEM,2011-02-05,2011-02-06,in person,ULB (Université Libre de Bruxelles),Brussels,331,4,18,267,32,20,19,294,212,0,full schedule (event index),event index html
 2012,12,FOSDEM,2012-02-04,2012-02-05,in person,ULB (Université Libre de Bruxelles),Brussels,441,3,26,370,33,27,23,410,261,71,full schedule,schedule xml
@@ -25,5 +25,5 @@ year,edition,name,start,end,format,venue,city,events,keynotes,main_track_talks,d
 2023,23,FOSDEM,2023-02-04,2023-02-05,in person,ULB (Université Libre de Bruxelles),Brussels,780,4,32,696,36,55,35,787,464,733,full schedule,schedule xml
 2024,24,FOSDEM,2024-02-03,2024-02-04,in person,ULB (Université Libre de Bruxelles),Brussels,874,5,35,775,37,59,29,945,591,842,full schedule,schedule xml
 2025,25,FOSDEM,2025-02-01,2025-02-02,in person,ULB (Université Libre de Bruxelles),Brussels,1105,13,25,962,38,70,35,1193,714,955,full schedule,schedule xml
-2026,26,FOSDEM,2026-01-31,2026-02-01,in person,ULB (Université Libre de Bruxelles),Brussels,1079,0,45,926,23,65,37,1216,720,989,full schedule,schedule xml
+2026,26,FOSDEM,2026-01-31,2026-02-01,in person,ULB (Université Libre de Bruxelles),Brussels,1079,0,45,926,23,65,37,1216,719,989,full schedule,schedule xml
 2027,27,FOSDEM,2027-01-30,2027-01-31,in person,ULB (Université Libre de Bruxelles),Brussels,,,,,,78,,,,,"announced: dates, devrooms and CfPs",

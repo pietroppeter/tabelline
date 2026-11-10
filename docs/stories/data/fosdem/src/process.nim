@@ -27,14 +27,18 @@ proc save(df: DataFrame, name, comment: string) =
 # ---------------------------------------------------------------- helpers
 
 proc nameKey(e: Expr): Expr =
-  ## A key to match the same person across years: accents and case folded,
-  ## punctuation and nicknames in quotes dropped, spaces collapsed.
-  e.str.normalize(UnicodeForm.NFKD)
+  ## A key to match the same person across years: accents and case folded (ø, ł, ß and
+  ## friends too), punctuation and nicknames in quotes dropped, spaces collapsed. The key keeps
+  ## Latin letters only, so "Bogomil Shopov - Бого" is `bogomil shopov`; a name with no Latin
+  ## letter at all (a name in Chinese) keeps its own letters.
+  let folded = e.str.normalize(UnicodeForm.NFKD)
    .str.replaceAll(r"\p{Mn}", "")
    .str.replaceAll("\"[^\"]*\"", " ")
    .str.toLowercase
-   .str.replaceAll(r"[^a-z0-9]+", " ")
-   .str.stripChars
+   # letters that NFKD does not split into a base letter and a mark
+   .str.replaceMany({"ø": "o", "ł": "l", "ß": "ss", "æ": "ae", "œ": "oe", "ı": "i", "þ": "th", "ð": "d", "đ": "d"})
+  let latin = folded.str.replaceAll(r"[^a-z0-9]+", " ").str.stripChars
+  choose(if latin == "": folded.str.replaceAll(r"[^\p{L}\p{N}]+", " ").str.stripChars else: latin)
 
 proc minutesOf(e: Expr): Expr =
   ## "HH:MM" to minutes after midnight.
