@@ -1,6 +1,6 @@
 {
  "gt-getstarted": {
-  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
   "pages": [
    {
     "title": "Column Labels",
@@ -379,7 +379,7 @@
   ]
  },
  "gt-blog": {
-  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
   "pages": [
    {
     "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
@@ -967,7 +967,7 @@
   ]
  },
  "gt-examples": {
-  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
   "pages": [
    {
     "title": "Gini coefficient (with gt-extras)",
@@ -1753,15 +1753,16 @@
     "year": 2020,
     "by": "Dillon Hammill",
     "licence": "GPL-2",
+    "package": "Shiny",
     "prize": "Honourable mention",
     "post": "https://forum.posit.co/t/dataeditr-interactive-editor-for-viewing-filtering-entering-editing-data-table-contest-submission/87976",
     "kind": "package",
-    "files": 1,
+    "files": 4,
     "url": "https://github.com/DillonHammill/DataEditR",
     "port": "port",
     "note": "",
     "ready": "other",
-    "calls": 115,
+    "calls": 398,
     "needs": {},
     "uses": []
    },
@@ -6921,7 +6922,7 @@
   ]
  },
  "gt-reference": {
-  "commit": "466333f77be11a31c02b7eeded8609961862b925",
+  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
   "pages": [
    {
     "title": "GT()",
@@ -8098,9 +8099,9 @@
    {
     "title": "loc.summary_stub()",
     "path": "reference/loc.summary_stub",
-    "url": "https://posit-dev.github.io/great-tables/reference/loc.summary_stub.html",
+    "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L552",
     "port": "port",
-    "note": "",
+    "note": "The reference has no page for it yet (404): the link goes to its docstring in the code",
     "ready": "0.2",
     "calls": 13,
     "needs": {
@@ -8185,9 +8186,9 @@
    {
     "title": "loc.summary()",
     "path": "reference/loc.summary",
-    "url": "https://posit-dev.github.io/great-tables/reference/loc.summary.html",
+    "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L741",
     "port": "port",
-    "note": "",
+    "note": "The reference has no page for it yet (404): the link goes to its docstring in the code",
     "ready": "0.2",
     "calls": 13,
     "needs": {
