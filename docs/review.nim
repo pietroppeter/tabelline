@@ -63,7 +63,9 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, tran
 .rv-panel button { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
 /* history: one line per version */
 .rv-versions { list-style: none; margin: 0 0 .8rem; padding: 0; }
-.rv-versions li { display: flex; align-items: center; gap: .5rem; min-height: 48px; border-bottom: 1px solid var(--shade); }
+.rv-versions li { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; min-height: 48px; padding: .3rem 0; border-bottom: 1px solid var(--shade); }
+.rv-versions .rv-old { display: flex; gap: .4rem; }
+.rv-versions .rv-old[hidden] { display: none; }
 .rv-versions a { color: var(--ink); }
 .rv-versions .rv-date { flex: 1; color: var(--muted); font-size: .9rem; }
 .rv-versions .rv-n { font-size: .85rem; }
