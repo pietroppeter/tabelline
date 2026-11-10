@@ -292,6 +292,8 @@ proc textCaseMatch*(t: sink Tabella, cases: openArray[(string, string)], default
   ## Changes texts by cases, `{"old": "new"}`: with `replace = "all"` a text equal to a case
   ## becomes its new text (and any other `default`, when given); with `"partial"` each case is
   ## replaced inside the text.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `textCaseMatch:` then `"Gas giant": "giant"` and `locations = loc.body("type")`.
   let cs = @cases
   let (d, partial) = (default, replace == "partial")
   textTransform(t, proc (s: string): string =
@@ -313,6 +315,8 @@ proc colsLabel*(t: sink Tabella, column: string, label: Text): Tabella =
 
 proc colsLabel*(t: sink Tabella, labels: openArray[(string, string)]): Tabella =
   ## `colsLabel({"mass": "Mass", "diameter": "Diameter"})`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `colsLabel:` then `mass: "Mass"` and `diameter: "Diameter"`.
   result = t
   for (n, l) in labels: result = colsLabel(result, n, toText(l))
 
@@ -329,6 +333,8 @@ proc colsAlign*(t: sink Tabella, align: Align, columns: ColSel = everything()): 
 
 proc colsWidth*(t: sink Tabella, widths: openArray[(string, string)]): Tabella =
   ## CSS widths: `colsWidth({"name": "120px", "notes": "30%"})`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `colsWidth:` then `name: "120px"` and `notes: "30%"`.
   result = t
   for (n, w) in widths:
     discard result.data[n]
@@ -532,6 +538,9 @@ proc summaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], groups: 
                   columns: ColSel = numeric(), side = sBottom, missingText = "—"): Tabella =
   ## Adds rows that sum up each row group (or the `groups` listed), one for each aggregate in
   ## `fns`, labelled in the stub: `summaryRows(fns = {"total": agg.sum}, columns = "moons")`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `summaryRows:` then `total: agg.sum`, `columns = "moons"` and `fmtNumber(decimals = 1)`
+  ## (a `fmt*` line is `fmt`).
   ## The summary rows go under the group, or above it with `side = sTop`. Each cell is
   ## formatted like its column (its last format), `agg.count` as an integer; a cell with
   ## nothing to sum up, and the columns not in `columns`, show `missingText`.
@@ -550,7 +559,7 @@ proc grandSummaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], col
                        side = sBottom, missingText = "—"): Tabella =
   ## Adds rows that sum up the whole table, every row of every group, one for each aggregate in
   ## `fns`: at the bottom of the table, or at the top with `side = sTop`. Formatted as
-  ## `summaryRows`.
+  ## `summaryRows`; a block as in `summaryRows`: `grandSummaryRows:` then `mean: agg.mean`.
   result = t
   result.addSummary(true, [], columns, fns, nil, side, missingText)
 
@@ -944,7 +953,8 @@ proc addSummaryColumns(t: var Tabella, columns: ColSel, fns: openArray[(string, 
 proc summaryColumns*(t: sink Tabella, fns: openArray[(string, Aggregate)], columns: ColSel = numeric(),
                      side = sRight, missingText = "—"): Tabella =
   ## Adds a column for each aggregate in `fns`, summing up `columns` across each row:
-  ## `summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])`, at the
+  ## `summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])`, or as
+  ## a block (`summaryColumns:` then `total: agg.sum`, see `tabella`), at the
   ## right of the table (or at the left of the data with `side = sLeft`). The new column is
   ## formatted like the first column it sums up, or by `fmt`; summary rows sum it up like any
   ## other column, so a table of totals gets its grand total.

@@ -702,6 +702,40 @@ nbCode:
 nbTable squares
 
 nbText: """
+### Pairs as blocks
+
+Some verbs take a list of pairs: a label and its value, as `colsLabel`, `colsWidth`,
+`colsUnits`, `textCaseMatch`, `summaryRows`, `grandSummaryRows` and `summaryColumns` do. Inside
+`tabella(data): body`, each of them also takes an indented block, one pair per line, so the
+recipe reads as a list and not as punctuation:
+"""
+nbCode:
+  let sums = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide ["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"]
+    colsLabel:
+      mass: "mass, {{10^24 kg}}"
+      diameter: "diameter, {{km}}"
+    fmtNumber:
+      columns = "mass"
+      decimals = 2
+      dropTrailingZeros = true
+    fmtInteger "diameter"
+    summaryRows:
+      total: agg.sum
+      columns = "mass"
+      missingText = ""
+    grandSummaryRows:
+      mean: agg.mean
+      "the largest": agg.max
+      fmtNumber(decimals = 0)
+    optCssTheme()
+  nbTable sums
+
+nbNote("""
+Three kinds of line make a block. `label: value` is a pair, for the verbs above (a label with spaces is a string, `"the largest"`, or in backquotes). `name = value` is a named argument, in any verb (`columns = "mass"`). In the summary verbs, `fmtNumber(decimals = 0)`, or any `fmt*` that has a `format*` function, formats the summary rows: it stands for `fmt = (x: float) => formatNumber(x, decimals = 0)`. `tabOptions:` takes `name = value` lines too. The pair form stays: `summaryRows fns = {"total": agg.sum}` makes the same call, and is the one to use outside `tabella(data): body` or when the pairs are built by code. For data, `tableData:` is the block form of `toTableData`.
+""", nkCode)
+
+nbText: """
 ## Tables that follow the page
 
 Every table on these pages ends with `optCssTheme()`. It is the one verb here that gt and Great

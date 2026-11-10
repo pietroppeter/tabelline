@@ -43,7 +43,9 @@ block:
   ]
   let t = tabella(rows, rownameCol = "group"):
     tabHeader "0.2 in five groups"
-    colsLabel {"what": "what it adds", "status": "now"}
+    colsLabel:
+      what: "what it adds"
+      status: "now"
     tabStyle style.css("white-space: nowrap"), loc.stub()
     tabStyle style.text(weight = "bold"), loc.body("status", where(it["status"] == "built"))
     optCssTheme()
@@ -61,13 +63,13 @@ under each group, labelled in the stub, for each pair of a label and an aggregat
 nbCode:
   let moons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
     colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
-    summaryRows fns = {"total": agg.sum}
+    summaryRows:
+      total: agg.sum
     optCssTheme()
   nbTable moons
 
 nbNote("""
-`fns = {"total": agg.sum}` is a list of pairs: the label of the row and how to sum up a column.
-`columns` is not given, so every numeric column is summed up, here only `moons`.
+Under `summaryRows:` each line is a pair: the label of the row and how to sum up a column. It is the same call as `summaryRows fns = {"total": agg.sum}`, the list of pairs gt calls `fns`. `columns` is not given, so every numeric column is summed up, here only `moons`.
 """, nkCode)
 
 nbText: """
@@ -80,8 +82,12 @@ rule. Several aggregates give several rows:
 nbCode:
   let allMoons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
     colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
-    summaryRows fns = {"total": agg.sum}
-    grandSummaryRows fns = {"all moons": agg.sum, "most": agg.max, "planets": agg.count}
+    summaryRows:
+      total: agg.sum
+    grandSummaryRows:
+      "all moons": agg.sum
+      most: agg.max
+      planets: agg.count
     optCssTheme()
   nbTable allMoons
 
@@ -105,15 +111,19 @@ nbCode:
     colsHide ["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"]
     fmtNumber "mass", decimals = 3, dropTrailingZeros = true
     fmtInteger "diameter"
-    summaryRows fns = {"total": agg.sum}, columns = "mass", missingText = ""
-    grandSummaryRows fns = {"mean": agg.mean}, fmt = (x: float) => formatNumber(x, decimals = 0)
+    summaryRows:
+      total: agg.sum
+      columns = "mass"
+      missingText = ""
+    grandSummaryRows:
+      mean: agg.mean
+      fmtNumber(decimals = 0)
     optCssTheme()
   nbTable sizes
 
 nbNote("""
 `missingText = ""` leaves the cells of the columns that are not summed up empty (gt writes a
-dash, and so does tabelline by default). The grand mean is formatted by `fmt`, a proc of a
-float, like Great Tables' `vals.fmt_*`.
+dash, and so does tabelline by default). A line `name = value` in a block is a named argument. The grand mean is formatted by the line `fmtNumber(decimals = 0)`: in a summary block it stands for `fmt = (x: float) => formatNumber(x, decimals = 0)`, a proc of a float, like Great Tables' `vals.fmt_*`.
 """, nkCode)
 
 nbText: """
@@ -127,6 +137,11 @@ Each choice says what gt (R) and Great Tables (Python) do.
   missing ones. *gt:* `fns = list(total = "sum")`, a name, a function or a formula. *Great
   Tables:* `fns = {"total": pl.col("mass").sum()}`, a Polars expression or a function of the
   data frame.
+- **Pairs as a block.** Inside `tabella(data): body`, `summaryRows:` takes its pairs one per
+  line, as every verb with a list of pairs does (`colsLabel:`, `colsWidth:`, `colsUnits:`,
+  `textCaseMatch:`, `summaryColumns:`, ...), with named arguments as `name = value` lines; the
+  pair form `fns = {"total": agg.sum}` makes the same call. The name `fns` is gt's and Great
+  Tables', and the block hides it. *gt:* a named list. *Great Tables:* a dict.
 - **The column's format by default.** A table where the totals look different from the rows
   above them is rarely what you want, so tabelline uses the last format of the column; `fmt` is
   a proc of a float. *gt:* unformatted unless `fmt = list(~ fmt_number(.))`. *Great Tables:*
@@ -208,8 +223,10 @@ nbCode:
     silver: [8, 10, 8, 10]
     bronze: [13, 5, 9, 6]
   let totals = tabella(medals, rownameCol = "country"):
-    summaryColumns fns = {"total": agg.sum}
-    grandSummaryRows fns = {"all": agg.sum}
+    summaryColumns:
+      total: agg.sum
+    grandSummaryRows:
+      all: agg.sum
     optCssTheme()
   nbTable totals
 
@@ -272,7 +289,9 @@ nbCode:
   let labelled = tabella(planets(), rownameCol = "planet"):
     colsHide everything()
     colsUnhide ["density", "gravity"]
-    colsLabel {"density": "density, {{kg/m^3}}", "gravity": "gravity, {{m s^-2}}"}
+    colsLabel:
+      density: "density, {{kg/m^3}}"
+      gravity: "gravity, {{m s^-2}}"
     optCssTheme()
   nbTable labelled
 
@@ -363,7 +382,9 @@ nbCode:
     fmtFlag "flag"
     fmtCountry "country"
     fmtBins "stay", fmt = x => formatNumber(x, 0)
-    colsLabel {"flag": "", "stay": "nights"}
+    colsLabel:
+      flag: ""
+      stay: "nights"
     optCssTheme()
   nbTable visits
 
@@ -417,7 +438,8 @@ nbCode:
     fmtNumber "it", decimals = 2, locale = "it"
     fmtNumber "de_CH", decimals = 2, locale = "de-CH"
     fmtNumber "fr", decimals = 2, locale = "fr"
-    colsLabel {"n": "en"}
+    colsLabel:
+      n: "en"
     optCssTheme()
   nbTable marks
 
@@ -467,7 +489,10 @@ nbCode:
     ways.add Way(locale: l, fixed: formatDate("2026-11-07", "wday_day_month_year", l),
                  flexible: formatDate("2026-11-07", "yMMMEd", l), time: formatTime("14:35", "hm", l))
   let dates = tabella(ways, rownameCol = "locale"):
-    colsLabel {"fixed": "wday_day_month_year", "flexible": "yMMMEd", "time": "hm"}
+    colsLabel:
+      fixed: "wday_day_month_year"
+      flexible: "yMMMEd"
+      time: "hm"
     optCssTheme()
   nbTable dates
 

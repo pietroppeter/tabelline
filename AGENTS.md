@@ -27,6 +27,11 @@ working rules that are easy to miss.
   rows when the verb is called and run when the table is rendered (`build.nim`), so every renderer
   agrees. Macros only where a proc cannot do the job (today: `tabella(data): body`, `tableData:`,
   `tabOptions`).
+- Examples in the docs and the specs write a table as `tabella(data): body`, one verb per line,
+  not as a chain of dots, and a verb that takes a list of pairs (`colsLabel`, `colsWidth`,
+  `colsUnits`, `textCaseMatch`, `summaryRows`, `grandSummaryRows`, `summaryColumns`) as an
+  indented block, one pair per line (`summaryRows:` then `total: agg.sum`). A new verb whose first
+  argument is a list of pairs goes in `pairVerbs` (`src/tabelline.nim`).
 - `nim r tests/all.nim` runs the tests. Dependencies are managed with atlas: nimib is the `docs`
   feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/` (not committed) and
   put on the path by `nim.cfg` (committed, written by atlas).

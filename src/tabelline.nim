@@ -16,26 +16,87 @@
 ## ```
 ##
 ## Two macros, where plain procs cannot do the job: `tabella(data): body`, which reads each
-## line of `body` as a verb applied to the table (no chaining dots needed), and `tableData:`,
-## which reads columns as `name: [values]`, with `nil` for a missing value.
+## line of `body` as a verb applied to the table (no chaining dots needed, and a verb that takes
+## a list of pairs may take them as an indented block, one per line), and `tableData:`, which
+## reads columns as `name: [values]`, with `nil` for a missing value.
 
-import std/macros
+import std/[macros, strutils]
 import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text, extract]
 export core, formats, units, colors, verbs, build, render_html, render_text, extract
 
+const pairVerbs = ["colsLabel", "colsWidth", "colsUnits", "textCaseMatch", "summaryRows",
+                   "grandSummaryRows", "summaryColumns"]
+  ## The verbs whose first argument is a list of pairs, which `tabella(data): body` also takes
+  ## as an indented block.
+
+func verbName(n: NimNode): string =
+  if n.kind in {nnkOpenSymChoice, nnkClosedSymChoice}: n[0].strVal
+  elif n.kind in {nnkIdent, nnkSym}: n.strVal
+  else: ""
+
+proc pairLabel(n: NimNode): NimNode =
+  ## The label of a block line: `total`, `"all moons"` or `` `mass (kg)` `` is a string.
+  case n.kind
+  of nnkIdent, nnkSym: newLit(n.strVal)
+  of nnkOpenSymChoice, nnkClosedSymChoice: newLit(n[0].strVal)
+  of nnkStrLit, nnkRStrLit, nnkTripleStrLit: n
+  of nnkAccQuoted: (var s = ""; (for p in n: s.add p.strVal); newLit(s))
+  else: (error("expected a label: a name or a string", n); n)
+
+proc blockArgs(verb: string, blk: NimNode): seq[NimNode] =
+  ## The arguments an indented block stands for. In a verb of `pairVerbs`, a line `label: value`
+  ## is a pair of the list; in any verb, a line `name = value` is that named argument; in a
+  ## summary verb, a line `fmtNumber(decimals = 1)` is `fmt`, a proc of a float that calls
+  ## `formatNumber(x, decimals = 1)`.
+  var pairs = newNimNode(nnkTableConstr)
+  for line in blk:
+    if line.kind in {nnkCall, nnkCommand} and line.len == 2 and line[1].kind == nnkStmtList and
+        verb in pairVerbs:
+      let value = if line[1].len == 1: line[1][0] else: line[1]
+      pairs.add newColonExpr(pairLabel(line[0]), value)
+    elif line.kind == nnkAsgn:
+      result.add newNimNode(nnkExprEqExpr).add(line[0], line[1])
+    elif line.kind in {nnkCall, nnkCommand} and verbName(line[0]).startsWith("fmt") and
+        verb in ["summaryRows", "grandSummaryRows", "summaryColumns"]:
+      let name = verbName(line[0])
+      let f = ident("format" & name[3 .. ^1])
+      let x = ident("x")
+      var call = newCall(f, x)
+      for k in 1 ..< line.len: call.add line[k]
+      let lambda = newProc(params = [ident("string"), newIdentDefs(x, ident("float"))],
+                           body = newStmtList(call), procType = nnkLambda)
+      result.add newNimNode(nnkExprEqExpr).add(ident("fmt"), lambda)
+    else:
+      error("a line of a " & verb & " block is `label: value`, `name = value`" &
+            (if verb in ["summaryRows", "grandSummaryRows", "summaryColumns"]: " or a fmt* call" else: ""), line)
+  if pairs.len > 0: result.insert(pairs, 0)
+
 proc rewriteVerbs(body, it: NimNode): NimNode =
   ## Each call statement `verb(args)` becomes `it = verb(it, args)`; `for`, `if`, `when` and
-  ## `block` bodies are rewritten too, other statements are left as they are.
+  ## `block` bodies are rewritten too, other statements are left as they are. A verb may end in
+  ## an indented block (`blockArgs`): `summaryRows:` then `total: agg.sum` on the next line.
   case body.kind
   of nnkStmtList:
     result = newStmtList()
     for s in body: result.add rewriteVerbs(s, it)
   of nnkCall, nnkCommand:
     if body[0].kind in {nnkIdent, nnkSym, nnkOpenSymChoice, nnkClosedSymChoice} and
-        (if body[0].kind in {nnkOpenSymChoice, nnkClosedSymChoice}: body[0][0].strVal
-         else: body[0].strVal) notin ["echo", "discard", "doAssert", "assert", "debugEcho"]:
+        verbName(body[0]) notin ["echo", "discard", "doAssert", "assert", "debugEcho"]:
       var call = newCall(body[0], it)
-      for k in 1 ..< body.len: call.add body[k]
+      let verb = verbName(body[0])
+      let hasBlock = body.len >= 2 and body[^1].kind == nnkStmtList and verb != "tabOptions"
+      for k in 1 ..< body.len - (if hasBlock: 1 else: 0): call.add body[k]
+      if hasBlock:
+        let extra = blockArgs(verb, body[^1])
+        # the list of pairs is the verb's first argument; named arguments may follow anywhere
+        for a in extra:
+          if a.kind == nnkTableConstr: call.insert(2, a)
+          else: call.add a
+      elif body.len >= 2 and body[^1].kind == nnkStmtList and verb == "tabOptions":
+        call.del(call.len - 1)
+        for line in body[^1]:
+          if line.kind != nnkAsgn: error("a line of a tabOptions block is `name = value`", line)
+          call.add newNimNode(nnkExprEqExpr).add(line[0], line[1])
       result = newAssignment(it, call)
     else:
       result = body
@@ -52,6 +113,23 @@ macro tabella*(args: varargs[untyped]): untyped =
   ## `tabella(data, rownameCol = "name")` is a table for `data` (see `initTabella`), and with a body,
   ## `tabella(data): body` is that table changed by the verbs in `body`, one per line, without
   ## repeating the table: `tabHeader "Title"` stands for `t = t.tabHeader("Title")`.
+  ##
+  ## A verb in `body` may end with an indented block. In a verb whose first argument is a list of
+  ## pairs (`colsLabel`, `colsWidth`, `colsUnits`, `textCaseMatch`, `summaryRows`,
+  ## `grandSummaryRows`, `summaryColumns`) a line `label: value` is a pair; in any verb a line
+  ## `name = value` is a named argument; in a summary verb a line `fmtNumber(decimals = 1)` is
+  ## `fmt = (x: float) => formatNumber(x, decimals = 1)`; `tabOptions:` takes `name = value`:
+  ##
+  ## ```nim
+  ## let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  ##   colsLabel:
+  ##     mass: "mass, {{10^24 kg}}"
+  ##   summaryRows:
+  ##     total: agg.sum
+  ##     "the largest": agg.max
+  ##     columns = "mass"
+  ##     fmtNumber(decimals = 1)
+  ## ```
   ## (A macro, not a proc: a proc overload would make Nim check the body before rewriting it.)
   let hasBody = args.len >= 2 and args[^1].kind == nnkStmtList
   var create = newCall(bindSym("initTabella", brOpen))
