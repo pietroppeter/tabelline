@@ -13,7 +13,9 @@ that builds it is still to be opened.
 - The pages of the docs share their style, their fonts and the review script as files in
   `docs/assets/` (`site.css`, `fonts/*.woff2`, `review.js`), linked relatively: local to the
   site, nothing remote. A reader downloads them once.
-- `-d:standalone` builds every page as one file again, everything inlined, for a one-page preview.
+- `-d:singleFile` builds every page as one file again, everything inlined, for a one-page preview. (Not
+  `-d:standalone`, the first name: Nim's standard library already uses that define, for
+  `--os:standalone`.)
 - The full-site preview copies `docs/assets/` with the pages, as it does for the book; the
   tool becomes `tools/preview.nim`, like the other tools (it is the last Python one in `tools/`).
 - The rule is rewritten in AGENTS.md, the way-of-working spec and the design guide: a page in a

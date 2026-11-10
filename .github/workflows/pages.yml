@@ -80,6 +80,8 @@ jobs:
         run: |
           mkdir _site
           (cd docs && find . \( -name '*.html' -o -name llms.txt \) -not -path './book/*' | tar -c -T - | tar -x -C ../_site)
+          # the files every page shares: site.css (written by the build), the fonts, review.js
+          cp -r docs/assets _site/assets
           # the book whole: its pages, assets and images, and the chapters' JSON for the next build
           cp -r docs/book _site/book
           find _site -name '*.html' | sort

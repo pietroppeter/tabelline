@@ -45,7 +45,10 @@ working rules that are easy to miss.
 ## Pages
 
 - Every page is a nimib notebook in `docs/` that calls `nb.useTabelline(...)` after `nbInit`
-  and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
+  and writes an HTML file that shares its style, fonts and scripts with the other pages
+  (`docs/assets/`: `site.css`, written by `stile.nim`, the fonts, `review.js`; local, nothing
+  remote), so a reader downloads them once; `-d:singleFile` inlines them, for a page that must
+  work alone, such as a one-page artifact. It has two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
   Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
@@ -136,8 +139,8 @@ working rules that are easy to miss.
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
-- `python3 tools/preview.py` copies the built pages to `../tabelline-preview` for an artifact
-  (folder links point to index.html), with the book. A link to the artifact ending in `#<page>`
+- `nim r tools/preview.nim` copies the built pages to `../tabelline-preview` for an artifact
+  (folder links point to index.html), with `docs/assets/` and the book: publish the whole folder. A link to the artifact ending in `#<page>`
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.

@@ -17,17 +17,26 @@
 ##
 ## Two looks are in every page: Munari, the default, whose rules are the page itself (so a page
 ## without JavaScript is Munari), and the quaderno (an Italian school exercise book), every rule of
-## which is scoped by `html[data-tema="quaderno"]`. Fonts are inlined, so a page is one standalone
-## file. No other module of the docs writes CSS or a colour: pages use the blocks of `blocchi.nim`, and
+## which is scoped by `html[data-tema="quaderno"]`. The pages share it: `css` is written once to
+## `docs/assets/site.css`, and its fonts are the files beside it, in `docs/assets/fonts/`. Built
+## with `-d:singleFile`, a page inlines all of it instead (fonts as data URLs), so it is one file
+## that works alone, for a one-page preview. No other module of the docs writes CSS or a colour: pages use the blocks of `blocchi.nim`, and
 ## tables take tabelline's `optCssTheme()`, which reads these tokens by name (`--ink`, `--paper`,
 ## `--line`, `--shade`, `--primary`, `--secondary`, `--font`).
 
 import std/[os, strformat, strutils, base64]
 
-const fontDir = currentSourcePath().parentDir / "assets" / "fonts"
+const
+  singleFile* = defined(singleFile)
+    ## `-d:singleFile`: every page is one file, its style and fonts inlined
+  assetsDir* = currentSourcePath().parentDir / "assets"
+    ## `docs/assets/`: the files the pages share (deployed with them)
+  fontDir = assetsDir / "fonts"
 
 func face(family, file, weight, style: string): string =
-  &"@font-face{{font-family:'{family}';src:url(data:font/woff2;base64,{encode(staticRead(fontDir / file))}) format('woff2');" &
+  # shared: the font file, beside site.css; singleFile: the font itself, as a data URL
+  let src = when singleFile: "data:font/woff2;base64," & encode(staticRead(fontDir / file)) else: "fonts/" & file
+  &"@font-face{{font-family:'{family}';src:url({src}) format('woff2');" &
     &"font-weight:{weight};font-style:{style};font-display:swap}}\n"
 
 const fonts = face("Patrick Hand", "patrick-hand.woff2", "400", "normal") &
@@ -527,6 +536,20 @@ const quadernoCss = scoped(quadernoRules, "html[data-tema=\"quaderno\"]")
 
 const css* = fonts & tokens & munariCss & quadernoCss
   ## All the CSS of a page: Munari, the default, then the quaderno, scoped.
+
+proc assetHref*(name, pageFile: string): string =
+  ## The link from a page (its HTML file) to a file the pages share, `docs/assets/<name>`.
+  relativePath(assetsDir / name, absolutePath(pageFile).parentDir).replace('\\', '/')
+
+proc siteCss*(pageFile: string): string =
+  ## What a page puts in its head for its style: a link to `docs/assets/site.css` (written when
+  ## it changed), relative to the page; with `-d:singleFile`, the CSS itself.
+  when singleFile:
+    "<style>\n" & css & "</style>"
+  else:
+    let file = assetsDir / "site.css"
+    if not fileExists(file) or readFile(file) != css: writeFile(file, css)
+    &"""<link rel="stylesheet" href="{assetHref("site.css", pageFile)}">"""
 
 # ----------------------------------------------------------------------------------------- tables
 

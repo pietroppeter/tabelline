@@ -751,7 +751,7 @@ proc useTabelline*(nb: var Nb, nome = "tabelline", materia = "", classe = "", ti
   nb.doc.context["title"] = %(if title.len > 0: title else: nome)
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript & "\n<style>\n" & css & "</style>")
+    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename))
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
@@ -763,3 +763,8 @@ proc useTabelline*(nb: var Nb, nome = "tabelline", materia = "", classe = "", ti
   nb.backend.partials["nbText"] = pageText
   nb.backend.partials["left"] = emptyPartial
   nb.backend.partials["right"] = emptyPartial
+
+proc sharedReviewScript*(nb: Nb): string =
+  ## The review mode's script for a page of the docs: the shared copy, `docs/assets/review.js`, or
+  ## "" (inlined) with `-d:singleFile`. Pass it as `nbReview(..., tscript = sharedReviewScript(nb))`.
+  when singleFile: "" else: assetHref("review.js", nb.doc.filename)

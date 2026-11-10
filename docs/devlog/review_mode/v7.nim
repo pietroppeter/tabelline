@@ -21,7 +21,7 @@ nb.useTabelline(nome = "tabelline", title = title,
                 nameHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
-nbReview(questa, "devlog/review-mode", title, source, dates)
+nbReview(questa, "devlog/review-mode", title, source, dates, tscript = sharedReviewScript(nb))
 
 # above the title: the day the post was written, and the day of this version when it is another
 proc long(date: string): string = parse(date, "d MMM yyyy").format("d MMMM yyyy")

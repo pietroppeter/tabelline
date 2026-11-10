@@ -18,7 +18,7 @@ nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{que
 nb.useTabelline(nome = "tabelline", title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
                 nameHref = (if newest: "../../" else: "../../../"))
-nbReview(questa, "devlog/review-mode", title, source)
+nbReview(questa, "devlog/review-mode", title, source, tscript = sharedReviewScript(nb))
 
 nbTitolo &"9 November 2026 · version {questa}", title, """
 Reviewing a page on a phone takes screenshots, notes, and many trips between the page and the

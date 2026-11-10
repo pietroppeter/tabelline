@@ -13,7 +13,7 @@ the version from git, and turns it on for every page of the docs.
 - Non-goal: sharing the style and the fonts as files. That is its own change,
   `share-site-assets` (Pietro, 10 Nov 2026: a page in a collection shares what it needs, a
   one-shot page stays one file). This change builds on it: the pages of the docs share
-  `assets/review.js`, and a `-d:standalone` build inlines it again.
+  `assets/review.js`, and a `-d:singleFile` build inlines it again.
 
 ## Decisions
 
@@ -61,7 +61,7 @@ was built from, and its round's export. The redirect pages `review-mode/vN/` are
 post was never linked by version from outside.
 
 **Every page of the docs.** `useTabelline(..., review = true)` calls `nbReview(script =
-<the shared review.js>)` after the page is set up; with `-d:standalone` the script is inlined.
+<the shared review.js>)` after the page is set up; with `-d:singleFile` the script is inlined.
 The pages that set `review = false`: none to start with.
 
 ## Risks and trade-offs
