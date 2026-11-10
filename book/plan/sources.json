@@ -2164,7 +2164,18 @@
      "base": "https://posit-dev.github.io/great-tables/reference/"
     }
    },
-   "pages": []
+   "pages": [
+    {
+     "path": "reference/loc.summary_stub",
+     "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L552",
+     "note": "The reference has no page for it yet (404): the link goes to its docstring in the code"
+    },
+    {
+     "path": "reference/loc.summary",
+     "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L741",
+     "note": "The reference has no page for it yet (404): the link goes to its docstring in the code"
+    }
+   ]
   },
   {
    "id": "r-gt-reference",
