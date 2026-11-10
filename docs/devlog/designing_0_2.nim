@@ -59,10 +59,11 @@ under each group, labelled in the stub, for each pair of a label and an aggregat
 """
 
 nbCode:
-  let moons = tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-    .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-    .summaryRows(fns = {"total": agg.sum})
-  nbTable moons.optCssTheme()
+  let moons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+    summaryRows fns = {"total": agg.sum}
+    optCssTheme()
+  nbTable moons
 
 nbNote("""
 `fns = {"total": agg.sum}` is a list of pairs: the label of the row and how to sum up a column.
@@ -77,14 +78,17 @@ rule. Several aggregates give several rows:
 """
 
 nbCode:
-  nbTable moons
-    .grandSummaryRows(fns = {"all moons": agg.sum, "most": agg.max, "planets": agg.count})
-    .optCssTheme()
+  let allMoons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+    summaryRows fns = {"total": agg.sum}
+    grandSummaryRows fns = {"all moons": agg.sum, "most": agg.max, "planets": agg.count}
+    optCssTheme()
+  nbTable allMoons
 
 nbNote("""
 The aggregates are `agg.sum`, `agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count` and
 `agg.sd`. `aggregate(proc)` makes one from any proc of the column's values, such as the middle
-value: `aggregate(proc (vs: seq[Value]): Value = vs[vs.len div 2])`.
+value: `aggregate((vs: seq[Value]) => vs[vs.len div 2])`.
 """, nkCode)
 
 nbText: """
@@ -97,13 +101,14 @@ their own:
 """
 
 nbCode:
-  let sizes = tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-    .colsHide(["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"])
-    .fmtNumber("mass", decimals = 3, dropTrailingZeros = true)
-    .fmtInteger("diameter")
-    .summaryRows(fns = {"total": agg.sum}, columns = "mass", missingText = "")
-    .grandSummaryRows(fns = {"mean": agg.mean}, fmt = (x: float) => formatNumber(x, decimals = 0))
-  nbTable sizes.optCssTheme()
+  let sizes = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide ["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"]
+    fmtNumber "mass", decimals = 3, dropTrailingZeros = true
+    fmtInteger "diameter"
+    summaryRows fns = {"total": agg.sum}, columns = "mass", missingText = ""
+    grandSummaryRows fns = {"mean": agg.mean}, fmt = (x: float) => formatNumber(x, decimals = 0)
+    optCssTheme()
+  nbTable sizes
 
 nbNote("""
 `missingText = ""` leaves the cells of the columns that are not summed up empty (gt writes a
@@ -114,17 +119,27 @@ float, like Great Tables' `vals.fmt_*`.
 nbText: """
 ### Choices
 
-- **`agg.sum`, not `sum`.** gt takes `"sum"` or the function `sum`; in Nim `{"total": sum}`
-  cannot compile, because Nim's own `sum`, `min` and `max` make the name ambiguous. A namespace,
-  like `style.fill` and `loc.body`, keeps the names of gt and makes a typo a compile error.
-- **The column's format by default.** gt and Great Tables leave a summary unformatted unless you
-  say how; a table where the totals look different from the rows above them is rarely what you
-  want, so tabelline uses the last format of the column.
-- **A stub when there is none.** Summary rows need a place for their label; as in gt, a table
-  without row names gets an empty stub.
+Each choice says what gt (R) and Great Tables (Python) do.
+
+- **`agg.sum`, not `sum`.** In Nim `{"total": sum}` cannot compile, because Nim's own `sum`,
+  `min` and `max` make the name ambiguous. A namespace, like `style.fill` and `loc.body`, keeps
+  the names and makes a typo a compile error. An aggregate gets one column's values, without the
+  missing ones. *gt:* `fns = list(total = "sum")`, a name, a function or a formula. *Great
+  Tables:* `fns = {"total": pl.col("mass").sum()}`, a Polars expression or a function of the
+  data frame.
+- **The column's format by default.** A table where the totals look different from the rows
+  above them is rarely what you want, so tabelline uses the last format of the column; `fmt` is
+  a proc of a float. *gt:* unformatted unless `fmt = list(~ fmt_number(.))`. *Great Tables:*
+  unformatted unless `fmt = vals.fmt_number`.
+- **Numeric columns by default.** `columns` is `numeric()`, since a sum of names is no sum.
+  *gt:* `everything()`. *Great Tables:* the columns named in the expressions.
+- **A stub when there is none.** Summary rows need a place for their label, so a table without
+  row names gets an empty stub. *gt:* the same. *Great Tables:* the same; `summary_rows` without
+  row groups is an error, as here.
 - **Styles and notes.** Summary cells have their own locations, `loc.summary`,
-  `loc.summaryStub`, `loc.grandSummary`, `loc.grandSummaryStub`, as in Great Tables, and
-  footnote marks are numbered in reading order through them.
+  `loc.summaryStub`, `loc.grandSummary`, `loc.grandSummaryStub`, and footnote marks are numbered
+  in reading order through them. *gt:* `cells_summary()`, `cells_stub_summary()` and the grand
+  ones. *Great Tables:* `loc.summary()`, `loc.summary_stub()`, the names tabelline follows.
 - **Not yet:** text transforms do not reach summary rows.
 
 ## 2 · Rows and columns
@@ -142,10 +157,11 @@ nbCode:
     ended: [nil, 2003, 2017, nil]
     target: ["Jupiter, Saturn", "Jupiter", "Saturn", "Jupiter"]
     moon: [nil, "Io", "Titan", nil]
-  nbTable tabella(missions, rownameCol = "mission")
-    .colsMergeRange("launch", "ended")
-    .colsMerge(["target", "moon"], pattern = "{1}<< and {2}>>")
-    .optCssTheme()
+  let merged = tabella(missions, rownameCol = "mission"):
+    colsMergeRange "launch", "ended"
+    colsMerge ["target", "moon"], pattern = "{1}<< and {2}>>"
+    optCssTheme()
+  nbTable merged
 
 nbNote("""
 `colsMerge` writes the cells with a pattern: `{1}` and `{2}` are the columns, and the part
@@ -162,14 +178,14 @@ row, and `rowsAdd` adds rows, into a group when they name one. `rowsHide` takes 
 """
 
 nbCode:
-  nbTable tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-    .colsHide(everything())
-    .colsAdd("moons per Earth mass", proc (r: Row): Value =
-      toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97))
-    .fmtNumber("moons per Earth mass", decimals = 1)
-    .rowsHide(where(it["type"] == "Terrestrial"))
-    .rowsAdd([(planet: "Pluto", `type`: "Dwarf planet", moons: 5, mass: 0.0130)])
-    .optCssTheme()
+  let grown = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide everything()
+    colsAdd "moons per Earth mass", (r: Row) => toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97)
+    fmtNumber "moons per Earth mass", decimals = 1
+    rowsHide where(it["type"] == "Terrestrial")
+    rowsAdd [(planet: "Pluto", `type`: "Dwarf planet", moons: 5, mass: 0.0130)]
+    optCssTheme()
+  nbTable grown
 
 nbNote("""
 Pluto is added with only the columns it needs; the proc of `colsAdd` ran on the data before it,
@@ -191,10 +207,11 @@ nbCode:
     gold: [16, 12, 7, 9]
     silver: [8, 10, 8, 10]
     bronze: [13, 5, 9, 6]
-  nbTable tabella(medals, rownameCol = "country")
-    .summaryColumns(fns = {"total": agg.sum})
-    .grandSummaryRows(fns = {"all": agg.sum})
-    .optCssTheme()
+  let totals = tabella(medals, rownameCol = "country"):
+    summaryColumns fns = {"total": agg.sum}
+    grandSummaryRows fns = {"all": agg.sum}
+    optCssTheme()
+  nbTable totals
 
 nbText: """
 ### Indents and decimal marks
@@ -208,11 +225,12 @@ nbCode:
   let budget = tableData:
     item: ["Hardware", "Laptops", "Screens", "Travel", "Trains", "Hotels"]
     eur: [5200.0, 4000.0, 1200.0, 900.0, 312.5, 587.25]
-  nbTable tabella(budget, rownameCol = "item")
-    .tabStubIndent([1, 2, 4, 5], "increase")
-    .fmtNumber("eur", decimals = 2, dropTrailingZeros = true)
-    .colsAlignDecimal("eur")
-    .optCssTheme()
+  let aligned = tabella(budget, rownameCol = "item"):
+    tabStubIndent [1, 2, 4, 5], "increase"
+    fmtNumber "eur", decimals = 2, dropTrailingZeros = true
+    colsAlignDecimal "eur"
+    optCssTheme()
+  nbTable aligned
 
 nbNote("""
 The alignment pads each number on the right with figure spaces, which are as wide as a digit
@@ -224,15 +242,23 @@ nbText: """
 ### Choices
 
 - **Merges at render time.** A merge is kept as a rule and run when the table is built, after
-  the formats, like gt's; the merged columns are hidden, not removed, so a later format of
-  theirs still shows.
-- **`autohide`, for all four merges.** gt's `cols_merge` takes `hide_columns`, the other three
-  `autohide`; one name is simpler.
-- **One column at a time.** gt's `cols_add` takes several expressions of the data; in Nim, a name
-  and a proc of the row reads well and needs no macro. Great Tables has no `cols_add` or
-  `rows_add`.
-- **Hidden rows are not summed up.** A summary sums up what the table shows.
-- **Indents of 1em.** gt indents 5px a level, which is hard to see on a phone.
+  the formats; the merged columns are hidden, not removed, so a later format of theirs still
+  shows. *gt* and *Great Tables:* the same, with the same `{1}<< ({2})>>` patterns.
+- **`autohide`, for all four merges.** One name is simpler. *gt* and *Great Tables:*
+  `cols_merge` takes `hide_columns`, the other three `autohide`.
+- **One column at a time.** A name and a proc of the row reads well in Nim and needs no macro.
+  *gt:* `cols_add` takes several expressions of the data. *Great Tables:* no `cols_add`; you add
+  the column to the data frame.
+- **Rows of your own, from data.** `rowsAdd` takes a `TableData` or objects. *gt:* `rows_add`
+  takes name = value pairs. *Great Tables:* no `rows_add`.
+- **Hidden rows are not summed up.** A summary sums up what the table shows. *gt:* `rows_hide`
+  is new. *Great Tables:* no `rows_hide`.
+- **Summary columns.** The aggregates of `summaryRows`, across a row. *gt:* `summary_columns`,
+  new. *Great Tables:* not yet.
+- **Indents of 1em.** 5px is hard to see on a phone. *gt:* 5px a level. *Great Tables:* no
+  `tab_stub_indent`.
+- **Decimal marks with figure spaces.** No CSS, so it works in text too. *gt* and *Great
+  Tables:* the same characters.
 
 ## 3 · More formats
 
@@ -243,10 +269,12 @@ The simplest unit is in a column label: a density in kilograms per cubic metre. 
 """
 
 nbCode:
-  nbTable tabella(planets(), rownameCol = "planet")
-    .colsHide(everything()).colsUnhide(["density", "gravity"])
-    .colsLabel({"density": "density, {{kg/m^3}}", "gravity": "gravity, {{m s^-2}}"})
-    .optCssTheme()
+  let labelled = tabella(planets(), rownameCol = "planet"):
+    colsHide everything()
+    colsUnhide ["density", "gravity"]
+    colsLabel {"density": "density, {{kg/m^3}}", "gravity": "gravity, {{m s^-2}}"}
+    optCssTheme()
+  nbTable labelled
 
 nbNote("""
 `colsUnits({"density": "kg/m^3"})` does the same without touching the label, with a pattern for
@@ -266,10 +294,11 @@ nbCode:
     constant: ["speed of light", "gravity", "Boltzmann", "vacuum permeability", "room"]
     value: [299792458.0, 9.80665, 1.380649e-23, 1.25663706e-6, 20.0]
     units: ["m /s", "m s^-2", "J /K", "N A^-2", "degC"]
-  nbTable tabella(constants, rownameCol = "constant")
-    .fmtAuto("value")
-    .fmtUnits("units")
-    .optCssTheme()
+  let physics = tabella(constants, rownameCol = "constant"):
+    fmtAuto "value"
+    fmtUnits "units"
+    optCssTheme()
+  nbTable physics
 
 nbNote("""
 `fmtAuto` picked a format for the values: scientific notation for the very large and the very
@@ -290,9 +319,10 @@ nbCode:
     name: ["water", "rust", "photosynthesis", "ammonia"]
     reaction: ["2H2 + O2 -> 2H2O", "4Fe + 3O2 -> 2Fe2O3", "6CO2 + 6H2O -> C6H12O6 + 6O2", "N2 + 3H2 <=> 2NH3"]
     ion: ["OH-", "Fe^3+", "HCO3-", "NH4+"]
-  nbTable tabella(reactions, rownameCol = "name")
-    .fmtChem(["reaction", "ion"])
-    .optCssTheme()
+  let chemistry = tabella(reactions, rownameCol = "name"):
+    fmtChem ["reaction", "ion"]
+    optCssTheme()
+  nbTable chemistry
 
 nbText: """
 ### Fractions
@@ -306,13 +336,14 @@ nbCode:
   let flour = tableData:
     ingredient: ["flour", "sugar", "butter", "salt"]
     cups: [2.25, 0.333, 0.5, 0.0625]
-  nbTable tabella(flour, rownameCol = "ingredient")
-    .colsAdd("diagonal", flour["cups"].values)
-    .colsAdd("in sixteenths", flour["cups"].values)
-    .fmtFraction("cups")
-    .fmtFraction("diagonal", layout = "diagonal")
-    .fmtFraction("in sixteenths", denominator = 16, simplify = false)
-    .optCssTheme()
+  let recipe = tabella(flour, rownameCol = "ingredient"):
+    colsAdd "diagonal", flour["cups"].values
+    colsAdd "in sixteenths", flour["cups"].values
+    fmtFraction "cups"
+    fmtFraction "diagonal", layout = "diagonal"
+    fmtFraction "in sixteenths", denominator = 16, simplify = false
+    optCssTheme()
+  nbTable recipe
 
 nbText: """
 ### Bins and country names
@@ -327,13 +358,14 @@ nbCode:
     country: ["IT", "FRA", "DE", "JP"]
     stay: ["[1,3)", "[3,7)", "[7,14)", "[14,28)"]
     visits: [1200, 830, 610, 95]
-  nbTable tabella(visitors)
-    .colsAdd("flag", visitors["country"].values, before = "country")
-    .fmtFlag("flag")
-    .fmtCountry("country")
-    .fmtBins("stay", fmt = proc (x: float): string = formatNumber(x, 0))
-    .colsLabel({"flag": "", "stay": "nights"})
-    .optCssTheme()
+  let visits = tabella(visitors):
+    colsAdd "flag", visitors["country"].values, before = "country"
+    fmtFlag "flag"
+    fmtCountry "country"
+    fmtBins "stay", fmt = x => formatNumber(x, 0)
+    colsLabel {"flag": "", "stay": "nights"}
+    optCssTheme()
+  nbTable visits
 
 nbNote("""
 `fmt` formats each end of an interval, here as an integer. `fmtCountry` takes two- and three-letter codes, in any case.
@@ -345,25 +377,31 @@ nbText: """
 
 - **Unicode in text.** A table printed in a terminal or written as Markdown shows `kg/m³`, `H₂O`
   and `2¼`, with Unicode superscripts and subscripts; where a character has none (there is no
-  subscript f) it writes `T_(eff)`. gt's text output keeps the notation as it was typed.
-- **Symbols are characters.** `:mu:` is µ and `->` is →, plain characters in every output; gt
-  draws reaction arrows as small SVG pictures. The three equilibrium arrows of gt are all ⇌.
+  subscript f) it writes `T_(eff)`. *gt:* the text output keeps the notation as it was typed.
+  *Great Tables:* `fmt_units` for HTML only.
+- **Symbols are characters.** `:mu:` is µ and `->` is →, plain characters in every output.
+  *gt:* reaction arrows drawn as small SVG pictures, and three equilibrium arrows (all ⇌ here).
+  *Great Tables:* no `fmt_chem`.
 - **One label helper.** Every renderer gets a column label from `columnLabel`, so `{{...}}` and
-  `colsUnits` work the same in HTML, text and Markdown.
-- **`accuracy` and `denominator`.** gt's `accuracy` takes "low", "med", "high" or a number; two
-  arguments say which is which.
-- **`fmt` is a proc of a float.** gt's `fmt_bins(fmt = ~ fmt_integer(.))` formats a small gt
-  table; in Nim the proc that formats one number is simpler.
-- **Country names from CLDR, at build time.** `tools/cldr.nim` reads CLDR's JSON and writes
-  `countries.nim`, a constant table, so nothing is read at run time and the core still needs only
-  Nim's standard library. Names are English until the locales of group 4.
+  `colsUnits` work the same in HTML, text and Markdown. *gt:* `cols_units` and `{{...}}` in
+  `cols_label`. *Great Tables:* `{{...}}` in `cols_label` and `define_units`, no `cols_units`.
+- **`accuracy` and `denominator`.** Two arguments say which is which. *gt:* one `accuracy`
+  takes "low", "med", "high" or a number. *Great Tables:* no `fmt_fraction`.
+- **`fmt` is a proc of a float.** The proc that formats one number is simpler in Nim. *gt:*
+  `fmt_bins(fmt = ~ fmt_integer(.))`, a formula that formats a small gt table. *Great Tables:*
+  no `fmt_bins`.
+- **Country names from CLDR, generated once.** The data is stable, so `tools/cldr.nim` reads
+  CLDR's JSON once and writes `countries.nim`, a constant table committed with the code: nothing
+  is downloaded when you build or run, and the core still needs only Nim's standard library. It
+  is run again for a new CLDR release. Names are English until the locales of group 4. *gt:*
+  CLDR data stored in the package, in every locale. *Great Tables:* no `fmt_country`.
 - **Not yet:** a currency for every ISO code in `fmtAuto` (it knows the common ones until group
-  4), and gt's `fmt_units` in LaTeX.
+  4), and gt's `fmt_units` in LaTeX. *Great Tables* has no `fmt_auto` or `fmt_passthrough`.
 
 ## 4 · Every locale
 
-*Planned, PR 4.* Numbers, currencies and dates in the locales of CLDR, generated into a Nim
-module at compile time; rotated labels, more options, extracting the built table as data, a
+*Planned, PR 4.* Numbers, currencies and dates in the locales of CLDR, generated once into a
+committed Nim module, like the country names; rotated labels, more options, extracting the built table as data, a
 preview of a big table, body styles from a column, more datasets.
 
 ## 5 · Pictures in cells

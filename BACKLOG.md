@@ -64,6 +64,11 @@ Rough size: S (hours), M (a day or two), L (more).
   `tabelline/nanuq`, so the core keeps no dependencies.
 - **datamancer** (S). The same for SciNim's datamancer.
 - **Arraymancer tensors** (S). A 2D tensor as a table.
+- **unchained** (S-M). Vindaar's unchained (units checked at compile time) as an optional
+  module `tabelline/unchained`: a column of `KiloGram` or `Meter•Second⁻¹` values becomes a column
+  of floats whose unit, read from the type, is set as with `colsUnits` (written in gt's notation,
+  so it shows as kg or m s⁻¹ in every output); `toUnit` converts a column before it is shown.
+  From the 0.2 review (Pietro, 10 Nov 2026).
 
 ## Outputs
 
