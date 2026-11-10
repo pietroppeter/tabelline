@@ -629,6 +629,49 @@ template nbDrawing*(tsvg, talt: string) =
   ## in the page's colours, with a caption in Markdown.
   nb.addDrawing(tsvg, talt)
 
+# ------------------------------------------------------------------------------- the API reference
+
+type ApiLink* = object
+  ## A link under an API entry: what it is (`gt`, `source`), its text and where it goes.
+  label*, text*, href*: string
+
+newNbBlock(NbApi):
+  name: string
+  anchor: string
+  symKind: string
+  signatures: seq[string]
+  doc: string
+  links: seq[ApiLink]
+  exampleCode: string
+  exampleHtml: string
+  toHtml:
+    var s = &"""<section class="api" id="{blk.anchor}"><h4><code>{esc(blk.name)}</code>""" &
+      &"""<span class="api-kind">{blk.symKind}</span></h4>"""
+    for sig in blk.signatures:
+      s.add "<pre class=\"api-sig\"><code class=\"nohighlight nim hljs\">" & highlightNim(sig) & "</code></pre>"
+    s.add(if blk.doc.len > 0: highlightFences(markdownToHtml(blk.doc))
+          else: """<p class="api-none">No doc comment yet.</p>""")
+    if blk.exampleCode.len > 0:
+      s.add """<details class="api-ex"><summary>an example, from the specs</summary>""" &
+        "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.exampleCode) & "</code></pre>" &
+        blk.exampleHtml & "</details>"
+    if blk.links.len > 0:
+      s.add """<p class="api-links">"""
+      for i, l in blk.links:
+        if i > 0: s.add " · "
+        s.add &"""{l.label} <a href="{l.href}">{inline(l.text)}</a>"""
+      s.add "</p>"
+    s & "</section>"
+
+template nbApi*(tname, tanchor, tkind: string, tsignatures: seq[string], tdoc: string,
+                tlinks: seq[ApiLink] = @[], texampleCode = "", texampleHtml = "") =
+  ## One name of the API: its kind (proc, template, type...), its signatures (one per overload,
+  ## highlighted), its doc comment in Markdown (or a line that says there is none yet), an
+  ## example folded under it (code, and the table it makes) and links (gt's name, the source).
+  ## `tanchor` is its `id`, for links to `#name`.
+  nb.add newNbApi(name = tname, anchor = tanchor, symKind = tkind, signatures = tsignatures, doc = tdoc,
+                  links = tlinks, exampleCode = texampleCode, exampleHtml = texampleHtml)
+
 # ------------------------------------------------------------------------------------- the page
 
 const temaHeadScript = """<script>
