@@ -5,17 +5,17 @@
 import std/[os, strformat, strutils]
 import nimib
 import tabelline, tabelline/nimib
-import blocchi
+import blocks
 
 let docs = currentSourcePath().parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "agents" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "For coding agents", classe = "kept up to date",
+nb.useTabelline(section = "For coding agents", cadence = "kept up to date",
                title = "tabelline for agents", homeHref = "../",
                description = "For coding agents working on tabelline: setup, commands, where things are, and the working rules.")
 
-nbTitolo "For coding agents · kept up to date · started 8 November 2026", "Working on tabelline, for agents", """
+nbTitle "For coding agents · kept up to date · started 8 November 2026", "Working on tabelline, for agents", """
 What a coding agent needs to change tabelline: how to set up, the commands it will run, where things are, and the rules of the repository. People new to the code can read it too.
 """
 nbText: """
@@ -24,7 +24,7 @@ when this page is built, so they are always the ones in the repository. A short 
 for language models is at [llms.txt](../llms.txt). Skills for tabelline will be listed here when
 there are some.
 """
-nbIndice
+nbToc
 
 nbText: """
 ## Start here
@@ -65,7 +65,7 @@ nbText: """
 - `openspec/specs/`: how tabelline behaves, requirement by requirement, each with an example.
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.
-- `docs/`: every page, a nimib notebook made of the blocks in `docs/blocchi.nim` (the review mode's are in `docs/review.nim`); the look is `docs/stile.nim`,
+- `docs/`: every page, a nimib notebook made of the blocks in `docs/blocks.nim` (the review mode's are in `docs/review.nim`); the look is `docs/theme.nim`,
   explained in the [Design guide](../design/). Posts are in `docs/devlog/`, stories (one for
   every release, told with tabelline) in `docs/stories/`.
 - `book/`: the [book](../book/), a nimibook (`nim r book/bookbuild.nim`); its planned sources are

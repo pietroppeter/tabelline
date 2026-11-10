@@ -1,10 +1,10 @@
 ## The parts of a table, each in its own colour: the six parts of gt (and the row groups and
-## spanners), drawn on any tabelline table. Used by the explainer and the home page (`nbParti`).
+## spanners), drawn on any tabelline table. Used by the explainer and the home page (`nbParts`).
 ##
-## The colours are `partTints` in `stile.nim`: light tints of Haru, the default palette of the
+## The colours are `partTints` in `theme.nim`: light tints of Haru, the default palette of the
 ## Munari look, and of its neighbours among the Japanese traditional colours (nipponcolors.com).
 import tabelline
-import stile
+import theme
 
 type Part* = tuple[name, what, kanji, colourName: string]
 
@@ -25,5 +25,5 @@ proc showParts*(t: sink Tabella): Tabella =
    .tabStyle(style.fill(partTints[2]), loc.stubhead())
    .tabStyle(style.fill(partTints[3]), loc.stub())
    .tabStyle(style.fill(partTints[4]), loc.rowGroups())
-   .tabStyle(style.fill(partTints[5]) & style.text(color = tinta("--ink")), loc.body())   # over data colours too
+   .tabStyle(style.fill(partTints[5]) & style.text(color = tint("--ink")), loc.body())   # over data colours too
    .tabStyle(style.fill(partTints[6]), loc.sourceNotes(), loc.footnotes())

@@ -3,15 +3,14 @@
 import std/os
 import nimib
 import tabelline, tabelline/[datasets, nimib]
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "day-one" / "index.html"
-nb.useTabelline(nome = "tabelline",
-               title = "Day one: from gt to tabelline", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Day one: from gt to tabelline", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
-nbTitolo "7 November 2026", "Day one: from gt to tabelline", """
+nbTitle "7 November 2026", "Day one: from gt to tabelline", """
 Reading gt and Great Tables, deciding to write rather than wrap, and a first tabelline with its specs, its explainer and a notebook look.
 """
 nbText: """

@@ -4,7 +4,7 @@
 import std/[os, strutils, strformat, times]
 import nimib
 import tabelline, tabelline/nimib
-import ../../[blocchi, review]
+import ../../[blocks, review]
 import storia
 
 const
@@ -16,9 +16,9 @@ let source = currentSourcePath().relativePath(docs.parentDir)
 let shots = docs / "devlog" / "data" / "review-mode"
 nbInit
 nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{questa}") / "index.html"
-nb.useTabelline(nome = "tabelline", title = title,
+nb.useTabelline(title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
-                nameHref = (if newest: "../../" else: "../../../"))
+                wordmarkHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
 nbReview(questa, "devlog/review-mode", title, source, dates)
@@ -27,7 +27,7 @@ nbReview(questa, "devlog/review-mode", title, source, dates)
 proc long(date: string): string = parse(date, "d MMM yyyy").format("d MMMM yyyy")
 let written = storico[0].date
 let updated = storico[questa - 1].date
-nbTitolo long(written), title, """
+nbTitle long(written), title, """
 Reviewing a page on a phone takes screenshots, notes, and many trips between the page and the
 chat. A review mode for nimib pages: select text, comment on it, go through the comments with a
 bar, and export them all in one text to paste in the chat, where an agent makes the changes. This
@@ -37,7 +37,7 @@ post is reviewed with its own review mode, round by round, and keeps every versi
 nbVersion questa, (if updated != written: updated else: "")
 
 if not newest:
-  nbNota &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
+  nbNote &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
     &"[version {storico.len}](../).", nkWarning
 
 nbInReview:
@@ -48,16 +48,16 @@ nbInReview:
     let changes = what.strip(chars = {'.', ' '}).split("; ")
     for i, change in changes:
       list.add &"{i + 1}. {change}\n"
-    nbNota list & "\nWhat the review asked for is in [Versions and rounds](#versions-and-rounds).",
+    nbNote list & "\nWhat the review asked for is in [Versions and rounds](#versions-and-rounds).",
       nkDone, &"New in version {questa}"
-  nbNota """
+  nbNote """
 Select a few words and tap **Comment ✓** in the bar at the bottom, then write what should change
 (paste a screenshot in it if it helps): it is kept as you type. With nothing selected, the same
 button is **Page note**, a note on the whole page. **‹** and **›** open your comments one by one;
 **Export** gives the text to copy into the chat. **Close review**, above, goes back to reading.
 """, nkInfo, "You are reviewing this page"
 
-nbIndice
+nbToc
 
 nbText: """
 ## The problem
@@ -107,15 +107,15 @@ export, and History. Each card numbers its pieces from 1 and says what they do, 
 still open about them.
 """
 
-nbGalleria "The screens of the review mode":
-  nbScheda "Reading":
-    nbSchermata shots / "reading-v8.jpg", shots / "reading-v8.json", "The page as it is, with one button"
+nbGallery "The screens of the review mode":
+  nbGalleryCard "Reading":
+    nbScreenshot shots / "reading-v8.jpg", shots / "reading-v8.json", "The page as it is, with one button"
     nbText """
 1. **✎ Review**, under the lede, beside the version and the day of its last update: opens the
    review mode.
 """
-  nbScheda "Reviewing":
-    nbSchermata shots / "reviewing-v8.jpg", shots / "reviewing-v8.json", "A comment open in the comment box, its words under it"
+  nbGalleryCard "Reviewing":
+    nbScreenshot shots / "reviewing-v8.jpg", shots / "reviewing-v8.json", "A comment open in the comment box, its words under it"
     nbText """
 1. **Close review**: the same button, closes the review mode.
 2. **Marks**: the words of each comment, in the soft colour of notes; the open one, darker. A tap
@@ -130,8 +130,8 @@ nbGalleria "The screens of the review mode":
    the comment is dropped. *Still open: is a tap on the page the best way to close it?*
 8. **Screenshots**, pasted in the note: small under it, × removes one, a tap shows it large.
 """
-  nbScheda "Export":
-    nbSchermata shots / "export-v8.jpg", shots / "export-v8.json", "The text of every comment, and each screenshot"
+  nbGalleryCard "Export":
+    nbScreenshot shots / "export-v8.jpg", shots / "export-v8.json", "The text of every comment, and each screenshot"
     nbText """
 1. **The text** of every comment, Markdown after a block of YAML, to edit before it goes.
 2. **Each screenshot**, named as the text names it, with **Copy image**, to paste after the text.
@@ -139,8 +139,8 @@ nbGalleria "The screens of the review mode":
 4. **Close review** ends the review, back to reading.
 5. **Copy** copies the text only.
 """
-  nbScheda "History":
-    nbSchermata shots / "history-v8.jpg", shots / "history-v8.json", "The versions of the page, and the comments kept on each"
+  nbGalleryCard "History":
+    nbScreenshot shots / "history-v8.jpg", shots / "history-v8.json", "The versions of the page, and the comments kept on each"
     nbText """
 1. **A version**, newest first, with the comments this browser keeps on it; a tap opens it.
 2. **Clear** deletes the comments of that version (a second tap confirms).
@@ -156,7 +156,7 @@ its own: the comment box, the export and History. The drawing has them all, and 
 take you from one to the next.
 """
 
-nbDisegno shots / "modi-v8.svg", "Reading and reviewing, with the comment box, the export and History, and the buttons between them"
+nbDrawing shots / "modi-v8.svg", "Reading and reviewing, with the comment box, the export and History, and the buttons between them"
 
 nbText: """
 - **Reading** is the page as it is, with one button beside the version: **✎ Review**. No bar, no

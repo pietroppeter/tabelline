@@ -3,15 +3,14 @@
 import std/os
 import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "book-found" / "index.html"
-nb.useTabelline(nome = "tabelline",
-                title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
-nbTitolo "8 November 2026", "What the book found for 0.1", """
+nbTitle "8 November 2026", "What the book found for 0.1", """
 Porting the Great Tables guide into the tabelline book turned up two bugs and a dozen gaps; 0.1
 closed them. What the book found, from the simplest to the most complex, and what it still finds.
 """
@@ -73,7 +72,7 @@ block:
     char: ["apricot", "banana", nil]
     fctr: ["one", "two", "five"]
   # the colours of the book's examples, as the guide gives them (names, not the page's tokens)
-  nbAccanto:
+  nbBeside:
     nbTable tabella(simple).optCssTheme.dataColor(everything(), palette = @["blue", "red"])
     nbTable tabella(few).optCssTheme
       .tabSpanner("spanner", ["char", "fctr"])

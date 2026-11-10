@@ -2,20 +2,20 @@
 ## for writing one. In three parts: the foundations (two looks, the rules, shapes, the palette by
 ## roles, type), the blocks a page is made of (each shown live, with its code), and how to write
 ## and build a page. Kept up to date: it changes in the PR that changes the design
-## (docs/stile.nim, docs/blocchi.nim); big design changes start as a devlog post that ends here.
+## (docs/theme.nim, docs/blocks.nim); big design changes start as a devlog post that ends here.
 import std/[os, strformat]
 import nimib
 import tabelline, tabelline/nimib
-import blocchi
+import blocks
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "design" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Design guide", classe = "kept up to date",
+nb.useTabelline(section = "Design guide", cadence = "kept up to date",
                title = "tabelline design guide", homeHref = "../",
                description = "The design of tabelline's pages: two looks, shapes for kinds, a palette by roles, and the blocks every page is made of.")
 
-nbTitolo "Design guide · kept up to date · started 8 November 2026", "How tabelline's pages look, and why", """
+nbTitle "Design guide · kept up to date · started 8 November 2026", "How tabelline's pages look, and why", """
 Every page of tabelline is made of a few pieces: two looks, three shapes, a palette by roles, one
 typeface and a dozen blocks. This page shows each of them live, says what it means and when to
 use it, and how it is built. It is the reference for writing a new page.
@@ -26,10 +26,10 @@ It is in three parts, and each part's sections carry its colour, a way of showin
 parts that this page tries first. The design comes from two devlog posts of 8 November 2026,
 [Reviewing the design](../devlog/design-review/) and [Blocks, not HTML](../devlog/blocks-review/).
 """
-nbIndice
+nbToc
 
 # =========================================================================== part 1: foundations
-nbParte 1, "Foundations", prPrimary
+nbPart 1, "Foundations", prPrimary
 nbText: """
 ## Two looks
 
@@ -69,7 +69,7 @@ its tables work just as well in a very different theme: everything it changes is
   the sheet itself, drawn as its straight top edge in the colour of its kind (secondary unless a
   reason says otherwise), never as a separate mark that could look like a checkbox.
 """
-nbNota "A warning: the triangle, on its note.", nkWarning
+nbNote "A warning: the triangle, on its note.", nkWarning
 nbCards "a card and a note, to show the square":
   nbCard "A card", "", "1":
     nbText "A sheet set apart, with the square's top edge in the secondary."
@@ -93,7 +93,7 @@ work: the page, the text, rules, code backgrounds, grey text. The steps in use h
 says what they are for: the paper and the ink themselves, the shade (step 1), the line (step 3)
 and muted, grey text (step 7). Use a name; a step by number only when no name fits.
 """
-nbTinte [("--paper", "`--paper`", "the page"), ("--shade", "`--shade`", "outputs, plain notes"),
+nbSwatches [("--paper", "`--paper`", "the page"), ("--shade", "`--shade`", "outputs, plain notes"),
          ("--line", "`--line`", "rules, row lines"), ("--muted", "`--muted`", "grey text"),
          ("--ink", "`--ink`", "text, edges"), ("--surface", "`--surface`", "code")]
 
@@ -105,7 +105,7 @@ into the paper (`--primary-soft`, 22%), for backgrounds; and a **text** version 
 (`--primary-text`, 50%), dark enough to read on paper and on its soft. The warning has no text
 version: **the warning colour is never text**, a warning is ink on its soft, with the triangle.
 """
-nbTinte [("--primary", "primary", "the circle: sections, kickers, link underlines, keywords"),
+nbSwatches [("--primary", "primary", "the circle: sections, kickers, link underlines, keywords"),
          ("--secondary", "secondary", "the square: information, pages to go to, strings, bars"),
          ("--warning", "warning", "the triangle: warnings, and the highlighter"),
          ("--success", "success", "what is done, what works; numbers in code"),
@@ -119,7 +119,7 @@ through the paper to `--primary`). A tabelline colour can be a CSS variable, so 
 them directly: `style.fill("var(--secondary)")`.
 
 **Rule:** never write a fixed colour in a page. Name a token; if none fits, the token is missing
-and goes in `docs/stile.nim`.
+and goes in `docs/theme.nim`.
 
 ## Type
 
@@ -131,26 +131,29 @@ and goes in `docs/stile.nim`.
 """
 
 # ================================================================================ part 2: blocks
-nbParte 2, "Blocks", prSecondary
+nbPart 2, "Blocks", prSecondary
 nbText: """
 ## The page and its title
 
 A page is a nimib notebook that calls `nb.useTabelline(...)` right after `nbInit`: both looks,
-the header with the switch and the cover label, the footer. Then `nbTitolo` opens it with a
+the header with the switch and the masthead, the footer. The masthead is the wordmark, the
+`section` the page belongs to (Guide, Devlog, Stories) and its `cadence`, how it lives (kept up to
+date, one for every release, dated posts); the quaderno writes the same three lines as the label
+of an exercise book (nome, materia, classe). Then `nbTitle` opens it with a
 kicker (what it is and when; in a post, the date), the title, and a lede that says what the page
 gives the reader. Everything below is a block: each section shows one live, with its code folded
 under it.
 """
 nbShowCode:
-  nbTitolo "Kicker · kept up to date", "A title", "The lede: what this page gives you, in a sentence or two."
+  nbTitle "Kicker · kept up to date", "A title", "The lede: what this page gives you, in a sentence or two."
 
 nbText: """
 ## Headings and the indice
 
 `##` is a section (the circle, in Munari) and goes in the indice; `###` is a subsection, in the
-primary's text colour, indented in the indice. `nbIndice` puts the indice where it is called,
+primary's text colour, indented in the indice. `nbToc` puts the indice where it is called,
 usually right after the title. Don't go deeper than `###`. A long page can be split in parts
-with `nbParte(number, title, role)`: from there on, its sections take the part's colour.
+with `nbPart(number, title, role)`: from there on, its sections take the part's colour.
 
 On a page with an indice, every heading ends with a small **↑** in a square: it goes back to the
 indice, so a long page on a phone is never more than a tap from its contents. It is drawn by
@@ -158,18 +161,18 @@ the CSS (`.su`), so the heading's text, its anchor and a review quote stay the s
 
 ## Notes
 
-A note is a sheet set apart, beside the text, in Markdown. Its kind is an enum, `NotaKind`, so a
+A note is a sheet set apart, beside the text, in Markdown. Its kind is an enum, `NoteKind`, so a
 kind spelled wrong does not compile; its colour follows from the kind. A page that tells a story
 with tables keeps the story in the text and puts what is about the code in green **code** notes,
 one under the table it explains, and a first one that says so.
 """
 nbShowCode:
-  nbNota "**plain**: an aside."
-  nbNota "**info**: information, a page to go to.", nkInfo
-  nbNota "**done**: what is done, what works.", nkDone
-  nbNota "**code**: about the code, what tabelline does in the table above, and why.", nkCode
-  nbNota "**missing**: a gap, or a difference from gt and Great Tables.", nkMissing
-  nbNota "**warning**: the API will change.", nkWarning, "A note can have a title"
+  nbNote "**plain**: an aside."
+  nbNote "**info**: information, a page to go to.", nkInfo
+  nbNote "**done**: what is done, what works.", nkDone
+  nbNote "**code**: about the code, what tabelline does in the table above, and why.", nkCode
+  nbNote "**missing**: a gap, or a difference from gt and Great Tables.", nkMissing
+  nbNote "**warning**: the API will change.", nkWarning, "A note can have a title"
 
 nbText: """
 ## Cards
@@ -212,7 +215,7 @@ nbText: """
 A tabelline table is placed with `nbTable` and takes `optCssTheme()`: its colours are the tokens,
 so it follows the look (Munari: an ink rule above and below, the primary under the heading; the
 quaderno: taped in, on squared paper). `nbShowCode` shows a table with its code folded under it,
-and `nbParti` adds a switch that shows the parts of the table in their colours.
+and `nbParts` adds a switch that shows the parts of the table in their colours.
 """
 nbShowCode:
   let tre = tableData:
@@ -221,7 +224,7 @@ nbShowCode:
   let t = tabella(tre, rownameCol = "tabellina"):
     tabHeader "Three tabelline"
     optCssTheme()
-  nbParti t
+  nbParts t
 
 nbText: """
 ## Galleries
@@ -232,12 +235,12 @@ title, and holds any blocks: text, code, the table it makes. Used in
 [Designing tabelline 0.1](../devlog/designing-0-1/) and [Blocks, not HTML](../devlog/blocks-review/).
 """
 nbShowCode:
-  nbGalleria "a gallery: swipe or scroll sideways":
-    nbScheda "One idea":
+  nbGallery "a gallery: swipe or scroll sideways":
+    nbGalleryCard "One idea":
       nbText "A card holds one step, no more."
-    nbScheda "Simplest first":
+    nbGalleryCard "Simplest first":
       nbText "The first card is the simplest; each adds one thing."
-    nbScheda "Side by side":
+    nbGalleryCard "Side by side":
       nbText "On a phone, one card and the edge of the next are in view."
 
 nbText: """
@@ -266,7 +269,7 @@ A commented text is marked in the secondary's soft colour with a line under it, 
 apart; the one open is in the secondary itself. In the quaderno, marks are the highlighter,
 underlined in red pen. `nbInReview` holds blocks shown only while reviewing. `nbVersions`
 is the strip of versions of the older versions of the post: plain boxes, the one shown with a
-line of ink under it. `nbDisegno` puts a drawing made with diagrammari in the page's colours,
+line of ink under it. `nbDrawing` puts a drawing made with diagrammari in the page's colours,
 and `nbFoldCode` folds long code (see *Source files*). The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
 when the page has them.
 """
@@ -274,7 +277,7 @@ when the page has them.
 nbText: """
 ## Swatches, quotes and highlights
 
-`nbTinte` shows colours beside their names, as in the palette above: a token or any CSS colour,
+`nbSwatches` shows colours beside their names, as in the palette above: a token or any CSS colour,
 a name and what it is for.
 
 > A quote has a grey edge in Munari, and is a sticky note in the quaderno.
@@ -284,7 +287,7 @@ for the triangle.
 """
 
 # ================================================================== part 3: writing and building
-nbParte 3, "Writing and building", prSuccess
+nbPart 3, "Writing and building", prSuccess
 nbText: """
 ## Writing a page
 
@@ -293,7 +296,7 @@ nbText: """
 - Write code in the order the reader meets it: define a value before using it.
 - **Use blocks.** Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks above. No HTML
   in `nbText`, no CSS and no colours in a page. When something is needed a second time, it
-  becomes a block in `docs/blocchi.nim`, with its CSS in `docs/stile.nim`. `nbRawHtml` is a last
+  becomes a block in `docs/blocks.nim`, with its CSS in `docs/theme.nim`. `nbRawHtml` is a last
   resort, for a one-off, with a comment that says why.
 - Check every new element in both looks, and at phone width (390px): nothing may be wider than
   the screen.
@@ -313,7 +316,7 @@ outside the blocks and the style; CI fails when a page has more than its count i
 
 ## How it is built
 
-**The palette.** `docs/stile.nim` holds every styling decision. Each look is six values (a
+**The palette.** `docs/theme.nim` holds every styling decision. Each look is six values (a
 `Look`): Munari's are CSS variables named after where they go (`--m-carta`, `--m-cerchio`, …) so a
 palette can be swapped on the page; the quaderno's are fixed. From them, one rule on `html`
 derives every token with `color-mix(in oklab, …)`: `--neutral-0` to `--neutral-9` and the names
@@ -321,13 +324,13 @@ of the steps in use (`--shade`, `--line`, `--muted`), `--surface`, and a soft
 and a text version of each role. The CSS of both looks and of every block uses only the tokens;
 the quaderno keeps a few motifs of its own (the squares, the margin, the post-it, the tape).
 Munari's rules are written plain, as the page's own; the quaderno's are written once without a
-scope, and `stile.nim` puts `html[data-tema="quaderno"]` in front of every selector when it builds
+scope, and `theme.nim` puts `html[data-tema="quaderno"]` in front of every selector when it builds
 the CSS, so they win over Munari only in the quaderno.
 
-**The blocks.** `docs/blocchi.nim` makes each block with nimib's `newNbBlock`: a type with
-fields and a `toHtml` that writes classes, never styles. A leaf block (`nbNota`, `nbTitolo`,
-`nbTinte`) is a `func` that adds it and a template that calls the func. A container (`nbCards`,
-`nbGalleria`, `nbTabs`, `nbShowCode`) inherits from `NbContainer`: its template opens it with
+**The blocks.** `docs/blocks.nim` makes each block with nimib's `newNbBlock`: a type with
+fields and a `toHtml` that writes classes, never styles. A leaf block (`nbNote`, `nbTitle`,
+`nbSwatches`) is a `func` that adds it and a template that calls the func. A container (`nbCards`,
+`nbGallery`, `nbTabs`, `nbShowCode`) inherits from `NbContainer`: its template opens it with
 `nb.withContainer` so the blocks of its body go inside, and its `toHtml` renders them with
 `nbContainerToHtml`. The indice is a block too: when the page is saved it reads every `##` and
 `###` of the page's text blocks, and the part each is in.
