@@ -10,8 +10,8 @@
 - Every page of the docs has the review mode, turned on by `useTabelline`; a page's version comes from git (the commits that changed its source), shown as *Version N · updated D* beside **✎ Review**, and the export (`nimib-review/4`) names its commit. The post Review mode is one notebook again; its versions 1 to 8 are in git (#58).
 - The pages of the docs share their style, fonts and the review script as files in `docs/assets/` (the home page goes from 250 KB to 50 KB); `-d:singleFile` builds a page as one file; `tools/preview.nim` replaces `preview.py` (#55).
 - Notebooks `import nimib` whole: nimib removed its old `md` (pietroppeter/nimib#268), so tabelline's `md()` no longer clashes with it; nimib is pinned to that commit until 0.5.0 is tagged. `tools/links.nim` checks links to this repository's own files in the checkout (#50).
-- The story FOSDEM, twenty-six times is ported from R with gt to tabelline 0.2: every table in Nim, with nanoplots of the devrooms and the speakers year by year, icons, and a table of what each gt function became; the keynotes table shows the R beside the Nim (#PR).
-- Fix: `subZero`, `subSmallVals`, `subLargeVals` and `subValues` with an empty text (`zeroText = ""`) left the value as it was; they now empty the cell, as gt does (#PR).
+- The story FOSDEM, twenty-six times is ported from R with gt to tabelline 0.2: every table in Nim, with nanoplots of the devrooms and the speakers year by year, icons, and a table of what each gt function became; the keynotes table shows the R beside the Nim (#64).
+- Fix: `subZero`, `subSmallVals`, `subLargeVals` and `subValues` with an empty text (`zeroText = ""`) left the value as it was; they now empty the cell, as gt does (#64).
 - Fix: in a grouped table, a row whose group value is missing was shown twice, before the groups
   and again in the group above it; it is now shown once, before the groups (#53).
 
