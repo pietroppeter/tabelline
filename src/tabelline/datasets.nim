@@ -3,6 +3,11 @@
 ## - `planets`: the eight planets, from NASA's Planetary Fact Sheet (public domain).
 ## - `exibble`: gt's tiny "example tibble", a column of each type (MIT, from gt / Great Tables).
 ## - `tavolaPitagorica(n)`: the times table, *la tavola pitagorica*, as every Italian pupil knows it.
+## - `isole`: the 194 islands of the Mediterranean, by area (Wikipedia), the twin of gt's `islands`.
+## - `citta`: the 95 largest cities of the European Union (Wikipedia), the twin of gt's `towny`.
+##
+## The data of `isole` and `citta` is in `data/` (CSV, with its source in a `#` line), read when
+## compiling; `docs/devlog/data/datasets/` has the programs that wrote it.
 
 import core
 
@@ -31,8 +36,18 @@ const exibbleCsv* = """num,char,fctr,date,time,datetime,currency,row,group
 8880000,honeydew,eight,2015-08-15,20:20,,0.44,row_8,grp_b
 """
 
+const isoleCsv* = staticRead("data/isole.csv")
+  ## island, country, area (km²), population, city (the largest). Wikipedia, "List of islands in
+  ## the Mediterranean", read 8 Nov 2026.
+const cittaCsv* = staticRead("data/citta.csv")
+  ## city, state (three-letter code), population within city limits, counted (the date of the
+  ## count). Wikipedia, "List of cities in the European Union by population within city limits",
+  ## read 8 Nov 2026.
+
 proc planets*(): TableData = parseCsv(planetsCsv)
 proc exibble*(): TableData = parseCsv(exibbleCsv)
+proc isole*(): TableData = parseCsv(isoleCsv, comment = "#")
+proc citta*(): TableData = parseCsv(cittaCsv, comment = "#")
 
 proc tavolaPitagorica*(n = 10): TableData =
   ## An n×n times table: a column `×` with 1..n, then one column per factor ("1" .. "n").

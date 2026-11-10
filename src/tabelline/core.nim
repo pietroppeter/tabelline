@@ -432,7 +432,7 @@ type
   Aggregate* = object
     ## How a summary row sums up a column: a proc from the column's non-missing values (of the
     ## group, or of the whole table) to one value. Built in: `agg.sum`, `agg.mean`, `agg.median`,
-    ## `agg.min`, `agg.max`, `agg.count`, `agg.sd`; any proc with `aggregate(myProc)`.
+    ## `agg.min`, `agg.max`, `agg.count`, `agg.std`; any proc with `aggregate(myProc)`.
     name*: string          ## "sum", "count", ... ("" for a proc of your own)
     fn*: proc (values: seq[Value]): Value
 
@@ -533,6 +533,78 @@ type
     footnotesOrder* = "marks_first"  ## or "marks_last", "preserve_order"
     sourceNotesFontSize* = "90%"
     containerOverflowX* = "auto"
+    containerOverflowY* = "auto"
+    containerWidth* = "auto"
+    containerHeight* = "auto"
+    containerPaddingX* = "0px"
+    containerPaddingY* = "0px"
+    tableLayout* = "auto"          ## or "fixed", as CSS's table-layout
+    tableFontWeight* = "normal"
+    tableFontStyle* = "normal"
+    headingBorderBottomStyle* = "solid"
+    headingBorderBottomWidth* = "2px"
+    headingBorderLrStyle* = "none"
+    headingBorderLrWidth* = "1px"
+    headingBorderLrColor* = "#D3D3D3"
+    columnLabelsBorderTopStyle* = "none"
+    columnLabelsBorderTopWidth* = "2px"
+    columnLabelsBorderTopColor* = "#D3D3D3"
+    columnLabelsBorderBottomStyle* = "solid"
+    columnLabelsBorderLrStyle* = "none"
+    columnLabelsBorderLrWidth* = "1px"
+    columnLabelsBorderLrColor* = "#D3D3D3"
+    columnLabelsVlinesStyle* = "none"
+    columnLabelsVlinesWidth* = "1px"
+    columnLabelsVlinesColor* = "#D3D3D3"
+    rowGroupFontSize* = "100%"
+    rowGroupTextTransform* = "inherit"
+    rowGroupPadding* = "8px"
+    rowGroupPaddingHorizontal* = "5px"
+    rowGroupBorderTopStyle* = "solid"
+    rowGroupBorderTopWidth* = "2px"
+    rowGroupBorderTopColor* = ""      ## "" for `rowGroupBorderColor`
+    rowGroupBorderBottomStyle* = "solid"
+    rowGroupBorderBottomWidth* = "2px"
+    rowGroupBorderBottomColor* = ""   ## "" for `rowGroupBorderColor`
+    rowGroupBorderLeftStyle* = "none"
+    rowGroupBorderLeftWidth* = "1px"
+    rowGroupBorderLeftColor* = "#D3D3D3"
+    rowGroupBorderRightStyle* = "none"
+    rowGroupBorderRightWidth* = "1px"
+    rowGroupBorderRightColor* = "#D3D3D3"
+    tableBodyHlinesStyle* = "solid"
+    tableBodyHlinesWidth* = "1px"
+    tableBodyVlinesStyle* = "solid"
+    tableBodyVlinesWidth* = "1px"
+    tableBodyBorderTopStyle* = "none"
+    tableBodyBorderTopWidth* = "2px"
+    tableBodyBorderTopColor* = "#D3D3D3"
+    tableBodyBorderBottomStyle* = "none"
+    tableBodyBorderBottomWidth* = "2px"
+    tableBodyBorderBottomColor* = "#D3D3D3"
+    stubFontSize* = "100%"
+    stubTextTransform* = "inherit"
+    stubBorderStyle* = "solid"
+    stubBorderWidth* = "2px"
+    stubBorderColor* = ""             ## "" for `tableBodyHlinesColor`
+    footnotesBackgroundColor* = ""    ## "" for the table's background
+    footnotesPadding* = "4px"
+    footnotesPaddingHorizontal* = "5px"
+    footnotesBorderBottomStyle* = "none"
+    footnotesBorderBottomWidth* = "2px"
+    footnotesBorderBottomColor* = "#D3D3D3"
+    footnotesBorderLrStyle* = "none"
+    footnotesBorderLrWidth* = "2px"
+    footnotesBorderLrColor* = "#D3D3D3"
+    sourceNotesBackgroundColor* = ""  ## "" for the table's background
+    sourceNotesPadding* = "4px"
+    sourceNotesPaddingHorizontal* = "5px"
+    sourceNotesBorderBottomStyle* = "none"
+    sourceNotesBorderBottomWidth* = "2px"
+    sourceNotesBorderBottomColor* = "#D3D3D3"
+    sourceNotesBorderLrStyle* = "none"
+    sourceNotesBorderLrWidth* = "2px"
+    sourceNotesBorderLrColor* = "#D3D3D3"
     extraCss* = ""          ## more CSS, scoped to the table when it starts with ` ` or `.`
 
   Tabella* = object

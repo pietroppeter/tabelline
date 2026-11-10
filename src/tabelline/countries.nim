@@ -1,6 +1,6 @@
-## Country names in English and three-letter codes, from Unicode CLDR 49.0.0.
-## Written by `tools/cldr.nim`: do not edit. CLDR is under the Unicode License v3
-## (`licenses/unicode-cldr-LICENSE.txt`).
+## Country names in English and three-letter codes.
+## Written by `tools/cldr.nim` from Unicode CLDR 49.0.0: do not edit.
+## CLDR is under the Unicode License v3 (`licenses/unicode-cldr-LICENSE.txt`).
 
 const countryNames* = [
   ("AC", "Ascension Island"),
@@ -18,7 +18,7 @@ const countryNames* = [
   ("AT", "Austria"),
   ("AU", "Australia"),
   ("AW", "Aruba"),
-  ("AX", "\xC3\x85land Islands"),
+  ("AX", "Åland Islands"),
   ("AZ", "Azerbaijan"),
   ("BA", "Bosnia & Herzegovina"),
   ("BB", "Barbados"),
@@ -29,7 +29,7 @@ const countryNames* = [
   ("BH", "Bahrain"),
   ("BI", "Burundi"),
   ("BJ", "Benin"),
-  ("BL", "St. Barth\xC3\xA9lemy"),
+  ("BL", "St. Barthélemy"),
   ("BM", "Bermuda"),
   ("BN", "Brunei"),
   ("BO", "Bolivia"),
@@ -47,7 +47,7 @@ const countryNames* = [
   ("CF", "Central African Republic"),
   ("CG", "Congo - Brazzaville"),
   ("CH", "Switzerland"),
-  ("CI", "C\xC3\xB4te d\xE2\x80\x99Ivoire"),
+  ("CI", "Côte d’Ivoire"),
   ("CK", "Cook Islands"),
   ("CL", "Chile"),
   ("CM", "Cameroon"),
@@ -58,7 +58,7 @@ const countryNames* = [
   ("CR", "Costa Rica"),
   ("CU", "Cuba"),
   ("CV", "Cape Verde"),
-  ("CW", "Cura\xC3\xA7ao"),
+  ("CW", "Curaçao"),
   ("CX", "Christmas Island"),
   ("CY", "Cyprus"),
   ("CZ", "Czechia"),
@@ -199,7 +199,7 @@ const countryNames* = [
   ("PY", "Paraguay"),
   ("QA", "Qatar"),
   ("QO", "Outlying Oceania"),
-  ("RE", "R\xC3\xA9union"),
+  ("RE", "Réunion"),
   ("RO", "Romania"),
   ("RS", "Serbia"),
   ("RU", "Russia"),
@@ -220,7 +220,7 @@ const countryNames* = [
   ("SO", "Somalia"),
   ("SR", "Suriname"),
   ("SS", "South Sudan"),
-  ("ST", "S\xC3\xA3o Tom\xC3\xA9 & Pr\xC3\xADncipe"),
+  ("ST", "São Tomé & Príncipe"),
   ("SV", "El Salvador"),
   ("SX", "Sint Maarten"),
   ("SY", "Syria"),
@@ -237,7 +237,7 @@ const countryNames* = [
   ("TM", "Turkmenistan"),
   ("TN", "Tunisia"),
   ("TO", "Tonga"),
-  ("TR", "T\xC3\xBCrkiye"),
+  ("TR", "Türkiye"),
   ("TT", "Trinidad & Tobago"),
   ("TV", "Tuvalu"),
   ("TW", "Taiwan"),

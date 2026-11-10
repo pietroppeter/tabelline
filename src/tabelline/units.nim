@@ -209,6 +209,8 @@ proc fmtChem*(t: sink Tabella, columns: ColSel, rows = allRows()): Tabella =
 proc colsUnits*(t: sink Tabella, units: openArray[(string, string)], unitsPattern = "{1}, {2}"): Tabella =
   ## Units for column labels, in gt's notation: `colsUnits({"density": "kg/m^3"})` shows the
   ## label "density, kg/m³". `unitsPattern` places them: `{1}` is the label, `{2}` the units.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `colsUnits:` then `density: "kg/m^3"`.
   result = t
   for (name, u) in units:
     if not result.data.hasColumn(name): raise newException(KeyError, "no column named " & name.escape)

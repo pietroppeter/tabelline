@@ -16,8 +16,8 @@ suite "aggregates":
     check agg.min.fn(vals("b".toValue, "a".toValue)) == "a"
     check agg.max.fn(vals(1.toValue, 5.toValue, 2.toValue)) == 5
     check agg.count.fn(vals(1.toValue, "x".toValue)) == 2
-    check agg.sd.fn(vals(2.toValue, 4.toValue, 4.toValue, 4.toValue, 5.toValue, 5.toValue, 7.toValue, 9.toValue)).toFloat > 2.13
-    check agg.sd.fn(vals(1.toValue)).isNull
+    check agg.std.fn(vals(2.toValue, 4.toValue, 4.toValue, 4.toValue, 5.toValue, 5.toValue, 7.toValue, 9.toValue)).toFloat > 2.13
+    check agg.std.fn(vals(1.toValue)).isNull
   test "of your own":
     let a = aggregate(proc (vs: seq[Value]): int = vs.len * 10, "tens")
     check a.fn(vals(1.toValue)) == 10

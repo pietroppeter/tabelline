@@ -35,6 +35,11 @@ proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol = "", groupn
   ## A display table straight from Nim objects or named tuples, one field per column.
   initTabella(toTableData(rows), rownameCol, groupnameCol, id, locale)
 
+proc initTabella*(t: sink Tabella): Tabella =
+  ## A table already made, so that `tabella(t): body` adds verbs to it:
+  ## `tabellaPreview(data): colsHide "notes"`.
+  t
+
 # ------------------------------------------------------------------------------------- parts
 
 proc tabHeader*(t: sink Tabella, title: Text, subtitle: Text = toText("")): Tabella =
@@ -220,11 +225,14 @@ proc resolve*(l: Loc, t: Tabella): Target =
       for n in names: result.cells.add (i, n)
   else: discard
 
+proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target)
+
 proc tabStyle*(t: sink Tabella, style: CellStyle, locations: varargs[Loc]): Tabella =
-  ## Styles the cells at `locations`: `tabStyle(style.fill("#FFF3B0"), loc.body(rows = [2]))`.
+  ## Styles the cells at `locations`: `tabStyle(style.fill("#FFF3B0"), loc.body(rows = [2]))`. A
+  ## value may come from another column of each row: `style.fill(fromColumn("colour"))`.
   result = t
   for l in locations:
-    result.styles.add StyleRule(target: l.resolve(result), style: style)
+    result.tabStyleCells(style, l.resolve(result))
 
 proc tabFootnote*(t: sink Tabella, note: Text, locations: varargs[Loc]): Tabella =
   ## A note in the footer, marked at each of `locations` (no location: a plain footnote, no mark).
@@ -284,6 +292,8 @@ proc textCaseMatch*(t: sink Tabella, cases: openArray[(string, string)], default
   ## Changes texts by cases, `{"old": "new"}`: with `replace = "all"` a text equal to a case
   ## becomes its new text (and any other `default`, when given); with `"partial"` each case is
   ## replaced inside the text.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `textCaseMatch:` then `"Gas giant": "giant"` and `locations = loc.body("type")`.
   let cs = @cases
   let (d, partial) = (default, replace == "partial")
   textTransform(t, proc (s: string): string =
@@ -305,6 +315,8 @@ proc colsLabel*(t: sink Tabella, column: string, label: Text): Tabella =
 
 proc colsLabel*(t: sink Tabella, labels: openArray[(string, string)]): Tabella =
   ## `colsLabel({"mass": "Mass", "diameter": "Diameter"})`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `colsLabel:` then `mass: "Mass"` and `diameter: "Diameter"`.
   result = t
   for (n, l) in labels: result = colsLabel(result, n, toText(l))
 
@@ -321,6 +333,8 @@ proc colsAlign*(t: sink Tabella, align: Align, columns: ColSel = everything()): 
 
 proc colsWidth*(t: sink Tabella, widths: openArray[(string, string)]): Tabella =
   ## CSS widths: `colsWidth({"name": "120px", "notes": "30%"})`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `colsWidth:` then `name: "120px"` and `notes: "30%"`.
   result = t
   for (n, w) in widths:
     discard result.data[n]
@@ -460,9 +474,10 @@ func median*(_: AggNs): Aggregate =
     let m = xs.len div 2
     toValue(if xs.len mod 2 == 1: xs[m] else: (xs[m - 1] + xs[m]) / 2))
 
-func sd*(_: AggNs): Aggregate =
-  ## The standard deviation of the numbers, of a sample (divided by n - 1, as R's `sd`).
-  Aggregate(name: "sd", fn: proc (values: seq[Value]): Value =
+func std*(_: AggNs): Aggregate =
+  ## The standard deviation of the numbers, of a sample (divided by n - 1, as R's `sd` and
+  ## Polars' `std`).
+  Aggregate(name: "std", fn: proc (values: seq[Value]): Value =
     let xs = numbers(values)
     if xs.len < 2: return null()
     let m = xs.sum / float(xs.len)
@@ -523,6 +538,9 @@ proc summaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], groups: 
                   columns: ColSel = numeric(), side = sBottom, missingText = "—"): Tabella =
   ## Adds rows that sum up each row group (or the `groups` listed), one for each aggregate in
   ## `fns`, labelled in the stub: `summaryRows(fns = {"total": agg.sum}, columns = "moons")`.
+  ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
+  ## `summaryRows:` then `total: agg.sum`, `columns = "moons"` and `fmtNumber(decimals = 1)`
+  ## (a `fmt*` line is `fmt`).
   ## The summary rows go under the group, or above it with `side = sTop`. Each cell is
   ## formatted like its column (its last format), `agg.count` as an integer; a cell with
   ## nothing to sum up, and the columns not in `columns`, show `missingText`.
@@ -541,7 +559,7 @@ proc grandSummaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], col
                        side = sBottom, missingText = "—"): Tabella =
   ## Adds rows that sum up the whole table, every row of every group, one for each aggregate in
   ## `fns`: at the bottom of the table, or at the top with `side = sTop`. Formatted as
-  ## `summaryRows`.
+  ## `summaryRows`; a block as in `summaryRows`: `grandSummaryRows:` then `mean: agg.mean`.
   result = t
   result.addSummary(true, [], columns, fns, nil, side, missingText)
 
@@ -935,7 +953,8 @@ proc addSummaryColumns(t: var Tabella, columns: ColSel, fns: openArray[(string, 
 proc summaryColumns*(t: sink Tabella, fns: openArray[(string, Aggregate)], columns: ColSel = numeric(),
                      side = sRight, missingText = "—"): Tabella =
   ## Adds a column for each aggregate in `fns`, summing up `columns` across each row:
-  ## `summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])`, at the
+  ## `summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])`, or as
+  ## a block (`summaryColumns:` then `total: agg.sum`, see `tabella`), at the
   ## right of the table (or at the left of the data with `side = sLeft`). The new column is
   ## formatted like the first column it sums up, or by `fmt`; summary rows sum it up like any
   ## other column, so a table of totals gets its grand total.
@@ -1028,3 +1047,138 @@ proc colsAlignDecimal*(t: sink Tabella, columns: ColSel = numeric(), decMark = "
       result.decimalMarks.add mark
     for c in result.boxhead.mitems:
       if c.name == n: c.align = alRight
+
+# ------------------------------------------------------------------------- rotated labels
+
+proc colsLabelRotate*(t: sink Tabella, columns: ColSel = everything(), dir = "sideways-lr"): Tabella =
+  ## Turns the labels of `columns` on their side, for narrow columns: read from the bottom up
+  ## (`"sideways-lr"`) or from the top down (`"sideways-rl"`). HTML only: text and Markdown keep
+  ## the labels as they are.
+  let css = case dir
+            of "sideways-lr": "writing-mode: vertical-rl; transform: rotate(180deg); text-align: left; vertical-align: middle"
+            of "sideways-rl": "writing-mode: vertical-rl; text-align: left; vertical-align: middle"
+            else: raise newException(ValueError, "dir is \"sideways-lr\" or \"sideways-rl\", not " & dir.escape)
+  result = t
+  let names = columns.resolve(result.data).filterIt(it != result.rownameCol and it != result.groupnameCol)
+  result.styles.add StyleRule(target: Target(kind: lkColumnLabels, names: names), style: style.css(css))
+
+# ---------------------------------------------------------------- styles from the data
+
+const fromColumnMark = "\x1Bfrom-column:"
+
+func fromColumn*(column: string, naValue = ""): string =
+  ## A style value taken, for each cell, from `column` of the same row:
+  ## `tabStyle(style.fill(fromColumn("colour")), loc.body("name"))`. A missing value is
+  ## `naValue` ("" leaves that property out). Works in any style for body and stub cells.
+  fromColumnMark & column & "\x1F" & naValue
+
+proc perCell(t: Tabella, st: CellStyle, row: int): CellStyle =
+  ## `st` with every `fromColumn` value read from `row`.
+  for (k, v) in st.css:
+    if v.startsWith(fromColumnMark):
+      let parts = v[fromColumnMark.len .. ^1].split('\x1F', 1)
+      if not t.data.hasColumn(parts[0]):
+        raise newException(KeyError, "fromColumn: no column " & parts[0].escape)
+      let x = t.data[parts[0], row]
+      let s = if x.isNull: parts[1] else: $x
+      if s.len > 0: result.css.add (k, s)
+    else: result.css.add (k, v)
+
+func hasFromColumn(st: CellStyle): bool = st.css.anyIt(it[1].startsWith(fromColumnMark))
+
+proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target) =
+  if st.hasFromColumn and target.kind in {lkBody, lkStub}:
+    for (i, n) in target.cells:
+      t.styles.add StyleRule(target: Target(kind: target.kind, cells: @[(i, n)]), style: t.perCell(st, i))
+  elif st.hasFromColumn:
+    raise newException(ValueError, "fromColumn works in loc.body and loc.stub only")
+  else:
+    t.styles.add StyleRule(target: target, style: st)
+
+proc tabStyle*(t: sink Tabella, fn: proc (r: Row): CellStyle, locations: varargs[Loc]): Tabella =
+  ## Styles each body or stub cell at `locations` with a style computed from its row:
+  ## `tabStyle((r: Row) => (if r["moons"] > 10: style.fill("var(--x-soft)") else: CellStyle()), loc.body())`.
+  result = t
+  for l in locations:
+    let target = l.resolve(result)
+    if target.kind notin {lkBody, lkStub}:
+      raise newException(ValueError, "a style from a proc of the row works in loc.body and loc.stub only")
+    for (i, n) in target.cells:
+      let st = fn(Row(data: result.data, index: i))
+      if st.css.len > 0:
+        result.styles.add StyleRule(target: Target(kind: target.kind, cells: @[(i, n)]), style: st)
+
+proc tabStyleBody*(t: sink Tabella, style: CellStyle, columns: ColSel = everything(), rows = allRows(),
+                   values: openArray[string] = [], pattern = "", fn: proc (v: Value): bool = nil,
+                   targets = "cell"): Tabella =
+  ## Styles the body cells whose value is one of `values` (compared as text, or as numbers),
+  ## contains `pattern`, or makes `fn` true; `targets = "row"` styles their whole row, `"column"`
+  ## their whole column: `tabStyleBody(style.fill("var(--x-soft)"), values = ["Earth"])`.
+  if targets notin ["cell", "row", "column"]:
+    raise newException(ValueError, "targets is \"cell\", \"row\" or \"column\", not " & targets.escape)
+  if values.len == 0 and pattern.len == 0 and fn.isNil:
+    raise newException(ValueError, "tabStyleBody needs values, a pattern or fn")
+  result = t
+  let vals = @values
+  proc matches(v: Value): bool =
+    if v.isNull: return false
+    for s in vals:
+      if $v == s: return true
+      if v.isNumber:
+        try:
+          if v.toFloat == parseFloat(s): return true
+        except ValueError: discard
+    if pattern.len > 0 and pattern in $v: return true
+    if not fn.isNil and fn(v): return true
+  let names = columns.resolve(result.data).filterIt(it != result.rownameCol)
+  let all = result.data.names.filterIt(it != result.rownameCol and it != result.groupnameCol)
+  let ix = rows.resolve(result.data)
+  var cells: seq[(int, string)]
+  for i in ix:
+    for n in names:
+      if not matches(result.data[n, i]): continue
+      case targets
+      of "cell": cells.add (i, n)
+      of "row":
+        for m in all: cells.add (i, m)
+      else:
+        for j in 0 ..< result.data.nrows: cells.add (j, n)
+  var seen: seq[(int, string)]
+  for c in cells:
+    if c notin seen: seen.add c
+  if seen.len > 0:
+    result.tabStyleCells(style, Target(kind: lkBody, cells: seen))
+
+# --------------------------------------------------------------------------------- preview
+
+proc initTabellaPreview*(data: TableData, topN = 5, bottomN = 1, inclRownums = true): Tabella =
+  ## A preview of a big table: its first `topN` rows, a row that says which rows are left out
+  ## ("6..99"), and its last `bottomN` rows, numbered from 1 in the stub (`inclRownums`), as
+  ## gt's `gt_preview()`. Written `tabellaPreview(data, topN = 3)`, with a body if you like.
+  let n = data.nrows
+  var keep: seq[int]
+  if n <= topN + bottomN + 1:
+    for i in 0 ..< n: keep.add i
+  else:
+    for i in 0 ..< topN: keep.add i
+    keep.add -1
+    for i in n - bottomN ..< n: keep.add i
+  const stub = "\x1Fpreview-row"
+  var cols: seq[(string, seq[Value])]
+  if inclRownums or keep.contains(-1):
+    var nums: seq[Value]
+    for i in keep:
+      nums.add(if i >= 0: (if inclRownums: toValue($(i + 1)) else: toValue(""))
+               else: toValue($(topN + 1) & ".." & $(n - bottomN)))
+    cols.add (stub, nums)
+  for c in data.columns:
+    var vs: seq[Value]
+    for i in keep: vs.add(if i >= 0: c.values[i] else: null())
+    cols.add (c.name, vs)
+  result = initTabella(toTableData(cols), rownameCol = if cols.len > 0 and cols[0][0] == stub: stub else: "")
+  let gap = keep.find(-1)
+  if gap >= 0:
+    result.styles.add StyleRule(target: Target(kind: lkBody, cells: data.names.mapIt((gap, it))),
+                                style: style.fill("rgba(128, 128, 128, 0.12)"))
+    result.styles.add StyleRule(target: Target(kind: lkStub, cells: @[(gap, stub)]),
+                                style: style.fill("rgba(128, 128, 128, 0.12)") & style.text(size = "smaller"))

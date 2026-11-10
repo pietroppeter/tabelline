@@ -24,6 +24,11 @@ proc tableCss*(id: string, o: TabOptions): string =
   let stubBg = if o.stubBackgroundColor.len > 0: o.stubBackgroundColor else: "transparent"
   let summaryBg = if o.summaryRowBackgroundColor.len > 0: o.summaryRowBackgroundColor else: "transparent"
   let grandBg = if o.grandSummaryRowBackgroundColor.len > 0: o.grandSummaryRowBackgroundColor else: "transparent"
+  let footBg = if o.footnotesBackgroundColor.len > 0: o.footnotesBackgroundColor else: o.tableBackgroundColor
+  let sourceBg = if o.sourceNotesBackgroundColor.len > 0: o.sourceNotesBackgroundColor else: o.tableBackgroundColor
+  let groupTop = if o.rowGroupBorderTopColor.len > 0: o.rowGroupBorderTopColor else: o.rowGroupBorderColor
+  let groupBottom = if o.rowGroupBorderBottomColor.len > 0: o.rowGroupBorderBottomColor else: o.rowGroupBorderColor
+  let stubBorder = if o.stubBorderColor.len > 0: o.stubBorderColor else: o.tableBodyHlinesColor
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel).
     bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
@@ -31,40 +36,57 @@ proc tableCss*(id: string, o: TabOptions): string =
   let labelsColor = if onDark(o.columnLabelsBackgroundColor): "#FFFFFF" else: o.tableFontColor
   let i = "#" & id
   let vlines = if o.tableBodyVlinesColor.len == 0: ""
-               else: i & " .tb_row, " & i & " .tb_col_headings th { border-left: 1px solid " &
-                     o.tableBodyVlinesColor & "; border-right: 1px solid " & o.tableBodyVlinesColor & "; }\n"
+               else: i & " .tb_row, " & i & " .tb_col_headings th { border-left: " & o.tableBodyVlinesWidth & " " &
+                     o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor & "; border-right: " &
+                     o.tableBodyVlinesWidth & " " & o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor & "; }\n"
   var css = fmt("""
-[i] { overflow-x: [o.containerOverflowX]; }
+[i] { overflow-x: [o.containerOverflowX]; overflow-y: [o.containerOverflowY]; width: [o.containerWidth];
+  height: [o.containerHeight]; padding: [o.containerPaddingY] [o.containerPaddingX]; }
 [i] table, [i] thead, [i] tbody, [i] tfoot, [i] tr, [i] td, [i] th { border-style: none; }
 [i] .tb_table { display: table; border-collapse: collapse; line-height: normal;
   margin-left: [o.tableMarginLeft]; margin-right: [o.tableMarginRight]; width: [o.tableWidth];
   color: [o.tableFontColor]; font-family: [o.tableFontNames]; font-size: [o.tableFontSize];
-  background-color: [o.tableBackgroundColor];
+  background-color: [o.tableBackgroundColor]; table-layout: [o.tableLayout];
+  font-weight: [o.tableFontWeight]; font-style: [o.tableFontStyle];
   border-top: [o.tableBorderTopWidth] [o.tableBorderTopStyle] [o.tableBorderTopColor];
   border-bottom: [o.tableBorderBottomWidth] [o.tableBorderBottomStyle] [o.tableBorderBottomColor];
   border-left: [o.tableBorderLeftWidth] [o.tableBorderLeftStyle] [o.tableBorderLeftColor];
   border-right: [o.tableBorderRightWidth] [o.tableBorderRightStyle] [o.tableBorderRightColor]; }
 [i] .tb_caption { caption-side: top; padding: 4px 5px; color: [o.tableFontColor]; font-style: italic; }
 [i] .tb_heading { background-color: [headingBg]; text-align: [o.headingAlign]; color: [headingColor]; }
+[i] .tb_heading th { border-left: [o.headingBorderLrWidth] [o.headingBorderLrStyle] [o.headingBorderLrColor];
+  border-right: [o.headingBorderLrWidth] [o.headingBorderLrStyle] [o.headingBorderLrColor]; }
 [i] .tb_title { font-size: [o.headingTitleFontSize]; font-weight: [o.headingTitleFontWeight];
   padding: [o.headingPadding] [o.headingPaddingHorizontal]; }
 [i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; font-weight: [o.headingSubtitleFontWeight]; padding: 0 [o.headingPaddingHorizontal] [o.headingPadding] [o.headingPaddingHorizontal]; }
-[i] .tb_heading_last { border-bottom: 2px solid [o.headingBorderBottomColor]; }
+[i] .tb_heading_last { border-bottom: [o.headingBorderBottomWidth] [o.headingBorderBottomStyle] [o.headingBorderBottomColor]; }
 [i] .tb_col_headings th { background-color: [labelsBg]; color: [labelsColor];
   font-size: [o.columnLabelsFontSize]; font-weight: [o.columnLabelsFontWeight];
   text-transform: [o.columnLabelsTextTransform]; vertical-align: bottom;
   padding: [o.columnLabelsPadding] [o.columnLabelsPaddingHorizontal]; overflow-x: hidden; }
-[i] .tb_col_headings_last th { border-bottom: [o.columnLabelsBorderBottomWidth] solid [o.columnLabelsBorderBottomColor]; }
+[i] .tb_col_headings_last th { border-bottom: [o.columnLabelsBorderBottomWidth] [o.columnLabelsBorderBottomStyle] [o.columnLabelsBorderBottomColor]; }
+[i] .tb_heading + .tb_col_headings th, [i] thead > .tb_col_headings:first-child th {
+  border-top: [o.columnLabelsBorderTopWidth] [o.columnLabelsBorderTopStyle] [o.columnLabelsBorderTopColor]; }
+[i] .tb_col_headings th:first-child { border-left: [o.columnLabelsBorderLrWidth] [o.columnLabelsBorderLrStyle] [o.columnLabelsBorderLrColor]; }
+[i] .tb_col_headings th:last-child { border-right: [o.columnLabelsBorderLrWidth] [o.columnLabelsBorderLrStyle] [o.columnLabelsBorderLrColor]; }
+[i] .tb_col_headings th + th { border-left: [o.columnLabelsVlinesWidth] [o.columnLabelsVlinesStyle] [o.columnLabelsVlinesColor]; }
 [i] .tb_spanner { display: inline-block; width: 100%; padding-bottom: 4px;
   border-bottom: 2px solid [o.columnLabelsBorderBottomColor]; }
 [i] .tb_spanner_empty { border-bottom: none; }
 [i] .tb_group_heading { background-color: [groupBg]; font-weight: [o.rowGroupFontWeight];
-  padding: 8px 5px; text-align: left; border-top: 2px solid [o.rowGroupBorderColor];
-  border-bottom: 2px solid [o.rowGroupBorderColor]; }
+  font-size: [o.rowGroupFontSize]; text-transform: [o.rowGroupTextTransform];
+  padding: [o.rowGroupPadding] [o.rowGroupPaddingHorizontal]; text-align: left;
+  border-top: [o.rowGroupBorderTopWidth] [o.rowGroupBorderTopStyle] [groupTop];
+  border-bottom: [o.rowGroupBorderBottomWidth] [o.rowGroupBorderBottomStyle] [groupBottom];
+  border-left: [o.rowGroupBorderLeftWidth] [o.rowGroupBorderLeftStyle] [o.rowGroupBorderLeftColor];
+  border-right: [o.rowGroupBorderRightWidth] [o.rowGroupBorderRightStyle] [o.rowGroupBorderRightColor]; }
 [i] .tb_row { padding: [o.dataRowPadding] [o.dataRowPaddingHorizontal]; margin: 10px;
-  border-top: 1px solid [o.tableBodyHlinesColor]; vertical-align: middle; overflow-x: hidden; }
+  border-top: [o.tableBodyHlinesWidth] [o.tableBodyHlinesStyle] [o.tableBodyHlinesColor]; vertical-align: middle; overflow-x: hidden; }
+[i] tbody { border-top: [o.tableBodyBorderTopWidth] [o.tableBodyBorderTopStyle] [o.tableBodyBorderTopColor];
+  border-bottom: [o.tableBodyBorderBottomWidth] [o.tableBodyBorderBottomStyle] [o.tableBodyBorderBottomColor]; }
 [i] .tb_stub { background-color: [stubBg]; font-weight: [o.stubFontWeight]; text-align: left;
-  border-right: 2px solid [o.tableBodyHlinesColor]; }
+  font-size: [o.stubFontSize]; text-transform: [o.stubTextTransform];
+  border-right: [o.stubBorderWidth] [o.stubBorderStyle] [stubBorder]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
 [i] .tb_indent_1 { text-indent: 1em; } [i] .tb_indent_2 { text-indent: 2em; } [i] .tb_indent_3 { text-indent: 3em; }
 [i] .tb_indent_4 { text-indent: 4em; } [i] .tb_indent_5 { text-indent: 5em; }
@@ -83,9 +105,16 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_first_grand_summary_row { border-top: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
 [i] .tb_last_grand_summary_row_top { border-bottom: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
 [i] .tb_left { text-align: left; } [i] .tb_center { text-align: center; } [i] .tb_right { text-align: right; font-variant-numeric: tabular-nums; }
-[i] .tb_footnotes, [i] .tb_sourcenotes { color: [o.tableFontColor]; background-color: [o.tableBackgroundColor]; }
-[i] .tb_footnote { font-size: [o.footnotesFontSize]; padding: 4px 5px; text-align: left; }
-[i] .tb_sourcenote { font-size: [o.sourceNotesFontSize]; padding: 4px 5px; text-align: left; }
+[i] .tb_footnotes { color: [o.tableFontColor]; background-color: [footBg]; }
+[i] .tb_sourcenotes { color: [o.tableFontColor]; background-color: [sourceBg]; }
+[i] .tb_footnote { font-size: [o.footnotesFontSize]; padding: [o.footnotesPadding] [o.footnotesPaddingHorizontal]; text-align: left;
+  border-left: [o.footnotesBorderLrWidth] [o.footnotesBorderLrStyle] [o.footnotesBorderLrColor];
+  border-right: [o.footnotesBorderLrWidth] [o.footnotesBorderLrStyle] [o.footnotesBorderLrColor]; }
+[i] .tb_footnotes:not(:has(+ .tb_footnotes)) .tb_footnote { border-bottom: [o.footnotesBorderBottomWidth] [o.footnotesBorderBottomStyle] [o.footnotesBorderBottomColor]; }
+[i] .tb_sourcenote { font-size: [o.sourceNotesFontSize]; padding: [o.sourceNotesPadding] [o.sourceNotesPaddingHorizontal]; text-align: left;
+  border-left: [o.sourceNotesBorderLrWidth] [o.sourceNotesBorderLrStyle] [o.sourceNotesBorderLrColor];
+  border-right: [o.sourceNotesBorderLrWidth] [o.sourceNotesBorderLrStyle] [o.sourceNotesBorderLrColor]; }
+[i] .tb_sourcenotes:last-child .tb_sourcenote { border-bottom: [o.sourceNotesBorderBottomWidth] [o.sourceNotesBorderBottomStyle] [o.sourceNotesBorderBottomColor]; }
 [i] tfoot tr:first-child td { padding-top: 8px; }
 [i] .tb_footnote_marks { font-size: 75%; vertical-align: 0.4em; font-weight: normal; font-style: normal; }
 """, '[', ']') & vlines

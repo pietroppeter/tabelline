@@ -5,20 +5,19 @@
 
 import std/[strutils, math, times, sequtils, strformat]
 from std/unicode import Rune, runes, runeLen, `$`
-import core, countries
+import core, countries, localize
+export localize
 
 # ----------------------------------------------------------------------------------- locales
 
 type Marks* = tuple[sep, dec: string]
 
 func localeMarks*(locale: string): Marks =
-  ## Digit group and decimal marks for a locale ("en", "it", "de", "fr", "ch", ...).
-  case locale.toLowerAscii.split({'-', '_'})[0]
-  of "", "en", "ja", "zh", "ko", "he", "th": (",", ".")
-  of "it", "de", "es", "nl", "da", "id", "tr", "el", "pt", "ro", "sl", "hr", "sr": (".", ",")
-  of "fr", "nb", "sv", "fi", "cs", "pl", "ru", "uk", "sk", "hu", "bg", "et", "lt", "lv": (" ", ",")
-  of "ch", "rm": ("’", ".")
-  else: (",", ".")
+  ## Digit group and decimal marks for a locale, from CLDR: `localeMarks("it")` is (".", ","),
+  ## `localeMarks("de-CH")` is ("'", "."), `localeMarks("fr")` is (" ", ",") with a narrow
+  ## no-break space. An unknown locale, or "", is "en".
+  let l = getLocale(locale)
+  (l.group, l.decimal)
 
 func escapeHtml*(s: string): string =
   s.multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"), ("\"", "&quot;"))
@@ -111,25 +110,38 @@ func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText): str
   if ctx == rcHtml: mant & " × 10<sup>" & (if ei < 0: "−" & $(-ei) else: $ei) & "</sup>"
   else: mant & " × 10" & superscript($ei)
 
-func formatPercent*(x: float, decimals = 1, scaleValues = true, decMark = ".", sepMark = ","): string =
-  formatNumber(if scaleValues: x * 100 else: x, decimals, sepMark = sepMark, decMark = decMark) & "%"
-
-const currencySymbols* = [("USD", "$"), ("EUR", "€"), ("GBP", "£"), ("JPY", "¥"), ("CHF", "CHF "),
-                          ("CNY", "¥"), ("INR", "₹"), ("BRL", "R$"), ("KRW", "₩"), ("ITL", "L. ")]
+func formatPercent*(x: float, decimals = 1, scaleValues = true, decMark = ".", sepMark = ",",
+                    pattern = "#,##0%", percentSign = "%"): string =
+  ## `formatPercent(0.123)` is "12.3%"; `pattern` is a locale's (`getLocale("fr").percentPattern`
+  ## is "#,##0 %", with a no-break space).
+  let (pre, suf) = splitPattern(pattern)
+  let n = formatNumber(if scaleValues: x * 100 else: x, decimals, sepMark = sepMark, decMark = decMark)
+  let sign = if n.startsWith("−"): "−" else: ""
+  sign & pre.replace("%", percentSign) & n[sign.len .. ^1] & suf.replace("%", percentSign)
 
 func currencySymbol*(code: string): string =
-  for (c, s) in currencySymbols:
-    if c == code.toUpperAscii: return s
-  code
+  ## The symbol of an ISO 4217 code, from CLDR (English): "EUR" is "€", "CHF" is "CHF", "CAD"
+  ## is "CA$". An unknown code is its own symbol.
+  currencyInfo(code).symbol
 
 func formatCurrency*(x: float, currency = "USD", decimals = -1, sepMark = ",", decMark = ".",
-                     placement = "left"): string =
-  ## `formatCurrency(49.95, "EUR")` is "€49.95"; `decimals = -1` picks 0 for JPY and ITL, else 2.
-  let d = if decimals >= 0: decimals elif currency.toUpperAscii in ["JPY", "KRW", "ITL"]: 0 else: 2
-  let sym = currencySymbol(currency)
+                     placement = "", pattern = "¤#,##0.00", accounting = false,
+                     useSubunits = true): string =
+  ## `formatCurrency(49.95, "EUR")` is "€49.95". `decimals = -1` takes the currency's (0 for JPY,
+  ## 3 for BHD, 2 for most); `useSubunits = false` drops them. The symbol goes where `pattern`
+  ## puts it (a locale's `currencyPattern`: "#,##0.00 ¤" in Italian), or `placement` "left" or
+  ## "right". `accounting` writes a negative amount in parentheses.
+  let info = currencyInfo(currency)
+  let d = if not useSubunits: 0 elif decimals >= 0: decimals else: info.digits
   let n = formatNumber(abs(x), d, sepMark = sepMark, decMark = decMark)
-  let sign = if x < 0: "−" else: ""
-  if placement == "right": sign & n & " " & sym.strip else: sign & sym & n
+  let negative = x < 0 and n.anyIt(it in {'1'..'9'})
+  let p = case placement
+          of "left": "¤#,##0.00"
+          of "right": "#,##0.00\u00A0¤"
+          else: pattern
+  result = withCurrency(n, info.symbol, p)
+  if negative:
+    result = if accounting: "(" & result & ")" else: "−" & result
 
 func formatRoman*(n: int, upper = true): string =
   ## `formatRoman(2026)` is "MMXXVI".
@@ -142,22 +154,42 @@ func formatRoman*(n: int, upper = true): string =
   if not upper: result = result.toLowerAscii
 
 const dateStyles* = [
-  ("iso", "yyyy-MM-dd"), ("wday_month_day_year", "dddd, MMMM d, yyyy"), ("month_day_year", "MMMM d, yyyy"),
-  ("day_month_year", "d MMMM yyyy"), ("day_m_year", "d MMM yyyy"), ("m_day_year", "MMM d, yyyy"),
-  ("year_month", "MMMM yyyy"), ("dd/mm/yyyy", "dd/MM/yyyy"), ("mm/dd/yyyy", "MM/dd/yyyy")]
+  ("iso", "y-MM-dd"), ("wday_month_day_year", "EEEE, MMMM d, y"), ("wd_m_day_year", "EEE, MMM d, y"),
+  ("wday_day_month_year", "EEEE d MMMM y"), ("month_day_year", "MMMM d, y"), ("m_day_year", "MMM d, y"),
+  ("day_m_year", "d MMM y"), ("day_month_year", "d MMMM y"), ("day_month", "d MMMM"), ("day_m", "d MMM"),
+  ("year", "y"), ("month", "LLLL"), ("day", "dd"), ("year.mn.day", "y/MM/dd"), ("y.mn.day", "yy/MM/dd"),
+  ("year_week", "Y-'W'ww"), ("year_quarter", "y-'Q'Q"), ("year_month", "LLLL y"),
+  ("dd/mm/yyyy", "dd/MM/y"), ("mm/dd/yyyy", "MM/dd/y")]
+  ## gt's fixed date styles, as CLDR patterns, with names in the locale's language. The flexible
+  ## ones (`dateSkeletons`: "yMMMd", "yMMMEd", ...) also follow the locale's order.
 
-proc formatDate*(s: string, dateStyle = "iso"): string =
-  ## An ISO date ("2015-01-15", or the date part of a datetime) in one of `dateStyles`, or in any
-  ## std/times pattern. Text that is not a date is returned as is.
-  var pattern = dateStyle
-  for (name, p) in dateStyles:
-    if name == dateStyle: pattern = p
+func parseIsoDate(s: string): (int, int, int, bool) =
+  ## Year, month and day of "2015-01-15" (or the date part of a datetime).
+  let t = s.strip
+  if t.len < 10 or t[4] != '-' or t[7] != '-': return (0, 0, 0, false)
   try:
-    let d = parse(s.strip[0 ..< min(10, s.strip.len)], "yyyy-MM-dd")
-    d.format(pattern)
-  except CatchableError:
-    s
+    let (y, m, d) = (parseInt(t[0 ..< 4]), parseInt(t[5 ..< 7]), parseInt(t[8 ..< 10]))
+    if m notin 1..12 or d notin 1..getDaysInMonth(Month(m), y): return (0, 0, 0, false)
+    (y, m, d, true)
+  except ValueError: (0, 0, 0, false)
 
+proc formatDate*(s: string, dateStyle = "iso", locale = ""): string =
+  ## An ISO date ("2015-01-15", or the date part of a datetime) in one of `dateStyles`, a
+  ## flexible style of `dateSkeletons` ("yMMMd"), or a std/times pattern (English names), in the
+  ## language of `locale`: `formatDate("2015-01-15", "day_month_year", "it")` is "15 gennaio 2015".
+  ## Text that is not a date is returned as is.
+  let (y, m, d, ok) = parseIsoDate(s)
+  if not ok: return s
+  let l = getLocale(locale)
+  var pattern = l.skeleton(dateStyle)
+  if pattern.len == 0:
+    for (name, p) in dateStyles:
+      if name == dateStyle: pattern = p
+  let weekday = (ord(getDayOfWeek(MonthdayRange(d), Month(m), y)) + 1) mod 7
+  if pattern.len > 0:
+    return formatPattern(l, pattern, y, m, d, weekday)
+  try: dateTime(y, Month(m), MonthdayRange(d), zone = utc()).format(dateStyle)
+  except CatchableError: s
 
 func formatInteger*(x: float, useSeps = true, sepMark = ","): string =
   ## `formatInteger(1234.6)` is "1,235".
@@ -242,7 +274,8 @@ func formatSpelledNum*(n: int): string =
   if n mod 10 > 0: result.add "-" & ones[n mod 10]
 
 const timeStyles* = ["iso", "iso-short", "h_m_s_p", "h_m_p", "h_p", "h_m", "h_m_s"]
-  ## Named time styles: 14:35:00, 14:35, 2:35:00 PM, 2:35 PM, 2 PM, 14:35, 14:35:00.
+  ## Named time styles: 14:35:00, 14:35, 2:35:00 PM, 2:35 PM, 2 PM, 14:35, 14:35:00. The
+  ## flexible ones (`timeSkeletons`: "Hm", "hm", ...) follow the locale.
 
 func splitDatetime(s: string): (string, string) =
   ## The date and the time of "2026-11-07T14:35:00", "2026-11-07 14:35" or "14:35".
@@ -264,28 +297,33 @@ func parseClock(s: string): (int, int, int, bool) =
     (h, m, sec, true)
   except ValueError: (0, 0, 0, false)
 
-func formatTime*(s: string, timeStyle = "iso"): string =
-  ## A time ("14:35", "14:35:07", or the time of an ISO datetime) in one of `timeStyles`. Text
-  ## that is not a time is returned as is.
+func formatTime*(s: string, timeStyle = "iso", locale = ""): string =
+  ## A time ("14:35", "14:35:07", or the time of an ISO datetime) in one of `timeStyles` or
+  ## `timeSkeletons`, with the locale's AM and PM: `formatTime("14:35", "hm", "it")` is "2:35 PM".
+  ## Text that is not a time is returned as is.
   let (h, m, sec, ok) = parseClock(splitDatetime(s)[1])
   if not ok: return s
+  let l = getLocale(locale)
   let h12 = (if h mod 12 == 0: 12 else: h mod 12)
-  let ap = if h < 12: "AM" else: "PM"
+  let ap = if h < 12: l.am else: l.pm
   case timeStyle
   of "iso", "h_m_s": &"{h:02}:{m:02}:{sec:02}"
   of "iso-short", "h_m": &"{h:02}:{m:02}"
   of "h_m_s_p": &"{h12}:{m:02}:{sec:02} {ap}"
   of "h_m_p": &"{h12}:{m:02} {ap}"
   of "h_p": &"{h12} {ap}"
-  else: raise newException(ValueError, "unknown time style " & timeStyle.escape)
+  else:
+    let p = if timeStyle in timeSkeletons: l.skeleton(timeStyle) else: ""
+    if p.len == 0: raise newException(ValueError, "unknown time style " & timeStyle.escape)
+    formatPattern(l, p, hour = h, minute = m, second = sec)
 
-proc formatDatetime*(s: string, dateStyle = "iso", timeStyle = "iso", sep = " "): string =
+proc formatDatetime*(s: string, dateStyle = "iso", timeStyle = "iso", sep = " ", locale = ""): string =
   ## An ISO datetime ("2026-11-07T14:35:00" or "2026-11-07 14:35") as a date and a time, in the
   ## date and time styles; a date without a time shows only the date.
   let (d, t) = splitDatetime(s)
   if d.len == 0: return s
-  result = formatDate(d, dateStyle)
-  if t.len > 0 and parseClock(t)[3]: result.add sep & formatTime(t, timeStyle)
+  result = formatDate(d, dateStyle, locale)
+  if t.len > 0 and parseClock(t)[3]: result.add sep & formatTime(t, timeStyle, locale)
 
 const durationUnits = [("weeks", 604800.0, "w", "week"), ("days", 86400.0, "d", "day"),
                        ("hours", 3600.0, "h", "hour"), ("minutes", 60.0, "m", "minute"),
@@ -478,18 +516,27 @@ proc fmtInteger*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
 
 proc fmtPercent*(t: sink Tabella, columns: ColSel, rows = allRows(), decimals = 1, scaleValues = true,
                  locale = ""): Tabella =
-  ## Fractions as percentages: 0.123 is "12.3%" (`scaleValues = false` for values already in %).
+  ## Fractions as percentages: 0.123 is "12.3%" (`scaleValues = false` for values already in %),
+  ## "12,3 %" in French.
   let m = t.marksFor(locale, "", "")
+  let l = getLocale(if locale.len > 0: locale else: t.locale)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if not v.isNumber: return escapeHtml($v)
-    formatPercent(v.toFloat, decimals, scaleValues, m.dec, m.sep), rows)
+    formatPercent(v.toFloat, decimals, scaleValues, m.dec, m.sep, l.percentPattern, l.percentSign), rows)
 
 proc fmtCurrency*(t: sink Tabella, columns: ColSel, rows = allRows(), currency = "USD", decimals = -1,
-                  placement = "left", locale = ""): Tabella =
+                  placement = "", accounting = false, useSubunits = true, locale = ""): Tabella =
+  ## Numbers as amounts of a currency (any ISO 4217 code), with its symbol and its decimals, in the
+  ## locale's way: "€49.95" in English, "49,95 €" in Italian. `placement` "left" or "right"
+  ## puts the symbol there whatever the locale; `accounting` writes negative amounts in parentheses.
   let m = t.marksFor(locale, "", "")
+  let l = getLocale(if locale.len > 0: locale else: t.locale)
+  if placement notin ["", "left", "right"]:
+    raise newException(ValueError, "placement is \"left\" or \"right\", not " & placement.escape)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if not v.isNumber: return escapeHtml($v)
-    escapeHtml(formatCurrency(v.toFloat, currency, decimals, m.sep, m.dec, placement)), rows)
+    escapeHtml(formatCurrency(v.toFloat, currency, decimals, m.sep, m.dec, placement,
+                              l.currencyPattern, accounting, useSubunits)), rows)
 
 proc fmtScientific*(t: sink Tabella, columns: ColSel, rows = allRows(), decimals = 2, locale = ""): Tabella =
   let m = t.marksFor(locale, "", "")
@@ -502,10 +549,12 @@ proc fmtRoman*(t: sink Tabella, columns: ColSel, rows = allRows(), upper = true)
     if not v.isNumber: return escapeHtml($v)
     formatRoman(int(round(v.toFloat)), upper), rows)
 
-proc fmtDate*(t: sink Tabella, columns: ColSel, rows = allRows(), dateStyle = "iso"): Tabella =
-  ## ISO date strings in a `dateStyles` style ("month_day_year", ...) or a std/times pattern.
+proc fmtDate*(t: sink Tabella, columns: ColSel, rows = allRows(), dateStyle = "iso", locale = ""): Tabella =
+  ## ISO date strings in a `dateStyles` style ("month_day_year", ...), a flexible style
+  ## ("yMMMd"), or a std/times pattern, in the locale's language.
+  let loc = if locale.len > 0: locale else: t.locale
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    escapeHtml(formatDate($v, dateStyle)), rows)
+    escapeHtml(formatDate($v, dateStyle, loc)), rows)
 
 proc fmtMarkdown*(t: sink Tabella, columns: ColSel, rows = allRows()): Tabella =
   ## Cell text as Markdown (inline: emphasis, code, links).
@@ -575,18 +624,20 @@ proc fmtSpelledNum*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows
     if not v.isNumber: return escapeHtml($v)
     formatSpelledNum(int(round(v.toFloat))), rows)
 
-proc fmtTime*(t: sink Tabella, columns: ColSel, rows = allRows(), timeStyle = "iso"): Tabella =
-  ## Times ("14:35:00", or the time of a datetime) in one of `timeStyles`.
+proc fmtTime*(t: sink Tabella, columns: ColSel, rows = allRows(), timeStyle = "iso", locale = ""): Tabella =
+  ## Times ("14:35:00", or the time of a datetime) in one of `timeStyles` or `timeSkeletons`.
+  let loc = if locale.len > 0: locale else: t.locale
   discard formatTime("00:00", timeStyle)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    escapeHtml(formatTime($v, timeStyle)), rows)
+    escapeHtml(formatTime($v, timeStyle, loc)), rows)
 
 proc fmtDatetime*(t: sink Tabella, columns: ColSel, rows = allRows(), dateStyle = "iso", timeStyle = "iso",
-                  sep = " "): Tabella =
+                  sep = " ", locale = ""): Tabella =
   ## ISO datetimes as a date and a time, each in its style.
+  let loc = if locale.len > 0: locale else: t.locale
   discard formatTime("00:00", timeStyle)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    escapeHtml(formatDatetime($v, dateStyle, timeStyle, sep)), rows)
+    escapeHtml(formatDatetime($v, dateStyle, timeStyle, sep, loc)), rows)
 
 proc fmtDuration*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), inputUnits = "seconds",
                   outputUnits: openArray[string] = [], durationStyle = "narrow", trimZeroUnits = true,
@@ -813,10 +864,6 @@ proc fmtCountry*(t: sink Tabella, columns: ColSel, rows = allRows(), pattern = "
     let s = formatCountry($v, sep).withPattern(pattern)
     if ctx == rcHtml: escapeHtml(s) else: s, rows)
 
-const autoCurrencies = ["usd", "eur", "gbp", "jpy", "chf", "cny", "inr", "brl", "krw", "aud", "cad",
-  "sek", "nok", "dkk", "pln", "czk", "huf", "mxn", "zar", "rub", "try", "nzd", "sgd", "hkd", "twd",
-  "thb", "idr", "myr", "php", "ils", "aed", "sar", "egp", "ngn", "kes", "ars", "clp", "cop", "pen"]
-
 func autoNumber(isInt, suf: bool, m: Marks): FormatFn =
   ## The format `fmtAuto` gives a numeric column (a proc of its own, so that each column's
   ## closure keeps its own `isInt`).
@@ -836,7 +883,7 @@ proc fmtAuto*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
               scope: openArray[string] = ["numbers", "currency"], lgNumPref = "sci", locale = ""): Tabella =
   ## A format for each column, from its values: numbers with as many decimals as they need (up
   ## to 3), very small or large ones in scientific notation (`lgNumPref = "suf"`: large ones
-  ## with a suffix, "12.3M"), and a currency when the column's name ends with its code
+  ## with a suffix, "12.3M"), and a currency when the column's name ends with an ISO 4217 code
   ## ("price_eur").
   result = t
   let m = result.marksFor(locale, "", "")
@@ -846,7 +893,7 @@ proc fmtAuto*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
     if not col.values.anyIt(it.isNumber): continue
     let lower = name.toLowerAscii
     let code = if lower.len > 4 and lower[^4] in {'_', '.'}: lower[^3 .. ^1] else: ""
-    if "currency" in sc and code in autoCurrencies:
+    if "currency" in sc and code.len == 3 and isCurrency(code):
       result = result.fmtCurrency(name, rows, currency = code.toUpperAscii, locale = locale)
       continue
     if "numbers" notin sc: continue

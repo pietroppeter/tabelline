@@ -43,7 +43,9 @@ block:
   ]
   let t = tabella(rows, rownameCol = "group"):
     tabHeader "0.2 in five groups"
-    colsLabel {"what": "what it adds", "status": "now"}
+    colsLabel:
+      what: "what it adds"
+      status: "now"
     tabStyle style.css("white-space: nowrap"), loc.stub()
     tabStyle style.text(weight = "bold"), loc.body("status", where(it["status"] == "built"))
     optCssTheme()
@@ -61,13 +63,13 @@ under each group, labelled in the stub, for each pair of a label and an aggregat
 nbCode:
   let moons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
     colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
-    summaryRows fns = {"total": agg.sum}
+    summaryRows:
+      total: agg.sum
     optCssTheme()
   nbTable moons
 
 nbNote("""
-`fns = {"total": agg.sum}` is a list of pairs: the label of the row and how to sum up a column.
-`columns` is not given, so every numeric column is summed up, here only `moons`.
+Under `summaryRows:` each line is a pair: the label of the row and how to sum up a column. It is the same call as `summaryRows fns = {"total": agg.sum}`, the list of pairs gt calls `fns`. `columns` is not given, so every numeric column is summed up, here only `moons`.
 """, nkCode)
 
 nbText: """
@@ -80,14 +82,18 @@ rule. Several aggregates give several rows:
 nbCode:
   let allMoons = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
     colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
-    summaryRows fns = {"total": agg.sum}
-    grandSummaryRows fns = {"all moons": agg.sum, "most": agg.max, "planets": agg.count}
+    summaryRows:
+      total: agg.sum
+    grandSummaryRows:
+      "all moons": agg.sum
+      most: agg.max
+      planets: agg.count
     optCssTheme()
   nbTable allMoons
 
 nbNote("""
 The aggregates are `agg.sum`, `agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count` and
-`agg.sd`. `aggregate(proc)` makes one from any proc of the column's values, such as the middle
+`agg.std`. `aggregate(proc)` makes one from any proc of the column's values, such as the middle
 value: `aggregate((vs: seq[Value]) => vs[vs.len div 2])`.
 """, nkCode)
 
@@ -105,15 +111,19 @@ nbCode:
     colsHide ["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"]
     fmtNumber "mass", decimals = 3, dropTrailingZeros = true
     fmtInteger "diameter"
-    summaryRows fns = {"total": agg.sum}, columns = "mass", missingText = ""
-    grandSummaryRows fns = {"mean": agg.mean}, fmt = (x: float) => formatNumber(x, decimals = 0)
+    summaryRows:
+      total: agg.sum
+      columns = "mass"
+      missingText = ""
+    grandSummaryRows:
+      mean: agg.mean
+      fmtNumber(decimals = 0)
     optCssTheme()
   nbTable sizes
 
 nbNote("""
 `missingText = ""` leaves the cells of the columns that are not summed up empty (gt writes a
-dash, and so does tabelline by default). The grand mean is formatted by `fmt`, a proc of a
-float, like Great Tables' `vals.fmt_*`.
+dash, and so does tabelline by default). A line `name = value` in a block is a named argument. The grand mean is formatted by the line `fmtNumber(decimals = 0)`: in a summary block it stands for `fmt = (x: float) => formatNumber(x, decimals = 0)`, a proc of a float, like Great Tables' `vals.fmt_*`.
 """, nkCode)
 
 nbText: """
@@ -127,6 +137,11 @@ Each choice says what gt (R) and Great Tables (Python) do.
   missing ones. *gt:* `fns = list(total = "sum")`, a name, a function or a formula. *Great
   Tables:* `fns = {"total": pl.col("mass").sum()}`, a Polars expression or a function of the
   data frame.
+- **Pairs as a block.** Inside `tabella(data): body`, `summaryRows:` takes its pairs one per
+  line, as every verb with a list of pairs does (`colsLabel:`, `colsWidth:`, `colsUnits:`,
+  `textCaseMatch:`, `summaryColumns:`, ...), with named arguments as `name = value` lines; the
+  pair form `fns = {"total": agg.sum}` makes the same call. The name `fns` is gt's and Great
+  Tables', and the block hides it. *gt:* a named list. *Great Tables:* a dict.
 - **The column's format by default.** A table where the totals look different from the rows
   above them is rarely what you want, so tabelline uses the last format of the column; `fmt` is
   a proc of a float. *gt:* unformatted unless `fmt = list(~ fmt_number(.))`. *Great Tables:*
@@ -208,8 +223,10 @@ nbCode:
     silver: [8, 10, 8, 10]
     bronze: [13, 5, 9, 6]
   let totals = tabella(medals, rownameCol = "country"):
-    summaryColumns fns = {"total": agg.sum}
-    grandSummaryRows fns = {"all": agg.sum}
+    summaryColumns:
+      total: agg.sum
+    grandSummaryRows:
+      all: agg.sum
     optCssTheme()
   nbTable totals
 
@@ -272,7 +289,9 @@ nbCode:
   let labelled = tabella(planets(), rownameCol = "planet"):
     colsHide everything()
     colsUnhide ["density", "gravity"]
-    colsLabel {"density": "density, {{kg/m^3}}", "gravity": "gravity, {{m s^-2}}"}
+    colsLabel:
+      density: "density, {{kg/m^3}}"
+      gravity: "gravity, {{m s^-2}}"
     optCssTheme()
   nbTable labelled
 
@@ -363,7 +382,9 @@ nbCode:
     fmtFlag "flag"
     fmtCountry "country"
     fmtBins "stay", fmt = x => formatNumber(x, 0)
-    colsLabel {"flag": "", "stay": "nights"}
+    colsLabel:
+      flag: ""
+      stay: "nights"
     optCssTheme()
   nbTable visits
 
@@ -400,9 +421,181 @@ nbText: """
 
 ## 4 · Every locale
 
-*Planned, PR 4.* Numbers, currencies and dates in the locales of CLDR, generated once into a
-committed Nim module, like the country names; rotated labels, more options, extracting the built table as data, a
-preview of a big table, body styles from a column, more datasets.
+### A number in another language
+
+The simplest thing a locale changes is the marks of a number: which character groups the
+thousands, which one starts the decimals. A table takes a locale, and every format follows it:
+"""
+
+nbCode:
+  let amounts = tableData:
+    n: [1234567.891, 0.5]
+    share: [0.256, 0.5]
+  let italian = tabella(amounts, locale = "it"):
+    fmtNumber "n", decimals = 2
+    fmtPercent "share"
+    optCssTheme()
+  nbTable italian
+
+nbText: """
+A format can also take a locale of its own, which wins over the table's. That is how one table
+can show the same number in four languages, one column each:
+"""
+
+nbCode:
+  let marks = tabella(amounts):
+    colsHide "share"
+    colsAdd "it", amounts["n"].values
+    colsAdd "de_CH", amounts["n"].values
+    colsAdd "fr", amounts["n"].values
+    fmtNumber "n", decimals = 2
+    fmtNumber "it", decimals = 2, locale = "it"
+    fmtNumber "de_CH", decimals = 2, locale = "de-CH"
+    fmtNumber "fr", decimals = 2, locale = "fr"
+    colsLabel:
+      n: "en"
+    optCssTheme()
+  nbTable marks
+
+nbNote("""
+`locale` is a tag of Unicode CLDR, in any case, with `-` or `_`. An unknown region falls back to its language (`"it-XX"` is `"it"`) and an unknown language to English. The French group mark is a narrow no-break space, as CLDR has it.
+""", nkCode)
+
+nbText: """
+### Money
+
+A currency adds a symbol, a number of decimals and a place for the symbol, which depends on the
+language, not on the currency: the euro goes before the amount in English and after it in
+Italian. Every code of ISO 4217 that CLDR knows (305 of them) has its symbol and its decimals:
+"""
+
+nbCode:
+  let prices = tableData:
+    item: ["espresso", "pizza", "refund"]
+    eur: [1.3, 7.04, -2.5]
+    jpy: [480, 1600, -300]
+    bhd: [0.6, 2.9, -0.8]
+  let money = tabella(prices, rownameCol = "item", locale = "it"):
+    fmtCurrency "eur", currency = "EUR"
+    fmtCurrency "jpy", currency = "JPY", accounting = true
+    fmtCurrency "bhd", currency = "BHD", placement = "left"
+    optCssTheme()
+  nbTable money
+
+nbNote("""
+The yen has no decimals and the Bahraini dinar three, as CLDR says. `accounting = true` writes a negative amount in brackets; `placement = "left"` puts the symbol first whatever the locale.
+""", nkCode)
+
+nbText: """
+### Dates in their own words
+
+A date needs more: the names of months and days, and an order. gt has two kinds of date style:
+fixed ones, with an order of their own and the names in the locale's language
+(`"day_month_year"`), and flexible ones, named by the parts they show (`"yMMMd"`: year, short
+month, day), which each language writes in its own order:
+"""
+
+nbCode:
+  type Way = object
+    locale, fixed, flexible, time: string
+  var ways: seq[Way]
+  for l in ["en", "it", "de", "ja", "ru"]:
+    ways.add Way(locale: l, fixed: formatDate("2026-11-07", "wday_day_month_year", l),
+                 flexible: formatDate("2026-11-07", "yMMMEd", l), time: formatTime("14:35", "hm", l))
+  let dates = tabella(ways, rownameCol = "locale"):
+    colsLabel:
+      fixed: "wday_day_month_year"
+      flexible: "yMMMEd"
+      time: "hm"
+    optCssTheme()
+  nbTable dates
+
+nbNote("""
+`formatDate` and `formatTime` are the plain functions under `fmtDate` and `fmtTime`; a table's `locale` reaches them through the verbs. The fixed style keeps its order in every language (so Japanese reads oddly); the flexible one is CLDR's own pattern for each locale.
+""", nkCode)
+
+nbText: """
+### Big tables, and tables as data
+
+The rest of the group is small tools that gt has and 0.1 did not. A long table can be previewed,
+its first and last rows with a row that names the rows left out; and a style can
+come from the data:
+"""
+
+nbCode:
+  let islands = tabellaPreview(isole(), topN = 5, bottomN = 1):
+    colsHide "city"
+    fmtInteger ["area", "population"]
+    tabStyleBody style.text(weight = "bold"), columns = "country", values = ["Italy"], targets = "row"
+    optCssTheme()
+  nbTable islands
+
+nbNote("""
+`tabellaPreview` takes a body of verbs, as `tabella` does. `tabStyleBody` styles the cells whose value is one of `values` (or contains a `pattern`, or makes a proc true), or here their whole row. `fromColumn("colour")` inside any style takes the value from another column of the same row: `style.fill(fromColumn("colour"))`.
+""", nkCode)
+
+nbText: """
+A label can lie on its side where many narrow columns have long names: a column of check marks
+needs one character, its label a word or two.
+"""
+
+nbCode:
+  let traits = tabella(planets(), rownameCol = "planet"):
+    colsAdd "rocky", proc (r: Row): Value = toValue(r["type"].s == "Terrestrial")
+    colsAdd "has moons", proc (r: Row): Value = toValue(r["moons"].i > 0)
+    colsAdd "has rings", proc (r: Row): Value = r["rings"]
+    colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "moons", "rings"]
+    fmtTf ["rocky", "has moons", "has rings"]
+    colsAlign alCenter, ["rocky", "has moons", "has rings"]
+    colsLabelRotate ["rocky", "has moons", "has rings"]
+    optCssTheme()
+  nbTable traits
+
+nbText: """
+Once built, a table can be read back as data: `extractCells` gives the shown text of some cells,
+`extractBody` the whole body and `extractSummary` the summary rows, each as a `TableData`:
+"""
+
+nbCode:
+  let back = tabella(extractSummary(sizes)):
+    optCssTheme()
+  nbTable back
+
+nbText: """
+The group also adds 72 of gt's options (142 in all: every rule of the heading, the labels, the
+groups, the body, the stub and the footer, with its style, width and colour), two datasets
+(`isole()`, the islands of the Mediterranean, and `citta()`, the cities of the European Union,
+from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `agg.std`.
+
+### Choices
+
+- **CLDR, generated once.** `tools/cldr.nim` reads CLDR 49 and writes `locales.nim` (657
+  locales) and `currencies.nim`, committed with the code: nothing is read when you build or run.
+  A locale keeps only what differs from its parent (`en-AU` from `en-001`, from `en`), and each
+  value is written once, however many locales share it (10,209 values for 27,287 fields), so the
+  data of 657 locales is 199 KB in a program (290 KB before the values were shared). *gt:* its
+  own tables from CLDR, 574 locales, in its internal data (576 KB compressed, with its other
+  tables). *Great Tables:* 574 locales for numbers, in a CSV of 256 KB; the names and patterns
+  of dates come from Babel, a package of about 10 MB.
+- **The symbol where the language puts it.** `fmtCurrency` follows the locale's pattern; `placement`
+  chooses. *gt:* the symbol on the left unless `placement = "right"`. *Great Tables:* the same.
+- **ISO codes.** `currency` is a code ("EUR"). *gt:* a code or a name ("euro"). *Great Tables:*
+  a code.
+- **Grouped by three.** CLDR's minimum grouping (Spanish writes 1234) and the Indian grouping
+  (12,34,567) are left out, so a column lines up. *gt:* the same, with `system = "ind"` for the
+  Indian one (not yet here). *Great Tables:* the same.
+- **Latin digits.** Every locale writes 0-9. *gt:* the same. *Great Tables:* the same.
+- **A style from the data is a value.** `fromColumn` goes inside any style, and a proc of the
+  row covers the rest. *gt:* `from_column(column, na_value, fn)`. *Great Tables:* `from_column`
+  too.
+- **`pattern` is plain text.** `tabStyleBody` looks for it in the value; a regular expression
+  would need PCRE. *gt:* a regular expression. *Great Tables:* no `tab_style_body`.
+- **The preview is a table.** `tabellaPreview` returns a `Tabella` and takes a body of verbs, as `tabella`.
+  *gt:* `gt_preview()` returns a gt table too. *Great Tables:* no preview.
+- **`agg.std`.** The name of Great Tables and Polars, short and plain. *gt:* `"sd"`, R's name.
+  *Great Tables:* `std`, through Polars.
+- **Not yet:** country names in other languages, `system = "ind"`, flexible styles with a time
+  zone (`"Hmv"`), hidden column labels, groups as a column, a multiline footer.
 
 ## 5 · Pictures in cells
 
@@ -443,6 +636,16 @@ as subscripts and a sign at the end as a charge. A superscript or a subscript is
 `<sub>` in HTML and Unicode in text (`toSuperscript`, `toSubscript`). Labels go through
 `renderLabel`, which formats what is between `{{` and `}}` and leaves the rest to the label's
 own kind of text (plain or Markdown).
+
+The locales of group 4 are three tables (`locales.nim`): every value once, in one long string
+(`localeValues`); for each locale, the fields it says differently from its parent, each a field
+number and a value number (`localeCellField`, `localeCellValue`); and where each locale's fields
+start (`localeTable`). `getLocale` finds the locale by binary search, fills the fields it does
+not have from its parents, and
+gives a `Locale` object: marks, patterns, names. A format reads it once, when its verb is
+called. Dates are written by `formatPattern`, which reads a CLDR pattern a letter at a time:
+`y` the year, `MMMM` the month's name, `LLLL` its name standing alone (Russian has both),
+`EEE` the short weekday, `h` and `a` the hour and AM or PM, and text between quotes as it is.
 """
 
 nbSave

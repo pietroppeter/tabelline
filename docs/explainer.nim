@@ -126,15 +126,15 @@ nbCode:
   type Verb = object
     family, verbs, does, tabelline: string
   let menu = @[
-    Verb(family: "Create", verbs: "gt(), gt_preview(), gt_group()", does: "a table from a dataframe", tabelline: "tabella(), tableData:"),
+    Verb(family: "Create", verbs: "gt(), gt_preview(), gt_group()", does: "a table from a dataframe", tabelline: "tabella(), tableData:, tabellaPreview()"),
     Verb(family: "Parts", verbs: "tab_header, tab_spanner, tab_stubhead, tab_row_group, tab_footnote, tab_source_note", does: "add the parts of a table", tabelline: "all six"),
     Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "28, and fmt() for your own"),
     Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "all five"),
-    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns"),
+    Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns"),
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
-    Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle, dataColor, textTransform"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (70), 14 opt*"),
-    Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word", does: "render", tabelline: "toHtml, toText, toMarkdown, save"),
+    Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (142), 14 opt*"),
+    Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, save, extractBody, extractCells, extractSummary"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
     tabHeader "The gt menu", "verb families of gt and Great Tables, and what tabelline has so far"
@@ -169,7 +169,7 @@ block:
 
 doAssert nFormats == 28, "the menu says 28 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
-doAssert nOptions == 70, "the menu says 70 options; there are " & $nOptions
+doAssert nOptions == 142, "the menu says 142 options; there are " & $nOptions
 
 
 nbText: """
@@ -554,7 +554,7 @@ nbTable tour
 
 nbText: """
 The formatters are plain functions too, for use anywhere (Great Tables calls them `vals`), and
-they know a few locales:
+they know every locale of Unicode CLDR (657 of them):
 """
 
 nbCode:
@@ -566,17 +566,24 @@ nbCode:
   echo formatCurrency(-49.95, "EUR")
   echo formatRoman(2026)
   echo formatDate("2026-11-07", "wday_month_day_year")
+  echo formatDate("2026-11-07", "yMMMEd", "it"), " · ", formatDate("2026-11-07", "yMMMEd", "ja")
 
 nbText: """
-A table can take a locale, so every number format follows it:
+A table can take a locale, so every format follows it: the marks of numbers, where a currency
+goes, the names of months and days, and the order of a date:
 """
 nbCode:
-  let italiano = tabella(exibble(), locale = "it")
-    .colsHide(["char", "fctr", "date", "time", "datetime", "row", "group"])
-    .fmtNumber("num", decimals = 2)
-    .fmtCurrency("currency", currency = "EUR")
-    .tabHeader("Numeri all'italiana")
+  let italiano = tabella(exibble(), locale = "it"):
+    colsHide ["char", "fctr", "time", "datetime", "row", "group"]
+    fmtNumber "num", decimals = 2
+    fmtCurrency "currency", currency = "EUR"
+    fmtDate "date", dateStyle = "yMMMEd"
+    tabHeader "Numeri all'italiana"
   nbTable italiano
+
+nbNote("""
+`locale = "it"` is read by each format: `fmtCurrency` writes the euro after the amount, as Italian does, and `fmtDate` takes gt's flexible style `"yMMMEd"` (year, short month, day, weekday) in the Italian order. The data is Unicode CLDR's, generated into a Nim module once and committed with the code.
+""", nkCode)
 
 nbText: """
 Units, chemical formulas and fractions are written as text, in gt's notation, and shown with
@@ -619,6 +626,27 @@ nbCode:
     .summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])
     .grandSummaryRows(fns = {"all": agg.sum}, columns = ["gold", "silver", "bronze", "total"])
     .optCssTheme()
+
+nbText: """
+## Big tables, and tables as data
+
+A long table can be previewed: its first and last rows, with a row that says which are left out.
+Styles can come from the data, from another column or from a test of each value; and the table,
+once built, can be read back:
+"""
+
+nbCode:
+  let cities = tabellaPreview(citta(), topN = 4, bottomN = 1):
+    fmtInteger "population"
+    fmtDate "counted", dateStyle = "yMMM"
+    tabStyleBody style.text(weight = "bold"), columns = "state", values = ["ITA"], targets = "row"
+    optCssTheme()
+  nbTable cities
+  echo extractCells(cities, "city").join(", ")
+
+nbNote("""
+`tabellaPreview` takes a body of verbs, as `tabella` does. `tabStyleBody` finds the cells whose value is "ITA" and styles their row; `extractCells` gives back what the reader sees, in order, as text.
+""", nkCode)
 
 nbText: """
 ## Nim sugar
@@ -671,6 +699,40 @@ nbCode:
       tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
     optCssTheme()
 nbTable squares
+
+nbText: """
+### Pairs as blocks
+
+Some verbs take a list of pairs: a label and its value, as `colsLabel`, `colsWidth`,
+`colsUnits`, `textCaseMatch`, `summaryRows`, `grandSummaryRows` and `summaryColumns` do. Inside
+`tabella(data): body`, each of them also takes an indented block, one pair per line, so the
+recipe reads as a list and not as punctuation:
+"""
+nbCode:
+  let sums = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide ["density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings", "moons"]
+    colsLabel:
+      mass: "mass, {{10^24 kg}}"
+      diameter: "diameter, {{km}}"
+    fmtNumber:
+      columns = "mass"
+      decimals = 2
+      dropTrailingZeros = true
+    fmtInteger "diameter"
+    summaryRows:
+      total: agg.sum
+      columns = "mass"
+      missingText = ""
+    grandSummaryRows:
+      mean: agg.mean
+      "the largest": agg.max
+      fmtNumber(decimals = 0)
+    optCssTheme()
+  nbTable sums
+
+nbNote("""
+Three kinds of line make a block. `label: value` is a pair, for the verbs above (a label with spaces is a string, `"the largest"`, or in backquotes). `name = value` is a named argument, in any verb (`columns = "mass"`). In the summary verbs, `fmtNumber(decimals = 0)`, or any `fmt*` that has a `format*` function, formats the summary rows: it stands for `fmt = (x: float) => formatNumber(x, decimals = 0)`. `tabOptions:` takes `name = value` lines too. The pair form stays: `summaryRows fns = {"total": agg.sum}` makes the same call, and is the one to use outside `tabella(data): body` or when the pairs are built by code. For data, `tableData:` is the block form of `toTableData`.
+""", nkCode)
 
 nbText: """
 ## Tables that follow the page
