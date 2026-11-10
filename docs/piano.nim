@@ -28,7 +28,7 @@ const releases*: seq[Release] = @[
   Release(version: "0.1", theme: "The basics", threads: @[
     t("build", "Build tabelline 0.1",
       "The 24 small groups proposed in the coverage map (formats, substitutions, caption, rm verbs, order of rows, options, locations), then the release.",
-      "post Designing tabelline 0.1; tag v0.1.0", "in review"),
+      "post Designing tabelline 0.1; tag v0.1.0", "done"),
     t("use", "Use it: Milano Cortina 2026",
       "The Winter Olympics and Paralympics of 2026 in tables, in three parts of three (the Games, the money, what stays), learning from Il Post, with data from Wikipedia and NOAA.",
       "story", "done", "stories/milano-cortina/"),

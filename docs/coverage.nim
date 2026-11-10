@@ -97,7 +97,7 @@ block:
 nbText: """
 ### A bigger 0.1: the basics, while they are cheap
 
-0.1.0 was not tagged yet, so it could still grow. These are the groups that took hours each, most
+Before 0.1.0 was tagged, it grew by these groups that took hours each, most
 of them a verb over machinery that was already there (formats, substitutions, options, locations),
 each one an OpenSpec change. With them, 0.1 has every basic of gt except the ones that need real
 work: summary rows and merged columns, which open 0.2. How they were built is in the devlog post

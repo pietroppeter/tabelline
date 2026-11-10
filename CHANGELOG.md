@@ -2,6 +2,37 @@
 
 ## Unreleased
 
+## 0.1.0 (10 Nov 2026)
+
+tabelline is great tables for Nim: display tables after R's gt and Python's Great Tables, in
+plain Nim, rendered as HTML, text and Markdown, and in nimib notebooks. 0.1 has the basics of gt,
+from the data to the footer. The API can still change before 1.0.
+
+- **Data**: `tableData:` (columns written in Nim, with `for`, `if` and computed names), any seq of
+  objects or tuples, `parseCsv` and `readCsv` (with `comment = "#"`), and the datasets `planets`,
+  `exibble` and `tavolaPitagorica`.
+- **The parts of gt**: header, column labels and spanners (also from `a.b` names), stub and stub
+  head, row groups, body, footnotes and source notes, caption; `rm*` verbs to take parts away.
+- **Formats**: 21, from `fmtNumber` and `fmtPercent` to `fmtNumberSi`, `fmtBytes`, `fmtDuration`
+  and `fmtMarkdown`, plus `fmt` with a proc of your own; all five substitutions; text transforms.
+- **Columns and rows**: labels, widths, alignment, hiding and moving columns, `rowOrder`,
+  `rowGroupOrder`.
+- **Styles**: `tabStyle` with `style.*` at every location of Great Tables but the summary ones,
+  and `dataColor`, which colours each column on its own.
+- **Options**: 56 options through `tabOptions`, 14 `opt*` presets, and `optCssTheme()`, which
+  takes every colour and the font from the page's CSS variables, so a table follows its page.
+- **Output**: `toHtml` (scoped CSS; `makePage = true` for a whole page), `save`, `echo t` as text,
+  `toMarkdown`, and `nbTable` for nimib.
+
+Not in 0.1, and planned: summary rows and merged columns (0.2), formats in every locale (0.3),
+nanoplots (0.4), images and other outputs (0.5); see the Roadmap and the Feature map. What
+tabelline has that gt does not is listed on the Feature map, under *Not from gt*.
+
+Docs: https://pietroppeter.github.io/tabelline/ (the Guide, the Book, the Milano Cortina 2026
+story, the Roadmap, the Feature map, the devlog and the specs).
+
+### Since the proof of concept
+
 - Docs: links to the Great Tables guide work again (Great Tables made its *Get Started* guide into
   its *User Guide*, with new page names), and so does the link to the 2024 Table Contest winners.
   `tools/links.nim` checks every link of the pages and the book, inside the site and out; CI runs
@@ -127,9 +158,9 @@ The 24 small groups of gt marked for 0.1 in the coverage map, one OpenSpec chang
   loses decorations that looked pressable; same-day devlog posts take a letter (A, B, C); a post
   on the palettes, to compare and try them (#6).
 
-## 0.1.0 (7 Nov 2026)
+### The proof of concept (7 Nov 2026)
 
-The first release: a proof of concept. The API will change.
+The first commits, a proof of concept (`fmtBar` and `optQuaderno` were removed before the release).
 
 - The table data (`Value`, `TableData`, `tableData:`, CSV), the table spec (`Tabella`) with the
   six parts of gt (header, column labels and spanners, stub and stub head, row groups, body,
