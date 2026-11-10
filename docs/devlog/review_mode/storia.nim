@@ -59,7 +59,7 @@ const storico* = [
              "itself; screenshots that open large; History instead of Clear all; Share opens a new " &
              "session, outside the project; *How it is built* from zero, starting from nimib.",
            comments: 27),
-  Versione(date: "10 Nov 2026", time: "05:30", what: "Round 6: reading is the default, and a **Review** button " &
+  Versione(date: "10 Nov 2026", time: "06:35", what: "Round 6: reading is the default, and a **Review** button " &
              "beside the version opens and closes the review mode; outside it, no bar and no marks; " &
              "no kinds: a replacement is written in the note; the comment the arrows stop on is open " &
              "in a sheet with no buttons, which saves as you type; a screenshot opens large with a tap; " &
@@ -73,7 +73,7 @@ const storico* = [
              "deserves a module of its own, in English, and a simpler call; the skill keeps versions and " &
              "rounds that only this post needs, and its answers should be grouped.",
            comments: 22),
-  Versione(date: "10 Nov 2026", time: "06:40", what: "Round 7: the date the post was written above the title, " &
+  Versione(date: "10 Nov 2026", time: "06:35", what: "Round 7: the date the post was written above the title, " &
              "the last update beside the version; the pieces of the screen before the modes, one card per " &
              "screen, History included; *Close review* in the export too; the *sheet* is now the *comment " &
              "box*; the versions are cards; folded code reads *show code*; the review mode is a module of " &
