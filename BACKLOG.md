@@ -86,6 +86,10 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Docs
 
+- **FOSDEM devroom picker** (M, Pietro, from the FOSDEM story): once the story is in Nim, a
+  small widget (nimib JS block, data inlined) where a reader picks a devroom (its family, across
+  renames) and sees its talks of the last three editions, plus the 2027 call for participation
+  until the schedule is out. Goes with the parked interactive tables (`opt_interactive`).
 - **A skill for users** (M). `skill.md` and `llms.txt` written from the specs and their examples
   while the pages are built, served from the site, as Great Docs does for Great Tables. From the
   skills part of [A month of building with Claude](https://pietroppeter.github.io/claude-artifacts/a-month-with-claude/#part-three) (0.1 use-it thread).

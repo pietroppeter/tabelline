@@ -449,9 +449,7 @@ artifact. When every page of a site has the review mode, they can share one copy
 loads it once for all of them. The blocks, in full:
 """
 
-let blocchiSrc = readFile(docs / "review.nim")
-let blockCode = blocchiSrc[blocchiSrc.find("func versionHref*") ..< blocchiSrc.find("newNbBlock(NbVersions):")]
-nbPiega "review.nim: the blocks", blockCode
+nbFoldCode "docs/review.nim", start = "func versionHref*", stop = "newNbBlock(NbVersions):"
 
 nbText: """
 ### The script
@@ -487,11 +485,8 @@ block:
     optCssTheme()
   nbTable t
 
-for chunk in chunks:
-  let lines = chunk.splitLines
-  var heading = lines[0].strip
-  for (key, name, does) in parts:
-    if key == heading: heading = name
-  nbPiega heading, lines[1 .. ^1].join("\n").strip(leading = false).unindent(2), "js"
+for i, (key, name, does) in parts:
+  nbFoldCode "docs/assets/review.js", start = "// part: " & key,
+             stop = (if i < parts.high: "// part: " else: "})();"), title = name
 
 nbSave

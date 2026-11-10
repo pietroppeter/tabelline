@@ -64,13 +64,20 @@ In a nimib notebook, `import tabelline/nimib` and `nbTable t`.
 
 ## Stories
 
-Real subjects told in tables made with tabelline, one for every release, kept up to date
+Real subjects told in tables made with tabelline, at least one for every release, kept up to date
 ([all the stories](https://pietroppeter.github.io/tabelline/stories/), sources in `docs/stories/`);
 the home page shows them as a gallery:
 
 - [Milano Cortina 2026, in small numbers](https://pietroppeter.github.io/tabelline/stories/milano-cortina/)
   (tabelline 0.1): the 2026 Winter Olympics and Paralympics in three parts of three (the Games,
   the money, what stays), learning from Il Post's coverage, on data from Wikipedia, Il Post and NOAA.
+- [FOSDEM's data, made with nanuq](https://pietroppeter.github.io/tabelline/stories/fosdem-data/)
+  (tabelline 0.1): how the data of the FOSDEM story was made, from five kinds of web page to ten
+  tidy tables with nanuq (Polars for Nim): the nanuq code, what nanuq did well and where it
+  pinched, the schema of every table, and checks that run when the page is built.
+- [FOSDEM, twenty-six times](https://pietroppeter.github.io/tabelline/stories/fosdem/)
+  (tabelline 0.2, written in R with gt until 0.2 and 0.3 are built): the editions, the devrooms
+  and the people of FOSDEM from 2001 to 2027, on FOSDEM's own schedules, read with nanuq.
 
 ## The site
 

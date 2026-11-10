@@ -287,22 +287,26 @@ details.codice > summary::-webkit-details-marker { display: none; }
 details.codice > summary::before { content: "+ show code"; }
 details.codice[open] > summary::before { content: "− hide code"; }
 details.codice pre { margin: .4rem 0 0; }
-details.piega { margin: 0; }
-details.piega > summary { list-style: none; cursor: pointer; display: inline-block; padding: .55rem 0 .25rem;
-  font: 700 .68rem/1.6 var(--font); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-details.piega > summary::-webkit-details-marker { display: none; }
-details.piega > summary span { border-bottom: 2px solid var(--secondary); }
-details.piega > summary::before { content: "+ "; }
-details.piega[open] > summary::before { content: "− "; }
-details.piega pre { margin: .4rem 0 .8rem; }
-body details.piega pre > code { font-size: 12.5px; }
-/* a drawing (nbDisegno): a Pele diagram in the page's colours */
+body /* a drawing (nbDisegno): a Pele diagram in the page's colours */
 .disegno { margin: 1.4rem 0; }
 .disegno svg { display: block; max-width: 100%; height: auto; margin: 0 auto; --pele-bg: var(--paper); --pele-fg: var(--ink);
   --pele-muted: var(--muted); --pele-line: var(--ink); --pele-border: var(--ink); --pele-surface: var(--surface);
   --pele-surface-alt: var(--neutral-1); --pele-accent: var(--secondary); }
 .disegno figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
 body details.codice pre > code { font-size: 12.5px; }
+
+/* code, folded under its name and its length (nbFoldCode) */
+details.foldcode { margin: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+details.foldcode + details.foldcode { border-top: 0; }
+details.foldcode:not(:has(+ details.foldcode)) { margin-bottom: 1.6rem; }
+details.foldcode > summary { list-style: none; cursor: pointer; padding: .45rem 0; display: flex; gap: .6rem;
+  align-items: baseline; }
+details.foldcode > summary::-webkit-details-marker { display: none; }
+details.foldcode > summary::before { content: "+"; font-weight: 700; width: .8rem; color: var(--secondary); }
+details.foldcode[open] > summary::before { content: "−"; }
+details.foldcode > summary > span { margin-left: auto; font-size: .8rem; white-space: nowrap; }
+details.foldcode pre { margin: .2rem 0 .8rem; }
+body details.foldcode pre > code { font-size: 12.5px; }
 
 /* the parts of a table (nbParti): a switch between the data and its parts, and their legend */
 .parti { list-style: none; padding: 0; margin: .8rem 0; }

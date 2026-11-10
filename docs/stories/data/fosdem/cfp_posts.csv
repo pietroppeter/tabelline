@@ -1,0 +1,736 @@
+# Calls for participation posted to fosdem@lists.fosdem.org (2006-2026, HyperKitty mbox export), one row per first post; sender names only. edition is the FOSDEM year the post names, else the next edition after its date.
+edition,date,kind,devroom_from_subject,subject,sender,sender_key,sender_spoke,pretalx_link
+2007,2006-12-15,devroom cfp,Research,CfP: Research Room @ FOSDEM: Libre software as a matter of research,Jesus M. Gonzalez-Barahona,jesus m gonzalez barahona,true,
+2007,2007-02-03,other cfp,,VVSS'07 - Call for participation,A Serebrenik,a serebrenik,false,
+2008,2007-12-14,devroom cfp,Ruby and Rails,"Ruby and Rails dev room, Call For Papers",Peter Vandenabeele,peter vandenabeele,true,
+2008,2008-01-02,devroom cfp,FYI Research,FYI: Research devroom: call for participation,Pascal Bleser,pascal bleser,false,
+2009,2008-12-10,devroom cfp,Ruby and Rails,Call for papers: Ruby and Rails devroom at fosdem 2009 (Sat 7 Feb 2009),Peter Vandenabeele,peter vandenabeele,true,
+2010,2009-10-12,other cfp,,News : Call For Participation,info,info,false,
+2011,2010-11-03,devroom cfp,"""MySQL & Friends""","Call for papers for the ""MySQL & Friends"" developer room",Lenz Grimmer,lenz grimmer,true,
+2011,2010-11-03,other cfp,,Call for talks for the FOSDEM 2011 distributions miniconference,Wouter Verhelst,wouter verhelst,false,
+2011,2010-11-03,devroom cfp,Data Analytics,[CFP] Data Analytics DevRoom,Olivier Grisel,olivier grisel,true,
+2011,2010-11-04,devroom cfp,Open Source Telephony,CFP - Open Source Telephony Devroom - FOSDEM 2011,Russell Bryant,russell bryant,true,
+2011,2010-11-07,other cfp,,PostgreSQL@FOSDEM 2011 - Call for talks,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2011,2010-11-08,other cfp,,CFP Now Open: Free Java @ FOSDEM 2011,Tom Marble,tom marble,true,
+2011,2010-11-10,devroom cfp,Mono,Mono Developer Room at FOSDEM 2011: CFP,Ruben Vermeersch,ruben vermeersch,true,
+2011,2010-11-12,other cfp,,World of GNUStep FOSDEM 2011 call for participation,Lars Sonchocky-Helldorf,lars sonchocky helldorf,false,
+2011,2010-11-14,other cfp,,Crossdesktop at FOSDEM: call for papers,Bart Coppens,bart coppens,true,
+2011,2010-11-14,other cfp,,LibreOffice at FOSDEM - Call for Papers,Florian Effenberger,florian effenberger,false,
+2011,2010-11-14,other cfp,,Perl @ FOSDEM 2011 - Call for speakers,Gabor Szabo,gabor szabo,true,
+2011,2010-11-16,other cfp,,BSD at FOSDEM 2011 - Call for speakers,Marius Nünnerich,marius nunnerich,false,
+2011,2010-12-01,other cfp,,CFP: Security / hardware crypto & FOSS,Martin Paljak,martin paljak,true,
+2011,2010-12-02,other cfp,,CFP extended to 17 December! Free Java @ FOSDEM 2011,Tom Marble,tom marble,true,
+2011,2010-12-06,devroom cfp,Embedded,Embedded devroom cfp,Philippe De Swert,philippe de swert,false,
+2011,2010-12-08,devroom cfp,Accessibility,Accessibility DevRoom fosdem 2011 CfP,Louis Suárez-Potts,louis suarez potts,false,
+2011,2010-12-20,devroom cfp,Configuration Management,Call for talks for the Configuration Management DevRoom at fosdem 2011,James Turnbull,james turnbull,true,
+2011,2010-12-20,devroom cfp,Configuration Management,Call for talks for the Configuration Management DevRoom at fosdem 2011,James Turnbull,james turnbull,true,
+2012,2011-11-11,devroom cfp,Cross Distribution,Cross-Distribution devroom: Call for Participation,Wouter Verhelst,wouter verhelst,false,
+2012,2011-11-16,devroom cfp,Graph Processing,[FOSDEM 2012-Graph Processing Room] Call for participations,Pere Urbón Bayes,pere urbon bayes,true,
+2012,2011-11-19,other cfp,,FOSDEM2012 - Open Source Game Development: Call for Speakers,Nils Kneuper,nils kneuper,true,
+2012,2011-11-20,devroom cfp,PostgreSQL,FOSDEM 2012 - PostgreSQL Devroom: Call for Speakers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2012,2011-11-24,devroom cfp,Mono,Mono Developer Room at FOSDEM 2012: CFP,Ruben Vermeersch,ruben vermeersch,false,
+2012,2011-11-29,devroom cfp,Open source Virtualization and Cloud,FOSDEM 2012: Open source Virtualization and Cloud devroom: Call for speakers,Thierry Carrez,thierry carrez,true,
+2012,2011-11-30,devroom cfp,Free Java,Free Java DevRoom CFP now open!,Tom Marble,tom marble,true,
+2012,2011-11-30,devroom cfp,Legal Issues,Legal Issues DevRoom CFP now open!,Tom Marble,tom marble,true,
+2012,2011-12-12,devroom cfp,Smalltalk,Call for Participation in the Smalltalk Devroom at FOSDEM 2012.,Stephan Eggermont,stephan eggermont,true,
+2012,2011-12-14,other cfp,,Call for presentations: Open Mobile Linux at FOSDEM 2012,Henri Bergius,henri bergius,false,
+2012,2011-12-16,other cfp,,Call for presentations: Mozilla at Fosdem 2012,Benoit Leseul,benoit leseul,false,
+2012,2011-12-19,devroom cfp,Open source Virtualization and Cloud,FOSDEM 2012: Open source Virtualization and Cloud devroom: CFP deadline extension,Thierry Carrez,thierry carrez,true,
+2012,2011-12-24,other cfp,,"New deadline, Fosdem 2012 Graph Processing Call for Papers",Pere Urbón Bayes,pere urbon bayes,true,
+2012,2012-10-31,devroom cfp,Fwd CrossDesktop,Fwd: FOSDEM CrossDesktop DevRoom 2013 - Call for Talks,Pau Garcia i Quiles,pau garcia i quiles,true,
+2012,2012-11-08,devroom cfp,Cloud,FOSDEM 2013: Cloud Devroom - Call for Participation,Russell Bryant,russell bryant,false,
+2013,2012-08-17,other cfp,,Last minute call for speakers SFK12,Mike Dupont,mike dupont,false,
+2013,2012-10-27,other cfp,,FOSDEM2013 - Open Source Game Development: Call for Speakers,Nils Kneuper,nils kneuper,true,
+2013,2012-10-28,devroom cfp,Announce s Graph Processing,Announce Call for Participations Graph Processing DevRoom 2013,Pere Urbón Bayes,pere urbon bayes,true,
+2013,2012-10-28,devroom cfp,Announce s Graph Processing,Announce Call for Participations Graph Processing DevRoom 2013,Pere Urbón Bayes,pere urbon bayes,true,
+2013,2012-10-28,other cfp,,Call for participation,Tias Guns,tias guns,false,
+2013,2012-10-30,devroom cfp,PHP,Call for Papers for the PHP room,Lorna Mitchell,lorna mitchell,false,
+2013,2012-11-02,other cfp,,Wine project call for papers,Jeremy White,jeremy white,true,
+2013,2012-11-06,devroom cfp,Ada,"Call for Talks - Ada Developer Room at FOSDEM 2013, Brussels",Dirk Craeynest,dirk craeynest,true,
+2013,2012-11-08,devroom cfp,Embedded and mobile,Embedded and mobile devroom CFP,Philippe De Swert,philippe de swert,false,
+2013,2012-11-08,devroom cfp,NoSQL,FOSDEM 2013: NoSQL devroom - call for participation,Ross Lawley,ross lawley,false,
+2013,2012-11-10,devroom cfp,Legal Issues,FOSDEM 2013: Legal Issues devroom CFP,Tom Marble,tom marble,true,
+2013,2012-11-12,devroom cfp,Mozilla,FOSDEM 2013: Mozilla Devroom CFP,Benoit Leseul,benoit leseul,false,
+2013,2012-11-12,devroom cfp,pgeu general PGDay and,"[pgeu-general] FOSDEM PGDay and Devroom 2013 - announcement, call for papers",Magnus Hagander,magnus hagander,false,
+2013,2012-11-14,devroom cfp,Smalltalk,Call for Participation in the Smalltalk Devroom at FOSDEM 2013,Stephan Eggermont,stephan eggermont,true,
+2013,2012-11-15,devroom cfp,Configuration/Systems Management,Call for talks: Configuration/Systems Management DevRoom at FOSDEM 2013,Dawn Foster,dawn foster,true,
+2013,2012-11-15,devroom cfp,Virtualization,Virtualization Devroom CFP @ FOSDEM 2013,Lars Kurth,lars kurth,false,
+2013,2012-11-18,devroom cfp,Testing and Automation,Call for Participation: Testing and Automation dev room,R. Tyler Croy,r tyler croy,false,
+2013,2012-11-18,devroom cfp,BSD developer's,Call for Presentations: BSD developer's room at FOSDEM 2013,Benny Siegert,benny siegert,true,
+2013,2012-11-27,devroom cfp,Announce s Graph Processing,Announce Call for Participations Graph Processing DevRoom 2013,Pere Urbón Bayes,pere urbon bayes,true,
+2013,2012-12-05,other cfp,,Mono @ FOSDEM 2013: CFP,Ruben Vermeersch,ruben vermeersch,false,
+2013,2012-12-06,devroom cfp,Jabber/XMPP,Call for Participation in the Jabber/XMPP Devroom at FOSDEM 2013,Peter Saint-Andre,peter saint andre,true,
+2014,2013-08-06,fosdem call,main tracks and,Call for participation: main tracks and developer rooms,Philip Paeps,philip paeps,false,https://penta.fosdem.org/submission/
+2014,2013-09-15,fosdem call,,Call for participation: lightning talks and stands,Wynke Stulemeijer,wynke stulemeijer,false,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-10-04,devroom cfp,Go,Go devroom CFP,Andrew Gerrand,andrew gerrand,true,
+2014,2013-10-09,devroom cfp,Microkernels / Component based OSes,FOSDEM 2014 - CfP: Microkernels / Component-based OSes devroom,Julian Stecklina,julian stecklina,true,https://penta.fosdem.org/submission/
+2014,2013-10-10,devroom cfp,NoSQL,CFP for NoSQL Devroom,Carol Huang,carol huang,true,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-10-11,devroom cfp,Configuration Management,CFP for Configuration Management Devroom,Dawn Foster,dawn foster,false,https://penta.fosdem.org/submission/
+2014,2013-10-11,devroom cfp,Internet of Things,CFP for Internet of Things Devroom,Pieter Hintjens,pieter hintjens,true,https://penta.fosdem.org/submission
+2014,2013-10-17,devroom cfp,Automotive,CFP Automotive Devroom | FOSDEM 2014,Jeremiah Foster,jeremiah foster,false,https://penta.fosdem.org/submission/
+2014,2013-10-17,devroom cfp,Free Java,Free Java DevRoom FOSDEM 2014 Call For Participation now open!,Mario Torre,mario torre,true,
+2014,2013-10-18,devroom cfp,HPC and Computational Science,HPC and Computational Science devroom at FOSDEM'14 - Call for Participation,Kenneth Hoste,kenneth hoste,true,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-10-20,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2014, Brussels, Belgium",Dirk Craeynest,dirk craeynest,true,
+2014,2013-10-22,devroom cfp,Graph Processing,Call for Participation for Graph Processing Devroom 2014,Achim Friedland,achim friedland,false,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-10-23,devroom cfp,Virtualisation and IaaS,CFP for Virtualisation and IaaS devroom,Thierry Carrez,thierry carrez,true,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-10-23,devroom cfp,Embedded and mobile,[CFP] Embedded and mobile devroom,Philippe De Swert,philippe de swert,false,https://penta.fosdem.org/submission/
+2014,2013-10-25,devroom cfp,Valgrind,"CFP Valgrind developer room at FOSDEM 2014 (Brussels, Belgium, 2 February)",Mark Wielaard,mark wielaard,true,https://penta.fosdem.org/submission/FOSDEM14/
+2014,2013-10-27,other cfp,,FOSDEM2014 CfP: Game development,Nils Kneuper,nils kneuper,true,https://penta.fosdem.org/submission/
+2014,2013-10-29,devroom cfp,Smalltalk,Call for Participation in the Smalltalk Devroom at FOSDEM2014,Stephan Eggermont,stephan eggermont,true,
+2014,2013-11-03,devroom cfp,Legal Issues,FOSDEM 2014 Legal Issues DevRoom Call For Participation,Tom Marble,tom marble,true,https://penta.fosdem.org/submission
+2014,2013-11-08,devroom cfp,Testing and Automation,[CFP] Testing and Automation Devroom,R. Tyler Croy,r tyler croy,false,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-11-09,devroom cfp,BSD developer's,Call for presentations: BSD developer's room at FOSDEM 2014,Benny Siegert,benny siegert,true,https://penta.fosdem.org/submission/FOSDEM14/
+2014,2013-11-13,devroom cfp,PostgreSQL,PostgreSQL Devroom 2014 - Announcement & Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2014,2013-11-18,devroom cfp,JavaScript,FOSDEM 2014 - JavaScript devroom CfP,Steven Beeckman,steven beeckman,true,
+2014,2013-12-02,devroom cfp,deadline extended to Dec 10th Testing and Automation,CFP deadline extended to Dec 10th for the Testing and Automation devroom,R. Tyler Croy,r tyler croy,false,
+2014,2013-12-02,devroom cfp,Distributions Developer,Distributions Developer Devroom: Call for Participation,Joe Brockmeier,joe brockmeier,false,https://penta.fosdem.org/submission/FOSDEM14
+2014,2013-12-03,devroom cfp,Config Management,CFP for Config Management Devroom: Deadline Extended to Dec. 8,Dawn Foster,dawn foster,false,https://penta.fosdem.org/submission/
+2014,2014-10-23,devroom cfp,Go,FOSDEM Go DevRoom CFP,Andrew Gerrand,andrew gerrand,true,https://penta.fosdem.org/submission/FOSDEM15
+2014,2014-10-26,devroom cfp,Desktops,FOSDEM 2015 Desktops DevRoom Call for Talks,Pau Garcia i Quiles,pau garcia i quiles,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-07-01,fosdem call,main tracks and,Call for participation: main tracks and developer rooms,Philip Paeps,philip paeps,false,https://penta.fosdem.org/submission/
+2015,2014-09-19,fosdem call,,Call for participation: lightning talks and stands,Wynke Stulemeijer,wynke stulemeijer,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-08,devroom cfp,Configuration Management,Configuration Management Devroom CFP is open,Dawn Foster,dawn foster,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-11,devroom cfp,Electronic Design Automation,Call for Participation for Electronic Design Automation Devroom 2015,Javier Serrano,javier serrano,false,
+2015,2014-10-11,devroom cfp,Open Source Design,Open Source Design Devroom: Call for Participation,belen barros pena,belen barros pena,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-13,devroom cfp,Smalltalk,Smalltalk Devroom at FOSDEM 2015: Call for Participation,Stephan Eggermont,stephan eggermont,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-16,devroom cfp,Legal and Policy Issues,Legal and Policy Issues DevRoom at FOSDEM 2015: CALL FOR PARTICIPATION,Bradley M. Kuhn,bradley m kuhn,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-17,devroom cfp,BSD,BSD Devroom CFP is open,Rodrigo OSORIO,rodrigo osorio,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-17,devroom cfp,Open Source Search,CFP: Open Source Search Dev Room,Leslie Hawthorn,leslie hawthorn,true,
+2015,2014-10-17,devroom cfp,geospatial,CfP: geospatial devroom at FOSDEM,Johan Van de Wauw,johan van de wauw,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-20,devroom cfp,Open Source Design,Call for Participation: FOSDEM 2015 Open Source Design devroom,Bernard Tyers,bernard tyers,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-20,devroom cfp,Open Media,Call for participation for Open Media devroom at FOSDEM 2015,"Coinchon, Mathias",coinchon mathias,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-20,devroom cfp,Software Defined Radio,Software Defined Radio Track -- Call for Participation,Martin Braun,martin braun,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-21,devroom cfp,Embedded,Embedded devroom -- call for proposals,Jeremiah Foster,jeremiah foster,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-21,devroom cfp,Internet of Things,Internet of Things Devroom - call for proposals,Pieter Hintjens,pieter hintjens,true,https://penta.fosdem.org/submission
+2015,2014-10-22,devroom cfp,Distributions,FOSDEM'15 Distributions Devroom Call for Participation,Andreas Thienemann,andreas thienemann,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-22,devroom cfp,Security,Security devroom CFP,Martin Paljak,martin paljak,true,
+2015,2014-10-22,devroom cfp,Testing and Automation,Testing and Automation devroom CFP,Jeff Weiss,jeff weiss,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-23,devroom cfp,Ruby,Ruby devroom 2015 Call for participation now open!,R. Tyler Croy,r tyler croy,false,
+2015,2014-10-24,devroom cfp,Infrastructure as Service (IaaS),Infrastructure-as-a-Service (IaaS) Devroom at FOSDEM 15: Call for Participation,Joe Brockmeier,joe brockmeier,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-24,devroom cfp,Virtualization,Virtualization Devroom at FOSDEM 15: Call for Participation,Joe Brockmeier,joe brockmeier,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-10-29,devroom cfp,PGDay and,FOSDEM PGDay and Devroom 2015 - Announcement & Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2015,2014-10-31,devroom cfp,Network,Network devroom call for participation,Dave Neary,dave neary,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-11-01,devroom cfp,Microkernels,FOSDEM 2015 - CfP: Microkernels DevRoom,Jakub Jermar,jakub jermar,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-11-01,devroom cfp,Graph Processing,Graph Processing Devroom CfP,Achim 'ahzf' Friedland,achim ahzf friedland,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-11-02,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2015, Brussels, Belgium",Dirk Craeynest,dirk craeynest,true,
+2015,2014-11-05,devroom cfp,Valgrind,"Call for Proposals: Valgrind developer room, FOSDEM 2015, Brussels, 31 Jan 2015",Julian Seward,julian seward,true,https://penta.fosdem.org/submission/FOSDEM15/
+2015,2014-11-05,devroom cfp,MySQL & Friends,MySQL & Friends Devroom CfP,Frederic Descamps,frederic descamps,true,
+2015,2014-11-05,other cfp,,Open Document Editors Call for Papers,Andrea Pescetti,andrea pescetti,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-11-07,other cfp,,Python @ FOSDEM 2015 - Call For Proposals,Stéphane Wirtel,stephane wirtel,true,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-11-17,devroom cfp,PGDay and,FOSDEM PGDay and Devroom 2015 - Call for Papers,Dave Page,dave page,false,
+2015,2014-11-18,devroom cfp,Lisp,Lisp Devroom at FOSDEM 2015: Call for Participation,Sanel Zukan,sanel zukan,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-12-02,devroom cfp,Configuration Management,Configuration Management Devroom CFP extended to December 10,Dawn Foster,dawn foster,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-12-02,devroom cfp,Deadline Extended (was Open Source Search,Deadline Extended (was: CFP: Open Source Search Dev Room),Leslie Hawthorn,leslie hawthorn,true,
+2015,2014-12-02,other cfp,,Network management and SDN – call for participation extended,Pavel Simerda,pavel simerda,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2014-12-05,other cfp,,Network management and SDN – call for participation extended,Pavel Simerda,pavel simerda,false,https://penta.fosdem.org/submission/FOSDEM15
+2015,2015-10-26,devroom cfp,Open Media,Open Media devroom CFP - FOSDEM 2016,Zohar Babin,zohar babin,true,https://penta.fosdem.org/submission/FOSDEM16
+2015,2015-10-30,devroom cfp,SDN/NFV,SDN/NFV DevRoom: Call for participation!,Dave Neary,dave neary,false,https://penta.fosdem.org/submission/FOSDEM16
+2015,2015-11-02,devroom cfp,Desktops,Desktops DevRoom 2016: Call for Participation,Pau Garcia i Quiles,pau garcia i quiles,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-09-24,other cfp,,FOSDEM 2016: Call for Participation,Alasdair G Kergon,alasdair g kergon,false,
+2016,2015-10-22,devroom cfp,Software Defined Radio,Call for Participation: Software Defined Radio Devroom at FOSDEM 2016,Martin Braun,martin braun,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-23,devroom cfp,Microkernel,FOSDEM 2016 - Microkernel devroom CfP,Jakub Jermar,jakub jermar,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-23,devroom cfp,MySQL & Friends,MySQL & Friends Devroom CfP is OPEN !,Frederic Descamps,frederic descamps,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-24,devroom cfp,Internet of Things,Call for Talks: Internet of Things Developer Room,Pieter Hintjens,pieter hintjens,false,https://penta.fosdem.org/submission
+2016,2015-10-27,devroom cfp,Security,CFP: Security Devroom @ FOSDEM'16,Nikos Mavrogiannopoulos,nikos mavrogiannopoulos,true,
+2016,2015-10-27,devroom cfp,Go,Go devroom call for proposals,Luna Duclos,luna duclos,true,https://penta.fosdem.org/submission/FOSDEM162
+2016,2015-10-27,devroom cfp,Open Source Design,Open Source Design devroom CFP,belen barros pena,belen barros pena,true,https://penta.fosdem.org/submission/FOSDEM16/
+2016,2015-10-28,devroom cfp,Testing and Automation,Testing and Automation devroom CFP,Jeff Weiss,jeff weiss,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-28,devroom cfp,Virtualization & IaaS,Virtualization & IaaS Devroom CFP,Mikey Ariel,mikey ariel,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-29,devroom cfp,Electronic Design Automation,FOSDEM 2016 Electronic Design Automation devroom CfP,Javier Serrano,javier serrano,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-29,devroom cfp,Mozilla,FOSDEM 2016: Mozilla DevRoom Call for Papers,Francisco Picolini,francisco picolini,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-29,devroom cfp,Legal and Policy Issues,Legal and Policy Issues DevRoom CFP,Tom Marble,tom marble,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-29,devroom cfp,Open Game Development,Open Game Development Room at FOSDEM – Call for Participation,Jesse Himmelstein,jesse himmelstein,true,
+2016,2015-10-29,devroom cfp,Config Management,[CFP] Config Management Devroom at FOSDEM 2016,"Heck, Walter",heck walter,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-30,devroom cfp,Ruby,Ruby devroom CFP,R. Tyler Croy,r tyler croy,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-10-31,devroom cfp,"Embedded, mobile and automotive","Embedded, mobile and automotive devroom call for papers",Philippe De Swert,philippe de swert,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-01,devroom cfp,Lua,Lua DevRoom at FOSDEM 2016 - Call for Presentations,Hisham Muhammad,hisham muhammad,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-01,devroom cfp,"ANN HPC, Big Data, and Data Science","[ANN] FOSDEM'16 HPC, Big Data, and Data Science Devroom Call for Participation",Ewan Higgs,ewan higgs,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-02,devroom cfp,Geospatial,Call For papers Geospatial devroom @FOSDEM 2016,Johan Van de Wauw,johan van de wauw,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-02,devroom cfp,Coding Language Communities,Call for Participation: Coding for Language Communities devroom @FOSDEM2016,Peter Bouda,peter bouda,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-02,devroom cfp,Containers & Process Isolation,Containers & Process Isolation Devroom CFP,Sergey Bronnikov,sergey bronnikov,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-02,devroom cfp,Distributions,Distributions Devroom CFP,Brian Stinson,brian stinson,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-04,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2016, Brussels, Belgium",Dirk Craeynest,dirk craeynest,true,
+2016,2015-11-04,devroom cfp,SDN/NFV,SDN/NFV DevRoom: Call for participation!,Dave Neary,dave neary,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2015-11-15,devroom cfp,PGDay and,FOSDEM PGDay and Devroom 2016 - Announcement & Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2016,2015-11-23,devroom cfp,Virt & IaaS,"Virt & IaaS Devroom CFP Extension, Speaker Mentoring, CoC",Mikey Ariel,mikey ariel,false,
+2016,2015-11-27,devroom cfp,Java,Java Dev Room CFP,Mario Torre,mario torre,true,
+2016,2015-12-07,devroom cfp,Reminder Microkernel,Reminder: Microkernel-devroom CfP deadline is on this Sunday,Jakub Jermar,jakub jermar,true,
+2016,2015-12-07,devroom cfp,Reminder Virt & IaaS,"Reminder: Virt & IaaS devroom CFP ends tomorrow, Dec. 8",Mikey Ariel,mikey ariel,false,
+2016,2016-10-18,devroom cfp,SDR,FOSDEM 2017: SDR Track CfP,Martin Braun,martin braun,true,https://penta.fosdem.org/submission/FOSDEM16
+2016,2016-10-20,devroom cfp,Announcement Desktops,[Announcement] Desktops DevRoom 2016 CfP,Pau Garcia i Quiles,pau garcia i quiles,true,https://penta.fosdem.org/submission/FOSDEM17
+2016,2016-10-24,devroom cfp,Testing/Automation,[CFP] FOSDEM 2017 - Testing/Automation Devroom,R. Tyler Croy,r tyler croy,false,https://penta.fosdem.org/submission/FOSDEM16
+2016,2016-12-10,devroom cfp,Deadline extended SDR,Deadline extended: FOSDEM 2017: SDR Track CfP,Martin Braun,martin braun,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-11,devroom cfp,"""Open Source Design""","CfP: ""Open Source Design"" Developer Room",Ecaterina Moraru (Valica),ecaterina moraru valica,false,
+2017,2016-10-11,devroom cfp,MySQL & Friends,MySQL & Friends Devroom CfP,Frédéric Descamps,frederic descamps,true,
+2017,2016-10-11,devroom cfp,LLVM,[CFP] LLVM devroom @ FOSDEM 2017,Renato Golin,renato golin,false,https://penta.fosdem.org/user/new_account
+2017,2016-10-13,devroom cfp,Geospatial,CfP - FOSDEM Geospatial devroom @FOSDEM 2017,Johan Van de Wauw,johan van de wauw,true,
+2017,2016-10-14,devroom cfp,Electronic Design Automation (EDA),FOSDEM 2017 Electronic Design Automation (EDA) devroom Call for Participation,Javier Serrano,javier serrano,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-14,devroom cfp,Good news Config Management,Good news: FOSDEM 2017 Config Management Devroom Call For Papers is open!,"Heck, Walter",heck walter,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-14,other cfp,,Open Source Gamedev - Call for papers,Jesse Himmelstein,jesse himmelstein,true,
+2017,2016-10-14,devroom cfp,PHP and Friends,PHP and Friends devroom CfP announced,Wim Godden,wim godden,false,
+2017,2016-10-15,devroom cfp,Legal and Policy Issues,Legal and Policy Issues DevRoom CFP,Tom Marble,tom marble,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-16,other cfp,,Call for Participation: Valgrind at FOSDEM 2017,Ivo Raisr,ivo raisr,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-17,devroom cfp,BSD,BSD Devroom CFP @ Frosdem'17,Rodrigo OSORIO,rodrigo osorio,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-17,devroom cfp,Microkernels / Component based OSes,Microkernels / Component-based OSes devroom - Call for Participation,Josef Söntgen,josef sontgen,true,
+2017,2016-10-18,devroom cfp,Community,Call for Participation: Community DevRoom at FOSDEM 2017,Leslie Hawthorn,leslie hawthorn,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-18,devroom cfp,Perl,Perl devroom CfP announced,WvD,wvd,false,
+2017,2016-10-19,devroom cfp,Ruby,CFP for Ruby Devroom is open,Christophe Philemotte,christophe philemotte,true,
+2017,2016-10-19,devroom cfp,Announcement Virtualization and IaaS,CfP Announcement: Virtualization and IaaS Devroom,Brian Proffitt,brian proffitt,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-19,devroom cfp,PGDay and,FOSDEM PGDay and Devroom 2017 - Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2017,2016-10-19,devroom cfp,Internet of Things,Internet of Things devroom CFP,Maxime Vincent,maxime vincent,true,
+2017,2016-10-19,devroom cfp,Internet of Things,Internet of Things devroom CFP,Maxime Vincent,maxime vincent,true,
+2017,2016-10-19,devroom cfp,Announcement IaaS and Virtualization,[Announcement] CfP for IaaS and Virtualization Devroom,Brian Proffitt,brian proffitt,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-19,devroom cfp,"devroom managers ANN HPC, Big Data, and Data Science","[devroom-managers] [ANN] HPC, Big Data, and Data Science Devroom CfP",Vasiliki Kalavri,vasiliki kalavri,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-22,devroom cfp,Go,Go devroom Call for Proposals,Luna Duclos,luna duclos,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-10-24,devroom cfp,"""Cloud and Monitoring"" and ""Containers and Microservices""","""Cloud and Monitoring"" and ""Containers and Microservices"" devrooms Joint Call for Proposals",Josh Berkus,josh berkus,true,
+2017,2016-10-24,devroom cfp,Mozilla,CFP for Mozilla Devroom,Francisco Picolini,francisco picolini,false,https://penta.fosdem.org/submission
+2017,2016-10-24,devroom cfp,security,CfP for FOSDEM 2017 security devroom,Nikos Mavrogiannopoulos,nikos mavrogiannopoulos,false,
+2017,2016-10-24,devroom cfp,Free Java,Free Java DevRoom @ FOSDEM CFP now open,Mario Torre,mario torre,true,
+2017,2016-10-24,devroom cfp,Free Java,Free Java DevRoom @ FOSDEM CFP now open,Mario Torre,mario torre,true,
+2017,2016-10-24,devroom cfp,Distributions,[CFP] FOSDEM 2017 - Distributions Devroom,Brian Stinson,brian stinson,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-11-04,devroom cfp,Open Media,Open Media devroom FOSDEM 2017 - Call For Participation,Christophe Massiot,christophe massiot,true,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-11-06,devroom cfp,Decentralised Internet,Decentralised Internet devroom - CFP,Julien Rabier,julien rabier,false,https://penta.fosdem.org/submission/FOSDEM17
+2017,2016-11-06,devroom cfp,PHP & Friends,PHP & Friends devroom CfP,Wim Godden,wim godden,false,
+2017,2016-11-16,devroom cfp,reminder! RTC,[CFP] reminder! FOSDEM RTC dev-room talks: deadline tomorrow,FOSDEM RTC Team,fosdem rtc team,false,
+2017,2016-11-20,devroom cfp,Monitoring and Cloud,CfP for Monitoring and Cloud Devroom,Richard Hartmann,richard hartmann,true,
+2017,2016-12-04,devroom cfp,BSD,BSD Devroom CFP @ Frosdem'17 – call for participation extended,Rodrigo OSORIO,rodrigo osorio,false,https://penta.fosdem.org/submission/FOSDEM17
+2018,2017-10-06,devroom cfp,SDR,FOSDEM 2018: SDR Track CfP,Martin Braun,martin braun,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-07,devroom cfp,MySQL & Friends,MySQL & Friends Devroom CfP,Frédéric descamps,frederic descamps,true,
+2018,2017-10-09,devroom cfp,Identity and Access Management,Call for Participation: Identity and Access Management devroom @ FOSDEM 2018,Alexander Bokovoy,alexander bokovoy,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-09,devroom cfp,Microkernels,FOSDEM 2018 - Microkernels developer room - CfP,Jakub Jermar,jakub jermar,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-10,devroom cfp,Config Management,FOSDEM 2018 Config Management Devroom Call For Papers is open!,"Heck, Walter",heck walter,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-11,devroom cfp,BSD,FOSDEM 2018 : BSD Devroom cfp,Rodrigo Osorio,rodrigo osorio,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-11,devroom cfp,BSD,FOSDEM 2018 : BSD Devroom cfp,Rodrigo Osorio,rodrigo osorio,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-12,devroom cfp,Community,Call for Participation: Community DevRoom at FOSDEM 2018,Leslie Hawthorn,leslie hawthorn,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-12,devroom cfp,Legal and Policy Issues,Call for Participation: Legal and Policy Issues DevRoom at FOSDEM 2018,Tom Marble,tom marble,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-12,devroom cfp,Software Defined Storage,FOSDEM Call for Participation: Software Defined Storage devroom,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-12,devroom cfp,"HPC, Big Data, and Data Science","FOSDEM'18 HPC, Big Data, and Data Science Devroom Call for Participation",Kenneth Hoste,kenneth hoste,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-12,devroom cfp,Go,Go Devroom CfP - FOSDEM 2018,Francesc Campoy Flores,francesc campoy flores,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-13,devroom cfp,Debugging Tools,Call for Participation: Debugging Tools DevRoom at FOSDEM 2018,Ivo Raisr,ivo raisr,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-13,devroom cfp,Rust,FOSDEM'18 Rust Devroom Call for Participation,Andy Georges,andy georges,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-13,devroom cfp,LLVM toolchain,[CFP] LLVM toolchain devroom CFP at FOSDEM 2018,Kristof Beyls,kristof beyls,false,https://penta.fosdem.org/user/new_account
+2018,2017-10-14,devroom cfp,Containers,Containers devroom at FOSDEM 2018: Call for papers,Stéphane Graber,stephane graber,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-15,devroom cfp,Open Source Design,FOSDEM'18 Open Source Design Devroom - Call for Participation,Victoria Bondarchuk,victoria bondarchuk,true,https://penta.fosdem.org/submission/FOSDEM18/
+2018,2017-10-15,devroom cfp,Open Media,Open Media devroom FOSDEM 2018 - Call For Participation,Christophe Massiot,christophe massiot,true,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-15,devroom cfp,Decentralized Internet & Privacy,[CFP] Decentralized Internet & Privacy devroom,Julien Rabier,julien rabier,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-16,devroom cfp,Announcement Virtualization and IaaS,CfP Announcement: Virtualization and IaaS Devroom,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2018,2017-10-16,devroom cfp,Monitoring & Cloud,FOSDEM 2018 Monitoring & Cloud devroom - CFP,Carl Bergquist,carl bergquist,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-16,devroom cfp,Source Code Analysis,FOSDEM 2018 Source Code Analysis devroom - Call for Participation,Alfredo Beaumont,alfredo beaumont,false,
+2018,2017-10-16,devroom cfp,Fwd Retrocomputing,Fwd: Retrocomputing DevRoom CfP,Pau Garcia i Quiles,pau garcia i quiles,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-16,devroom cfp,Geospatial,Geospatial devroom - Call for Participation,Johan Van de Wauw,johan van de wauw,true,
+2018,2017-10-17,devroom cfp,PGDay and,FOSDEM PGDay and Devroom 2018 - Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2018,2017-10-17,devroom cfp,Graph Processing,Graph Processing Devroom CfP,Martin Junghanns,martin junghanns,true,
+2018,2017-10-17,devroom cfp,Testing/Automation,[CFP] FOSDEM 2018 - Testing/Automation Devroom,R. Tyler Croy,r tyler croy,false,https://penta.fosdem.org/submission/FOSDEM18/
+2018,2017-10-20,devroom cfp,CAD and Open Hardware,FOSDEM 2018 CAD and Open Hardware Devroom Call for Participation,Javier Serrano,javier serrano,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-21,devroom cfp,FW SDN & NFV,FW: Call for Content for the SDN & NFV DevRoom 2018,Alasdair G Kergon,alasdair g kergon,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-24,devroom cfp,Internet of Things,Internet of Things devroom CFP,Maxime Vincent,maxime vincent,false,
+2018,2017-10-26,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2018, Brussels, Belgium",Dirk Craeynest,dirk craeynest,true,
+2018,2017-10-26,devroom cfp,Free Java,Free Java Dev Room Call For Participation,Mario Torre,mario torre,true,
+2018,2017-10-30,devroom cfp,Hardware Enablement,Hardware Enablement Devroom Call for Participation,Christian Kellner,christian kellner,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-31,devroom cfp,Distributions,FOSDEM 2018 - Distributions Devroom Call for Participation,Brian Exelbierd,brian exelbierd,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-10-31,devroom cfp,"Embedded, mobile and automotive","[CFP] Embedded, mobile and automotive devroom 2018",Philippe De Swert,philippe de swert,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-11-11,devroom cfp,Mozilla,Mozilla Devroom - Call for Papers [FOSDEM 2018],Ziggy Maes,ziggy maes,false,https://penta.fosdem.org/submission/FOSDEM18
+2018,2017-11-17,devroom cfp,Tool Docs,FOSDEM 2018 - Tool the Docs devroom - CFP,Kristof Van Tomme,kristof van tomme,false,https://penta.fosdem.org/submission/FOSDEM18.
+2018,2017-11-20,devroom cfp,DNS,FOSDEM 2018 DNS devroom CfP,Peter van Dijk,peter van dijk,false,https://penta.fosdem.org/submission/FOSDEM18.
+2018,2017-11-27,devroom cfp,Deadline extension LLVM toolchain,Deadline extension: [CFP] LLVM toolchain devroom CFP at FOSDEM 2018,Kristof Beyls,kristof beyls,false,https://penta.fosdem.org/user/new_account
+2018,2018-10-14,devroom cfp,DNS,DNS devroom CfP,Peter van Dijk,peter van dijk,false,https://penta.fosdem.org/submission/FOSDEM19.
+2018,2018-10-17,devroom cfp,Monitoring & Observability,[CFP] Monitoring & Observability devroom,Richard Hartmann,richard hartmann,true,https://penta.fosdem.org/submission/FOSDEM18
+2019,2018-08-11,other cfp,,Call for participation,Gerry Demaret,gerry demaret,false,
+2019,2018-10-10,devroom cfp,Free Software Radio,FOSDEM 2019: Free Software Radio Devroom CfP,Martin Braun,martin braun,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-11,devroom cfp,"MySQL, MariaDB & Friends","MySQL, MariaDB & Friends Devroom CfP",Frédéric Descamps,frederic descamps,true,
+2019,2018-10-12,devroom cfp,Microkernels,FOSDEM 2019 - Microkernels developer room - CfP,Sebastian Sumpf,sebastian sumpf,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-12,devroom cfp,Open Media,FOSDEM 2019 Open Media room - Call for speakers participation,Zohar Babin,zohar babin,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-12,devroom cfp,Software Defined Storage,FOSDEM Call for Participation: Software Defined Storage devroom,Niels de Vos,niels de vos,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-12,devroom cfp,LLVM toolchain,[CFP] LLVM toolchain devroom CFP at FOSDEM 2019,Kristof Beyls,kristof beyls,false,https://penta.fosdem.org/user/new_account
+2019,2018-10-12,devroom cfp,cinder swift Software Defined Storage,[cinder][swift] FOSDEM Call for Participation: Software Defined Storage devroom,Niels de Vos,niels de vos,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-14,devroom cfp,Rust,FOSDEM Call for Participation: Rust Devroom,Andy Georges,andy georges,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,Open Source Design,CfP for Open Source Design devroom FOSDEM 2019,Bernard Tyers,bernard tyers,true,https://penta.fosdem.org/submission/FOSDEM19/
+2019,2018-10-15,devroom cfp,End of embedded,End of the embedded devroom (regarding Call for participation),Philippe De Swert,philippe de swert,false,
+2019,2018-10-15,devroom cfp,CAD and Open Hardware,FOSDEM 2019 CAD and Open Hardware Devroom Call for Participation,Javier Serrano,javier serrano,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,Software Defined Networking,FOSDEM 2019 Software Defined Networking Devroom CFP,Ray Kinsella,ray kinsella,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,Infra Management,FOSDEM 2019: Infra Management Devroom Call for Papers,"Heck, Walter",heck walter,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,BSD,FOSDEM Call for Participation: BSD Devroom,Rodrigo Osorio,rodrigo osorio,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,"HPC, Big Data, and Data Science","FOSDEM'19 HPC, Big Data, and Data Science Devroom Call for Participation",Kenneth Hoste,kenneth hoste,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-15,devroom cfp,‘19 Virtualization & IaaS,FOSDEM‘19 Virtualization & IaaS Devroom CfP,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2019,2018-10-16,devroom cfp,PHP and Friends,FOSDEM 2019 - PHP and Friends devroom CFP,Wim Vandersmissen,wim vandersmissen,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-16,devroom cfp,Free Java,FOSDEM 2019 Free Java Dev Room Call For Participation,Mario Torre,mario torre,true,
+2019,2018-10-16,devroom cfp,Go,FOSDEM 2019 Go Devroom Call for Participation,Maartje Eyskens,maartje eyskens,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-16,devroom cfp,Minimalistic Languages,FOSDEM 2019 Minimalistic Languages Devroom CFP,pjotr.public997,pjotr public997,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-16,devroom cfp,Decentralized Internet & Privacy,[CFP] Decentralized Internet & Privacy devroom,Loïc Dachary,loic dachary,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-17,devroom cfp,Machine Learning on Code,FOSDEM 2019 Machine Learning on Code Devroom CfP,Alexander Bezzubov,alexander bezzubov,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-18,devroom cfp,Community,Call for Participation: Community DevRoom at FOSDEM 2019,Leslie Hawthorn,leslie hawthorn,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-18,devroom cfp,Legal and Policy Issues,Call for Participation: Legal and Policy Issues DevRoom at FOSDEM 2019,Tom Marble,tom marble,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-19,devroom cfp,Collaborative information and content management application,Collaborative information and content management application devroom - Call for participation,Clément Aubin,clement aubin,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-20,devroom cfp,Blockchain,Call for Presentations - Blockchain Devroom,Pietro Abate,pietro abate,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-22,devroom cfp,JavaScript,JavaScript Devroom - Call for Participation,Ludovic Gasc,ludovic gasc,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-23,devroom cfp,Python,FOSDEM 2019 - Python devroom CFP,Eric Gazoni,eric gazoni,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-28,devroom cfp,Retrocomputing,FOSDEM 2019 - Retrocomputing DevRoom CfP,Pau Garcia Quiles,pau garcia quiles,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-29,devroom cfp,Free Java Tools and Editors,FOSDEM 2019 - Free Java Tools and Editors DevRoom CfP,geertjan.wielenga,geertjan wielenga,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-10-30,other cfp,,Reminder: Open Media @ FOSDEM 2019 - Call for speakers participation,Zohar Babin,zohar babin,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-01,devroom cfp,Containers,Containers devroom at FOSDEM 2019: Call for papers,Stéphane Graber,stephane graber,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-01,devroom cfp,Distributions,FOSDEM 2019 - Distributions Devroom Call for Participation,Brian Exelbierd,brian exelbierd,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-01,devroom cfp,Geospatial,FOSDEM 2019: Geospatial Devroom - Call for Participation,Marc VLOEMANS,marc vloemans,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-03,devroom cfp,Hardware Enablement,FOSDEM 2019 Hardware Enablement Devroom Call for Participation,Paul Kocialkowski,paul kocialkowski,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-04,devroom cfp,PGDay and PostgreSQL,FOSDEM PGDay and PostgreSQL Devroom 2019 - Call for Papers,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2019,2018-11-04,devroom cfp,Tool Docs,Tool the Docs DevRoom - Announcement & Call for Papers,Katalin Fogas,katalin fogas,false,
+2019,2018-11-06,devroom cfp,Graph Processing,FOSDEM 2019 Graph Processing Developer Room CfP,Michael Hunger,michael hunger,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-14,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2019, Brussels, Belgium",Dirk.Craeynest,dirk craeynest,true,
+2019,2018-11-16,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2019, Brussels, Belgium",Dirk.Craeynest,dirk craeynest,true,
+2019,2018-11-16,devroom cfp,Search,Search devroom at FOSDEM 2019: Call for papers,Philipp Krenn,philipp krenn,true,https://penta.fosdem.org/submission/FOSDEM19.
+2019,2018-11-18,devroom cfp,Quantum computing,FOSDEM 2019 - Quantum computing devroom CfP,Tomas Babej,tomas babej,true,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-11-19,devroom cfp,Graphics,FOSDEM 2019: Graphics DevRoom: Call for speakers.,Luc Verhaegen,luc verhaegen,false,https://penta.fosdem.org/submission/FOSDEM19
+2019,2018-12-14,devroom cfp,ODE,Call for Papers ODE DevRoom at FOSDEM,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM19.
+2019,2018-12-14,devroom cfp,UPDATED ODE,UPDATED Call for Papers ODE DevRoom at FOSDEM,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM19.
+2019,2019-10-10,devroom cfp,Containers,Containers devroom at FOSDEM 2019: Call for papers,Stéphane Graber,stephane graber,true,https://penta.fosdem.org/submission/FOSDEM20
+2019,2019-10-11,devroom cfp,JavaScript,[CfP] JavaScript Room 2020,Ludovic Gasc Lemaire,ludovic gasc lemaire,false,https://penta.fosdem.org/submission/FOSDEM20
+2019,2019-10-15,devroom cfp,Free Tools and Editors,[CfP] Free Tools and Editors devroom at FOSDEM 2020,Geertjan Wielenga,geertjan wielenga,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-04,devroom cfp,Security,Call for Presentations: FOSDEM Security devroom 2020,Jakub Jelen,jakub jelen,false,
+2020,2019-10-04,devroom cfp,Microkernels and Component based OS,CfP: FOSDEM 2020 - Microkernels and Component-based OS devroom,Julian Stecklina,julian stecklina,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-04,devroom cfp,Microkernels and Component based OS,CfP: FOSDEM 2020 - Microkernels and Component-based OS devroom,Julian Stecklina,julian stecklina,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-04,devroom cfp,Fwd Microkernels and Component based OS,[Fwd: CfP: FOSDEM 2020 - Microkernels and Component-based OS devroom],Julian Stecklina,julian stecklina,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-06,devroom cfp,Monitoring & Observability,[CFP] Monitoring & Observability devroom @ FOSDEM 2020,Richard Hartmann,richard hartmann,true,https://penta.fosdem.org/submission
+2020,2019-10-07,devroom cfp,Open Research Tools & Technologies,Open Research Tools & Technologies devroom call for papers,Paul GIRARD,paul girard,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-07,other cfp,,[CFP] Continuous Integration & Continuous Deployment @ FOSDEM 2020,Vernin Olivier,vernin olivier,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-08,devroom cfp,Legal and Policy Issues,Call for Participation: Legal and Policy Issues DevRoom at FOSDEM 2020,Tom Marble,tom marble,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-08,other cfp,,Call for participation : Collaborative information and content management applications at FOSDEM 2020,Clément Aubin,clement aubin,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-08,devroom cfp,LLVM,[CFP] LLVM devroom at FOSDEM 2020,Kristof Beyls,kristof beyls,true,https://penta.fosdem.org/user/new_account
+2020,2019-10-09,devroom cfp,Open Source Design,CfP for Open Source Design Devroom,Amit Nambiar,amit nambiar,true,https://penta.fosdem.org/submission/FOSDEM20/
+2020,2019-10-09,devroom cfp,Web Performance,Web Performance devroom CfP,Gilles Dubuc,gilles dubuc,false,
+2020,2019-10-09,devroom cfp,Game Development,[CFP] Game Development devroom @ FOSDEM 2020,Rémi Verschelde,remi verschelde,false,https://penta.fosdem.org/submission/FOSDEM20.
+2020,2019-10-09,devroom cfp,Game Development,[CFP] Game Development devroom @ FOSDEM 2020,Rémi Verschelde,remi verschelde,false,https://penta.fosdem.org/submission/FOSDEM20.
+2020,2019-10-10,devroom cfp,Containers,Containers devroom at FOSDEM 2020: Call for papers,Stéphane Graber,stephane graber,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-10,devroom cfp,Software Defined Networking,FOSDEM 2020 Software Defined Networking Devroom CFP,Ray Kinsella,ray kinsella,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-10,devroom cfp,Testing and Automation,FOSDEM 2020 Testing and Automation devroom CfP,Alexander Todorov,alexander todorov,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-10,devroom cfp,Python,[CFP] Python devroom,Eric Gazoni,eric gazoni,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-11,devroom cfp,Software Defined Storage,CfP: Software Defined Storage devroom at FOSDEM 2020,Niels de Vos,niels de vos,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-11,devroom cfp,BSD,FOSDEM 2020 BSD Devroom CFP,Rodrigo Osorio,rodrigo osorio,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-11,devroom cfp,"Minimalistic, Experimental and Emerging Languages","FOSDEM 2020 Minimalistic, Experimental and Emerging Languages Devroom CfP",Manolis Ragkousis,manolis ragkousis,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-11,devroom cfp,Virtualization & IaaS,FOSDEM 2020 Virtualization & IaaS Devroom CfP,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2020,2019-10-11,devroom cfp,Mozilla,[CFP] Mozilla devroom 2020,Ludovic Hirlimann,ludovic hirlimann,false,
+2020,2019-10-11,devroom cfp,Community,[CfP] Community DevRoom 2020,laura.czajkowski,laura czajkowski,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-11,devroom cfp,Rust,[CfP] Rust Devroom 2020,Ewan Higgs,ewan higgs,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-12,devroom cfp,Open Source Design,[CfP] Open Source Design devroom 2020,belen barros pena,belen barros pena,false,https://penta.fosdem.org/submission/FOSDEM20/
+2020,2019-10-13,devroom cfp,Free Java,FOSDEM 2020 Free Java Dev Room Call For Participation,Mario Torre,mario torre,false,
+2020,2019-10-13,devroom cfp,Testing and Automation,FOSDEM 2020 Testing and Automation devroom CfP,Alexander Todorov,alexander todorov,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-13,devroom cfp,Open Source Computer Aided Design and Modeling,[CfP] Open Source Computer Aided Design and Modeling devroom at FOSDEM 2020,Seth Hillbrand,seth hillbrand,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-14,devroom cfp,"Erlang, Elixir and friends","[CFP] Erlang, Elixir and friends devroom at FOSDEM 2020",Riccardo Binetti,riccardo binetti,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-14,devroom cfp,Graph Systems and Algorithms,[CFP] Graph Systems and Algorithms Devroom,Max Kiessling,max kiessling,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-14,devroom cfp,Coding Language Communities,[CfP] Coding for Language Communities Devroom at FOSDEM 2020,Don Pedro,don pedro,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-14,devroom cfp,Coding Language Communities,[CfP] Coding for Language Communities Devroom at FOSDEM 2020,Peter Bouda,peter bouda,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-15,devroom cfp,Decentralized Internet & Privacy,[CFP] Decentralized Internet & Privacy devroom @ FOSDEM 2020,brabo,brabo,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-15,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive devroom @FOSDEM2020",Krzysztof Opasiak,krzysztof opasiak,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-15,devroom cfp,Debugging Tools,[CfP] Debugging Tools devroom 2020,Mark Wielaard,mark wielaard,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-16,devroom cfp,Infra Management,CFP Infra Management Devroom @ FOSDEM 2020,Walter Heck,walter heck,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-16,devroom cfp,Open Media,CfP: Open Media devroom,Christophe Massiot,christophe massiot,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-16,devroom cfp,DNS,DNS Developer Room Call for Participation,Pieter Lexis,pieter lexis,true,https://penta.fosdem.org/submission/FOSDEM20.
+2020,2019-10-16,devroom cfp,Free Software Radio,FOSDEM 2020: Free Software Radio Devroom CfP,Nicolas Cuervo Benavides,nicolas cuervo benavides,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-16,devroom cfp,ODE,ODE DevRoom Call for Papers,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM20.
+2020,2019-10-17,devroom cfp,Software Defined Networking,FOSDEM 2020 Software Defined Networking Devroom CFP,Ray Kinsella,ray kinsella,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-17,devroom cfp,ODE,ODE DevRoom Call for Papers,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM20.
+2020,2019-10-18,devroom cfp,PGDay and PostgreSQL,FOSDEM PGDay and PostgreSQL Devroom 2020 - Call for Papers,Ilya Kosmodemiansky,ilya kosmodemiansky,true,
+2020,2019-10-18,devroom cfp,Internet of Things (IOT),[CFP] Internet of Things (IOT) devroom at FOSDEM 2020: call for proposals,Benjamin Henrion,benjamin henrion,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-21,devroom cfp,"Open Source Firmware, BMC and Bootloader","FOSDEM 2020 Open Source Firmware, BMC and Bootloader Devroom Call for Participation",Daniel Kiper,daniel kiper,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-22,devroom cfp,Kotlin,[CFP] Kotlin DevRoom @ FOSDEM 2020,Nicola Corti,nicola corti,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-23,other cfp,,"CFP -IJWMN December 2019, Volume 11 Number 6 (International Journal of Wireless & Mobile Networks)",jin soo,jin soo,false,
+2020,2019-10-25,devroom cfp,Backup and Recovery,Call for Papers - Backup and Recovery Devroom at FOSDEM 2020,Andreas Rogge,andreas rogge,true,
+2020,2019-10-26,devroom cfp,Ada,"CfP - Ada Developer Room at FOSDEM 2020, Brussels, Belgium",Dirk.Craeynest,dirk craeynest,true,
+2020,2019-10-27,devroom cfp,Distributions,Distributions Devroom Call for Participation,Brian Exelbierd,brian exelbierd,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-27,devroom cfp,Retrocomputing,FOSDEM 2020 - Retrocomputing DevRoom Call for Participation,Pau Garcia Quiles,pau garcia quiles,false,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-10-28,other cfp,,A question on CFP,Raymond Paik,raymond paik,false,
+2020,2019-10-29,devroom cfp,Quantum computing,FOSDEM 2020 - Quantum computing devroom CfP,Tomas Babej,tomas babej,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-11-04,devroom cfp,Graphics,FOSDEM Graphics Devroom: call for speakers.,Luc Verhaegen,luc verhaegen,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2019-11-12,other cfp,,Copyleft Conf CFP open through November 17th,Deb Nicholson,deb nicholson,true,
+2020,2019-12-10,devroom cfp,Hardware Enablement,FOSDEM Hardware Enablement Devroom: call for speakers.,Luc Verhaegen,luc verhaegen,true,https://penta.fosdem.org/submission/FOSDEM20
+2020,2020-02-05,other cfp,,Prototype Fund has started the eighth call for proposals - apply by March 31st,Patricia Leu,patricia leu,false,
+2021,2020-12-01,devroom cfp,Virtualization & IaaS,[CFP] Virtualization & IaaS Devroom,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2021,2020-12-02,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-03,devroom cfp,Testing and Automation,"Cfp Testing and Automation devroom, FOSDEM'21",Alexander Todorov,alexander todorov,true,
+2021,2020-12-03,devroom cfp,Declarative and Minimalistic Computing,Declarative and Minimalistic Computing devroom CfP,Manolis Ragkousis,manolis ragkousis,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-03,devroom cfp,SDN,FOSDEM 2021 SDN Devroom CFP,"Kinsella, Ray",kinsella ray,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-03,devroom cfp,Python,Python devroom 2021 CfP,Eric Gazoni,eric gazoni,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-03,devroom cfp,Collab,[CFP] Collab devroom @ FOSDEM 2021,Clément Aubin,clement aubin,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-04,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-05,devroom cfp,Community,Community DevRoom CFP is now announced!,laura.czajkowski,laura czajkowski,false,https://penta.fosdem.org/submission
+2021,2020-12-05,devroom cfp,Distribution,Distribution Devroom CFP,Vipul Siddharth,vipul siddharth,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-05,devroom cfp,Free Software Radio,FOSDEM 2021: Free Software Radio Devroom CfP,Nicolas Cuervo Benavides,nicolas cuervo benavides,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-05,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-05,devroom cfp,Kotlin,[CFP] Kotlin DevRoom @ FOSDEM 2021,Nicola Corti,nicola corti,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-06,devroom cfp,Graph Systems and Algorithms,[CFP] Graph Systems and Algorithms Devroom,Max Kiessling,max kiessling,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-07,devroom cfp,Legal & Policy Issues,Call for Participation: Legal & Policy Issues DevRoom at FOSDEM 2021,Karen M. Sandler,karen m sandler,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-07,devroom cfp,Web Performance,FOSDEM 2021: Web Performance devroom call for proposals,Gilles Dubuc,gilles dubuc,false,
+2021,2020-12-07,devroom cfp,Hardware Aided Trusted Computing,[CFP] Hardware-Aided Trusted Computing Devroom,Jo Van Bulck,jo van bulck,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-07,devroom cfp,"Network monitoring, discovery and inventory","[CFP] Network monitoring, discovery and inventory devroom",Alexander Biehl,alexander biehl,false,https://penta.fosdem.org/submission
+2021,2020-12-08,devroom cfp,mozilla,CFP for the mozilla dev room,Ludovic Hirlimann,ludovic hirlimann,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-08,devroom cfp,Open Source Design,Call for Proposals for the Open Source Design devroom,Bernard Tyers,bernard tyers,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-08,devroom cfp,Software Defined Storage,CfP Software Defined Storage devroom,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-08,devroom cfp,JavaScript,CfP: FOSDEM 2021 - JavaScript Devroom,Ludovic Gasc Lemaire,ludovic gasc lemaire,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-08,devroom cfp,Microkernel,CfP: FOSDEM 2021 - Microkernel Devroom,Martin Decky,martin decky,true,https://penta.fosdem.org/submission/FOSDEM21/
+2021,2020-12-08,devroom cfp,"Open Source Firmware, BMC and Bootloader","Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,michal zygowski,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-09,devroom cfp,Open Research Tools and Technologies,[CFP] Open Research Tools and Technologies devroom,Paul,paul,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-10,other cfp,,CfP Safety and Open Source,Shaun Mooney,shaun mooney,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-11,devroom cfp,Friends of OpenJDK,[CFP] Friends of OpenJDK devroom,Geertjan Wielenga,geertjan wielenga,false,https://penta.fosdem.org/submission/FOSDEM21.
+2021,2020-12-13,devroom cfp,LibreOffice,LibreOffice DevRoom Call for Papers,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM21.
+2021,2020-12-13,other cfp,,Stands - Call for Participation,Pieter De Praetere,pieter de praetere,false,
+2021,2020-12-14,devroom cfp,PostgreSQL,Call for Papers: PostgreSQL Devroom,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2021,2020-12-14,devroom cfp,Go,Go Devroom CfP — FOSDEM 2021,Maartje Eyskens,maartje eyskens,true,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-15,other cfp,,FOSDEM 2021 CFP (Final Reminder),"Kinsella, Ray",kinsella ray,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2020-12-15,devroom cfp,Real Time Communications,[CFP] Real Time Communications devroom,Saúl Ibarra Corretgé,saul ibarra corretge,true,https://penta.fosdem.org/submission/FOSDEM21/
+2021,2020-12-21,devroom cfp,Retrocomputing,FOSDEM 2021 - Retrocomputing DevRoom Call for Participation,François Revol,francois revol,false,https://penta.fosdem.org/submission/FOSDEM21
+2021,2021-11-29,devroom cfp,Computer Aided Modeling and Design Development,[CfP] Computer Aided Modeling and Design Development Room,Seth Hillbrand,seth hillbrand,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-11-29,devroom cfp,Network,FOSDEM 2022 Network Devroom CFP,"Kinsella, Ray",kinsella ray,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-11-29,devroom cfp,Collaboration and Content Management,[CFP] Collaboration and Content Management devroom,Clément Aubin,clement aubin,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-11-29,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-11-30,devroom cfp,Virtualization & IaaS,[CFP] Virtualization & IaaS Devroom,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-11-30,devroom cfp,Public Code,[CfP] Public Code devroom,Jan Ainali,jan ainali,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-01,devroom cfp,Conference Organizing,Conference Organizing Devroom CFP,Wouter Verhelst,wouter verhelst,true,https://penta.fosdem.org/submission
+2022,2021-12-01,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive devroom @FOSDEM2022",Krzysztof Opasiak,krzysztof opasiak,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-01,devroom cfp,Mozilla,[CFP] Mozilla Dev Room,Michael Kohler,michael kohler,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-02,other cfp,,FOSDEM 2022 - Declarative and Minimalistic Computing - Call for Participation,Manolis Ragkousis,manolis ragkousis,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-02,devroom cfp,JavaScript,FOSDEM 2022 - JavaScript Devroom - Call for Participation,Ludovic Gasc Lemaire,ludovic gasc lemaire,false,
+2022,2021-12-02,devroom cfp,Retrocomputing,FOSDEM 2022 - Retrocomputing DevRoom Call for Participation,François Revol,francois revol,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-02,devroom cfp,LibreOffice Technology,LibreOffice Technology DevRoom Call for Papers,Italo Vignoli,italo vignoli,true,https://penta.fosdem.org/submission/FOSDEM22.
+2022,2021-12-03,devroom cfp,BSD,BSD devroom CFP,Rodrigo Osorio,rodrigo osorio,true,
+2022,2021-12-03,devroom cfp,Distributions,FOSDEM 2022 - Distributions Devroom CFP,Vipul Siddharth,vipul siddharth,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-03,devroom cfp,Open Research Tools and Technologies,Open Research Tools and Technologies devroom CFP,Paul,paul,false,
+2022,2021-12-03,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive devroom @FOSDEM2022",Krzysztof Opasiak,krzysztof opasiak,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-04,devroom cfp,Kotlin,[CFP] Kotlin DevRoom @ FOSDEM 2022,Nicola Corti,nicola corti,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-04,devroom cfp,Ada Development,[CfP] Ada Development Room 2022,Fernando Oleo Blanco,fernando oleo blanco,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-05,devroom cfp,Friends of OpenJDK,[CFP] Friends of OpenJDK DevRoom 2022,Geertjan Wielenga,geertjan wielenga,false,https://penta.fosdem.org/submission/FOSDEM22.
+2022,2021-12-06,devroom cfp,Open Source Design,"CFP: Open Source Design devroom, FOSDEM'22",belen barros pena,belen barros pena,false,https://penta.fosdem.org/submission/
+2022,2021-12-06,devroom cfp,Testing and Automation,"CFP: Testing and Automation devroom, FOSDEM'22",Alexander Todorov,alexander todorov,true,
+2022,2021-12-06,other cfp,,CfP FOSDEM 22 Software Defined Storage,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-06,devroom cfp,"Open Source Firmware, BMC and Bootloader","FOSDEM'22 Open Source Firmware, BMC and Bootloader devroom CFP",Michał Żygowski,michal zygowski,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-06,other cfp,,Matrix.org Foundation and Community 2022 - Call for Participations,Thibault Martin,thibault martin,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-06,devroom cfp,Microkernel and Component based OS,Microkernel and Component-based OS Devroom CfP,Martin Decky,martin decky,true,
+2022,2021-12-06,devroom cfp,Free Software Radio,[CFP] Free Software Radio DevRoom 2022,Andrej Rode,andrej rode,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-06,devroom cfp,Hardware Aided Trusted Computing,[CFP] Hardware-Aided Trusted Computing devroom,Fritz Alder,fritz alder,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-07,devroom cfp,CICD,CFP FOSDEM 22 CICD Devroom,Olivier Vernin,olivier vernin,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-07,devroom cfp,‘22 LLVM,CFP FOSDEM ‘22 LLVM Devroom,kiran,kiran,false,https://penta.fosdem.org/user/new_account
+2022,2021-12-07,devroom cfp,Containers,CFP: Containers devroom at FOSDEM22,Stéphane Graber,stephane graber,false,
+2022,2021-12-07,devroom cfp,FOSS on mobile devices,FOSS on mobile devices devroom CfP,Evangelos Ribeiro Tzaras,evangelos ribeiro tzaras,true,
+2022,2021-12-07,devroom cfp,Python,Python Devroom CFP,Eric Gazoni,eric gazoni,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-08,devroom cfp,Fwd,Fwd: [devroom-managers] Call for Presentations - Infra Management DevRoom - FOSDEM 2022,lkcl,lkcl,false,
+2022,2021-12-08,devroom cfp,Fwd,Fwd: [devroom-managers] Call for Presentations - OpenPOWER DevRoom - FOSDEM 2022,lkcl,lkcl,false,
+2022,2021-12-08,devroom cfp,Apache OpenOffice,[CFP] Apache OpenOffice Devroom,Andrea Pescetti,andrea pescetti,true,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-08,other cfp,,[CfP] PostgreSQL @ FOSDEM 2022,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2022,2021-12-11,other cfp,,MariaDB Server CfP,Ian Gilfillan,ian gilfillan,true,
+2022,2021-12-13,devroom cfp,Legal & Policy Issues,Call for Participation: Legal & Policy Issues DevRoom at FOSDEM 2022,Karen M. Sandler,karen m sandler,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-13,devroom cfp,Raku,Raku Devroom CFP,Andrew Shitov,andrew shitov,true,https://penta.fosdem.org/submission/FOSDEM22.
+2022,2021-12-16,devroom cfp,Safety and Open Source,CfP Safety and Open Source devroom,Shaun Mooney,shaun mooney,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-17,devroom cfp,Graphics,CFP FOSDEM22 Graphics DevRoom,Luc Verhaegen,luc verhaegen,false,https://penta.fosdem.org/submission/FOSDEM22
+2022,2021-12-27,devroom cfp,Extended deadline Retrocomputing,Extended deadline: FOSDEM 2022 - Retrocomputing DevRoom Call for Participation,François Revol,francois revol,false,
+2023,2022-09-27,fosdem call,,FOSDEM 2023 Stands CfP,Pieter De Praetere,pieter de praetere,false,
+2023,2022-11-07,devroom cfp,Community,Call for Participation: Community Devroom 2023,laura.czajkowski,laura czajkowski,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-07,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-08,devroom cfp,Testing and Automation,"CFP: Testing and Automation devroom, FOSDEM'23",Alexander Todorov,alexander todorov,true,
+2023,2022-11-08,devroom cfp,Binary Tools,Call for Participation: Binary Tools Devroom 2023,Jose E. Marchesi,jose e marchesi,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-08,devroom cfp,Graph Systems and Algorithms,Call for participation: Graph Systems and Algorithms Devroom 2023,Max Kiessling,max kiessling,false,https://penta.fosdem.org/submission/FOSDEM2
+2023,2022-11-08,devroom cfp,LibreOffice Technology,LibreOffice Technology DevRoom Call for Papers,Italo Vignoli,italo vignoli,false,https://penta.fosdem.org/submission/FOSDEM23.
+2023,2022-11-08,devroom cfp,Security,Security Devroom: Call for Participation,Jakub Jelen,jakub jelen,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-08,devroom cfp,Kotlin,[CFP] Kotlin DevRoom @ FOSDEM 2023,Nicola Corti,nicola corti,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-08,devroom cfp,devroom managers Network,[devroom-managers] Call for Participation: Network Devroom 2023,Alfredo Cardigliano,alfredo cardigliano,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-09,devroom cfp,( ) Kernel,Call for Participation (CfP): Kernel Devroom,Christian Brauner,christian brauner,false,https://penta.fosdem.org/submission/FOSDEM23/
+2023,2022-11-09,devroom cfp,PostgreSQL,Call for Participation: PostgreSQL Devroom and FOSDEM PGDay,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2023,2022-11-09,devroom cfp,Public Code and Digital Public Goods,Call for Participation: Public Code and Digital Public Goods devroom,Jan Ainali,jan ainali,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-09,devroom cfp,Translations,Call for Participation: Translations Devroom 2023,Paulo Henrique de Lima Santana,paulo henrique de lima santana,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-09,devroom cfp,SBOM,SBOM devroom info and CfP,Alexios Zavras,alexios zavras,true,https://penta.fosdem.org/submission/FOSDEM23/
+2023,2022-11-09,devroom cfp,Image based Linux and Secure Measured Boot,[CFP] Image-based Linux and Secure Measured Boot Devroom,Luca Boccassi,luca boccassi,true,https://penta.fosdem.org/submission/FOSDEM23/event/new
+2023,2022-11-10,devroom cfp,Nix and NixOS,Call for Participation: Nix and NixOS Devroom 2023,Ryan Lahfa,ryan lahfa,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-10,devroom cfp,Collaboration,Call for participation: Collaboration devroom 2023,Clément Aubin,clement aubin,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-10,devroom cfp,containers,Call for participation: containers devroom at FOSDEM 2023,Stéphane Graber,stephane graber,true,
+2023,2022-11-10,devroom cfp,Software Defined Storage,CfP Software Defined Storage devroom FOSDEM23,Jan Fajerski,jan fajerski,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-10,devroom cfp,Virtualization & IaaS,[CFP] Virtualization & IaaS Devroom,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2023,2022-11-10,devroom cfp,devroom managers Microkernel and Component based OS,[devroom-managers] Call for Participation: Microkernel and Component-based OS Devroom 2023,Razvan Deaconescu,razvan deaconescu,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-11,devroom cfp,Energy,Call for Participation: Energy devroom,Nico Rikken,nico rikken,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-11,devroom cfp,"Erlang, Elixir & Friends","Call for Participation: Erlang, Elixir & Friends Devroom 2023",Riccardo Binetti,riccardo binetti,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-11,devroom cfp,FOSS on mobile devices,Call for Participation: FOSS on mobile devices devroom,Evangelos Ribeiro Tzaras,evangelos ribeiro tzaras,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-11,devroom cfp,Open Source Design,Call for Participation: Open Source Design Devroom at FOSDEM 2023,Nimisha Vijay,nimisha vijay,false,https://penta.fosdem.org/submission/FOSDEM23/
+2023,2022-11-11,devroom cfp,DNS,DNS devroom CfP,Peter van Dijk,peter van dijk,false,https://penta.fosdem.org/submission/FOSDEM23.
+2023,2022-11-11,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive Devroom @FOSDEM2023",Krzysztof Opasiak,krzysztof opasiak,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-12,devroom cfp,BSD,Call for Participation: BSD devroom at FOSDEM 2023,Rodrigo Osorio,rodrigo osorio,true,
+2023,2022-11-12,devroom cfp,Haskell,Call for Participation: Haskell Devroom 2023,Fraser Tweedale,fraser tweedale,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-12,devroom cfp,Railways and Open Transport,Call for Participation: Railways and Open Transport Devroom,Cornelius Schumacher,cornelius schumacher,true,https://penta.fosdem.org/submission/FOSDEM23/
+2023,2022-11-12,devroom cfp,Open Media,CfP: Open Media Devroom at FOSDEM 2023,Christophe Massiot,christophe massiot,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-13,devroom cfp,Foojay.io,CFP: Foojay.io Developer Room at FOSDEM 2023,Geertjan Wielenga,geertjan wielenga,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-13,other cfp,,FOSDEM 2023 - Declarative and Minimalistic Computing - Call for Participation,Manolis Ragkousis,manolis ragkousis,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-13,other cfp,,FOSDEM 2023 Call for Presentations,Alasdair G Kergon,alasdair g kergon,false,
+2023,2022-11-14,devroom cfp,LLVM,CFP FOSDEM 2023 LLVM dev room,Kristof Beyls,kristof beyls,false,https://penta.fosdem.org/user/new_account
+2023,2022-11-14,devroom cfp,Confidential Computing,Call for Participation: Confidential Computing Devroom 2023,Fritz Alder,fritz alder,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-14,devroom cfp,Matrix,"FOSDEM 2023 - Matrix Devroom, Call for Participation",Thibault Martin,thibault martin,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-14,devroom cfp,Mozilla,"FOSDEM 2023 - Mozilla Devroom, Call for Participation",Francisco Picolini,francisco picolini,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-14,devroom cfp,JavaScript,FOSDEM 2023 – JavaScript DevRoom Call for Participation,Fabien,fabien,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-15,devroom cfp,Fwd Fast and Streaming Data,Fwd: [CFP] Fast and Streaming Data Devroom,Javier Ramirez,javier ramirez,true,https://penta.fosdem.org/submission/
+2023,2022-11-16,devroom cfp,"Open Source Firmware, BMC and Bootloader","Call for Participation: Open Source Firmware, BMC and Bootloader devroom at FOSDEM 2023",Daniel Kiper,daniel kiper,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-16,devroom cfp,“Monitoring & Observability”,FOSDEM 2023 - CfP for “Monitoring & Observability” devroom at FOSDEM 2023,Richard Hartmann,richard hartmann,true,https://penta.fosdem.org/submission
+2023,2022-11-17,devroom cfp,Open Research Tools and Technologies,CFP Open Research Tools and Technologies devroom,Paul Girard,paul girard,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-17,devroom cfp,Distributions,FOSDEM 2023 Distributions Devroom - Call for Participation,Justin W. Flory (he/him),justin w flory he him,false,https://penta.fosdem.org/user/new_account
+2023,2022-11-18,devroom cfp,RISC V,Call for Participation: RISC-V Devroom 2023,Björn Töpel,bjorn topel,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-18,devroom cfp,Sovereign Cloud,Call for Participation: Sovereign Cloud DevRoom at FOSDEM 2023,Felix Kronlage-Dammers,felix kronlage dammers,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-21,other cfp,,Call for Participation,Eric Gazoni,eric gazoni,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-21,devroom cfp,Legal and Policy Issues,Call for Participation: Legal and Policy Issues DevRoom at FOSDEM 2023,Karen M. Sandler,karen m sandler,false,https://penta.fosdem.org/submission/FOSDEM23
+2023,2022-11-24,other cfp,,Call for Participation: Real Time Communications 2023,Saúl Ibarra Corretgé,saul ibarra corretge,true,https://penta.fosdem.org/submission/FOSDEM23/
+2023,2022-11-24,devroom cfp,devroom managers Network,[devroom-managers] Call for Participation: Network Devroom 2023,Alfredo Cardigliano,alfredo cardigliano,true,https://penta.fosdem.org/submission/FOSDEM23
+2023,2023-11-11,devroom cfp,Monitoring & Observability,Call for Participation: Monitoring & Observability Devroom,Richard Hartmann,richard hartmann,true,
+2023,2023-11-13,devroom cfp,Ruby,Call for Participation: Ruby devroom 2024,George Kosmopoulos,george kosmopoulos,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2023,2023-11-16,devroom cfp,Open Source Design,Open Source Design devroom at FOSDEM '24: Call for participation,Nimisha Vijay,nimisha vijay,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-08,devroom cfp,Virtualization and Cloud infrastructure,Call for participation: Virtualization and Cloud infrastructure Room at FOSDEM 2024,Piotr Kliczewski,piotr kliczewski,false,https://penta.fosdem.org/submission/FOSDEM17
+2024,2023-11-08,devroom cfp,Community,Community devroom CFP,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-08,devroom cfp,Fwd Community,Fwd: Community devroom CFP,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-08,devroom cfp,Emulator Development,[CFP] Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,false,https://pretalx.fosdem.org/fosdem-2024
+2024,2023-11-08,other cfp,,"[CfP] Call for participation: Libre-SOC, FPGA and VLSI at FOSDEM 2024",Andrey Miroshnikov,andrey miroshnikov,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-08,devroom cfp,Open Hardware and CAD/CAM,[CfP] Open Hardware and CAD/CAM devroom at FOSDEM 2024,Seth Hillbrand,seth hillbrand,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-08,devroom cfp,Software Defined Radio and Amateur Radio,[CfP] Software-Defined Radio and Amateur Radio Devroom 2024,Marcus Müller,marcus muller,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-09,devroom cfp,Collaboration and Content Management,Call for Participation : Collaboration and Content Management Devroom 2024,Clément Aubin,clement aubin,true,
+2024,2023-11-09,devroom cfp,Nix and NixOS,Call for Participation: Nix and NixOS Devroom 2024,Pierre Bourdon,pierre bourdon,false,
+2024,2023-11-09,devroom cfp,RISC V,Call for Participation: RISC-V Devroom 2024,Björn Töpel,bjorn topel,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-09,devroom cfp,Rust,Call for Participation: Rust Devroom @ FOSDEM 2024,Ewan Higgs,ewan higgs,false,
+2024,2023-11-09,devroom cfp,Network,Call for participation: Network Devroom at FOSDEM 2024,Luca Deri,luca deri,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-09,devroom cfp,Containers,Containers devroom CFP for FOSDEM 2024,Stéphane Graber,stephane graber,true,
+2024,2023-11-09,devroom cfp,Public Code and Digital Public Goods,Public Code and Digital Public Goods devroom Call for Participation,Jan Ainali,jan ainali,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-09,devroom cfp,Software Defined Storage,[CfP] FOSDEM Software Defined Storage devroom,Jan Fajerski,jan fajerski,false,
+2024,2023-11-09,devroom cfp,,[CfP] Identity and Access Management deveroom at FOSDEM 2024,Alexander Bokovoy,alexander bokovoy,true,
+2024,2023-11-10,devroom cfp,LLVM,CFP FOSDEM 2024 LLVM dev room,Kristof Beyls,kristof beyls,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Confidential computing,Call for Participation : Confidential computing devroom 2024,Fritz Alder,fritz alder,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Energy,Call for Participation: Energy devroom @ FOSDEM 2024,Kai Hermann,kai hermann,false,
+2024,2023-11-10,devroom cfp,"Erlang, Elixir, Gleam & Friends","Call for Participation: Erlang, Elixir, Gleam & Friends Devroom 2024",Arnaldo Cesco,arnaldo cesco,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Mozilla,Call for Participation: Mozilla Devroom 2024,Konstantina Papadea,konstantina papadea,false,https://pretalx.fosdem.org/fosdem-2024/cfp.
+2024,2023-11-10,devroom cfp,Railways and Open Transport,Call for Participation: Railways and Open Transport Devroom,Max Mehl,max mehl,true,
+2024,2023-11-10,devroom cfp,Translations,Call for Participation: Translations Devroom 2024,Paulo Henrique de Lima Santana,paulo henrique de lima santana,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Web Performance,Call for Participation: Web Performance Devroom 2024,Dave Hunt,dave hunt,true,
+2024,2023-11-10,devroom cfp,APIs & friends,Call for participation: APIs & friends devroom FOSDEM 2024,Alvaro Navarro,alvaro navarro,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,", Debuggers and Analysis tools","CfP for FOSDEM 2024, Debuggers and Analysis tools devroom",Guinevere Larsen,guinevere larsen,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Go,CfP for Go Devroom at FOSDEM 2024,Maartje Eyskens,maartje eyskens,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Free Java,FOSDEM 2024 Free Java Dev Room Call For Participation,Mario Torre,mario torre,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,GCC,GCC devroom at FOSDEM 2024: Call for Participation open,David Malcolm,david malcolm,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-10,devroom cfp,Python,Python Devroom Call for Participation,Eric Gazoni,eric gazoni,false,
+2024,2023-11-10,devroom cfp,Tool Docs,Tool the Docs Devroom FOSDEM 2024 CFP,Chris Chinchilla,chris chinchilla,false,
+2024,2023-11-10,devroom cfp,to Matrix,[CfP] Call for Participation to the Matrix Devroom,thibaultm,thibaultm,false,https://pretalx.fosdem.org/
+2024,2023-11-11,devroom cfp,PostgreSQL,Call for Participation: PostgreSQL Devroom @ FOSDEM 2024,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,
+2024,2023-11-11,devroom cfp,"HPC, Big Data, and Data Science","CfP for FOSDEM'24 HPC, Big Data, and Data Science Devroom",Kenneth Hoste,kenneth hoste,true,
+2024,2023-11-11,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive Devroom @FOSDEM2024",Krzysztof Opasiak,krzysztof opasiak,false,
+2024,2023-11-12,devroom cfp,"""Modern Email""","Call for Participation in the ""Modern Email"" Developer Room at FOSDEM '24!",Mechiel Lukkien,mechiel lukkien,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-12,other cfp,,Declarative and Minimalistic Computing: CfP for FOSDEM 2024,Manolis Ragkousis,manolis ragkousis,false,https://pretalx.fosdem.org/
+2024,2023-11-12,devroom cfp,"Erlang, Elixir, Gleam and Friends","Erlang, Elixir, Gleam and Friends devroom Call for Participation",Arnaldo Cesco,arnaldo cesco,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-12,devroom cfp,Retrocomputing,FOSDEM 2024 - Retrocomputing Devroom - Call for papers,seg seg,seg seg,false,
+2024,2023-11-12,other cfp,,FOSS on Mobile Devices: CfP for FOSDEM 2024,Arnaud Ferraris,arnaud ferraris,true,
+2024,2023-11-13,devroom cfp,AI and Machine Learning,CFP - AI and Machine Learning devroom,William Jones,william jones,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-13,devroom cfp,Software Bill of Materials (SBOM),CfP - Software Bill of Materials (SBOM) devroom,Alexios Zavras,alexios zavras,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-13,devroom cfp,"Open Source Firmware, BMC and Bootloader","FOSDEM'24 Open Source Firmware, BMC and Bootloader devroom CFP",Daniel Kiper,daniel kiper,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-13,devroom cfp,Real Time Communications,[CfP] Real Time Communications devroom at FOSDEM 2024,Saúl Ibarra Corretgé,saul ibarra corretge,true,
+2024,2023-11-14,devroom cfp,Testing and Continuous Delivery,CFP Testing and Continuous Delivery devroom,Alexander Todorov,alexander todorov,false,https://pretalx.fosdem.org/fosdem-2024/.
+2024,2023-11-14,other cfp,,Call for Proposals: Designing Futures of FOSS Content Management,Mathias Bolt Lesniak,mathias bolt lesniak,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-15,devroom cfp,Legal and Policy Issues,CfP for Legal and Policy Issues DevRoom at FOSDEM 2024,Karen M. Sandler,karen m sandler,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-15,devroom cfp,Distributions,FOSDEM 2024 Distributions Devroom - Call for Participation,Justin W. Flory (he/him),justin w flory he him,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-15,devroom cfp,JavaScript,JavaScript devroom CFP announcement!,Aymen Ben Amor,aymen ben amor,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-15,devroom cfp,Python,[CfP] Python Devroom Call for Participation,Eric Gazoni,eric gazoni,false,
+2024,2023-11-15,devroom cfp,devroom managers Open Research,[devroom-managers][CfP] Open Research Devroom,Sara Petti,sara petti,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-16,devroom cfp,DNS,DNS DevRoom at FOSDEM2024 - Call for Participation,Pieter Lexis,pieter lexis,false,
+2024,2023-11-17,devroom cfp,Kernel,Call for participation: Kernel Devroom at FOSDEM 2024,Mike Rapoport,mike rapoport,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-17,devroom cfp,Perl & Raku,CfP Perl & Raku Devroom,Theo van Hoesel,theo van hoesel,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-18,devroom cfp,European Policy,FOSDEM 2024 - European Policy devroom info and Call for Participation,Simon Phipps,simon phipps,true,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-11-19,devroom cfp,graphics,FOSDEM graphics DevRoom CFP,Luc Verhaegen,luc verhaegen,false,
+2024,2023-11-20,devroom cfp,Open Media,Call For Participation: Open Media devroom,Jaron Viëtor,jaron vietor,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2023-12-01,devroom cfp,"Deadline extended till Monday evening ""Modern Email""","[Deadline extended till Monday evening] CfP in the ""Modern Email"" Developer Room at FOSDEM '24!",Hans-Joerg Happel,hans joerg happel,false,https://pretalx.fosdem.org/fosdem-2024/cfp
+2024,2024-10-27,devroom cfp,Identity and Access management,Identity and Access management devroom CFP for FOSDEM 2025,Alexander Bokovoy,alexander bokovoy,true,
+2024,2024-10-30,devroom cfp,; EU Policy,Call for Participation; EU Policy Devroom,Simon Phipps,simon phipps,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-24,devroom cfp,Testing and Continuous Delivery,CFP Testing and Continuous Delivery devroom,Alexander Todorov,alexander todorov,false,https://pretalx.fosdem.org/fosdem-2025/.
+2025,2024-10-24,devroom cfp,Educational,Call for Participation: Educational devroom @ FOSDEM 2025,Bart Mathijssen,bart mathijssen,false,
+2025,2024-10-25,devroom cfp,Distributions,2025 Distributions DevRoom - Call for Participation,benny Vasquez,benny vasquez,false,
+2025,2024-10-25,devroom cfp,RISC V,Call for Participation: RISC-V Devroom 2025,Björn Töpel,bjorn topel,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-25,devroom cfp,Railways and Open Transport,Call for Participation: Railways and Open Transport Devroom,Cornelius Schumacher,cornelius schumacher,true,
+2025,2024-10-25,devroom cfp,Network,Call for participation: Network Devroom at FOSDEM 2025,Luca Deri,luca deri,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-25,devroom cfp,Community,Community DevRoom CFP,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-25,devroom cfp,eBPF,FOSDEM 2025 eBPF Devroom Call for Participation,Quentin Monnet,quentin monnet,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-26,devroom cfp,Junior,Call for Participation: FOSDEM Junior devroom @ FOSDEM 2025,Bart Mathijssen,bart mathijssen,false,
+2025,2024-10-26,devroom cfp,Security,Call for participation: Security Devroom at FOSDEM 2025,Simon Josefsson,simon josefsson,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-26,devroom cfp,Image Based Linux and Boot Integrity,CfP: Image-Based Linux and Boot Integrity Devroom at FOSDEM 25,Luca Boccassi,luca boccassi,false,
+2025,2024-10-26,devroom cfp,Containers,Containers devroom CFP for FOSDEM 2025,Stéphane Graber,stephane graber,true,
+2025,2024-10-26,devroom cfp,Kernel,Kernel devroom CFP for FOSDEM 2025,Stéphane Graber,stephane graber,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-26,devroom cfp,LLVM,LLVM dev room - CFP,Kristof Beyls,kristof beyls,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-27,devroom cfp,Open Media,Call For Participation: Open Media devroom,Jaron Viëtor,jaron vietor,true,
+2025,2024-10-27,devroom cfp,Collaboration and Content Management,Call for Participation : Collaboration and Content Management Devroom,Clément Aubin,clement aubin,false,
+2025,2024-10-28,devroom cfp,Python,Call for Participation: Python devroom @ FOSDEM 2025,Marc-Andre Lemburg,marc andre lemburg,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-28,devroom cfp,Software Defined Storage,Call for participation: Software Defined Storage devroom at FOSDEM 2025,Jan Fajerski,jan fajerski,true,
+2025,2024-10-28,devroom cfp,Cloud Native Databases,Cloud Native Databases DevRoom CFP,Raymond Paik,raymond paik,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-28,devroom cfp,Declarative and Minimalistic Computing,Declarative and Minimalistic Computing devroom CfP,Manolis Ragkousis,manolis ragkousis,false,https://pretalx.fosdem.org/
+2025,2024-10-28,devroom cfp,Rust,FOSDEM 2025 Rust devroom Call for Presentations,Ewan Higgs,ewan higgs,false,
+2025,2024-10-28,devroom cfp,LibreOffice Technology,LibreOffice Technology DevRoom Call for Papers,Italo Vignoli,italo vignoli,true,https://pretalx.fosdem.org/fosdem-2025/cfp.
+2025,2024-10-29,other cfp,,Call For Participation: Funding the FOSS Ecosystem at FOSDEM 2025,Tara Tarakiyee,tara tarakiyee,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,devroom cfp,"APIs GraphQL, OpenAPI, AsyncAPI & Friends","Call for Participation for APIs: GraphQL, OpenAPI, AsyncAPI & Friends Devroom",Jem Gillam,jem gillam,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,devroom cfp,Android Open Source Project,Call for Participation: Android Open Source Project devroom at FOSDEM 2025,Chris Simmonds,chris simmonds,true,
+2025,2024-10-29,devroom cfp,Energy,Call for Participation: Energy Devroom,Kai Hermann,kai hermann,false,
+2025,2024-10-29,devroom cfp,Free Java,Call for Participation: Free Java devroom,Chris Mah,chris mah,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,devroom cfp,Nix and NixOS,Call for Participation: Nix and NixOS devroom @ FOSDEM 2025,Bryan Honof,bryan honof,true,
+2025,2024-10-29,devroom cfp,Ada,Call for Presentations: Ada devroom @ FOSDEM 2025,Fernando Oleo Blanco,fernando oleo blanco,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,devroom cfp,Robotics and Simulation,Call for participation: Robotics and Simulation Room at FOSDEM 2025,Lucas Chiesa,lucas chiesa,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,other cfp,,Call for participation: Tool the Docs at FOSDEM 2025,Chris Chinchilla,chris chinchilla,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-29,devroom cfp,Virtualization and Cloud infrastructure,Call for participation: Virtualization and Cloud infrastructure Room at FOSDEM 2025,Piotr Kliczewski,piotr kliczewski,false,
+2025,2024-10-29,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive Devroom @FOSDEM2025",Krzysztof Opasiak,krzysztof opasiak,false,
+2025,2024-10-30,devroom cfp,Attestation,Attestation Devroom CfP,Muhammad Usama Sardar,muhammad usama sardar,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,s Data Analytics,Call For Participations: Data Analytics DevRoom @ FOSDEM 2025,Javier Ramirez,javier ramirez,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,"""Modern Email""","Call for Participation: ""Modern Email"" devroom",Mechiel Lukkien,mechiel lukkien,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,Confidential Computing,Call for Participation: Confidential Computing devroom @ FOSDEM 2025,Fritz Alder,fritz alder,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,Microkernel and Component Based OS,Call for Participation: Microkernel and Component-Based OS Devroom,Udo Steinberg,udo steinberg,true,
+2025,2024-10-30,devroom cfp,Quantum Computing,Call for Participation: Quantum Computing devroom @ FOSDEM 2025,Alessandro Cosentino,alessandro cosentino,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,Real Time Communications,Call for Participation: Real-Time Communications devroom @ FOSDEM 2025,Saúl Ibarra Corretgé,saul ibarra corretge,true,
+2025,2024-10-30,devroom cfp,Web Performance,Call for Participation: Web Performance Devroom 2025,Dave Hunt,dave hunt,true,
+2025,2024-10-30,devroom cfp,Legal and Policy Issues,CfP: Legal and Policy Issues DevRoom at FOSDEM 2025,Tom Marble,tom marble,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,Fwd Community,Fwd: Community DevRoom CFP,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-10-30,devroom cfp,GCC (GNU Toolchain),GCC (GNU Toolchain) dev room - CFP,Marc,marc,false,
+2025,2024-10-30,devroom cfp,Swift,Swift DevRoom CFP 2025 Submission,Paris Pittman,paris pittman,true,
+2025,2024-10-30,devroom cfp,FOSS on Mobile,[CfP] FOSS on Mobile Devroom Call for Proposals,Evangelos Ribeiro Tzaras,evangelos ribeiro tzaras,true,
+2025,2024-10-31,devroom cfp,Network,Call for participation: Network Devroom at FOSDEM 2025,Luca Deri,luca deri,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-01,devroom cfp,"""Modern Email""","Call for Participation: ""Modern Email"" devroom",Damian Poddebniak,damian poddebniak,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-01,devroom cfp,Geospatial,Call for Participation: Geospatial devroom at FOSDEM 2025,Edward Betts,edward betts,false,
+2025,2024-11-01,devroom cfp,Social Web,Call for Participation: Social Web Devroom,Evan Prodromou,evan prodromou,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-01,devroom cfp,PostgreSQL,PostgreSQL Devroom & FOSDEM PGDay 2025 - dates announced and call for papers open,Andreas 'ads' Scherbaum,andreas ads scherbaum,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-01,devroom cfp,,[devroom-managers] Call for participation/talks: Open Source Design at FOSDEM 2025,Eriol Fox,eriol fox,false,
+2025,2024-11-02,devroom cfp,# Retrocomputing,# FOSDEM 2025 - Retrocomputing Devroom - Call for papers #,Sebas Devroom manager FOSDEM 2024 Retrocomputing,sebas devroom manager fosdem 2024 retrocomputing,false,
+2025,2024-11-04,devroom cfp,Open Research,CFP Open Research devroom,Paul,paul,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-04,devroom cfp,Government Collaboration,Call for Participation: Government Collaboration devroom at FOSDEM 2025,Felix Kronlage-Dammers,felix kronlage dammers,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-04,devroom cfp,to Matrix Foundation and Community,CfP to the Matrix Foundation and Community DevRoom,Thibault Martin,thibault martin,false,https://pretalx.fosdem.org/.
+2025,2024-11-04,devroom cfp,DNS,FOSDEM 2025 DNS devroom Call for Presentations,Peter van Dijk,peter van dijk,false,
+2025,2024-11-04,devroom cfp,MySQL,MySQL Devroom - CfP,Frédéric Descamps,frederic descamps,true,
+2025,2024-11-04,devroom cfp,SBOM,SBOM devroom info and CfP -- FOSDEM 2025,Alexios Zavras,alexios zavras,false,
+2025,2024-11-05,devroom cfp,JavaScript,Call for Participation: FOSDEM JavaScript Devroom 2025,Aymen Ben Amor,aymen ben amor,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-05,other cfp,,Mozilla CFP at FOSDEM 2025,Rizki Dwi Kelimutu,rizki dwi kelimutu,false,
+2025,2024-11-06,devroom cfp,"HPC, Big Data, and Data Science","CfP for FOSDEM'25 HPC, Big Data, and Data Science Devroom",Kenneth Hoste,kenneth hoste,false,
+2025,2024-11-06,devroom cfp,Go,Go Devroom CfP — FOSDEM 2025,Maartje Eyskens,maartje eyskens,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-06,other cfp,,[CfP] Inclusive Web Call for Proposals,Saptak Sengupta,saptak sengupta,false,
+2025,2024-11-12,devroom cfp,"Open Source Firmware, BMC and Bootloader","Call for Participation: Open Source Firmware, BMC and Bootloader devroom",Piotr Król,piotr krol,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-22,devroom cfp,"Open Source Firmware, BMC and Bootloader","Call for Participation: Open Source Firmware, BMC and Bootloader devroom",Piotr Król,piotr krol,true,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2024-11-27,devroom cfp,Digital Wallets and Verifiable Credentials,Digital Wallets and Verifiable Credentials DevRoom CfP,Sean Bohan,sean bohan,false,https://pretalx.fosdem.org/fosdem-2025/cfp
+2025,2025-10-31,other cfp,,CfP Bioinformatics and Computational Biology,Alexis Praga,alexis praga,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2025,2025-11-05,devroom cfp,Community,FOSDEM - CFP Community devroom,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2025,2025-11-12,devroom cfp,Legal and Policy Issues,Call For Participation: Legal and Policy Issues DevRoom,Tom Marble,tom marble,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-27,devroom cfp,Collaboration and Content Management,Call for Participation : Collaboration and Content Management Devroom,Clément Aubin,clement aubin,false,
+2026,2025-10-27,devroom cfp,Virtualization and Cloud infrastructure,Call for participation: Virtualization and Cloud infrastructure Room at FOSDEM 2026,Piotr Kliczewski,piotr kliczewski,false,
+2026,2025-10-28,devroom cfp,Energy,Call for Participation: Energy Devroom at FOSDEM 2026,Kai Hermann,kai hermann,false,
+2026,2025-10-28,devroom cfp,Rust,Call for participation: Rust devroom,Ewan Higgs,ewan higgs,false,
+2026,2025-10-30,devroom cfp,Testing and Continuous Delivery,CFP Testing and Continuous Delivery devroom,Alexander Todorov,alexander todorov,false,https://pretalx.fosdem.org/fosdem-2026/
+2026,2025-10-30,devroom cfp,Open Hardware and CAD/CAM,Call for Participation: Open Hardware and CAD/CAM devroom at FOSDEM 2026,Chris Hennes,chris hennes,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-30,devroom cfp,Robotics and Simulation,Call for Participation: Robotics and Simulation Devroom at FOSDEM 2026,Arnaud Taffanel,arnaud taffanel,true,
+2026,2025-10-30,devroom cfp,eBPF,FOSDEM 2026 eBPF Devroom Call for Participation,Quentin Monnet,quentin monnet,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-30,devroom cfp,devroom managers Network,[devroom-managers] Call for participation: Network Devroom at FOSDEM 2026,Alfredo Cardigliano,alfredo cardigliano,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,"""Local First, Sync engines and CRDTs""","Call for Participation: ""Local First, Sync engines and CRDTs"" devroom at FOSDEM 2026",Niko - NextGraph,niko nextgraph,false,
+2026,2025-10-31,devroom cfp,Databases,Call for Participation: Databases devroom at FOSDEM 2026,Raymond Paik,raymond paik,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,other cfp,,"Call for Participation: Local First, sync engines and CRDTs",Niko - NextGraph,niko nextgraph,false,
+2026,2025-10-31,devroom cfp,Music Production,Call for Participation: Music Production devroom,Lorenzo Miniero,lorenzo miniero,true,
+2026,2025-10-31,devroom cfp,Open Media,Call for Participation: Open Media devroom 2026,Jaron Viëtor,jaron vietor,true,
+2026,2025-10-31,devroom cfp,Plan 9,Call for Participation: Plan 9 Devroom 2026,red,red,false,https://pretalx.fosdem.org/fosdem-2026/
+2026,2025-10-31,devroom cfp,Python,Call for Participation: Python devroom @ FOSDEM 2026,Marc-Andre Lemburg,marc andre lemburg,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,RISC V,Call for Participation: RISC-V Devroom 2026,Björn Töpel,bjorn topel,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,Security,Call for Participation: Security Devroom @ FOSDEM'2026,Simon Josefsson,simon josefsson,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,Social Web,Call for Participation: Social Web Devroom,Evan Prodromou,evan prodromou,true,https://pretalx.fosdem.org/fosdem-2026/cfp.
+2026,2025-10-31,devroom cfp,Modern Email,Call for participation: Modern Email devroom at FOSDEM 2026,Mechiel Lukkien,mechiel lukkien,true,
+2026,2025-10-31,other cfp,,CfP Microkernel and Component-Based OS,Sebastian Sumpf,sebastian sumpf,false,
+2026,2025-10-31,devroom cfp,Funding FOSS Ecosystem,Funding the FOSS Ecosystem - devroom CfP,Paloma Oliveira,paloma oliveira,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,Search,Search devroom CFP,Carly Richmond,carly richmond,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-10-31,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive Devroom @FOSDEM2026",Krzysztof Opasiak,krzysztof opasiak,false,
+2026,2025-10-31,devroom cfp,devroom managers Identity and Access management,[devroom-managers] Identity and Access management devroom CFP for FOSDEM 2026,Iker Pedrosa,iker pedrosa,true,
+2026,2025-11-01,devroom cfp,Educational,Call for Participation: Educational devroom @ FOSDEM 2026,Bart Mathijssen,bart mathijssen,false,
+2026,2025-11-01,other cfp,,Call for Participation: Software Defined Radio/Digital Signal Processing,jmfriedt,jmfriedt,false,https://pretalx.fosdem.org
+2026,2025-11-01,devroom cfp,Declarative and Minimalistic Computing,Declarative and Minimalistic Computing devroom CfP,Manolis Ragkousis,manolis ragkousis,false,https://pretalx.fosdem.org/
+2026,2025-11-02,other cfp,,Call for Participation: Software Defined Radio/Digital Signal Processing,friedtj,friedtj,false,https://pretalx.fosdem.org
+2026,2025-11-02,devroom cfp,Gaming and VR,Call for participation: Gaming and VR Devroom 2026,vadim.troshchinskiy,vadim troshchinskiy,false,
+2026,2025-11-02,devroom cfp,Open Source Design,Call for participation: Open Source Design Devroom 2026,Eriol Fox,eriol fox,true,
+2026,2025-11-02,devroom cfp,Containers,Containers devroom CFP for FOSDEM 2026,Stéphane Graber,stephane graber,true,
+2026,2025-11-02,other cfp,,Open Source Digital Forensics CFP,Mahmoud Abdelghany,mahmoud abdelghany,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-03,devroom cfp,Browser and Web Platform,Browser and Web Platform Devroom at FOSDEM 2026: Call for Participation,Sylvestre Ledru,sylvestre ledru,true,
+2026,2025-11-03,devroom cfp,Browser and Web Platform,Browser and Web Platform Devroom at FOSDEM 2026: Call for Participation,Sylvestre Ledru,sylvestre ledru,true,
+2026,2025-11-03,devroom cfp,LLVM,CFP FOSDEM 2026 LLVM dev room,Kristof Beyls,kristof beyls,true,
+2026,2025-11-03,devroom cfp,Software Defined Storage,Call for Participation: Software Defined Storage devroom for FOSDEM 2026,Jan Fajerski,jan fajerski,true,
+2026,2025-11-03,devroom cfp,Confidential Computing,Confidential Computing Devroom at FOSDEM 2026: Call for Participation,Ilaria Battiston,ilaria battiston,true,https://pretalx.fosdem.org/fosdem-2026/
+2026,2025-11-03,devroom cfp,FPGA and VLSI,FPGA and VLSI devroom devroom CFP for FOSDEM 2026 (updated version),Tobias Platen,tobias platen,false,
+2026,2025-11-03,devroom cfp,Kernel,Kernel devroom CFP for FOSDEM 2026,Stéphane Graber,stephane graber,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-03,devroom cfp,GCC (GNU Toolchain),[FOSDEM 2026] Call for Participation: GCC (GNU Toolchain) Devroom,Marc Poulhiès,marc poulhies,true,
+2026,2025-11-04,devroom cfp,"BSD, illumos, OpenZFS, bhyve","CfP BSD, illumos, OpenZFS, bhyve Devroom",Rodrigo Osorio,rodrigo osorio,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-04,devroom cfp,"BSD, illumos, OpenZFS, bhyve","CfP BSD, illumos, OpenZFS, bhyve Devroom @ Fosdem 2026",Rodrigo Osorio,rodrigo osorio,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-04,devroom cfp,DNS,DNS Devroom Call For Presentations,Pieter Lexis,pieter lexis,false,
+2026,2025-11-04,devroom cfp,Distros,Distros Devroom Call For Presentations,Shaun McCance,shaun mccance,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-05,devroom cfp,FOSS on Mobile,Call for Participation: FOSS on Mobile devroom @ FOSDEM 2026,David Llewellyn-Jones,david llewellyn jones,true,
+2026,2025-11-05,devroom cfp,Railways and Open Transport,Call for Participation: Railways and Open Transport devroom @ FOSDEM 2026,Max Mehl,max mehl,true,
+2026,2025-11-05,devroom cfp,“Building Europe’s Public Digital Infrastructure”,Call for Participation: “Building Europe’s Public Digital Infrastructure” devroom,Felix Kronlage-Dammers,felix kronlage dammers,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-05,devroom cfp,Retrocomputing,Call for participation: Retrocomputing Devroom - FOSDEM 2026,Sebas Devroom manager FOSDEM 2024 Retrocomputing,sebas devroom manager fosdem 2024 retrocomputing,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-05,devroom cfp,"HPC, Big Data, and Data Science","CfP for FOSDEM'26 HPC, Big Data, and Data Science Devroom",Kenneth Hoste,kenneth hoste,true,
+2026,2025-11-05,devroom cfp,Graphics,Graphics DevRoom 26: Cfp.,Luc Verhaegen,luc verhaegen,false,
+2026,2025-11-06,devroom cfp,Package Managers,Call for Participation: Package Managers Devroom at FOSDEM 2026,Andrew Nesbitt,andrew nesbitt,true,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-06,devroom cfp,Software Performance,Call for participation: Software Performance Devroom - FOSDEM 2026,zamazan4ik,zamazan4ik,false,
+2026,2025-11-07,other cfp,,Call for Participation: CRA in practice @ FOSDEM 2026,Roman Zhukov,roman zhukov,true,"https://pretalx.fosdem.org/fosdem-2026/cfp,"
+2026,2025-11-07,devroom cfp,Geospatial,Call for Participation: Geospatial devroom at FOSDEM 2026,Edward Betts,edward betts,true,
+2026,2025-11-07,devroom cfp,open Translations,CfP open: Translations devroom at FOSDEM'26,Benjamin Jamie,benjamin jamie,false,
+2026,2025-11-07,devroom cfp,Decentralised Communication,Cfp for the Decentralised Communication Devroom,Thibault Martin,thibault martin,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2025-11-07,devroom cfp,Decentralized Internet and Privacy,Decentralized Internet and Privacy Devroom at FOSDEM 2026: Call for Participation,dllud,dllud,false,
+2026,2025-11-08,devroom cfp,Geospatial,Call for Participation: Geospatial devroom at FOSDEM 2026,Edward Betts,edward betts,true,
+2026,2025-11-09,devroom cfp,"Audio, Video & Graphics Creation","cfp for Audio, Video & Graphics Creation Devroom",David Pitts,david pitts,false,
+2026,2025-11-10,devroom cfp,Open Research,CfP for the Open Research Devroom,Diego Diego,diego diego,false,https://pretalx.fosdem.org/fosdem-2026/cfp*
+2026,2025-11-11,devroom cfp,SBOMs and Supply Chains,CfP for SBOMs and Supply Chains devroom in FOSDEM 2026,Alexios Zavras,alexios zavras,false,https://pretalx.fosdem.org/fosdem-2026/cfp
+2026,2026-10-26,other cfp,,[CfP] Beyond the CRA - Building Secure and Resilient Open Source,Madalin Neag,madalin neag,true,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-23,devroom cfp,"""Local First, Sync engines and CRDTs""","Call for Participation: ""Local First, Sync engines and CRDTs"" devroom at FOSDEM 2027",Niko - NextGraph,niko nextgraph,false,
+2027,2026-10-23,devroom cfp,Open Media,Call for Participation: Open Media devroom 2027,Jaron Viëtor,jaron vietor,false,
+2027,2026-10-23,devroom cfp,Operations,Call for Proposals: Operations Devroom @ FOSDEM 2027,Giorgio Bonfiglio,giorgio bonfiglio,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-23,devroom cfp,eBPF,FOSDEM 2027 eBPF Devroom Call for Participation,Quentin Monnet,quentin monnet,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-24,devroom cfp,Testing and Continuous Delivery,CFP Testing and Continuous Delivery devroom,Alexander Todorov,alexander todorov,false,https://pretalx.fosdem.org/fosdem-2027/
+2027,2026-10-24,devroom cfp,Community,Call for Papers: Community Devroom at FOSDEM 2027,laura.czajkowski,laura czajkowski,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-24,devroom cfp,Distributions,Distributions Devroom Call for Proposals,benny Vasquez,benny vasquez,false,
+2027,2026-10-24,devroom cfp,Emulator Development,[FOSDEM27] Call for papers - Emulator Development Room,Mahmoud Abdelghany,mahmoud abdelghany,false,https://pretalx.fosdem.org/fosdem-2027
+2027,2026-10-24,devroom cfp,devroom managers FOSS on Mobile,[devroom-managers] [CfP] FOSS on Mobile Devroom Call for Proposals,Chris Simmonds,chris simmonds,false,
+2027,2026-10-25,devroom cfp,Package Management,CfP: Package Management devroom at FOSDEM 27,Vlad Miricioiu,vlad miricioiu,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-25,devroom cfp,Rust,FOSDEM 2027 Call for Participation: Rust Devroom,Ewan Higgs,ewan higgs,false,
+2027,2026-10-25,devroom cfp,"","FOSDEM 2027 Devroom CfP: Archives, Libraries, and Digital Memory",Melissa Draper,melissa draper,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-25,devroom cfp,LLVM,FOSDEM 2027 LLVM devroom call for presentations,Hans Wennborg,hans wennborg,false,
+2027,2026-10-25,devroom cfp,"Embedded, Mobile and Automotive","[CFP] Embedded, Mobile and Automotive Devroom @FOSDEM2027",Krzysztof Opasiak,krzysztof opasiak,false,
+2027,2026-10-25,devroom cfp,Identity and Access Management,[FOSDEM 2027] Identity and Access Management devroom - Call for Papers,Alexander Bokovoy,alexander bokovoy,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-25,devroom cfp,Microkernel and Componend based OS,[FOSDEM 2027] Microkernel and Componend-based OS devroom - Call for Papers,Eduard Drusa,eduard drusa,false,
+2027,2026-10-25,devroom cfp,,[devroom-managers] [FOSDEM27] Call for papers - radio frequency digital signal processing (RF DSP),friedtj,friedtj,false,https://pretalx.fosdem.org/fosdem-2027/
+2027,2026-10-26,devroom cfp,Tool Docs,"CFP for Tool the Docs Devroom, FOSDEM 2027",Chris Chinchilla,chris chinchilla,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,MLIR,CFP: MLIR Devroom @ FOSDEM'2027,Renato Golin,renato golin,false,
+2027,2026-10-26,devroom cfp,Ruby,Call for Participation: Ruby Devroom at FOSDEM 2027,Sean Marcia,sean marcia,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,Retrocomputing,Call for participation: Retrocomputing Devroom,Sebas Devroom manager FOSDEM 2024 Retrocomputing,sebas devroom manager fosdem 2024 retrocomputing,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,"HPC, Big Data, and Data Science","CfP for HPC, Big Data, and Data Science Devroom @ FOSDEM'27",Kenneth Hoste,kenneth hoste,false,
+2027,2026-10-26,devroom cfp,Decentralised Messaging,CfP: Decentralised Messaging Devroom,Andy Piper,andy piper,false,
+2027,2026-10-26,devroom cfp,Image Based Linux and Boot Integrity,CfP: Image-Based Linux and Boot Integrity Devroom at FOSDEM 27,Luca Boccassi,luca boccassi,false,
+2027,2026-10-26,devroom cfp,Open Hardware and CAD/CAM,CfP: Open Hardware and CAD/CAM Devroom,Chris Hennes,chris hennes,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,Security,CfP: Security Devroom @ FOSDEM'2027,Jakub Jelen,jakub jelen,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,Digital Dissident,Digital Dissident Devroom - Call for Participation,Václav Navrátil,vaclav navratil,false,
+2027,2026-10-26,devroom cfp,FOSS Office,FOSS Office DevRoom Call for Papers,Italo Vignoli,italo vignoli,false,
+2027,2026-10-26,devroom cfp,Collaboration and Content Management,[CFP] Collaboration and Content Management devroom,Clément Aubin,clement aubin,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,Smart Homes,[CFP] Smart Homes Devroom – FOSDEM 2027,Maarten Raeymaekers,maarten raeymaekers,false,
+2027,2026-10-26,devroom cfp,Virtualization & IaaS,[CFP] Virtualization & IaaS Devroom,Piotr Kliczewski,piotr kliczewski,false,
+2027,2026-10-26,devroom cfp,"BSD, illumos, bhyve, OpenZFS","[CfP] BSD, illumos, bhyve, OpenZFS Devroom @ FOSDEM'2027",Rodrigo Osorio,rodrigo osorio,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,Bioinformatics and Computational Biology,[CfP] Bioinformatics and Computational Biology Devroom,Alessandro Pilotti,alessandro pilotti,false,
+2027,2026-10-26,devroom cfp,Software Defined Storage,[CfP] Software Defined Storage Devroom @ FOSDEM'27,Jan Fajerski,jan fajerski,false,
+2027,2026-10-26,devroom cfp,GCC (GNU Toolchain),[FOSDEM 2027] Call for Participation: GCC (GNU Toolchain) Devroom,Marc Poulhiès,marc poulhies,false,
+2027,2026-10-26,devroom cfp,devroom managers Free Java,[devroom-managers] Call for Participation: Free Java devroom at FOSDEM 2027,Chris Mah,chris mah,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-26,devroom cfp,devroom managers Network,[devroom-managers] Call for Participation: Network devroom at FOSDEM 2027,Alfredo Cardigliano,alfredo cardigliano,false,
+2027,2026-10-26,devroom cfp,,[devroom-managers] [CfP] Open Source Healthcare @ FOSDEM'27,Addie Cobb,addie cobb,false,
+2027,2026-10-27,devroom cfp,Protocol,Call for Participation: AT Protocol Devroom,Viivi Marttinen,viivi marttinen,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,devroom cfp,Railways and Open Transport,CfP: Railways and Open Transport Devroom,Cornelius Schumacher,cornelius schumacher,false,
+2027,2026-10-27,devroom cfp,"Erlang, Elixir, Gleam and Friends","Erlang, Elixir, Gleam and Friends devroom Call for Participation",Arnaldo Cesco,arnaldo cesco,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,other cfp,,[CFP] Browser and web platform,Sylvestre Ledru,sylvestre ledru,false,
+2027,2026-10-27,devroom cfp,RISC V,[CFP] RISC-V Devroom at FOSDEM 2027,Kashyap Chamarthy,kashyap chamarthy,false,https://pretalx.fosdem.org/fosdem-2027/cfp.
+2027,2026-10-27,devroom cfp,Accessibility,[CfP] Accessibility DevRoom at FOSDEM 2027 –Call for Participation,Bee Padalkar,bee padalkar,false,https://pretalx.fosdem.org/fosdem-2027/.
+2027,2026-10-27,devroom cfp,Embedded & Resource Constrained OS,[CfP] Embedded & Resource-Constrained OS devroom @ FOSDEM 2027,Benjamin Cabé,benjamin cabe,false,
+2027,2026-10-27,devroom cfp,Modern Email,[CfP] Modern Email DevRoom at FOSDEM 27,Hans-Joerg Happel,hans joerg happel,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,devroom cfp,Open Research,[CfP] Open Research Devroom @ FOSDEM 2027,Mathieu Jacomy,mathieu jacomy,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,devroom cfp,Robotics and Simulation,[CfP] Robotics and Simulation devroom at FOSDEM 27,Arnaud Taffanel,arnaud taffanel,false,
+2027,2026-10-27,devroom cfp,— Image Based Linux and Boot Integrity,[FOSDEM27] Call for papers — Image-Based Linux and Boot Integrity Devroom,Zbigniew Jędrzejewski-Szmek,zbigniew jedrzejewski szmek,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,other cfp,,[FOSDEM27] CfP - Go,Maartje Eyskens,maartje eyskens,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-27,devroom cfp,M Ecosystem,the M-Ecosystem Devroom - Call for Participation,Frédéric Descamps,frederic descamps,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-28,devroom cfp,Green & Ethical Tech,CFP - Green & Ethical Tech Devroom (FOSDEM 2027),"Parolini, Giuditta",parolini giuditta,false,
+2027,2026-10-28,devroom cfp,Gaming and VR,CFP: Gaming and VR Devroom,Vadim Troshchinskiy,vadim troshchinskiy,false,
+2027,2026-10-28,devroom cfp,Gaming and VR,CFP: Gaming and VR Devroom,Vadim Troshchinskiy Shmelev,vadim troshchinskiy shmelev,false,
+2027,2026-10-28,devroom cfp,Social Web,CFP: Social Web Devroom @ FOSDEM 2027,Evan Prodromou,evan prodromou,false,https://pretalx.fosdem.org/fosdem-2027/cfp.
+2027,2026-10-28,devroom cfp,Kernel,FOSDEM 2027: Kernel Devroom CfP,Mike Rapoport,mike rapoport,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-28,devroom cfp,Open Source & EU Policy,Open Source & EU Policy devroom: Call for Proposals,Jordan Maris,jordan maris,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-10-29,devroom cfp,Educational,Call for Papers FOSDEM 2027 - Educational Devroom,Richard Millwood,richard millwood,false,
+2027,2026-10-30,devroom cfp,Rust,FOSDEM 2027 Call for Participation: Rust Devroom [CORRECTION],Ewan Higgs,ewan higgs,false,
+2027,2026-10-30,devroom cfp,Graphics,FOSDEM27: Graphics DevRoom CfP.,Luc Verhaegen,luc verhaegen,false,
+2027,2026-10-31,devroom cfp,Decentralized Internet and Privacy,Decentralized Internet and Privacy Devroom at FOSDEM 2027: Call for Participation,dllud,dllud,false,
+2027,2026-11-01,devroom cfp,AI Plumbers,AI Plumbers Devroom: Call for Proposals,Roman Shaposhnik,roman shaposhnik,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-11-01,devroom cfp,"Audio, Video, Graphics and Podcast Creation","FOSDEM 2027 Call for Participation: Audio, Video, Graphics and Podcast Creation Devroom (AVG)",P Scherbaum,p scherbaum,false,
+2027,2026-11-01,devroom cfp,devroom managers Mainline Linux on Mobile,[devroom-managers] [CfP] Mainline Linux on Mobile devroom 2027,Bart Ribbers,bart ribbers,false,
+2027,2026-11-02,devroom cfp,Legal and Policy Issues,CFP: Legal and Policy Issues DevRoom at FOSDEM 2027,Karen Sandler,karen sandler,false,https://pretalx.fosdem.org/fosdem-2027/cfp
+2027,2026-11-02,devroom cfp,Containers,Containers devroom CFP for FOSDEM 2027,Stéphane Graber,stephane graber,false,
+2027,2026-11-03,devroom cfp,DNS,FOSDEM 2027 DNS Devroom Call For Presentations,Pieter Lexis,pieter lexis,false,
+2027,2026-11-07,devroom cfp,Geospatial,Call for Participation: Geospatial devroom at FOSDEM 2027,Edward Betts,edward betts,false,

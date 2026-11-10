@@ -1,0 +1,28 @@
+# Events, devrooms and speakers of every edition held, from editions.csv.
+decade,year,events,devrooms,devroom_talks,main_track_talks,lightning_talks,speakers,coverage
+2001–2009,2001,31,0,0,31,0,25,main grid only
+2001–2009,2002,39,5,0,39,0,30,main grid only
+2001–2009,2003,37,6,0,29,0,19,main grid only
+2001–2009,2004,45,8,14,22,0,36,main grid + most devroom pages
+2001–2009,2005,105,18,83,22,0,83,main grid + most devroom pages
+2001–2009,2006,139,16,112,22,0,119,main grid + most devroom pages
+2001–2009,2007,207,15,155,18,28,176,main tracks + devroom pages
+2001–2009,2008,228,16,170,18,35,231,main tracks + devroom pages
+2001–2009,2009,276,19,226,18,28,239,main tracks + devroom pages
+2010–2019,2010,293,22,239,18,32,233,main tracks + devroom pages
+2010–2019,2011,331,20,267,18,32,294,full schedule (event index)
+2010–2019,2012,441,27,370,26,33,410,full schedule
+2010–2019,2013,487,30,416,24,36,476,full schedule
+2010–2019,2014,513,33,439,24,39,487,full schedule
+2010–2019,2015,552,36,476,25,40,531,full schedule
+2010–2019,2016,617,38,536,29,38,569,full schedule
+2010–2019,2017,668,41,571,29,38,610,full schedule
+2010–2019,2018,689,42,597,33,42,651,full schedule
+2010–2019,2019,775,47,661,30,42,730,full schedule
+2020–2026,2020,872,56,754,33,42,841,full schedule
+2020–2026,2021,773,49,616,22,21,684,full schedule
+2020–2026,2022,730,52,626,36,19,655,full schedule
+2020–2026,2023,780,55,696,32,36,787,full schedule
+2020–2026,2024,874,59,775,35,37,945,full schedule
+2020–2026,2025,1105,70,962,25,38,1193,full schedule
+2020–2026,2026,1079,65,926,45,23,1216,full schedule

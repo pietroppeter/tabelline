@@ -4,4 +4,4 @@
 {.warning[UnusedImport]: off.}
 import index, explainer, design, agents, specs, coverage, roadmap
 import devlog/[review_mode, datasets, blocks_review, design_review, day_one, tabellone, two_looks, palettes, three_threads, designing_0_1, book_found, index as devlogIndex]
-import stories/[milano_cortina, index as storiesIndex]
+import stories/[milano_cortina, fosdem_data, fosdem, index as storiesIndex]

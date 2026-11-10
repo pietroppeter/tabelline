@@ -11,13 +11,15 @@
 ##   nbGalleria "what it shows": (nbScheda "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
+##   nbFoldCode "docs/review.nim"              # a source file, or a part of it, folded
+##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParti t                                 # a table and its parts, with a switch
 ##   nbTinte [("--primary", "primary", "sections")]
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
-import std/[json, strutils, strformat, base64]
+import std/[json, os, osproc, strutils, strformat, sequtils, base64]
 import nimib except md
 import tabelline, tabelline/nimib
 import stile, parti
@@ -431,6 +433,118 @@ template nbShowCode*(body: untyped) =
       body
   nb.add showCode
 
+# ---------------------------------------------------------------------------------- code, folded
+# A source file, or a part of it, folded under its name and its length: a page can show the code it
+# talks about without its length getting in the way. Several in a row make a list. nimib's
+# `nbFile` shows a file too, always open.
+
+const repoRoot = currentSourcePath().parentDir.parentDir
+
+newNbBlock(NbFoldCode):
+  title: string
+  path: string
+  lang: string
+  code: string
+  toHtml:
+    let lines = blk.code.splitLines.len
+    let name = if blk.title.len > 0: inline(blk.title) else: "<code>" & esc(blk.path) & "</code>"
+    &"""<details class="foldcode"><summary>{name} <span>{lines} lines</span></summary>""" &
+      (if blk.lang == "nim": "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.code) & "</code></pre>"
+       else: codeHtml(blk.code, blk.lang)) & "</details>"
+
+proc langOf(file: string): string =
+  case file.splitFile.ext
+  of ".nim", ".nims": "nim"
+  of ".py": "python"
+  of ".R", ".r": "r"
+  of ".js": "js"
+  of ".yaml", ".yml": "yaml"
+  else: "sh"
+
+proc foldCode*(nb: var Nb, file: string, start = "", stop = "", title = "", lang = "") =
+  ## `file` (a path from the root of the repository, or any path), folded. With `start`, from the
+  ## first line that holds it; with `stop`, up to the next line that holds that (or to the end).
+  let path = if fileExists(file): file else: repoRoot / file
+  var code = readFile(path)
+  if start.len > 0:
+    let i = code.find(start)
+    doAssert i >= 0, file & ": no " & start
+    code = code[code.rfind('\n', last = i) + 1 .. ^1]
+    if stop.len > 0:
+      let j = code.find(stop, start = code.find('\n') + 1)
+      if j >= 0: code = code[0 ..< code.rfind('\n', last = j) + 1]
+  nb.add newNbFoldCode(title = title, path = relativePath(absolutePath(path), repoRoot), lang = (if lang.len > 0: lang else: langOf(file)),
+                       code = code.dedent.strip(chars = {'\n'}))
+
+template nbFoldCode*(file: string, start = "", stop = "", title = "", lang = "") =
+  ## Code folded under its path (or `title`, in Markdown) and its length:
+  ## `nbFoldCode "docs/review.nim"`, or a part of it with `start` and `stop`.
+  nb.foldCode(file, start, stop, title, lang)
+
+# ------------------------------------------------------------------------------------ R and gt
+# A story can be written in R with gt before tabelline has what it needs, and ported to Nim when
+# the release is built. Its R cells run in one R session (docs/stories/r/run.R), only when one of
+# them changed; their outputs are kept in a committed JSON file, which is also what the Nim port
+# is compared with. The CI has no R: a stale file stops the build.
+
+newNbBlock(NbShowR):
+  code: string
+  html: string
+  toHtml:
+    blk.html & """<details class="codice"><summary></summary>""" & codeHtml(blk.code, "r") & "</details>"
+
+var rCells: seq[NbShowR]
+
+template nbShowR*(rcode: string) =
+  ## What the R code `rcode` shows (a gt table), with the code folded below it, as `nbShowCode`.
+  ## The cells of a page share one R environment, as in a notebook; `runR` runs them.
+  let cellR = newNbShowR(code = rcode.strip, html = "")
+  nb.add cellR
+  rCells.add cellR
+
+func untinta(html: string): string =
+  ## The placeholder colours of `tinta` in tabelline.R back to the page's tokens.
+  result = html
+  for i, token in tokenColours:
+    let hex = &"F0E0{i + 1:02X}"
+    result = result.replace("#" & hex, &"var({token})").replace("#" & hex.toLowerAscii, &"var({token})")
+
+proc runR*(nb: var Nb, outputs, dataDir: string) =
+  ## Gives every `nbShowR` cell of the page its output: from `outputs` (a JSON file) when the
+  ## cells are the same, else by running them all with Rscript in `dataDir` (from the repository's
+  ## root). Call it once, before `nbSave`.
+  let root = currentSourcePath().parentDir.parentDir
+  let cells = rCells.mapIt(it.code)
+  var saved: JsonNode = nil
+  if fileExists(outputs):
+    saved = parseFile(outputs)
+    if saved{"cells"}.isNil or saved["cells"].len != cells.len or
+       toSeq(0 ..< cells.len).anyIt(saved["cells"][it].getStr != cells[it]):
+      saved = nil
+  if saved.isNil:
+    if findExe("Rscript").len == 0 or getEnv("STORY_NO_R") in ["1", "true"]:
+      raise newException(IOError, "the R cells of " & outputs & " changed: build the page with R " &
+        "and gt (docs/stories/r/run.R) and commit the outputs")
+    let page = outputs.splitFile.name
+    let req = $(%*{"page": page, "dir": dataDir, "cells": cells})
+    echo "[runR] running the R cells of ", page
+    let (output, code) = execCmdEx("Rscript docs/stories/r/run.R", input = req, workingDir = root)
+    if code != 0: raise newException(IOError, "R failed:\n" & output)
+    let ran = parseJson(output[output.find('{') .. ^1])
+    saved = %*{"gt": ran["gt"], "R": ran["r"], "cells": cells, "outputs": ran["outputs"]}
+    writeFile(outputs, pretty(saved))
+  var errors: seq[string]
+  for k, c in rCells:
+    let o = saved["outputs"][k]
+    if o.hasKey("error"): errors.add c.code & "\n--> " & o["error"].getStr
+    let printed = o{"printed"}.getStr.strip
+    c.html = (if printed.len > 0: "<pre class=\"nb-output\">" & esc(printed) & "</pre>" else: "") &
+      untinta(o{"html"}.getStr)
+  if errors.len > 0:
+    stderr.writeLine errors.join("\n\n")
+    raise newException(ValueError, "R cells failed: " & $errors.len)
+  rCells.setLen 0
+
 # ------------------------------------------------------------------------------ parts of a table
 
 newNbBlock(NbParti):
@@ -514,24 +628,6 @@ template nbDisegno*(tsvg, talt: string) =
   ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
   ## in the page's colours, with a caption in Markdown.
   nb.disegno(tsvg, talt)
-
-newNbBlock(NbPiega):
-  title: string
-  code: string
-  lang: string
-  toHtml:
-    let inside = if blk.lang == "nim": """<pre><code class="nohighlight nim hljs">""" & highlightNim(blk.code) & "</code></pre>"
-                 else: codeHtml(blk.code, blk.lang)
-    &"""<details class="piega"><summary><span>show code: {esc(blk.title)}</span></summary>{inside}</details>"""
-
-proc piega*(nb: var Nb, title, code: string, lang = "nim") =
-  nb.add newNbPiega(title = title, code = code.strip(chars = {'\n'}), lang = lang)
-
-template nbPiega*(ttitle, tcode: string, tlang = "nim") =
-  ## Code that is shown, not run, folded under a plain-text title, like the code under a table
-  ## (`nbShowCode`): *+ show code: title* opens it. For code a reader opens only when the text
-  ## above it is not enough.
-  nb.piega(ttitle, tcode, tlang)
 
 # ------------------------------------------------------------------------------------- the page
 

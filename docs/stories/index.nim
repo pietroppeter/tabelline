@@ -1,5 +1,5 @@
 ## The stories, docs/stories/index.html: real subjects told in tables made with tabelline, one for
-## every release (the *use it* thread of the roadmap), newest release first, in the gallery of
+## every release (the *use it* thread of the roadmap), in release order, in the gallery of
 ## `storie.nim` (the home page shows the same gallery).
 ## Stories are kept up to date: when a release makes a table of a story better, the story changes.
 ## A story that used to be a devlog post keeps its old address, which forwards here (`moved`).

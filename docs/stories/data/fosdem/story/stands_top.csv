@@ -1,0 +1,14 @@
+# The stands present at the most editions (2008-2026), by name folded to a key, from stands.csv.
+stand,first,last,editions
+Debian,2008,2026,19
+PostgreSQL,2008,2026,19
+GNOME,2008,2026,18
+KDE,2008,2026,17
+Mozilla,2008,2026,17
+LibreOffice,2011,2026,15
+OpenEmbedded,2008,2021,14
+CentOS,2008,2020,13
+Jenkins,2012,2026,13
+openSUSE,2008,2022,12
+Fedora Project,2011,2026,10
+illumos,2012,2022,9
