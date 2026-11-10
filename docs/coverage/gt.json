@@ -328,25 +328,25 @@
     {
      "feature": "Icons",
      "gt": "fmt_icon()",
-     "status": "missing",
-     "note": "Font Awesome in gt; here a small inlined SVG set, so pages stay standalone.",
-     "plan": "0.4",
+     "status": "done",
+     "note": "fmtIcon: every Font Awesome Free icon (2,163), inlined as SVG from a file written by tools/fontawesome.nim; full and older names; fillColors by name.",
+     "plan": "0.2",
      "size": "M"
     },
     {
      "feature": "Images",
      "gt": "fmt_image(), local_image(), web_image(), ggplot_image()",
-     "status": "missing",
-     "note": "Inlined as data URLs.",
-     "plan": "0.4",
+     "status": "partial",
+     "note": "fmtImage: local files inlined as data URLs, addresses left as they are. Not yet: local_image(), web_image(), ggplot_image().",
+     "plan": "0.2",
      "size": "M"
     },
     {
      "feature": "Plots in cells",
      "gt": "fmt_nanoplot(), cols_nanoplot()",
-     "status": "missing",
-     "note": "Lines, bars and boxes in SVG. A draft of the single-value bar and line is kept for after 0.1.",
-     "plan": "0.4",
+     "status": "partial",
+     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text. Not yet: x values, per-point options.",
+     "plan": "0.2",
      "size": "L"
     },
     {
