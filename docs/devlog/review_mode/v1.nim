@@ -2,9 +2,9 @@
 ## A version knows its number from its file name, vN.nim. The newest version is the post, built into
 ## devlog/review-mode/; an older one is kept as it was and built into devlog/review-mode/vN/.
 import std/[os, strutils, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import ../../[blocchi, review]
+import ../../[blocks, review]
 import storia
 
 const
@@ -15,12 +15,12 @@ let docs = currentSourcePath().parentDir.parentDir.parentDir
 let source = currentSourcePath().relativePath(docs.parentDir)
 nbInit
 nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{questa}") / "index.html"
-nb.useTabelline(nome = "tabelline", title = title,
+nb.useTabelline(title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
-                nameHref = (if newest: "../../" else: "../../../"))
-nbReview(questa, "devlog/review-mode", title, source)
+                wordmarkHref = (if newest: "../../" else: "../../../"))
+nbReview(questa, "devlog/review-mode", title, source, tscript = sharedReviewScript(nb))
 
-nbTitolo &"9 November 2026 · version {questa}", title, """
+nbTitle &"9 November 2026 · version {questa}", title, """
 Reviewing a page on a phone takes screenshots, notes, and many trips between the page and the
 chat. A review mode for nimib pages: select text, comment on it, go through the comments with a
 bar, and export them all in one text to paste in the chat, where an agent makes the changes. This
@@ -30,16 +30,16 @@ post is reviewed with its own review mode, round by round, and keeps every versi
 nbVersions storico.lista, questa
 
 if not newest:
-  nbNota &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
+  nbNote &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
     &"[version {storico.len}](../).", nkWarning
 
-nbNota """
+nbNote """
 Select a few words of this page and tap **Comment** in the bar at the bottom: write what should
 change, and save. **‹** and **›** go through your comments, **Edit** changes the one shown, and
 **Export** gives the text to paste in the chat. The comments stay in this browser only.
 """, nkInfo, "Try it on this page"
 
-nbIndice
+nbToc
 
 nbText: """
 ## The problem

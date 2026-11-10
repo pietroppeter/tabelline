@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- The pages of the docs share their style, fonts and the review script as files in `docs/assets/` (the home page goes from 250 KB to 50 KB); `-d:singleFile` builds a page as one file; `tools/preview.nim` replaces `preview.py` (#55).
+- Notebooks `import nimib` whole: nimib removed its old `md` (pietroppeter/nimib#268), so tabelline's `md()` no longer clashes with it; nimib is pinned to that commit until 0.5.0 is tagged. `tools/links.nim` checks links to this repository's own files in the checkout (#50).
 - Fix: in a grouped table, a row whose group value is missing was shown twice, before the groups
   and again in the group above it; it is now shown once, before the groups (#53).
 

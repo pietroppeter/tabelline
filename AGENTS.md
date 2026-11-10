@@ -45,20 +45,22 @@ working rules that are easy to miss.
 ## Pages
 
 - Every page is a nimib notebook in `docs/` that calls `nb.useTabelline(...)` after `nbInit`
-  and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
+  and writes an HTML file that shares its style, fonts and scripts with the other pages
+  (`docs/assets/`: `site.css`, written by `theme.nim`, the fonts, `review.js`; local, nothing
+  remote), so a reader downloads them once; `-d:singleFile` inlines them, for a page that must
+  work alone, such as a one-page artifact. It has two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
   Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
   broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
-  Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
-  of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
-  `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbFoldCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`, `nbDisegno`). In a page that tells a story with tables (an explainer, a use-it post), what is
-  about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
+  of `docs/blocks.nim` (`nbTitle`, `nbToc`, `nbNote(text, kind)`, `nbCards`/`nbCard`,
+  `nbGallery`/`nbGalleryCard`, `nbTabs`, `nbShowCode`, `nbFoldCode`, `nbParts`, `nbBeside`, `nbSwatches`,
+  `nbPart`, `nbDrawing`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  about the code goes in `nbNote(text, nkCode)`, the green card, under the table it explains,
   with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
-  becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
+  becomes a block in `docs/blocks.nim`; its CSS goes in `docs/theme.nim`, from the tokens.
   `nbRawHtml` is a last resort, for a one-off, with a comment saying why. Tables take
   `optCssTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
@@ -89,7 +91,7 @@ working rules that are easy to miss.
   warning (`nkWarning`, drawn as a road sign), the square a sheet set apart (notes, cards, gallery
   cards: their straight top edge). Each shape has a default colour, another only with a reason.
   Nothing that only decorates may look like something to press or drag (no dots, holes or knobs
-  on cards). Colours are the tokens of `docs/stile.nim`: six values per look (paper, ink,
+  on cards). Colours are the tokens of `docs/theme.nim`: six values per look (paper, ink,
   primary, secondary, warning, success), and every other colour mixed from them (the neutrals
   `--shade`, `--line`, `--muted` and the scale `--neutral-0` … `--neutral-9`, `--surface`,
   `--x-soft`, `--x-text`); the warning colour is never text. The old names `--n-0` … `--n-9` and
@@ -110,7 +112,7 @@ working rules that are easy to miss.
 ## The book
 
 - The book is `book/`, a nimibook built by `nim r book/bookbuild.nim` into `docs/book/` (see
-  README.md). One theme, the Munari look with the Edo palette: the tokens of `docs/stile.nim` in
+  README.md). One theme, the Munari look with the Edo palette: the tokens of `docs/theme.nim` in
   the values `edo`, written by the build before `book/theme/edo.css`, which names no colour of
   its own. Its own tables (the sources) take `optCssTheme()`; the ported examples keep the colours
   of the guide. Chapters are written with `book/tabbook.nim`'s blocks (`tabs`, `tabelline`,
@@ -137,8 +139,8 @@ working rules that are easy to miss.
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
-- `python3 tools/preview.py` copies the built pages to `../tabelline-preview` for an artifact
-  (folder links point to index.html), with the book. A link to the artifact ending in `#<page>`
+- `nim r tools/preview.nim` copies the built pages to `../tabelline-preview` for an artifact
+  (folder links point to index.html), with `docs/assets/` and the book: publish the whole folder. A link to the artifact ending in `#<page>`
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.

@@ -3,23 +3,22 @@
 ## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/stories/data/milano-cortina/
 ## (tables from Wikipedia, written by fetch.py there).
 import std/[os, strutils, strformat, sequtils, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import ../blocchi, ../olimpiadi
+import ../blocks, ../olimpiadi
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "stories" / "milano-cortina" / "index.html"
-nb.useTabelline(nome = "tabelline",
-                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", nameHref = "../../")
+nb.useTabelline(title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
 
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 proc blend(a, b: string, t: float): string = mix(parseColor(a), parseColor(b), t).toHex
 let gold = haru.warning                                                  # rapeseed yellow
 let silver = blend(haru.paper, haru.ink, 0.3)                            # paper and a little ink
 let bronze = blend(blend(haru.warning, haru.primary, 0.5), haru.ink, 0.2) # yellow, plum and ink
-let gilt = tinta("--warning")                 # Italy's row
-let fresh = tinta("--success-soft")           # venues built for the Games
+let gilt = tint("--warning")                 # Italy's row
+let fresh = tint("--success-soft")           # venues built for the Games
 
 proc link(path, label: string): string = &"[{label}]({post(path)})"
 
@@ -32,7 +31,7 @@ proc medal(s: string): string =
     else: ""
   (if emoji.len > 0: emoji & " " else: "") & s.capitalizeAscii
 
-nbTitolo "A story · tabelline 0.1", "Milano Cortina 2026, in small numbers", """
+nbTitle "A story · tabelline 0.1", "Milano Cortina 2026, in small numbers", """
 The Winter Olympics and Paralympics of 2026, told in tables: in three parts of three, from the
 simplest fact to the bills that are still arriving.
 """
@@ -52,14 +51,14 @@ its questions the same way, takes the numbers Il Post reported (each table links
 and the rest from Wikipedia (and the air from NOAA). The words are this story's own.
 """
 
-nbNota("""
+nbNote("""
 Green cards like this one are about the code. Under every table, **show code** opens the Nim
 that made it, and a green card says which tabelline verbs do the work, and why. The
 rest of the text is about the Games: skip the green cards to read only the story. One table,
 the medal table, is also shown in Python and in R, to compare.
 """, nkCode, "Reading the code")
 
-nbIndice()
+nbToc()
 
 nbText: """
 ## One row to start
@@ -86,7 +85,7 @@ nbShowCode:
     tabSourceNote md("From Wikipedia's [2026 Winter Olympics](https://en.wikipedia.org/wiki/2026_Winter_Olympics); 92 teams counting the neutral athletes.")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtRoman` turns 25 into XXV. The dates are ISO dates in the data, `"2026-02-06"`, and `fmtDate`
 shows them as a reader wants them. Everything else in this story adds one idea at a time to a
 table like this one.
@@ -124,7 +123,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
 
-nbNota("""
+nbNote("""
 Nothing in the data says "edition": the roman column is the row's number, `fmtRoman` again.
 """, nkCode)
 
@@ -155,7 +154,7 @@ nbShowCode:
     tabStyle style.text(weight = "bold"), loc.body(cols("part"))
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtIndex` writes 1, 2, 3 as A, B, C, so the parts below are A, B and C.
 """, nkCode)
 
@@ -215,7 +214,7 @@ nbCode:
   echo trips[1]
   echo post(tripsSource)
 
-nbNota("""
+nbNote("""
 `readTsv` (in `docs/olimpiadi.nim`) skips the comment line and calls `parseCsv`, which makes a
 `TableData`: one column per field, each value a number or a text. A `const` list of objects goes
 to `tabella` as it is, one field per column. Some tables are made in between: a `seq` of objects
@@ -224,7 +223,7 @@ built in a loop (the venues, one row per venue with its sports joined; the table
 written by short Python scripts that read Wikipedia: how, in *How this story is built*.
 """, nkCode)
 
-nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
+nbPart 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
 nbText: """
 ## A · The Games
 
@@ -266,7 +265,7 @@ nbShowCode:
     tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbNota("""
+nbNote("""
 The data has one row per venue and sport, so the page joins them first. `textCaseMatch` rewrites
 the "before" column, and with `replace = "partial"` puts the emoji of each sport's kind in front
 of it, inside the joined list. `textReplace` drops "Milano" from the venue names, after
@@ -290,7 +289,7 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(tripsSource, \"7 March 2025\")} and {link(tripsSource2, \"29 October 2025\")}, after the organisers' tables and the Washington Post.")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtDuration` takes hours and writes them as a length of time, "10h", so it reads as a trip,
 not as a number.
 """, nkCode)
@@ -328,7 +327,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
 
-nbNota("""
+nbNote("""
 The row groups come from a column, `groupnameCol = "kind"`, and
 `textCaseMatch(kindLabels, locations = loc.rowGroups())` gives each its emoji. The same emojis go
 in front of the sports in the other tables, with `sportMarks()`; both are in
@@ -394,20 +393,20 @@ gt(head(medals, 10), rowname_col = "team") |>
       tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbNota("""
+nbNote("""
 This is the only table of the story shown in three languages: Nim with tabelline, Python with
 Great Tables, R with gt. It is the table everyone knows, so it is the one to compare, verb by
 verb. The [Book](../../book/) does the same for the examples it ports from the gt and Great
 Tables guides.
 """, nkCode, "Three languages, once")
 
-nbNota("""
+nbNote("""
 `readTsv` and `top` are this story's own: the first drops the comment lines naming the Wikipedia
 revision, then calls `parseCsv`; the second keeps the ten rows with most golds. Each country gets its flag from a two-letter code, `fmtFlag`, as an
 emoji, so nothing is loaded. `dataColor` shades each medal column in its own metal, from the paper
 to `gold`, `silver` or `bronze`, so the deepest cell of a column is the country with most of that
 medal (each column has its own range, as in gt). The three are mixed at the top of the page from
-the Munari look's colours (`docs/stile.nim`) with tabelline's `mix`: gold is its yellow
+the Munari look's colours (`docs/theme.nim`) with tabelline's `mix`: gold is its yellow
 (`haru.warning`), silver the paper with a little ink, bronze the yellow and the plum with a little
 ink. They are values, not the page's CSS variables, because `dataColor` mixes the colours itself
 while building the table, and picks a dark or light text for each cell so the numbers stay
@@ -435,12 +434,12 @@ nbShowCode:
       tabStyle style.fill(gilt), loc.body(rows = where(it["team"] == "Italy"))
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
-  nbAccanto:
+  nbBeside:
     nbTable topTen(false)
     nbTable topTen(true)
 
-nbNota("""
-Two `rowOrder` calls on the same data, side by side with `nbAccanto`.
+nbNote("""
+Two `rowOrder` calls on the same data, side by side with `nbBeside`.
 """, nkCode)
 
 nbText: &"""
@@ -479,7 +478,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
 
-nbNota("""
+nbNote("""
 The table is built from the one before: the same groups and emojis, and `fmtFlag` again. Italy's
 column is filled yellow with `tabStyle` where it has four or more.
 """, nkCode)
@@ -540,7 +539,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
 
-nbNota("""
+nbNote("""
 `textCaseMatch(sportMarks())` puts the emoji of each sport's kind in front of it; the row groups,
 the medal colours, get theirs from `textTransform`, with a small proc of this story.
 """, nkCode)
@@ -568,7 +567,7 @@ nbShowCode:
       tabStyle style.fill(gilt), loc.body(rows = where(it["team"] == "Italy"))
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
-  nbAccanto:
+  nbBeside:
     nbTable small("medals.tsv", "Olympics")
     nbTable small("paralympics.tsv", "Paralympics")
 
@@ -594,7 +593,7 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(channelsSource, \"6 February 2026\")}; NBC's audience from Il Post, {link(sharesSource, \"24 February 2026\")}.")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtTf` turns `true` and `false` into ✓ and ✗, one of gt's ten styles.
 """, nkCode)
 
@@ -613,7 +612,7 @@ A seat was cheap or very dear: €30 for the cheapest, €1,400 for the men's ho
 """
 
 nbShowCode:
-  nbAccanto:
+  nbBeside:
     block:
       let t = tabella(prices, rownameCol = "what"):
         optCssTheme()
@@ -668,7 +667,7 @@ nbShowCode:
     tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbNota("""
+nbNote("""
 The table mixes euros and dollars. `fmtCurrency` takes `rows`, so each row is formatted in its
 own currency, and `subZero` says "nothing" where a country pays nothing.
 """, nkCode)
@@ -694,7 +693,7 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(prizesSource, \"23 February 2026\")}, at February's prices; the silver medal's weight is not given.")
   nbTable t
 
-nbNota("""
+nbNote("""
 The data has a 0 in three places, and each means something else. `subZero` says it column by
 column: in *weighs* the 0 is a number nobody gave, so it shows "—"; in *of gold* it is a true
 zero, "none"; in *worth* it is a value too small for the article to count, "a few euros". The data
@@ -802,7 +801,7 @@ nbShowCode:
     tabSourceNote md(&"Il Post, {link(snowSources[0], \"24 Feb 2026\")} and {link(snowSources[1], \"22 Jan 2026\")}. Over 90% of Italy's ski slopes were snowed artificially in 2025, 98% in the Dolomites (Legambiente, via {link(\"2025/03/07/olimpiadi-invernali-diffuse-2026-piu-luoghi-sostenibilita/\", \"Il Post\")}).")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtNumber(compact = true)` writes 1.6M. The unit stays in a column of its own:
 `fmtNumberSi(unit = "m³", decimals = 1)` would write "1.6 Mm³", which reads as cubic megametres (more about this at the end).
 """, nkCode)
@@ -836,7 +835,7 @@ nbShowCode:
     tabOptions(tableFontSize = "14px")
   nbTable t
 
-nbNota("""
+nbNote("""
 The data has the share as a fraction of the air, 0.00042935, which no one wants to read:
 `fmtPartsper(toUnits = "ppm")` writes it as 429 ppm.
 """, nkCode)
@@ -868,7 +867,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtNumber(compact = true, pattern = "{x} t")` writes 930K t; the same `pattern` puts each unit after its number.
 """, nkCode)
 
@@ -901,7 +900,7 @@ nbShowCode:
     tabSourceNote md(&"The IOC, via Il Post, {link(iocSource, \"30 October 2025\")}.")
   nbTable t
 
-nbNota("""
+nbNote("""
 `subSmallVals` hides the precise small shares behind "under 5%", gt's way to say a number is too
 small to matter.
 """, nkCode)
@@ -956,7 +955,7 @@ The last row is in the future: the cable car of Socrepes, built on a landslide t
 works in 2025, is due to open on 8 December, a month from today.
 """
 
-nbParte 2, "", prSecondary   # the closing sections: the articles and the code
+nbPart 2, "", prSecondary   # the closing sections: the articles and the code
 nbText: """
 ## The articles
 
@@ -981,7 +980,7 @@ nbShowCode:
     tabOptions(tableFontSize = "13px")
   nbTable t
 
-nbNota("""
+nbNote("""
 `fmtUrl` makes the links, from the paths in `docs/olimpiadi.nim`.
 """, nkCode)
 
@@ -1015,7 +1014,7 @@ time, so that `fmtFlag "code"` becomes `t = t.fmtFlag("code")`. The verbs themse
 and a format such as `fmtCurrency` only records what to do: it runs when the table is rendered,
 so the HTML, text and Markdown renderers all agree. Two small helpers belong to this page:
 `readTsv`, which skips comment lines, and `medal`, which puts 🥇 before "gold". The page is made
-of the docs' blocks (`docs/blocchi.nim`): `nbAccanto` puts small tables side by side (they wrap
+of the docs' blocks (`docs/blocks.nim`): `nbBeside` puts small tables side by side (they wrap
 to one column on a phone), and under every table *show code* opens the code that made it:
 `nbShowCode` runs its block, reads the
 block's own source back with nimib's `getCode`, and folds it under the tables the block made.

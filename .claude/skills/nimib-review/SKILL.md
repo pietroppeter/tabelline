@@ -48,10 +48,10 @@ The quote is rendered text, not source. Search the notebook for it, and expect:
 
 - Markdown marks gone: `**bold**`, `` `code` ``, `*em*` appear without their marks, a link shows
   only its text, a line break in the source is a space in the quote.
-- Text made by code (a table, a generated list, the indice, a block of `blocchi.nim` or
+- Text made by code (a table, a generated list, the indice, a block of `blocks.nim` or
   `review.nim`) is not
   in the notebook's text: find the code or the data file that makes it.
-- Text in a shared block (a header, a footer) is in `docs/blocchi.nim`, which changes every page:
+- Text in a shared block (a header, a footer) is in `docs/blocks.nim`, which changes every page:
   say so before changing it.
 
 ## 3. Make the changes

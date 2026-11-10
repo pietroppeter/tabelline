@@ -1,29 +1,29 @@
 ## *Blocchi*: the blocks of tabelline's pages, and the page itself (header, footer, headings).
 ##
 ## A page says what it shows with these blocks, and never how it is drawn: no HTML in `nbText`,
-## no CSS and no colours in a page. The CSS of every block is in `stile.nim`, from the tokens.
+## no CSS and no colours in a page. The CSS of every block is in `theme.nim`, from the tokens.
 ##
-##   nb.useTabelline(materia = "...", title = "...")   # right after nbInit
-##   nbTitolo "kicker", "Title", "a lede, in Markdown"
-##   nbIndice
-##   nbNota "text", nkWarning
+##   nb.useTabelline(section = "...", title = "...")   # right after nbInit
+##   nbTitle "kicker", "Title", "a lede, in Markdown"
+##   nbToc
+##   nbNote "text", nkWarning
 ##   nbCards: (nbCard "Title", "href/": nbText "...")
-##   nbGalleria "what it shows": (nbScheda "Title": ...)
+##   nbGallery "what it shows": (nbGalleryCard "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
 ##   nbFoldCode "docs/review.nim"              # a source file, or a part of it, folded
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
-##   nbParti t                                 # a table and its parts, with a switch
-##   nbTinte [("--primary", "primary", "sections")]
+##   nbParts t                                 # a table and its parts, with a switch
+##   nbSwatches [("--primary", "primary", "sections")]
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
 import std/[json, os, osproc, strutils, strformat, sequtils, base64]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import stile, parti
-export stile
+import theme, table_parts
+export theme
 
 const
   repoUrl* = "https://github.com/pietroppeter/tabelline"
@@ -175,7 +175,7 @@ func codeHtml*(code, lang: string): string =
 
 # ------------------------------------------------------------------------------------- the title
 
-newNbBlock(NbTitolo):
+newNbBlock(NbTitle):
   kicker: string
   title: string
   lede: string
@@ -184,13 +184,13 @@ newNbBlock(NbTitolo):
       &"<h1>{inline(blk.title)}</h1>\n" &
       (if blk.lede.len > 0: &"""<div class="lede">{markdownToHtml(blk.lede)}</div>""" else: "")
 
-proc titolo*(nb: var Nb, kicker, title: string, lede = "") =
-  nb.add newNbTitolo(kicker = kicker, title = title, lede = lede)
+proc addTitle*(nb: var Nb, kicker, title: string, lede = "") =
+  nb.add newNbTitle(kicker = kicker, title = title, lede = lede)
 
-template nbTitolo*(tkicker, ttitle: string, tlede = "") =
+template nbTitle*(tkicker, ttitle: string, tlede = "") =
   ## The top of a page: a small line above (the kicker: what kind of page, a date), the title,
   ## and the lede, a paragraph that says what the page is for. All three in Markdown.
-  nb.titolo(tkicker, ttitle, tlede)
+  nb.addTitle(tkicker, ttitle, tlede)
 
 # ------------------------------------------------------------------------------ parts of a page
 
@@ -198,7 +198,7 @@ type PartRole* = enum
   ## The colour of a part of a page: its sections' circles and their entries in the indice.
   prPrimary = "primary", prSecondary = "secondary", prSuccess = "success"
 
-newNbBlock(NbParte):
+newNbBlock(NbPart):
   numero: int
   title: string
   role: PartRole
@@ -206,25 +206,25 @@ newNbBlock(NbParte):
     if blk.title == "": &"""<p class="parte parte-{blk.role}" hidden></p>"""   # colour only, no label
     else: &"""<p class="parte parte-{blk.role}">Part {blk.numero} · {inline(blk.title)}</p>"""
 
-proc parte*(nb: var Nb, num: int, title: string, role: PartRole) =
-  nb.add newNbParte(numero = num, title = title, role = role)
+proc addPart*(nb: var Nb, num: int, title: string, role: PartRole) =
+  nb.add newNbPart(numero = num, title = title, role = role)
 
-template nbParte*(tnum: int, ttitle: string, trole: PartRole) =
+template nbPart*(tnum: int, ttitle: string, trole: PartRole) =
   ## The start of a part of a long page: a label, and from here on the sections' circles (and
   ## their entries in the indice) take the colour of `trole`. With an empty title there is no
   ## label, only the colour: for a page whose headings already name its parts.
-  nb.parte(tnum, ttitle, trole)
+  nb.addPart(tnum, ttitle, trole)
 
 # ------------------------------------------------------------------------------------ the indice
 
-newNbBlock(NbIndice):
+newNbBlock(NbToc):
   title: string
   toHtml:
     var items = ""
     var openSub = false
     var part = ""
     for b in nb.doc.blocksFlattened:
-      if b of NbParte: part = &""" class="parte-{b.NbParte.role}""""
+      if b of NbPart: part = &""" class="parte-{b.NbPart.role}""""
       if not (b of NbText): continue
       for (level, text) in headingsOf(b.NbText.text):
         let link = &"""<a href="#{slugify(text)}">{text}</a>"""
@@ -239,18 +239,18 @@ newNbBlock(NbIndice):
     if items.len > 0: items.add "</li>"
     &"""<nav class="indice" id="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
 
-proc indice*(nb: var Nb, title = "Indice") =
+proc addToc*(nb: var Nb, title = "Indice") =
   nb.doc.context["indice"] = %true   # the headings get their arrow back to it (`addHeadingIds`)
-  nb.add newNbIndice(title = title)
+  nb.add newNbToc(title = title)
 
-template nbIndice*(ttitle = "Indice") =
+template nbToc*(ttitle = "Indice") =
   ## The table of contents of the page's `##` and `###` headings, built when the page is saved.
-  nb.indice(ttitle)
+  nb.addToc(ttitle)
 
 # ----------------------------------------------------------------------------------------- notes
 
-type NotaKind* = enum
-  ## What a note is about; its colour follows (`stile.nim`). A warning carries the triangle.
+type NoteKind* = enum
+  ## What a note is about; its colour follows (`theme.nim`). A warning carries the triangle.
   nkPlain = "plain"      ## an aside
   nkInfo = "info"        ## information, a page to go to
   nkDone = "done"        ## what is done, what works
@@ -258,21 +258,21 @@ type NotaKind* = enum
   nkWarning = "warning"  ## something to watch out for: the API will change, a step breaks things
   nkCode = "code"        ## about the code: what tabelline does in the table above, and why
 
-newNbBlock(NbNota):
+newNbBlock(NbNote):
   text: string
-  tipo: NotaKind
+  tipo: NoteKind
   title: string
   toHtml:
     &"""<div class="nota {blk.tipo}">""" &
       (if blk.title.len > 0: &"""<span class="titolo">{inline(blk.title)}</span>""" else: "") &
       markdownToHtml(blk.text) & "</div>"
 
-proc nota*(nb: var Nb, text: string, kind = nkPlain, title = "") =
-  nb.add newNbNota(text = text, tipo = kind, title = title)
+proc addNote*(nb: var Nb, text: string, kind = nkPlain, title = "") =
+  nb.add newNbNote(text = text, tipo = kind, title = title)
 
-template nbNota*(ttext: string, tkind = nkPlain, ttitle = "") =
-  ## A note beside the text, in Markdown, of a kind: `nbNota "The API will change.", nkWarning`.
-  nb.nota(ttext, tkind, ttitle)
+template nbNote*(ttext: string, tkind = nkPlain, ttitle = "") =
+  ## A note beside the text, in Markdown, of a kind: `nbNote "The API will change.", nkWarning`.
+  nb.addNote(ttext, tkind, ttitle)
 
 # ----------------------------------------------------------------------------------------- cards
 
@@ -285,7 +285,7 @@ newNbBlock(NbCard of NbContainer):
   title: string
   href: string
   numero: string
-  tipo: NotaKind
+  tipo: NoteKind
   toHtml:
     let title = if blk.href.len > 0: &"""<a href="{blk.href}">{inline(blk.title)}</a>""" else: inline(blk.title)
     &"""<div class="nota {blk.tipo}" role="listitem">""" &
@@ -299,7 +299,7 @@ template nbCards*(what: string, body: untyped) =
     body
   nb.add cards
 
-template nbCard*(heading, link, num: string, kind: NotaKind, body: untyped) =
+template nbCard*(heading, link, num: string, kind: NoteKind, body: untyped) =
   ## A card: a title (a link when `link` is not empty), a small number above it (or ""), a kind
   ## (`nkInfo` for a page to go to) and blocks inside.
   let card = newNbCard(title = heading, href = link, numero = num, tipo = kind)
@@ -317,38 +317,38 @@ template nbCard*(heading: string, body: untyped) =
 
 # --------------------------------------------------------------------------------------- gallery
 
-newNbBlock(NbGalleria of NbContainer):
+newNbBlock(NbGallery of NbContainer):
   label: string
   toHtml:
     &"""<div class="nb-galleria" tabindex="0" aria-label="{blk.label}">""" & nbContainerToHtml(blk, nb) & "</div>"
 
-newNbBlock(NbScheda of NbContainer):
+newNbBlock(NbGalleryCard of NbContainer):
   title: string
   label: string
   toHtml:
     let label = if blk.label.len > 0: &""" data-label="{esc(blk.label)}"""" else: ""
     &"""<div class="nb-scheda"{label}><h3>{inline(blk.title)}</h3>""" & nbContainerToHtml(blk, nb) & "</div>"
 
-newNbBlock(NbAccanto of NbContainer):
+newNbBlock(NbBeside of NbContainer):
   toHtml:
     """<div class="accanto">""" & nbContainerToHtml(blk, nb) & "</div>"
 
-template nbAccanto*(body: untyped) =
+template nbBeside*(body: untyped) =
   ## The blocks of `body` side by side, wrapping on a narrow screen: small tables to compare.
-  let accanto = newNbAccanto()
+  let accanto = newNbBeside()
   nb.withContainer(accanto):
     body
   nb.add accanto
 
-proc accosta*(c: NbContainer) =
-  ## Puts tables that follow each other in `c` side by side (in an `NbAccanto`).
+proc placeBeside*(c: NbContainer) =
+  ## Puts tables that follow each other in `c` side by side (in an `NbBeside`).
   var res: seq[NbBlock]
   var i = 0
   while i < c.blocks.len:
     var j = i
     while j < c.blocks.len and c.blocks[j] of NbTable: inc j
     if j - i >= 2:
-      let a = newNbAccanto()
+      let a = newNbBeside()
       a.blocks = c.blocks[i ..< j]
       res.add a
       i = j
@@ -357,28 +357,28 @@ proc accosta*(c: NbContainer) =
       inc i
   c.blocks = res
 
-template nbGalleria*(what: string, body: untyped) =
-  ## A gallery: cards (`nbScheda`) side by side, to swipe or scroll sideways, numbered.
+template nbGallery*(what: string, body: untyped) =
+  ## A gallery: cards (`nbGalleryCard`) side by side, to swipe or scroll sideways, numbered.
   ## `what` says what it shows, for screen readers.
-  let galleria = newNbGalleria(label = what)
+  let galleria = newNbGallery(label = what)
   nb.withContainer(galleria):
     body
   nb.add galleria
 
-template nbScheda*(heading: string, body: untyped) =
+template nbGalleryCard*(heading: string, body: untyped) =
   ## A card of a gallery: a title and any blocks.
-  nbScheda(heading, "", body)
+  nbGalleryCard(heading, "", body)
 
-template nbScheda*(heading, what: string, body: untyped) =
+template nbGalleryCard*(heading, what: string, body: untyped) =
   ## A card of a gallery with a label before its number (a step, a part).
-  let scheda = newNbScheda(title = heading, label = what)
+  let scheda = newNbGalleryCard(title = heading, label = what)
   nb.withContainer(scheda):
     body
   nb.add scheda
 
 # ------------------------------------------------------------------------------------------ tabs
 
-const lingue* = [("nim", "👑 Nim"), ("python", "🐍 Python"), ("r", "🏴‍☠️ R")]
+const languages* = [("nim", "👑 Nim"), ("python", "🐍 Python"), ("r", "🏴‍☠️ R")]
 
 newNbBlock(NbTabs of NbContainer):
   python: string
@@ -390,15 +390,15 @@ newNbBlock(NbTabs of NbContainer):
       else: made.add nb.render(b).strip & "\n"
     let panels = [nimCode.strip, (if blk.python.len > 0: codeHtml(blk.python, "python") else: ""),
                   (if blk.r.len > 0: codeHtml(blk.r, "r") else: "")]
-    var res = """<div class="lingue"><div class="lingue-tab" role="tablist">"""
+    var res = """<div class="languages"><div class="lingue-tab" role="tablist">"""
     var first = true
-    for i, (key, label) in lingue:
+    for i, (key, label) in languages:
       if panels[i].len == 0: continue
       res.add &"""<button type="button" role="tab" data-lingua="{key}" aria-selected="{first}">{label}</button>"""
       first = false
     res.add "</div>"
     first = true
-    for i, (key, label) in lingue:
+    for i, (key, label) in languages:
       if panels[i].len == 0: continue
       res.add &"""<div class="lingue-pannello" role="tabpanel" data-lingua="{key}"{(if first: "" else: " hidden")}>{panels[i]}</div>"""
       first = false
@@ -502,8 +502,8 @@ template nbShowR*(rcode: string) =
   nb.add cellR
   rCells.add cellR
 
-func untinta(html: string): string =
-  ## The placeholder colours of `tinta` in tabelline.R back to the page's tokens.
+func untint(html: string): string =
+  ## The placeholder colours of `tint` in tabelline.R back to the page's tokens.
   result = html
   for i, token in tokenColours:
     let hex = &"F0E0{i + 1:02X}"
@@ -539,7 +539,7 @@ proc runR*(nb: var Nb, outputs, dataDir: string) =
     if o.hasKey("error"): errors.add c.code & "\n--> " & o["error"].getStr
     let printed = o{"printed"}.getStr.strip
     c.html = (if printed.len > 0: "<pre class=\"nb-output\">" & esc(printed) & "</pre>" else: "") &
-      untinta(o{"html"}.getStr)
+      untint(o{"html"}.getStr)
   if errors.len > 0:
     stderr.writeLine errors.join("\n\n")
     raise newException(ValueError, "R cells failed: " & $errors.len)
@@ -547,7 +547,7 @@ proc runR*(nb: var Nb, outputs, dataDir: string) =
 
 # ------------------------------------------------------------------------------ parts of a table
 
-newNbBlock(NbParti):
+newNbBlock(NbParts):
   dati: string
   parti: string
   toHtml:
@@ -559,20 +559,20 @@ newNbBlock(NbParti):
     """<button type="button" class="mostra-parti" aria-pressed="false">Show the parts</button>""" &
       &"""<div class="vista-dati">{blk.dati}</div><div class="vista-parti" hidden>{blk.parti}{legend}</div>"""
 
-proc parti*(nb: var Nb, t: Tabella) =
-  nb.add newNbParti(dati = t.toHtml, parti = showParts(t).toHtml)
+proc addParts*(nb: var Nb, t: Tabella) =
+  nb.add newNbParts(dati = t.toHtml, parti = showParts(t).toHtml)
 
-template nbParti*(t: Tabella) =
+template nbParts*(t: Tabella) =
   ## The table `t`, with a switch that shows its parts in their colours, and their legend.
-  nb.parti(t)
+  nb.addParts(t)
 
-template nbPartiLegenda*() =
+template nbPartsLegend*() =
   ## The parts of a table, each with its colour, as a list.
-  nb.add newNbParti()
+  nb.add newNbParts()
 
 # -------------------------------------------------------------------------------------- swatches
 
-newNbBlock(NbTinte):
+newNbBlock(NbSwatches):
   tinte: seq[(string, string, string)]
   toHtml:
     var res = """<div class="tinte">"""
@@ -581,17 +581,17 @@ newNbBlock(NbTinte):
       res.add &"""<div class="tinta"><span style="background:{css}"></span><strong>{inline(name)}</strong>{inline(what)}</div>"""
     res & "</div>"
 
-proc tinte*(nb: var Nb, swatches: openArray[(string, string, string)]) =
-  nb.add newNbTinte(tinte = @swatches)
+proc addSwatches*(nb: var Nb, swatches: openArray[(string, string, string)]) =
+  nb.add newNbSwatches(tinte = @swatches)
 
-template nbTinte*(swatches: openArray[(string, string, string)]) =
+template nbSwatches*(swatches: openArray[(string, string, string)]) =
   ## Swatches: a colour (a token such as `--primary`, or a CSS colour), its name and what it is
   ## for, in Markdown.
-  nb.tinte(swatches)
+  nb.addSwatches(swatches)
 
 # ---------------------------------------------------------------------------- annotated screens
 
-newNbBlock(NbSchermata):
+newNbBlock(NbScreenshot):
   src: string
   alt: string
   punti: seq[(int, float, float)]
@@ -602,32 +602,32 @@ newNbBlock(NbSchermata):
     &"""<figure class="schermata"><div><img src="{blk.src}" alt="{esc(blk.alt)}">{marks}</div>""" &
       &"""<figcaption>{inline(blk.alt)}</figcaption></figure>"""
 
-proc schermata*(nb: var Nb, image, points, alt: string) =
+proc addScreenshot*(nb: var Nb, image, points, alt: string) =
   let j = parseJson(readFile(points))
   var punti: seq[(int, float, float)]
   for p in j["points"]: punti.add (p["n"].getInt, p["x"].getFloat, p["y"].getFloat)
   let mime = if image.endsWith(".png"): "image/png" else: "image/jpeg"
-  nb.add newNbSchermata(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti)
+  nb.add newNbScreenshot(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti)
 
-template nbSchermata*(timage, tpoints, talt: string) =
+template nbScreenshot*(timage, tpoints, talt: string) =
   ## A screenshot with numbered circles on it, to name its pieces in the text or a table: the
   ## image (inlined), a JSON of points (`{"points": [{"n": 1, "x": 12.5, "y": 40}]}`, in % of the
-  ## width and height) and a caption in Markdown. Put two side by side with `nbAccanto`.
-  nb.schermata(timage, tpoints, talt)
+  ## width and height) and a caption in Markdown. Put two side by side with `nbBeside`.
+  nb.addScreenshot(timage, tpoints, talt)
 
-newNbBlock(NbDisegno):
+newNbBlock(NbDrawing):
   svg: string
   alt: string
   toHtml:
     &"""<figure class="disegno" role="img" aria-label="{esc(blk.alt)}">{blk.svg}<figcaption>{inline(blk.alt)}</figcaption></figure>"""
 
-proc disegno*(nb: var Nb, svgFile, alt: string) =
-  nb.add newNbDisegno(svg = readFile(svgFile).strip, alt = alt)
+proc addDrawing*(nb: var Nb, svgFile, alt: string) =
+  nb.add newNbDrawing(svg = readFile(svgFile).strip, alt = alt)
 
-template nbDisegno*(tsvg, talt: string) =
+template nbDrawing*(tsvg, talt: string) =
   ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
   ## in the page's colours, with a caption in Markdown.
-  nb.disegno(tsvg, talt)
+  nb.addDrawing(tsvg, talt)
 
 # ------------------------------------------------------------------------------------- the page
 
@@ -719,11 +719,13 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
   var rows = ""
-  for (key, label, cls) in [("nome", "Nome", "nome"), ("materia", "Materia", ""), ("classe", "Classe", "")]:
+  # The masthead: the wordmark, the section and its cadence. The quaderno shows them as the label
+  # of an exercise book, so each line keeps the label's word for it (Nome, Materia, Classe).
+  for (key, label, cls) in [("wordmark", "Nome", "nome"), ("section", "Materia", ""), ("cadence", "Classe", "")]:
     let v = c{key}.getStr
     if v.len > 0:
-      let nameHref = c{"name_href"}.getStr
-      let shown = if key == "nome" and nameHref.len > 0: &"""<a href="{nameHref}">{v}</a>""" else: v
+      let wordmarkHref = c{"wordmark_href"}.getStr
+      let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
@@ -741,25 +743,31 @@ func pageFooter(blk: JsonNode, nb: Nb): string =
 
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 
-proc useTabelline*(nb: var Nb, nome = "tabelline", materia = "", classe = "", title = "", description = "",
-                   homeHref = "", backLabel = "tabelline", nameHref = "") =
-  ## The page: both looks (Munari and the quaderno, `stile.nim`), the header with the switch and the
-  ## cover label (`nome`, `materia`, `classe`), and the footer. `homeHref` links back, with
-  ## `backLabel` as its text (a devlog post links back to the devlog); `nameHref` makes the name a
-  ## link (a post's name links to the home page).
+proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
+                   homeHref = "", backLabel = "tabelline", wordmarkHref = "") =
+  ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
+  ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
+  ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
+  ## `backLabel` as its text (a devlog post links back to the devlog); `wordmarkHref` makes the
+  ## wordmark a link (a post's wordmark links to the home page).
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
-  nb.doc.context["title"] = %(if title.len > 0: title else: nome)
+  nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript & "\n<style>\n" & css & "</style>")
+    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename))
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
-  for (key, value) in [("nome", nome), ("materia", materia), ("classe", classe), ("home_href", homeHref),
-                       ("back_label", backLabel), ("name_href", nameHref)]:
+  for (key, value) in [("wordmark", "tabelline"), ("section", section), ("cadence", cadence), ("home_href", homeHref),
+                       ("back_label", backLabel), ("wordmark_href", wordmarkHref)]:
     nb.doc.context[key] = %value
   nb.backend.partials["header"] = pageHeader
   nb.backend.partials["footer"] = pageFooter
   nb.backend.partials["nbText"] = pageText
   nb.backend.partials["left"] = emptyPartial
   nb.backend.partials["right"] = emptyPartial
+
+proc sharedReviewScript*(nb: Nb): string =
+  ## The review mode's script for a page of the docs: the shared copy, `docs/assets/review.js`, or
+  ## "" (inlined) with `-d:singleFile`. Pass it as `nbReview(..., tscript = sharedReviewScript(nb))`.
+  when singleFile: "" else: assetHref("review.js", nb.doc.filename)

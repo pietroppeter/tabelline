@@ -4,14 +4,14 @@
 ## `?spec=<names>` and `?change=<names>` (or the same after `#`) show only those; see the
 ## "Links" box on the page.
 import std/[os, strutils, json, algorithm, strformat, sequtils]
-import nimib except md
-import blocchi
+import nimib
+import blocks
 import ../tools/specexamples
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "specs" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Specs", classe = "kept up to date",
+nb.useTabelline(section = "Specs", cadence = "kept up to date",
                title = "tabelline specs", homeHref = "../",
                description = "How tabelline behaves today: OpenSpec requirements with examples that run.")
 
@@ -147,7 +147,9 @@ proc specHtml(s: Spec, kind = "spec"): string =
         for b in sc.bullets: result.add "<li>" & whenThen(b) & "</li>"
         result.add "</ul></div>"
       result.add "</div>"
-  result.add &"""<p class="src">source: <a href="{repoUrl}/blob/main/{s.path}"><code>{s.path}</code></a></p></details>"""
+  # a pull request is built from its branch (GITHUB_HEAD_REF), where a new change's files already exist
+  let branch = getEnv("GITHUB_HEAD_REF", "main")
+  result.add &"""<p class="src">source: <a href="{repoUrl}/blob/{branch}/{s.path}"><code>{s.path}</code></a></p></details>"""
 
 var total, passing, nreq = 0
 for k, ex in examples:
@@ -157,7 +159,7 @@ for k, ex in examples:
 for s in specs:
   for (_, rs) in s.sections: nreq += rs.len
 
-nbTitolo "Specs · rebuilt on every push", "How tabelline behaves", &"""
+nbTitle "Specs · rebuilt on every push", "How tabelline behaves", &"""
 Every behaviour agreed so far, written down with [OpenSpec](https://github.com/Fission-AI/OpenSpec):
 {specs.len} specs, {nreq} requirements, {total} examples. Each example ran against the code while
 this page was built: **{passing} of {total} pass**.
@@ -171,7 +173,7 @@ archived and its deltas join the specs. The examples are checked by
 `nim r tools/specexamples.nim`, here and in CI. Tap a spec to open it.
 """
 
-nbNota("""
+nbNote("""
 Add `spec=` or `change=` to this page's link to show only some of it, opened:
 [`?spec=formatting`](?spec=formatting), [`?spec=table-*`](?spec=table-*) (a prefix),
 [`?spec=formatting,styling`](?spec=formatting,styling), [`?change=all`](?change=all).
@@ -181,7 +183,7 @@ not run JavaScript gets the whole page, so to read one spec, read its markdown:
 """, nkInfo, "Links to a part of this page, for people and agents")
 
 # The specs and changes are rendered from OpenSpec's markdown by this page's own procs above: a
-# one-off renderer, so they go in as HTML. Their CSS is in stile.nim, the filter in blocchi.nim.
+# one-off renderer, so they go in as HTML. Their CSS is in theme.nim, the filter in blocks.nim.
 nbText "## Specs"
 var specsHtml = """<div class="filterbar nota info" id="filterbar" hidden></div>"""
 for s in specs: specsHtml.add specHtml(s)

@@ -3,14 +3,14 @@
 ## going, how it is made. Dated posts are not listed here: they are in the devlog.
 ## When a release adds features, the table may grow a little, but it stays simple.
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/[datasets, nimib]
-import blocchi, stories/storie
+import blocks, stories/storie
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "great tables for Nim", classe = "1ª · since November 2026",
+nb.useTabelline(section = "great tables for Nim", cadence = "since November 2026",
                title = "tabelline: great tables for Nim",
                description = "tabelline: display tables for Nim, after R's gt and Python's Great Tables.")
 
@@ -32,7 +32,7 @@ nbCode:
     dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
     tabSourceNote "NASA Planetary Fact Sheet"
     optCssTheme()  # the page's colours
-nbParti t
+nbParts t
 nbText: """
 The six parts of every gt table are explained in the [Guide](explainer/#the-parts-of-a-table).
 The last line, `optCssTheme()`, is tabelline's own: the table takes its colours and font from the

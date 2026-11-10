@@ -5,25 +5,24 @@
 ## The data is in docs/stories/data/fosdem/ (see its README); the small tables of this story are
 ## in story/, written by src/insights.nim (nanuq).
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 let story = "docs/stories/data/fosdem/story"   # from the repository's root, for R
 nbInit
 nb.doc.filename = docs / "stories" / "fosdem" / "index.html"
-nb.useTabelline(nome = "tabelline",
-                title = "FOSDEM, twenty-six times", homeHref = "../", backLabel = "Stories", nameHref = "../../")
+nb.useTabelline(title = "FOSDEM, twenty-six times", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
 
-nbTitolo "A story · tabelline 0.2", "FOSDEM, twenty-six times", """
+nbTitle "A story · tabelline 0.2", "FOSDEM, twenty-six times", """
 Every year, on a weekend at the start of February, a few thousand people who make free software
 fill the campus of the Université Libre de Bruxelles. There is no ticket and no registration.
 This is FOSDEM in tables, from OSDEM in 2001 to the edition of 2027, in three parts of three:
 the editions, the devrooms, the people.
 """
 
-nbNota("""
+nbNote("""
 Green cards like this one are about how the tables are made. This story is written ahead of
 tabelline 0.2, which brings summary rows and merged columns, and 0.3 (units, dates in other
 languages, data from nanuq): so for now every table is **R with gt**, and the story will be
@@ -32,7 +31,7 @@ ported to Nim when the release is built. The numbers are computed in Nim with
 and draws the table. *Show code* under a table opens the R that made it.
 """, nkCode, "Reading the code")
 
-nbIndice()
+nbToc()
 
 nbText: """
 ## One row to start
@@ -56,7 +55,7 @@ gt(next_one, rowname_col = "name") |>
   tab_source_note("fosdem.org, news of 2027: the dates and the accepted developer rooms.")
 """
 
-nbNota("""
+nbNote("""
 `cols_merge_range` puts the two dates in one column, as "30 Jan–31 Jan": merged columns are
 tabelline 0.2. `opt_css_theme()` is tabelline's `optCssTheme()`, written in R for this story
 (in `docs/stories/r/tabelline.R`): the table takes the page's colours and font.
@@ -111,7 +110,7 @@ gt(tables, rowname_col = "table") |>
   tab_source_note(md("archive.fosdem.org, FOSDEM's website on GitHub, lists.fosdem.org; see the folder's README."))
 """
 
-nbNota("""
+nbNote("""
 Every file starts with a line naming its sources, so `read.csv(comment.char = "#")` skips it,
 as tabelline's `readCsv(path, comment = "#")` does. The story's own small tables are in
 `story/`, made from these by `src/insights.nim`.
@@ -123,7 +122,7 @@ most years, the devroom pages; the first three editions only have their printed 
 tables below say where a year is partial.
 """
 
-nbParte 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
+nbPart 1, "", prSuccess   # no label: the headings name the parts, the circles take its colour
 nbText: """
 ## A · The editions
 
@@ -151,13 +150,13 @@ gt(dates, rowname_col = "edition_site", groupname_col = "era") |>
   text_case_match("in person" ~ "", .locations = cells_body(format)) |>
   text_case_match("FOSDEM" ~ "", .locations = cells_body(name)) |>
   cols_label(name = "", start = "weekend", format = "") |>
-  tab_style(cell_fill(tinta("--success-soft")), cells_body(rows = in_window)) |>
-  tab_style(cell_fill(tinta("--success-soft")), cells_stub(rows = in_window)) |>
+  tab_style(cell_fill(tint("--success-soft")), cells_body(rows = in_window)) |>
+  tab_style(cell_fill(tint("--success-soft")), cells_stub(rows = in_window)) |>
   tab_source_note(md("FOSDEM's archived sites ([archive.fosdem.org](https://archive.fosdem.org/)); 2027 from [fosdem.org](https://fosdem.org/2027/). A year opens its edition's site.")) |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
-nbNota("""
+nbNote("""
 The row groups come from a column made with `cut`, and `cols_merge_range` puts Saturday and
 Sunday in one cell (tabelline 0.2). `text_case_match` empties "in person", so only "online"
 stands out.
@@ -193,7 +192,7 @@ gt(sizes, rowname_col = "year", groupname_col = "decade") |>
   tab_options(table.font.size = "12px", data_row.padding = px(2), column_labels.padding.horizontal = px(3), data_row.padding.horizontal = px(3))
 """
 
-nbNota("""
+nbNote("""
 `summary_rows` adds a total under each decade, and `grand_summary_rows` one for all the years:
 summary rows are the first feature of tabelline 0.2. The speakers have no total on purpose: the
 same person speaks in many years, so they do not add up.
@@ -220,7 +219,7 @@ gt(stands, rowname_col = "stand") |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
-nbNota("""
+nbNote("""
 The stands are a table of their own in the data, `stands.csv`, one row per stand and year:
 the pages were a list until 2012, tables by building from 2013, cards online in 2021 and 2022.
 `cols_merge_range` again for the years.
@@ -250,8 +249,8 @@ gt(online, rowname_col = "year") |>
   fmt_percent(with_video, decimals = 0) |>
   cols_label(format = "", events = "events", devrooms = "devrooms", rooms = "rooms",
              speakers = "speakers", median_minutes = "a talk", with_video = "on video") |>
-  tab_style(cell_fill(tinta("--secondary-soft")), cells_body(rows = format == "online")) |>
-  tab_style(cell_fill(tinta("--secondary-soft")), cells_stub(rows = format == "online")) |>
+  tab_style(cell_fill(tint("--secondary-soft")), cells_body(rows = format == "online")) |>
+  tab_style(cell_fill(tint("--secondary-soft")), cells_stub(rows = format == "online")) |>
   tab_footnote("The median length of a talk: keynotes, main tracks, devrooms, lightning talks.",
                cells_column_labels(median_minutes)) |>
   tab_footnote("Online.", cells_stub(rows = format == "online")) |>
@@ -259,7 +258,7 @@ gt(online, rowname_col = "year") |>
   tab_options(table.font.size = "13px")
 """
 
-nbNota("""
+nbNote("""
 `cols_units` writes the unit beside the column's label, "a talk, min" (units are tabelline
 0.3), and `fmt_percent` the share of events with a video. The online years are shaded, with a
 footnote instead of a column.
@@ -299,13 +298,13 @@ gt(rooms27, rowname_col = "devroom", groupname_col = "group") |>
   sub_missing(was, missing_text = "") |>
   summary_rows(groups = everything(), columns = editions,
                fns = list(devrooms = ~ length(.)), fmt = ~ fmt_integer(.)) |>
-  tab_style(cell_fill(tinta("--success-soft")), cells_row_groups("new in 2027")) |>
+  tab_style(cell_fill(tint("--success-soft")), cells_row_groups("new in 2027")) |>
   tab_style(cell_text(size = "12px"), cells_body(was)) |>
   tab_source_note(md("fosdem.org, [accepted developer rooms of 2027](https://fosdem.org/2027/news/accepted-developer-rooms/); a name opens its call for participation. Earlier years from the schedules.")) |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
-nbNota("""
+nbNote("""
 The summary row of each group counts its devrooms (`length`), under the editions column. The
 groups are computed in nanuq (`src/insights.nim`): a devroom's *family* is its name folded to a
 key, plus 49 renames matched by hand, and its status is new, back (missing the year before) or
@@ -342,7 +341,7 @@ gt(longest, rowname_col = "devroom", groupname_col = "now") |>
   tab_options(table.font.size = "12px", data_row.padding = px(2), column_labels.padding.horizontal = px(3), data_row.padding.horizontal = px(3))
 """
 
-nbNota("""
+nbNote("""
 `cols_merge_range` again, for the first and the last year; the two groups come from a column
 made in R from `in_2027`. The longest run of consecutive
 editions comes from nanuq: the year minus the year's rank in its devroom is the same number
@@ -377,7 +376,7 @@ gt(renames, rowname_col = "devroom") |>
   tab_options(table.font.size = "12px", data_row.padding = px(3))
 """
 
-nbNota("""
+nbNote("""
 The table is made in nanuq: each devroom's names are grouped by their key, written as "name
 (first–last)" with `format`, and joined in order with `str.join("; ")`. A name can overlap the
 next one: Free Java and Java were both used in 2014 and 2015.
@@ -401,7 +400,7 @@ gt(flow, rowname_col = "year", groupname_col = "decade") |>
   summary_rows(groups = everything(), columns = c(new, back, last_time),
                fns = list(total = ~ sum(.)), fmt = ~ fmt_integer(.)) |>
   sub_zero(last_time, zero_text = "", rows = year == 2027) |>
-  tab_style(cell_fill(tinta("--success-soft")), cells_body(new, rows = new >= 13)) |>
+  tab_style(cell_fill(tint("--success-soft")), cells_body(new, rows = new >= 13)) |>
   tab_footnote("Not held again up to 2027.", cells_column_labels(last_time)) |>
   tab_footnote("Partial: the old sites list some devrooms without their pages.",
                cells_stub(rows = year <= 2006)) |>
@@ -409,7 +408,7 @@ gt(flow, rowname_col = "year", groupname_col = "decade") |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
-nbNota("""
+nbNote("""
 Summary rows per decade again, on three columns of five. The statuses come from a window in
 nanuq: the year before a devroom's year is `col.year.shift(1).over("family")`, and the next one
 `shift(-1)`.
@@ -454,9 +453,9 @@ gt(keynotes, rowname_col = "year") |>
   sub_missing(video, missing_text = "") |>
   text_transform(function(x) ifelse(first_of_year, x, ""), cells_stub()) |>
   cols_label(day = "", title = "", video = "") |>
-  tab_style(cell_fill(tinta("--primary-soft")), cells_body(rows = opening)) |>
-  tab_style(cell_fill(tinta("--primary-soft")), cells_stub(rows = opening)) |>
-  tab_style(cell_text(size = "12px", color = tinta("--muted")), cells_body(day)) |>
+  tab_style(cell_fill(tint("--primary-soft")), cells_body(rows = opening)) |>
+  tab_style(cell_fill(tint("--primary-soft")), cells_stub(rows = opening)) |>
+  tab_style(cell_text(size = "12px", color = tint("--muted")), cells_body(day)) |>
   tab_footnote("The schedule says only \"RMS\".", cells_body(title, rows = year == 2002)) |>
   tab_footnote("Online: no keynotes; the first talk of the day, in the community track.",
                cells_body(title, rows = year %in% c(2021, 2022))) |>
@@ -464,7 +463,7 @@ gt(keynotes, rowname_col = "year") |>
   tab_options(table.font.size = "13px", data_row.padding = px(3))
 """
 
-nbNota("""
+nbNote("""
 A title becomes a link in R (`[title](url)`, then `fmt_markdown`), and `cols_merge` puts the
 speakers under it in the same cell, one of the merges of tabelline 0.2. `fmt_url` turns each
 recording into a ▶. The year is shown once, on the first keynote of each year
@@ -500,7 +499,7 @@ gt(top, rowname_col = "person") |>
   tab_options(table.font.size = "12px", data_row.padding = px(2), column_labels.padding.horizontal = px(3), data_row.padding.horizontal = px(3))
 """
 
-nbNota("""
+nbNote("""
 `sub_zero` leaves the cells empty where there are no keynotes or main-track talks, so the
 table shows where each one spoke. The names are matched in nanuq with a folded key: "Richard
 \"RichiH\" Hartmann" and "Richard Hartmann" are one person.
@@ -541,7 +540,7 @@ gt(newcomers, rowname_col = "year", groupname_col = "decade") |>
   tab_options(table.font.size = "13px", data_row.padding = px(2))
 """
 
-nbNota("""
+nbNote("""
 `cols_merge_n_pct` writes the share beside the count, "719 (59%)": merged columns, tabelline
 0.2. A call is "by a speaker" when its sender spoke at the same edition: FOSDEM publishes no
 list of who runs a devroom, so the sender is the closest trace.
@@ -588,13 +587,13 @@ gt(nim, groupname_col = "year") |>
   sub_missing(video, missing_text = "") |>
   cols_label(title = "talk", track = "devroom", video = "") |>
   tab_style(cell_text(size = "12px"), cells_body(track)) |>
-  tab_style(cell_fill(tinta("--primary-soft")), cells_body(rows = track == "Nim Programming Language")) |>
+  tab_style(cell_fill(tint("--primary-soft")), cells_body(rows = track == "Nim Programming Language")) |>
   tab_footnote("Online, with a devroom of its own.", cells_row_groups("2022")) |>
   tab_source_note(md("FOSDEM's schedules: titles with \"Nim\", the 2022 Nim devroom, and abstracts read by hand (talks that only mention Nim are left out); the stand from [archive.fosdem.org/2018/stands](https://archive.fosdem.org/2018/stands/).")) |>
   tab_options(table.font.size = "13px", data_row.padding = px(3))
 """
 
-nbNota("""
+nbNote("""
 The pattern `{1}<<<br>{2}>>` of `cols_merge` writes the second value only when there is one
 (the stand has no speaker). The devroom gets a second line, in italics, only for the talks
 that are not about Nim itself. The list is made in nanuq: a regex on the titles, the 2022 devroom, four talks added
@@ -606,7 +605,7 @@ Nineteen talks in seven years, by fifteen speakers; Peter Munch-Ellingsen gave f
 Andreas Rumpf, who made Nim, two. Every one was recorded.
 """
 
-nbParte 2, "", prSecondary   # the closing sections: how it is built
+nbPart 2, "", prSecondary   # the closing sections: how it is built
 nbText: """
 ## How this story is built
 
@@ -630,10 +629,10 @@ typed by hand), the opening talks, the speakers. Each is a CSV in `story/`, with
 saying what it is made from.
 
 **4. The tables on this page** are R with gt, because tabelline does not yet have what they
-need. `nbShowR` (in `docs/blocchi.nim`) takes a cell of R and shows what it makes, with the code
+need. `nbShowR` (in `docs/blocks.nim`) takes a cell of R and shows what it makes, with the code
 folded under it. The cells run in one R session, in order, through `docs/stories/r/run.R`, which
-first reads `docs/stories/r/tabelline.R`: `opt_css_theme()` and `tinta()`, the two things the
-pages have and gt has not. gt takes only named or hex colours, so `tinta` gives each token a
+first reads `docs/stories/r/tabelline.R`: `opt_css_theme()` and `tint()`, the two things the
+pages have and gt has not. gt takes only named or hex colours, so `tint` gives each token a
 placeholder hex and the page puts the token back. Their HTML is kept in `story/fosdem-gt.json`, with the
 gt version, so the site builds without R, and so the tabelline port can be compared with it,
 table by table.

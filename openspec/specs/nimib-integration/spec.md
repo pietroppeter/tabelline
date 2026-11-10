@@ -14,6 +14,6 @@ the table, so the table renders with nimib's HTML backend (`nbInit`) and Markdow
 - **WHEN** a notebook made with `nbInitMd` calls `nbTable t`
 - **THEN** the Markdown file holds `t.toMarkdown`
 
-#### Scenario: nimib's old md template
-- **WHEN** a notebook imports nimib and tabelline and calls `md("...")`
-- **THEN** the call is ambiguous with nimib's deprecated `md`, so the notebook imports `nimib except md`
+#### Scenario: md in a notebook
+- **WHEN** a notebook does `import nimib` and imports tabelline, and calls `md("...")`
+- **THEN** the call is tabelline's `md`: nimib 0.5 has no `md` of its own, so nothing is excluded from the import

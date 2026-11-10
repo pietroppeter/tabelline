@@ -4,19 +4,19 @@
 ## Stories are kept up to date: when a release makes a table of a story better, the story changes.
 ## A story that used to be a devlog post keeps its old address, which forwards here (`moved`).
 import std/os
-import nimib except md
-import ../blocchi, storie
+import nimib
+import ../blocks, storie
 
 let here = currentSourcePath().parentDir
 let docs = here.parentDir
 
 nbInit
 nb.doc.filename = here / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Stories", classe = "one for every release",
+nb.useTabelline(section = "Stories", cadence = "one for every release",
                title = "tabelline stories", homeHref = "../",
                description = "Real subjects told in tables made with tabelline, one for every release.")
 
-nbTitolo "Stories", "Told with tabelline", """
+nbTitle "Stories", "Told with tabelline", """
 Real subjects, with real data, told in tables made with tabelline: one story for every release,
 written as a user would write it, with the features that release adds. Stories are kept up to
 date, so a table gets better when tabelline does. How tabelline itself is made is in the

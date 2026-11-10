@@ -17,17 +17,26 @@
 ##
 ## Two looks are in every page: Munari, the default, whose rules are the page itself (so a page
 ## without JavaScript is Munari), and the quaderno (an Italian school exercise book), every rule of
-## which is scoped by `html[data-tema="quaderno"]`. Fonts are inlined, so a page is one standalone
-## file. No other module of the docs writes CSS or a colour: pages use the blocks of `blocchi.nim`, and
+## which is scoped by `html[data-tema="quaderno"]`. The pages share it: `css` is written once to
+## `docs/assets/site.css`, and its fonts are the files beside it, in `docs/assets/fonts/`. Built
+## with `-d:singleFile`, a page inlines all of it instead (fonts as data URLs), so it is one file
+## that works alone, for a one-page preview. No other module of the docs writes CSS or a colour: pages use the blocks of `blocks.nim`, and
 ## tables take tabelline's `optCssTheme()`, which reads these tokens by name (`--ink`, `--paper`,
 ## `--line`, `--shade`, `--primary`, `--secondary`, `--font`).
 
 import std/[os, strformat, strutils, base64]
 
-const fontDir = currentSourcePath().parentDir / "assets" / "fonts"
+const
+  singleFile* = defined(singleFile)
+    ## `-d:singleFile`: every page is one file, its style and fonts inlined
+  assetsDir* = currentSourcePath().parentDir / "assets"
+    ## `docs/assets/`: the files the pages share (deployed with them)
+  fontDir = assetsDir / "fonts"
 
 func face(family, file, weight, style: string): string =
-  &"@font-face{{font-family:'{family}';src:url(data:font/woff2;base64,{encode(staticRead(fontDir / file))}) format('woff2');" &
+  # shared: the font file, beside site.css; singleFile: the font itself, as a data URL
+  let src = when singleFile: "data:font/woff2;base64," & encode(staticRead(fontDir / file)) else: "fonts/" & file
+  &"@font-face{{font-family:'{family}';src:url({src}) format('woff2');" &
     &"font-weight:{weight};font-style:{style};font-display:swap}}\n"
 
 const fonts = face("Patrick Hand", "patrick-hand.woff2", "400", "normal") &
@@ -72,7 +81,7 @@ const
   textShare* = 50   ## % of a colour in ink, for `--x-text`
 
   partTints* = ["#FAECAC", "#C7DFEA", "#F1BEC7", "#FDDFC4", "#CDC7DE", "#CAE2B7", "#D7EEEC"]
-    ## The categorical palette of the parts of a table (`parti.nim`): Haru and its neighbours
+    ## The categorical palette of the parts of a table (`table_parts.nim`): Haru and its neighbours
     ## (菜の花, 勿忘草, 紅梅, 洒落柿, 藤, 苗, 瓶覗), about 40% in the paper, readable in both looks.
 
 func tokensCss(): string =
@@ -254,7 +263,7 @@ body:has(#indice) .su { display: inline-block; }
 .cards .nota { margin: 0; }
 .cards .nota .titolo + p { margin-top: .3rem; }
 
-/* a gallery (nbGalleria, nbScheda): cards to swipe sideways, numbered */
+/* a gallery (nbGallery, nbGalleryCard): cards to swipe sideways, numbered */
 .nb-galleria { display: flex; align-items: flex-start; gap: .8rem; overflow-x: auto; scroll-snap-type: x mandatory;
   padding: .2rem 0 .8rem; counter-reset: nb-scheda; -webkit-overflow-scrolling: touch; }
 .nb-galleria::after { content: ""; flex: 0 0 .2rem; }
@@ -287,7 +296,7 @@ details.codice > summary::-webkit-details-marker { display: none; }
 details.codice > summary::before { content: "+ show code"; }
 details.codice[open] > summary::before { content: "− hide code"; }
 details.codice pre { margin: .4rem 0 0; }
-body /* a drawing (nbDisegno): a Pele diagram in the page's colours */
+body /* a drawing (nbDrawing): a Pele diagram in the page's colours */
 .disegno { margin: 1.4rem 0; }
 .disegno svg { display: block; max-width: 100%; height: auto; margin: 0 auto; --pele-bg: var(--paper); --pele-fg: var(--ink);
   --pele-muted: var(--muted); --pele-line: var(--ink); --pele-border: var(--ink); --pele-surface: var(--surface);
@@ -308,7 +317,7 @@ details.foldcode > summary > span { margin-left: auto; font-size: .8rem; white-s
 details.foldcode pre { margin: .2rem 0 .8rem; }
 body details.foldcode pre > code { font-size: 12.5px; }
 
-/* the parts of a table (nbParti): a switch between the data and its parts, and their legend */
+/* the parts of a table (nbParts): a switch between the data and its parts, and their legend */
 .parti { list-style: none; padding: 0; margin: .8rem 0; }
 .parti li { margin: .35rem 0; padding-left: 2rem; position: relative; line-height: 1.45; }
 .tinta-parte { position: absolute; left: 0; top: .25em; width: 1.3rem; height: 1rem; outline: 1px solid var(--line); }
@@ -317,13 +326,13 @@ body details.foldcode pre > code { font-size: 12.5px; }
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .3rem .8rem; margin: .2rem 0 0; }
 .mostra-parti[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-/* swatches (nbTinte): a colour beside its name */
+/* swatches (nbSwatches): a colour beside its name */
 .tinte { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .8rem; margin: 1rem 0; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }
 .tinte .tinta span { display: block; height: 2.4rem; margin-bottom: .3rem; outline: 1px solid var(--neutral-2); }
 .tinte .tinta strong { display: block; font-size: .95rem; }
 
-/* parts of a long page (nbParte): a label, then the sections' circles take the part's colour */
+/* parts of a long page (nbPart): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
 .parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
 /* a later part wins over an earlier one, whatever its colour: one more class for the second part on */
@@ -366,7 +375,7 @@ footer a { color: var(--ink); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
 details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
-/* a screenshot with numbered circles (nbSchermata): the circle is a place */
+/* a screenshot with numbered circles (nbScreenshot): the circle is a place */
 .schermata { margin: 1rem 0; width: min(47%, 15rem); }
 .schermata > div { position: relative; }
 .schermata img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
@@ -459,7 +468,7 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border-color: var(-
 .indice ol ol li::before { content: "– "; }
 .indice a { color: var(--primary); }
 
-/* notes (nbNota): a sticky note, coloured by its kind; a warning carries the triangle */
+/* notes (nbNote): a sticky note, coloured by its kind; a warning carries the triangle */
 .nota { background: var(--postit); padding: .8rem 1.1rem; border-top: 0; border-radius: 2px 2px 14px 2px;
   box-shadow: 2px 3px 8px rgba(0,0,0,.09); transform: rotate(-.3deg); }
 .nota.info { background: var(--secondary-soft); } .nota.done, .nota.code { background: var(--success-soft); }
@@ -528,19 +537,33 @@ const quadernoCss = scoped(quadernoRules, "html[data-tema=\"quaderno\"]")
 const css* = fonts & tokens & munariCss & quadernoCss
   ## All the CSS of a page: Munari, the default, then the quaderno, scoped.
 
+proc assetHref*(name, pageFile: string): string =
+  ## The link from a page (its HTML file) to a file the pages share, `docs/assets/<name>`.
+  relativePath(assetsDir / name, absolutePath(pageFile).parentDir).replace('\\', '/')
+
+proc siteCss*(pageFile: string): string =
+  ## What a page puts in its head for its style: a link to `docs/assets/site.css` (written when
+  ## it changed), relative to the page; with `-d:singleFile`, the CSS itself.
+  when singleFile:
+    "<style>\n" & css & "</style>"
+  else:
+    let file = assetsDir / "site.css"
+    if not fileExists(file) or readFile(file) != css: writeFile(file, css)
+    &"""<link rel="stylesheet" href="{assetHref("site.css", pageFile)}">"""
+
 # ----------------------------------------------------------------------------------------- tables
 
 const tokenColours* = ["--paper", "--shade", "--line", "--muted", "--ink", "--surface",
   "--primary", "--primary-soft", "--primary-text", "--secondary", "--secondary-soft", "--secondary-text",
   "--warning", "--warning-soft", "--success", "--success-soft", "--success-text"]
-  ## The tokens a page may name in a table colour, as `tinta("--secondary")`.
+  ## The tokens a page may name in a table colour, as `tint("--secondary")`.
 
-func tinta*(token: string): string =
-  ## A token as a CSS colour, for tabelline's colour arguments: `style.fill(tinta("--secondary"))`.
+func tint*(token: string): string =
+  ## A token as a CSS colour, for tabelline's colour arguments: `style.fill(tint("--secondary"))`.
   doAssert token in tokenColours, "not a token: " & token
   "var(" & token & ")"
 
-func tintaMix*(token: string, share: int, other = "--paper"): string =
+func tintMix*(token: string, share: int, other = "--paper"): string =
   ## `share`% of a token in another (the paper by default), for a scale drawn from the palette.
   doAssert token in tokenColours and other in tokenColours
   &"color-mix(in oklab, var({token}) {share}%, var({other}))"

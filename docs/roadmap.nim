@@ -2,18 +2,18 @@
 ## threads that make it (build it, use it, port the references), with their status. Kept up
 ## to date: the data is docs/piano.nim, updated when a thread starts, ships or changes its plan.
 import std/[os, strutils, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import blocchi, piano
+import blocks, piano
 
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "roadmap" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Roadmap", classe = "kept up to date",
+nb.useTabelline(section = "Roadmap", cadence = "kept up to date",
                title = "tabelline roadmap", homeHref = "../",
                description = "The releases of tabelline, and the three threads that make each one.")
 
-nbTitolo "Roadmap · kept up to date", "The roadmap", """
+nbTitle "Roadmap · kept up to date", "The roadmap", """
 Five releases to cover most of gt, and three threads for each: one builds it, one uses it, one ports the code that already exists.
 """
 nbText: """
@@ -21,7 +21,7 @@ What goes in each release comes from the [feature map](../coverage/); why the wo
 three is told in the devlog post [Three threads for every release](../devlog/three-threads/).
 This page says where each thread stands.
 """
-nbIndice
+nbToc
 
 nbText: "## The three threads"
 

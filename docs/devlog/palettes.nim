@@ -1,15 +1,14 @@
 ## devlog: 07 Nov 2026 D | Munari meets Japan: palettes for the second look | The Munari look gets softer colours, taken from Japan's traditional colour names, and loses the dots and holes that looked like buttons. What each colour does on a page, six palettes to swipe through, and the stories behind the names.
 ## A dated post: it tells how the palettes were chosen, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "palettes" / "index.html"
-nb.useTabelline(nome = "tabelline",
-               title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 # ------------------------------------------------------------------------------------ palettes
 type
@@ -152,7 +151,7 @@ nbRawHtml: """<style>
 .parte { font: 700 .7rem/1.3 var(--text); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 1.6rem 0 -.6rem; }
 </style>"""
 
-nbTitolo "7 November 2026", "Munari meets Japan: palettes for the second look", """
+nbTitle "7 November 2026", "Munari meets Japan: palettes for the second look", """
 The Munari look gets softer colours, from Japan's traditional colour names, and loses the dots and holes that looked like buttons. Here is what each colour does, six palettes to swipe through, and the stories behind their names.
 """
 nbText: """
@@ -210,10 +209,10 @@ square, triangle.
 <p class="parte">Notes</p>
 """
 
-nbNota("**The plain note** is paper with a third of the triangle in it, and the full triangle along its top edge.")
-nbNota("**The azzurra note** does the same with the square.", nkInfo)
-nbNota("**The rosa note** with the circle.", nkMissing)
-nbNota("**The verde note** with the fourth colour, which is green in most palettes, but need not be.", nkDone)
+nbNote("**The plain note** is paper with a third of the triangle in it, and the full triangle along its top edge.")
+nbNote("**The azzurra note** does the same with the square.", nkInfo)
+nbNote("**The rosa note** with the circle.", nkMissing)
+nbNote("**The verde note** with the fourth colour, which is green in most palettes, but need not be.", nkDone)
 
 nbText: """<p class="parte">Code and its output</p>
 

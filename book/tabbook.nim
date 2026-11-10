@@ -13,10 +13,10 @@
 ## Every remark of the book (how tabelline differs, what it lacks) goes in `tabelline "<markdown>"`,
 ## a box set apart from the text of the original, which is kept as it is.
 import std/[os, osproc, strutils, json, xmltree]
-import nimib except md
+import nimib
 import nimibook, markdown
 import tabelline/nimib as tabNimib
-export nimib except md
+export nimib
 export nimibook, tabNimib
 
 type Source* = object

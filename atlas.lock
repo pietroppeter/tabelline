@@ -3,7 +3,7 @@
     "nimib": {
       "dir": "$deps/nimib",
       "url": "https://github.com/pietroppeter/nimib",
-      "commit": "7cfe29cefd76b5110a0c7798f540b8c693b065cf",
+      "commit": "7118b3a8fa112757b7d76ffcb5251a6478cbfcfd",
       "version": ""
     },
     "nimibook": {

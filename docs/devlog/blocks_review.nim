@@ -4,15 +4,14 @@
 ## preaches: no HTML in its text and no nbRawHtml; its gallery is the first custom block,
 ## docs/blocchi.nim.
 import std/[os, strutils, strformat, sequtils, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "blocks-review" / "index.html"
-nb.useTabelline(nome = "tabelline",
-               title = "Blocks, not HTML", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Blocks, not HTML", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbText: """
 *8 November 2026*
@@ -30,7 +29,7 @@ wrote most of these pages, don't drift again.
 This page has no HTML in its text and no `nbRawHtml`: it is written only with nimib's blocks,
 tabelline's `nbTable` and the first custom block.
 """
-nbIndice
+nbToc
 
 # -------------------------------------------------------------------------------------- audit
 type Audit = object
@@ -51,7 +50,7 @@ proc audit(path: string): Audit =
   let s = readFile(path)
   let rel = path.relativePath(docs)
   result.file = rel
-  result.kind = if rel in ["quaderno.nim", "munari.nim", "blocchi.nim", "parti.nim"]: "theme and helpers"
+  result.kind = if rel in ["quaderno.nim", "munari.nim", "blocks.nim", "table_parts.nim"]: "theme and helpers"
                 elif rel.startsWith("devlog/"): "posts"
                 elif rel in ["mese.nim", "piano.nim", "olimpiadi.nim", "all.nim"]: "data"
                 else: "living documents"
@@ -200,14 +199,14 @@ Here it is in use. The cards hold ordinary blocks: text, code that runs, a table
 *a gallery of cards*, not how one is drawn:
 """
 
-nbGalleria "three cards: swipe or scroll sideways":
-  nbScheda "Text":
+nbGallery "three cards: swipe or scroll sideways":
+  nbGalleryCard "Text":
     nbText "A card holds any blocks. This one holds only text, written in Markdown."
-  nbScheda "Code":
+  nbGalleryCard "Code":
     nbText "Code runs where it is, and its output follows it."
     nbCode:
       echo 6 * 7
-  nbScheda "A table":
+  nbGalleryCard "A table":
     nbText "And a table made with tabelline."
     block:
       let d = tableData:
