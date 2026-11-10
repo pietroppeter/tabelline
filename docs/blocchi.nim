@@ -11,7 +11,7 @@
 ##   nbGalleria "what it shows": (nbScheda "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
-##   nbSorgente "src/process.nim"              # a whole source file, folded under its name
+##   nbFoldCode "docs/review.nim"              # a source file, or a part of it, folded
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParti t                                 # a table and its parts, with a switch
 ##   nbTinte [("--primary", "primary", "sections")]
@@ -433,36 +433,53 @@ template nbShowCode*(body: untyped) =
       body
   nb.add showCode
 
-# ------------------------------------------------------------------------------------ a file, folded
-# The whole of a source file, folded under its name: a page can show the scripts it talks about
-# without their length getting in the way. nimib's `nbFile` shows a file too, always open.
+# ---------------------------------------------------------------------------------- code, folded
+# A source file, or a part of it, folded under its name and its length: a page can show the code it
+# talks about without its length getting in the way. Several in a row make a list. nimib's
+# `nbFile` shows a file too, always open.
 
-newNbBlock(NbSorgente):
+const repoRoot = currentSourcePath().parentDir.parentDir
+
+newNbBlock(NbFoldCode):
+  title: string
   path: string
   lang: string
   code: string
   toHtml:
-    let lines = blk.code.strip(chars = {'\n'}).splitLines.len
-    &"""<details class="sorgente"><summary><code>{esc(blk.path)}</code> <span>{lines} lines</span></summary>""" &
-      (if blk.lang == "nim":
-         "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.code.strip(chars = {'\n'})) & "</code></pre>"
+    let lines = blk.code.splitLines.len
+    let name = if blk.title.len > 0: inline(blk.title) else: "<code>" & esc(blk.path) & "</code>"
+    &"""<details class="foldcode"><summary>{name} <span>{lines} lines</span></summary>""" &
+      (if blk.lang == "nim": "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.code) & "</code></pre>"
        else: codeHtml(blk.code, blk.lang)) & "</details>"
 
-proc sorgente*(nb: var Nb, file: string, shown = "") =
-  ## The file `file`, folded under its name (`shown`, or the file's own path).
-  let ext = file.splitFile.ext
-  let lang = case ext
-             of ".nim", ".nims": "nim"
-             of ".py": "python"
-             of ".R", ".r": "r"
-             of ".js": "js"
-             of ".yaml", ".yml": "yaml"
-             else: "sh"
-  nb.add newNbSorgente(path = (if shown.len > 0: shown else: file), lang = lang, code = readFile(file))
+proc langOf(file: string): string =
+  case file.splitFile.ext
+  of ".nim", ".nims": "nim"
+  of ".py": "python"
+  of ".R", ".r": "r"
+  of ".js": "js"
+  of ".yaml", ".yml": "yaml"
+  else: "sh"
 
-template nbSorgente*(file: string, shown = "") =
-  ## A source file, folded under its name and length: "open" shows it, highlighted.
-  nb.sorgente(file, shown)
+proc foldCode*(nb: var Nb, file: string, start = "", stop = "", title = "", lang = "") =
+  ## `file` (a path from the root of the repository, or any path), folded. With `start`, from the
+  ## first line that holds it; with `stop`, up to the next line that holds that (or to the end).
+  let path = if fileExists(file): file else: repoRoot / file
+  var code = readFile(path)
+  if start.len > 0:
+    let i = code.find(start)
+    doAssert i >= 0, file & ": no " & start
+    code = code[code.rfind('\n', last = i) + 1 .. ^1]
+    if stop.len > 0:
+      let j = code.find(stop, start = code.find('\n') + 1)
+      if j >= 0: code = code[0 ..< code.rfind('\n', last = j) + 1]
+  nb.add newNbFoldCode(title = title, path = relativePath(absolutePath(path), repoRoot), lang = (if lang.len > 0: lang else: langOf(file)),
+                       code = code.dedent.strip(chars = {'\n'}))
+
+template nbFoldCode*(file: string, start = "", stop = "", title = "", lang = "") =
+  ## Code folded under its path (or `title`, in Markdown) and its length:
+  ## `nbFoldCode "docs/review.nim"`, or a part of it with `start` and `stop`.
+  nb.foldCode(file, start, stop, title, lang)
 
 # ------------------------------------------------------------------------------------ R and gt
 # A story can be written in R with gt before tabelline has what it needs, and ported to Nim when
@@ -611,24 +628,6 @@ template nbDisegno*(tsvg, talt: string) =
   ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
   ## in the page's colours, with a caption in Markdown.
   nb.disegno(tsvg, talt)
-
-newNbBlock(NbPiega):
-  title: string
-  code: string
-  lang: string
-  toHtml:
-    let inside = if blk.lang == "nim": """<pre><code class="nohighlight nim hljs">""" & highlightNim(blk.code) & "</code></pre>"
-                 else: codeHtml(blk.code, blk.lang)
-    &"""<details class="piega"><summary><span>show code: {esc(blk.title)}</span></summary>{inside}</details>"""
-
-proc piega*(nb: var Nb, title, code: string, lang = "nim") =
-  nb.add newNbPiega(title = title, code = code.strip(chars = {'\n'}), lang = lang)
-
-template nbPiega*(ttitle, tcode: string, tlang = "nim") =
-  ## Code that is shown, not run, folded under a plain-text title, like the code under a table
-  ## (`nbShowCode`): *+ show code: title* opens it. For code a reader opens only when the text
-  ## above it is not enough.
-  nb.piega(ttitle, tcode, tlang)
 
 # ------------------------------------------------------------------------------------- the page
 

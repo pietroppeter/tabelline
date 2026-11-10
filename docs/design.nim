@@ -243,13 +243,15 @@ nbShowCode:
 nbText: """
 ## Source files
 
-A whole source file, folded under its name and its length, with `nbSorgente`: a page shows the
-scripts it talks about without their length getting in the way. Several in a row make a list.
-Used in [FOSDEM's data, made with nanuq](../devlog/fosdem-data/).
+Code folded under its name and its length, with `nbFoldCode`: a whole file, or a part of it from
+the line that holds `start` to the line that holds `stop`. A page shows the code it talks about
+without its length getting in the way. Several in a row make a list. Used in
+[FOSDEM's data, made with nanuq](../devlog/fosdem-data/) and [Review mode](../devlog/review-mode/).
 """
 nbShowCode:
-  nbSorgente currentSourcePath().parentDir / "stories" / "r" / "tabelline.R", "docs/stories/r/tabelline.R"
-  nbSorgente currentSourcePath().parentDir / "stories" / "r" / "run.R", "docs/stories/r/run.R"
+  nbFoldCode "docs/stories/r/tabelline.R"
+  nbFoldCode "docs/stories/r/run.R"
+  nbFoldCode "docs/review.nim", start = "func versionHref*", stop = "newNbBlock(NbVersions):"
 
 nbText: """
 ## Review mode and versions
@@ -265,8 +267,7 @@ apart; the one open is in the secondary itself. In the quaderno, marks are the h
 underlined in red pen. `nbInReview` holds blocks shown only while reviewing. `nbVersions`
 is the strip of versions of the older versions of the post: plain boxes, the one shown with a
 line of ink under it. `nbDisegno` puts a drawing made with diagrammari in the page's colours,
-and `nbPiega` folds long code under a line that reads *show code*, like the code shown by
-`nbShowCode`. The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
+and `nbFoldCode` folds long code (see *Source files*). The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
 when the page has them.
 """
 

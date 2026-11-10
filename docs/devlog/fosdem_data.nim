@@ -134,9 +134,8 @@ two steps, whole, in the order `build.sh` runs them, and `grid.py`, a helper use
 old HTML tables while the scripts were written:
 """
 
-let srcDir = fosdem / "src"
 proc showSource(name: string) =
-  nbSorgente srcDir / name, "src/" & name
+  nbFoldCode fosdem / "src" / name, title = "`src/" & name & "`"
 for f in ["fetch.sh", "build.sh", "extract_xml.py", "extract_eventindex.py", "extract_devrooms.py",
           "extract_early.py", "extract_early_devrooms.py", "extract_trackpages.py",
           "extract_cfp_yaml.py", "extract_lists.py", "extract_stands.py", "extract_upcoming.py",

@@ -54,8 +54,8 @@ working rules that are easy to miss.
   Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
-  `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbSorgente`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`, `nbDisegno`, `nbPiega`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbFoldCode`, `nbParti`, `nbAccanto`, `nbTinte`,
+  `nbParte`, `nbDisegno`). In a page that tells a story with tables (an explainer, a use-it post), what is
   about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
   with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
