@@ -2,7 +2,7 @@
 
 Data for tabelline's story about FOSDEM, [FOSDEM, twenty-six times](../../fosdem.nim) (the 0.2
 story: devrooms, talks and the people who give them). Twenty-six editions, from OSDEM in February 2001 to FOSDEM 2026, plus 2027 as announced so far
-(dates, the 78 accepted devrooms and their calls for participation). Only the data is here; the story comes later.
+(dates, the 78 accepted devrooms and their calls for participation).
 
 Every table is a CSV whose first line is a `#` comment naming its sources, so it reads with
 `readCsv(path, comment = "#")`. Text fields are on one line (no line breaks inside quotes).
