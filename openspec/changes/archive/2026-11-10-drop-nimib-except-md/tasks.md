@@ -12,4 +12,4 @@
 ## 3. Release
 
 - [ ] 3.1 When nimib 0.5.0 is tagged, pin nimib to the tag
-- [ ] 3.2 Archive the change: remove the BACKLOG entry, add a CHANGELOG line
+- [x] 3.2 Archive the change: remove the BACKLOG entry, add a CHANGELOG line
