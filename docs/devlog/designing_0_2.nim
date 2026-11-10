@@ -648,7 +648,7 @@ cities of the EU, by people:
 """
 
 nbCode:
-  let big = tabella(tabellaPreview(citta(), topN = 5, bottomN = 0, inclRownums = false)):
+  let big = tabellaPreview(citta(), topN = 5, bottomN = 0, inclRownums = false):
     colsHide "counted"
     colsAdd "bar", proc (r: Row): Value = r["population"]
     fmtInteger "population"
