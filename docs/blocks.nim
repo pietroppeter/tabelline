@@ -22,7 +22,7 @@
 import std/[json, os, osproc, strutils, strformat, sequtils, base64]
 import nimib
 import tabelline, tabelline/nimib
-import theme, table_parts
+import theme, table_parts, review
 export theme
 
 const
@@ -743,18 +743,26 @@ func pageFooter(blk: JsonNode, nb: Nb): string =
 
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 
+proc sharedReviewScript*(nb: Nb): string =
+  ## The review mode's script for a page of the docs: the shared copy, `docs/assets/review.js`, or
+  ## "" (inlined) with `-d:singleFile`. Pass it as `nbReview(..., tscript = sharedReviewScript(nb))`.
+  when singleFile: "" else: assetHref("review.js", nb.doc.filename)
+
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
-                   homeHref = "", backLabel = "tabelline", wordmarkHref = "") =
+                   homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
+                   reviewPage = "") =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
   ## `backLabel` as its text (a devlog post links back to the devlog); `wordmarkHref` makes the
-  ## wordmark a link (a post's wordmark links to the home page).
+  ## wordmark a link (a post's wordmark links to the home page). Every page has the review mode
+  ## (`review.nim`), its version line under the lede and **✎ Review**: `review = false` leaves it
+  ## out, `reviewPage` keeps the key its comments are stored under when the file is renamed.
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename))
+    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename, extra = reviewCss))
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
@@ -766,8 +774,4 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   nb.backend.partials["nbText"] = pageText
   nb.backend.partials["left"] = emptyPartial
   nb.backend.partials["right"] = emptyPartial
-
-proc sharedReviewScript*(nb: Nb): string =
-  ## The review mode's script for a page of the docs: the shared copy, `docs/assets/review.js`, or
-  ## "" (inlined) with `-d:singleFile`. Pass it as `nbReview(..., tscript = sharedReviewScript(nb))`.
-  when singleFile: "" else: assetHref("review.js", nb.doc.filename)
+  if review: nb.review(page = reviewPage, script = sharedReviewScript(nb), css = false)

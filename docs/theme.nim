@@ -541,14 +541,15 @@ proc assetHref*(name, pageFile: string): string =
   ## The link from a page (its HTML file) to a file the pages share, `docs/assets/<name>`.
   relativePath(assetsDir / name, absolutePath(pageFile).parentDir).replace('\\', '/')
 
-proc siteCss*(pageFile: string): string =
+proc siteCss*(pageFile: string, extra = ""): string =
   ## What a page puts in its head for its style: a link to `docs/assets/site.css` (written when
-  ## it changed), relative to the page; with `-d:singleFile`, the CSS itself.
+  ## it changed), relative to the page; with `-d:singleFile`, the CSS itself. `extra` is CSS of
+  ## other modules every page has (the review mode's).
   when singleFile:
-    "<style>\n" & css & "</style>"
+    "<style>\n" & css & extra & "</style>"
   else:
     let file = assetsDir / "site.css"
-    if not fileExists(file) or readFile(file) != css: writeFile(file, css)
+    if not fileExists(file) or readFile(file) != css & extra: writeFile(file, css & extra)
     &"""<link rel="stylesheet" href="{assetHref("site.css", pageFile)}">"""
 
 # ----------------------------------------------------------------------------------------- tables

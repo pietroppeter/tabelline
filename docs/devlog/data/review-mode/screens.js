@@ -1,23 +1,22 @@
 // Takes the four annotated screenshots of the post "Review mode" (reading, reviewing, export,
-// history: <name>-v8.jpg) and the places of their numbered circles (<name>-v8.json), from the built
-// page, on a phone. Older versions keep the screenshots made for them (sheet.jpg, export.jpg for
-// versions 1 to 6; sheet-v7, export-v7 for version 7, taken by this script's version 7).
+// history: <name>-v9.jpg) and the places of their numbered circles (<name>-v9.json), from the built
+// page, on a phone. The screenshots of older versions are in git with them (commit 64f87e2).
 // Run after building the post: node docs/devlog/data/review-mode/screens.js ; then build it again.
 const { chromium, devices } = require('playwright');
 const path = require('path');
 const fs = require('fs');
 const here = __dirname;
 const page_ = path.join(here, '..', '..', 'review-mode', 'index.html');
-const suffix = '-v8';
+const suffix = '-v9';
 
 (async () => {
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ ...devices['iPhone 13'], deviceScaleFactor: 2 });
   const p = await ctx.newPage();
   await p.goto('file://' + page_);
-  await p.evaluate(() => {   // nothing kept, but three comments on version 7, for History
+  await p.evaluate(() => {   // nothing kept, but three comments on version 8, for History
     localStorage.clear();
-    localStorage.setItem('nimib-review:devlog/review-mode@v7', JSON.stringify([{}, {}, {}]));
+    localStorage.setItem('nimib-review:devlog/review-mode@v8', JSON.stringify([{}, {}, {}]));
   });
   await p.reload();
   const vw = p.viewportSize();
