@@ -3,7 +3,7 @@
 ## What is decided goes to the Design Ref (docs/design.nim). The colour maths (OKLab mixes and
 ## WCAG contrast) runs when the page is built.
 import std/[os, strutils, strformat, sequtils, math, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks
 

@@ -3,7 +3,7 @@
 ## going, how it is made. Dated posts are not listed here: they are in the devlog.
 ## When a release adds features, the table may grow a little, but it stays simple.
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/[datasets, nimib]
 import blocks, stories/storie
 

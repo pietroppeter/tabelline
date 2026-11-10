@@ -1,7 +1,7 @@
 ## devlog: 08 Nov 2026 B | What the book found for 0.1 | Porting the Great Tables guide into the tabelline book turned up two bugs and a dozen gaps; 0.1 closed them. What the book found, from the simplest to the most complex, and what it still finds.
 ## A dated post: it tells what the port of the Great Tables guide found for 0.1, and is not updated afterwards.
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks
 

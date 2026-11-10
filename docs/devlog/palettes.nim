@@ -1,7 +1,7 @@
 ## devlog: 07 Nov 2026 D | Munari meets Japan: palettes for the second look | The Munari look gets softer colours, taken from Japan's traditional colour names, and loses the dots and holes that looked like buttons. What each colour does on a page, six palettes to swipe through, and the stories behind the names.
 ## A dated post: it tells how the palettes were chosen, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks
 

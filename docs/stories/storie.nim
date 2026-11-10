@@ -4,7 +4,7 @@
 ## small table from it when `preview` has one. The last card says which story comes next, from the
 ## roadmap's data (`docs/piano.nim`).
 import std/[os, strutils, algorithm, options, sequtils, parsecsv, streams]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks, ../olimpiadi, ../piano
 

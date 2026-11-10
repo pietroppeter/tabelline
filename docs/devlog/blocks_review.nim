@@ -4,7 +4,7 @@
 ## preaches: no HTML in its text and no nbRawHtml; its gallery is the first custom block,
 ## docs/blocchi.nim.
 import std/[os, strutils, strformat, sequtils, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks
 

@@ -4,7 +4,7 @@
 ## `?spec=<names>` and `?change=<names>` (or the same after `#`) show only those; see the
 ## "Links" box on the page.
 import std/[os, strutils, json, algorithm, strformat, sequtils]
-import nimib except md
+import nimib
 import blocks
 import ../tools/specexamples
 
@@ -147,7 +147,9 @@ proc specHtml(s: Spec, kind = "spec"): string =
         for b in sc.bullets: result.add "<li>" & whenThen(b) & "</li>"
         result.add "</ul></div>"
       result.add "</div>"
-  result.add &"""<p class="src">source: <a href="{repoUrl}/blob/main/{s.path}"><code>{s.path}</code></a></p></details>"""
+  # a pull request is built from its branch (GITHUB_HEAD_REF), where a new change's files already exist
+  let branch = getEnv("GITHUB_HEAD_REF", "main")
+  result.add &"""<p class="src">source: <a href="{repoUrl}/blob/{branch}/{s.path}"><code>{s.path}</code></a></p></details>"""
 
 var total, passing, nreq = 0
 for k, ex in examples:

@@ -1,7 +1,7 @@
 ## devlog: 07 Nov 2026 F | Designing tabelline 0.1 | tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it is built.
 ## A dated post: it tells how 0.1 was designed and built, and is not updated afterwards.
 import std/[os, strutils, strformat, sequtils]
-import nimib except md
+import nimib
 import tabelline, tabelline/[nimib, datasets]
 import ../blocks
 

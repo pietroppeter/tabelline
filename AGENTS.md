@@ -51,7 +51,6 @@ working rules that are easy to miss.
   Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
   broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
-  Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocks.nim` (`nbTitle`, `nbToc`, `nbNote(text, kind)`, `nbCards`/`nbCard`,
   `nbGallery`/`nbGalleryCard`, `nbTabs`, `nbShowCode`, `nbFoldCode`, `nbParts`, `nbBeside`, `nbSwatches`,

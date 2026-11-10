@@ -2,7 +2,7 @@
 ## A version knows its number from its file name, vN.nim. The newest version is the post, built into
 ## devlog/review-mode/; an older one is kept as it was and built into devlog/review-mode/vN/.
 import std/[os, strutils, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../../[blocks, review]
 import storia

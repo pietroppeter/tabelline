@@ -2,7 +2,7 @@
 ## threads that make it (build it, use it, port the references), with their status. Kept up
 ## to date: the data is docs/piano.nim, updated when a thread starts, ships or changes its plan.
 import std/[os, strutils, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import blocks, piano
 

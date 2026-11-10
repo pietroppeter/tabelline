@@ -20,7 +20,7 @@
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
 import std/[json, os, osproc, strutils, strformat, sequtils, base64]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import theme, table_parts
 export theme

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Notebooks `import nimib` whole: nimib removed its old `md` (pietroppeter/nimib#268), so tabelline's `md()` no longer clashes with it; nimib is pinned to that commit until 0.5.0 is tagged. `tools/links.nim` checks links to this repository's own files in the checkout (#50).
+
 ## 0.1.0 (10 Nov 2026)
 
 tabelline is great tables for Nim: display tables after R's gt and Python's Great Tables, in

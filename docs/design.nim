@@ -4,7 +4,7 @@
 ## and build a page. Kept up to date: it changes in the PR that changes the design
 ## (docs/theme.nim, docs/blocks.nim); big design changes start as a devlog post that ends here.
 import std/[os, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import blocks
 

@@ -5,7 +5,7 @@
 ## nanuq code from src/process.nim as text. The checks run on the data every time the page is
 ## built. The meaning of each column is written by hand in docs/stories/data/fosdem/columns.csv.
 import std/[os, strutils, sequtils, tables, sets, parsecsv, streams, times, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocks
 

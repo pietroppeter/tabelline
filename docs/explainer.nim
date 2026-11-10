@@ -2,7 +2,7 @@
 ## tabelline built step by step. The site's Guide: kept up to date as tabelline grows.
 ## Writes docs/explainer/index.html.
 import std/[os, strutils, sequtils, sugar]
-import nimib except md   # nimib's old `md` (deprecated) would clash with tabelline's
+import nimib
 import tabelline, tabelline/[datasets, nimib]
 import blocks, piano
 
