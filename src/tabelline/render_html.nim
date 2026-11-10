@@ -66,6 +66,8 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] .tb_stub { background-color: [stubBg]; font-weight: [o.stubFontWeight]; text-align: left;
   border-right: 2px solid [o.tableBodyHlinesColor]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
+[i] .tb_indent_1 { text-indent: 1em; } [i] .tb_indent_2 { text-indent: 2em; } [i] .tb_indent_3 { text-indent: 3em; }
+[i] .tb_indent_4 { text-indent: 4em; } [i] .tb_indent_5 { text-indent: 5em; }
 [i] .tb_striped { background-color: [o.rowStripingBackgroundColor]; }
 [i] .tb_summary_row { background-color: [summaryBg]; text-transform: [o.summaryRowTextTransform];
   padding: [o.summaryRowPadding] [o.summaryRowPaddingHorizontal]; vertical-align: middle; }
@@ -123,7 +125,8 @@ proc bodyHtml(t: Tabella, b: Built): string =
       let stripe = if t.options.rowStriping and striped: " tb_striped" else: ""
       if t.hasStub:
         let k = cellKey(r.index, t.rownameCol)
-        result.add &"""<th scope="row" class="tb_row tb_left tb_stub{stripe}"{b.styleAttr(k)}>{r.stub}{b.marksHtml(k, m)}</th>"""
+        let indent = if r.indent > 0: &" tb_indent_{r.indent}" else: ""
+        result.add &"""<th scope="row" class="tb_row tb_left tb_stub{indent}{stripe}"{b.styleAttr(k)}>{r.stub}{b.marksHtml(k, m)}</th>"""
       for j, c in b.columns:
         let k = cellKey(r.index, c.name)
         result.add &"""<td class="tb_row {alignClass(c.align)}{stripe}"{b.styleAttr(k)}>{r.cells[j]}{b.marksHtml(k, m)}</td>"""

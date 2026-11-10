@@ -54,7 +54,7 @@ proc toText*(t: Tabella): string =
       entries.add Entry(kind: ekRule, text: "dots")
     for r in g.rows:
       var cells: seq[string]
-      if t.hasStub: cells.add r.stub & b.marksText(cellKey(r.index, t.rownameCol), m)
+      if t.hasStub: cells.add "  ".repeat(r.indent) & r.stub & b.marksText(cellKey(r.index, t.rownameCol), m)
       for j, c in b.columns: cells.add r.cells[j] & b.marksText(cellKey(r.index, c.name), m)
       entries.add Entry(kind: ekRow, cells: cells)
     if g.summaryBottom.len > 0:
@@ -169,7 +169,7 @@ proc toMarkdown*(t: Tabella): string =
     summaryLines(g.summaryTop, "*")
     for r in g.rows:
       var cells: seq[string]
-      if t.hasStub: cells.add mdEscape(r.stub)
+      if t.hasStub: cells.add "\u00A0\u00A0".repeat(r.indent) & mdEscape(r.stub)
       for j, c in b.columns: cells.add mdEscape(r.cells[j] & b.marksText(cellKey(r.index, c.name), m))
       lines.add "| " & cells.join(" | ") & " |"
     summaryLines(g.summaryBottom, "*")

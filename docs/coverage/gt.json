@@ -107,8 +107,8 @@
     {
      "feature": "Stub indent, multi-column stub",
      "gt": "tab_stub_indent()",
-     "status": "missing",
-     "note": "Indent stub rows; several columns as the stub.",
+     "status": "partial",
+     "note": "tabStubIndent (levels 0 to 5, increase, decrease); multi-column stubs not yet.",
      "plan": "0.2",
      "size": "S",
      "where": "R"
@@ -160,9 +160,9 @@
     {
      "feature": "Summary columns",
      "gt": "summary_columns()",
-     "status": "missing",
-     "note": "A column computed from others (new in gt).",
-     "plan": "0.3",
+     "status": "done",
+     "note": "summaryColumns with the aggregates of summary rows (agg.*).",
+     "plan": "0.2",
      "size": "M",
      "where": "R"
     }
@@ -451,8 +451,8 @@
     {
      "feature": "Align on the decimal mark",
      "gt": "cols_align_decimal()",
-     "status": "missing",
-     "note": "Pads numbers so the marks line up.",
+     "status": "done",
+     "note": "colsAlignDecimal: figure spaces, the locale's mark; works in text too.",
      "plan": "0.2",
      "size": "S"
     },
@@ -485,16 +485,16 @@
     {
      "feature": "Merge columns",
      "gt": "cols_merge(), cols_merge_uncert(), cols_merge_range(), cols_merge_n_pct()",
-     "status": "missing",
-     "note": "\"{1} ({2})\" patterns, value ± error, ranges, n (%).",
+     "status": "done",
+     "note": "colsMerge with gt's pattern ({1}, <<...>>), colsMergeUncert, colsMergeRange, colsMergeNPct.",
      "plan": "0.2",
      "size": "M"
     },
     {
      "feature": "Add columns",
      "gt": "cols_add()",
-     "status": "partial",
-     "note": "addColumn on the data; no verb with placement yet.",
+     "status": "done",
+     "note": "colsAdd from values or a proc of the row, before or after a column.",
      "plan": "0.2",
      "size": "S",
      "where": "R"
@@ -509,8 +509,8 @@
     {
      "feature": "Add rows",
      "gt": "rows_add()",
-     "status": "missing",
-     "note": "Rows given as values, with placement.",
+     "status": "done",
+     "note": "rowsAdd from a TableData or objects, before or after a row, into its group.",
      "plan": "0.2",
      "size": "S",
      "where": "R"
@@ -518,8 +518,8 @@
     {
      "feature": "Hide rows",
      "gt": "rows_hide(), rows_unhide()",
-     "status": "missing",
-     "note": "",
+     "status": "done",
+     "note": "rowsHide, rowsUnhide; hidden rows are not summed up.",
      "plan": "0.2",
      "size": "S",
      "where": "R"

@@ -446,6 +446,16 @@ type
     fmt*: FormatFn             ## nil: the column's format
     missingText*: string
 
+  MergeKind* = enum
+    mkPattern, mkUncert, mkRange, mkNPct
+
+  MergeRule* = object
+    ## Columns shown together in the first one (`colsMerge` and its cousins), at render time.
+    kind*: MergeKind
+    columns*: seq[string]      ## the first is where the merged text goes
+    rows*: seq[int]            ## empty: every row
+    pattern*: string           ## `{1}`, `{2}`, ... with `<<...>>` for a part dropped when a value is missing
+
   FootnoteMarks* = enum
     fmNumbers, fmLetters, fmCapitals, fmStandard, fmExtended
 
@@ -542,6 +552,11 @@ type
     footnotes*: seq[Footnote]
     sourceNotes*: seq[Text]
     summaries*: seq[SummaryRule]
+    merges*: seq[MergeRule]
+    hiddenRows*: seq[int]                      ## rows not shown (`rowsHide`)
+    indents*: Table[int, int]                  ## row -> indent level of its stub cell, 1 to 5
+    decimalAligned*: seq[string]               ## columns aligned on the decimal mark
+    decimalMarks*: seq[string]                 ## the mark for each of them
     options*: TabOptions
     locale*: string
     id*: string

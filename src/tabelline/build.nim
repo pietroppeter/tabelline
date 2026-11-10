@@ -4,12 +4,14 @@
 ## only lay out a `Built`.
 
 import std/[tables, sequtils, strutils, algorithm]
+from std/unicode import runeLen
 import core, formats
 
 type
   BuiltRow* = object
     index*: int                  ## row in the data
     stub*: string                ## the stub cell, formatted ("" without a stub)
+    indent*: int                 ## indent level of the stub cell (0 to 5)
     cells*: seq[string]          ## formatted cells of the visible data columns
   BuiltSummary* = object
     label*: string               ## the label in the stub, rendered
@@ -124,8 +126,60 @@ proc keysOf*(t: Tabella, target: Target, columns: seq[ColInfo]): seq[string] =
     keys
 
 proc displayOrder*(t: Tabella): seq[int] =
-  ## The rows of the data in the order they are shown (before grouping).
-  if t.rowOrder.len > 0: t.rowOrder else: toSeq(0 ..< t.data.nrows)
+  ## The rows of the data in the order they are shown (before grouping), without hidden rows.
+  result = if t.rowOrder.len > 0: t.rowOrder else: toSeq(0 ..< t.data.nrows)
+  if t.hiddenRows.len > 0: result = result.filterIt(it notin t.hiddenRows)
+
+func fillPattern*(pattern: string, texts: seq[string], missing: seq[bool]): string =
+  ## `pattern` with `{1}`, `{2}`, ... replaced by `texts`; a part in `<<...>>` is dropped when a
+  ## value it names is missing (as in gt's `cols_merge`).
+  proc refs(part: string): seq[int] =
+    var i = 0
+    while i < part.len:
+      if part[i] == '{':
+        let j = part.find('}', i)
+        if j > i:
+          try: result.add parseInt(part[i + 1 ..< j]) - 1
+          except ValueError: discard
+          i = j
+      inc i
+  proc fill(part: string): string =
+    result = part
+    for k in countdown(texts.high, 0): result = result.replace("{" & $(k + 1) & "}", texts[k])
+  var i = 0
+  while i < pattern.len:
+    let a = pattern.find("<<", i)
+    if a < 0:
+      result.add fill(pattern[i .. ^1])
+      break
+    let b = pattern.find(">>", a + 2)
+    if b < 0:
+      result.add fill(pattern[i .. ^1])
+      break
+    result.add fill(pattern[i ..< a])
+    let part = pattern[a + 2 ..< b]
+    if not part.refs.anyIt(it >= 0 and it < missing.len and missing[it]): result.add fill(part)
+    i = b + 2
+
+proc mergedCell(t: Tabella, m: MergeRule, row: int, ctx: RenderContext): string =
+  var texts, missing: seq[string]
+  var isMissing: seq[bool]
+  for c in m.columns:
+    texts.add t.formatCell(row, c, ctx)
+    isMissing.add t.data[c, row].isNull
+  if m.kind == mkNPct and m.columns.len > 1:   # no percentage after a zero count
+    let n = t.data[m.columns[0], row]
+    if n.isNumber and n.toFloat == 0: isMissing[1] = true
+  discard missing
+  fillPattern(m.pattern, texts, isMissing)
+
+proc shownCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string =
+  ## The text of a body cell: merged with other columns (`colsMerge`) or formatted.
+  for k in countdown(t.merges.high, 0):
+    let m = t.merges[k]
+    if m.columns.len > 0 and m.columns[0] == col and (m.rows.len == 0 or row in m.rows):
+      return t.mergedCell(m, row, ctx)
+  t.formatCell(row, col, ctx)
 
 proc transformCell*(t: Tabella, row: int, col: string, shown: string): string =
   ## The shown text of a cell after the text transforms that cover it, in the order given.
@@ -166,6 +220,31 @@ proc summaryOf(t: Tabella, rule: SummaryRule, rows: seq[int], columns: seq[ColIn
       s.cells.add t.formatSummary(rule, agg, agg.fn(values), c.name, ctx)
     result.add s
 
+func fractionWidth(s, mark: string): int =
+  ## How many characters, the mark included, come after the integer part of `s`.
+  if '<' in s: return -1          # HTML: left as it is
+  let p = s.rfind(mark)
+  if p < 0: 0 else: s[p .. ^1].runeLen
+
+proc alignDecimals(b: var Built, j: int, mark: string) =
+  var cells: seq[ptr string]
+  for g in b.groups.mitems:
+    for r in g.rows.mitems: cells.add addr r.cells[j]
+    for s in g.summaryTop.mitems: cells.add addr s.cells[j]
+    for s in g.summaryBottom.mitems: cells.add addr s.cells[j]
+  for s in b.grandTop.mitems: cells.add addr s.cells[j]
+  for s in b.grandBottom.mitems: cells.add addr s.cells[j]
+  var widest = 0
+  for c in cells: widest = max(widest, fractionWidth(c[], mark))
+  for c in cells:
+    let w = fractionWidth(c[], mark)
+    if w < 0 or c[].len == 0 or w == widest: continue
+    var pad = widest - w
+    if w == 0:    # no mark: a punctuation space stands for it
+      c[].add "\u2008"
+      dec pad
+    for _ in 1 .. pad: c[].add "\u2007"
+
 proc build*(t: Tabella, ctx: RenderContext): Built =
   result.ctx = ctx
   result.columns = t.visibleData
@@ -175,9 +254,9 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
     var g = BuiltGroup(id: gid, label: if gid.len > 0: t.groupLabels[gid].renderText(ctx) else: "")
     for i in t.displayOrder:
       if t.rowGroups[i] != gid: continue
-      var r = BuiltRow(index: i)
-      if t.hasRowNames: r.stub = t.transformCell(i, t.rownameCol, t.formatCell(i, t.rownameCol, ctx))
-      for c in result.columns: r.cells.add t.transformCell(i, c.name, t.formatCell(i, c.name, ctx))
+      var r = BuiltRow(index: i, indent: t.indents.getOrDefault(i, 0))
+      if t.hasRowNames: r.stub = t.transformCell(i, t.rownameCol, t.shownCell(i, t.rownameCol, ctx))
+      for c in result.columns: r.cells.add t.transformCell(i, c.name, t.shownCell(i, c.name, ctx))
       g.rows.add r
     if g.rows.len > 0:
       for rule in t.summaries:
@@ -191,6 +270,12 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
     let rows = t.displayOrder
     if rule.top: result.grandTop.add t.summaryOf(rule, rows, result.columns, "", ctx)
     else: result.grandBottom.add t.summaryOf(rule, rows, result.columns, "", ctx)
+
+  # decimal alignment: pad each cell after its mark with figure spaces, so the marks line up
+  for j, c in result.columns:
+    let k = t.decimalAligned.find(c.name)
+    if k < 0: continue
+    result.alignDecimals(j, t.decimalMarks[k])
 
   # footnote marks, numbered in reading order of their locations
   var keysInOrder = @["title", "subtitle"] & (if t.hasStub: @["stubhead"] else: @[])

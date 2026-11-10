@@ -579,6 +579,29 @@ nbCode:
   nbTable italiano
 
 nbText: """
+## Rows and columns of your own
+
+A table can show more than its data: columns merged into one cell, columns and rows added, totals
+across each row (`summaryColumns`) and down each column (`grandSummaryRows`), indented row labels
+and numbers lined up on their decimal mark:
+"""
+
+nbCode:
+  let medals = tableData:
+    country: ["Norway", "Germany", "Italy"]
+    gold: [16, 12, 7]
+    silver: [8, 10, 8]
+    bronze: [13, 5, 9]
+    first: [1924, 1928, 1936]
+    last: [2026, 2026, 2026]
+  nbTable tabella(medals, rownameCol = "country")
+    .colsMergeRange("first", "last")
+    .colsLabel("first", "medals since")
+    .summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])
+    .grandSummaryRows(fns = {"all": agg.sum}, columns = ["gold", "silver", "bronze", "total"])
+    .optCssTheme()
+
+nbText: """
 ## Nim sugar
 
 ### Tables from Nim values

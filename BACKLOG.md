@@ -10,13 +10,13 @@ Rough size: S (hours), M (a day or two), L (more).
 ## Parts
 
 - **Summary rows** (M, *in progress*: `add-summary-rows`). `summaryRows`, `grandSummaryRows`.
-- **Column merges** (M). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
+- **Column merges** (M, *in progress*: `add-rows-and-columns`). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
   (value ± error), `colsMergeRange`, `colsMergeNPct`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
-- **Stub indent and multi-column stubs** (S). `tabStubIndent`, `rownameCol` with several columns.
-- **Rows** (S). `rowsAdd`, hidden rows.
+- **Stub indent and multi-column stubs** (S, indent *in progress*: `add-rows-and-columns`). `tabStubIndent`, `rownameCol` with several columns.
+- **Rows** (S, *in progress*: `add-rows-and-columns`). `rowsAdd`, hidden rows.
 
 ## Formats
 

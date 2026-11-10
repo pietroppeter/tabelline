@@ -119,6 +119,9 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Designing tabelline 0.2](https://pietroppeter.github.io/tabelline/devlog/designing-0-2/)
+  (10 Nov 2026 A): 0.2 takes in 0.3 and 0.4, in five groups, each from zero with its choices;
+  written while 0.2 is built.
 - [Review mode](https://pietroppeter.github.io/tabelline/devlog/review-mode/)
   (9 Nov 2026 A): select text on a page, comment on it, go through the comments with a bar at the
   bottom, and export them as Markdown with a YAML front matter for an agent; the post is reviewed
