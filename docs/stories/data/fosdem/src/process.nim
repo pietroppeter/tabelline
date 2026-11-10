@@ -1,4 +1,4 @@
-## Turns the staging CSVs (flattened from FOSDEM's raw sources by the extract_*.py
+## Turns the staging CSVs (flattened from FOSDEM's raw sources by the extract_*.nim
 ## scripts) into the tidy tables of docs/stories/data/fosdem/.
 ##
 ##   nim r -d:release --path:<nanuq>/src process.nim <stage dir> <out dir>

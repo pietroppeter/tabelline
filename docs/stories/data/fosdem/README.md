@@ -114,6 +114,6 @@ sh src/fetch.sh raw                    # ~200 MB of raw downloads, not committed
 sh src/build.sh raw <nanuq checkout>   # staging CSVs in raw/stage, tables here
 ```
 
-`src/extract_*.py` (Python standard library) only flatten each raw format into staging CSVs; all
+`src/extract_*.nim` (Nim standard library) only flatten each raw format into staging CSVs; all
 the cleaning, joining and counting is in `src/process.nim`, written with
 [nanuq](https://github.com/pietroppeter/nanuq) 0.6.1. Two runs give byte-identical files.

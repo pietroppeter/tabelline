@@ -618,7 +618,7 @@ of FOSDEM's website on GitHub, the fosdem@ mailing list archive (only senders, d
 subjects), and fosdem.org's news of 2027. `src/fetch.sh` downloads them, about 200 MB, which
 are not committed.
 
-**2. The tables** are made in two steps. Short Python scripts (standard library only) flatten
+**2. The tables** are made in two steps. Short Nim scripts (standard library only) flatten
 each raw format into staging CSV files; then `src/process.nim`, written with nanuq (Polars for
 Nim), cleans, joins and counts them into the ten tables of `docs/stories/data/fosdem/`. Its
 README says what is complete for each year. Two runs give the same files, byte for byte.

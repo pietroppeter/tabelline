@@ -109,12 +109,12 @@ nbShowCode:
     step, tool, does: string
     files: int
   let src = fosdem / "src"
-  var py = 0
-  for f in walkFiles(src / "extract_*.py"): inc py
+  var extract = 0
+  for f in walkFiles(src / "extract_*.nim"): inc extract
   let rows = @[
     Step(step: "1. fetch", tool: "shell: curl, wget, git", files: 1,
          does: "download the archive's pages, XML, mailing list and website history, about 200 MB"),
-    Step(step: "2. flatten", tool: "Python, standard library", files: py,
+    Step(step: "2. flatten", tool: "Nim, standard library", files: extract,
          does: "read HTML, XML, YAML and mbox, write one staging CSV per format"),
     Step(step: "3. process", tool: "Nim with nanuq", files: 2,
          does: "clean, join and count: the ten tables, then the story's small ones")]
@@ -127,19 +127,24 @@ nbShowCode:
 
 nbText: """
 The first two steps only move bytes around: the old FOSDEM sites are HTML written by hand, one
-layout a year, and Python's parsers read them in a few lines each. Everything that needs a
-decision (what a talk is, who a person is, which devroom is which) happens in the third step,
-in nanuq. The raw files are not committed; the ten tables are. Here are the scripts of the first
-two steps, whole, in the order `build.sh` runs them, and `grid.py`, a helper used to look at the
-old HTML tables while the scripts were written:
+layout a year, and Nim's standard library reads them with regular expressions, its XML parser
+and a small mail reader. Everything that needs a decision (what a talk is, who a person is,
+which devroom is which) happens in the third step, in nanuq. The raw files are not committed;
+the ten tables are.
+
+The flattening was first written in Python, then ported to Nim: the Nim scripts write the same
+twenty staging files as the Python ones did, byte for byte, so the ten tables did not change.
+Here are the scripts of the first two steps, whole, in the order `build.sh` runs them, then
+what they share (`common.nim`) and `grid.nim`, which spreads the cells of an HTML table over the
+rows and columns they span (and prints the tables of a page, to look at the old sites):
 """
 
 proc showSource(name: string) =
   nbFoldCode fosdem / "src" / name, title = "`src/" & name & "`"
-for f in ["fetch.sh", "build.sh", "extract_xml.py", "extract_eventindex.py", "extract_devrooms.py",
-          "extract_early.py", "extract_early_devrooms.py", "extract_trackpages.py",
-          "extract_cfp_yaml.py", "extract_lists.py", "extract_stands.py", "extract_upcoming.py",
-          "grid.py"]:
+for f in ["fetch.sh", "build.sh", "extract_xml.nim", "extract_eventindex.nim", "extract_devrooms.nim",
+          "extract_early.nim", "extract_early_devrooms.nim", "extract_trackpages.nim",
+          "extract_cfp_yaml.nim", "extract_lists.nim", "extract_stands.nim", "extract_upcoming.nim",
+          "common.nim", "grid.nim"]:
   showSource f
 
 nbText: """
@@ -434,7 +439,7 @@ data. To make the data again, from the raw files:
 
 ```sh
 sh src/fetch.sh raw                   # about 200 MB from archive.fosdem.org and friends
-sh src/build.sh raw <nanuq checkout>  # Python flattens, nanuq makes the tables
+sh src/build.sh raw <nanuq checkout>  # Nim flattens, nanuq makes the tables
 ```
 """
 
