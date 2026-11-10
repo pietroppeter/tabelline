@@ -117,13 +117,12 @@ tabelline changes; dated posts are in the devlog.
 8. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
    things are, and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
 
-Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
+Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
 - [Review mode](https://pietroppeter.github.io/tabelline/devlog/review-mode/)
   (9 Nov 2026 A): select text on a page, comment on it, go through the comments with a bar at the
-  bottom, and export them as Markdown with a YAML front matter for an agent; the post is reviewed
-  with itself and keeps every version (`v1/`, `v2/`, ...). Unlike the other posts, it changes
-  while the experiment runs.
+  bottom, and export them as Markdown with a YAML block for an agent. Every page of the site has
+  it now, with its version from git; the post is reviewed with itself, round by round.
 - [Rethinking tabelline's datasets](https://pietroppeter.github.io/tabelline/devlog/datasets/)
   (8 Nov 2026 E): the three ways to make a dataset, the datasets tabelline uses and where they come
   from, the ones gt and Great Tables show first, and a brainstorm of three domains in three sizes
