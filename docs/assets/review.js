@@ -1,7 +1,8 @@
 // Review mode for a nimib page: open it with the Review button, select text, comment on it, keep
 // the comments in this browser, export them as Markdown with a YAML block for a coding agent.
 // No dependencies. The page gives its settings on
-// <div id="review" data-page data-version data-title data-source data-versions>.
+// <div id="review" data-page data-title data-source data-version data-commit data-updated>
+// (the version, its commit and its date come from git, when the page is built).
 // Each part is between `// part:` lines, which the devlog post "Review mode" shows one by one.
 (function () {
   var cfg = document.getElementById('review');
@@ -147,15 +148,22 @@
   var current = -1, full = false, on = false;
 
   // part: mode
-  // Reading is the default: no bar, no marks, nothing of the review mode but one button, Review,
-  // beside the version (in `.rv-enter`, or under the title). It opens the review mode, and closes
-  // it. Blocks that only matter while reviewing (`.rv-only`) show only then.
+  // Reading is the default: no bar, no marks, nothing of the review mode but its version line,
+  // *Version 12 · updated 10 Nov 2026*, and one button beside it, Review, under the lede or the
+  // title (or where the page put `.rv-enter`). It opens the review mode, and closes it. Blocks
+  // that only matter while reviewing (`.rv-only`) show only then.
   var slot = document.querySelector('.rv-enter');
   if (!slot) {
     slot = document.createElement('p');
     slot.className = 'rv-enter';
     var after = root.querySelector('.lede') || root.querySelector('h1');
     if (after) after.insertAdjacentElement('afterend', slot); else root.prepend(slot);
+  }
+  if (!slot.querySelector('.rv-version')) {
+    var line = document.createElement('span');
+    line.className = 'rv-version';
+    line.textContent = 'Version ' + page.version + (page.updated ? ' · updated ' + page.updated : '');
+    slot.prepend(line);
   }
   var toggle = document.createElement('button');
   toggle.type = 'button';
@@ -396,11 +404,12 @@
     // a chat shows a pasted text as Markdown: a yaml fence is a tidy box under the title
     var out = ['# Review of “' + page.title + '”, version ' + page.version, '',
       '```yaml',
-      'format: nimib-review/3',
+      'format: nimib-review/4',
       'title: ' + yaml(page.title),
       'page: ' + yaml(location.origin + location.pathname),
       'source: ' + yaml(page.source),
-      'version: ' + page.version,
+      'version: ' + yaml(page.version),
+      'commit: ' + yaml(page.commit || ''),
       'exported: ' + yaml(new Date().toISOString()),
       'comments: ' + notes.length,
       '```', ''];
@@ -504,11 +513,10 @@
   });
 
   // part: history
-  // The versions of the page, each with the comments this browser keeps on it: open one, clear
-  // its comments, or clear every comment of the review mode in this browser. Back to Export from
-  // here. Clearing asks twice, with a second tap (confirm() is blocked inside an artifact).
-  var versions = [];
-  try { versions = JSON.parse(page.versions || '[]'); } catch (e) {}
+  // The versions of the page that have comments in this browser, this one first: clear the
+  // comments of one, or every comment of the review mode in this browser. Old versions are not
+  // pages: git keeps them. Back to Export from here. Clearing asks twice, with a second tap
+  // (confirm() is blocked inside an artifact).
   var hist = document.createElement('dialog');
   hist.className = 'rv-sheet rv-history';
   hist.innerHTML =
@@ -521,7 +529,7 @@
     var found = {};
     try {
       for (var i = 0; i < localStorage.length; i++) {
-        var k = localStorage.key(i), m = k.match(/@v(\d+)$/);
+        var k = localStorage.key(i), m = k.match(/@v([^@]+)$/);
         if (m && k.indexOf(PREFIX + page.page + '@v') === 0) found[m[1]] = read(k).length;
       }
     } catch (e) {}
@@ -534,19 +542,21 @@
   }
   function openHistory() {
     var list = hist.querySelector('.rv-versions'), counts = stored();
-    var all = versions.slice();
-    if (!all.some(function (v) { return v.n == page.version; })) all.push({ n: +page.version, date: '', href: '' });
-    Object.keys(counts).forEach(function (n) {
-      if (!all.some(function (v) { return v.n == n; })) all.push({ n: +n, date: '', href: '' });
+    var all = [{ n: page.version }];
+    Object.keys(counts).forEach(function (n) { if (n !== page.version) all.push({ n: n }); });
+    // this one first, then the others, newest first (a number from git, `12+` for a local build)
+    all.sort(function (a, b) {
+      if (a.n === page.version) return -1;
+      if (b.n === page.version) return 1;
+      return (parseInt(b.n, 10) || 0) - (parseInt(a.n, 10) || 0);
     });
-    all.sort(function (a, b) { return b.n - a.n; });   // the newest first
     list.innerHTML = '';
     all.forEach(function (v) {
-      var li = document.createElement('li'), n = counts[v.n] || 0, here = v.n == page.version;
-      var name = here || !v.href ? '<b>v' + v.n + '</b>' : '<a href="' + v.href + '"><b>v' + v.n + '</b></a>';
-      li.innerHTML = name + ' <span class="rv-date"></span> <span class="rv-n"></span>' +
+      var li = document.createElement('li'), n = counts[v.n] || 0, here = v.n === page.version;
+      li.innerHTML = '<b></b> <span class="rv-date"></span> <span class="rv-n"></span>' +
         '<button type="button" class="rv-danger">Clear</button>';
-      li.querySelector('.rv-date').textContent = (v.date || '') + (here ? ' · this one' : '');
+      li.querySelector('b').textContent = 'v' + v.n;
+      li.querySelector('.rv-date').textContent = here ? (page.updated || '') + ' · this one' : '';
       li.querySelector('.rv-n').textContent = n ? n + (n === 1 ? ' comment' : ' comments') : '';
       var b = li.querySelector('button');
       b.hidden = !n;

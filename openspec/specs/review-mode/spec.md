@@ -1,4 +1,10 @@
-## ADDED Requirements
+# review-mode Specification
+
+## Purpose
+The review mode of a page: a reader comments on the page where it is, and exports the comments
+in one text for a coding agent. It lives in `docs/review.nim`, a module that can move to nimib.
+
+## Requirements
 
 ### Requirement: Turning the review mode on
 `import review` SHALL add `nbReview`, a block that turns the review mode on for the page, with
@@ -8,14 +14,12 @@ repository by default) and `script` (a link to a shared copy of the script; inli
 The page SHALL open in reading mode, with nothing of the review mode but a version line and a
 **✎ Review** button.
 
-```nim
-import nimib
-import review
+A notebook turns it on with `import review` and `nbReview()` after `nbInit`, and `nbReview()`
+finds its settings with `reviewSettings`: for the notebook `docs/notes.nim` of a repository,
+titled *Notes*, they are
 
-nbInit
-nbText: "# Notes\n\nSome text to review."
-nbReview()
-echo reviewSettings(nb)
+```nim
+echo reviewSettings("/home/me/notes/docs/notes.nim", root = "/home/me/notes", title = "Notes")
 ```
 
 ```text

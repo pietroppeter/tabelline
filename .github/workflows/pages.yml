@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the whole history: a page's version is the commits that changed it
 
       - name: No committed HTML
         run: |

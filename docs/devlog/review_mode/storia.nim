@@ -1,5 +1,6 @@
 ## The versions of the post "Review mode" and the review rounds that made them, oldest first.
-## Every version's notebook (v1.nim, v2.nim, ...) reads this, so an old version links the newer ones.
+## Versions 1 to 8 were a notebook each (in git at commit 64f87e2); since version 9 the post is one
+## notebook, and a version is a commit. Add a line here when a round makes a new version.
 
 type Versione* = object
   date*: string      ## the day the version was published
@@ -79,9 +80,15 @@ const storico* = [
              "box*; the versions are cards; folded code reads *show code*; the review mode is a module of " &
              "its own, `review.nim`, in English, and `nbReview()` needs no arguments; the skill keeps versions " &
              "and rounds only for pages that ask for them, and answers by theme.",
-           review: "Waiting for the eighth round.", comments: 0),
+           review: "No round on the page: the API was discussed in the chat, and became the change " &
+             "*review-mode-api*, now in [the specs of the review mode](../../specs/?spec=review-mode): " &
+             "the newest version by default, or only the newest; the version from git; the review mode on every page; " &
+             "devlog posts take edits.",
+           comments: 0),
+  Versione(date: "10 Nov 2026", time: "", what: "The review mode is on every page of the site, and its version " &
+             "comes from git: a commit that changes a page is its next version, and the export names it; " &
+             "the post is one notebook, and versions 1 to 8 are linked as they were, in git; " &
+             "**History** lists only the versions with comments in this browser; the export is `nimib-review/4`.",
+           review: "Waiting for the ninth round.", comments: 0),
 ]
 
-func lista*(vs: openArray[Versione]): seq[(string, string)] =
-  ## `(date, what)` of each version, for `nbVersioni`.
-  for v in vs: result.add (v.date, v.what)
