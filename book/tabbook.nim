@@ -28,10 +28,24 @@ type Source* = object
 
 const gtLicenseUrl* = "https://github.com/posit-dev/great-tables/blob/main/LICENSE"
 
+const gtGuidePages = {
+  # The book ported the Get Started guide, which Great Tables has since made into its User Guide,
+  # with other names: page of Get Started -> where it is in the User Guide.
+  "index": "introduction.html", "overview": "introduction.html#the-anatomy-of-a-table",
+  "basic-header": "header-footer-stub.html",
+  "basic-stub": "header-footer-stub.html#the-stub-row-labels",
+  "basic-column-labels": "column-labels.html", "basic-formatting": "formatting-values.html",
+  "basic-styling": "styling-the-table-body.html", "targeted-styles": "styling-the-whole-table.html",
+  "table-theme-premade": "premade-themes.html", "loc-selection": "location-selection.html"}
+
 proc gtGuide*(title, page, changes: string): Source =
-  ## A page of the Great Tables user guide (posit-dev.github.io/great-tables/get-started/<page>).
+  ## A page of the Great Tables user guide, by its name in the Get Started guide the book ported
+  ## (posit-dev.github.io/great-tables/user-guide/, `gtGuidePages`).
+  var url = page & ".html"
+  for (old, now) in gtGuidePages:
+    if old == page: url = now
   Source(title: "“" & title & "” in the Great Tables user guide",
-         url: "https://posit-dev.github.io/great-tables/get-started/" & page & ".html",
+         url: "https://posit-dev.github.io/great-tables/user-guide/" & url,
          authors: "Rich Iannone, Michael Chow and the Great Tables contributors",
          license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
 
