@@ -78,6 +78,10 @@ Rough size: S (hours), M (a day or two), L (more).
 ## nimib
 
 - **nimibook and nimiSlides** (S). Check that tables look right in their themes.
+- **`nbTable` with a body** (S, from the 0.2 book port). `nbTable tabella(data): body` does not
+  compile (the body goes to `nbTable`), so every page names a table first (`let t = tabella(...):`
+  then `nbTable t`). `nbTable(data, args): body` (or `nbTabella`) would show a recipe in one go
+  and make the no-dots rule cheap in pages.
 
 ## Docs
 
@@ -117,3 +121,6 @@ Rough size: S (hours), M (a day or two), L (more).
   colour name).
 - **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
 - **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.
+- **Summary cells in a column with no format** (S, from the 0.2 book port). tabelline formats
+  them as numbers (5,552.33); Great Tables shows the raw value (5552.3331). Keep ours, but say so
+  in the summary rows spec and its list of differences.
