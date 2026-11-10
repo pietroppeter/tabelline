@@ -3,7 +3,7 @@
 ## from AGENTS.md when the page builds so the two never disagree. Kept up to date. It also
 ## writes docs/llms.txt, a short map of the site for language models (llmstxt.org).
 import std/[os, strformat, strutils]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import blocchi
 

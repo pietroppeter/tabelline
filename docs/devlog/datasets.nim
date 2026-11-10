@@ -4,7 +4,7 @@
 ## devlog/data/datasets/uses.csv; the data from outside was fetched by four Nim scripts there
 ## (survey, unesco, isole, citta), each with its Python twin, from public sources.
 import std/[os, strutils, strformat, sequtils, algorithm, tables]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocchi
 

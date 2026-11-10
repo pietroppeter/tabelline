@@ -4,7 +4,7 @@
 ## `?spec=<names>` and `?change=<names>` (or the same after `#`) show only those; see the
 ## "Links" box on the page.
 import std/[os, strutils, json, algorithm, strformat, sequtils]
-import nimib except md
+import nimib
 import blocchi
 import ../tools/specexamples
 

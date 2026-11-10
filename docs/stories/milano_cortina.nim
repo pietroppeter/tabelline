@@ -3,7 +3,7 @@
 ## The data is in docs/olimpiadi.nim (facts from Il Post, by hand) and docs/stories/data/milano-cortina/
 ## (tables from Wikipedia, written by fetch.py there).
 import std/[os, strutils, strformat, sequtils, algorithm]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocchi, ../olimpiadi
 
