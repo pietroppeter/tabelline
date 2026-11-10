@@ -3,13 +3,12 @@
 import std/[os, sugar]
 import nimib
 import tabelline, tabelline/[nimib, datasets]
-import ../[blocks, review]
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "designing-0-2" / "index.html"
 nb.useTabelline(title = "Designing tabelline 0.2", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
-nbReview(tscript = sharedReviewScript(nb))
 
 nbTitle "10 November 2026", "Designing tabelline 0.2", """
 tabelline 0.2 takes in what was planned for 0.3 and 0.4: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
