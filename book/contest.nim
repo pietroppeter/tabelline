@@ -57,11 +57,11 @@ nbTable otherTable(other)
 nbText: """
 ## How the entries are found
 
-`book/plan/contest.py` reads the forum topics with the contest's tags (2020 to 2024) through
+`book/plan/contest.nim` reads the forum topics with the contest's tags (2020 to 2024) through
 the forum's JSON API, and the winners posts on posit.co: an entry is the GitHub repository its
 post links first, or the one its winners post links. The 2025 entries are GitHub Discussions,
 read here from the winners post. Repositories deleted since are left out. Then
-`book/plan/plan.py` clones each one (only the list of its files), reads its R, Python, R
+`book/plan/plan.nim` clones each one (only the list of its files), reads its R, Python, R
 Markdown, Quarto and notebook files, and finds its licence and the packages it uses.
 """
 

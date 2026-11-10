@@ -21,3 +21,14 @@
     if (lang === "nim" || lang === "python" || lang === "r") choose(lang);
   });
 })();
+
+// a finder (tabbook.nim): the chosen button looks pressed; CSS (:target) shows its part
+(function () {
+  function mark() {
+    document.querySelectorAll(".tb-choices a[href^='#']").forEach(function (a) {
+      a.setAttribute("aria-current", String(a.getAttribute("href") === location.hash));
+    });
+  }
+  window.addEventListener("hashchange", mark);
+  document.addEventListener("DOMContentLoaded", mark);
+})();

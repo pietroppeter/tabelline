@@ -19,6 +19,7 @@ to the backlog.
 | Data | `readCsv` reads `"0400"` as the number 400; text with leading zeros could stay text | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
 | Parts | `tabStub` (the stub is only chosen in `tabella(rownameCol = ...)`) | [Stub](get-started/basic_stub.html) | **new** |
 | Parts | `tabSpanner` gathers its columns, in the order given (tabelline leaves them where they are) | [Column Labels](get-started/basic_column_labels.html) | **new** |
+| Parts | Markdown (a link) in a row group label, as gt's `tab_row_group(label = md(...))` | [Find an example by feature](features.html) | **new** |
 | Parts | Summary rows and their locations | [Styling the whole table](get-started/targeted_styles.html), [Table Theme Options](get-started/table_theme_options.html) | 0.2 |
 | Columns | `colsAdd` (the book adds columns to the data) | [Intro](get-started/intro.html) | 0.2 |
 | Columns | Columns by position, negative ones too (`["date", 1, -1]`) | [Column Selection](get-started/column_selection.html) | **new** |

@@ -512,7 +512,7 @@
    "kind": "contest",
    "lang": "R and Python",
    "status": "planned",
-   "what": "Tables made to win, one entry at a time, from 2020 to 2025: every entry with its code on GitHub (book/plan/contest.py collects them from Posit Community and the winners posts). An entry with no licence is an idea to redo, not code to port",
+   "what": "Tables made to win, one entry at a time, from 2020 to 2025: every entry with its code on GitHub (book/plan/contest.nim collects them from Posit Community and the winners posts). An entry with no licence is an idea to redo, not code to port",
    "find": {
     "kind": "repos",
     "repo": "rich-iannone/table-contest",

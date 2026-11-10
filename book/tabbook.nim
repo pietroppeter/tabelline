@@ -263,6 +263,35 @@ template sideBySide* =
 template endSideBySide* =
   nbRawHtml: "</div>"
 
+# ---------------------------------------------------------------------------------------- finder
+# A page that shows one part at a time, chosen by a link to its id (`#id`): plain HTML and CSS
+# (`:target`), no script. The links of `choices` are drawn as plain buttons.
+
+template finder*(body: untyped) =
+  ## The choices and the parts they show.
+  nbRawHtml: "<div class=\"tb-finder\">"
+  body
+  nbRawHtml: "</div>"
+
+template choices*(body: untyped) =
+  ## The blocks whose links (`[name](#id)`) choose a part: drawn as buttons. A link to
+  ## `#choices` goes back to them.
+  nbRawHtml: "<div class=\"tb-choices\" id=\"choices\">"
+  body
+  nbRawHtml: "</div>"
+
+template noChoice*(body: untyped) =
+  ## Shown until a part is chosen.
+  nbRawHtml: "<div class=\"tb-no-choice\">"
+  body
+  nbRawHtml: "</div>"
+
+template choice*(id: string, body: untyped) =
+  ## A part, shown when a link to `#id` is followed.
+  nbRawHtml: "<section class=\"tb-choice\" id=\"" & id & "\">"
+  body
+  nbRawHtml: "</section>"
+
 # ----------------------------------------------------------------------------------------- theme
 # The look lives in theme/ (edo.css, book.js); `nim r book/bookbuild.nim` adds it to nimibook's
 # own assets, so the Markdown pages get it too.
