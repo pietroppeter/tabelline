@@ -96,25 +96,28 @@ tabelline changes; dated posts are in the devlog.
    entries](https://pietroppeter.github.io/tabelline/book/contest.html) and [what the port
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
+3. [The Zen of tabelline](https://pietroppeter.github.io/tabelline/zen/): `import tabelline/this`,
+   nineteen aphorisms about tables after Francesco Bruzzesi's *Zen of Great Tables*, as text and
+   as a table (`src/tabelline/zen.nim`).
 
 **Where it's going**
 
-3. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.5
+4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.5
    adds and the real tables it is tried on, with the three threads of each (build it, use it,
    port the references), from `docs/piano.nim`.
-4. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+5. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
    and Great Tables, whether tabelline has it, and the release that plans the rest (data in
    `docs/coverage/gt.json`).
 
 **How it's made**
 
-5. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): dated posts, newest first.
-6. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
+6. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): dated posts, newest first.
+7. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
    down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
    run against the code while the page is built.
-7. [Design guide](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
+8. [Design guide](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
    colours, the type and every component, with when to use each.
-8. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
+9. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
    things are, and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
@@ -167,6 +170,7 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 - `src/tabelline/build.nim`: the build step all renderers share.
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
+- `src/tabelline/zen.nim`: the Zen of tabelline (`zenText`, `zenTable`); `src/tabelline/this.nim` prints it on import.
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
 - `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/stile.nim` is the style of both looks, from the tokens, and `docs/blocchi.nim` the blocks every page is made of; `docs/review.nim` is the review mode, blocks and styles in one module that can move to nimib).
 - `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).

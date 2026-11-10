@@ -742,6 +742,12 @@
      "note": "Optional modules for nanuq (Polars) and datamancer.",
      "plan": "0.3",
      "size": "S"
+    },
+    {
+     "feature": "The Zen",
+     "gt": "import great_tables.this (Great Tables only)",
+     "status": "done",
+     "note": "import tabelline/this prints the Zen of tabelline; tabelline/zen has it as a table."
     }
    ]
   }
