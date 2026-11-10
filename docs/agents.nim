@@ -43,7 +43,7 @@ block:
   let cmds = tableData:
     command: ["nim r tests/all.nim", "nim r tools/specexamples.nim", "nim r tools/specexamples.nim --update",
               "nim r tools/drift.nim", "nim r -d:release docs/all.nim", "nim r book/bookbuild.nim",
-              "python3 tools/preview.py"]
+              "nim r tools/preview.nim"]
     does: ["runs the tests", "runs every example in the specs and checks its output",
            "rewrites the outputs after a change is built (`--changes` adds open changes)",
            "checks that no page adds HTML, styles or colours (`--update` lowers the baseline)",

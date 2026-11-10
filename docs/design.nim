@@ -34,7 +34,8 @@ nbText: """
 ## Two looks
 
 Every page carries two looks, and the reader picks one with the switch in the header; the choice
-is remembered. Both are in the same standalone HTML file: fonts inlined, nothing loaded from
+is remembered. Both are in one style sheet that every page shares, `assets/site.css`, with its
+fonts beside it: nothing loaded from
 elsewhere.
 
 - **Munari**, the default, after Bruno Munari's books on the square, the circle and the

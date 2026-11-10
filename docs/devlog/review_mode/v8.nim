@@ -21,7 +21,7 @@ nb.useTabelline(title = title,
                 wordmarkHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
-nbReview(questa, "devlog/review-mode", title, source, dates)
+nbReview(questa, "devlog/review-mode", title, source, dates, tscript = sharedReviewScript(nb))
 
 # above the title, the day the post was written; beside the version, the day of its last update
 proc long(date: string): string = parse(date, "d MMM yyyy").format("d MMMM yyyy")
@@ -443,10 +443,11 @@ the same when the post moves, its title and source, and the day of each version,
 **✎ Review** its place beside it. Blocks inside `nbInReview:` show only while reviewing, as
 *New in version 8* does on this page.
 
-The script is inlined, so the page stays one file that works anywhere, even as a claude.ai
-artifact. When every page of a site has the review mode, they can share one copy:
-`nbReview(tscript = "../assets/review.js")` writes a link to the script instead, and the browser
-loads it once for all of them. The blocks, in full:
+By default the script is inlined, so a page stays one file that works anywhere, even as a
+claude.ai artifact. The pages of a site share one copy instead:
+`nbReview(tscript = "../assets/review.js")` writes a link to the script, and the browser loads it
+once for all of them. This post does that, as tabelline's pages share their style and fonts. The
+blocks, in full:
 """
 
 nbFoldCode "docs/review.nim", start = "func versionHref*", stop = "newNbBlock(NbVersions):"
