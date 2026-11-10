@@ -27,7 +27,8 @@ proc initTabella*(data: TableData, rownameCol = "", groupnameCol = "", id = "", 
     for i in 0 ..< data.nrows:
       let g = $data[groupnameCol, i]
       result.rowGroups[i] = g
-      if g notin result.groupLabels: result.groupLabels[g] = toText(g)
+      # a missing (or empty) group value leaves the row out of every group
+      if g.len > 0 and g notin result.groupLabels: result.groupLabels[g] = toText(g)
 
 proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol = "", groupnameCol = "", id = "",
                                  locale = ""): Tabella =

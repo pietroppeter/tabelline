@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Fix: in a grouped table, a row whose group value is missing was shown twice, before the groups
+  and again in the group above it; it is now shown once, before the groups (#53).
+
 ## 0.1.0 (10 Nov 2026)
 
 tabelline is great tables for Nim: display tables after R's gt and Python's Great Tables, in

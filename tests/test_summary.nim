@@ -81,3 +81,12 @@ suite "summary rows":
   test "markdown":
     let md = base.summaryRows(fns = {"total": agg.sum}).toMarkdown
     check "| *total* | 3 |" in md
+
+suite "row groups (0.1.0 fix)":
+  test "a row with no group is shown once, before the groups":
+    let d = tableData:
+      g: ["a", "b", nil]
+      x: [1, 2, 3]
+    let b = tabella(d, groupnameCol = "g").build(rcText)
+    check b.groups.mapIt(it.id) == @["", "a", "b"]
+    check b.groups.mapIt(it.rows.mapIt(it.cells[0])) == @[@["3"], @["1"], @["2"]]

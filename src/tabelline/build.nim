@@ -170,7 +170,7 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
   result.ctx = ctx
   result.columns = t.visibleData
   # rows in display order: ungrouped rows first, then each group in order
-  var order = @[""] & toSeq(t.groupLabels.keys)
+  var order = @[""] & toSeq(t.groupLabels.keys).filterIt(it.len > 0)
   for gid in order:
     var g = BuiltGroup(id: gid, label: if gid.len > 0: t.groupLabels[gid].renderText(ctx) else: "")
     for i in t.displayOrder:
