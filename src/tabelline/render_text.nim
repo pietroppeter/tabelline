@@ -27,15 +27,43 @@ proc toText*(t: Tabella): string =
   for c in b.columns:
     headers.add c.label.renderText(rcText) & b.marksText(colKey(c.name), m)
     aligns.add c.align
-  var rows: seq[seq[string]]
-  var groupBefore: seq[string]     # group label shown above a row ("" for none)
+  # the body as a list of lines to draw: rows of cells, group labels, and rules
+  type
+    EntryKind = enum ekRow, ekLabel, ekRule
+    Entry = object
+      kind: EntryKind
+      cells: seq[string]
+      text: string     # the label, or the rule's kind: "group" (├─┼), "dots" (├┄┼), "grand" (╞═╪)
+  var entries: seq[Entry]
+  proc summaryEntries(ss: seq[BuiltSummary]) =
+    for s in ss:
+      var cells = if t.hasStub: @[s.label & b.marksText(s.key, m)] else: @[]
+      for j, c in b.columns: cells.add s.cells[j] & b.marksText(s.key & c.name, m)
+      entries.add Entry(kind: ekRow, cells: cells)
+  if b.grandTop.len > 0:
+    summaryEntries(b.grandTop)
+    entries.add Entry(kind: ekRule, text: "grand")
+  var bodyStart = entries.len
   for g in b.groups:
-    for k, r in g.rows:
+    if g.id.len > 0:
+      if entries.len > bodyStart: entries.add Entry(kind: ekRule, text: "group")
+      entries.add Entry(kind: ekLabel, text: g.label & b.marksText(groupKey(g.id), m))
+      entries.add Entry(kind: ekRule, text: "dots")
+    if g.summaryTop.len > 0:
+      summaryEntries(g.summaryTop)
+      entries.add Entry(kind: ekRule, text: "dots")
+    for r in g.rows:
       var cells: seq[string]
       if t.hasStub: cells.add r.stub & b.marksText(cellKey(r.index, t.rownameCol), m)
       for j, c in b.columns: cells.add r.cells[j] & b.marksText(cellKey(r.index, c.name), m)
-      rows.add cells
-      groupBefore.add(if k == 0 and g.id.len > 0: g.label & b.marksText(groupKey(g.id), m) else: "")
+      entries.add Entry(kind: ekRow, cells: cells)
+    if g.summaryBottom.len > 0:
+      entries.add Entry(kind: ekRule, text: "dots")
+      summaryEntries(g.summaryBottom)
+  if b.grandBottom.len > 0:
+    entries.add Entry(kind: ekRule, text: "grand")
+    summaryEntries(b.grandBottom)
+  let rows = entries.filterIt(it.kind == ekRow).mapIt(it.cells)
   var widths = headers.mapIt(it.width)
   for r in rows:
     for j, c in r: widths[j] = max(widths[j], c.width)
@@ -82,12 +110,17 @@ proc toText*(t: Tabella): string =
     lines.add s
   lines.add "│" & toSeq(0 ..< headers.len).mapIt(" " & pad(headers[it], widths[it], aligns[it]) & " ").join("│") & "│"
   lines.add rule("╞", "╪", "╡").replace("─", "═")
-  for k, r in rows:
-    if groupBefore[k].len > 0:
-      if k > 0: lines.add rule("├", "┼", "┤")
-      lines.add "│ " & pad(groupBefore[k], inner, alLeft) & " │"
-      lines.add rule("├", "┼", "┤").replace("─", "┄")
-    lines.add "│" & toSeq(0 ..< r.len).mapIt(" " & pad(r[it], widths[it], aligns[it]) & " ").join("│") & "│"
+  for e in entries:
+    case e.kind
+    of ekLabel: lines.add "│ " & pad(e.text, inner, alLeft) & " │"
+    of ekRule:
+      lines.add(case e.text
+                of "dots": rule("├", "┼", "┤").replace("─", "┄")
+                of "grand": rule("╞", "╪", "╡").replace("─", "═")
+                else: rule("├", "┼", "┤"))
+    of ekRow:
+      let r = e.cells
+      lines.add "│" & toSeq(0 ..< r.len).mapIt(" " & pad(r[it], widths[it], aligns[it]) & " ").join("│") & "│"
   lines.add rule("└", "┴", "┘")
   for (k, n) in b.footer: lines.add (if k > 0: footMarkText(k, m) & " " else: "") & n
   for n in t.sourceNotes: lines.add n.renderText(rcText)
@@ -121,16 +154,26 @@ proc toMarkdown*(t: Tabella): string =
             else: ":--")
   lines.add "| " & header.join(" | ") & " |"
   lines.add "|" & sep.join("|") & "|"
+  proc summaryLines(ss: seq[BuiltSummary], mark: string) =
+    # summary rows: the label in italics (a group's) or bold (the table's)
+    for s in ss:
+      var cells = @[mark & mdEscape(s.label) & mark & b.marksText(s.key, m)]
+      for j, c in b.columns: cells.add mdEscape(s.cells[j] & b.marksText(s.key & c.name, m))
+      lines.add "| " & cells.join(" | ") & " |"
+  summaryLines(b.grandTop, "**")
   for g in b.groups:
     if g.id.len > 0:
       var cells = @["**" & mdEscape(g.label) & "**"]
       for _ in 1 ..< header.len: cells.add ""
       lines.add "| " & cells.join(" | ") & " |"
+    summaryLines(g.summaryTop, "*")
     for r in g.rows:
       var cells: seq[string]
       if t.hasStub: cells.add mdEscape(r.stub)
       for j, c in b.columns: cells.add mdEscape(r.cells[j] & b.marksText(cellKey(r.index, c.name), m))
       lines.add "| " & cells.join(" | ") & " |"
+    summaryLines(g.summaryBottom, "*")
+  summaryLines(b.grandBottom, "**")
   if b.notes.len > 0 or b.plainNotes.len > 0 or t.sourceNotes.len > 0: lines.add ""
   for (k, n) in b.footer: lines.add (if k > 0: "<sup>" & footMarkText(k, m) & "</sup> " else: "") & n & "  "
   for n in t.sourceNotes: lines.add n.renderText(rcText) & "  "

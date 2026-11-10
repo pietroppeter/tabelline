@@ -152,8 +152,8 @@
     {
      "feature": "Summary rows",
      "gt": "summary_rows(), grand_summary_rows()",
-     "status": "missing",
-     "note": "Subtotals per group and a grand total. Proposed: openspec change add-summary-rows.",
+     "status": "done",
+     "note": "Subtotals per group and a grand total: summaryRows, grandSummaryRows, with agg.sum, mean, median, min, max, count, sd or a proc of your own.",
      "plan": "0.2",
      "size": "M"
     },
@@ -559,7 +559,7 @@
      "feature": "Locations",
      "gt": "cells_title(), cells_body(), cells_stub(), ...",
      "status": "done",
-     "note": "Every location of Great Tables but the summary ones (with summary rows, 0.2): loc.header, loc.columnHeader, loc.footer are new.",
+     "note": "Every location of Great Tables, the summary ones since 0.2 (loc.summary, loc.summaryStub, loc.grandSummary, loc.grandSummaryStub): loc.header, loc.columnHeader, loc.footer are new.",
      "plan": "0.1",
      "size": "S"
     },
@@ -588,7 +588,7 @@
      "feature": "Table options",
      "gt": "tab_options()",
      "status": "partial",
-     "note": "About 40 of gt's 200 options: fonts, widths, borders, heading, labels, groups, stub, padding, striping, footer.",
+     "note": "70 of gt's 200 options: fonts, widths, borders, heading, labels, groups, stub, padding, striping, summary rows, footer.",
      "plan": "0.2",
      "size": "M"
     },

@@ -11,14 +11,20 @@ type
     index*: int                  ## row in the data
     stub*: string                ## the stub cell, formatted ("" without a stub)
     cells*: seq[string]          ## formatted cells of the visible data columns
+  BuiltSummary* = object
+    label*: string               ## the label in the stub, rendered
+    key*: string                 ## the location key of its stub cell (`summaryKey`)
+    cells*: seq[string]          ## formatted cells of the visible data columns
   BuiltGroup* = object
     id*: string
     label*: string               ## rendered label ("" for rows outside any group)
     rows*: seq[BuiltRow]
+    summaryTop*, summaryBottom*: seq[BuiltSummary]   ## the group's summary rows
   Built* = object
     ctx*: RenderContext
     columns*: seq[ColInfo]       ## visible data columns, in order
     groups*: seq[BuiltGroup]
+    grandTop*, grandBottom*: seq[BuiltSummary]       ## the grand summary rows
     marks*: Table[string, seq[int]]    ## location key -> footnote numbers
     notes*: seq[string]                ## rendered footnotes, by number - 1
     plainNotes*: seq[string]           ## footnotes without a mark
@@ -29,6 +35,10 @@ func cellKey*(row: int, col: string): string = "cell:" & $row & ":" & col
 func colKey*(col: string): string = "col:" & col
 func spannerKey*(label: string): string = "spanner:" & label
 func groupKey*(id: string): string = "group:" & id
+func summaryKey*(group, label: string, col = ""): string =
+  ## A cell of a group's summary row (the stub cell when `col` is "").
+  "summary:" & group & ":" & label & ":" & col
+func grandKey*(label: string, col = ""): string = "grand:" & label & ":" & col
 
 func renderText*(t: Text, ctx: RenderContext): string =
   if ctx == rcHtml: textToHtml(t) else: textToPlain(t)
@@ -94,6 +104,24 @@ proc keysOf*(t: Tabella, target: Target, columns: seq[ColInfo]): seq[string] =
   of lkSourceNotes: @["source_notes"]
   of lkFootnotes: @["footnotes"]
   of lkFooter: @["footnotes", "source_notes"]
+  of lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub:
+    let grand = target.kind in {lkGrandSummary, lkGrandSummaryStub}
+    let cols = if target.kind in {lkSummaryStub, lkGrandSummaryStub}: @[""]
+               else: columns.mapIt(it.name).filterIt(it in target.columns)
+    var keys: seq[string]
+    for rule in t.summaries:
+      if rule.grand != grand: continue
+      let groups = if grand: @[""]
+                   elif rule.groups.len > 0: rule.groups
+                   else: toSeq(t.groupLabels.keys)
+      for g in groups:
+        if not grand and target.names.len > 0 and g notin target.names: continue
+        for (label, _) in rule.fns:
+          if target.labels.len > 0 and label notin target.labels: continue
+          for c in cols:
+            let k = if grand: grandKey(label, c) else: summaryKey(g, label, c)
+            if k notin keys: keys.add k
+    keys
 
 proc displayOrder*(t: Tabella): seq[int] =
   ## The rows of the data in the order they are shown (before grouping).
@@ -105,30 +133,82 @@ proc transformCell*(t: Tabella, row: int, col: string, shown: string): string =
   for tr in t.transforms:
     if (row, col) in tr.target.cells: result = tr.fn(result)
 
+proc columnFormat(t: Tabella, col: string): FormatRule =
+  ## The last format given to the whole column `col` (`fn` is nil when there is none).
+  for k in countdown(t.formats.high, 0):
+    let f = t.formats[k]
+    if col in f.columns and f.rows.len == 0: return f
+
+proc formatSummary(t: Tabella, rule: SummaryRule, agg: Aggregate, v: Value, col: string,
+                   ctx: RenderContext): string =
+  if v.isNull: return (if ctx == rcHtml: escapeHtml(rule.missingText) else: rule.missingText)
+  if rule.fmt != nil: return rule.fmt(v, ctx)
+  if agg.name != "count":
+    let f = t.columnFormat(col)
+    if f.fn != nil: return f.fn(v, ctx)
+  let s = if v.kind == vkFloat: formatNumber(v.f, decimals = 2) else: $v
+  if ctx == rcHtml: escapeHtml(s) else: s
+
+proc summaryOf(t: Tabella, rule: SummaryRule, rows: seq[int], columns: seq[ColInfo],
+               group: string, ctx: RenderContext): seq[BuiltSummary] =
+  ## The summary rows of `rule` over the data `rows`, one per aggregate.
+  for (label, agg) in rule.fns:
+    var s = BuiltSummary(label: if ctx == rcHtml: escapeHtml(label) else: label,
+                         key: if rule.grand: grandKey(label) else: summaryKey(group, label))
+    for c in columns:
+      if c.name notin rule.columns:
+        s.cells.add(if ctx == rcHtml: escapeHtml(rule.missingText) else: rule.missingText)
+        continue
+      var values: seq[Value]
+      for i in rows:
+        let v = t.data[c.name, i]
+        if not v.isNull: values.add v
+      s.cells.add t.formatSummary(rule, agg, agg.fn(values), c.name, ctx)
+    result.add s
+
 proc build*(t: Tabella, ctx: RenderContext): Built =
   result.ctx = ctx
   result.columns = t.visibleData
   # rows in display order: ungrouped rows first, then each group in order
-  var order = @[""] & toSeq(t.groupLabels.keys)
+  var order = @[""] & toSeq(t.groupLabels.keys).filterIt(it.len > 0)
   for gid in order:
     var g = BuiltGroup(id: gid, label: if gid.len > 0: t.groupLabels[gid].renderText(ctx) else: "")
     for i in t.displayOrder:
       if t.rowGroups[i] != gid: continue
       var r = BuiltRow(index: i)
-      if t.hasStub: r.stub = t.transformCell(i, t.rownameCol, t.formatCell(i, t.rownameCol, ctx))
+      if t.hasRowNames: r.stub = t.transformCell(i, t.rownameCol, t.formatCell(i, t.rownameCol, ctx))
       for c in result.columns: r.cells.add t.transformCell(i, c.name, t.formatCell(i, c.name, ctx))
       g.rows.add r
-    if g.rows.len > 0: result.groups.add g
+    if g.rows.len > 0:
+      for rule in t.summaries:
+        if rule.grand or gid.len == 0 or (rule.groups.len > 0 and gid notin rule.groups): continue
+        let rows = g.rows.mapIt(it.index)
+        if rule.top: g.summaryTop.add t.summaryOf(rule, rows, result.columns, gid, ctx)
+        else: g.summaryBottom.add t.summaryOf(rule, rows, result.columns, gid, ctx)
+      result.groups.add g
+  for rule in t.summaries:
+    if not rule.grand: continue
+    let rows = t.displayOrder
+    if rule.top: result.grandTop.add t.summaryOf(rule, rows, result.columns, "", ctx)
+    else: result.grandBottom.add t.summaryOf(rule, rows, result.columns, "", ctx)
 
   # footnote marks, numbered in reading order of their locations
   var keysInOrder = @["title", "subtitle"] & (if t.hasStub: @["stubhead"] else: @[])
   for s in t.spanners.sortedByIt(-it.level): keysInOrder.add spannerKey(s.label.s)
   for c in result.columns: keysInOrder.add colKey(c.name)
+  proc addSummaryKeys(keys: var seq[string], rows: seq[BuiltSummary], columns: seq[ColInfo]) =
+    for s in rows:
+      keys.add s.key
+      for c in columns: keys.add s.key & c.name
+  keysInOrder.addSummaryKeys(result.grandTop, result.columns)
   for g in result.groups:
     keysInOrder.add groupKey(g.id)
+    keysInOrder.addSummaryKeys(g.summaryTop, result.columns)
     for r in g.rows:
-      if t.hasStub: keysInOrder.add cellKey(r.index, t.rownameCol)
+      if t.hasRowNames: keysInOrder.add cellKey(r.index, t.rownameCol)
       for c in result.columns: keysInOrder.add cellKey(r.index, c.name)
+    keysInOrder.addSummaryKeys(g.summaryBottom, result.columns)
+  keysInOrder.addSummaryKeys(result.grandBottom, result.columns)
   var keysOfNote: seq[seq[string]]
   for f in t.footnotes:
     var ks = if f.target.kind in {lkFootnotes, lkSourceNotes, lkFooter}: @[]
