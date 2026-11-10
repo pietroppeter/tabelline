@@ -131,9 +131,9 @@ nbCode:
     Verb(family: "Format", verbs: "fmt_number, fmt_percent, fmt_currency, fmt_date, fmt_scientific, fmt_roman, fmt_markdown, fmt_image, fmt_flag, fmt_units, fmt_nanoplot, … (32)", does: "turn values into text", tabelline: "21, and fmt() for your own"),
     Verb(family: "Substitute", verbs: "sub_missing, sub_zero, sub_small_vals, sub_large_vals, sub_values", does: "replace some values", tabelline: "all five"),
     Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, align, width, hide, unhide, move, reorder"),
-    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder; summaries not yet"),
+    Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle, dataColor, textTransform"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (56), 14 opt*"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (70), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word", does: "render", tabelline: "toHtml, toText, toMarkdown, save"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
@@ -169,7 +169,7 @@ block:
 
 doAssert nFormats == 21, "the menu says 21 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
-doAssert nOptions == 56, "the menu says 56 options; there are " & $nOptions
+doAssert nOptions == 70, "the menu says 70 options; there are " & $nOptions
 
 
 nbText: """
@@ -501,7 +501,18 @@ nbCode:
 nbTable t
 
 nbText: """
-Step 5: the same table with `optCssTheme()`, the preset of these pages: its colours are the page's
+Step 5: add it up. `summaryRows` adds rows under each group, one for each aggregate, and
+`grandSummaryRows` rows for the whole table, set apart by a double rule. Each summary cell is
+formatted like its column, so the masses keep their three decimals:
+"""
+nbCode:
+  t = t.summaryRows(fns = {"total": agg.sum}, columns = ["mass", "moons"], missingText = "")
+    .grandSummaryRows(fns = {"in all": agg.sum, "largest": agg.max},
+                      columns = ["mass", "diameter", "moons"], missingText = "")
+nbTable t
+
+nbText: """
+Step 6: the same table with `optCssTheme()`, the preset of these pages: its colours are the page's
 own, so it follows the look you pick at the top ([Tables that follow the page](#tables-that-follow-the-page)
 explains it). Next to it, `optStylize`:
 """
@@ -520,6 +531,7 @@ let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "typ
   tabSpanner "Size", ["mass", "diameter"]
   fmtNumber "mass", decimals = 3, dropTrailingZeros = true
   dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
+  summaryRows fns = {"total": agg.sum}, columns = ["mass", "moons"], missingText = ""
   optCssTheme()
 ```
 

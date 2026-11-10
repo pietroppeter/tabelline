@@ -22,6 +22,8 @@ proc tableCss*(id: string, o: TabOptions): string =
   let labelsBg = if o.columnLabelsBackgroundColor.len > 0: o.columnLabelsBackgroundColor else: o.tableBackgroundColor
   let groupBg = if o.rowGroupBackgroundColor.len > 0: o.rowGroupBackgroundColor else: o.tableBackgroundColor
   let stubBg = if o.stubBackgroundColor.len > 0: o.stubBackgroundColor else: "transparent"
+  let summaryBg = if o.summaryRowBackgroundColor.len > 0: o.summaryRowBackgroundColor else: "transparent"
+  let grandBg = if o.grandSummaryRowBackgroundColor.len > 0: o.grandSummaryRowBackgroundColor else: "transparent"
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel).
     bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
@@ -65,6 +67,14 @@ proc tableCss*(id: string, o: TabOptions): string =
   border-right: 2px solid [o.tableBodyHlinesColor]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
 [i] .tb_striped { background-color: [o.rowStripingBackgroundColor]; }
+[i] .tb_summary_row { background-color: [summaryBg]; text-transform: [o.summaryRowTextTransform];
+  padding: [o.summaryRowPadding] [o.summaryRowPaddingHorizontal]; vertical-align: middle; }
+[i] .tb_first_summary_row { border-top: [o.summaryRowBorderWidth] [o.summaryRowBorderStyle] [o.summaryRowBorderColor]; }
+[i] .tb_last_summary_row_top { border-bottom: [o.summaryRowBorderWidth] [o.summaryRowBorderStyle] [o.summaryRowBorderColor]; }
+[i] .tb_grand_summary_row { background-color: [grandBg]; text-transform: [o.grandSummaryRowTextTransform];
+  padding: [o.grandSummaryRowPadding] [o.grandSummaryRowPaddingHorizontal]; vertical-align: middle; }
+[i] .tb_first_grand_summary_row { border-top: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
+[i] .tb_last_grand_summary_row_top { border-bottom: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
 [i] .tb_left { text-align: left; } [i] .tb_center { text-align: center; } [i] .tb_right { text-align: right; font-variant-numeric: tabular-nums; }
 [i] .tb_footnotes, [i] .tb_sourcenotes { color: [o.tableFontColor]; background-color: [o.tableBackgroundColor]; }
 [i] .tb_footnote { font-size: [o.footnotesFontSize]; padding: 4px 5px; text-align: left; }
@@ -88,11 +98,26 @@ proc bodyHtml(t: Tabella, b: Built): string =
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
   let m = t.options
   var striped = false
+  proc summaryHtml(ss: seq[BuiltSummary], grand, top: bool): string =
+    # summary rows: a rule above the first (below the last, when they come first)
+    let kind = if grand: "tb_grand_summary_row" else: "tb_summary_row"
+    for k, s in ss:
+      var cls = kind
+      if not top and k == 0: cls.add(if grand: " tb_first_grand_summary_row" else: " tb_first_summary_row")
+      if top and k == ss.high: cls.add(if grand: " tb_last_grand_summary_row_top" else: " tb_last_summary_row_top")
+      result.add &"""<tr class="{kind}_tr">"""
+      result.add &"""<th scope="row" class="tb_stub tb_left {cls}"{b.styleAttr(s.key)}>{s.label}{b.marksHtml(s.key, m)}</th>"""
+      for j, c in b.columns:
+        let key = s.key & c.name
+        result.add &"""<td class="{alignClass(c.align)} {cls}"{b.styleAttr(key)}>{s.cells[j]}{b.marksHtml(key, m)}</td>"""
+      result.add "</tr>\n"
   result.add "<tbody class=\"tb_table_body\">\n"
+  result.add summaryHtml(b.grandTop, true, true)
   for g in b.groups:
     if g.id.len > 0:
       result.add &"""<tr class="tb_group_heading_row"><th colspan="{ncols}" class="tb_group_heading" scope="colgroup" id="{escapeHtml(g.id)}"{b.styleAttr(groupKey(g.id))}>{g.label}{b.marksHtml(groupKey(g.id), m)}</th></tr>""" & "\n"
     striped = false
+    result.add summaryHtml(g.summaryTop, false, true)
     for r in g.rows:
       result.add "<tr>"
       let stripe = if t.options.rowStriping and striped: " tb_striped" else: ""
@@ -104,6 +129,8 @@ proc bodyHtml(t: Tabella, b: Built): string =
         result.add &"""<td class="tb_row {alignClass(c.align)}{stripe}"{b.styleAttr(k)}>{r.cells[j]}{b.marksHtml(k, m)}</td>"""
       result.add "</tr>\n"
       striped = not striped
+    result.add summaryHtml(g.summaryBottom, false, false)
+  result.add summaryHtml(b.grandBottom, true, false)
   result.add "</tbody>\n"
 
 proc columnLabelsHtml(t: Tabella, b: Built): string =

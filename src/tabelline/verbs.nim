@@ -4,7 +4,7 @@
 ## (`sink`, so a chain moves the spec along instead of copying it).
 
 import std/[macros, strutils, sequtils, tables, math, algorithm]
-import core, colors
+import core, colors, formats
 
 # ---------------------------------------------------------------------------------- creating
 
@@ -182,6 +182,20 @@ func footer*(_: LocNs): Loc = Loc(kind: lkFooter)
 func spannerLabels*(_: LocNs, labels: varargs[string]): Loc = Loc(kind: lkSpanners, names: @labels)
   ## The same as `loc.spanners`, by Great Tables' name.
 func footnotes*(_: LocNs): Loc = Loc(kind: lkFootnotes)
+func summary*(_: LocNs, groups: openArray[string] = [], columns: ColSel = everything(),
+              rows: openArray[string] = []): Loc =
+  ## The cells of the summary rows of `groups` (all, by default), in `columns`, for the rows
+  ## labelled `rows` (all, by default).
+  Loc(kind: lkSummary, names: @groups, cols: columns, labels: @rows)
+func summaryStub*(_: LocNs, groups: openArray[string] = [], rows: openArray[string] = []): Loc =
+  ## The labels of the summary rows, in the stub.
+  Loc(kind: lkSummaryStub, names: @groups, labels: @rows)
+func grandSummary*(_: LocNs, columns: ColSel = everything(), rows: openArray[string] = []): Loc =
+  ## The cells of the grand summary rows.
+  Loc(kind: lkGrandSummary, cols: columns, labels: @rows)
+func grandSummaryStub*(_: LocNs, rows: openArray[string] = []): Loc =
+  ## The labels of the grand summary rows, in the stub.
+  Loc(kind: lkGrandSummaryStub, labels: @rows)
 
 proc resolve*(l: Loc, t: Tabella): Target =
   result = Target(kind: l.kind)
@@ -193,6 +207,12 @@ proc resolve*(l: Loc, t: Tabella): Target =
     result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
   of lkStub:
     for i in l.rows.resolve(t.data): result.cells.add (i, t.rownameCol)
+  of lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub:
+    # the rows are found when the table is built, so the summary rows may come later
+    result.names = l.names
+    result.labels = l.labels
+    if l.kind in {lkSummary, lkGrandSummary}:
+      result.columns = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
   of lkBody:   # the data cells: the stub column is loc.stub, as in gt
     let names = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
     for i in l.rows.resolve(t.data):
@@ -241,7 +261,7 @@ proc mapLabels(t: var Tabella, l: Loc, fn: proc (s: string): string) =
       for n in t.sourceNotes.mitems: change n
     if l.kind != lkSourceNotes:
       for f in t.footnotes.mitems: change f.note
-  of lkBody, lkStub: discard
+  of lkBody, lkStub, lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub: discard
 
 proc textTransform*(t: sink Tabella, fn: proc (s: string): string, locations: varargs[Loc]): Tabella =
   ## Changes the shown text at `locations` (by default the body) with a proc: for cells the proc
@@ -402,6 +422,134 @@ proc rowGroupOrder*(t: sink Tabella, groups: openArray[string]): Tabella =
     if k notin labels: labels[k] = v
   result.groupLabels = labels
 
+# ------------------------------------------------------------------------------ summary rows
+
+const agg* = AggNs()
+
+func numbers(values: seq[Value]): seq[float] =
+  for v in values:
+    if v.isNumber: result.add v.toFloat
+
+func sum*(_: AggNs): Aggregate =
+  ## The sum of the numbers (an int when they are all ints).
+  Aggregate(name: "sum", fn: proc (values: seq[Value]): Value =
+    var ints = true
+    var any = false
+    var i = 0
+    var f = 0.0
+    for v in values:
+      if not v.isNumber: continue
+      any = true
+      if v.kind == vkInt: i += v.i else: ints = false
+      f += v.toFloat
+    if not any: null() elif ints: toValue(i) else: toValue(f))
+
+func mean*(_: AggNs): Aggregate =
+  ## The mean of the numbers.
+  Aggregate(name: "mean", fn: proc (values: seq[Value]): Value =
+    let xs = numbers(values)
+    if xs.len == 0: null() else: toValue(xs.sum / float(xs.len)))
+
+func median*(_: AggNs): Aggregate =
+  ## The median of the numbers (the mean of the two middle ones when they are even).
+  Aggregate(name: "median", fn: proc (values: seq[Value]): Value =
+    var xs = numbers(values)
+    if xs.len == 0: return null()
+    xs.sort
+    let m = xs.len div 2
+    toValue(if xs.len mod 2 == 1: xs[m] else: (xs[m - 1] + xs[m]) / 2))
+
+func sd*(_: AggNs): Aggregate =
+  ## The standard deviation of the numbers, of a sample (divided by n - 1, as R's `sd`).
+  Aggregate(name: "sd", fn: proc (values: seq[Value]): Value =
+    let xs = numbers(values)
+    if xs.len < 2: return null()
+    let m = xs.sum / float(xs.len)
+    var s = 0.0
+    for x in xs: s += (x - m) * (x - m)
+    toValue(sqrt(s / float(xs.len - 1))))
+
+func extreme(values: seq[Value], largest: bool): Value =
+  result = null()
+  for v in values:
+    if v.isNull: continue
+    if result.isNull or (if largest: result < v else: v < result): result = v
+
+func min*(_: AggNs): Aggregate =
+  ## The smallest value (of numbers, or of texts).
+  Aggregate(name: "min", fn: proc (values: seq[Value]): Value = extreme(values, false))
+
+func max*(_: AggNs): Aggregate =
+  ## The largest value (of numbers, or of texts).
+  Aggregate(name: "max", fn: proc (values: seq[Value]): Value = extreme(values, true))
+
+func count*(_: AggNs): Aggregate =
+  ## How many values are not missing. Shown as an integer, whatever the column's format.
+  Aggregate(name: "count", fn: proc (values: seq[Value]): Value = toValue(values.len))
+
+proc aggregate*[P: proc](fn: P, name = ""): Aggregate =
+  ## An aggregate of your own, from a proc of the non-missing values to one value:
+  ## `aggregate(proc (vs: seq[Value]): Value = toValue(vs.len * 2))`, or a value that converts to
+  ## one (`proc (vs: seq[Value]): float`).
+  let f = fn
+  Aggregate(name: name, fn: proc (values: seq[Value]): Value = toValue(f(values)))
+
+proc toFormatFn*[P: proc](fn: P): FormatFn =
+  ## A format from a proc of a float (`(x: float) => formatNumber(x, 1)`), of a value
+  ## (`(v: Value) => $v`), both giving plain text, or a `FormatFn` as it is.
+  when P is FormatFn: fn
+  else:
+    let f = fn
+    proc (v: Value, ctx: RenderContext): string =
+      let s = when compiles(f(1.0)): (if v.isNumber: f(v.toFloat) else: $v)
+              else: f(v)
+      if ctx == rcHtml: escapeHtml(s) else: s
+
+proc addSummary(t: var Tabella, grand: bool, groups: openArray[string], columns: ColSel,
+                fns: openArray[(string, Aggregate)], fmt: FormatFn, side: Side, missingText: string) =
+  if fns.len == 0: raise newException(ValueError, "no aggregates in fns")
+  if side notin {sTop, sBottom}: raise newException(ValueError, "summary rows go at the top or the bottom")
+  if not grand:
+    if not t.hasGroups:
+      raise newException(ValueError, "summaryRows needs row groups (groupnameCol, tabRowGroup); " &
+        "for the whole table use grandSummaryRows")
+    for g in groups:
+      if g notin t.groupLabels: raise newException(KeyError, "no row group " & g.escape)
+  t.summaries.add SummaryRule(grand: grand, groups: @groups, columns: columns.resolve(t.data),
+    fns: @fns, top: side == sTop, fmt: fmt, missingText: missingText)
+
+proc summaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], groups: openArray[string] = [],
+                  columns: ColSel = numeric(), side = sBottom, missingText = "—"): Tabella =
+  ## Adds rows that sum up each row group (or the `groups` listed), one for each aggregate in
+  ## `fns`, labelled in the stub: `summaryRows(fns = {"total": agg.sum}, columns = "moons")`.
+  ## The summary rows go under the group, or above it with `side = sTop`. Each cell is
+  ## formatted like its column (its last format), `agg.count` as an integer; a cell with
+  ## nothing to sum up, and the columns not in `columns`, show `missingText`.
+  result = t
+  result.addSummary(false, groups, columns, fns, nil, side, missingText)
+
+proc summaryRows*[P: proc](t: sink Tabella, fns: openArray[(string, Aggregate)], fmt: P,
+                           groups: openArray[string] = [], columns: ColSel = numeric(),
+                           side = sBottom, missingText = "—"): Tabella =
+  ## Summary rows formatted by `fmt`, a proc of a float (`fmt = (x: float) => formatNumber(x, 1)`),
+  ## of a value, or a `FormatFn` (see `toFormatFn`).
+  result = t
+  result.addSummary(false, groups, columns, fns, toFormatFn(fmt), side, missingText)
+
+proc grandSummaryRows*(t: sink Tabella, fns: openArray[(string, Aggregate)], columns: ColSel = numeric(),
+                       side = sBottom, missingText = "—"): Tabella =
+  ## Adds rows that sum up the whole table, every row of every group, one for each aggregate in
+  ## `fns`: at the bottom of the table, or at the top with `side = sTop`. Formatted as
+  ## `summaryRows`.
+  result = t
+  result.addSummary(true, [], columns, fns, nil, side, missingText)
+
+proc grandSummaryRows*[P: proc](t: sink Tabella, fns: openArray[(string, Aggregate)], fmt: P,
+                                columns: ColSel = numeric(), side = sBottom, missingText = "—"): Tabella =
+  ## Grand summary rows formatted by `fmt` (see `summaryRows`).
+  result = t
+  result.addSummary(true, [], columns, fns, toFormatFn(fmt), side, missingText)
+
 # ---------------------------------------------------------------------------------- dataColor
 
 proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
@@ -544,6 +692,10 @@ proc optCssTheme*(t: sink Tabella, theme: CssTheme): Tabella =
   result.options.rowGroupBackgroundColor = shade
   result.options.rowGroupBorderColor = ink
   result.options.rowStripingBackgroundColor = shade
+  result.options.summaryRowBorderColor = ink
+  result.options.summaryRowBorderWidth = "1px"
+  result.options.grandSummaryRowBorderColor = ink
+  result.options.grandSummaryRowBorderWidth = "4px"
 
 proc optCssTheme*(t: sink Tabella, ink = "--ink", paper = "--paper", line = "--line",
                   shade = "--shade", primary = "--primary", font = "--font"): Tabella =

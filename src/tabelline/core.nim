@@ -393,14 +393,18 @@ type
 
   LocKind* = enum
     lkTitle, lkSubtitle, lkStubhead, lkSpanners, lkColumnLabels, lkStub, lkRowGroups, lkBody,
-    lkFootnotes, lkSourceNotes, lkHeader, lkColumnHeader, lkFooter
+    lkFootnotes, lkSourceNotes, lkHeader, lkColumnHeader, lkFooter,
+    lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub
 
   Target* = object
     ## A resolved location: `cells` for the body and the stub (row, column), `names` for
-    ## column labels, spanners and row groups.
+    ## column labels, spanners and row groups. For summary rows, `names` are the groups, `labels`
+    ## the labels of the summary rows (empty: all of them) and `columns` the columns.
     kind*: LocKind
     cells*: seq[(int, string)]
     names*: seq[string]
+    labels*: seq[string]
+    columns*: seq[string]
 
   Loc* = object
     ## An unresolved location, from the `loc` namespace: `loc.body(cols = "mass", rows = [0])`.
@@ -408,6 +412,7 @@ type
     cols*: ColSel
     rows*: RowSel
     names*: seq[string]
+    labels*: seq[string]   ## summary rows, by label
 
   StyleRule* = object
     target*: Target
@@ -421,6 +426,25 @@ type
     ## A proc over the shown text of the cells at a location (`textTransform`).
     target*: Target
     fn*: proc (s: string): string
+
+  Aggregate* = object
+    ## How a summary row sums up a column: a proc from the column's non-missing values (of the
+    ## group, or of the whole table) to one value. Built in: `agg.sum`, `agg.mean`, `agg.median`,
+    ## `agg.min`, `agg.max`, `agg.count`, `agg.sd`; any proc with `aggregate(myProc)`.
+    name*: string          ## "sum", "count", ... ("" for a proc of your own)
+    fn*: proc (values: seq[Value]): Value
+
+  AggNs* = object ## the `agg` namespace: `agg.sum`, `agg.mean`, ...
+
+  SummaryRule* = object
+    ## Summary rows added by `summaryRows` (for some groups) or `grandSummaryRows` (`grand`).
+    grand*: bool
+    groups*: seq[string]       ## the groups summarised (empty: all of them)
+    columns*: seq[string]      ## the columns summarised; the others show `missingText`
+    fns*: seq[(string, Aggregate)]   ## (label, aggregate): one row each
+    top*: bool                 ## above the group (or the table) instead of below
+    fmt*: FormatFn             ## nil: the column's format
+    missingText*: string
 
   FootnoteMarks* = enum
     fmNumbers, fmLetters, fmCapitals, fmStandard, fmExtended
@@ -475,6 +499,20 @@ type
     tableBodyHlinesColor* = "#D3D3D3"
     rowStriping* = false
     rowStripingBackgroundColor* = "rgba(128,128,128,0.05)"
+    summaryRowBackgroundColor* = ""     ## "" for the table's background
+    summaryRowTextTransform* = "inherit"
+    summaryRowPadding* = "8px"
+    summaryRowPaddingHorizontal* = "5px"
+    summaryRowBorderStyle* = "solid"
+    summaryRowBorderWidth* = "2px"
+    summaryRowBorderColor* = "#D3D3D3"
+    grandSummaryRowBackgroundColor* = ""
+    grandSummaryRowTextTransform* = "inherit"
+    grandSummaryRowPadding* = "8px"
+    grandSummaryRowPaddingHorizontal* = "5px"
+    grandSummaryRowBorderStyle* = "double"
+    grandSummaryRowBorderWidth* = "6px"
+    grandSummaryRowBorderColor* = "#D3D3D3"
     footnotesFontSize* = "90%"
     footnotesMarks* = fmNumbers
     footnotesMarksCustom*: seq[string]  ## marks of your own; when set, `footnotesMarks` is ignored
@@ -503,6 +541,7 @@ type
     transforms*: seq[TransformRule]
     footnotes*: seq[Footnote]
     sourceNotes*: seq[Text]
+    summaries*: seq[SummaryRule]
     options*: TabOptions
     locale*: string
     id*: string
@@ -516,5 +555,9 @@ func visibleData*(t: Tabella): seq[ColInfo] =
   ## The data columns shown in the body, in display order (not the stub, groups or hidden ones).
   t.boxhead.filterIt(it.role == crData and not it.hidden)
 
-func hasStub*(t: Tabella): bool = t.rownameCol.len > 0
+func hasSummaries*(t: Tabella): bool = t.summaries.len > 0
+func hasStub*(t: Tabella): bool = t.rownameCol.len > 0 or t.hasSummaries
+  ## A stub is shown for the row names, and for the labels of summary rows (as in gt, a table
+  ## with summary rows and no row names gets an empty stub).
+func hasRowNames*(t: Tabella): bool = t.rownameCol.len > 0
 func hasGroups*(t: Tabella): bool = t.groupLabels.len > 0
