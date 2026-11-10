@@ -181,15 +181,15 @@ for (module, title, intro) in order:
     for s in syms:
       var links: seq[ApiLink]
       let sn = snake(s.name)
-      if sn in gtNames and s.kind in ["proc", "func", "template", "macro"]:
+      if s.name in ownNames:
+        links.add ApiLink(label: "tabelline's own:", text: "Not from gt", href: "../coverage/#not-from-gt")
+      elif sn in gtNames and s.kind in ["proc", "func", "template", "macro"]:
         let w = gtNames[sn]
-        if w == "Py":
+        if w.startsWith("Py"):
           links.add ApiLink(label: "Great Tables", text: &"`GT.{sn}()`",
                             href: &"https://posit-dev.github.io/great-tables/reference/GT.{sn}.html")
         else:
           links.add ApiLink(label: "gt", text: &"`{sn}()`", href: &"https://gt.rstudio.com/reference/{sn}.html")
-      elif s.name in ownNames:
-        links.add ApiLink(label: "tabelline's own:", text: "Not from gt", href: "../coverage/#not-from-gt")
       links.add ApiLink(label: "source", text: &"`{m.path.lastPathPart}:{s.lines[0]}`",
                         href: &"{repoUrl}/blob/main/{m.path}#L{s.lines[0]}")
       var exCode, exHtml = ""
