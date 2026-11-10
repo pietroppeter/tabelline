@@ -3,15 +3,15 @@
 import std/[os, json, strutils, math, sequtils, strformat]
 import nimib except md
 import tabelline, tabelline/[nimib, build]
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "tabellone" / "index.html"
-nb.useTabelline(nome = "tabelline",
+nb.useTabelline(name = "tabelline",
                title = "Tabellone: when a table becomes a grid", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-nbTitolo "7 November 2026 · research", "Tabellone: when a table becomes a grid", """
+nbTitle "7 November 2026 · research", "Tabellone: when a table becomes a grid", """
 gt and Great Tables make tables to read; dashboards need grids to explore. What a grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.
 """
 nbText: """

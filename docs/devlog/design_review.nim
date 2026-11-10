@@ -5,12 +5,12 @@
 import std/[os, strutils, strformat, sequtils, math, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "design-review" / "index.html"
-nb.useTabelline(nome = "tabelline",
+nb.useTabelline(name = "tabelline",
                title = "Reviewing the design: a palette by roles", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
 # ---------------------------------------------------------------------------------- colour maths
@@ -147,7 +147,7 @@ html[data-tema="quaderno"] {{ {css(quadernoTokens)} }}
 .p-table .bar {{ display: inline-block; height: .6rem; background: var(--secondary); vertical-align: middle; }}
 </style>"""
 
-nbTitolo "8 November 2026", "Reviewing the design: a palette by roles", """
+nbTitle "8 November 2026", "Reviewing the design: a palette by roles", """
 The pages of tabelline grew faster than their palette. Six colours named after Munari's shapes still paint everything, but which colour a new element should take is decided case by case, the yellow that should only warn does five other jobs, and galleries are copied from post to post. This post looks at what we have, proposes a palette by roles (neutral, primary, secondary, status and data) for both looks, maps every component to it, and lists the choices to make. What is chosen becomes the new Design Ref.
 """
 nbText: """
@@ -155,7 +155,7 @@ Everything below that shows a colour uses the proposed tokens, live, in the look
 of the page: switch it to see the quaderno's version. The contrast numbers are computed when the
 page is built, from the fixed values of the two looks.
 """
-nbIndice
+nbToc
 
 # ------------------------------------------------------------------------------------- part 1
 nbText: """

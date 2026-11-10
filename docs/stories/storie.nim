@@ -6,7 +6,7 @@
 import std/[os, strutils, algorithm, options, sequtils, parsecsv, streams]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../blocchi, ../olimpiadi, ../piano
+import ../blocks, ../olimpiadi, ../piano
 
 type Story* = object
   slug*, release*, title*, lede*: string
@@ -84,11 +84,11 @@ proc next*(): string =
 template nbStorie*(base: string) =
   ## The gallery of the stories: one card for each, linked (`base` is the path to docs/stories/
   ## from the page), and a last card for the stories to come.
-  nbGalleria "the stories, in release order":
+  nbGallery "the stories, in release order":
     for s in stories():
-      nbScheda("[" & s.title & "](" & base & s.slug & "/)", "tabelline " & s.release):
+      nbGalleryCard("[" & s.title & "](" & base & s.slug & "/)", "tabelline " & s.release):
         nbText s.lede
         let t = preview(s.slug)
         if t.isSome: nbTable t.get
-    nbScheda("More stories will come", "next"):
+    nbGalleryCard("More stories will come", "next"):
       nbText "One for every release, on real data. Next: " & next() & "."

@@ -5,13 +5,13 @@
 import std/[os, json, strutils, strformat, sequtils, tables]
 import nimib except md
 import tabelline, tabelline/nimib
-import blocchi
+import blocks
 
 let docs = currentSourcePath().parentDir
 let data = parseFile(docs / "coverage" / "gt.json")
 nbInit
 nb.doc.filename = docs / "coverage" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Feature map", classe = "kept up to date",
+nb.useTabelline(name = "tabelline", subject = "Feature map", class = "kept up to date",
                title = "tabelline and gt: feature map", homeHref = "../",
                description = "Every feature group of gt and Great Tables, what tabelline has, and the plan for the rest.")
 
@@ -29,7 +29,7 @@ for a in data["areas"]:
 let total = items.len
 func count(xs: seq[Item], s: string): int = xs.countIt(it.status == s)
 
-nbTitolo &"""Feature map · updated {data["updated"].getStr}""", "tabelline and gt: the feature map", &"""
+nbTitle &"""Feature map · updated {data["updated"].getStr}""", "tabelline and gt: the feature map", &"""
 Every feature group of gt and Great Tables, whether tabelline has it, and the release that plans the rest.
 """
 nbText: &"""
@@ -43,7 +43,7 @@ tabelline uses the same names in camelCase (`fmt_number` is `fmtNumber`).
 The data is [docs/coverage/gt.json](https://github.com/pietroppeter/tabelline/blob/main/docs/coverage/gt.json),
 compared with {data["gt"].getStr}.
 """
-nbIndice
+nbToc
 
 nbText: "## By area"
 

@@ -3,15 +3,15 @@
 import std/[os, strutils, strformat, sequtils]
 import nimib except md
 import tabelline, tabelline/[nimib, datasets]
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "designing-0-1" / "index.html"
-nb.useTabelline(nome = "tabelline",
+nb.useTabelline(name = "tabelline",
                title = "Designing tabelline 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
 
-nbTitolo "7 November 2026", "Designing tabelline 0.1", """
+nbTitle "7 November 2026", "Designing tabelline 0.1", """
 tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it is built.
 """
 nbText: """
@@ -21,7 +21,7 @@ changes what it looks like, each idea only after the ones it needs. Every step i
 smallest example that shows it.
 """
 
-nbIndice()
+nbToc()
 
 nbText: """
 ## 0.1 from zero
@@ -59,18 +59,18 @@ every table is made by the code above it.
 """
 
 
-let galleriaPassi = newNbGalleria(label = "0.1 step by step: swipe or scroll sideways")
+let galleriaPassi = newNbGallery(label = "0.1 step by step: swipe or scroll sideways")
 
 template scheda(passo, titolo, abilita: string, body: untyped) =
   ## A card of the gallery: one step, what it lets you do, and the blocks `body` adds.
   ## Tables that follow each other sit side by side.
   nb.withContainer(galleriaPassi):
-    let card = newNbScheda(title = titolo, label = passo)
+    let card = newNbGalleryCard(title = titolo, label = passo)
     nb.withContainer(card):
       nbText abilita
       block:
         body
-    accosta(card)
+    placeBeside(card)
     nb.add card
 
 let pianeti {.used.} = tableData:
@@ -475,12 +475,12 @@ And one card for each: the same thing written in R, in Python and in tabelline, 
 tabelline chose what it did. Swipe sideways.
 """
 
-let galleriaScelte = newNbGalleria(label = "eight choices: swipe or scroll sideways")
+let galleriaScelte = newNbGallery(label = "eight choices: swipe or scroll sideways")
 
 template scelta(titolo, domanda: string, body: untyped) =
   ## A card of the second gallery: one choice, the code in three languages and the verdict.
   nb.withContainer(galleriaScelte):
-    let card = newNbScheda(title = titolo)
+    let card = newNbGalleryCard(title = titolo)
     nb.withContainer(card):
       nbText domanda
       body
@@ -722,12 +722,12 @@ The rest is Nim as it is. Eight things, one card each, with code that runs and w
 Swipe sideways.
 """
 
-let galleriaZucchero = newNbGalleria(label = "Nim sugar: swipe or scroll sideways")
+let galleriaZucchero = newNbGallery(label = "Nim sugar: swipe or scroll sideways")
 
 template zucchero(titolo, cosa: string, body: untyped) =
   ## A card of the third gallery: one piece of Nim sugar, code that runs and what it makes.
   nb.withContainer(galleriaZucchero):
-    let card = newNbScheda(title = titolo)
+    let card = newNbGalleryCard(title = titolo)
     nb.withContainer(card):
       nbText cosa
       block:
@@ -872,7 +872,7 @@ at one hundred, and how `fmtIndex` showed that 42 is "PP" in gt's way of countin
 spreadsheet's (`indexAlgo = "excel"`).
 """
 
-nbNota("""
+nbNote("""
 **Still to do in this thread.** Open the release PR, which moves these lines of the changelog
 under 0.1.0, and tag `v0.1.0` when Pietro says *vai*. The other two threads of 0.1 use the
 release on a month of work and port the first references to the tabelline book.

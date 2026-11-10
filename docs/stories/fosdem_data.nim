@@ -7,14 +7,14 @@
 import std/[os, strutils, sequtils, tables, sets, parsecsv, streams, times, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 let fosdem = docs / "stories" / "data" / "fosdem"
 let process = readFile(fosdem / "src" / "process.nim")
 nbInit
 nb.doc.filename = docs / "stories" / "fosdem-data" / "index.html"
-nb.useTabelline(nome = "tabelline",
+nb.useTabelline(name = "tabelline",
                 title = "FOSDEM's data, made with nanuq", homeHref = "../", backLabel = "Stories", nameHref = "../../")
 
 type Row = Table[string, string]
@@ -44,7 +44,7 @@ var data: Table[string, seq[Row]]
 for n in names: data[n] = load(fosdem / n & ".csv")
 let ev = data["events"]
 
-nbTitolo "A story · tabelline 0.1", "FOSDEM's data, made with nanuq", """
+nbTitle "A story · tabelline 0.1", "FOSDEM's data, made with nanuq", """
 Twenty-six years of FOSDEM schedules, from five kinds of web page to ten tidy tables, cleaned,
 joined and counted with nanuq, Polars for Nim, in under a second.
 """
@@ -59,13 +59,13 @@ the story comes out of about 750 lines of nanuq, which run in less than a second
 same files, byte for byte, every time.
 """
 
-nbNota("""
+nbNote("""
 Green cards like this one are about how the page is made. This story does not use nanuq: it
 reads the CSV files nanuq wrote with Nim's standard library, and quotes the nanuq code from
 `src/process.nim` as it is.
 """, nkCode, "Reading the code")
 
-nbIndice()
+nbToc()
 
 nbText: """
 ## One expression to start
@@ -286,7 +286,7 @@ nbShowCode:
     colsLabel {"what": "", "how": ""}
   nbTable t
 
-nbNota("""
+nbNote("""
 None of the pinches stopped the work, and each has a workaround in `process.nim`. The last one
 is the only one that could have gone unnoticed: Polars does not keep the row order of a join
 unless asked, so numbering rows after a join gave different ids on different runs. Numbering

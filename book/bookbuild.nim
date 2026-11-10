@@ -29,7 +29,7 @@ import std/[os, osproc, json, strutils, sequtils, tables, sets, strformat, times
 import std/sha1
 {.warning[Deprecated]: on.}
 import tabbook  # the theme of the pages
-import ../docs/stile  # the palette: the tokens of tabelline's pages, in the Edo values
+import ../docs/theme  # the palette: the tokens of tabelline's pages, in the Edo values
 import nimibook/commands
 
 const recordVersion = 1
