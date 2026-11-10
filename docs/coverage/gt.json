@@ -15,23 +15,13 @@
   },
   {
    "version": "0.2",
-   "title": "Rows and merges",
-   "plan": "Summary rows, merged columns, rows added, hidden and ordered, decimal alignment, more options."
+   "title": "Rows, every format, pictures",
+   "plan": "Summary rows, merged columns, rows added and hidden, decimal alignment; units, fractions and every CLDR locale; icons, images and nanoplots; more options. It took in the first plan's 0.3 and 0.4."
   },
   {
    "version": "0.3",
-   "title": "Every format, every locale",
-   "plan": "Units, fractions, dates and currencies in many languages (CLDR), interop with data frames."
-  },
-  {
-   "version": "0.4",
-   "title": "Pictures in cells",
-   "plan": "Images, icons and nanoplots, all inlined."
-  },
-  {
-   "version": "0.5",
    "title": "Out of the browser",
-   "plan": "LaTeX, RTF and Word, images and PDF, groups of tables."
+   "plan": "LaTeX, RTF and Word, images and PDF, groups of tables; tables from data frames."
   }
  ],
  "areas": [
@@ -59,7 +49,7 @@
      "gt": "gt_group(), gt_split(), grp_*()",
      "status": "missing",
      "note": "Several tables that share options; a long table split in parts.",
-     "plan": "0.5",
+     "plan": "0.3",
      "size": "M",
      "where": "R"
     },
@@ -312,7 +302,7 @@
      "feature": "Country names",
      "gt": "fmt_country()",
      "status": "done",
-     "note": "fmtCountry: English names from Unicode CLDR 49 (two- and three-letter codes); other languages with the locales.",
+     "note": "fmtCountry: English names from Unicode CLDR 49 (two- and three-letter codes); not yet in other languages.",
      "plan": "0.2",
      "size": "S",
      "where": "R"
@@ -658,7 +648,7 @@
      "gt": "gtsave()",
      "status": "missing",
      "note": "Needs a browser to draw; maybe through Playwright, outside the core.",
-     "plan": "0.5",
+     "plan": "0.3",
      "size": "M"
     },
     {
@@ -666,7 +656,7 @@
      "gt": "as_latex()",
      "status": "missing",
      "note": "",
-     "plan": "0.5",
+     "plan": "0.3",
      "size": "L"
     },
     {
@@ -674,7 +664,7 @@
      "gt": "as_rtf(), as_word()",
      "status": "missing",
      "note": "For clinical reports.",
-     "plan": "0.5",
+     "plan": "0.3",
      "size": "L",
      "where": "R"
     },

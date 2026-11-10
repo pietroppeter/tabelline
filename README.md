@@ -99,12 +99,12 @@ tabelline changes; dated posts are in the devlog.
 
 **Where it's going**
 
-3. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.5
-   adds and the real tables it is tried on, with the three threads of each (build it, use it,
-   port the references), from `docs/piano.nim`.
-4. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+3. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
    and Great Tables, whether tabelline has it, and the release that plans the rest (data in
    `docs/coverage/gt.json`).
+4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.3
+   adds and the real tables it is tried on, with the threads of each (build it, use it, port the
+   references), from `docs/piano.nim`.
 
 **How it's made**
 
