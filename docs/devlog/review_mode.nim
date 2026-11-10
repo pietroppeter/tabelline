@@ -129,9 +129,11 @@ nbGallery "The screens of the review mode":
     nbScreenshot shots / "history-v9.jpg", shots / "history-v9.json", "The versions of the page, and the comments kept on each"
     nbText """
 1. **A version** with comments in this browser, this one first, then the others, newest first.
-2. **Clear** deletes the comments of that version (a second tap confirms).
-3. **Clear everything** deletes every comment of the review mode in this browser.
-4. **Export** goes back to the export.
+2. **Bring here** moves the comments of an older version to this one, those whose words this
+   version still has; **Export** exports them, with the commit they were written on.
+3. **Clear** deletes the comments of that version (a second tap confirms).
+4. **Export everything** exports the comments of every version, each saying where it is from;
+   **Export** goes back to the export.
 """
 
 nbText: """

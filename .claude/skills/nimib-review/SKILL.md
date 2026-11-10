@@ -1,6 +1,6 @@
 ---
 name: nimib-review
-description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/4`), to apply each comment to the page's source and close the review round.
+description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/5`), to apply each comment to the page's source and close the review round.
 metadata:
   status: draft
 ---
@@ -21,7 +21,7 @@ text into changes.
   built from uncommitted changes; 7 hex characters: built outside git). Check that the
   count matches the `## n.` sections: a long paste can arrive cut short, and the count is how you
   notice. If it does not match, say so.
-- Each section is `## n. Where` in `nimib-review/3` and `/4`: `In “Heading” (#id)`, `At the top`, or
+- Each section is `## n. Where` in `nimib-review/3` to `/5`: `In “Heading” (#id)`, `At the top`, or
   `On the whole page` (no quote: the note is about the page as a whole). Every comment is a note;
   a replacement is said in it, as `Replace with: ...`, or `Remove`. Do what the note asks.
 - In `/1` and `/2` the section is `## n. Kind, where`:
@@ -30,7 +30,10 @@ text into changes.
     says why.
   - `Remove` (`Cut` in exports of version 3 and before): remove the quoted text and mend the
     sentence around it.
-  A `/3` or `/4` export may still hold one of these, from a comment written on an older version.
+  A `/3` to `/5` export may still hold one of these, from a comment written on an older version.
+- `From version 7 (commit a1b2c3d).` under a heading (`/5`): the comment was written on an older
+  version than the export's, and kept in the browser (History's **Export** or **Export
+  everything**). Check it before you apply it: see step 2.
 - `> quote` is the exact text the reader selected, as the page shows it, whitespace collapsed.
   `Around it: “…before ⟦quote⟧ after…”` gives the words around it, to tell apart a quote found
   more than once. `(#id)` is the anchor of the heading the quote is under.
@@ -49,6 +52,20 @@ text into changes.
 When the export has a `commit`, first see what changed in the source since it was read:
 `git log --oneline <commit>..HEAD -- <source>` and `git diff <commit> -- <source>`. A comment
 on text that changed since may already be done, or need reading again.
+
+A comment from an older version (`From version N`, or an export whose `version` is older than
+the page's) needs checking before it is applied, because the page moved on since:
+
+- Diff from the comment's own commit when it has one (`git diff <its commit> -- <source>`),
+  else from the export's, else find the version's commit: the version is the number of commits
+  that changed the source, so `git log --reverse --format=%h -- <source> | sed -n <N>p`.
+- Still valid: the quote is still on the page and the note still asks for something not done.
+  Apply it.
+- Already done: the diff made the change it asks for. Say so, and change nothing.
+- Moot: the text it is about is gone or rewritten (`(Not found on the page any more.)`, or the
+  diff removed it). Say what became of that text, and ask only if the note still points to
+  something worth doing.
+- In the reply, list the older comments apart, each as valid (applied), already done or moot.
 
 The quote is rendered text, not source. Search the notebook for it, and expect:
 

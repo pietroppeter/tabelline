@@ -106,7 +106,7 @@ working rules that are easy to miss.
   under its lede, with **✎ Review** beside it (`nbVersion()` moves the line); the version is
   the number of commits that changed the page's source, so CI checks out the whole history. In
   the review mode a reader selects text, comments, and exports the comments as Markdown with a
-  block of YAML (`format: nimib-review/4`, with the `commit`; `/3` had no commit, `/2` had kinds,
+  block of YAML (`format: nimib-review/5`, where a comment kept from an older version says so; `/4` added the `commit`, `/3` had no commit, `/2` had kinds,
   `/1` a front matter). When such an export is pasted in the chat, follow the skill
   `.claude/skills/nimib-review/`. The devlog post `review_mode` records its rounds in
   `docs/devlog/review_mode/storia.nim`.
