@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Every page of the docs has the review mode, turned on by `useTabelline`; a page's version comes from git (the commits that changed its source), shown as *Version N · updated D* beside **✎ Review**, and the export (`nimib-review/4`) names its commit. The post Review mode is one notebook again; its versions 1 to 8 are in git (#PR).
+- Every page of the docs has the review mode, turned on by `useTabelline`; a page's version comes from git (the commits that changed its source), shown as *Version N · updated D* beside **✎ Review**, and the export (`nimib-review/4`) names its commit. The post Review mode is one notebook again; its versions 1 to 8 are in git (#58).
 - The pages of the docs share their style, fonts and the review script as files in `docs/assets/` (the home page goes from 250 KB to 50 KB); `-d:singleFile` builds a page as one file; `tools/preview.nim` replaces `preview.py` (#55).
 - Notebooks `import nimib` whole: nimib removed its old `md` (pietroppeter/nimib#268), so tabelline's `md()` no longer clashes with it; nimib is pinned to that commit until 0.5.0 is tagged. `tools/links.nim` checks links to this repository's own files in the checkout (#50).
 
