@@ -287,6 +287,12 @@ details.codice > summary::-webkit-details-marker { display: none; }
 details.codice > summary::before { content: "+ show code"; }
 details.codice[open] > summary::before { content: "− hide code"; }
 details.codice pre { margin: .4rem 0 0; }
+details.piega { margin: .3rem 0; border-top: 1px solid var(--line); }
+details.piega:last-of-type { border-bottom: 1px solid var(--line); }
+details.piega > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: .5rem; font-weight: 700; }
+details.piega > summary::marker { color: var(--muted); }
+details.piega pre { margin: 0 0 .8rem; }
+body details.piega pre > code { font-size: 12.5px; }
 body details.codice pre > code { font-size: 12.5px; }
 
 /* the parts of a table (nbParti): a switch between the data and its parts, and their legend */
@@ -529,7 +535,16 @@ func tintaMix*(token: string, share: int, other = "--paper"): string =
 # ----------------------------------------------------------------------------------- review mode
 
 const revisioneRules = """
-/* the review mode (blocchi.nim, nbRevisione): marks on the text, a bar at the bottom, sheets */
+/* the review mode (blocchi.nim, nbRevisione): a Review button, then marks on the text, a bar at
+   the bottom, the comment's sheet at the top, export and history */
+.rv-solo { display: none; }
+body.rv-on .rv-solo { display: block; }
+.rv-bar[hidden], .rv-panel[hidden] { display: none; }
+.rv-entra { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; margin: .8rem 0 1.4rem; color: var(--muted); font-size: .92rem; }
+.rv-entra .versione { font-weight: 700; color: var(--ink); }
+.rv-toggle { font: inherit; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 0;
+  min-height: 44px; padding: 0 .8rem; cursor: pointer; }
+.rv-toggle[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 -3px 0 var(--secondary); }
 body.rv-on { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)); }
 mark.rv-mark { background: var(--secondary-soft); color: inherit; box-shadow: 0 2px 0 var(--secondary); cursor: pointer; }
 mark.rv-mark.rv-current { background: var(--secondary); }
@@ -538,6 +553,8 @@ mark.rv-mark.rv-current { background: var(--secondary); }
   background: var(--surface); border-top: 3px solid var(--ink); font: 400 15px/1.2 var(--font); }
 .rv-bar button, .rv-sheet button { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line);
   border-radius: 0; min-height: 44px; min-width: 44px; padding: 0 .7rem; cursor: pointer; white-space: nowrap; }
+.rv-bar button { padding: 0 .55rem; }
+.rv-bar button[data-do="delete"] { color: var(--primary-text); }
 .rv-bar button:disabled { color: var(--muted); border-color: var(--shade); cursor: default; }
 .rv-bar button[data-do="prev"], .rv-bar button[data-do="next"] { font-size: 1.4rem; padding: 0; }
 .rv-bar .rv-count { min-width: 3.2rem; text-align: center; color: var(--muted); font-size: .85rem; }
@@ -552,24 +569,33 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, tran
   background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
 .rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
 .rv-sheet .rv-actions { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
-.rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
-/* the comment sheet: small, from the top, so the marked words stay in view under it */
+.rv-sheet .rv-left { margin-right: auto; }
+.rv-sheet .rv-danger { color: var(--primary-text); }
+/* the comment's sheet: at the top, small, not modal: the bar and the page stay in reach */
+.rv-panel { position: fixed; top: 0; left: 0; right: 0; z-index: 60; max-width: 40rem; margin: 0 auto;
+  padding: .5rem max(.6rem, env(safe-area-inset-right, 0px)) .6rem max(.6rem, env(safe-area-inset-left, 0px));
+  background: var(--surface); border-bottom: 3px solid var(--ink); color: var(--ink); font: 400 16px/1.45 var(--font);
+  animation: rv-down .2s ease-out; }
+.rv-panel .rv-whole { margin: 0 0 .3rem; color: var(--muted); font-size: .85rem; }
+.rv-panel .rv-note { margin: 0; }
+.rv-panel .rv-thumbs { margin-top: .45rem; }
+.rv-panel button { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
+/* history: one line per version */
+.rv-versions { list-style: none; margin: 0 0 .8rem; padding: 0; }
+.rv-versions li { display: flex; align-items: center; gap: .5rem; min-height: 48px; border-bottom: 1px solid var(--shade); }
+.rv-versions a { color: var(--ink); }
+.rv-versions .rv-date { flex: 1; color: var(--muted); font-size: .9rem; }
+.rv-versions .rv-n { font-size: .85rem; }
+/* a screenshot, as large as the screen allows */
+dialog.rv-zoom { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; margin: 0; padding: 0; border: 0; background: transparent; }
+dialog.rv-zoom[open] { display: flex; align-items: center; justify-content: center; }
+dialog.rv-zoom::backdrop { background: color-mix(in oklab, var(--ink) 88%, transparent); }
+dialog.rv-zoom img { max-width: 100%; max-height: 100%; object-fit: contain; }
+dialog.rv-zoom button { position: fixed; top: max(.5rem, env(safe-area-inset-top, 0px)); right: .5rem; min-width: 44px; min-height: 44px;
+  font-size: 1.5rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 0; }
+.rv-thumb img, .rv-shot img { cursor: zoom-in; }
 dialog.rv-sheet[open] { animation: rv-down .2s ease-out; }
 @keyframes rv-down { from { transform: translateY(-100%); } }
-dialog.rv-sheet.rv-compact { padding: .5rem max(.6rem, env(safe-area-inset-right, 0px)) .6rem max(.6rem, env(safe-area-inset-left, 0px)); }
-dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, transparent); }
-.rv-row { display: flex; align-items: center; gap: .35rem; margin-bottom: .45rem; }
-.rv-row > button[value="cancel"] { font-size: 1.5rem; padding: 0; }
-.rv-kinds, .rv-whole { flex: 1; display: flex; justify-content: center; }
-.rv-whole { color: var(--muted); font-size: .9rem; }
-.rv-sheet .rv-kinds label { display: inline-flex; margin: 0; }
-.rv-kinds input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.rv-kinds span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .55rem; font-size: .92rem;
-  border: 1px solid var(--line); margin-left: -1px; cursor: pointer; }
-.rv-kinds input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.rv-kinds input:focus-visible + span { outline: 2px solid var(--secondary); }
-.rv-sheet textarea, .rv-note { margin: 0 0 .45rem; }
-.rv-compact .rv-row .rv-delete { margin: 0; font-size: .92rem; padding: 0 .55rem; color: var(--primary-text); }
 /* the note: an editable box, so a phone offers to paste a screenshot in it */
 .rv-note { min-height: 3.2rem; max-height: 9rem; overflow-y: auto; padding: .5rem; font: 16px/1.4 var(--font);
   background: var(--paper); border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -584,6 +610,12 @@ dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, tr
 .rv-shot { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--muted); }
 .rv-shot img { height: 2.75rem; width: auto; border: 1px solid var(--line); }
 .rv-shot span { flex: 1; overflow-wrap: anywhere; }
+/* a drawing (nbDisegno): a Pele diagram in the page's colours */
+.disegno { margin: 1.4rem 0; }
+.disegno svg { display: block; max-width: 100%; height: auto; margin: 0 auto; --pele-bg: var(--paper); --pele-fg: var(--ink);
+  --pele-muted: var(--muted); --pele-line: var(--ink); --pele-border: var(--ink); --pele-surface: var(--surface);
+  --pele-surface-alt: var(--neutral-1); --pele-accent: var(--secondary); }
+.disegno figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
 /* the versions of a page (nbVersioni) */
 .versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
 .versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }

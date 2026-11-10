@@ -55,7 +55,7 @@ working rules that are easy to miss.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  `nbParte`, `nbDisegno`, `nbPiega`). In a page that tells a story with tables (an explainer, a use-it post), what is
   about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
   with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
@@ -93,9 +93,10 @@ working rules that are easy to miss.
 - The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
-- Review mode: a page that calls `nbRevisione` (after `useTabelline`) lets a reader select text,
-  comment, and export the comments as Markdown with a block of YAML (`format:
-  nimib-review/2`; `/1` had a front matter). When such an export is pasted in the chat, follow the skill
+- Review mode: a page that calls `nbRevisione` (after `useTabelline`) has a **✎ Review** button
+  (beside `nbVersione`'s line, or under the title); in the review mode a reader selects text,
+  comments, and exports the comments as Markdown with a block of YAML (`format:
+  nimib-review/3`; `/2` had kinds, `/1` a front matter). When such an export is pasted in the chat, follow the skill
   `.claude/skills/nimib-review/`. The devlog post `review_mode` keeps one notebook per version in
   `docs/devlog/review_mode/` and is updated round by round while the experiment runs.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`

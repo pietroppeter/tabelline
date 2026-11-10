@@ -52,7 +52,21 @@ const storico* = [
   Versione(date: "9 Nov 2026", time: "16:04", what: "Every heading of the site has an arrow back to the contents; " &
              "the problem says who makes the pages (coding agents, Claude Code from a phone); the table of " &
              "versions gives the day and time of the first of each day, then how long after the one before.",
-           review: "Waiting for the sixth round.", comments: 0),
+           review: "[Round 6](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-6.md): " &
+             "no kinds, a replacement is said in the note; rethink the post from scratch, with a diagram " &
+             "of the modes and the stories the review mode serves; a Review button that opens and " &
+             "closes the mode, and no review UI without it; a sheet with no buttons that saves by " &
+             "itself; screenshots that open large; History instead of Clear all; Share opens a new " &
+             "session, outside the project; *How it is built* from zero, starting from nimib.",
+           comments: 27),
+  Versione(date: "10 Nov 2026", time: "05:30", what: "Round 6: reading is the default, and a **Review** button " &
+             "beside the version opens and closes the review mode; outside it, no bar and no marks; " &
+             "no kinds: a replacement is written in the note; the comment the arrows stop on is open " &
+             "in a sheet with no buttons, which saves as you type; a screenshot opens large with a tap; " &
+             "**History** lists the versions and clears their comments; no **Share**, since it opens " &
+             "a new session; the post rethought from scratch, with a diagram of the modes and the " &
+             "stories they serve; *How it is built* starts from nimib.",
+           review: "Waiting for the seventh round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =
