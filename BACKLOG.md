@@ -9,7 +9,6 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Parts
 
-- **Summary rows** (M, *in progress*: `add-summary-rows`). `summaryRows`, `grandSummaryRows`.
 - **Column merges** (M, *in progress*: `add-rows-and-columns`). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
   (value ± error), `colsMergeRange`, `colsMergeNPct`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
