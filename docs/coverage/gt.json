@@ -1,11 +1,11 @@
 {
  "title": "gt coverage",
- "updated": "2026-11-07",
+ "updated": "2026-11-10",
  "gt": "gt 1.4 (R) and Great Tables 0.17 (Python), by their reference indexes",
  "release": {
   "version": "0.1.0",
-  "tag": "v0.1.0 (to be tagged)",
-  "date": "2026-11-07"
+  "tag": "v0.1.0",
+  "date": "2026-11-10"
  },
  "plans": [
   {
@@ -596,7 +596,7 @@
      "feature": "Presets",
      "gt": "opt_stylize(), opt_row_striping(), opt_align_table_header(), opt_all_caps(), opt_table_font()",
      "status": "done",
-     "note": "Plus optQuaderno, tabelline's own."
+     "note": "Plus optCssTheme and optCss, tabelline's own: a table that follows the page's CSS."
     },
     {
      "feature": "Padding, outline, lines",
