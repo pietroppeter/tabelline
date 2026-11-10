@@ -49,10 +49,37 @@ const storico* = [
              "every heading of the site should lead back to the contents; the problem assumed the reader " &
              "knew these threads; the versions should say the time, and how long after the one before.",
            comments: 3),
-  Versione(date: "9 Nov 2026", time: "16:09", what: "Every heading of the site has an arrow back to the contents; " &
+  Versione(date: "9 Nov 2026", time: "16:04", what: "Every heading of the site has an arrow back to the contents; " &
              "the problem says who makes the pages (coding agents, Claude Code from a phone); the table of " &
              "versions gives the day and time of the first of each day, then how long after the one before.",
-           review: "Waiting for the sixth round.", comments: 0),
+           review: "[Round 6](https://github.com/pietroppeter/tabelline/blob/claude/project-thread-0a0us6/docs/devlog/data/review-mode/round-6.md): " &
+             "no kinds, a replacement is said in the note; rethink the post from scratch, with a diagram " &
+             "of the modes and the stories the review mode serves; a Review button that opens and " &
+             "closes the mode, and no review UI without it; a sheet with no buttons that saves by " &
+             "itself; screenshots that open large; History instead of Clear all; Share opens a new " &
+             "session, outside the project; *How it is built* from zero, starting from nimib.",
+           comments: 27),
+  Versione(date: "10 Nov 2026", time: "06:35", what: "Round 6: reading is the default, and a **Review** button " &
+             "beside the version opens and closes the review mode; outside it, no bar and no marks; " &
+             "no kinds: a replacement is written in the note; the comment the arrows stop on is open " &
+             "in a sheet with no buttons, which saves as you type; a screenshot opens large with a tap; " &
+             "**History** lists the versions and clears their comments; no **Share**, since it opens " &
+             "a new session; the post rethought from scratch, with a diagram of the modes and the " &
+             "stories they serve; *How it is built* starts from nimib.",
+           review: "[Round 7](https://github.com/pietroppeter/tabelline/blob/claude/project-thread-0a0us6/docs/devlog/data/review-mode/round-7.md): " &
+             "the date above the title reads badly; the pieces of the screen should come before the modes, " &
+             "one card per screen, History too; *Close review* in the export; *sheet* is not a clear name; " &
+             "the table of versions is unreadable; the folded code looks like headings; the review mode " &
+             "deserves a module of its own, in English, and a simpler call; the skill keeps versions and " &
+             "rounds that only this post needs, and its answers should be grouped.",
+           comments: 22),
+  Versione(date: "10 Nov 2026", time: "06:35", what: "Round 7: the date the post was written above the title, " &
+             "the last update beside the version; the pieces of the screen before the modes, one card per " &
+             "screen, History included; *Close review* in the export too; the *sheet* is now the *comment " &
+             "box*; the versions are cards; folded code reads *show code*; the review mode is a module of " &
+             "its own, `review.nim`, in English, and `nbReview()` needs no arguments; the skill keeps versions " &
+             "and rounds only for pages that ask for them, and answers by theme.",
+           review: "Waiting for the eighth round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =

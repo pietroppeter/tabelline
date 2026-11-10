@@ -1,9 +1,10 @@
-// Review mode for a nimib page: select text, comment on it, keep the comments in this browser,
-// export them as Markdown with a YAML front matter for a coding agent. No dependencies.
-// The page gives its settings on <div id="revisione" data-page data-version data-title data-source>.
+// Review mode for a nimib page: open it with the Review button, select text, comment on it, keep
+// the comments in this browser, export them as Markdown with a YAML block for a coding agent.
+// No dependencies. The page gives its settings on
+// <div id="review" data-page data-version data-title data-source data-versions>.
 // Each part is between `// part:` lines, which the devlog post "Review mode" shows one by one.
 (function () {
-  var cfg = document.getElementById('revisione');
+  var cfg = document.getElementById('review');
   var root = document.querySelector('main');
   if (!cfg || !root) return;
   var page = cfg.dataset;
@@ -19,7 +20,7 @@
     var nodes = [], text = '', last = null;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
-        var p = n.parentNode.closest('script, style, #revisione');
+        var p = n.parentNode.closest('script, style, #review');
         return p ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       }
     });
@@ -124,9 +125,11 @@
   // part: store
   // The comments of a page live in this browser's localStorage, one key per page and version,
   // so a new version starts with no comments and the old ones stay with the version they are on.
-  var KEY = 'nimib-review:' + page.page + '@v' + page.version;
-  function load() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; }
+  // Whether the review mode is open is kept too, so a page opens the way it was left.
+  var PREFIX = 'nimib-review:', KEY = PREFIX + page.page + '@v' + page.version;
+  var MODE = 'nimib-review-mode:' + page.page;
+  function read(key) {
+    try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
   }
   function save() {
     try {
@@ -134,36 +137,67 @@
         return { id: n.id, kind: n.kind, quote: n.quote, prefix: n.prefix, suffix: n.suffix,
                  section: n.section, text: n.text, replacement: n.replacement, at: n.at, images: n.images };
       })));
-      return true;
-    } catch (e) { return false; }   // the browser's storage is full: screenshots take the most
+      full = false;
+    } catch (e) { full = true; }   // the browser's storage is full: screenshots take the most
   }
-  var notes = load();
-  var current = -1, full = false;
+  function remember(on) {
+    try { if (on) localStorage.setItem(MODE, '1'); else localStorage.removeItem(MODE); } catch (e) {}
+  }
+  var notes = read(KEY);
+  var current = -1, full = false, on = false;
+
+  // part: mode
+  // Reading is the default: no bar, no marks, nothing of the review mode but one button, Review,
+  // beside the version (in `.rv-enter`, or under the title). It opens the review mode, and closes
+  // it. Blocks that only matter while reviewing (`.rv-only`) show only then.
+  var slot = document.querySelector('.rv-enter');
+  if (!slot) {
+    slot = document.createElement('p');
+    slot.className = 'rv-enter';
+    var after = root.querySelector('.lede') || root.querySelector('h1');
+    if (after) after.insertAdjacentElement('afterend', slot); else root.prepend(slot);
+  }
+  var toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'rv-toggle';
+  slot.appendChild(toggle);
+  toggle.addEventListener('click', function () { setMode(!on); });
+  function setMode(open) {
+    on = open;
+    remember(on);
+    document.body.classList.toggle('rv-on', on);
+    toggle.textContent = on ? 'Close review' : '✎ Review';
+    toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    bar.hidden = !on;
+    if (on) drawAll(); else { leave(); unmarkAll(); pending = null; }
+    show();
+  }
 
   // part: bar
-  // The bar stays at the bottom of the screen, where a thumb reaches on a phone: the previous and
-  // next comment, which one this is, edit it, a new one (*Page note* when nothing is selected, a
-  // note on the whole page; *Comment ✓* on the words selected), and export. A selection is kept
-  // as soon as it is made, because tapping a button can clear it on a phone.
+  // While reviewing, a bar stays at the bottom of the screen, where a thumb reaches on a phone:
+  // the previous and next comment and which one this is, delete it, a new one (*Page note* when
+  // nothing is selected, a note on the whole page; *Comment ✓* on the words selected), and
+  // export. A selection is kept as soon as it is made, because tapping a button can clear it.
   var bar = document.createElement('div');
   bar.className = 'rv-bar';
+  bar.hidden = true;
   bar.setAttribute('role', 'toolbar');
   bar.setAttribute('aria-label', 'Review mode');
   bar.innerHTML =
     '<button type="button" data-do="prev" aria-label="Previous comment">‹</button>' +
     '<span class="rv-count" aria-live="polite"></span>' +
     '<button type="button" data-do="next" aria-label="Next comment">›</button>' +
-    '<button type="button" data-do="edit" aria-label="Edit this comment">Edit</button>' +
+    '<button type="button" data-do="delete" aria-label="Delete this comment">Delete</button>' +
     '<button type="button" data-do="add" class="rv-add">Page note</button>' +
     '<button type="button" data-do="export">Export</button>';
   document.body.appendChild(bar);
-  document.body.classList.add('rv-on');
   var pending = null;
   document.addEventListener('selectionchange', function () {
+    if (!on) return;
     var sel = document.getSelection();
     if (sel.rangeCount && !sel.isCollapsed && root.contains(sel.getRangeAt(0).commonAncestorContainer)) {
       pending = describe(sel.getRangeAt(0));
-    } else if (!sheet.open) {
+    } else {
       setTimeout(function () { if (document.getSelection().isCollapsed) { pending = null; show(); } }, 400);
     }
     show();
@@ -173,35 +207,26 @@
     var b = e.target.closest('button');
     if (!b) return;
     var act = b.dataset.do;
-    if (act === 'prev' || act === 'next') go(current + (act === 'next' ? 1 : -1));
-    if (act === 'edit' && notes[current]) openSheet(notes[current]);
-    if (act === 'add') openSheet(pending ? Object.assign({ kind: 'comment', text: '' }, pending)
-                                         : { kind: 'comment', text: '', quote: '', prefix: '', suffix: '',
-                                             section: { title: '', id: '' } });
+    if (act === 'prev' || act === 'next') step(act === 'next' ? 1 : -1);
+    if (act === 'delete' && notes[current]) remove(notes[current]);
+    if (act === 'add') add();
     if (act === 'export') openExport();
   });
-  root.addEventListener('click', function (e) {
+  root.addEventListener('click', function (e) {   // a tap on marked words opens them, anywhere else closes
+    if (!on || !document.getSelection().isCollapsed) return;
     var m = e.target.closest('mark.rv-mark');
-    if (!m || !document.getSelection().isCollapsed) return;
-    var i = notes.findIndex(function (n) { return n.id === m.dataset.id; });
-    if (i >= 0) { go(i); openSheet(notes[i]); }
+    if (m) {
+      var n = notes.find(function (x) { return x.id === m.dataset.id; });
+      if (n) select(n);
+    } else if (current >= 0 && !e.target.closest('a, button')) leave();
   });
-  function go(i) {
-    if (!notes.length) return;
-    current = (i + notes.length) % notes.length;
-    root.querySelectorAll('mark.rv-current').forEach(function (m) { m.classList.remove('rv-current'); });
-    var ms = root.querySelectorAll('mark.rv-mark[data-id="' + notes[current].id + '"]');
-    ms.forEach(function (m) { m.classList.add('rv-current'); });
-    if (ms.length) ms[0].scrollIntoView({ block: 'center', behavior: 'smooth' });
-    show();
-  }
   function show() {
     var c = bar.querySelector('.rv-count');
-    if (full) { c.textContent = 'storage full: export'; return; }
-    c.textContent = notes.length ? (current >= 0 ? (current + 1) + '/' : '') + notes.length : 'none';
+    c.textContent = full ? 'storage full: export'
+                  : notes.length ? (current >= 0 ? (current + 1) + '/' : '') + notes.length : 'none';
     bar.querySelector('[data-do="prev"]').disabled = !notes.length;
     bar.querySelector('[data-do="next"]').disabled = !notes.length;
-    bar.querySelector('[data-do="edit"]').disabled = current < 0;
+    bar.querySelector('[data-do="delete"]').disabled = current < 0;
     var add = bar.querySelector('.rv-add');
     add.textContent = pending ? 'Comment ✓' : 'Page note';   // says what it will do: on the words, or on the page
     add.classList.toggle('rv-selected', !!pending);
@@ -209,62 +234,95 @@
   }
 
   // part: sheet
-  // Writing a comment, in a sheet that slides down from the top and stays small, so the words it
-  // is about stay in view under it, marked. One row: Cancel, the kind, Delete (for a comment
-  // already saved), Save. Then the new text, for a replacement (starting from the words
-  // selected; empty, it removes them), and the note. A screenshot is pasted in the note, like
-  // text: the note is an editable box, not a text field, so a phone offers to paste an image
-  // there. While a sheet is open the page may not zoom, so a phone does not zoom in on it.
+  // The comment that ‹ and › stop on is open in a sheet at the top of the screen: there is no
+  // Edit, no Save and no Cancel. What is typed is kept as it is typed; ‹ and › keep working and
+  // take the sheet to the next comment; a tap on the page closes it. A comment left empty is
+  // dropped. The sheet is small, so the words it is about stay in view under it, marked. There
+  // are no kinds: to replace the words, the note says so ("Replace with: ..."), or "Remove". A
+  // screenshot is pasted in the note, like text: the note is an editable box, so a phone offers
+  // to paste an image there. While the sheet is open the page may not zoom.
   var viewport = document.querySelector('meta[name="viewport"]');
   var looseViewport = viewport ? viewport.content : '';
-  function noZoom(on) {
-    if (viewport) viewport.content = on ? looseViewport + ', maximum-scale=1' : looseViewport;
+  function noZoom(yes) {
+    if (viewport) viewport.content = yes ? looseViewport + ', maximum-scale=1' : looseViewport;
   }
-  var sheet = document.createElement('dialog');
-  sheet.className = 'rv-sheet rv-compact';
+  var sheet = document.createElement('div');
+  sheet.className = 'rv-panel';
+  sheet.hidden = true;
   sheet.innerHTML =
-    '<form method="dialog">' +
-    '<div class="rv-row"><button value="cancel" aria-label="Cancel">×</button>' +
-    '<span class="rv-kinds" role="radiogroup" aria-label="Kind">' +
-    '<label><input type="radio" name="kind" value="comment"><span>Comment</span></label>' +
-    '<label><input type="radio" name="kind" value="replace"><span>Replace</span></label></span>' +
-    '<span class="rv-whole">On the whole page</span>' +
-    '<button value="delete" class="rv-delete">Delete</button>' +
-    '<button value="save" class="rv-save">Save</button></div>' +
-    '<textarea name="replacement" rows="2" class="rv-replacement" aria-label="Replace with" placeholder="New text (empty: remove the words)"></textarea>' +
-    '<div class="rv-note" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Note"' +
-    ' data-placeholder="Note, or paste a screenshot"></div>' +
-    '<div class="rv-thumbs"></div>' +
-    '</form>';
+    '<p class="rv-whole">On the whole page</p>' +
+    '<div class="rv-note" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Comment"' +
+    ' data-placeholder="What should change, and why. To replace the words: Replace with: and the new text; ' +
+    'to drop them: Remove. Paste a screenshot here too."></div>' +
+    '<div class="rv-thumbs"></div>';
   document.body.appendChild(sheet);
-  var form = sheet.querySelector('form'), noteBox = sheet.querySelector('.rv-note');
-  var editing = null, shots = [];
-  function openSheet(n) {
-    editing = n;
-    shots = (n.images || []).slice();
-    thumbs();
-    sheet.querySelector('.rv-kinds').hidden = !n.quote;
+  var noteBox = sheet.querySelector('.rv-note');
+  function add() {
+    var n = Object.assign({ text: '', quote: '', prefix: '', suffix: '', section: { title: '', id: '' } }, pending || {});
+    n.id = 'c' + Date.now().toString(36);
+    n.at = new Date().toISOString();
+    notes.push(n);
+    document.getSelection().removeAllRanges();
+    pending = null;
+    select(n);
+    noteBox.focus();
+  }
+  function select(n) {
+    var was = notes[current];
+    if (was && was !== n) drop(was);
+    drawAll();
+    current = notes.indexOf(n);
+    root.querySelectorAll('mark.rv-current').forEach(function (m) { m.classList.remove('rv-current'); });
+    var ms = root.querySelectorAll('mark.rv-mark[data-id="' + n.id + '"]');
+    ms.forEach(function (m) { m.classList.add('rv-current'); });
     sheet.querySelector('.rv-whole').hidden = !!n.quote;
-    form.elements.kind.value = n.kind === 'cut' ? 'replace' : n.kind || 'comment';   // a cut of v3 is an empty replacement
     noteBox.textContent = n.text || '';
-    form.elements.replacement.value = n.kind === 'cut' ? '' : n.replacement != null ? n.replacement
-                                    : (n.quote || '').replace(/\s+/g, ' ').trim();
-    sheet.querySelector('.rv-delete').hidden = !n.id;
-    kinds();
-    if (n.quote && !n.id) mark(Object.assign({}, n, { id: 'rv-new' }));   // the words, marked while writing
+    thumbs();
+    sheet.hidden = false;
     noZoom(true);
-    sheet.showModal();
-    keepInView(n.id || 'rv-new');
+    keepInView();
+    show();
   }
-  function keepInView(id) {   // the marked words, just under the sheet
-    var m = root.querySelector('mark.rv-mark[data-id="' + id + '"]');
+  function step(d) {
+    if (!notes.length) return;
+    var target = notes[((current < 0 ? (d > 0 ? -1 : 0) : current) + d + notes.length) % notes.length];
+    if (target !== notes[current]) select(target);
+  }
+  function leave() {   // close the sheet; an empty comment goes
+    var n = notes[current];
+    current = -1;
+    sheet.hidden = true;
+    noZoom(false);
+    if (n) drop(n);
+    root.querySelectorAll('mark.rv-current').forEach(function (m) { m.classList.remove('rv-current'); });
+    show();
+  }
+  function empty(n) { return !(n.text || '').trim() && !(n.images || []).length && n.replacement == null; }
+  function drop(n) { if (empty(n)) { notes = notes.filter(function (x) { return x !== n; }); save(); drawAll(); } }
+  function remove(n) {
+    notes = notes.filter(function (x) { return x !== n; });
+    save();
+    current = -1;
+    sheet.hidden = true;
+    noZoom(false);
+    drawAll();
+    show();
+  }
+  function keepInView() {   // the marked words, just under the sheet
+    var m = root.querySelector('mark.rv-current');
     if (!m) return;
-    var under = sheet.offsetHeight + 24;   // its height, not its place: it is still sliding in
-    window.scrollBy(0, m.getBoundingClientRect().top - under);
+    var under = sheet.offsetHeight + 24;
+    window.scrollBy({ top: m.getBoundingClientRect().top - under, behavior: 'smooth' });
   }
-  function kinds() { form.elements.replacement.hidden = form.elements.kind.value !== 'replace' || !editing || !editing.quote; }
-  form.addEventListener('change', kinds);
+  noteBox.addEventListener('input', function () {
+    var n = notes[current];
+    if (!n) return;
+    n.text = noteBox.innerText.trim();
+    save();
+    show();
+  });
   function thumbs() {
+    var n = notes[current], shots = (n && n.images) || [];
     var box = sheet.querySelector('.rv-thumbs');
     box.innerHTML = '';
     box.hidden = !shots.length;
@@ -273,11 +331,15 @@
       t.className = 'rv-thumb';
       t.innerHTML = '<img alt="screenshot ' + (i + 1) + '"><button type="button" aria-label="Remove screenshot ' + (i + 1) + '">×</button>';
       t.querySelector('img').src = src;
-      t.querySelector('button').addEventListener('click', function () { shots.splice(i, 1); thumbs(); });
+      t.querySelector('img').addEventListener('click', function () { zoom(src); });
+      t.querySelector('button').addEventListener('click', function () {
+        shots.splice(i, 1);
+        n.images = shots.length ? shots : undefined;
+        save(); thumbs();
+      });
       box.appendChild(t);
     });
   }
-  function grown() { if (sheet.open && editing) keepInView(editing.id || 'rv-new'); }   // a screenshot added: the words, still in view
   function shrink(blob, width, quality) {   // an image as a JPEG at most `width` pixels wide
     return new Promise(function (ok, ko) {
       var img = new Image(), url = URL.createObjectURL(blob);
@@ -294,46 +356,33 @@
   }
   noteBox.addEventListener('paste', function (e) {   // an image goes to the screenshots, text stays plain text
     e.preventDefault();
+    var n = notes[current];
     var files = [].filter.call(e.clipboardData.files || [], function (f) { return /^image\//.test(f.type); });
     Promise.all(files.map(function (b) { return shrink(b, 900, 0.72); })).then(function (srcs) {
-      shots = shots.concat(srcs); thumbs(); grown();
+      if (!srcs.length || !n) return;
+      n.images = (n.images || []).concat(srcs);
+      save(); thumbs(); keepInView(); show();
     });
     var text = e.clipboardData.getData('text/plain');
     if (text) document.execCommand('insertText', false, text);
   });
   noteBox.addEventListener('drop', function (e) { e.preventDefault(); });   // no images inside the text
-  sheet.addEventListener('close', function () {
-    var act = sheet.returnValue, n = editing;
-    editing = null;
-    noZoom(false);
-    if (act === 'save') {
-      n.kind = n.quote ? form.elements.kind.value : 'comment';
-      n.text = noteBox.innerText.trim();
-      n.replacement = n.kind === 'replace' ? form.elements.replacement.value : null;
-      n.images = shots.length ? shots : undefined;
-      if (!n.id) {
-        n.id = 'c' + Date.now().toString(36);
-        n.at = new Date().toISOString();
-        notes.push(n);
-      }
-      document.getSelection().removeAllRanges();
-      pending = null;
-    } else if (act === 'delete') {
-      notes = notes.filter(function (x) { return x !== n; });
-    } else { pending = null; drawAll(); show(); return; }
-    var saved = save();
-    drawAll();
-    current = notes.indexOf(n);
-    full = !saved;
-    if (current >= 0) go(current); else show();
-  });
+
+  // part: zoom
+  // A tap on a screenshot, in the sheet or in the export, shows it as large as the screen allows.
+  var lens = document.createElement('dialog');
+  lens.className = 'rv-zoom';
+  lens.innerHTML = '<button type="button" aria-label="Close">×</button><img alt="screenshot">';
+  document.body.appendChild(lens);
+  lens.addEventListener('click', function () { lens.close(); });
+  function zoom(src) { lens.querySelector('img').src = src; lens.showModal(); }
 
   // part: export
   // The comments as one text, for a person and for an agent: a title, a YAML block that says which
   // page, version and source they are on, then one Markdown section per comment, in page order.
-  // The text can be edited before it is copied or shared. Copy copies the text only, short
-  // enough for a chat message; each screenshot has a Copy of its own, to paste after it. Share
-  // sends the text as a file with the screenshots, named as the text names them.
+  // The text can be edited before it is copied. Copy copies the text only, short enough for a
+  // chat message; each screenshot has a Copy of its own, to paste after it. Close review ends the
+  // review here too, so a long page need not be scrolled back to its top.
   function yaml(s) { return JSON.stringify(String(s)); }   // a JSON string is a YAML string
   function flat(s) { return s.replace(/\s+/g, ' '); }
   function quoted(s) { return flat(s).trim(); }
@@ -344,11 +393,10 @@
   }
   function shotName(i, k) { return 'review-v' + page.version + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
   function exportText() {
-    // a chat shows a pasted text as Markdown: a front matter there is a rule and loose lines,
-    // a yaml fence is a tidy box, so the settings go in one, under the title
+    // a chat shows a pasted text as Markdown: a yaml fence is a tidy box under the title
     var out = ['# Review of “' + page.title + '”, version ' + page.version, '',
       '```yaml',
-      'format: nimib-review/2',
+      'format: nimib-review/3',
       'title: ' + yaml(page.title),
       'page: ' + yaml(location.origin + location.pathname),
       'source: ' + yaml(page.source),
@@ -357,18 +405,17 @@
       'comments: ' + notes.length,
       '```', ''];
     notes.forEach(function (n, i) {
-      var cut = n.kind === 'cut' || (n.kind === 'replace' && !(n.replacement || '').trim());
-      var kind = cut ? 'Remove' : n.kind === 'replace' ? 'Replace' : 'Comment';
-      var where = !n.quote ? 'on the whole page'
-                : n.section && n.section.title ? 'in “' + n.section.title + '”' + (n.section.id ? ' (#' + n.section.id + ')' : '')
-                : 'at the top';
-      out.push('## ' + (i + 1) + '. ' + kind + ', ' + where, '');
+      var where = !n.quote ? 'On the whole page'
+                : n.section && n.section.title ? 'In “' + n.section.title + '”' + (n.section.id ? ' (#' + n.section.id + ')' : '')
+                : 'At the top';
+      out.push('## ' + (i + 1) + '. ' + where, '');
       if (n.quote) {
         out.push('> ' + quoted(n.quote), '');
         out.push('Around it: “…' + flat(n.prefix) + '⟦' + flat(n.quote) + '⟧' + flat(n.suffix) + '…”', '');
         if (n.found === false) out.push('(Not found on the page any more.)', '');
       }
-      if (cut) out.push('Remove these words.', '');
+      // a comment kept from version 6 or before may still have a kind of its own
+      if (n.kind === 'cut' || (n.kind === 'replace' && !(n.replacement || '').trim())) out.push('Remove these words.', '');
       else if (n.kind === 'replace') out.push('Replace with:', '', fence(n.replacement), '');
       if (n.text) out.push(n.text, '');
       if (n.images) out.push('Screenshots: ' + n.images.map(function (src, k) { return shotName(i, k); }).join(', '), '');
@@ -378,28 +425,21 @@
   var box = document.createElement('dialog');
   box.className = 'rv-sheet rv-export';
   box.innerHTML =
-    '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy or share it</p>' +
+    '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy it</p>' +
     '<textarea rows="12" spellcheck="false"></textarea><div class="rv-shotlist"></div>' +
-    '<div class="rv-actions"><button value="clear" class="rv-delete">Clear all</button>' +
-    '<button value="close">Close</button><button value="share">Share</button>' +
-    '<button value="copy" class="rv-save">Copy</button></div></form>';
+    '<div class="rv-actions"><button value="history" class="rv-left">History</button>' +
+    '<button value="leave">Close review</button><button value="close">Close</button>' +
+    '<button value="copy" class="rv-save" autofocus>Copy</button></div></form>';
   document.body.appendChild(box);
   var area = box.querySelector('textarea');
   function openExport() {
-    var clear = box.querySelector('[value="clear"]');
-    clear.dataset.sure = ''; clear.textContent = 'Clear all';
+    if (current >= 0) leave();
     area.value = exportText();
-    box.querySelector('[value="share"]').hidden = !navigator.share;
     shotList();
     noZoom(true);
     box.showModal();
   }
   box.addEventListener('close', function () { noZoom(false); });
-  function fileOf(src, name) {   // a data: URL as a File, without fetch (an artifact may block it)
-    var bytes = atob(src.split(',')[1]), arr = new Uint8Array(bytes.length);
-    for (var i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
-    return new File([arr], name, { type: 'image/jpeg' });
-  }
   function allShots() {
     var all = [];
     notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(i, k), src: src }); }); });
@@ -407,16 +447,19 @@
   }
   function shotList() {   // each screenshot, with its own Copy: paste it in the chat after the text
     var list = box.querySelector('.rv-shotlist');
+    var canCopy = !!(navigator.clipboard && window.ClipboardItem);
     list.innerHTML = '';
     var all = allShots();
-    list.hidden = !all.length || !(navigator.clipboard && window.ClipboardItem);
+    list.hidden = !all.length;
     all.forEach(function (shot) {
       var row = document.createElement('div');
       row.className = 'rv-shot';
       row.innerHTML = '<img alt=""><span></span><button type="button">Copy image</button>';
       row.querySelector('img').src = shot.src;
+      row.querySelector('img').addEventListener('click', function () { zoom(shot.src); });
       row.querySelector('span').textContent = shot.name;
       var b = row.querySelector('button');
+      b.hidden = !canCopy;
       b.addEventListener('click', function () {
         copied(b, navigator.clipboard.write([new ClipboardItem({ 'image/png': png(shot.src) })]));
       });
@@ -443,33 +486,102 @@
       setTimeout(function () { button.textContent = label; }, 1500);
     }, function () { button.textContent = 'Blocked'; });
   }
-  function share() {
-    var files = [new File([area.value], 'review-v' + page.version + '.md', { type: 'text/markdown' })];
-    allShots().forEach(function (shot) { files.push(fileOf(shot.src, shot.name)); });
-    var data = { title: 'Review of ' + page.title, files: files };
-    if (!navigator.canShare || !navigator.canShare(data)) data = { title: data.title, text: area.value };
-    return navigator.share(data);
-  }
   box.querySelector('form').addEventListener('submit', function (e) {
     var act = e.submitter && e.submitter.value;
-    if (act === 'share') {
-      e.preventDefault();
-      share().catch(function () {});
-    } else if (act === 'copy') {
+    if (act === 'copy') {
       e.preventDefault();
       var button = e.submitter;
       var fallback = function () { area.select(); document.execCommand('copy'); };
       copied(button, navigator.clipboard ? navigator.clipboard.writeText(area.value).catch(fallback)
                                          : Promise.resolve().then(fallback));
-    } else if (act === 'clear' && e.submitter.dataset.sure !== 'yes') {
-      e.preventDefault();   // a second tap deletes: confirm() is blocked inside an artifact
-      e.submitter.dataset.sure = 'yes';
-      e.submitter.textContent = 'Delete ' + notes.length + '?';
-    } else if (act === 'clear') {
-      notes = []; current = -1; full = !save(); drawAll(); show();
+    } else if (act === 'history') {
+      e.preventDefault();
+      box.close();
+      openHistory();
+    } else if (act === 'leave') {   // the end of a review: back to reading, from the bottom of the page too
+      setMode(false);
     }
   });
 
-  drawAll();
-  show();
+  // part: history
+  // The versions of the page, each with the comments this browser keeps on it: open one, clear
+  // its comments, or clear every comment of the review mode in this browser. Back to Export from
+  // here. Clearing asks twice, with a second tap (confirm() is blocked inside an artifact).
+  var versions = [];
+  try { versions = JSON.parse(page.versions || '[]'); } catch (e) {}
+  var hist = document.createElement('dialog');
+  hist.className = 'rv-sheet rv-history';
+  hist.innerHTML =
+    '<form method="dialog"><p class="rv-where">History: the versions of this page</p>' +
+    '<ol class="rv-versions"></ol>' +
+    '<div class="rv-actions"><button value="wipe" class="rv-left rv-danger">Clear everything</button>' +
+    '<button value="export">Export</button><button value="close" class="rv-save" autofocus>Close</button></div></form>';
+  document.body.appendChild(hist);
+  function stored() {   // the versions of this page that have comments in this browser
+    var found = {};
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i), m = k.match(/@v(\d+)$/);
+        if (m && k.indexOf(PREFIX + page.page + '@v') === 0) found[m[1]] = read(k).length;
+      }
+    } catch (e) {}
+    return found;
+  }
+  function twice(button, label, act) {   // the first tap asks, the second does
+    if (button.dataset.sure === 'yes') { act(); return; }
+    button.dataset.sure = 'yes';
+    button.textContent = label;
+  }
+  function openHistory() {
+    var list = hist.querySelector('.rv-versions'), counts = stored();
+    var all = versions.slice();
+    if (!all.some(function (v) { return v.n == page.version; })) all.push({ n: +page.version, date: '', href: '' });
+    Object.keys(counts).forEach(function (n) {
+      if (!all.some(function (v) { return v.n == n; })) all.push({ n: +n, date: '', href: '' });
+    });
+    all.sort(function (a, b) { return b.n - a.n; });   // the newest first
+    list.innerHTML = '';
+    all.forEach(function (v) {
+      var li = document.createElement('li'), n = counts[v.n] || 0, here = v.n == page.version;
+      var name = here || !v.href ? '<b>v' + v.n + '</b>' : '<a href="' + v.href + '"><b>v' + v.n + '</b></a>';
+      li.innerHTML = name + ' <span class="rv-date"></span> <span class="rv-n"></span>' +
+        '<button type="button" class="rv-danger">Clear</button>';
+      li.querySelector('.rv-date').textContent = (v.date || '') + (here ? ' · this one' : '');
+      li.querySelector('.rv-n').textContent = n ? n + (n === 1 ? ' comment' : ' comments') : '';
+      var b = li.querySelector('button');
+      b.hidden = !n;
+      b.addEventListener('click', function () {
+        twice(b, 'Delete ' + n + '?', function () {
+          try { localStorage.removeItem(PREFIX + page.page + '@v' + v.n); } catch (e) {}
+          if (here) { notes = []; leave(); drawAll(); show(); }
+          openHistory();
+        });
+      });
+      list.appendChild(li);
+    });
+    var wipe = hist.querySelector('[value="wipe"]');
+    wipe.dataset.sure = ''; wipe.textContent = 'Clear everything';
+    if (!hist.open) hist.showModal();
+  }
+  hist.querySelector('form').addEventListener('submit', function (e) {
+    var act = e.submitter && e.submitter.value;
+    if (act === 'wipe') {
+      e.preventDefault();
+      twice(e.submitter, 'Delete every comment?', function () {
+        try {
+          Object.keys(localStorage).forEach(function (k) { if (k.indexOf(PREFIX) === 0) localStorage.removeItem(k); });
+        } catch (err) {}
+        notes = []; leave(); drawAll(); show();
+        openHistory();
+      });
+    } else if (act === 'export') {
+      e.preventDefault();
+      hist.close();
+      openExport();
+    }
+  });
+
+  var wasOn = false;
+  try { wasOn = localStorage.getItem(MODE) === '1'; } catch (e) {}
+  setMode(wasOn);
 })();

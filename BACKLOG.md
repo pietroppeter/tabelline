@@ -98,6 +98,19 @@ Rough size: S (hours), M (a day or two), L (more).
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.
 - **A Table Contest entry** (M). For the next Posit Table Contest.
+- **Review mode: one notebook, not one per version** (M). Each round freezes the latest notebook
+  and copies it (`docs/devlog/review_mode/vN.nim`, about 300 lines, one more compile in CI and
+  about 600 KB more on Pages, mostly fonts). Keep only the latest as a notebook; a frozen version
+  links to its page from the commit that published it (a new field in `storia.nim`); keep the
+  round exports as the record. Do it when the experiment ends, or when the build passes about 2
+  minutes.
+  Pietro's ideas (9 Nov): store a version as nimib's JSON dump of the document, and a later one
+  as a delta of blocks from it, so a frozen version renders without compiling; later, see what a
+  NIF file would give instead of JSON (a nimib change, not a tabelline one).
+- **Review-mode rounds made site-wide changes outside a change** (S). The ↑ link back to the
+  indice on every page (#46) and the review-mode lines in AGENTS.md: check them against the specs
+  and the design guide, and write a change if they stay. Review-mode PRs now stay open until this
+  check (Pietro, 9 Nov).
 
 ## From the tabelline book (0.1 port thread, book/gaps.md in PR #11)
 

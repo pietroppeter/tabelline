@@ -48,13 +48,14 @@ working rules that are easy to miss.
   and writes a standalone HTML file (fonts inlined, nothing remote) with two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
-  Check new page elements in both looks, at 390px. The HTML is not committed: CI builds every
+  Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
+  broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
   Notebooks that import nimib and tabelline use `import nimib except md`.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocchi.nim` (`nbTitolo`, `nbIndice`, `nbNota(text, kind)`, `nbCards`/`nbCard`,
   `nbGalleria`/`nbScheda`, `nbTabs`, `nbShowCode`, `nbParti`, `nbAccanto`, `nbTinte`,
-  `nbParte`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  `nbParte`, `nbDisegno`, `nbPiega`). In a page that tells a story with tables (an explainer, a use-it post), what is
   about the code goes in `nbNota(text, nkCode)`, the green card, under the table it explains,
   with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocchi.nim`; its CSS goes in `docs/stile.nim`, from the tokens.
@@ -96,9 +97,11 @@ working rules that are easy to miss.
 - The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
-- Review mode: a page that calls `nbRevisione` (after `useTabelline`) lets a reader select text,
-  comment, and export the comments as Markdown with a block of YAML (`format:
-  nimib-review/2`; `/1` had a front matter). When such an export is pasted in the chat, follow the skill
+- Review mode: a page that calls `nbReview` (`docs/review.nim`, a module of its own in English
+  that can move to nimib, with its styles) has a **✎ Review** button (beside `nbVersion`'s line,
+  or under the title); in the review mode a reader selects text,
+  comments, and exports the comments as Markdown with a block of YAML (`format:
+  nimib-review/3`; `/2` had kinds, `/1` a front matter). When such an export is pasted in the chat, follow the skill
   `.claude/skills/nimib-review/`. The devlog post `review_mode` keeps one notebook per version in
   `docs/devlog/review_mode/` and is updated round by round while the experiment runs.
 - A link can show part of the specs page: `specs/?spec=<names>` or `specs/?change=<names>`
@@ -139,7 +142,8 @@ working rules that are easy to miss.
   opens that page: the folder with `/` as `-`, such as `#devlog-three-threads` or `#roadmap`,
   and for the book `#book-` and the page's path without `.html`, such as
   `#book-get-started-intro`. Give Pietro the deep link to what changed.
-- When a change is visual, put before and after screenshots (phone width, both looks) in the reply
+- When a change is visual, put before and after screenshots (phone width, Munari; the quaderno
+  only when the change might affect it) in the reply
   to Pietro, and only the after shots of what changed in the PR description. To show them in the
   PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
   in the next commit.

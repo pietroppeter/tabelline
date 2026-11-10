@@ -243,13 +243,20 @@ nbShowCode:
 nbText: """
 ## Review mode and versions
 
-`nbRevisione` puts a page in review mode (tried in [Review mode](../devlog/review-mode/)): a
-bar fixed at the bottom, in the surface colour under a rule of ink, with buttons at least 44
-pixels high, the one to comment in ink; the sheet to write in opens at the top, where the
-phone's keyboard does not cover it. A commented text is marked in the secondary's soft colour
-with a line under it, a note set apart; the one shown is in the secondary itself. In the
-quaderno, marks are the highlighter, underlined in red pen. `nbVersioni` is the strip of a
-page's versions: plain boxes, the one shown with a line of ink under it.
+`nbReview` (in `docs/review.nim`) gives a page a review mode (tried in [Review mode](../devlog/review-mode/)). Reading
+is the default: the page shows only a light button, **✎ Review**, beside the version that
+`nbVersion` writes under the lede, in plain outline; open, it keeps its outline in ink with a
+line of the secondary under it. While reviewing, a bar is fixed at the bottom, in the surface
+colour under a rule of ink, with buttons at least 44 pixels high, the one to comment in ink; the
+comment that is open sits in a comment box at the top, where the phone's keyboard does not cover it.
+A commented text is marked in the secondary's soft colour with a line under it, a note set
+apart; the one open is in the secondary itself. In the quaderno, marks are the highlighter,
+underlined in red pen. `nbInReview` holds blocks shown only while reviewing. `nbVersions`
+is the strip of versions of the older versions of the post: plain boxes, the one shown with a
+line of ink under it. `nbDisegno` puts a drawing made with diagrammari in the page's colours,
+and `nbPiega` folds long code under a line that reads *show code*, like the code shown by
+`nbShowCode`. The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
+when the page has them.
 """
 
 nbText: """
