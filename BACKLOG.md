@@ -76,7 +76,13 @@ Rough size: S (hours), M (a day or two), L (more).
   later, maybe in its own repository. See the devlog post
   [Tabellone](https://pietroppeter.github.io/tabelline/devlog/tabellone/), which has a sketch.
   Optional: `tabelline/aggrid`, AG Grid column definitions from a Tabella.
-- **RTF / Word** (L). For the pharma use case.
+- **RTF / Word** (L). For the pharma use case. The PowerPoint experiment's cell grid (one look
+  per cell, after options and styles) would feed a Word table (`w:tbl`) too, which makes it M.
+- **PowerPoint** (M, *experiment*: `src/tabelline/pptx.nim`, notes in `tools/pptx/README.md`).
+  `savePptx` writes a native, editable PowerPoint table (std lib only, a stored zip);
+  `toClipboardHtml` gives inline-styled HTML to paste into PowerPoint. gt has `gtsave(".pptx")`
+  in its development version; Great Tables has none. Left: check in PowerPoint itself, font
+  widths, adding a slide to a deck of your own (needs inflate), an OpenSpec change.
 
 ## nimib
 
