@@ -136,7 +136,8 @@
     try {
       localStorage.setItem(KEY, JSON.stringify(notes.map(function (n) {
         return { id: n.id, kind: n.kind, quote: n.quote, prefix: n.prefix, suffix: n.suffix,
-                 section: n.section, text: n.text, replacement: n.replacement, at: n.at, images: n.images };
+                 section: n.section, text: n.text, replacement: n.replacement, at: n.at, images: n.images,
+                 commit: n.commit || page.commit || '' };
       })));
       full = false;
     } catch (e) { full = true; }   // the browser's storage is full: screenshots take the most
@@ -399,25 +400,31 @@
     while (s.indexOf(f) >= 0) f += '~';
     return f + 'text\n' + s.trim() + '\n' + f;
   }
-  function shotName(i, k) { return 'review-v' + page.version + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
-  function exportText() {
-    // a chat shows a pasted text as Markdown: a yaml fence is a tidy box under the title
-    var out = ['# Review of “' + page.title + '”, version ' + page.version, '',
+  var exportVersion = '';   // the version being exported, when it is not this one
+  function shotName(i, k) { return 'review-v' + (exportVersion || page.version) + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
+  function exportText(list, version, commit) {
+    // a chat shows a pasted text as Markdown: a yaml fence is a tidy box under the title.
+    // By default the comments of this version; History exports those of an older one, with the
+    // commit they were written on, and says which of them this version no longer has.
+    list = list || notes; version = version || page.version;
+    commit = commit === undefined ? page.commit || '' : commit;
+    var out = ['# Review of “' + page.title + '”, version ' + version, '',
       '```yaml',
-      'format: nimib-review/4',
+      'format: nimib-review/5',
       'title: ' + yaml(page.title),
       'page: ' + yaml(location.origin + location.pathname),
       'source: ' + yaml(page.source),
-      'version: ' + yaml(page.version),
-      'commit: ' + yaml(page.commit || ''),
+      'version: ' + yaml(version),
+      'commit: ' + yaml(commit),
       'exported: ' + yaml(new Date().toISOString()),
-      'comments: ' + notes.length,
+      'comments: ' + list.length,
       '```', ''];
-    notes.forEach(function (n, i) {
+    list.forEach(function (n, i) {
       var where = !n.quote ? 'On the whole page'
                 : n.section && n.section.title ? 'In “' + n.section.title + '”' + (n.section.id ? ' (#' + n.section.id + ')' : '')
                 : 'At the top';
       out.push('## ' + (i + 1) + '. ' + where, '');
+      if (n.from && n.from !== version) out.push('From version ' + n.from + (n.commit ? ' (commit ' + n.commit + ')' : '') + '.', '');
       if (n.quote) {
         out.push('> ' + quoted(n.quote), '');
         out.push('Around it: “…' + flat(n.prefix) + '⟦' + flat(n.quote) + '⟧' + flat(n.suffix) + '…”', '');
@@ -441,9 +448,11 @@
     '<button value="copy" class="rv-save" autofocus>Copy</button></div></form>';
   document.body.appendChild(box);
   var area = box.querySelector('textarea');
-  function openExport() {
+  var exportList = null;
+  function openExport(list, version, commit) {
     if (current >= 0) leave();
-    area.value = exportText();
+    exportList = list || null; exportVersion = list ? version : '';
+    area.value = exportText(list, version, commit);
     shotList();
     noZoom(true);
     box.showModal();
@@ -451,7 +460,7 @@
   box.addEventListener('close', function () { noZoom(false); });
   function allShots() {
     var all = [];
-    notes.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(i, k), src: src }); }); });
+    (exportList || notes).forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(i, k), src: src }); }); });
     return all;
   }
   function shotList() {   // each screenshot, with its own Copy: paste it in the chat after the text
@@ -513,16 +522,17 @@
   });
 
   // part: history
-  // The versions of the page that have comments in this browser, this one first: clear the
-  // comments of one, or every comment of the review mode in this browser. Old versions are not
-  // pages: git keeps them. Back to Export from here. Clearing asks twice, with a second tap
-  // (confirm() is blocked inside an artifact).
+  // The versions of the page that have comments in this browser, this one first. The comments
+  // of an older version can be brought here (those whose words this version still has) or
+  // exported, with the commit they were written on; Export everything exports the comments of
+  // every version. Old versions are not pages: git keeps them. Clearing the comments of a
+  // version asks twice, with a second tap (confirm() is blocked inside an artifact).
   var hist = document.createElement('dialog');
   hist.className = 'rv-sheet rv-history';
   hist.innerHTML =
     '<form method="dialog"><p class="rv-where">History: the versions of this page</p>' +
     '<ol class="rv-versions"></ol>' +
-    '<div class="rv-actions"><button value="wipe" class="rv-left rv-danger">Clear everything</button>' +
+    '<div class="rv-actions"><button value="all" class="rv-left">Export everything</button>' +
     '<button value="export">Export</button><button value="close" class="rv-save" autofocus>Close</button></div></form>';
   document.body.appendChild(hist);
   function stored() {   // the versions of this page that have comments in this browser
@@ -540,6 +550,50 @@
     button.dataset.sure = 'yes';
     button.textContent = label;
   }
+  function bringHere(version) {
+    // the comments of an old version that this version still has (their words, found with their
+    // context, or a comment on the whole page) move here; the others stay where they were
+    var key = PREFIX + page.page + '@v' + version, old = read(key), stay = [], moved = 0;
+    unmarkAll();
+    var idx = textIndex(), ids = notes.map(function (n) { return n.id; });
+    old.forEach(function (n) {
+      if (n.quote && !locate(n, idx)) { stay.push(n); return; }
+      while (ids.indexOf(n.id) >= 0) n.id = n.id + 'x';   // two ids made in the same millisecond
+      ids.push(n.id);
+      notes.push(n); moved++;
+    });
+    save();
+    try {
+      if (stay.length) localStorage.setItem(key, JSON.stringify(stay)); else localStorage.removeItem(key);
+    } catch (e) {}
+    drawAll(); show();
+    return { moved: moved, left: stay.length };
+  }
+  function exportAll() {
+    // every comment of this page in this browser, this version's first, then the older ones,
+    // newest first, each saying the version it was written on and whether it is still found
+    var counts = stored(), idx = textIndex(), list = [];
+    var versions = Object.keys(counts).filter(function (v) { return v !== page.version; })
+      .sort(function (a, b) { return (parseInt(b, 10) || 0) - (parseInt(a, 10) || 0); });
+    notes.forEach(function (n) { list.push(n); });
+    versions.forEach(function (v) {
+      read(PREFIX + page.page + '@v' + v).forEach(function (n) {
+        n.from = v;
+        if (n.quote) n.found = !!locate(n, idx);
+        list.push(n);
+      });
+    });
+    hist.close();
+    openExport(list, page.version, page.commit || '');
+  }
+  function exportOld(version) {
+    var list = read(PREFIX + page.page + '@v' + version);
+    var idx = textIndex();
+    list.forEach(function (n) { n.from = version; if (n.quote) n.found = !!locate(n, idx); });
+    var commits = list.map(function (n) { return n.commit || ''; }).filter(function (c) { return c; });
+    hist.close();
+    openExport(list, version, commits.length ? commits[commits.length - 1] : '');
+  }
   function openHistory() {
     var list = hist.querySelector('.rv-versions'), counts = stored();
     var all = [{ n: page.version }];
@@ -554,11 +608,22 @@
     all.forEach(function (v) {
       var li = document.createElement('li'), n = counts[v.n] || 0, here = v.n === page.version;
       li.innerHTML = '<b></b> <span class="rv-date"></span> <span class="rv-n"></span>' +
+        '<span class="rv-old"><button type="button" value="bring">Bring here</button>' +
+        '<button type="button" value="export">Export</button></span>' +
         '<button type="button" class="rv-danger">Clear</button>';
+      var old = li.querySelector('.rv-old');
+      old.hidden = here || !n;
+      old.querySelector('[value="bring"]').addEventListener('click', function (e) {
+        var r = bringHere(v.n);
+        openHistory();
+        var said = r.moved + ' brought here' + (r.left ? ', ' + r.left + ' not found: they stay on v' + v.n : '');
+        hist.querySelector('.rv-where').textContent = 'History: ' + said;
+      });
+      old.querySelector('[value="export"]').addEventListener('click', function () { exportOld(v.n); });
       li.querySelector('b').textContent = 'v' + v.n;
       li.querySelector('.rv-date').textContent = here ? (page.updated || '') + ' · this one' : '';
       li.querySelector('.rv-n').textContent = n ? n + (n === 1 ? ' comment' : ' comments') : '';
-      var b = li.querySelector('button');
+      var b = li.querySelector('.rv-danger');
       b.hidden = !n;
       b.addEventListener('click', function () {
         twice(b, 'Delete ' + n + '?', function () {
@@ -569,21 +634,14 @@
       });
       list.appendChild(li);
     });
-    var wipe = hist.querySelector('[value="wipe"]');
-    wipe.dataset.sure = ''; wipe.textContent = 'Clear everything';
+    hist.querySelector('.rv-where').textContent = 'History: the versions of this page';
     if (!hist.open) hist.showModal();
   }
   hist.querySelector('form').addEventListener('submit', function (e) {
     var act = e.submitter && e.submitter.value;
-    if (act === 'wipe') {
+    if (act === 'all') {
       e.preventDefault();
-      twice(e.submitter, 'Delete every comment?', function () {
-        try {
-          Object.keys(localStorage).forEach(function (k) { if (k.indexOf(PREFIX) === 0) localStorage.removeItem(k); });
-        } catch (err) {}
-        notes = []; leave(); drawAll(); show();
-        openHistory();
-      });
+      exportAll();
     } else if (act === 'export') {
       e.preventDefault();
       hist.close();
