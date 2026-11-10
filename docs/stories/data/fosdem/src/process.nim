@@ -63,7 +63,9 @@ let xmlEvents = rd("xml_events.csv").withColumns(
   col.event_id.cast(String),
 ).select(col.year, col.event_id, col.source, col.day, col.start, col.end, col.duration_min,
          col.room, col.track, col("type"), col.title, col.subtitle, col.language, col.videos, col.slides,
-         format("https://archive.fosdem.org/{}/schedule/event/{}/", col.year, col.slug).alias("url"))
+         # the archive of 2012 keeps its pages as event/<slug>.html, later years as event/<slug>/
+         choose(if col.year == 2012: format("https://archive.fosdem.org/{}/schedule/event/{}.html", col.year, col.slug)
+                else: format("https://archive.fosdem.org/{}/schedule/event/{}/", col.year, col.slug)).alias("url"))
   # the first recording of each event: the MP4 when there is one
   .join(rd("xml_links.csv").filter(col.href.str.contains(r"^https?://video\.fosdem\.org/.*\.(mp4|webm)$"))
           .withColumns(col.event_id.cast(String), col.href.str.endsWith(".mp4").not.alias("not_mp4"))

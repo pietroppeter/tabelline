@@ -64,9 +64,9 @@ func headingsOf*(markdownText: string): seq[(int, string)] =
     if line.startsWith("## "): result.add (2, line[3 .. ^1].strip.stripInline)
     elif line.startsWith("### "): result.add (3, line[4 .. ^1].strip.stripInline)
 
-func addHeadingIds(html: string): string =
-  ## `<h2>Text</h2>` becomes `<h2 id="text">Text<a class="su" href="#indice"></a></h2>`: an id
-  ## matching `slugify` of the indice, and a way back to it.
+func addHeadingIds(html: string, su = false): string =
+  ## `<h2>Text</h2>` becomes `<h2 id="text">Text</h2>`: an id matching `slugify` of the indice.
+  ## With `su` (a page with an indice), also a way back to it: `<a class="su" href="#indice"></a>`.
   result = html
   for tag in ["h2", "h3"]:
     var res = ""
@@ -79,10 +79,10 @@ func addHeadingIds(html: string): string =
       let b = result.find(close, a)
       if b < 0: break
       let inner = result[a + open.len ..< b]
-      # an arrow back to the indice, shown only on pages that have one (CSS, `.su`); drawn by
-      # CSS too, so the heading's text stays the same for anchors and quotes
+      # an arrow back to the indice, only on pages that have one; drawn by CSS, so the heading's
+      # text stays the same for anchors and quotes
       res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner &
-        "<a class=\"su\" href=\"#indice\" aria-label=\"Back to the contents\"></a>" & close
+        (if su: "<a class=\"su\" href=\"#indice\" aria-label=\"Back to the contents\"></a>" else: "") & close
       i = b + close.len
     res.add result[i .. ^1]
     result = res
@@ -239,6 +239,7 @@ newNbBlock(NbIndice):
     &"""<nav class="indice" id="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
 
 proc indice*(nb: var Nb, title = "Indice") =
+  nb.doc.context["indice"] = %true   # the headings get their arrow back to it (`addHeadingIds`)
   nb.add newNbIndice(title = title)
 
 template nbIndice*(ttitle = "Indice") =
@@ -711,7 +712,7 @@ const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
 func pageText(blk: JsonNode, nb: Nb): string =
-  highlightFences(addHeadingIds(markdownToHtml(blk{"text"}.getStr)))
+  highlightFences(addHeadingIds(markdownToHtml(blk{"text"}.getStr), nb.doc.context{"indice"}.getBool))
 
 func pageHeader(blk: JsonNode, nb: Nb): string =
   let c = nb.doc.context
