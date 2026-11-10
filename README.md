@@ -165,12 +165,12 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - `src/tabelline/core.nim`: the data model (`Value`, `TableData`, `Text`, selectors, styles, `Tabella`).
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
 - `src/tabelline/units.nim`: units and chemical formulas in gt's notation (`fmtUnits`, `fmtChem`, `colsUnits`).
-- `src/tabelline/countries.nim`: country names and codes from Unicode CLDR, written by `tools/cldr.nim` (licence in `licenses/`).
+- `src/tabelline/countries.nim`, `locales.nim`, `currencies.nim`: country names, the conventions of 657 locales and 305 currencies, from Unicode CLDR 49, written once by `tools/cldr.nim` (licence in `licenses/`). `src/tabelline/localize.nim` reads them (`getLocale`, `currencyInfo`, `formatPattern`).
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
 - `src/tabelline/colors.nim`: palettes, interpolation, text contrast.
-- `src/tabelline/build.nim`: the build step all renderers share.
+- `src/tabelline/build.nim`: the build step all renderers share. `src/tabelline/extract.nim`: the built table as data (`extractCells`, `extractBody`, `extractSummary`).
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
-- `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`.
+- `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`, `isole`, `citta` (the last two from `src/tabelline/data/`).
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
 - `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/theme.nim` is the style of both looks, from the tokens, and `docs/blocks.nim` the blocks every page is made of; `docs/review.nim` is the review mode, blocks and styles in one module that can move to nimib).
 - `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).

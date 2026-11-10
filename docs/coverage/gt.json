@@ -49,9 +49,8 @@
     {
      "feature": "Preview of a big table",
      "gt": "gt_preview()",
-     "status": "missing",
-     "note": "First and last rows with a gap row.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "tabellaPreview(data, topN, bottomN, inclRownums): first and last rows, a shaded row naming the rows left out; tabella(preview): body adds verbs.",
      "size": "S",
      "where": "R"
     },
@@ -202,9 +201,8 @@
     {
      "feature": "Currency",
      "gt": "fmt_currency()",
-     "status": "partial",
-     "note": "Symbols for common currencies; no full currency table or accounting style.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "Every ISO 4217 code of CLDR (305), with its symbol and decimals, placed as the locale does; accounting, useSubunits.",
      "size": "S"
     },
     {
@@ -250,9 +248,8 @@
     {
      "feature": "Dates",
      "gt": "fmt_date()",
-     "status": "partial",
-     "note": "ISO dates in nine styles or a std/times pattern; month names in English only.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "gt's fixed and flexible styles (yMMMd, yMMMEd, yQQQQ, ...) in every CLDR locale, or a std/times pattern; times with Hm, hm, hms.",
      "size": "M"
     },
     {
@@ -378,9 +375,8 @@
     {
      "feature": "Locales",
      "gt": "locale=, with_locale()",
-     "status": "partial",
-     "note": "Number marks for about 40 locales; no month or currency names yet (CLDR).",
-     "plan": "0.3",
+     "status": "done",
+     "note": "Every CLDR 49 locale (657): marks, percent and currency patterns, month, day and quarter names, date and time patterns. Generated once by tools/cldr.nim and committed. Latin digits only; country names in English.",
      "size": "M"
     }
    ]
@@ -436,9 +432,8 @@
     {
      "feature": "Rotated labels",
      "gt": "cols_label_rotate()",
-     "status": "missing",
-     "note": "Vertical labels for narrow columns.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "colsLabelRotate(columns, dir): sideways-lr or sideways-rl, in HTML.",
      "size": "S",
      "where": "Python"
     },
@@ -572,9 +567,8 @@
     {
      "feature": "Body styles from a column",
      "gt": "tab_style_body(), from_column()",
-     "status": "missing",
-     "note": "Style values taken from another column.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "fromColumn(column, naValue) in any style; tabStyle with a proc of the row; tabStyleBody(values, pattern, fn, targets).",
      "size": "S"
     }
    ]
@@ -588,7 +582,7 @@
      "feature": "Table options",
      "gt": "tab_options()",
      "status": "partial",
-     "note": "70 of gt's 200 options: fonts, widths, borders, heading, labels, groups, stub, padding, striping, summary rows, footer.",
+     "note": "142 of gt's 200 options: container, fonts, widths, every rule of the heading, labels, groups, body, stub and footer, padding, striping, summary rows. Not yet: hidden labels, groups as a column, multiline footer, LaTeX and page options.",
      "plan": "0.2",
      "size": "M"
     },
@@ -687,9 +681,8 @@
     {
      "feature": "Extract",
      "gt": "extract_body(), extract_cells(), extract_summary()",
-     "status": "missing",
-     "note": "The built table as data.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "extractCells, extractBody, extractSummary: the shown text, as seq[string] and TableData.",
      "size": "S",
      "where": "R"
     },
@@ -731,7 +724,7 @@
      "feature": "Datasets",
      "gt": "exibble, gtcars, countrypops, sza, towny, ...",
      "status": "partial",
-     "note": "exibble and planets, plus tavolaPitagorica; more as examples need them.",
+     "note": "exibble, planets, tavolaPitagorica, isole (twin of islands) and citta (twin of towny); more as examples need them.",
      "plan": "0.2",
      "size": "S"
     },

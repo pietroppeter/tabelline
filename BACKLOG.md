@@ -30,8 +30,7 @@ Rough size: S (hours), M (a day or two), L (more).
 
 - **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
   `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
-- **Locales** (M). Month and day names and number marks for more locales, from CLDR data
-  generated into a Nim module at compile time.
+- **Locales** (M, *in progress*: `add-locales`). Every CLDR locale for numbers, currencies and dates. Left: country names in other languages, `system = "ind"`, flexible styles with a time zone.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
   half away from zero as gt does in some cases.
 

@@ -13,5 +13,5 @@
 ## 3. Docs and checks
 
 - [x] 3.1 Tests in `tests/test_locales.nim`
-- [ ] 3.2 The guide, the Feature map, section 4 of the devlog post "Designing tabelline 0.2"
-- [ ] 3.3 Run `nim r tests/all.nim` and `nim r tools/specexamples.nim --changes`; rebuild the docs
+- [x] 3.2 The guide, the Feature map, section 4 of the devlog post "Designing tabelline 0.2"
+- [x] 3.3 Run `nim r tests/all.nim` and `nim r tools/specexamples.nim --changes`; rebuild the docs

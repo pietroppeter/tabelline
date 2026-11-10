@@ -87,7 +87,7 @@ nbCode:
 
 nbNote("""
 The aggregates are `agg.sum`, `agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count` and
-`agg.sd`. `aggregate(proc)` makes one from any proc of the column's values, such as the middle
+`agg.std`. `aggregate(proc)` makes one from any proc of the column's values, such as the middle
 value: `aggregate((vs: seq[Value]) => vs[vs.len div 2])`.
 """, nkCode)
 
@@ -400,9 +400,144 @@ nbText: """
 
 ## 4 · Every locale
 
-*Planned, PR 4.* Numbers, currencies and dates in the locales of CLDR, generated once into a
-committed Nim module, like the country names; rotated labels, more options, extracting the built table as data, a
-preview of a big table, body styles from a column, more datasets.
+### A number in another language
+
+The simplest thing a locale changes is the marks of a number: which character groups the
+thousands, which one starts the decimals. A table takes a locale, and every format follows it:
+"""
+
+nbCode:
+  let amounts = tableData:
+    n: [1234567.891, 0.5]
+  let marks = tabella(amounts):
+    colsAdd "it", amounts["n"].values
+    colsAdd "de_CH", amounts["n"].values
+    colsAdd "fr", amounts["n"].values
+    fmtNumber "n", decimals = 2
+    fmtNumber "it", decimals = 2, locale = "it"
+    fmtNumber "de_CH", decimals = 2, locale = "de-CH"
+    fmtNumber "fr", decimals = 2, locale = "fr"
+    colsLabel {"n": "en"}
+    optCssTheme()
+  nbTable marks
+
+nbNote("""
+`locale` is a tag of Unicode CLDR, in any case, with `-` or `_`. An unknown region falls back to its language (`"it-XX"` is `"it"`) and an unknown language to English. The French group mark is a narrow no-break space, as CLDR has it.
+""", nkCode)
+
+nbText: """
+### Money
+
+A currency adds a symbol, a number of decimals and a place for the symbol, which depends on the
+language, not on the currency: the euro goes before the amount in English and after it in
+Italian. Every code of ISO 4217 that CLDR knows (305 of them) has its symbol and its decimals:
+"""
+
+nbCode:
+  let prices = tableData:
+    item: ["espresso", "pizza", "refund"]
+    eur: [1.3, 7.04, -2.5]
+    jpy: [480, 1600, -300]
+    bhd: [0.6, 2.9, -0.8]
+  let money = tabella(prices, rownameCol = "item", locale = "it"):
+    fmtCurrency "eur", currency = "EUR"
+    fmtCurrency "jpy", currency = "JPY", accounting = true
+    fmtCurrency "bhd", currency = "BHD", placement = "left"
+    optCssTheme()
+  nbTable money
+
+nbNote("""
+The yen has no decimals and the Bahraini dinar three, as CLDR says. `accounting = true` writes a negative amount in brackets; `placement = "left"` puts the symbol first whatever the locale.
+""", nkCode)
+
+nbText: """
+### Dates in their own words
+
+A date needs more: the names of months and days, and an order. gt has two kinds of date style:
+fixed ones, with an order of their own and the names in the locale's language
+(`"day_month_year"`), and flexible ones, named by the parts they show (`"yMMMd"`: year, short
+month, day), which each language writes in its own order:
+"""
+
+nbCode:
+  type Way = object
+    locale, fixed, flexible, time: string
+  var ways: seq[Way]
+  for l in ["en", "it", "de", "ja", "ru"]:
+    ways.add Way(locale: l, fixed: formatDate("2026-11-07", "wday_day_month_year", l),
+                 flexible: formatDate("2026-11-07", "yMMMEd", l), time: formatTime("14:35", "hm", l))
+  let dates = tabella(ways, rownameCol = "locale"):
+    colsLabel {"fixed": "wday_day_month_year", "flexible": "yMMMEd", "time": "hm"}
+    optCssTheme()
+  nbTable dates
+
+nbNote("""
+`formatDate` and `formatTime` are the plain functions under `fmtDate` and `fmtTime`; a table's `locale` reaches them through the verbs. The fixed style keeps its order in every language (so Japanese reads oddly); the flexible one is CLDR's own pattern for each locale.
+""", nkCode)
+
+nbText: """
+### Big tables, and tables as data
+
+The rest of the group is small tools that gt has and 0.1 did not. A long table can be previewed,
+its first and last rows with a row that names the rows left out; a style can come from the data;
+narrow columns can have their labels on their side:
+"""
+
+nbCode:
+  let islands = tabella(tabellaPreview(isole(), topN = 5, bottomN = 1)):
+    colsHide "city"
+    fmtInteger ["area", "population"]
+    tabStyleBody style.text(weight = "bold"), columns = "country", values = ["Italy"], targets = "row"
+    colsLabelRotate "area"
+    optCssTheme()
+  nbTable islands
+
+nbNote("""
+`tabellaPreview` makes a table, and `tabella(table): body` adds verbs to it. `tabStyleBody` styles the cells whose value is one of `values` (or contains a `pattern`, or makes a proc true), or here their whole row. `fromColumn("colour")` inside any style takes the value from another column of the same row: `style.fill(fromColumn("colour"))`.
+""", nkCode)
+
+nbText: """
+Once built, a table can be read back as data: `extractCells` gives the shown text of some cells,
+`extractBody` the whole body and `extractSummary` the summary rows, each as a `TableData`:
+"""
+
+nbCode:
+  let back = tabella(extractSummary(sizes)):
+    optCssTheme()
+  nbTable back
+
+nbText: """
+The group also adds 72 of gt's options (142 in all: every rule of the heading, the labels, the
+groups, the body, the stub and the footer, with its style, width and colour), two datasets
+(`isole()`, the islands of the Mediterranean, and `citta()`, the cities of the European Union,
+from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `agg.std`.
+
+### Choices
+
+- **CLDR, generated once.** `tools/cldr.nim` reads CLDR 49 and writes `locales.nim` (657
+  locales) and `currencies.nim`, committed with the code: nothing is read when you build or run.
+  A locale keeps only what differs from its parent (`en-AU` from `en-001`, from `en`), so the
+  data of 657 locales is 290 KB. *gt:* its own tables, from CLDR, for 574 locales. *Great
+  Tables:* 574 locales for numbers, dates in a few languages.
+- **The symbol where the language puts it.** `fmtCurrency` follows the locale's pattern; `placement`
+  chooses. *gt:* the symbol on the left unless `placement = "right"`. *Great Tables:* the same.
+- **ISO codes.** `currency` is a code ("EUR"). *gt:* a code or a name ("euro"). *Great Tables:*
+  a code.
+- **Grouped by three.** CLDR's minimum grouping (Spanish writes 1234) and the Indian grouping
+  (12,34,567) are left out, so a column lines up. *gt:* the same, with `system = "ind"` for the
+  Indian one (not yet here). *Great Tables:* the same.
+- **Latin digits.** Every locale writes 0-9. *gt:* the same. *Great Tables:* the same.
+- **A style from the data is a value.** `fromColumn` goes inside any style, and a proc of the
+  row covers the rest. *gt:* `from_column(column, na_value, fn)`. *Great Tables:* `from_column`
+  too.
+- **`pattern` is plain text.** `tabStyleBody` looks for it in the value; a regular expression
+  would need PCRE. *gt:* a regular expression. *Great Tables:* no `tab_style_body`.
+- **The preview is a table.** `tabellaPreview` returns a `Tabella`, so more verbs can follow.
+  *gt:* `gt_preview()` returns a gt table too. *Great Tables:* no preview.
+- **`agg.std`.** The name of Great Tables and Polars, short and plain. *gt:* `"sd"`, R's name.
+  *Great Tables:* `std`, through Polars.
+- **Not yet:** country names in other languages, `system = "ind"`, flexible styles with a time
+  zone (`"Hmv"`), hidden column labels, groups as a column, a multiline footer.
 
 ## 5 · Pictures in cells
 
@@ -443,6 +578,14 @@ as subscripts and a sign at the end as a charge. A superscript or a subscript is
 `<sub>` in HTML and Unicode in text (`toSuperscript`, `toSubscript`). Labels go through
 `renderLabel`, which formats what is between `{{` and `}}` and leaves the rest to the label's
 own kind of text (plain or Markdown).
+
+The locales of group 4 are a table of strings, one record of 120 fields per locale, joined by a
+separator, with empty fields where a locale says what its parent says (`locales.nim`).
+`getLocale` finds the record by binary search, fills the empty fields from the parents, and
+gives a `Locale` object: marks, patterns, names. A format reads it once, when its verb is
+called. Dates are written by `formatPattern`, which reads a CLDR pattern a letter at a time:
+`y` the year, `MMMM` the month's name, `LLLL` its name standing alone (Russian has both),
+`EEE` the short weekday, `h` and `a` the hour and AM or PM, and text between quotes as it is.
 """
 
 nbSave

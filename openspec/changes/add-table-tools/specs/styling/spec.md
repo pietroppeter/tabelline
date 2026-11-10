@@ -22,3 +22,24 @@ echo html.count("background-color: #4f7cac"), " ", html.count("background-color:
 ```text
 1 1 2
 ```
+
+### Requirement: More options
+`TabOptions` SHALL also hold gt's options for the container (`containerWidth`, `containerHeight`,
+`containerOverflowY`, `containerPaddingX`, `containerPaddingY`), the table (`tableLayout`,
+`tableFontWeight`, `tableFontStyle`), and the style, width and colour of the rules of the
+heading, the column labels (top, bottom, sides, between labels), the row groups (top, bottom,
+sides, with their size, padding and text transform), the body (lines between rows and columns,
+top and bottom), the stub (with its size and text transform), the footnotes and the source notes
+(with their background and padding). Their defaults SHALL draw the table as before.
+
+```nim
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
+  tabOptions(rowGroupBorderTopStyle = "dashed", stubBorderWidth = "1px", tableBodyHlinesStyle = "dotted")
+let css = t.toHtml
+echo "2px dashed" in css, " ", "1px solid #D3D3D3" in css, " ", "1px dotted" in css
+```
+
+```text
+true true true
+```

@@ -468,9 +468,10 @@ func median*(_: AggNs): Aggregate =
     let m = xs.len div 2
     toValue(if xs.len mod 2 == 1: xs[m] else: (xs[m - 1] + xs[m]) / 2))
 
-func sd*(_: AggNs): Aggregate =
-  ## The standard deviation of the numbers, of a sample (divided by n - 1, as R's `sd`).
-  Aggregate(name: "sd", fn: proc (values: seq[Value]): Value =
+func std*(_: AggNs): Aggregate =
+  ## The standard deviation of the numbers, of a sample (divided by n - 1, as R's `sd` and
+  ## Polars' `std`).
+  Aggregate(name: "std", fn: proc (values: seq[Value]): Value =
     let xs = numbers(values)
     if xs.len < 2: return null()
     let m = xs.sum / float(xs.len)

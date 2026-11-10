@@ -3,8 +3,9 @@
 The second part of the fourth of five PRs for 0.2 (Pietro, 10 Nov 2026: bring 0.3 and 0.4 into
 0.2). Four gt features of the Feature map that 0.1 lacked: rotated labels (`cols_label_rotate`),
 body styles from the data (`tab_style_body`, `from_column`), the preview of a big table
-(`gt_preview`), and the built table as data (`extract_body`, `extract_cells`,
-`extract_summary`).
+(`gt_preview`), the built table as data (`extract_body`, `extract_cells`,
+`extract_summary`), more of `tab_options()`, and two more datasets. It also renames `agg.sd`
+to `agg.std` (Pietro's review of the post, 10 Nov 2026: be consistent).
 
 ## What Changes
 
@@ -18,6 +19,13 @@ body styles from the data (`tab_style_body`, `from_column`), the preview of a bi
   big table, with a row saying which rows are left out ("6..99").
 - `extractCells(t, columns, rows, ctx)`, `extractBody(t, ctx)`, `extractSummary(t, ctx)`: the
   shown text of the cells, the body as a `TableData`, the summary rows as a `TableData`.
+
+- 72 more options of gt's `tab_options()` (142 in all): the container, the table's layout and
+  font, and the rules, sizes and paddings of the heading, column labels, row groups, body, stub,
+  footnotes and source notes.
+- Datasets `isole()` (194 islands of the Mediterranean) and `citta()` (95 cities of the EU),
+  from the devlog post "Rethinking tabelline's datasets".
+- `agg.sd` is `agg.std`. It is unreleased, so there is no old name to keep.
 
 ## Differences from gt and Great Tables
 
@@ -36,12 +44,21 @@ body styles from the data (`tab_style_body`, `from_column`), the preview of a bi
   data frames; `extract_summary` gives a list of data frames). `ctx = rcHtml` gives HTML, gt's
   `output = "html"`. *Great Tables:* none yet.
 
+- Options: `containerPaddingX` and `Y` are 0 by default (gt: 0px and 10px), so a table looks as
+  it did. Still not in: `column_labels_hidden`, `row_group_as_column`, `row_group_default_label`,
+  `footnotes_multiline`, `footnotes_sep`, `source_notes_multiline`, `source_notes_sep`,
+  `stub_indent_length`, the `*_include` switches, the LaTeX, page, Quarto and interactive ones.
+- `agg.std`: gt's `"sd"`, Great Tables' (Polars') `std`; Nim's std/stats calls it
+  `standardDeviation`.
+
 ## Capabilities
 
 ### Modified Capabilities
 
 - `table-parts`: Rotated labels, Preview of a big table (new).
-- `styling`: Styles from the data (new).
+- `styling`: Styles from the data, More options (new).
+- `table-data`: Datasets.
+- `table-parts`: Aggregates and their format (`agg.std`).
 - `rendering`: The built table as data (new).
 
 ## Impact
