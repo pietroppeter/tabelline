@@ -6,7 +6,7 @@
 
 ## 2. Previews and checks
 
-- [ ] 2.1 `tools/preview.py` copies `docs/assets/`
+- [ ] 2.1 Port `tools/preview.py` to Nim (`tools/preview.nim`, like the other tools), and make it copy `docs/assets/`
 - [ ] 2.2 `tools/links.nim` checks links to assets
 - [ ] 2.3 AGENTS.md, the design guide (*Two looks*), README: the new rule
 
