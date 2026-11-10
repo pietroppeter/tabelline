@@ -246,7 +246,7 @@ nbText: """
 Code folded under its name and its length, with `nbFoldCode`: a whole file, or a part of it from
 the line that holds `start` to the line that holds `stop`. A page shows the code it talks about
 without its length getting in the way. Several in a row make a list. Used in
-[FOSDEM's data, made with nanuq](../devlog/fosdem-data/) and [Review mode](../devlog/review-mode/).
+[FOSDEM's data, made with nanuq](../stories/fosdem-data/) and [Review mode](../devlog/review-mode/).
 """
 nbShowCode:
   nbFoldCode "docs/stories/r/tabelline.R"

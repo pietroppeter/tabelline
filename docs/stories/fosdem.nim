@@ -610,7 +610,8 @@ nbParte 2, "", prSecondary   # the closing sections: how it is built
 nbText: """
 ## How this story is built
 
-From zero, in four layers.
+From zero, in four layers. How the data was made, its schema and the checks it passes are told
+in a story of their own: [FOSDEM's data, made with nanuq](../fosdem-data/).
 
 **1. The raw data** is FOSDEM's own: the schedule of every edition from archive.fosdem.org (an
 XML export from 2012, the web pages before), the history of the devrooms' calls in the source

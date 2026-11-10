@@ -74,8 +74,8 @@ working rules that are easy to miss.
   there (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.
 - The Design guide (`docs/design.nim`) is updated in the PR that changes the look; a big design
   change starts as a devlog post. The page For coding agents reads this file when it builds.
-- Stories are the *use it* threads' output, one for every release: a real subject told in
-  tables, as a user would. A story is `docs/stories/<slug>.nim` (first line `## story: <release> |
+- Stories are the *use it* threads' output, one for every release, and a release may have
+  others (FOSDEM's data, for 0.1): a real subject told in tables, as a user would. A story is `docs/stories/<slug>.nim` (first line `## story: <release> |
   title | lede`, data in `docs/stories/data/<slug>/`); the gallery of the home page and of the
   stories page finds it and shows a small table from it (`preview` in `docs/stories/storie.nim`), and the roadmap's thread links it (`href`
   in `docs/piano.nim`). A story is kept up to date, like the other pages: when a release makes

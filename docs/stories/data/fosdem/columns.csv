@@ -1,4 +1,4 @@
-# What each column of the FOSDEM data means, written by hand for the post "FOSDEM's data, made with nanuq" (docs/devlog/fosdem_data.nim).
+# What each column of the FOSDEM data means, written by hand for the story "FOSDEM's data, made with nanuq" (docs/stories/fosdem_data.nim).
 table,column,meaning
 editions,year,the edition's year (the key)
 editions,edition,"its number: 1 for OSDEM 2001, 27 for 2027"

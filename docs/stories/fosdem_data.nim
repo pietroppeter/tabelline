@@ -1,8 +1,9 @@
-## devlog: 10 Nov 2026 A | FOSDEM's data, made with nanuq | Twenty-six years of FOSDEM schedules, from five kinds of web page to ten tidy tables, cleaned, joined and counted with nanuq, Polars for Nim, in under a second. The nanuq code that makes them, what nanuq did well and where it pinched, the schema of every table, and the checks that say the tables hold together.
-## A dated post about how the data of the FOSDEM story (docs/stories/data/fosdem/) was made. It
+## story: 0.1 | FOSDEM's data, made with nanuq | Twenty-six years of FOSDEM schedules, from five kinds of web page to ten tidy tables, cleaned, joined and counted with nanuq, Polars for Nim, in under a second. The nanuq code that makes them, what nanuq did well and where it pinched, the schema of every table, and the checks that say the tables hold together.
+## A story, kept up to date (first written on 10 November 2026, as a devlog post): how the data
+## of the FOSDEM story (docs/stories/data/fosdem/) was made, told in tables made with tabelline 0.1. It
 ## does not need nanuq: it reads the committed CSVs with the standard library, and quotes the
 ## nanuq code from src/process.nim as text. The checks run on the data every time the page is
-## built. The meaning of each column is written by hand in devlog/data/fosdem_data/columns.csv.
+## built. The meaning of each column is written by hand in docs/stories/data/fosdem/columns.csv.
 import std/[os, strutils, sequtils, tables, sets, parsecsv, streams, times, algorithm]
 import nimib except md
 import tabelline, tabelline/nimib
@@ -12,9 +13,9 @@ let docs = currentSourcePath().parentDir.parentDir
 let fosdem = docs / "stories" / "data" / "fosdem"
 let process = readFile(fosdem / "src" / "process.nim")
 nbInit
-nb.doc.filename = docs / "devlog" / "fosdem-data" / "index.html"
+nb.doc.filename = docs / "stories" / "fosdem-data" / "index.html"
 nb.useTabelline(nome = "tabelline",
-                title = "FOSDEM's data, made with nanuq", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+                title = "FOSDEM's data, made with nanuq", homeHref = "../", backLabel = "Stories", nameHref = "../../")
 
 type Row = Table[string, string]
 
@@ -43,13 +44,14 @@ var data: Table[string, seq[Row]]
 for n in names: data[n] = load(fosdem / n & ".csv")
 let ev = data["events"]
 
-nbTitolo "10 November 2026", "FOSDEM's data, made with nanuq", """
+nbTitolo "A story · tabelline 0.1", "FOSDEM's data, made with nanuq", """
 Twenty-six years of FOSDEM schedules, from five kinds of web page to ten tidy tables, cleaned,
 joined and counted with nanuq, Polars for Nim, in under a second.
 """
 
 nbText: """
-tabelline makes display tables from data that is already processed. For the FOSDEM story the
+tabelline makes display tables from data that is already processed. For the
+[FOSDEM story](../fosdem/) the
 processing is done by [nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim: the
 data frame library of Rust and Python, written with Nim's syntax. This is the first time nanuq
 made a whole dataset from raw files, end to end, and it is worth showing how: every table of
@@ -58,7 +60,7 @@ same files, byte for byte, every time.
 """
 
 nbNota("""
-Green cards like this one are about how the page is made. This post does not use nanuq: it
+Green cards like this one are about how the page is made. This story does not use nanuq: it
 reads the CSV files nanuq wrote with Nim's standard library, and quotes the nanuq code from
 `src/process.nim` as it is.
 """, nkCode, "Reading the code")
@@ -331,7 +333,7 @@ nbShowCode:
   type Col = object
     table, column, meaning, filled: string
   var rows: seq[Col]
-  for c in load(docs / "devlog" / "data" / "fosdem_data" / "columns.csv"):
+  for c in load(fosdem / "columns.csv"):
     let rs = data[c["table"]]
     let full = rs.countIt(it[c["column"]] != "")
     rows.add Col(table: c["table"], column: c["column"], meaning: c["meaning"],
@@ -348,7 +350,7 @@ nbText: """
 ## How they join
 
 The tables are tidy: one row per thing, a key per table, and the other tables point to it.
-The checks below found two things while this post was written. The first: the key of an event
+The checks below found two things while this story was written. The first: the key of an event
 is its year *and* its id, because the XML export numbers events per year, so id 2411 is a talk
 in 2014 and another in 2025. The second: one speaker of 2026, whose name is written in Chinese,
 had an empty key, because the first `nameKey` kept only the letters a to z. It also turned ø, ł
@@ -430,9 +432,9 @@ nanuq wrote separately, which is the best sign that nothing was lost between the
 checks cannot see is what FOSDEM's old sites never had: the schedules are complete from 2011,
 partial before (the story marks those years), and there is no list of who organised a devroom.
 
-## How this post is built
+## How this story is built
 
-The post reads the ten CSV files with Nim's `parsecsv`, as rows of strings, and makes every
+The story reads the ten CSV files with Nim's `parsecsv`, as rows of strings, and makes every
 table and check from them with tabelline: no nanuq is needed to build the site. The nanuq code
 above is read from `src/process.nim` when the page is built, so it is the code that made the
 data. To make the data again, from the raw files:
