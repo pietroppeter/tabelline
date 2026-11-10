@@ -115,6 +115,11 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated and not updated afterwards (posts of the same day take a letter, A, B, C, ...):
 
+- [Review mode](https://pietroppeter.github.io/tabelline/devlog/review-mode/)
+  (9 Nov 2026 A): select text on a page, comment on it, go through the comments with a bar at the
+  bottom, and export them as Markdown with a YAML front matter for an agent; the post is reviewed
+  with itself and keeps every version (`v1/`, `v2/`, ...). Unlike the other posts, it changes
+  while the experiment runs.
 - [Rethinking tabelline's datasets](https://pietroppeter.github.io/tabelline/devlog/datasets/)
   (8 Nov 2026 E): the three ways to make a dataset, the datasets tabelline uses and where they come
   from, the ones gt and Great Tables show first, and a brainstorm of three domains in three sizes

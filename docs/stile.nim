@@ -219,6 +219,12 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid v
 .indice > ol > li.parte-secondary::before { background: var(--secondary); color: var(--ink); }
 .indice > ol > li.parte-success::before { background: var(--success); color: var(--ink); }
 .indice ol ol { font: 400 .95rem/1.45 var(--font); padding-left: 0; margin: .15rem 0 .3rem; list-style: none; }
+/* back to the indice: an arrow at the end of every heading, on the pages that have an indice */
+.su { display: none; margin-left: .45rem; padding: .2em .45em; font-size: .55em; vertical-align: .25em;
+  color: var(--muted); text-decoration: none; border: 1px solid var(--line); line-height: 1; }
+.su::before { content: "↑"; }
+.su:hover, .su:focus-visible { color: var(--ink); border-color: var(--ink); }
+body:has(#indice) .su { display: inline-block; }
 .indice ol ol li::before { content: "— "; color: var(--muted); }
 .indice a { text-decoration-line: none; color: var(--ink); }
 .indice a:hover { text-decoration-line: underline; }
@@ -341,6 +347,14 @@ footer a { color: var(--ink); }
 details.source { margin-top: 1rem; text-align: left; }
 details.source summary { cursor: pointer; }
 details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
+/* a screenshot with numbered circles (nbSchermata): the circle is a place */
+.schermata { margin: 1rem 0; width: min(47%, 15rem); }
+.schermata > div { position: relative; }
+.schermata img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.schermata .punto { position: absolute; transform: translate(-50%, -50%); width: 1.25rem; height: 1.25rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font: 700 .72rem/1 var(--font);
+  background: var(--primary); color: var(--paper); box-shadow: 0 0 0 2px var(--paper); }
+.schermata figcaption { font-size: .8rem; line-height: 1.35; color: var(--muted); margin-top: .3rem; }
 """
 
 # ------------------------------------------------------------------------------------ the quaderno
@@ -511,3 +525,91 @@ func tintaMix*(token: string, share: int, other = "--paper"): string =
   ## `share`% of a token in another (the paper by default), for a scale drawn from the palette.
   doAssert token in tokenColours and other in tokenColours
   &"color-mix(in oklab, var({token}) {share}%, var({other}))"
+
+# ----------------------------------------------------------------------------------- review mode
+
+const revisioneRules = """
+/* the review mode (blocchi.nim, nbRevisione): marks on the text, a bar at the bottom, sheets */
+body.rv-on { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)); }
+mark.rv-mark { background: var(--secondary-soft); color: inherit; box-shadow: 0 2px 0 var(--secondary); cursor: pointer; }
+mark.rv-mark.rv-current { background: var(--secondary); }
+.rv-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: .3rem;
+  justify-content: center; padding: .45rem max(.5rem, env(safe-area-inset-right, 0px)) calc(.45rem + env(safe-area-inset-bottom, 0px)) max(.5rem, env(safe-area-inset-left, 0px));
+  background: var(--surface); border-top: 3px solid var(--ink); font: 400 15px/1.2 var(--font); }
+.rv-bar button, .rv-sheet button { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 0; min-height: 44px; min-width: 44px; padding: 0 .7rem; cursor: pointer; white-space: nowrap; }
+.rv-bar button:disabled { color: var(--muted); border-color: var(--shade); cursor: default; }
+.rv-bar button[data-do="prev"], .rv-bar button[data-do="next"] { font-size: 1.4rem; padding: 0; }
+.rv-bar .rv-count { min-width: 3.2rem; text-align: center; color: var(--muted); font-size: .85rem; }
+.rv-bar .rv-add, .rv-sheet .rv-save { background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 700; }
+.rv-bar .rv-add.rv-selected { background: var(--secondary); color: var(--ink); border-color: var(--ink); }
+dialog.rv-sheet { width: 100%; max-width: 40rem; margin: 0 auto auto; padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) 1rem max(1rem, env(safe-area-inset-left, 0px));
+  border: 0; border-bottom: 3px solid var(--ink); background: var(--surface); color: var(--ink); font: 400 16px/1.45 var(--font);
+  max-height: 90vh; overflow-y: auto; }
+dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, transparent); }
+.rv-sheet .rv-where { margin: 0 0 .4rem; font-weight: 700; }
+.rv-sheet textarea { display: block; width: 100%; margin-top: .2rem; font: 16px/1.4 var(--font); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
+.rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
+.rv-sheet .rv-actions { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
+.rv-sheet .rv-delete { margin-right: auto; color: var(--primary-text); }
+/* the comment sheet: small, from the top, so the marked words stay in view under it */
+dialog.rv-sheet[open] { animation: rv-down .2s ease-out; }
+@keyframes rv-down { from { transform: translateY(-100%); } }
+dialog.rv-sheet.rv-compact { padding: .5rem max(.6rem, env(safe-area-inset-right, 0px)) .6rem max(.6rem, env(safe-area-inset-left, 0px)); }
+dialog.rv-compact::backdrop { background: color-mix(in oklab, var(--ink) 12%, transparent); }
+.rv-row { display: flex; align-items: center; gap: .35rem; margin-bottom: .45rem; }
+.rv-row > button[value="cancel"] { font-size: 1.5rem; padding: 0; }
+.rv-kinds, .rv-whole { flex: 1; display: flex; justify-content: center; }
+.rv-whole { color: var(--muted); font-size: .9rem; }
+.rv-sheet .rv-kinds label { display: inline-flex; margin: 0; }
+.rv-kinds input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rv-kinds span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .55rem; font-size: .92rem;
+  border: 1px solid var(--line); margin-left: -1px; cursor: pointer; }
+.rv-kinds input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.rv-kinds input:focus-visible + span { outline: 2px solid var(--secondary); }
+.rv-sheet textarea, .rv-note { margin: 0 0 .45rem; }
+.rv-compact .rv-row .rv-delete { margin: 0; font-size: .92rem; padding: 0 .55rem; color: var(--primary-text); }
+/* the note: an editable box, so a phone offers to paste a screenshot in it */
+.rv-note { min-height: 3.2rem; max-height: 9rem; overflow-y: auto; padding: .5rem; font: 16px/1.4 var(--font);
+  background: var(--paper); border: 1px solid var(--line); white-space: pre-wrap; overflow-wrap: anywhere; }
+.rv-note:empty::before { content: attr(data-placeholder); color: var(--muted); }
+.rv-note:focus { outline: 2px solid var(--secondary); outline-offset: -1px; }
+.rv-thumbs { display: flex; flex-wrap: wrap; gap: .5rem; }
+.rv-thumb { position: relative; }
+.rv-thumb img { display: block; height: 4.5rem; width: auto; border: 1px solid var(--line); }
+.rv-thumb button { position: absolute; top: 0; right: 0; min-height: 32px; min-width: 32px; padding: 0; font-size: 1.1rem; }
+/* the export: each screenshot with its own Copy */
+.rv-shotlist { display: flex; flex-direction: column; gap: .35rem; margin: 0 0 .6rem; }
+.rv-shot { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--muted); }
+.rv-shot img { height: 2.75rem; width: auto; border: 1px solid var(--line); }
+.rv-shot span { flex: 1; overflow-wrap: anywhere; }
+/* the versions of a page (nbVersioni) */
+.versioni { margin: 1rem 0 1.4rem; font-size: .92rem; }
+.versioni ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.versioni li { border: 1px solid var(--line); background: var(--surface); }
+.versioni li > a, .versioni li > .voce { display: flex; align-items: center; min-height: 44px; padding: 0 .7rem; color: var(--ink); text-decoration: none; }
+.versioni li > a:hover b { text-decoration: underline; }
+.versioni li[aria-current] { border-color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
+.versioni .titolo { font-weight: 700; margin-right: .5rem; }
+.versioni li span span, .versioni li a span { color: var(--muted); margin-left: .35rem; }
+/* moving between versions: a short slide, the bar stays where it is */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: versione-out .22s ease-in both; }
+::view-transition-new(root) { animation: versione-in .26s ease-out both; }
+@keyframes versione-out { to { opacity: 0; transform: translateX(-1.5rem); } }
+@keyframes versione-in { from { opacity: 0; transform: translateX(1.5rem); } }
+.rv-bar { view-transition-name: rv-bar; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+"""
+
+const revisioneQuaderno = """
+mark.rv-mark { background: var(--highlight); box-shadow: 0 2px 0 var(--red-pen); }
+mark.rv-mark.rv-current { background: var(--postit); box-shadow: 0 2px 0 var(--red-pen), 0 0 0 2px var(--red-pen); }
+.rv-bar { font-family: var(--font); }
+"""
+
+const revisioneCss* = revisioneRules & scoped(revisioneQuaderno, "html[data-tema=\"quaderno\"]")
+  ## The CSS of the review mode and of the versions strip, added only to the pages that use them.

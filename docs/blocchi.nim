@@ -18,7 +18,7 @@
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
 
-import std/[json, strutils, strformat, sequtils, os, osproc]
+import std/[json, os, osproc, strutils, strformat, sequtils, base64]
 import nimib except md
 import tabelline, tabelline/nimib
 import stile, parti
@@ -65,7 +65,8 @@ func headingsOf*(markdownText: string): seq[(int, string)] =
     elif line.startsWith("### "): result.add (3, line[4 .. ^1].strip.stripInline)
 
 func addHeadingIds(html: string): string =
-  ## `<h2>Text</h2>` becomes `<h2 id="text">Text</h2>`, matching `slugify` of the indice.
+  ## `<h2>Text</h2>` becomes `<h2 id="text">Text<a class="su" href="#indice"></a></h2>`: an id
+  ## matching `slugify` of the indice, and a way back to it.
   result = html
   for tag in ["h2", "h3"]:
     var res = ""
@@ -78,7 +79,10 @@ func addHeadingIds(html: string): string =
       let b = result.find(close, a)
       if b < 0: break
       let inner = result[a + open.len ..< b]
-      res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner & close
+      # an arrow back to the indice, shown only on pages that have one (CSS, `.su`); drawn by
+      # CSS too, so the heading's text stays the same for anchors and quotes
+      res.add result[i ..< a] & "<" & tag & " id=\"" & slugify(stripInline(inner).replace("&amp;", "&")) & "\">" & inner &
+        "<a class=\"su\" href=\"#indice\" aria-label=\"Back to the contents\"></a>" & close
       i = b + close.len
     res.add result[i .. ^1]
     result = res
@@ -92,19 +96,25 @@ const
   pythonKeywords = ["and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else",
     "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or",
     "pass", "raise", "return", "try", "while", "with", "yield"]
+  jsKeywords = ["var", "let", "const", "function", "return", "if", "else", "for", "while", "new",
+    "typeof", "in", "of", "try", "catch", "break", "continue", "this"]
   rKeywords = ["if", "else", "for", "while", "repeat", "function", "return", "next", "break", "in",
     "library", "require"]
   otherLiterals = ["True", "False", "None", "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"]
+  jsLiterals = ["true", "false", "null", "undefined", "Infinity"]
 
 func highlightOther*(code, lang: string): string =
-  ## A small highlighter for the R, Python (and YAML) code that pages show but do not run:
-  ## keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
-  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords else: @[]
+  ## A small highlighter for the R, Python, JavaScript (and YAML) code that pages show but do not
+  ## run: keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
+  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords
+                 elif lang == "js": @jsKeywords else: @[]
+  let literals = if lang == "js": @jsLiterals else: @otherLiterals
+  let comment = if lang == "js": "//" else: "#"
   func span(cls, s: string): string = "<span class=\"hljs-" & cls & "\">" & esc(s) & "</span>"
   var i = 0
   while i < code.len:
     let c = code[i]
-    if c == '#':
+    if code.continuesWith(comment, i):
       var j = i
       while j < code.len and code[j] != '\n': inc j
       result.add span("comment", code[i ..< j]); i = j
@@ -124,7 +134,7 @@ func highlightOther*(code, lang: string): string =
       while j < code.len and code[j] in {'a'..'z', 'A'..'Z', '0'..'9', '_', '.', '-'}: inc j
       let w = code[i ..< j]
       if w in keywords: result.add span("keyword", w)
-      elif w in otherLiterals: result.add span("literal", w)
+      elif w in literals: result.add span("literal", w)
       elif lang == "yaml" and j < code.len and code[j] == ':': result.add span("keyword", w)
       elif j < code.len and code[j] == '(' and w.strip(chars = {'.'}).len > 0:
         let lead = w.len - w.strip(leading = true, trailing = false, chars = {'.'}).len
@@ -138,9 +148,9 @@ func highlightOther*(code, lang: string): string =
 
 func highlightFences(html: string): string =
   ## Code fences in Markdown, highlighted like the code that ran: Nim with nimib's highlighter,
-  ## R, Python and YAML with `highlightOther`, shell with its comments.
+  ## R, Python, JavaScript and YAML with `highlightOther`, shell with its comments.
   result = html
-  for lang in ["nim", "r", "python", "yaml", "sh"]:
+  for lang in ["nim", "r", "python", "js", "yaml", "sh"]:
     let openTag = "<pre><code class=\"language-" & lang & "\">"
     const close = "</code></pre>"
     var res = ""
@@ -226,7 +236,7 @@ newNbBlock(NbIndice):
           items.add "<li>" & link & "</li>"
     if openSub: items.add "</ol>"
     if items.len > 0: items.add "</li>"
-    &"""<nav class="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
+    &"""<nav class="indice" id="indice" aria-label="{blk.title}"><h2 class="indice-title">{blk.title}</h2><ol>{items}</ol></nav>"""
 
 proc indice*(nb: var Nb, title = "Indice") =
   nb.add newNbIndice(title = title)
@@ -528,6 +538,96 @@ template nbTinte*(swatches: openArray[(string, string, string)]) =
   ## Swatches: a colour (a token such as `--primary`, or a CSS colour), its name and what it is
   ## for, in Markdown.
   nb.tinte(swatches)
+
+# ----------------------------------------------------------------------------------- review mode
+
+const revisioneJs* = staticRead(currentSourcePath().parentDir / "assets" / "revisione.js")
+  ## The script of the review mode, kept as a file of its own (docs/assets/revisione.js) so it can
+  ## be read, tested and shown; it is inlined in the page, nothing is loaded from elsewhere.
+
+newNbBlock(NbRevisione):
+  page: string
+  version: int
+  title: string
+  source: string
+  toHtml:
+    &"""<div id="revisione" hidden data-page="{esc(blk.page)}" data-version="{blk.version}" """ &
+      &"""data-title="{esc(blk.title)}" data-source="{esc(blk.source)}"></div>""" &
+      "<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n" & revisioneJs & "});\n</script>"
+
+proc revisione*(nb: var Nb, page: string, version: int, title, source: string) =
+  nb.doc.context["stylesheet"] = %(nb.doc.context["stylesheet"].getStr & "\n<style>\n" & revisioneCss & "</style>")
+  nb.add newNbRevisione(page = page, version = version, title = title, source = source)
+
+template nbRevisione*(tpage: string, tversion: int, ttitle, tsource: string) =
+  ## Review mode on this page: select text and comment on it, go through the comments with the bar at
+  ## the bottom, and export them (Markdown with a YAML front matter) to paste in a chat with an agent.
+  ## The comments stay in the browser (localStorage), one set per `tpage` and `tversion`; `ttitle`
+  ## and `tsource` (the notebook the page is built from) go in the export. After `useTabelline`.
+  nb.revisione(tpage, tversion, ttitle, tsource)
+
+func versioneHref*(n, questa, latest: int): string =
+  ## The link from the page of version `questa` to version `n`: the newest is the page itself,
+  ## version `n` is kept in `vn/` beside it.
+  if n == questa: ""
+  elif questa == latest: &"v{n}/"
+  elif n == latest: "../"
+  else: &"../v{n}/"
+
+newNbBlock(NbVersioni):
+  versioni: seq[(string, string)]
+  questa: int
+  toHtml:
+    # two boxes, the newest first: the newest and the one before it, or, on an older version,
+    # the newest and this one. Every version is in the page's own table of versions.
+    let latest = blk.versioni.len
+    var shown = @[latest]
+    let other = if blk.questa == latest: latest - 1 else: blk.questa
+    if other >= 1: shown.add other
+    var items = ""
+    for n in shown:
+      let (date, what) = blk.versioni[n - 1]
+      let href = versioneHref(n, blk.questa, latest)
+      let inside = &"""<b>v{n}</b> <span>{inline(date)}</span>"""   # the whole box is the link
+      let box = if href.len > 0: &"""<a href="{href}">{inside}</a>""" else: &"""<span class="voce">{inside}</span>"""
+      let current = if n == blk.questa: " aria-current=\"page\"" else: ""
+      items.add &"""<li{current} title="{esc(what)}">{box}</li>"""
+    &"""<nav class="versioni" aria-label="Versions of this page"><span class="titolo">Versions</span><ol>{items}</ol></nav>"""
+
+proc versioni*(nb: var Nb, versions: openArray[(string, string)], this: int) =
+  nb.add newNbVersioni(versioni = @versions, questa = this)
+
+template nbVersioni*(tversions: openArray[(string, string)], tthis: int) =
+  ## The versions of a page that changes in rounds: `(date, what changed)` for each, oldest first,
+  ## and the number of this one. Shows two, the newest first; the newest is the page itself,
+  ## version `n` is kept in `vn/`. Moving between them is a short slide (a view transition).
+  nb.versioni(tversions, tthis)
+
+# ---------------------------------------------------------------------------- annotated screens
+
+newNbBlock(NbSchermata):
+  src: string
+  alt: string
+  punti: seq[(int, float, float)]
+  toHtml:
+    var marks = ""
+    for (n, x, y) in blk.punti:
+      marks.add &"""<span class="punto" style="left:{x:.1f}%;top:{y:.1f}%" aria-hidden="true">{n}</span>"""
+    &"""<figure class="schermata"><div><img src="{blk.src}" alt="{esc(blk.alt)}">{marks}</div>""" &
+      &"""<figcaption>{inline(blk.alt)}</figcaption></figure>"""
+
+proc schermata*(nb: var Nb, image, points, alt: string) =
+  let j = parseJson(readFile(points))
+  var punti: seq[(int, float, float)]
+  for p in j["points"]: punti.add (p["n"].getInt, p["x"].getFloat, p["y"].getFloat)
+  let mime = if image.endsWith(".png"): "image/png" else: "image/jpeg"
+  nb.add newNbSchermata(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti)
+
+template nbSchermata*(timage, tpoints, talt: string) =
+  ## A screenshot with numbered circles on it, to name its pieces in the text or a table: the
+  ## image (inlined), a JSON of points (`{"points": [{"n": 1, "x": 12.5, "y": 40}]}`, in % of the
+  ## width and height) and a caption in Markdown. Put two side by side with `nbAccanto`.
+  nb.schermata(timage, tpoints, talt)
 
 # ------------------------------------------------------------------------------------- the page
 
