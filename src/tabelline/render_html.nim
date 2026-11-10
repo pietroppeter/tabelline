@@ -16,6 +16,21 @@ func styleAttr(b: Built, key: string): string =
   let css = b.styles.getOrDefault(key)
   if css.len == 0: "" else: " style=\"" & css.replace("\"", "'") & "\""
 
+const nanoplotCss* = """
+[i] .tb_nanoplot text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; stroke-width: 0.15em; paint-order: stroke; stroke-linejoin: round; cursor: default; }
+[i] .tb_nanoplot .vert-line:hover rect { fill: var(--tb-guide); fill-opacity: 40%; stroke: #FFFFFF60; }
+[i] .tb_nanoplot .vert-line:hover text, [i] .tb_nanoplot .horizontal-line:hover text, [i] .tb_nanoplot .ref-line:hover text, [i] .tb_nanoplot .boxplot-line:hover text { stroke: white; fill: #212427; }
+[i] .tb_nanoplot .ref-line:hover rect { stroke: #FFFFFF60; }
+[i] .tb_nanoplot .ref-line:hover line { stroke: #FF0000; }
+[i] .tb_nanoplot .y-axis-line:hover rect { fill: #EDEDED; fill-opacity: 60%; stroke: #FFFFFF60; }
+[i] .tb_nanoplot .y-axis-line:hover text { stroke: white; stroke-width: 0.20em; fill: #1A1C1F; }
+[i] .tb_nanoplot_static .vert-line text, [i] .tb_nanoplot_static .horizontal-line text, [i] .tb_nanoplot_static .ref-line text, [i] .tb_nanoplot_static .boxplot-line text { stroke: white; fill: #212427; }
+[i] .tb_nanoplot_static .y-axis-line rect { fill: #EDEDED; fill-opacity: 60%; }
+[i] .tb_nanoplot_static .y-axis-line text { stroke: white; stroke-width: 0.20em; fill: #1A1C1F; }
+"""
+  ## The rules that show the values on hover (or always, without `interactiveDataValues`), with
+  ## `[i]` for the table's id: `tableCss` adds them to every table.
+
 proc tableCss*(id: string, o: TabOptions): string =
   ## The table's CSS, every rule scoped to `#id`.
   let headingBg = if o.headingBackgroundColor.len > 0: o.headingBackgroundColor else: o.tableBackgroundColor
@@ -240,11 +255,12 @@ proc tableHtml(t: Tabella): string =
   # a stable id: the same table always gets the same id, so built pages do not churn
   let id = if t.id.len > 0: t.id
            else: "tabella-" & toHex(hash(caption & head & labels & body & foot & $t.options), 8).toLowerAscii
+  let nanoCss = if body.contains("tb_nanoplot"): nanoplotCss.replace("[i]", "#" & id) else: ""
   let aria = if t.title.isEmpty: "" else: &" aria-labelledby=\"{id}-title\""
   head = head.replace("class=\"tb_title", &"id=\"{id}-title\" class=\"tb_title")
   &"""<div id="{id}" class="tabella">
 <style>
-{tableCss(id, t.options)}</style>
+{tableCss(id, t.options)}{nanoCss}</style>
 <table class="tb_table"{aria}>
 {caption}<thead>
 {head}{labels}</thead>

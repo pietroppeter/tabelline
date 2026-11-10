@@ -166,6 +166,8 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
 - `src/tabelline/units.nim`: units and chemical formulas in gt's notation (`fmtUnits`, `fmtChem`, `colsUnits`).
 - `src/tabelline/countries.nim`, `locales.nim`, `currencies.nim`: country names, the conventions of 657 locales and 305 currencies, from Unicode CLDR 49, written once by `tools/cldr.nim` (licence in `licenses/`). `src/tabelline/localize.nim` reads them (`getLocale`, `currencyInfo`, `formatPattern`).
+- `src/tabelline/pictures.nim`: icons (`fmtIcon`, every Font Awesome Free icon, from `data/fontawesome.tsv`, written by `tools/fontawesome.nim`; licence in `licenses/`) and images (`fmtImage`, inlined as data URLs).
+- `src/tabelline/nanoplots.nim`: nanoplots (`fmtNanoplot`, `colsNanoplot`), a port of Great Tables' SVG, and sparklines in text.
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
 - `src/tabelline/colors.nim`: palettes, interpolation, text contrast.
 - `src/tabelline/build.nim`: the build step all renderers share. `src/tabelline/extract.nim`: the built table as data (`extractCells`, `extractBody`, `extractSummary`).

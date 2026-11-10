@@ -166,6 +166,7 @@ block:
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),
     N(what: "the datasets `planets` and `tavolaPitagorica`", why: "small examples for the docs (`exibble` is gt's)", closest: "gt's and Great Tables' datasets"),
     N(what: "blocks for lists of pairs (`summaryRows:` then `total: agg.sum`)", why: "inside `tabella(data): body`, a verb's pairs and named arguments one per line, as Nim writes a body", closest: "named lists (`fns = list(total = \"sum\")`) and dicts (`fns={\"total\": ...}`)"),
+    N(what: "nanoplots in text: sparklines (`▁▃▅█`), bars beside a zero line, the five numbers of a box plot", why: "a nanoplot says something in the terminal and the specs too", closest: "nothing: gt and Great Tables draw nanoplots only in HTML"),
     N(what: "`toSuperscript`, `toSubscript`, and units, formulas and fractions in Unicode", why: "the text and Markdown outputs show `kg/m³` and `H₂O` too", closest: "gt's plain-text output, which keeps the notation as written"),
   ]
   let t = tabella(rows):
