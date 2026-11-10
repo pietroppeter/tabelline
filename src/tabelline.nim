@@ -20,8 +20,8 @@
 ## which reads columns as `name: [values]`, with `nil` for a missing value.
 
 import std/macros
-import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text]
-export core, formats, units, colors, verbs, build, render_html, render_text
+import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text, extract]
+export core, formats, units, colors, verbs, build, render_html, render_text, extract
 
 proc rewriteVerbs(body, it: NimNode): NimNode =
   ## Each call statement `verb(args)` becomes `it = verb(it, args)`; `for`, `if`, `when` and
@@ -32,7 +32,8 @@ proc rewriteVerbs(body, it: NimNode): NimNode =
     for s in body: result.add rewriteVerbs(s, it)
   of nnkCall, nnkCommand:
     if body[0].kind in {nnkIdent, nnkSym, nnkOpenSymChoice, nnkClosedSymChoice} and
-        body[0].strVal notin ["echo", "discard", "doAssert", "assert", "debugEcho"]:
+        (if body[0].kind in {nnkOpenSymChoice, nnkClosedSymChoice}: body[0][0].strVal
+         else: body[0].strVal) notin ["echo", "discard", "doAssert", "assert", "debugEcho"]:
       var call = newCall(body[0], it)
       for k in 1 ..< body.len: call.add body[k]
       result = newAssignment(it, call)
