@@ -36,7 +36,8 @@ suite "0.1 formats":
   test "booleans, flags":
     check formatTf(false, "triangles") == "▼"
     check formatFlag("it") == "🇮🇹"
-    check formatFlag("ITA") == "ITA"
+    check formatFlag("ITA") == "🇮🇹"
+    check formatFlag("ITAL") == "ITAL"
     expect ValueError: discard formatTf(true, "nope")
 
   test "a lone ~ or ^ is text":

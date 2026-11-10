@@ -4,8 +4,8 @@
 ## formats run when the table is rendered: the last format given for a cell wins.
 
 import std/[strutils, math, times, sequtils, strformat]
-from std/unicode import Rune, `$`
-import core
+from std/unicode import Rune, runes, runeLen, `$`
+import core, countries
 
 # ----------------------------------------------------------------------------------- locales
 
@@ -67,6 +67,37 @@ func superscript(s: string): string =
     elif c == '-': result.add "⁻"
     elif c == '+': discard
     else: result.add c
+
+const
+  superChars = [("0", "⁰"), ("1", "¹"), ("2", "²"), ("3", "³"), ("4", "⁴"), ("5", "⁵"), ("6", "⁶"),
+    ("7", "⁷"), ("8", "⁸"), ("9", "⁹"), ("+", "⁺"), ("-", "⁻"), ("−", "⁻"), ("=", "⁼"), ("(", "⁽"),
+    (")", "⁾"), ("a", "ᵃ"), ("b", "ᵇ"), ("c", "ᶜ"), ("d", "ᵈ"), ("e", "ᵉ"), ("f", "ᶠ"), ("g", "ᵍ"),
+    ("h", "ʰ"), ("i", "ⁱ"), ("j", "ʲ"), ("k", "ᵏ"), ("l", "ˡ"), ("m", "ᵐ"), ("n", "ⁿ"), ("o", "ᵒ"),
+    ("p", "ᵖ"), ("r", "ʳ"), ("s", "ˢ"), ("t", "ᵗ"), ("u", "ᵘ"), ("v", "ᵛ"), ("w", "ʷ"), ("x", "ˣ"),
+    ("y", "ʸ"), ("z", "ᶻ"), (".", "·"), ("/", "ᐟ")]
+  subChars = [("0", "₀"), ("1", "₁"), ("2", "₂"), ("3", "₃"), ("4", "₄"), ("5", "₅"), ("6", "₆"),
+    ("7", "₇"), ("8", "₈"), ("9", "₉"), ("+", "₊"), ("-", "₋"), ("−", "₋"), ("=", "₌"), ("(", "₍"),
+    (")", "₎"), ("a", "ₐ"), ("e", "ₑ"), ("h", "ₕ"), ("i", "ᵢ"), ("j", "ⱼ"), ("k", "ₖ"), ("l", "ₗ"),
+    ("m", "ₘ"), ("n", "ₙ"), ("o", "ₒ"), ("p", "ₚ"), ("r", "ᵣ"), ("s", "ₛ"), ("t", "ₜ"), ("u", "ᵤ"),
+    ("v", "ᵥ"), ("x", "ₓ")]
+
+func script(s: string, chars: openArray[(string, string)], mark: string): string =
+  ## `s` in Unicode super- or subscripts; when a character has none, `^s` or `_s` (with
+  ## parentheses around a longer `s`).
+  for r in s.runes:
+    var found = false
+    for (c, sc) in chars:
+      if c == $r: (result.add sc; found = true; break)
+    if not found:
+      return mark & (if s.runeLen > 1: "(" & s & ")" else: s)
+
+func toSuperscript*(s: string): string =
+  ## `toSuperscript("-2")` is "⁻²" (`^s` when a character has no superscript).
+  script(s, superChars, "^")
+
+func toSubscript*(s: string): string =
+  ## `toSubscript("2")` is "₂" (`_s` when a character has no subscript).
+  script(s, subChars, "_")
 
 func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText): string =
   ## `formatScientific(5.97e24)` is "5.97 × 10²⁴".
@@ -322,12 +353,15 @@ func formatTf*(b: bool, tfStyle = "check-mark"): string =
   raise newException(ValueError, "unknown tf style " & tfStyle.escape)
 
 func formatFlag*(codes: string, sep = " "): string =
-  ## Two-letter country codes (ISO 3166-1 alpha-2, comma or space separated) as flag emoji:
-  ## `formatFlag("IT")` is "🇮🇹". Anything else is left as it is.
+  ## Country codes (ISO 3166-1, two or three letters, comma or space separated) as flag emoji:
+  ## `formatFlag("IT")` and `formatFlag("ITA")` are "🇮🇹". Anything else is left as it is.
   var flags: seq[string]
   for c in codes.split({',', ' '}):
-    let code = c.strip.toUpperAscii
+    var code = c.strip.toUpperAscii
     if code.len == 0: continue
+    if code.len == 3:   # a three-letter code, ISO 3166-1 alpha-3
+      for (a3, a2) in countryAlpha3:
+        if a3 == code: (code = a2; break)
     if code.len != 2 or not code.allCharsInSet({'A'..'Z'}): flags.add c.strip; continue
     var f = ""
     for ch in code: f.add $Rune(0x1F1E6 + ord(ch) - ord('A'))
@@ -674,3 +708,147 @@ proc fmtTf*(t: sink Tabella, columns: ColSel, rows = allRows(), tfStyle = "check
     if k < cs.len: "<span style=\"color: " & cs[k] & "\">" & h & "</span>" else: h, rows)
   if naText.len > 0: result = result.subMissing(columns, rows, naText)
 
+
+# ------------------------------------------------------------------------ fractions, bins, ...
+
+func bestFraction(f: float, maxDen: int): (int, int) =
+  ## The fraction n/d closest to `f` (in [0, 1]) with d up to `maxDen`, the smallest d on a tie.
+  result = (0, 1)
+  var best = f
+  for d in 1 .. maxDen:
+    let n = int(round(f * float(d)))
+    let err = abs(f - float(n) / float(d))
+    if err < best - 1e-12: (best = err; result = (n, d))
+
+func formatFraction*(x: float, accuracy = "low", denominator = 0, simplify = true,
+                     layout = "inline", useSeps = true, sepMark = ",", ctx = rcText): string =
+  ## A number as a mixed fraction: `formatFraction(2.25)` is "2 1/4", `formatFraction(0.333)`
+  ## is "1/3". `accuracy` is "low" (denominators up to 9), "med" (99) or "high" (999); a
+  ## `denominator` fixes it ("2/16"), reduced when `simplify`. `layout = "diagonal"` shows
+  ## "2¼"-style fractions (`<sup>` and `<sub>` in HTML).
+  if x.isNaN: return "NaN"
+  if x.classify in {fcInf, fcNegInf}: return formatNumber(x)
+  let a = abs(x)
+  var whole = floor(a)
+  var (n, d) =
+    if denominator > 0: (int(round((a - whole) * float(denominator))), denominator)
+    else: bestFraction(a - whole, case accuracy
+                                  of "med": 99
+                                  of "high": 999
+                                  else: 9)
+  if n == d: (whole += 1; n = 0)
+  if n > 0 and simplify:
+    let g = gcd(n, d)
+    (n, d) = (n div g, d div g)
+  let sign = if x < 0 and (whole > 0 or n > 0): "−" else: ""
+  let w = if whole > 0 or n == 0: formatNumber(whole, 0, useSeps, sepMark = sepMark) else: ""
+  if n == 0: return sign & w
+  let frac =
+    if layout == "diagonal":
+      if ctx == rcHtml: "<span class=\"tb_frac\"><sup>" & $n & "</sup>⁄<sub>" & $d & "</sub></span>"
+      else: toSuperscript($n) & "⁄" & toSubscript($d)
+    else: $n & "/" & $d
+  sign & w & (if w.len > 0 and layout != "diagonal": " " else: "") & frac
+
+proc formatBins*(s: string, sep = "--", fmt: proc (x: float): string = nil): string =
+  ## A bin written as an interval, `"[10,20)"` or `"(0,5]"`, as a range: "10–20". `sep` goes
+  ## between the two ends (`--` is an en dash); `fmt` formats each end.
+  let t = s.strip
+  if t.len < 3 or t[0] notin {'(', '['} or t[^1] notin {')', ']'} or ',' notin t: return s
+  let parts = t[1 ..< ^1].split(',', 1)
+  var ends = @[parts[0].strip, parts[1].strip]
+  if fmt != nil:
+    for e in ends.mitems:
+      try: e = fmt(parseFloat(e))
+      except ValueError: discard
+  ends.join(sep.replace("--", "–"))
+
+func countryName*(code: string): string =
+  ## The English name of a country or territory by its two- or three-letter code (ISO 3166-1),
+  ## from Unicode CLDR: `countryName("IT")` and `countryName("ITA")` are "Italy". Other text
+  ## is returned as it is.
+  var c = code.strip.toUpperAscii
+  if c.len == 3:
+    for (a3, a2) in countryAlpha3:
+      if a3 == c: (c = a2; break)
+  for (a2, name) in countryNames:
+    if a2 == c: return name
+  code.strip
+
+func formatCountry*(codes: string, sep = ", "): string =
+  ## Country codes (comma or space separated) as names: `formatCountry("IT, FR")` is
+  ## "Italy, France".
+  codes.split({',', ' '}).filterIt(it.strip.len > 0).mapIt(countryName(it)).join(sep)
+
+proc fmtFraction*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), accuracy = "low",
+                  denominator = 0, simplify = true, layout = "inline", useSeps = true,
+                  pattern = "{x}", locale = ""): Tabella =
+  ## Numbers as mixed fractions: 2.25 is "2 1/4" (see `formatFraction`).
+  let m = t.marksFor(locale, "", "")
+  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    if not v.isNumber: return escapeHtml($v)
+    formatFraction(v.toFloat, accuracy, denominator, simplify, layout, useSeps, m.sep, ctx).withPattern(pattern), rows)
+
+proc fmtBins*(t: sink Tabella, columns: ColSel, rows = allRows(), sep = "--",
+              fmt: proc (x: float): string = nil): Tabella =
+  ## Intervals such as "[10,20)" as ranges, "10–20"; `fmt` formats both ends:
+  ## `fmtBins("size", fmt = x => formatNumber(x, 0))`.
+  let f = fmt
+  formats.fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let s = formatBins($v, sep, f)
+    if ctx == rcHtml: escapeHtml(s) else: s, rows)
+
+proc fmtPassthrough*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(), escape = true,
+                     pattern = "{x}"): Tabella =
+  ## Values shown as they are, in a `pattern`; with `escape = false` a value is HTML.
+  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let s = ($v).withPattern(pattern)
+    if ctx == rcHtml and escape: escapeHtml(s)
+    elif ctx == rcText and not escape: textToPlain(Text(kind: tkHtml, s: s))
+    else: s, rows)
+
+proc fmtCountry*(t: sink Tabella, columns: ColSel, rows = allRows(), pattern = "{x}", sep = ", "): Tabella =
+  ## Two- or three-letter country codes as English names, from CLDR: "IT" is "Italy".
+  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let s = formatCountry($v, sep).withPattern(pattern)
+    if ctx == rcHtml: escapeHtml(s) else: s, rows)
+
+const autoCurrencies = ["usd", "eur", "gbp", "jpy", "chf", "cny", "inr", "brl", "krw", "aud", "cad",
+  "sek", "nok", "dkk", "pln", "czk", "huf", "mxn", "zar", "rub", "try", "nzd", "sgd", "hkd", "twd",
+  "thb", "idr", "myr", "php", "ils", "aed", "sar", "egp", "ngn", "kes", "ars", "clp", "cop", "pen"]
+
+func autoNumber(isInt, suf: bool, m: Marks): FormatFn =
+  ## The format `fmtAuto` gives a numeric column (a proc of its own, so that each column's
+  ## closure keeps its own `isInt`).
+  result = proc (v: Value, ctx: RenderContext): string =
+    if not v.isNumber: return escapeHtml($v)
+    let x = v.toFloat
+    let a = abs(x)
+    if x != 0 and (a < 1e-3 or a >= 1e6):
+      if suf and a >= 1e6 and a < 1e15: return formatCompact(x, 1, m.dec)
+      let mant = a / pow(10.0, floor(log10(a)))
+      var d = 3   # as few decimals as the mantissa needs, up to 3
+      while d > 0 and abs(round(mant, d - 1) - round(mant, 3)) < 1e-9: dec d
+      return formatScientific(x, d, m.dec, ctx)
+    formatNumber(x, if isInt: 0 else: 3, dropTrailingZeros = true, sepMark = m.sep, decMark = m.dec)
+
+proc fmtAuto*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
+              scope: openArray[string] = ["numbers", "currency"], lgNumPref = "sci", locale = ""): Tabella =
+  ## A format for each column, from its values: numbers with as many decimals as they need (up
+  ## to 3), very small or large ones in scientific notation (`lgNumPref = "suf"`: large ones
+  ## with a suffix, "12.3M"), and a currency when the column's name ends with its code
+  ## ("price_eur").
+  result = t
+  let m = result.marksFor(locale, "", "")
+  let sc = @scope
+  for name in columns.resolve(result.data):
+    let col = result.data[name]
+    if not col.values.anyIt(it.isNumber): continue
+    let lower = name.toLowerAscii
+    let code = if lower.len > 4 and lower[^4] in {'_', '.'}: lower[^3 .. ^1] else: ""
+    if "currency" in sc and code in autoCurrencies:
+      result = result.fmtCurrency(name, rows, currency = code.toUpperAscii, locale = locale)
+      continue
+    if "numbers" notin sc: continue
+    let isInt = col.values.allIt(not it.isNumber or it.toFloat == round(it.toFloat))
+    result = fmt(result, name, autoNumber(isInt, lgNumPref == "suf", m), rows)

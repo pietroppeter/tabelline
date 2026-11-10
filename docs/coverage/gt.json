@@ -218,9 +218,9 @@
     {
      "feature": "Fractions",
      "gt": "fmt_fraction()",
-     "status": "missing",
-     "note": "1/3, 2 1/4, with an accuracy.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "fmtFraction: 2 1/4 or 2¼, accuracy low, med, high or a fixed denominator.",
+     "plan": "0.2",
      "size": "M",
      "where": "R"
     },
@@ -288,17 +288,17 @@
     {
      "feature": "Units",
      "gt": "fmt_units(), cols_units()",
-     "status": "missing",
-     "note": "gt's units syntax (m^2, kg/m^3) in cells and labels.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "fmtUnits, colsUnits and {{...}} in labels, in gt's notation; Unicode in text output.",
+     "plan": "0.2",
      "size": "M"
     },
     {
      "feature": "Chemistry",
      "gt": "fmt_chem()",
-     "status": "missing",
-     "note": "Chemical formulas with sub- and superscripts.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "fmtChem: formulas, charges, isotopes and reaction arrows; %...% inside units.",
+     "plan": "0.2",
      "size": "S",
      "where": "R"
     },
@@ -314,9 +314,9 @@
     {
      "feature": "Country names",
      "gt": "fmt_country()",
-     "status": "missing",
-     "note": "Country codes to names; needs a names table.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "fmtCountry: English names from Unicode CLDR 49 (two- and three-letter codes); other languages with the locales.",
+     "plan": "0.2",
      "size": "S",
      "where": "R"
     },
@@ -355,9 +355,9 @@
     {
      "feature": "Bins, auto format, passthrough",
      "gt": "fmt_bins(), fmt_auto(), fmt_passthrough()",
-     "status": "missing",
-     "note": "Interval labels; a format chosen from the column type; no format.",
-     "plan": "0.3",
+     "status": "done",
+     "note": "fmtBins (with a fmt proc for the ends), fmtAuto (numbers and currencies), fmtPassthrough.",
+     "plan": "0.2",
      "size": "S",
      "where": "R"
     },

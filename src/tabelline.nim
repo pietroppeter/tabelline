@@ -20,8 +20,8 @@
 ## which reads columns as `name: [values]`, with `nil` for a missing value.
 
 import std/macros
-import tabelline/[core, formats, colors, verbs, build, render_html, render_text]
-export core, formats, colors, verbs, build, render_html, render_text
+import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text]
+export core, formats, units, colors, verbs, build, render_html, render_text
 
 proc rewriteVerbs(body, it: NimNode): NimNode =
   ## Each call statement `verb(args)` becomes `it = verb(it, args)`; `for`, `if`, `when` and
@@ -65,6 +65,7 @@ proc columnName(n: NimNode): string =
   case n.kind
   of nnkIdent, nnkSym, nnkStrLit: n.strVal
   of nnkAccQuoted: (var s = ""; (for p in n: s.add p.strVal); s)
+  of nnkOpenSymChoice, nnkClosedSymChoice: n[0].strVal   # a name bound inside a template (`count`)
   of nnkDotExpr: columnName(n[0]) & "." & columnName(n[1])
   else: (error("expected a column name", n); "")
 

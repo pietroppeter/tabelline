@@ -68,6 +68,11 @@ proc tableCss*(id: string, o: TabOptions): string =
 [i] tbody tr:first-child .tb_row { border-top: none; }
 [i] .tb_indent_1 { text-indent: 1em; } [i] .tb_indent_2 { text-indent: 2em; } [i] .tb_indent_3 { text-indent: 3em; }
 [i] .tb_indent_4 { text-indent: 4em; } [i] .tb_indent_5 { text-indent: 5em; }
+[i] sup, [i] sub { line-height: 0; }
+[i] .tb_supsub { display: inline-flex; flex-direction: column; font-size: 70%; line-height: 1.05;
+  vertical-align: -0.4em; text-align: left; }
+[i] .tb_supsub sup, [i] .tb_supsub sub { font-size: inherit; vertical-align: baseline; line-height: inherit; }
+[i] .tb_frac { white-space: nowrap; } [i] .tb_frac sup, [i] .tb_frac sub { font-size: 70%; }
 [i] .tb_striped { background-color: [o.rowStripingBackgroundColor]; }
 [i] .tb_summary_row { background-color: [summaryBg]; text-transform: [o.summaryRowTextTransform];
   padding: [o.summaryRowPadding] [o.summaryRowPaddingHorizontal]; vertical-align: middle; }
@@ -145,12 +150,12 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
   proc labelCell(c: ColInfo, rowspan: int): string =
     let rs = if rowspan > 1: &" rowspan=\"{rowspan}\"" else: ""
     let w = if c.width.len > 0: &" width=\"{c.width}\"" else: ""
-    &"""<th class="tb_col_heading {alignClass(c.align)}" scope="col" id="{escapeHtml(c.name)}"{rs}{w}{b.styleAttr(colKey(c.name))}>{c.label.renderText(rcHtml)}{b.marksHtml(colKey(c.name), m)}</th>"""
+    &"""<th class="tb_col_heading {alignClass(c.align)}" scope="col" id="{escapeHtml(c.name)}"{rs}{w}{b.styleAttr(colKey(c.name))}>{c.columnLabel(rcHtml)}{b.marksHtml(colKey(c.name), m)}</th>"""
   for lv in countdown(levels, 1):
     let last = lv == 1 and false
     result.add "<tr class=\"tb_col_headings tb_spanner_row" & (if last: " tb_col_headings_last" else: "") & "\">"
     if lv == levels and t.hasStub:
-      result.add &"""<th class="tb_col_heading tb_left tb_stubhead" rowspan="{levels + 1}" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderText(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
+      result.add &"""<th class="tb_col_heading tb_left tb_stubhead" rowspan="{levels + 1}" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
     var j = 0
     while j < b.columns.len:
       let c = b.columns[j]
@@ -166,14 +171,14 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
       if k >= 0:
         let s = t.spanners[k]
         let key = spannerKey(s.label.s)
-        result.add &"""<th class="tb_center tb_spanner_col" colspan="{span}" scope="colgroup"><span class="tb_spanner"{b.styleAttr(key)}>{s.label.renderText(rcHtml)}{b.marksHtml(key, m)}</span></th>"""
+        result.add &"""<th class="tb_center tb_spanner_col" colspan="{span}" scope="colgroup"><span class="tb_spanner"{b.styleAttr(key)}>{s.label.renderLabel(rcHtml)}{b.marksHtml(key, m)}</span></th>"""
       else:
         result.add &"""<th class="tb_spanner_col" colspan="{span}"></th>"""
       j += span
     result.add "</tr>\n"
   result.add "<tr class=\"tb_col_headings tb_col_headings_last\">"
   if levels == 0 and t.hasStub:
-    result.add &"""<th class="tb_col_heading tb_left tb_stubhead" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderText(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
+    result.add &"""<th class="tb_col_heading tb_left tb_stubhead" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
   for c in b.columns:
     if levels == 0 or c.hasAnySpanner: result.add labelCell(c, 1)
   result.add "</tr>\n"
