@@ -1,7 +1,7 @@
 ## devlog: 07 Nov 2026 A | Day one: from gt to tabelline | Reading gt and Great Tables, deciding to write rather than wrap, and a first tabelline with its specs, its explainer and a notebook look.
 ## A dated post: it tells the first day as it happened, and is not updated afterwards.
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/[datasets, nimib]
 import ../blocchi
 

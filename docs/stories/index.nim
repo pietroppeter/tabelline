@@ -4,7 +4,7 @@
 ## Stories are kept up to date: when a release makes a table of a story better, the story changes.
 ## A story that used to be a devlog post keeps its old address, which forwards here (`moved`).
 import std/os
-import nimib except md
+import nimib
 import ../blocchi, storie
 
 let here = currentSourcePath().parentDir

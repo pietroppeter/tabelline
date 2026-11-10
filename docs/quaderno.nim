@@ -1,7 +1,7 @@
 ## Kept only for the pages written before the blocks module (open PRs at the time of the
 ## migration): import `blocchi` instead. `useQuaderno` is `useTabelline`, and `nbNota` with a
 ## colour name maps it to a kind. Remove this module once no page imports it.
-import nimib except md
+import nimib
 import blocchi
 export blocchi
 

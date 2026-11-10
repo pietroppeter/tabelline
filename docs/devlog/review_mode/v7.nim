@@ -2,7 +2,7 @@
 ## A version knows its number from its file name, vN.nim. The newest version is the post, built into
 ## devlog/review-mode/; an older one is kept as it was and built into devlog/review-mode/vN/.
 import std/[os, strutils, strformat, times]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../../[blocchi, review]
 import storia
@@ -430,7 +430,7 @@ The same page with the review mode, as tabelline's pages write it (`useTabelline
 their look; the review mode needs only the blocks):
 
 ```nim
-import nimib except md
+import nimib
 import tabelline/nimib
 import blocchi
 

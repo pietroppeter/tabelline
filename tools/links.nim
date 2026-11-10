@@ -20,6 +20,9 @@ const
   agent = "tabelline-links (+https://github.com/pietroppeter/tabelline)"
   parallel = 16
   skipped = ["github.com/pietroppeter/tabelline/edit/", "github.com/pietroppeter/tabelline/new/"]
+  # a link to a file of this repository on main is checked in the checkout: a PR that adds the
+  # file (a new OpenSpec change) links it before it is on main
+  ownBlob = "https://github.com/pietroppeter/tabelline/blob/main/"
 
 type Link = object
   page, href: string
@@ -102,6 +105,11 @@ proc main() =
        href.startsWith("data:") or href.startsWith("tel:"): continue
     if href.startsWith(ownBase):
       href = relativePath(site / href[ownBase.len .. ^1], site / l.page.parentDir).replace('\\', '/')
+    if href.startsWith(ownBlob):
+      let path = href[ownBlob.len .. ^1].split('#')[0].decodeUrl
+      if not (fileExists(root / path) or dirExists(root / path)):
+        broken.add l.page & ": " & l.href & " (no " & path & " in the repository)"
+      continue
     if href.startsWith("http://") or href.startsWith("https://") or href.startsWith("//"):
       if not skipped.anyIt(it in href):
         outside.mgetOrPut(href.split('#')[0], @[]).add l.page

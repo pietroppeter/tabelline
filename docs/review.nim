@@ -2,7 +2,7 @@
 ## the comments for a coding agent. One module for now, with its blocks, its styles and its
 ## script (`assets/review.js`), so it can move to nimib as it is.
 import std/[json, os, strutils, strformat]
-import nimib except md
+import nimib
 import stile
 
 func esc(s: string): string = s.multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"), ("\"", "&quot;"))

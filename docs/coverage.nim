@@ -3,7 +3,7 @@
 ## dated post: the data is docs/coverage/gt.json, updated in the PR that changes a status (and
 ## in each release PR). The tables on the page are tabelline tables.
 import std/[os, json, strutils, strformat, sequtils, tables]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import blocchi
 

@@ -1,7 +1,7 @@
 ## devlog: 07 Nov 2026 E | Three threads for every release | How tabelline will grow from 0.1 to 0.5: for every release one thread builds it, one uses it on real data, one ports reference code from gt and Great Tables. The way nanuq was made, with Nim, Python and R side by side.
 ## A dated post: it tells how the work was planned, and is not updated afterwards.
 import std/[os, strutils, strformat]
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocchi, ../piano
 

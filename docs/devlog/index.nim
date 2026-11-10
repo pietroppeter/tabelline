@@ -3,7 +3,7 @@
 ## in the order they were written (07 Nov 2026 A, B, C, ...), so the newest is still first; the
 ## letter can be left out for a day with one post. A new post needs no entry here.
 import std/[os, strutils, times, algorithm, strformat]
-import nimib except md
+import nimib
 import ../blocchi
 
 let here = currentSourcePath().parentDir

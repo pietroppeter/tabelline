@@ -5,7 +5,7 @@
 ## The data is in docs/stories/data/fosdem/ (see its README); the small tables of this story are
 ## in story/, written by src/insights.nim (nanuq).
 import std/os
-import nimib except md
+import nimib
 import tabelline, tabelline/nimib
 import ../blocchi
 
