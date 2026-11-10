@@ -9,13 +9,10 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Parts
 
-- **Column merges** (M, *in progress*: `add-rows-and-columns`). `colsMerge` with a pattern (`"{1} ({2})"`), `colsMergeUncert`
-  (value ± error), `colsMergeRange`, `colsMergeNPct`.
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
-- **Stub indent and multi-column stubs** (S, indent *in progress*: `add-rows-and-columns`). `tabStubIndent`, `rownameCol` with several columns.
-- **Rows** (S, *in progress*: `add-rows-and-columns`). `rowsAdd`, hidden rows.
+- **Multi-column stubs** (S). `rownameCol` with several columns (`tabStubIndent` is in 0.2).
 
 ## Formats
 
@@ -31,7 +28,6 @@ Rough size: S (hours), M (a day or two), L (more).
   replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
   substitution).
 
-- **More formatters** (M, *in progress*: `add-more-formats`). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
 - **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
   `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
 - **Locales** (M). Month and day names and number marks for more locales, from CLDR data
