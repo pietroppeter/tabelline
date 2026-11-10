@@ -11,6 +11,7 @@
 ##   nbGalleria "what it shows": (nbScheda "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
+##   nbSorgente "src/process.nim"              # a whole source file, folded under its name
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParti t                                 # a table and its parts, with a switch
 ##   nbTinte [("--primary", "primary", "sections")]
@@ -431,6 +432,37 @@ template nbShowCode*(body: untyped) =
     block:
       body
   nb.add showCode
+
+# ------------------------------------------------------------------------------------ a file, folded
+# The whole of a source file, folded under its name: a page can show the scripts it talks about
+# without their length getting in the way. nimib's `nbFile` shows a file too, always open.
+
+newNbBlock(NbSorgente):
+  path: string
+  lang: string
+  code: string
+  toHtml:
+    let lines = blk.code.strip(chars = {'\n'}).splitLines.len
+    &"""<details class="sorgente"><summary><code>{esc(blk.path)}</code> <span>{lines} lines</span></summary>""" &
+      (if blk.lang == "nim":
+         "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.code.strip(chars = {'\n'})) & "</code></pre>"
+       else: codeHtml(blk.code, blk.lang)) & "</details>"
+
+proc sorgente*(nb: var Nb, file: string, shown = "") =
+  ## The file `file`, folded under its name (`shown`, or the file's own path).
+  let ext = file.splitFile.ext
+  let lang = case ext
+             of ".nim", ".nims": "nim"
+             of ".py": "python"
+             of ".R", ".r": "r"
+             of ".js": "js"
+             of ".yaml", ".yml": "yaml"
+             else: "sh"
+  nb.add newNbSorgente(path = (if shown.len > 0: shown else: file), lang = lang, code = readFile(file))
+
+template nbSorgente*(file: string, shown = "") =
+  ## A source file, folded under its name and length: "open" shows it, highlighted.
+  nb.sorgente(file, shown)
 
 # ------------------------------------------------------------------------------------ R and gt
 # A story can be written in R with gt before tabelline has what it needs, and ported to Nim when

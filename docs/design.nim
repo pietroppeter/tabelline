@@ -241,6 +241,17 @@ nbShowCode:
       nbText "On a phone, one card and the edge of the next are in view."
 
 nbText: """
+## Source files
+
+A whole source file, folded under its name and its length, with `nbSorgente`: a page shows the
+scripts it talks about without their length getting in the way. Several in a row make a list.
+Used in [FOSDEM's data, made with nanuq](../devlog/fosdem-data/).
+"""
+nbShowCode:
+  nbSorgente currentSourcePath().parentDir / "stories" / "r" / "tabelline.R", "docs/stories/r/tabelline.R"
+  nbSorgente currentSourcePath().parentDir / "stories" / "r" / "run.R", "docs/stories/r/run.R"
+
+nbText: """
 ## Review mode and versions
 
 `nbRevisione` puts a page in review mode (tried in [Review mode](../devlog/review-mode/)): a

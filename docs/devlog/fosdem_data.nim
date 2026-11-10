@@ -129,8 +129,21 @@ nbText: """
 The first two steps only move bytes around: the old FOSDEM sites are HTML written by hand, one
 layout a year, and Python's parsers read them in a few lines each. Everything that needs a
 decision (what a talk is, who a person is, which devroom is which) happens in the third step,
-in nanuq. The raw files are not committed; the ten tables are.
+in nanuq. The raw files are not committed; the ten tables are. Here are the scripts of the first
+two steps, whole, in the order `build.sh` runs them, and `grid.py`, a helper used to look at the
+old HTML tables while the scripts were written:
+"""
 
+let srcDir = fosdem / "src"
+proc showSource(name: string) =
+  nbSorgente srcDir / name, "src/" & name
+for f in ["fetch.sh", "build.sh", "extract_xml.py", "extract_eventindex.py", "extract_devrooms.py",
+          "extract_early.py", "extract_early_devrooms.py", "extract_trackpages.py",
+          "extract_cfp_yaml.py", "extract_lists.py", "extract_stands.py", "extract_upcoming.py",
+          "grid.py"]:
+  showSource f
+
+nbText: """
 ## Five sources, one table of events
 
 Twenty-six years of schedules come in five shapes: the XML export (2012 on), the event index
@@ -223,6 +236,14 @@ list by name, matched on a folded name, with `coalesce` so the key columns meet 
 let tracks = fromEvents
   .join(listed, on = ["year", "tkey"], how = JoinType.Full, coalesce = some(true))
 ```
+
+All of it, the ten tables and then the story's own small ones:
+"""
+
+showSource "process.nim"
+showSource "insights.nim"
+
+nbText: """
 
 ## What nanuq did well, and where it pinched
 
