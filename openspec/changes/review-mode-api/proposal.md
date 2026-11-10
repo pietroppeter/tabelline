@@ -29,10 +29,13 @@ that builds it is still to be opened.
 - **Versions are not kept as pages.** `nbVersions`, `versionHref`, `versionsJson` and the
   `versions` argument go. History lists only the comments this browser keeps, by version, with
   Clear.
-- **`nbVersion()` takes no arguments**: it writes *Version 12 · updated 10 Nov 2026* from git.
+- **The version line is on by default**: every page with the review mode shows *Version 12 ·
+  updated 10 Nov 2026* under its title (under the lede when it has one), from git, with **✎
+  Review** beside it. `nbVersion()`, with no arguments, only places the line somewhere else.
 - **Every page of the docs** gets the review mode from the theme: `useTabelline` calls
-  `nbReview`, and **✎ Review** sits in the site's header, beside the switch of the looks, so no
-  page needs a line of its own. `useTabelline(review = false)` leaves it out.
+  `nbReview`, so no page needs a line of its own. `useTabelline(review = false)` leaves it out.
+- **Devlog posts take edits**: a dated post is still not rewritten, but typos, links and small
+  corrections are fixed, so the review mode is on there too.
 - **The post *Review mode* becomes one notebook.** v1 to v8 stop being rebuilt; the post's
   versions section links each version to its commit and its round's export.
 - CI fetches the whole history (`fetch-depth: 0`), so the commit count is right.
@@ -48,11 +51,11 @@ closest thing is a page's "suggest an edit" link (gt's pkgdown site links each p
 - `review-mode`: commenting on a page and exporting the comments for an agent.
 
 ### Modified Capabilities
-- `way-of-working`: every page of the docs has the review mode.
+- `way-of-working`: every page of the docs has the review mode; dated devlog posts take edits.
 
 ## Impact
 
-`docs/review.nim` (API, version from git), `docs/assets/review.js` (header button, History,
+`docs/review.nim` (API, version from git), `docs/assets/review.js` (the version line, History,
 format /4), `docs/blocchi.nim` (`useTabelline`, the header), `docs/stile.nim` (the header
 button), the post `docs/devlog/review_mode*` (one notebook), `.claude/skills/nimib-review/`
 (format /4, the diff), `.github/workflows/` (`fetch-depth: 0`), AGENTS.md, the design guide.
