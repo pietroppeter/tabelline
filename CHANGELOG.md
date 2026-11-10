@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- The pages of the docs share their style, fonts and the review script as files in `docs/assets/` (the home page goes from 250 KB to 50 KB); `-d:singleFile` builds a page as one file; `tools/preview.nim` replaces `preview.py` (#PR).
+- The pages of the docs share their style, fonts and the review script as files in `docs/assets/` (the home page goes from 250 KB to 50 KB); `-d:singleFile` builds a page as one file; `tools/preview.nim` replaces `preview.py` (#55).
 
 ## 0.1.0 (10 Nov 2026)
 
