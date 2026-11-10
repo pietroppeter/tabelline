@@ -12,6 +12,9 @@ the PR that adds this change.
 - `import tabelline/zen` gives it without printing: `pep20` and `aphorisms` (each with the part
   of tabelline that embodies it), `zenText`, `faithfulness`, `zenData()` and `zenTable()`.
 - Eleven aphorisms are Francesco's as they are; eight are retold about tabelline.
+- A second part after the *Zen of Nim* (Andreas Rumpf, NimConf 2021; Pietro asked for a mash-up,
+  as its philosophy is different): `nimZen`, `nimAphorisms` (each with the PEP 20 aphorism it meets
+  or argues with), `nimZenData()`, `nimZenTable()`; `zenText` prints both parts.
 - A page, The Zen of tabelline (`docs/zen.nim`), shows the text, the table, what changed from
   Great Tables and how it is built. A row "The Zen" in the feature map.
 
@@ -21,7 +24,7 @@ import tabelline/this
 
 ## Differences from gt and Great Tables
 
-- gt (R) has no Zen.
+- gt (R) has no Zen, and Great Tables has no part after the Zen of Nim.
 - Great Tables' module is `great_tables.this` and its table is `great_tables.this.table()`;
   tabelline's are `tabelline/this` and `zenTable()` in `tabelline/zen`, so the table can be had
   without the print (Nim cannot tell a notebook from a console when a module is imported).

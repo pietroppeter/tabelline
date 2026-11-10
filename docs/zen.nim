@@ -14,7 +14,7 @@ nb.useTabelline(nome = "tabelline", materia = "The Zen", classe = "kept up to da
                description = "import tabelline/this: the Zen of tabelline, after the Zen of Great Tables.")
 
 nbTitolo "The Zen · kept up to date", "The Zen of tabelline", """
-Nineteen aphorisms about tables, after Francesco Bruzzesi's *Zen of Great Tables*, after Tim Peters's *Zen of Python*.
+Aphorisms about tables, after Francesco Bruzzesi's *Zen of Great Tables*, after Tim Peters's *Zen of Python*, and after Araq's *Zen of Nim*.
 """
 nbIndice
 
@@ -95,15 +95,45 @@ block:
   nbTable changed
 
 nbText: """
+## The Zen of Nim
+
+Nim has a Zen too. Andreas Rumpf (Araq), who made Nim, gave it at the end of his talk at NimConf
+2021, and the talk became a post on the Nim site,
+[Zen of Nim](https://nim-lang.org/blog/2021/11/15/zen-of-nim.html), adapted by Pietro Peterlongo
+and reviewed by Araq. It has nine rules, and they are about something else. Python's Zen speaks
+to the person who writes the code: be explicit, be readable, keep one obvious way. Nim's speaks
+to the compiler and to the design of the language: let the compiler reason about the code, move
+work to compile time, keep the language small with macros, and write special code when you need
+speed.
+
+So the two sometimes agree and sometimes argue. *Explicit is better than implicit* meets *if the
+compiler cannot reason about the code, neither can the programmer*. *Special cases aren't special
+enough to break the rules* argues with *optimization is specialization*, and *sparse is better
+than dense* with *concise code enables readability*. Both end with one way to do it: Python's
+one obvious way, Nim's one language for everything.
+
+tabelline is a Nim library that follows a Python one, so its Zen takes both. After the nineteen
+aphorisms of Python's Zen, `import tabelline/this` prints nine more, the Zen of Nim retold about
+tables, and `nimZenTable()` shows them with what Python's Zen says next to each.
+"""
+nbCode:
+  let nimT = nimZenTable().optCssTheme()
+nbTable nimT
+
+nbText: """
 ## How it is built
 
 The Zen is two small modules of the core, `src/tabelline/zen.nim` and `src/tabelline/this.nim`,
 with nothing but Nim's standard library.
 
 `zen.nim` starts from the words: `pep20`, the nineteen aphorisms of PEP 20, and `aphorisms`, the
-nineteen of tabelline, each with the part of tabelline that embodies it. `zenText` joins them
-under a first line, at compile time.
+nineteen of tabelline, each with the part of tabelline that embodies it; then `nimZen`, the nine
+rules of the Zen of Nim, and `nimAphorisms`, tabelline's nine, each also with the number of the
+aphorism of PEP 20 it meets or argues with. `zenText` joins them under a first line, at compile
+time.
 """
+nbFoldCode "src/tabelline/zen.nim", start = "const nimAphorisms", stop = "func zenLines",
+           title = "`nimAphorisms`"
 nbFoldCode "src/tabelline/zen.nim", start = "func zenLines", stop = "func faithfulness",
            title = "`zenText`"
 
@@ -134,13 +164,21 @@ the two lines of an aphorism are laid out one under the other; the faithfulness 
 coloured from light to dark blue; the missing aphorism gets its text; a footnote says *See?* where
 the Zen says to add a footnote.
 """
-nbFoldCode "src/tabelline/zen.nim", start = "proc stacked", title = "`zenTable`"
+nbFoldCode "src/tabelline/zen.nim", start = "proc stacked", stop = "proc nimZenData",
+           title = "`zenTable`"
 nbNota("""
 Great Tables puts the aphorism and its original in two columns and joins them with `cols_merge()`.
 tabelline has no `colsMerge` yet (see the [feature map](../coverage/)), so the column holds both
 lines and a formatter, `stacked`, lays them out. It writes a line break in HTML and brackets in
 text, so `echo zenTable()` prints a table too.
 """, nkCode)
+
+nbText: """
+`nimZenData()` and `nimZenTable()` do the same for the Zen of Nim, with one more column: the
+aphorism of PEP 20 each rule meets or argues with, or *nothing* where Python's Zen has no word on
+it (copying a design, managing memory).
+"""
+nbFoldCode "src/tabelline/zen.nim", start = "proc nimZenData", title = "`nimZenData` and `nimZenTable`"
 
 nbText: """
 `this.nim` is three lines: it imports `zen`, exports it, and prints `zenText` at the top level,

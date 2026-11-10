@@ -747,7 +747,7 @@
      "feature": "The Zen",
      "gt": "import great_tables.this (Great Tables only)",
      "status": "done",
-     "note": "import tabelline/this prints the Zen of tabelline; tabelline/zen has it as a table."
+     "note": "import tabelline/this prints the Zen of tabelline; tabelline/zen has it as tables, with a second part after the Zen of Nim."
     }
    ]
   }

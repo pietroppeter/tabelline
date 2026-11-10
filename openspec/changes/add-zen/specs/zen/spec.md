@@ -3,7 +3,8 @@
 ### Requirement: The Zen as text
 `import tabelline/this` SHALL print *The Zen of tabelline* when the program starts: a first line
 that credits the Zen of Great Tables and Francesco Bruzzesi, an empty line, and the nineteen
-aphorisms, one per line. `import tabelline/zen` SHALL give the same text as `zenText` without
+aphorisms after PEP 20, one per line; then an empty line, a line that credits the Zen of Nim and
+Andreas Rumpf (Araq), an empty line and nine aphorisms after the Zen of Nim. `import tabelline/zen` SHALL give the same text as `zenText` without
 printing it.
 
 ```nim
@@ -18,9 +19,9 @@ A data table is input. A display table is output.
 Simple is better than complex.
 ```
 
-#### Scenario: Nineteen aphorisms
-- **WHEN** a program reads `aphorisms` and `pep20`
-- **THEN** both have nineteen entries, and aphorism `i` retells PEP 20's aphorism `i`
+#### Scenario: Nineteen aphorisms, then nine
+- **WHEN** a program reads `aphorisms` and `pep20`, `nimAphorisms` and `nimZen`
+- **THEN** the first two have nineteen entries and the others nine, and aphorism `i` retells the original `i`
 
 ### Requirement: The Zen as a table
 `zenTable()` SHALL make a `Tabella` of the Zen: one row per aphorism numbered in Roman numerals,
@@ -70,3 +71,31 @@ Originals: PEP 20, The Zen of Python, by Tim Peters. Remixed by Francesco Bruzze
 #### Scenario: Printed as text
 - **WHEN** a program calls `echo zenTable()`
 - **THEN** each aphorism prints with its original in brackets, without Markdown marks
+
+### Requirement: The Zen of Nim beside the Zen of Python
+`nimZenTable()` SHALL make a `Tabella` of the nine aphorisms after the Zen of Nim: each with its
+original, the part of tabelline that embodies it, the aphorism of PEP 20 it meets or argues with
+(*nothing* where PEP 20 has none), and its faithfulness to the Zen of Nim.
+
+```nim
+echo nimZenTable().colsHide(["aphorism", "faithful"]).tabHeader("After Nim")
+```
+
+```text
+                                              After Nim
+┌──────┬─────────────────────┬───────────────────────────────────────────────────────────────────────┐
+│      │     Embodied by     │ Python says                                                           │
+╞══════╪═════════════════════╪═══════════════════════════════════════════════════════════════════════╡
+│ I    │     tabHeader()     │ nothing                                                               │
+│ II   │        Value        │ Explicit is better than implicit.                                     │
+│ III  │ tabella(data): body │ Although practicality beats purity.                                   │
+│ IV   │       nbTable       │ Now is better than never.                                             │
+│ V    │    sink Tabella     │ nothing                                                               │
+│ VI   │       where()       │ Sparse is better than dense.                                          │
+│ VII  │     tabOptions      │ Simple is better than complex.                                        │
+│ VIII │        fmt()        │ Special cases aren't special enough to break the rules.               │
+│ IX   │  import tabelline   │ There should be one-- and preferably only one --obvious way to do it. │
+└──────┴─────────────────────┴───────────────────────────────────────────────────────────────────────┘
+Faithful: how close an aphorism stays to its Zen of Nim original, one minus the edit distance of the two over the length of the longer one.
+Originals: Zen of Nim, by Andreas Rumpf (Araq), NimConf 2021, and PEP 20, The Zen of Python, by Tim Peters.
+```

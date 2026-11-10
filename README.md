@@ -97,8 +97,8 @@ tabelline changes; dated posts are in the devlog.
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
 3. [The Zen of tabelline](https://pietroppeter.github.io/tabelline/zen/): `import tabelline/this`,
-   nineteen aphorisms about tables after Francesco Bruzzesi's *Zen of Great Tables*, as text and
-   as a table (`src/tabelline/zen.nim`).
+   aphorisms about tables after Francesco Bruzzesi's *Zen of Great Tables* and Araq's *Zen of
+   Nim*, as text and as tables (`src/tabelline/zen.nim`).
 
 **Where it's going**
 

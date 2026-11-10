@@ -55,7 +55,7 @@ let groups: seq[Group] = @[
   ("Learn tabelline", "Start here.", @[
     ("explainer/", "Guide", "gt and Great Tables from zero: what they are, how they work inside, who uses them; then tabelline, step by step."),
     ("book/", "Book", "The gt and Great Tables guides, redone in Nim page by page, with the original next to every example."),
-    ("zen/", "The Zen of tabelline", "import tabelline/this: nineteen aphorisms about tables, after Francesco Bruzzesi's Zen of Great Tables."),
+    ("zen/", "The Zen of tabelline", "import tabelline/this: aphorisms about tables, after Francesco Bruzzesi's Zen of Great Tables and Araq's Zen of Nim."),
   ]),
   ("Where it's going", "What tabelline has today and what comes next.", @[
     ("roadmap/", "Roadmap", "What each release from 0.1 to 0.5 adds, and the real tables it is tried on."),

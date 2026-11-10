@@ -5,7 +5,8 @@ import tabelline, tabelline/zen
 suite "the Zen":
   test "nineteen aphorisms, each after its PEP 20 original":
     check aphorisms.len == 19 and pep20.len == 19
-    check zenText.splitLines.len == 21
+    check zenText.splitLines.len == 2 + 19 + 3 + 9
+    check nimAphorisms.len == 9 and nimZen.len == 9
     check zenText.startsWith("The Zen of tabelline, after the Zen of Great Tables by Francesco Bruzzesi\n\n")
 
   test "faithfulness":
@@ -21,3 +22,8 @@ suite "the Zen":
     let html = zenTable().toHtml
     check "<br><small><em>Beautiful is better than ugly.</em></small>" in html
     check "<code>tabFootnote()</code>" in html
+
+  test "the table after the Zen of Nim":
+    let txt = nimZenTable().toText
+    check "IX" in txt and "Special cases aren't special enough to break the rules." in txt
+    check "nothing" in txt
