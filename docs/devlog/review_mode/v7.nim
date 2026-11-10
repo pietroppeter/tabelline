@@ -16,9 +16,9 @@ let source = currentSourcePath().relativePath(docs.parentDir)
 let shots = docs / "devlog" / "data" / "review-mode"
 nbInit
 nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{questa}") / "index.html"
-nb.useTabelline(name = "tabelline", title = title,
+nb.useTabelline(title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
-                nameHref = (if newest: "../../" else: "../../../"))
+                wordmarkHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
 nbReview(questa, "devlog/review-mode", title, source, dates)
@@ -435,7 +435,7 @@ import tabelline/nimib
 import blocks
 
 nbInit
-nb.useTabelline(name = "tabelline", title = "Notes")
+nb.useTabelline(title = "Notes")
 nbRevisione("notes", 1, "Notes", "docs/notes.nim")
 nbTitle "10 November 2026", "Notes"
 nbVersione 1

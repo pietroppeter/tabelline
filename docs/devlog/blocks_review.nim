@@ -11,8 +11,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "blocks-review" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Blocks, not HTML", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Blocks, not HTML", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbText: """
 *8 November 2026*

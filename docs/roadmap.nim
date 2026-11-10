@@ -9,7 +9,7 @@ import blocks, piano
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "roadmap" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Roadmap", class = "kept up to date",
+nb.useTabelline(section = "Roadmap", cadence = "kept up to date",
                title = "tabelline roadmap", homeHref = "../",
                description = "The releases of tabelline, and the three threads that make each one.")
 

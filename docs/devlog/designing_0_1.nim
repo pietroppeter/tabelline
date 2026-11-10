@@ -8,8 +8,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "designing-0-1" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Designing tabelline 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Designing tabelline 0.1", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "7 November 2026", "Designing tabelline 0.1", """
 tabelline 0.1 from zero: what a table needs, from the data to the last style, simplest first; where tabelline follows R's gt, where Python's Great Tables and where Nim asked for something of its own; and how it is built.

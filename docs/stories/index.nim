@@ -12,7 +12,7 @@ let docs = here.parentDir
 
 nbInit
 nb.doc.filename = here / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Stories", class = "one for every release",
+nb.useTabelline(section = "Stories", cadence = "one for every release",
                title = "tabelline stories", homeHref = "../",
                description = "Real subjects told in tables made with tabelline, one for every release.")
 

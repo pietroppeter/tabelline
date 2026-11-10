@@ -10,8 +10,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "design-review" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Reviewing the design: a palette by roles", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Reviewing the design: a palette by roles", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 # ---------------------------------------------------------------------------------- colour maths
 # sRGB <-> OKLab (Björn Ottosson's matrices), the space CSS `color-mix(in oklab, ...)` mixes in,

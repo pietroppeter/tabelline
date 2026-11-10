@@ -10,8 +10,7 @@ import ../blocks, ../olimpiadi
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "stories" / "milano-cortina" / "index.html"
-nb.useTabelline(name = "tabelline",
-                title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", nameHref = "../../")
+nb.useTabelline(title = "Milano Cortina 2026, in small numbers", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
 
 const soft = @[haru.paper, haru.secondary]    # Haru's paper to its forget-me-not blue
 proc blend(a, b: string, t: float): string = mix(parseColor(a), parseColor(b), t).toHex

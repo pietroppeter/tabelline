@@ -11,7 +11,7 @@ let docs = currentSourcePath().parentDir
 let data = parseFile(docs / "coverage" / "gt.json")
 nbInit
 nb.doc.filename = docs / "coverage" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Feature map", class = "kept up to date",
+nb.useTabelline(section = "Feature map", cadence = "kept up to date",
                title = "tabelline and gt: feature map", homeHref = "../",
                description = "Every feature group of gt and Great Tables, what tabelline has, and the plan for the rest.")
 

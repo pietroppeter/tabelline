@@ -15,9 +15,9 @@ let docs = currentSourcePath().parentDir.parentDir.parentDir
 let source = currentSourcePath().relativePath(docs.parentDir)
 nbInit
 nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{questa}") / "index.html"
-nb.useTabelline(name = "tabelline", title = title,
+nb.useTabelline(title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
-                nameHref = (if newest: "../../" else: "../../../"))
+                wordmarkHref = (if newest: "../../" else: "../../../"))
 nbReview(questa, "devlog/review-mode", title, source)
 
 nbTitle &"9 November 2026 · version {questa}", title, """

@@ -29,7 +29,7 @@ posts.sort(proc (a, b: Post): int = cmp((b.day, b.letter), (a.day, a.letter)))
 
 nbInit
 nb.doc.filename = here / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Devlog", class = "posts",
+nb.useTabelline(section = "Devlog", cadence = "dated posts",
                title = "tabelline devlog", homeHref = "../")
 
 nbTitle "Devlog", "How tabelline is made", """

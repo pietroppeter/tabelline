@@ -13,8 +13,7 @@ let docs = currentSourcePath().parentDir.parentDir
 let story = "docs/stories/data/fosdem/story"   # from the repository's root, for R
 nbInit
 nb.doc.filename = docs / "stories" / "fosdem" / "index.html"
-nb.useTabelline(name = "tabelline",
-                title = "FOSDEM, twenty-six times", homeHref = "../", backLabel = "Stories", nameHref = "../../")
+nb.useTabelline(title = "FOSDEM, twenty-six times", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
 
 nbTitle "A story · tabelline 0.2", "FOSDEM, twenty-six times", """
 Every year, on a weekend at the start of February, a few thousand people who make free software

@@ -11,7 +11,7 @@ import blocks
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "design" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Design guide", class = "kept up to date",
+nb.useTabelline(section = "Design guide", cadence = "kept up to date",
                title = "tabelline design guide", homeHref = "../",
                description = "The design of tabelline's pages: two looks, shapes for kinds, a palette by roles, and the blocks every page is made of.")
 
@@ -136,7 +136,10 @@ nbText: """
 ## The page and its title
 
 A page is a nimib notebook that calls `nb.useTabelline(...)` right after `nbInit`: both looks,
-the header with the switch and the cover label, the footer. Then `nbTitle` opens it with a
+the header with the switch and the masthead, the footer. The masthead is the wordmark, the
+`section` the page belongs to (Guide, Devlog, Stories) and its `cadence`, how it lives (kept up to
+date, one for every release, dated posts); the quaderno writes the same three lines as the label
+of an exercise book (nome, materia, classe). Then `nbTitle` opens it with a
 kicker (what it is and when; in a post, the date), the title, and a lede that says what the page
 gives the reader. Everything below is a block: each section shows one live, with its code folded
 under it.

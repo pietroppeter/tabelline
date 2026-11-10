@@ -5,9 +5,9 @@ import nimib except md
 import blocks
 export blocks
 
-proc useQuaderno*(nb: var Nb, name = "tabelline", subject = "", class = "", title = "", description = "",
-                  homeHref = "", backLabel = "tabelline", nameHref = "") {.deprecated: "use useTabelline".} =
-  nb.useTabelline(name, subject, class, title, description, homeHref, backLabel, nameHref)
+proc useQuaderno*(nb: var Nb, section = "", cadence = "", title = "", description = "",
+                  homeHref = "", backLabel = "tabelline", wordmarkHref = "") {.deprecated: "use useTabelline".} =
+  nb.useTabelline(section, cadence, title, description, homeHref, backLabel, wordmarkHref)
 
 func kindOf*(colour: string): NoteKind =
   ## The kind of note an old colour name meant.

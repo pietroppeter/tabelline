@@ -8,8 +8,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "palettes" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Munari meets Japan: palettes for the second look", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 # ------------------------------------------------------------------------------------ palettes
 type

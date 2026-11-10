@@ -10,7 +10,7 @@ import blocks, stories/storie
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "index.html"
-nb.useTabelline(name = "tabelline", subject = "great tables for Nim", class = "1ª · since November 2026",
+nb.useTabelline(section = "great tables for Nim", cadence = "since November 2026",
                title = "tabelline: great tables for Nim",
                description = "tabelline: display tables for Nim, after R's gt and Python's Great Tables.")
 

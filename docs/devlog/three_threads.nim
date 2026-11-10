@@ -8,8 +8,7 @@ import ../blocks, ../piano
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "three-threads" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Three threads for every release", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Three threads for every release", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "7 November 2026", "Three threads for every release", """
 How tabelline will grow from 0.1 to 0.5: for every release, one thread builds it, one uses it on real data, and one ports reference code from gt and Great Tables, with Nim, Python and R side by side.

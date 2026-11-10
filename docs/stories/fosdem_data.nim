@@ -14,8 +14,7 @@ let fosdem = docs / "stories" / "data" / "fosdem"
 let process = readFile(fosdem / "src" / "process.nim")
 nbInit
 nb.doc.filename = docs / "stories" / "fosdem-data" / "index.html"
-nb.useTabelline(name = "tabelline",
-                title = "FOSDEM's data, made with nanuq", homeHref = "../", backLabel = "Stories", nameHref = "../../")
+nb.useTabelline(title = "FOSDEM's data, made with nanuq", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
 
 type Row = Table[string, string]
 

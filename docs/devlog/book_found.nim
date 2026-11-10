@@ -8,8 +8,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "book-found" / "index.html"
-nb.useTabelline(name = "tabelline",
-                title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "What the book found for 0.1", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "8 November 2026", "What the book found for 0.1", """
 Porting the Great Tables guide into the tabelline book turned up two bugs and a dozen gaps; 0.1

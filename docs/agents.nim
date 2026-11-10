@@ -11,7 +11,7 @@ let docs = currentSourcePath().parentDir
 let repo = docs.parentDir
 nbInit
 nb.doc.filename = docs / "agents" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "For coding agents", class = "kept up to date",
+nb.useTabelline(section = "For coding agents", cadence = "kept up to date",
                title = "tabelline for agents", homeHref = "../",
                description = "For coding agents working on tabelline: setup, commands, where things are, and the working rules.")
 

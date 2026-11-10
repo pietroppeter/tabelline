@@ -8,8 +8,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "two-looks" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Two looks: the quaderno and Munari", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Two looks: the quaderno and Munari", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "7 November 2026", "Two looks: the quaderno and Munari", """
 The pages get a second look, after Bruno Munari, one switch away in every header: Munari is the new default, and your choice is remembered.

@@ -9,7 +9,7 @@ import blocks, piano
 let root = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = root / "explainer" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "The Great Explainer", class = "1ª · guide",
+nb.useTabelline(section = "Guide", cadence = "kept up to date",
                title = "The Great Explainer: great tables for Nim",
                description = "What gt and Great Tables are, how they work inside, who uses them, and a first version of tabelline, great tables for Nim.",
                homeHref = "../")

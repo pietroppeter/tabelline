@@ -11,7 +11,7 @@ import ../tools/specexamples
 let docs = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = docs / "specs" / "index.html"
-nb.useTabelline(name = "tabelline", subject = "Specs", class = "kept up to date",
+nb.useTabelline(section = "Specs", cadence = "kept up to date",
                title = "tabelline specs", homeHref = "../",
                description = "How tabelline behaves today: OpenSpec requirements with examples that run.")
 

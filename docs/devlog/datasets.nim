@@ -13,8 +13,7 @@ let root = docs.parentDir
 let data = docs / "devlog" / "data" / "datasets"
 nbInit
 nb.doc.filename = docs / "devlog" / "datasets" / "index.html"
-nb.useTabelline(name = "tabelline",
-                title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 proc readData(name: string): TableData =
   ## One of this post's CSV files: its `#` lines name the source.

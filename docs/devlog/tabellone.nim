@@ -8,8 +8,7 @@ import ../blocks
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "tabellone" / "index.html"
-nb.useTabelline(name = "tabelline",
-               title = "Tabellone: when a table becomes a grid", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Tabellone: when a table becomes a grid", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "7 November 2026 · research", "Tabellone: when a table becomes a grid", """
 gt and Great Tables make tables to read; dashboards need grids to explore. What a grid is, how AG Grid and friends do it, and whether tabelline should have a big brother.

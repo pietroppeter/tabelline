@@ -3,7 +3,7 @@
 ## A page says what it shows with these blocks, and never how it is drawn: no HTML in `nbText`,
 ## no CSS and no colours in a page. The CSS of every block is in `theme.nim`, from the tokens.
 ##
-##   nb.useTabelline(subject = "...", title = "...")   # right after nbInit
+##   nb.useTabelline(section = "...", title = "...")   # right after nbInit
 ##   nbTitle "kicker", "Title", "a lede, in Markdown"
 ##   nbToc
 ##   nbNote "text", nkWarning
@@ -719,11 +719,13 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
   var rows = ""
-  for (key, label, cls) in [("nome", "Nome", "nome"), ("materia", "Materia", ""), ("classe", "Classe", "")]:
+  # The masthead: the wordmark, the section and its cadence. The quaderno shows them as the label
+  # of an exercise book, so each line keeps the label's word for it (Nome, Materia, Classe).
+  for (key, label, cls) in [("wordmark", "Nome", "nome"), ("section", "Materia", ""), ("cadence", "Classe", "")]:
     let v = c{key}.getStr
     if v.len > 0:
-      let nameHref = c{"name_href"}.getStr
-      let shown = if key == "nome" and nameHref.len > 0: &"""<a href="{nameHref}">{v}</a>""" else: v
+      let wordmarkHref = c{"wordmark_href"}.getStr
+      let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
@@ -741,22 +743,23 @@ func pageFooter(blk: JsonNode, nb: Nb): string =
 
 func emptyPartial(blk: JsonNode, nb: Nb): string = ""
 
-proc useTabelline*(nb: var Nb, name = "tabelline", subject = "", class = "", title = "", description = "",
-                   homeHref = "", backLabel = "tabelline", nameHref = "") =
+proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
+                   homeHref = "", backLabel = "tabelline", wordmarkHref = "") =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
-  ## cover label (`name`, `subject`, `class`: the quaderno's nome, materia, classe), and the footer. `homeHref` links back, with
-  ## `backLabel` as its text (a devlog post links back to the devlog); `nameHref` makes the name a
-  ## link (a post's name links to the home page).
+  ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
+  ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
+  ## `backLabel` as its text (a devlog post links back to the devlog); `wordmarkHref` makes the
+  ## wordmark a link (a post's wordmark links to the home page).
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
-  nb.doc.context["title"] = %(if title.len > 0: title else: name)
+  nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
     "\n" & temaHeadScript & "\n<style>\n" & css & "</style>")
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
-  for (key, value) in [("nome", name), ("materia", subject), ("classe", class), ("home_href", homeHref),
-                       ("back_label", backLabel), ("name_href", nameHref)]:
+  for (key, value) in [("wordmark", "tabelline"), ("section", section), ("cadence", cadence), ("home_href", homeHref),
+                       ("back_label", backLabel), ("wordmark_href", wordmarkHref)]:
     nb.doc.context[key] = %value
   nb.backend.partials["header"] = pageHeader
   nb.backend.partials["footer"] = pageFooter
