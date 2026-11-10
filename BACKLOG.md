@@ -32,7 +32,7 @@ Rough size: S (hours), M (a day or two), L (more).
   replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
   substitution).
 
-- **More formatters** (M). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
+- **More formatters** (M, *in progress*: `add-more-formats`). `fmtUnits` (`m^2`, `kg/m^3`, gt's units syntax), `fmtFraction`.
 - **Images and icons** (M). `fmtImage` (inlined as data URLs so pages stay standalone),
   `fmtIcon`, without loading anything remote; SVG flags (emoji flags are in 0.1).
 - **Locales** (M). Month and day names and number marks for more locales, from CLDR data

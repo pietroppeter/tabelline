@@ -368,6 +368,8 @@ type
     ## The boxhead entry of one column: how its label and cells are shown.
     name*: string
     label*: Text
+    units*: string          ## units in gt's notation, shown with the label (`colsUnits`)
+    unitsPattern*: string   ## how: `{1}` is the label, `{2}` the units
     align*: Align
     width*: string
     hidden*: bool

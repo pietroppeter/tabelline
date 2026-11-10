@@ -37,7 +37,7 @@ block:
   let rows = @[
     G(group: "1 · Summing up", what: "summary rows for each group and for the whole table; aggregates", status: "built"),
     G(group: "2 · Rows and columns", what: "merged columns, added columns and rows, summary columns, hidden rows, stub indent, decimal alignment", status: "built"),
-    G(group: "3 · More formats", what: "units, fractions, chemistry, bins, automatic formats, country names", status: "planned"),
+    G(group: "3 · More formats", what: "units, fractions, chemistry, bins, automatic formats, country names", status: "built"),
     G(group: "4 · Every locale", what: "numbers, currencies and dates from CLDR; rotated labels, more options, extract, preview, body styles, datasets", status: "planned"),
     G(group: "5 · Pictures in cells", what: "icons, images and nanoplots, all inlined", status: "planned"),
   ]
@@ -236,8 +236,129 @@ nbText: """
 
 ## 3 · More formats
 
-*Planned, PR 3.* Units (`m^2`, `kg/m^3`, gt's syntax), fractions, chemical formulas, bins, an
-automatic format that picks one per column, and country names.
+### A unit in a label
+
+The simplest unit is in a column label: a density in kilograms per cubic metre. Between `{{` and
+`}}`, a label is written in gt's units notation, where `^` starts a power:
+"""
+
+nbCode:
+  nbTable tabella(planets(), rownameCol = "planet")
+    .colsHide(everything()).colsUnhide(["density", "gravity"])
+    .colsLabel({"density": "density, {{kg/m^3}}", "gravity": "gravity, {{m s^-2}}"})
+    .optCssTheme()
+
+nbNote("""
+`colsUnits({"density": "kg/m^3"})` does the same without touching the label, with a pattern for
+where the units go (`unitsPattern = "{1} ({2})"`). Units work in spanners and in the stubhead too.
+""", nkCode)
+
+nbText: """
+### Units in cells
+
+When the units differ from row to row, they go in a column of their own, and `fmtUnits` reads
+each cell. The notation has a few more signs: `_` starts a subscript, a unit after a lone `/` is
+a power −1, `:mu:` and other names between colons are symbols, `degC` is °C:
+"""
+
+nbCode:
+  let constants = tableData:
+    constant: ["speed of light", "gravity", "Boltzmann", "vacuum permeability", "room"]
+    value: [299792458.0, 9.80665, 1.380649e-23, 1.25663706e-6, 20.0]
+    units: ["m /s", "m s^-2", "J /K", "N A^-2", "degC"]
+  nbTable tabella(constants, rownameCol = "constant")
+    .fmtAuto("value")
+    .fmtUnits("units")
+    .optCssTheme()
+
+nbNote("""
+`fmtAuto` picked a format for the values: scientific notation for the very large and the very
+small, up to three decimals for the others. It looks at each column's values, and formats a
+currency when the column's name ends with its code (`price_eur`).
+""", nkCode)
+
+nbText: """
+### Chemistry
+
+Chemical formulas are units with their own rules: a digit after an element is a subscript, a
+number before a formula is a count, a charge follows a caret, and arrows join the two sides of a
+reaction:
+"""
+
+nbCode:
+  let reactions = tableData:
+    name: ["water", "rust", "photosynthesis", "ammonia"]
+    reaction: ["2H2 + O2 -> 2H2O", "4Fe + 3O2 -> 2Fe2O3", "6CO2 + 6H2O -> C6H12O6 + 6O2", "N2 + 3H2 <=> 2NH3"]
+    ion: ["OH-", "Fe^3+", "HCO3-", "NH4+"]
+  nbTable tabella(reactions, rownameCol = "name")
+    .fmtChem(["reaction", "ion"])
+    .optCssTheme()
+
+nbText: """
+### Fractions
+
+A recipe reads better in fractions. `fmtFraction` finds the closest fraction with a small
+denominator (up to 9, 99 or 999), or with a denominator you give, and writes it inline or
+diagonal:
+"""
+
+nbCode:
+  let flour = tableData:
+    ingredient: ["flour", "sugar", "butter", "salt"]
+    cups: [2.25, 0.333, 0.5, 0.0625]
+  nbTable tabella(flour, rownameCol = "ingredient")
+    .colsAdd("diagonal", flour["cups"].values)
+    .colsAdd("in sixteenths", flour["cups"].values)
+    .fmtFraction("cups")
+    .fmtFraction("diagonal", layout = "diagonal")
+    .fmtFraction("in sixteenths", denominator = 16, simplify = false)
+    .optCssTheme()
+
+nbText: """
+### Bins and country names
+
+Two formats turn codes into words. `fmtBins` reads intervals as R's `cut()` and pandas' `cut`
+write them, `[10,20)`, and shows a range; `fmtCountry` reads country codes and shows their names,
+from the Unicode CLDR:
+"""
+
+nbCode:
+  let visitors = tableData:
+    country: ["IT", "FRA", "DE", "JP"]
+    stay: ["[1,3)", "[3,7)", "[7,14)", "[14,28)"]
+    visits: [1200, 830, 610, 95]
+  nbTable tabella(visitors)
+    .colsAdd("flag", visitors["country"].values, before = "country")
+    .fmtFlag("flag")
+    .fmtCountry("country")
+    .fmtBins("stay", fmt = proc (x: float): string = formatNumber(x, 0))
+    .colsLabel({"flag": "", "stay": "nights"})
+    .optCssTheme()
+
+nbNote("""
+`fmt` formats each end of an interval, here as an integer. `fmtCountry` takes two- and three-letter codes, in any case.
+`fmtPassthrough` is the last of the group: it shows a value as it is, in a `pattern`.
+""", nkCode)
+
+nbText: """
+### Choices
+
+- **Unicode in text.** A table printed in a terminal or written as Markdown shows `kg/m³`, `H₂O`
+  and `2¼`, with Unicode superscripts and subscripts; where a character has none (there is no
+  subscript f) it writes `T_(eff)`. gt's text output keeps the notation as it was typed.
+- **Symbols are characters.** `:mu:` is µ and `->` is →, plain characters in every output; gt
+  draws reaction arrows as small SVG pictures. The three equilibrium arrows of gt are all ⇌.
+- **One label helper.** Every renderer gets a column label from `columnLabel`, so `{{...}}` and
+  `colsUnits` work the same in HTML, text and Markdown.
+- **`accuracy` and `denominator`.** gt's `accuracy` takes "low", "med", "high" or a number; two
+  arguments say which is which.
+- **`fmt` is a proc of a float.** gt's `fmt_bins(fmt = ~ fmt_integer(.))` formats a small gt
+  table; in Nim the proc that formats one number is simpler.
+- **Country names from CLDR, at build time.** `tools/cldr.nim` reads CLDR's JSON and writes
+  `countries.nim`, a constant table, so nothing is read at run time and the core still needs only
+  Nim's standard library. Names are English until the locales of group 4.
+- **Not yet:** a currency for every ISO code in `fmtAuto` (it knows the common ones until group
+  4), and gt's `fmt_units` in LaTeX.
 
 ## 4 · Every locale
 
@@ -273,6 +394,17 @@ Then, for the table as a whole:
 The renderers only lay out the result: the HTML adds the classes `tb_summary_row`,
 `tb_grand_summary_row` and `tb_indent_N`; the text draws a dotted rule before a group's
 summary and a double one before the table's.
+
+The formats of group 3 are plain functions, as the formats of 0.1 are, so they run in step 1.
+Units are read in three passes (`units.nim`): a part between `%` signs goes to the chemistry
+reader; the rest is split at spaces into tokens, and each token into a name, a subscript after
+`_` and a power after `^` (`unitToken`); the tokens are joined again with spaces, none after an
+opening bracket or around a lone `/` (`joinTokens`). Chemistry reads a token a character at a
+time (`chemToken`): an isotope at the start, then a count, then elements, with digits after them
+as subscripts and a sign at the end as a charge. A superscript or a subscript is `<sup>` or
+`<sub>` in HTML and Unicode in text (`toSuperscript`, `toSubscript`). Labels go through
+`renderLabel`, which formats what is between `{{` and `}}` and leaves the rest to the label's
+own kind of text (plain or Markdown).
 """
 
 nbSave

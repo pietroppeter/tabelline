@@ -165,6 +165,8 @@ Posts, dated and not updated afterwards (posts of the same day take a letter, A,
 - `src/tabelline.nim`: the module to import, with two of the three macros (`tabella(data): body`, `tableData:`; `tabOptions` is in `verbs.nim`).
 - `src/tabelline/core.nim`: the data model (`Value`, `TableData`, `Text`, selectors, styles, `Tabella`).
 - `src/tabelline/formats.nim`: value formatting and the `fmt*` / `sub*` verbs.
+- `src/tabelline/units.nim`: units and chemical formulas in gt's notation (`fmtUnits`, `fmtChem`, `colsUnits`).
+- `src/tabelline/countries.nim`: country names and codes from Unicode CLDR, written by `tools/cldr.nim` (licence in `licenses/`).
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
 - `src/tabelline/colors.nim`: palettes, interpolation, text contrast.
 - `src/tabelline/build.nim`: the build step all renderers share.

@@ -5,7 +5,7 @@
 
 import std/[tables, sequtils, strutils, algorithm]
 from std/unicode import runeLen
-import core, formats
+import core, formats, units
 
 type
   BuiltRow* = object
@@ -44,6 +44,20 @@ func grandKey*(label: string, col = ""): string = "grand:" & label & ":" & col
 
 func renderText*(t: Text, ctx: RenderContext): string =
   if ctx == rcHtml: textToHtml(t) else: textToPlain(t)
+
+func renderLabel*(t: Text, ctx: RenderContext): string =
+  ## A label (of a column, a spanner, the stubhead): like `renderText`, and units between `{{`
+  ## and `}}` are formatted (`"Density, {{kg/m^3}}"`).
+  if t.kind == tkHtml or "{{" notin t.s: return renderText(t, ctx)
+  let kind = t.kind
+  withUnits(t.s, ctx, func (s: string): string = renderText(Text(kind: kind, s: s), ctx))
+
+func columnLabel*(c: ColInfo, ctx: RenderContext): string =
+  ## The label of a column, with its units (`colsUnits`).
+  result = renderLabel(c.label, ctx)
+  if c.units.len > 0:
+    let pattern = if c.unitsPattern.len > 0: c.unitsPattern else: "{1}, {2}"
+    result = pattern.multiReplace(("{1}", result), ("{2}", formatUnits(c.units, ctx)))
 
 proc formatCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string =
   ## The shown text of one cell: the last format that covers it, then any substitution.
