@@ -6,7 +6,7 @@
 ## For each `.nim` file under docs/ it counts calls of nbRawHtml, nbText blocks whose text holds
 ## an HTML tag, `<style`, `<script`, inline `style="` and distinct `#RRGGBB` colours. Code shown in
 ## prose (Markdown code spans and fences in nbText) and Nim comments are not counted. The style
-## and the blocks (docs/stile.nim, docs/blocchi.nim, and docs/review.nim, which has both) are where
+## and the blocks (docs/theme.nim, docs/blocks.nim, and docs/review.nim, which has both) are where
 ## CSS and HTML belong, and dated
 ## snapshots (docs/devlog/data/) are left out. The check fails when a file counts more of anything
 ## than its line in tools/drift.tsv: a new page has none, and the dated posts keep what they had.
@@ -16,7 +16,7 @@ import std/[os, strutils, sequtils, strformat, tables, algorithm]
 const
   root = currentSourcePath().parentDir.parentDir
   baseline = root / "tools" / "drift.tsv"
-  allowed = ["stile.nim", "blocchi.nim", "review.nim"]
+  allowed = ["theme.nim", "blocks.nim", "review.nim"]
   kinds = ["nbRawHtml", "nbText html", "<style", "<script", "style=", "hex colours"]
   tags = ["<div", "<p ", "<p>", "<span", "<ul", "<ol", "<li", "<table", "<h1", "<h2", "<h3",
           "<small", "<details", "<button", "<br", "<a href", "<strong", "<em>", "<img"]
@@ -106,7 +106,7 @@ for (f, c) in now:
       failed = true
   if c != b and c.zip(b).allIt(it[0] <= it[1]): echo &"  {f}: below its baseline; run with --update to lower it"
 if failed:
-  echo "\nUse a block from docs/blocchi.nim (or make one), and put CSS and colours in docs/stile.nim."
+  echo "\nUse a block from docs/blocks.nim (or make one), and put CSS and colours in docs/theme.nim."
   quit 1
 let total = now.mapIt(it[1].foldl(a + b, 0)).foldl(a + b, 0)
 echo &"✓ no new drift ({total} counted in {now.len} files, none above tools/drift.tsv)"

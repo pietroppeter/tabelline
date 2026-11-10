@@ -3,15 +3,14 @@
 import std/[os, sequtils]
 import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "two-looks" / "index.html"
-nb.useTabelline(nome = "tabelline",
-               title = "Two looks: the quaderno and Munari", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Two looks: the quaderno and Munari", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
-nbTitolo "7 November 2026", "Two looks: the quaderno and Munari", """
+nbTitle "7 November 2026", "Two looks: the quaderno and Munari", """
 The pages get a second look, after Bruno Munari, one switch away in every header: Munari is the new default, and your choice is remembered.
 """
 nbText: """
@@ -100,7 +99,7 @@ block:  # the table only, not its code
     optCssTheme()
   nbTable lookTable
 
-nbNota("""
+nbNote("""
 **The motto.** *Complicare è facile, semplificare è difficile*: to complicate is easy, to
 simplify is hard. It is the line of Munari's that is quoted most, from his
 [*Verbale scritto*](https://it.wikiquote.org/wiki/Bruno_Munari) (1992). The Munari look puts it

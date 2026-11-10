@@ -6,7 +6,7 @@
 # sources tabelline.R (beside this file), moves to `dir` and runs the cells in order, in one
 # environment, like a notebook's. For each cell it writes what it printed and the HTML of its
 # last value, if visible (a gt table as `as_raw_html(inline_css = FALSE)`). The page's build
-# (`runR` in docs/blocchi.nim) calls it only when a cell changed, and keeps the outputs in a
+# (`runR` in docs/blocks.nim) calls it only when a cell changed, and keeps the outputs in a
 # committed JSON file, so building the site needs no R. gt's random table ids are seeded from
 # the page's name, so a second run gives the same HTML.
 suppressPackageStartupMessages({

@@ -4,7 +4,7 @@
 ## letter can be left out for a day with one post. A new post needs no entry here.
 import std/[os, strutils, times, algorithm, strformat]
 import nimib
-import ../blocchi
+import ../blocks
 
 let here = currentSourcePath().parentDir
 
@@ -29,10 +29,10 @@ posts.sort(proc (a, b: Post): int = cmp((b.day, b.letter), (a.day, a.letter)))
 
 nbInit
 nb.doc.filename = here / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "Devlog", classe = "posts",
+nb.useTabelline(section = "Devlog", cadence = "dated posts",
                title = "tabelline devlog", homeHref = "../")
 
-nbTitolo "Devlog", "How tabelline is made", """
+nbTitle "Devlog", "How tabelline is made", """
 Dated posts on the steps that made tabelline, newest first. Bigger changes are tracked and
 explained in a post. Each tells one step as it happened, and is not updated afterwards; the
 living documents, kept up to date, are on the [home page](../), and the subjects told with

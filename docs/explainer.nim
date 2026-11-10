@@ -4,17 +4,17 @@
 import std/[os, strutils, sequtils, sugar]
 import nimib
 import tabelline, tabelline/[datasets, nimib]
-import blocchi, piano
+import blocks, piano
 
 let root = currentSourcePath().parentDir
 nbInit
 nb.doc.filename = root / "explainer" / "index.html"
-nb.useTabelline(nome = "tabelline", materia = "The Great Explainer", classe = "1ª · guide",
+nb.useTabelline(section = "Guide", cadence = "kept up to date",
                title = "The Great Explainer: great tables for Nim",
                description = "What gt and Great Tables are, how they work inside, who uses them, and a first version of tabelline, great tables for Nim.",
                homeHref = "../")
 
-nbTitolo "Guide · The Great Explainer · started 7 November 2026", "Great tables, for Nim", """
+nbTitle "Guide · The Great Explainer · started 7 November 2026", "Great tables, for Nim", """
 *Tabelline* is what Italian children call the times tables, the little tables learned by heart in primary school. It is also the name of a new Nim library for making **display tables**: tables meant to be read by people, with a title, grouped rows, labels over columns, formatted numbers, colours and notes. This page explains where the idea comes from (R's **gt** and Python's **Great Tables**), how those libraries are built, who uses them, and then builds a first, small tabelline, step by step.
 """
 nbText: """
@@ -49,7 +49,7 @@ nbCode:
     colsAlign alCenter
 nbTable pitagora
 
-nbIndice
+nbToc
 
 nbText: """
 ## What is a great table?
@@ -109,7 +109,7 @@ nbCode:
     fmtInteger "diameter"
 nbTable parts
 
-nbPartiLegenda()
+nbPartsLegend()
 
 nbText: """
 The colours are light tints of Japanese traditional colours: those of Haru, the palette of these
@@ -336,7 +336,7 @@ So `tabella(data).tabHeader("Title").fmtNumber("x")` reads like gt's pipe and Gr
 method chain, and a table is never changed behind your back.
 """
 
-nbNota("""
+nbNote("""
 **What is `sink`?** A note on the parameter `t: sink Tabella`. It tells Nim that the proc takes
 ownership of the table it is given. When the caller does not use that table again, as in a
 chain, where each step's result goes straight into the next, Nim *moves* it instead of copying
@@ -637,7 +637,7 @@ nbCode:
     moons: [0, 1, 95, 146]
   let small = tabella(moons, rownameCol = "planet", groupnameCol = "kind"):
     tabHeader "Moons"
-nbAccanto:
+nbBeside:
   nbTable small
   nbTable small.optCssTheme()
 
@@ -652,7 +652,7 @@ option at a time: `tab_options(table.font.color = "var(--ink)", ...)`.
 
 These are the variables it reads, here in the look you picked:
 """
-nbTinte [("--ink", "`--ink`, the ink", "the text, the rules above and below, the rule under the column labels"),
+nbSwatches [("--ink", "`--ink`, the ink", "the text, the rules above and below, the rule under the column labels"),
          ("--paper", "`--paper`, the paper", "behind the table"),
          ("--line", "`--line`, a light grey", "the rules between rows"),
          ("--shade", "`--shade`, a lighter grey", "the row groups, and the stripes when rows are striped"),
@@ -736,7 +736,7 @@ nbCode:
       echo d
 
 nbText: """
-**The page's variables.** On these pages they are not written one by one. `docs/stile.nim` gives
+**The page's variables.** On these pages they are not written one by one. `docs/theme.nim` gives
 each look six values (paper, ink, primary, secondary, warning, success), and mixes every other
 colour from them in the browser: `--neutral-0` (the paper) to `--neutral-9` (the ink) are the
 ink in the paper, step by step, `--shade` and `--line` are two of those steps, and `--surface` is
@@ -768,7 +768,7 @@ block:
   nbText next & "\nSome things are left aside for now, such as interactive tables: the " &
     "[roadmap](../roadmap/#left-aside) says which, and why."
 
-nbNota("""
+nbNote("""
 This page is a nimib notebook, `docs/explainer.nim`: every table on it was made by the code shown, when the page was built. The research behind it read the sources of gt and Great Tables and the Posit blog. Corrections are welcome, as issues or pull requests.
 """, nkDone, "How this page was made")
 

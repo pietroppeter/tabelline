@@ -4,7 +4,7 @@
 import std/[os, strutils, strformat, times]
 import nimib
 import tabelline, tabelline/nimib
-import ../../[blocchi, review]
+import ../../[blocks, review]
 import storia
 
 const
@@ -16,9 +16,9 @@ let source = currentSourcePath().relativePath(docs.parentDir)
 let shots = docs / "devlog" / "data" / "review-mode"
 nbInit
 nb.doc.filename = docs / "devlog" / "review-mode" / (if newest: "" else: &"v{questa}") / "index.html"
-nb.useTabelline(nome = "tabelline", title = title,
+nb.useTabelline(title = title,
                 homeHref = (if newest: "../" else: "../../"), backLabel = "Devlog",
-                nameHref = (if newest: "../../" else: "../../../"))
+                wordmarkHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
 nbReview(questa, "devlog/review-mode", title, source, dates, tscript = sharedReviewScript(nb))
@@ -27,7 +27,7 @@ nbReview(questa, "devlog/review-mode", title, source, dates, tscript = sharedRev
 proc long(date: string): string = parse(date, "d MMM yyyy").format("d MMMM yyyy")
 let written = storico[0].date
 let updated = storico[questa - 1].date
-nbTitolo long(written) & (if updated != written: " · updated " & long(updated) else: ""), title, """
+nbTitle long(written) & (if updated != written: " · updated " & long(updated) else: ""), title, """
 Reviewing a page on a phone takes screenshots, notes, and many trips between the page and the
 chat. A review mode for nimib pages: select text, comment on it, go through the comments with a
 bar, and export them all in one text to paste in the chat, where an agent makes the changes. This
@@ -37,7 +37,7 @@ post is reviewed with its own review mode, round by round, and keeps every versi
 nbVersion questa
 
 if not newest:
-  nbNota &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
+  nbNote &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
     &"[version {storico.len}](../).", nkWarning
 
 nbInReview:
@@ -48,16 +48,16 @@ nbInReview:
     let changes = what.strip(chars = {'.', ' '}).split("; ")
     for i, change in changes:
       list.add &"{i + 1}. {change}\n"
-    nbNota list & "\nWhat the review asked for is in the table of [Versions and rounds](#versions-and-rounds).",
+    nbNote list & "\nWhat the review asked for is in the table of [Versions and rounds](#versions-and-rounds).",
       nkDone, &"New in version {questa}"
-  nbNota """
+  nbNote """
 Select a few words and tap **Comment ✓** in the bar at the bottom, then write what should change
 (paste a screenshot in it if it helps): it is kept as you type. With nothing selected, the same
 button is **Page note**, a note on the whole page. **‹** and **›** open your comments one by one;
 **Export** gives the text to copy into the chat. **Close review**, above, goes back to reading.
 """, nkInfo, "You are reviewing this page"
 
-nbIndice
+nbToc
 
 nbText: """
 ## The problem
@@ -105,7 +105,7 @@ A page with the review mode is read in one of two modes, and the review mode has
 its own. The drawing has them all, and what takes you from one to the next.
 """
 
-nbDisegno shots / "modi.svg", "The modes of a page: reading, and reviewing, with the sheet, the export and History"
+nbDrawing shots / "modi.svg", "The modes of a page: reading, and reviewing, with the sheet, the export and History"
 
 nbText: """
 - **Reading** is the page as it is, with one button beside the version: **✎ Review**. No bar, no
@@ -210,9 +210,9 @@ open in the sheet, and the export. The table under them says what each piece doe
 still open about it. Comment on a row of the table to change that piece.
 """
 
-nbAccanto:
-  nbSchermata shots / "sheet-v7.jpg", shots / "sheet-v7.json", "Reviewing: a comment open in the sheet at the top, its words under it, the bar at the bottom"
-  nbSchermata shots / "export-v7.jpg", shots / "export-v7.json", "The export: the text, to edit and copy, and each screenshot"
+nbBeside:
+  nbScreenshot shots / "sheet-v7.jpg", shots / "sheet-v7.json", "Reviewing: a comment open in the sheet at the top, its words under it, the bar at the bottom"
+  nbScreenshot shots / "export-v7.jpg", shots / "export-v7.json", "The export: the text, to edit and copy, and each screenshot"
 
 block:
   type Pezzo = object
@@ -432,12 +432,12 @@ their look; the review mode needs only the blocks):
 ```nim
 import nimib
 import tabelline/nimib
-import blocchi
+import blocks
 
 nbInit
-nb.useTabelline(nome = "tabelline", title = "Notes")
+nb.useTabelline(title = "Notes")
 nbRevisione("notes", 1, "Notes", "docs/notes.nim")
-nbTitolo "10 November 2026", "Notes"
+nbTitle "10 November 2026", "Notes"
 nbVersione 1
 nbText: "Some text to review."
 nbSave

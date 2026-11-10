@@ -50,7 +50,7 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Options and building
 
-- **Show the parts** (S). The docs' `showParts` (docs/parti.nim) as a library preset, `optParts()`,
+- **Show the parts** (S). The docs' `showParts` (docs/table_parts.nim) as a library preset, `optParts()`,
   with a legend: a way to learn the parts of a gt table on your own data.
 - **Option presets** (S-M). A page that styles every table the same way repeats six or seven
   `tabOptions` fields per table. A user-defined preset (`let sea = tabOptions(...)`, then

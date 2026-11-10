@@ -6,21 +6,20 @@
 import std/[os, strutils, strformat, sequtils, algorithm, tables]
 import nimib
 import tabelline, tabelline/nimib
-import ../blocchi
+import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
 let root = docs.parentDir
 let data = docs / "devlog" / "data" / "datasets"
 nbInit
 nb.doc.filename = docs / "devlog" / "datasets" / "index.html"
-nb.useTabelline(nome = "tabelline",
-                title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", nameHref = "../../")
+nb.useTabelline(title = "Rethinking tabelline's datasets", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 proc readData(name: string): TableData =
   ## One of this post's CSV files: its `#` lines name the source.
   readCsv(data / name, comment = "#")
 
-nbTitolo "8 November 2026", "Rethinking tabelline's datasets", """
+nbTitle "8 November 2026", "Rethinking tabelline's datasets", """
 A table is for people, and people recognise the data before they read a number. What tabelline
 uses today, what gt and Great Tables show first, and what tabelline could use instead.
 """
@@ -50,10 +49,10 @@ pages so far took whatever data was at hand. This post surveys it, in three part
 It ends with recommendations, the choices to make, and how this page is built.
 """
 
-nbIndice()
+nbToc()
 
 # ======================================================================================== Part 1
-nbParte 1, "What we have", prPrimary
+nbPart 1, "What we have", prPrimary
 
 nbText: """
 ## Three ways to make a dataset
@@ -63,14 +62,14 @@ dates as text, missing). There are three ways to make one, from the simplest to 
 most useful in a program. Here is the same small table, three Italian dishes, made the three ways.
 """
 
-nbGalleria "three ways to make the same table: swipe or scroll sideways":
-  nbScheda "Load it":
+nbGallery "three ways to make the same table: swipe or scroll sideways":
+  nbGalleryCard "Load it":
     block:
       nbText "From a file, with `readCsv` (or from a string, with `parseCsv`). Each value's type is guessed."
       nbCode:
         let ricette = readCsv(data / "ricette.csv")
       nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
-  nbScheda "Write the columns":
+  nbGalleryCard "Write the columns":
     block:
       nbText "In the code, one line per column, with the `tableData:` macro."
       nbCode:
@@ -79,7 +78,7 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
           region: ["Lazio", "Liguria", "Lombardia"]
           vegetarian: [false, true, false]
       nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
-  nbScheda "From objects":
+  nbGalleryCard "From objects":
     block:
       nbText "From Nim objects or named tuples, one field per column: `tabella` takes them as they are."
       nbCode:
@@ -92,7 +91,7 @@ nbGalleria "three ways to make the same table: swipe or scroll sideways":
           Ricetta(dish: "Risotto alla milanese", region: "Lombardia", vegetarian: false)]
       nbTable tabella(ricette, rownameCol = "dish").optCssTheme()
 
-nbNota """
+nbNote """
 **1 · Load it.** `readCsv(path)` reads a file; `parseCsv(text)` reads a string. Both take a
 `sep` (`'\t'` for TSV) and a `comment` (`comment = "#"` skips the lines naming a source).
 With `parseCsv` a page can read its file when it is compiled with `staticRead` and carry it inside (the book
@@ -108,7 +107,7 @@ in their order; `tabella(rows)` calls it for you. This is the way for data that 
 already has: rows parsed from somewhere else, or built with types of its own.
 """, nkCode, "Code"
 
-nbNota """
+nbNote """
 **Missing.** There is no reader for JSON, and no verbs on the data
 (filter, sort, head, join): the book writes its own `head`, `take` and `select`. Data frames
 are planned for 0.3.
@@ -239,7 +238,7 @@ the page that reads them.
 """
 
 # ======================================================================================== Part 2
-nbParte 2, "What gt and Great Tables show first", prSecondary
+nbPart 2, "What gt and Great Tables show first", prSecondary
 
 let survey = readData("survey.csv")
 
@@ -309,7 +308,7 @@ nbShowCode:
     tabHeader "gt's reference", "examples that start from each dataset"
     fmtMarkdown "dataset"
     tabSourceNote md("In four of gt's R files: `format_data`, `tab_create_modify`, `data_color`, `utils_render_html`.")
-  nbAccanto:
+  nbBeside:
     nbTable g
     nbTable r
 
@@ -351,7 +350,7 @@ nbShowCode:
     tabSourceNote md("From gt's `R/datasets.R` and the READMEs, 8 November 2026.")
   nbTable t
 
-nbNota """
+nbNote """
 **Do gt and Great Tables start from the population of countries?** Not quite, but it is the
 dataset they put first. `countrypops` opens the list of datasets in both READMEs, its badge comes
 first, and it ties with `gtcars` as the dataset gt's reference uses most (14 examples each, in the
@@ -368,7 +367,7 @@ reference has seen the data before.
 """
 
 # ======================================================================================== Part 3
-nbParte 3, "What we could have", prSuccess
+nbPart 3, "What we could have", prSuccess
 
 nbText: """
 ## Three domains, three sizes
