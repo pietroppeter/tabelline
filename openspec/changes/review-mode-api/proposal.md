@@ -34,6 +34,8 @@ that builds it is still to be opened.
   Review** beside it. `nbVersion()`, with no arguments, only places the line somewhere else.
 - **Every page of the docs** gets the review mode from the theme: `useTabelline` calls
   `nbReview`, so no page needs a line of its own. `useTabelline(review = false)` leaves it out.
+  The pages share one copy of the script, as they share their style (change
+  `share-site-assets`).
 - **Devlog posts take edits**: a dated post is still not rewritten, but typos, links and small
   corrections are fixed, so the review mode is on there too.
 - **The post *Review mode* becomes one notebook.** v1 to v8 stop being rebuilt; the post's
