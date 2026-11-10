@@ -22,7 +22,8 @@ Here is the first table every Italian pupil meets, *la tavola pitagorica*, made 
 from scratch. The code ran when this page was built.
 
 First the data: a column `×` with the numbers 1 to 10, then one column for each factor.
-`collect`, from Nim's `std/sugar`, turns a `for` loop into a list, one value per turn, and
+`collect`, from Nim's `std/sugar`, turns a `for` loop into a list, one value per turn (the
+closest Nim has to a list comprehension), and
 inside `tableData:` a `for` loop adds a column per turn, named `$j`:
 """
 
@@ -112,8 +113,9 @@ nbTable parts
 nbPartsLegend()
 
 nbText: """
-The colours are light tints of Japanese traditional colours: those of Haru, the palette of these
-pages, and of its neighbours. The same parts can be shown on the [planets table](../) of the home
+The colours are light tints of Japanese traditional colours, and the names in brackets are
+theirs, as [Nippon Colors](https://nipponcolors.com/) lists them (菜の花 *nanohana* is the yellow
+of rapeseed in flower): those of Haru, the palette of these pages, and of its neighbours. The same parts can be shown on the [planets table](../) of the home
 page.
 
 ## What they offer
@@ -269,7 +271,8 @@ tables made with gt and gridify.
 - **An ecosystem of extensions.** [gtExtras](https://jthomasmock.github.io/gtExtras/) (Tom Mock)
   adds sparklines, bar charts and themes; [reactable](https://glin.github.io/reactable/) and
   reactablefmtr cover interactive tables, and gt itself gained `opt_interactive()`.
-- **Books and teaching.** Albert Rapp's gt book, and many contest tutorials, teach table
+- **Books and teaching.** Albert Rapp's book [Creating beautiful tables in R with
+  {gt}](https://gt.albert-rapp.de/), and many contest tutorials, teach table
   design (alignment, fewer lines, grouping) as much as the API.
 - **Science.** Great Tables has posts on tables for scientific publishing, on LaTeX output, on
   the open transit data of SEPTA, and on plots inside tables.
