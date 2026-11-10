@@ -37,7 +37,7 @@ proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol = "", groupn
 
 proc initTabella*(t: sink Tabella): Tabella =
   ## A table already made, so that `tabella(t): body` adds verbs to it:
-  ## `tabella(tabellaPreview(data)): colsHide "notes"`.
+  ## `tabellaPreview(data): colsHide "notes"`.
   t
 
 # ------------------------------------------------------------------------------------- parts
@@ -1151,10 +1151,10 @@ proc tabStyleBody*(t: sink Tabella, style: CellStyle, columns: ColSel = everythi
 
 # --------------------------------------------------------------------------------- preview
 
-proc tabellaPreview*(data: TableData, topN = 5, bottomN = 1, inclRownums = true): Tabella =
+proc initTabellaPreview*(data: TableData, topN = 5, bottomN = 1, inclRownums = true): Tabella =
   ## A preview of a big table: its first `topN` rows, a row that says which rows are left out
   ## ("6..99"), and its last `bottomN` rows, numbered from 1 in the stub (`inclRownums`), as
-  ## gt's `gt_preview()`.
+  ## gt's `gt_preview()`. Written `tabellaPreview(data, topN = 3)`, with a body if you like.
   let n = data.nrows
   var keep: seq[int]
   if n <= topN + bottomN + 1:

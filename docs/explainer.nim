@@ -632,22 +632,21 @@ nbText: """
 ## Big tables, and tables as data
 
 A long table can be previewed: its first and last rows, with a row that says which are left out.
-Styles can come from the data, from another column or from a test of each value; narrow columns
-can have their labels on their side; and the table, once built, can be read back:
+Styles can come from the data, from another column or from a test of each value; and the table,
+once built, can be read back:
 """
 
 nbCode:
-  let cities = tabella(tabellaPreview(citta(), topN = 4, bottomN = 1)):
+  let cities = tabellaPreview(citta(), topN = 4, bottomN = 1):
     fmtInteger "population"
     fmtDate "counted", dateStyle = "yMMM"
     tabStyleBody style.text(weight = "bold"), columns = "state", values = ["ITA"], targets = "row"
-    colsLabelRotate "state"
     optCssTheme()
   nbTable cities
   echo extractCells(cities, "city").join(", ")
 
 nbNote("""
-`tabellaPreview` makes a table, and `tabella(table): body` adds verbs to it. `tabStyleBody` finds the cells whose value is "ITA" and styles their row; `extractCells` gives back what the reader sees, in order, as text.
+`tabellaPreview` takes a body of verbs, as `tabella` does. `tabStyleBody` finds the cells whose value is "ITA" and styles their row; `extractCells` gives back what the reader sees, in order, as text.
 """, nkCode)
 
 nbText: """

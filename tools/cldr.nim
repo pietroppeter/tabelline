@@ -171,9 +171,11 @@ for loc in available:
   if loc != "und": records[loc] = record(loc)
 
 var s = "## Number, currency, date and time conventions of every locale of CLDR.\n" & header
-s.add "##\n## `localeFields` names the fields of a record; `localeTable` holds, for each locale, the\n"
-s.add "## fields that differ from its parent (`localeParents`, or the tag without its last subtag),\n"
-s.add "## joined by '\\x1F' (an empty field inherits). `und` is the root, written in full.\n\n"
+s.add "##\n## `localeFields` names the fields of a record. A locale keeps only the fields that differ\n"
+s.add "## from its parent (`localeParents`, or the tag without its last subtag); `und` is the root,\n"
+s.add "## written in full. Each value is written once, in `localeValues` (joined by '\\x1F'; '\\x1E'\n"
+s.add "## is an empty value). `localeTable` gives each locale's first cell: a cell is a field\n"
+s.add "## (`localeCellField`) and the number of its value (`localeCellValue`).\n\n"
 s.add "const localeFields* = [" & fields.mapIt(it.lit).join(", ") & "]\n\n"
 s.add "const localeParents* = [\n"
 var ps: seq[(string, string)]
@@ -181,10 +183,13 @@ for loc in available:
   if explicitParents.hasKey(loc): ps.add (loc, parentOf(loc))
 ps.sort()
 for (a, b) in ps: s.add "  (" & a.lit & ", " & b.lit & "),\n"
-s.add "]\n\nconst localeTable* = [\n"
+s.add "]\n\n"
 var names = toSeq(records.keys)
 names.sort()
-var bytes = 0
+var pool: seq[string]
+var poolIx: Table[string, int]
+var cellField, cellValue: seq[int]
+var starts: seq[(string, int)]
 for loc in names:
   let r = records[loc]
   let parent = parentOf(loc)
@@ -195,9 +200,31 @@ for loc in names:
       if r[i] != pr[i]: diff[i] = (if r[i].len == 0: "\x1E" else: r[i])
   else:
     diff = r
-  let enc = diff.join("\x1F").strip(leading = false, chars = {'\x1F'})
-  bytes += enc.len
-  s.add "  (" & loc.lit & ", " & enc.lit & "),\n"
-s.add "]\n"
+  starts.add (loc, cellField.len)
+  for i, v in diff:
+    if v.len == 0: continue
+    if v notin poolIx:
+      poolIx[v] = pool.len
+      pool.add v
+    cellField.add i
+    cellValue.add poolIx[v]
+doAssert pool.len < 65536 and fields.len < 256
+proc numbers(xs: seq[int]): string =
+  for k, x in xs:
+    if k mod 24 == 0: result.add "\n  "
+    result.add $x & ", "
+s.add "const localeValues* =\n"
+var line = ""
+for k, v in pool:
+  line.add v & (if k < pool.high: "\x1F" else: "")
+  if line.len > 80 or k == pool.high:
+    s.add "  " & line.lit & (if k == pool.high: "\n" else: " &\n")
+    line = ""
+s.add "\nconst localeTable* = [\n"
+for (loc, first) in starts: s.add "  (" & loc.lit & ", " & $first & "),\n"
+s.add "]\n\nconst localeCellField*: array[" & $cellField.len & ", uint8] = [" & numbers(cellField) & "]\n"
+s.add "\nconst localeCellValue*: array[" & $cellValue.len & ", uint16] = [" & numbers(cellValue) & "]\n"
 writeFile(srcDir / "locales.nim", s)
-echo "locales.nim: ", names.len, " locales, ", bytes, " bytes of data"
+var bytes = cellField.len * 3
+for v in pool: bytes += v.len + 1
+echo "locales.nim: ", names.len, " locales, ", pool.len, " values, ", cellField.len, " cells, ", bytes, " bytes of data"

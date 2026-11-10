@@ -11,7 +11,7 @@ It comes from the Feature map rows Locales, Currency and Dates, and the BACKLOG.
 - `tools/cldr.nim` reads Unicode CLDR 49 (the JSON of cldr-json, full) once and writes
   `locales.nim` (657 locales) and `currencies.nim` (305 currencies) next to `countries.nim`. They
   are committed: nothing is read when tabelline builds or runs, and the core still needs only
-  Nim's standard library. A locale keeps only what differs from its parent.
+  Nim's standard library. A locale keeps only what differs from its parent, and each value is written once.
 - `localize.nim`: `getLocale(tag)` (an object with the marks, the patterns and the names of a
   locale), `normalizeTag`, `hasLocale`, `currencyInfo(code)`, `isCurrency`, `formatPattern` (a
   date or a time in a CLDR pattern), `dateSkeletons`, `timeSkeletons`.
