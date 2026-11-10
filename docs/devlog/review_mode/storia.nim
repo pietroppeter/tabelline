@@ -66,7 +66,20 @@ const storico* = [
              "**History** lists the versions and clears their comments; no **Share**, since it opens " &
              "a new session; the post rethought from scratch, with a diagram of the modes and the " &
              "stories they serve; *How it is built* starts from nimib.",
-           review: "Waiting for the seventh round.", comments: 0),
+           review: "[Round 7](https://github.com/pietroppeter/tabelline/blob/claude/project-thread-0a0us6/docs/devlog/data/review-mode/round-7.md): " &
+             "the date above the title reads badly; the pieces of the screen should come before the modes, " &
+             "one card per screen, History too; *Close review* in the export; *sheet* is not a clear name; " &
+             "the table of versions is unreadable; the folded code looks like headings; the review mode " &
+             "deserves a module of its own, in English, and a simpler call; the skill keeps versions and " &
+             "rounds that only this post needs, and its answers should be grouped.",
+           comments: 22),
+  Versione(date: "10 Nov 2026", time: "06:40", what: "Round 7: the date the post was written above the title, " &
+             "the last update beside the version; the pieces of the screen before the modes, one card per " &
+             "screen, History included; *Close review* in the export too; the *sheet* is now the *comment " &
+             "box*; the versions are cards; folded code reads *show code*; the review mode is a module of " &
+             "its own, `review.nim`, in English, and `nbReview()` needs no arguments; the skill keeps versions " &
+             "and rounds only for pages that ask for them, and answers by theme.",
+           review: "Waiting for the eighth round.", comments: 0),
 ]
 
 func lista*(vs: openArray[Versione]): seq[(string, string)] =

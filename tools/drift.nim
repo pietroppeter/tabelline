@@ -6,7 +6,8 @@
 ## For each `.nim` file under docs/ it counts calls of nbRawHtml, nbText blocks whose text holds
 ## an HTML tag, `<style`, `<script`, inline `style="` and distinct `#RRGGBB` colours. Code shown in
 ## prose (Markdown code spans and fences in nbText) and Nim comments are not counted. The style
-## and the blocks (docs/stile.nim, docs/blocchi.nim) are where CSS and HTML belong, and dated
+## and the blocks (docs/stile.nim, docs/blocchi.nim, and docs/review.nim, which has both) are where
+## CSS and HTML belong, and dated
 ## snapshots (docs/devlog/data/) are left out. The check fails when a file counts more of anything
 ## than its line in tools/drift.tsv: a new page has none, and the dated posts keep what they had.
 ## The same counter ships with the nimib-blocks skill (pietroppeter/skills).
@@ -15,7 +16,7 @@ import std/[os, strutils, sequtils, strformat, tables, algorithm]
 const
   root = currentSourcePath().parentDir.parentDir
   baseline = root / "tools" / "drift.tsv"
-  allowed = ["stile.nim", "blocchi.nim"]
+  allowed = ["stile.nim", "blocchi.nim", "review.nim"]
   kinds = ["nbRawHtml", "nbText html", "<style", "<script", "style=", "hex colours"]
   tags = ["<div", "<p ", "<p>", "<span", "<ul", "<ol", "<li", "<table", "<h1", "<h2", "<h3",
           "<small", "<details", "<button", "<br", "<a href", "<strong", "<em>", "<img"]

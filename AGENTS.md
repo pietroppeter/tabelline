@@ -97,8 +97,9 @@ working rules that are easy to miss.
 - The feature map (`docs/coverage.nim`) reads `docs/coverage/gt.json`. A PR that adds or
   completes a gt feature updates its row there (status, and `plan` while it is open), and a
   release PR checks the whole file.
-- Review mode: a page that calls `nbRevisione` (after `useTabelline`) has a **✎ Review** button
-  (beside `nbVersione`'s line, or under the title); in the review mode a reader selects text,
+- Review mode: a page that calls `nbReview` (`docs/review.nim`, a module of its own in English
+  that can move to nimib, with its styles) has a **✎ Review** button (beside `nbVersion`'s line,
+  or under the title); in the review mode a reader selects text,
   comments, and exports the comments as Markdown with a block of YAML (`format:
   nimib-review/3`; `/2` had kinds, `/1` a front matter). When such an export is pasted in the chat, follow the skill
   `.claude/skills/nimib-review/`. The devlog post `review_mode` keeps one notebook per version in

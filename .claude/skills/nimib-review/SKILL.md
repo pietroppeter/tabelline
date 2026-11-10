@@ -7,7 +7,7 @@ metadata:
 
 # Apply a review export
 
-The review mode of a nimib page (`nbRevisione` in tabelline's `docs/blocchi.nim`) lets a reader
+The review mode of a nimib page (`nbReview` in tabelline's `docs/review.nim`) lets a reader
 open the review with a button, select text, comment on it, and export every comment as one text:
 a title, a YAML block (a ```yaml fence since `nimib-review/2`; a front matter between `---` lines
 in `nimib-review/1`), then one Markdown section per comment, in page order. This skill turns that
@@ -48,15 +48,21 @@ The quote is rendered text, not source. Search the notebook for it, and expect:
 
 - Markdown marks gone: `**bold**`, `` `code` ``, `*em*` appear without their marks, a link shows
   only its text, a line break in the source is a space in the quote.
-- Text made by code (a table, a generated list, the indice, a block of `blocchi.nim`) is not
+- Text made by code (a table, a generated list, the indice, a block of `blocchi.nim` or
+  `review.nim`) is not
   in the notebook's text: find the code or the data file that makes it.
 - Text in a shared block (a header, a footer) is in `docs/blocchi.nim`, which changes every page:
   say so before changing it.
 
-## 3. Freeze the version that was reviewed, then change
+## 3. Make the changes
 
-For a page with versions (`nbVersioni`, such as the devlog post `review_mode`), the reviewed
-version is kept as it was:
+Change the notebook named in `source`. Keeping the reviewed version, and the round, is optional:
+only a page that asks for it does it.
+
+### A page that keeps its versions
+
+The devlog post `review_mode` keeps every version it was reviewed in, so its reviewed version
+is kept as it was:
 
 1. Copy `review_mode/vN.nim` to `review_mode/vN+1.nim`; `vN` now builds into `vN/` by itself
    (the newest file is the post).
@@ -64,14 +70,16 @@ version is kept as it was:
 3. Import the new file in `docs/devlog/review_mode.nim`.
 4. Make the changes in `vN+1.nim` only.
 
-## 4. Keep the round
+It also keeps each round: the export, as pasted, in `docs/devlog/data/review-mode/round-<n>.md`,
+and in `storia.nim` how many comments the round had and what they found. That is the post's
+own record, not a step for other pages.
 
-- Save the export, as pasted, in `docs/devlog/data/<slug>/round-<n>.md`.
-- Add the round to the page's record (`storia.nim`): how many comments, what they found.
-
-## 5. Build, check, report
+## 4. Build, check, report
 
 - Rebuild the page, check it at 390px in Munari (the quaderno only when the change might affect it), run the repository's checks (`nim r
   tools/drift.nim` in tabelline).
-- Reply with one line per comment: its number, kind, what was done, or the question it raises.
-  Don't skip a comment silently, and don't change what no comment asked for.
+- Reply by theme, not in the order of the comments: group the comments that ask for related
+  changes, and for each theme say what was asked (with the comments' numbers) and what changed,
+  or the question it raises. Comments that only say something works go in a section of their
+  own at the end. Every comment is in the reply once; don't skip one silently, and don't change
+  what no comment asked for.

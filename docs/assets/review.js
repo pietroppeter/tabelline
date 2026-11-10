@@ -1,10 +1,10 @@
 // Review mode for a nimib page: open it with the Review button, select text, comment on it, keep
 // the comments in this browser, export them as Markdown with a YAML block for a coding agent.
 // No dependencies. The page gives its settings on
-// <div id="revisione" data-page data-version data-title data-source data-versions>.
+// <div id="review" data-page data-version data-title data-source data-versions>.
 // Each part is between `// part:` lines, which the devlog post "Review mode" shows one by one.
 (function () {
-  var cfg = document.getElementById('revisione');
+  var cfg = document.getElementById('review');
   var root = document.querySelector('main');
   if (!cfg || !root) return;
   var page = cfg.dataset;
@@ -20,7 +20,7 @@
     var nodes = [], text = '', last = null;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
-        var p = n.parentNode.closest('script, style, #revisione');
+        var p = n.parentNode.closest('script, style, #review');
         return p ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       }
     });
@@ -148,12 +148,12 @@
 
   // part: mode
   // Reading is the default: no bar, no marks, nothing of the review mode but one button, Review,
-  // beside the version (in `.rv-entra`, or under the title). It opens the review mode, and closes
-  // it. Blocks that only matter while reviewing (`.rv-solo`) show only then.
-  var slot = document.querySelector('.rv-entra');
+  // beside the version (in `.rv-enter`, or under the title). It opens the review mode, and closes
+  // it. Blocks that only matter while reviewing (`.rv-only`) show only then.
+  var slot = document.querySelector('.rv-enter');
   if (!slot) {
     slot = document.createElement('p');
-    slot.className = 'rv-entra';
+    slot.className = 'rv-enter';
     var after = root.querySelector('.lede') || root.querySelector('h1');
     if (after) after.insertAdjacentElement('afterend', slot); else root.prepend(slot);
   }
@@ -381,7 +381,8 @@
   // The comments as one text, for a person and for an agent: a title, a YAML block that says which
   // page, version and source they are on, then one Markdown section per comment, in page order.
   // The text can be edited before it is copied. Copy copies the text only, short enough for a
-  // chat message; each screenshot has a Copy of its own, to paste after it.
+  // chat message; each screenshot has a Copy of its own, to paste after it. Close review ends the
+  // review here too, so a long page need not be scrolled back to its top.
   function yaml(s) { return JSON.stringify(String(s)); }   // a JSON string is a YAML string
   function flat(s) { return s.replace(/\s+/g, ' '); }
   function quoted(s) { return flat(s).trim(); }
@@ -427,7 +428,7 @@
     '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy it</p>' +
     '<textarea rows="12" spellcheck="false"></textarea><div class="rv-shotlist"></div>' +
     '<div class="rv-actions"><button value="history" class="rv-left">History</button>' +
-    '<button value="close">Close</button>' +
+    '<button value="leave">Close review</button><button value="close">Close</button>' +
     '<button value="copy" class="rv-save" autofocus>Copy</button></div></form>';
   document.body.appendChild(box);
   var area = box.querySelector('textarea');
@@ -497,6 +498,8 @@
       e.preventDefault();
       box.close();
       openHistory();
+    } else if (act === 'leave') {   // the end of a review: back to reading, from the bottom of the page too
+      setMode(false);
     }
   });
 

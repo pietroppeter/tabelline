@@ -4,7 +4,7 @@
 import std/[os, strutils, strformat, times]
 import nimib except md
 import tabelline, tabelline/nimib
-import ../../blocchi
+import ../../[blocchi, review]
 import storia
 
 const
@@ -21,7 +21,7 @@ nb.useTabelline(nome = "tabelline", title = title,
                 nameHref = (if newest: "../../" else: "../../../"))
 var dates: seq[string]
 for v in storico: dates.add v.date
-nbRevisione("devlog/review-mode", questa, title, source, dates)
+nbReview(questa, "devlog/review-mode", title, source, dates)
 
 # above the title: the day the post was written, and the day of this version when it is another
 proc long(date: string): string = parse(date, "d MMM yyyy").format("d MMMM yyyy")
@@ -34,13 +34,13 @@ bar, and export them all in one text to paste in the chat, where an agent makes 
 post is reviewed with its own review mode, round by round, and keeps every version.
 """
 
-nbVersione questa
+nbVersion questa
 
 if not newest:
   nbNota &"This is version {questa}, kept as it was when it was reviewed. The newest is " &
     &"[version {storico.len}](../).", nkWarning
 
-nbInRevisione:
+nbInReview:
   block:   # what changed, one numbered line per change (`what` lists them separated by "; ")
     var what = storico[questa - 1].what
     if what.startsWith("Round") and ": " in what: what = what[what.find(": ") + 2 .. ^1]
@@ -371,7 +371,7 @@ block:
   var rows: seq[Riga]
   for i in 0 ..< questa:
     let v = storico[i]
-    let href = versioneHref(i + 1, questa, storico.len)
+    let href = versionHref(i + 1, questa, storico.len)
     let name = if href.len > 0: &"[v{i + 1}]({href})" else: &"v{i + 1}"
     rows.add Riga(day: v.date, version: name, date: published(i), what: v.what, review: v.review, comments: v.comments)
   let t = tabella(rows, rownameCol = "version", groupnameCol = "day"):
@@ -455,8 +455,8 @@ a link to the script instead, and the browser loads it once for all of them. The
 full:
 """
 
-let blocchiSrc = readFile(docs / "blocchi.nim")
-let blockCode = blocchiSrc[blocchiSrc.find("func versioneHref*") ..< blocchiSrc.find("newNbBlock(NbVersioni):")]
+let blocchiSrc = readFile(docs / "review.nim")
+let blockCode = blocchiSrc[blocchiSrc.find("func versionHref*") ..< blocchiSrc.find("newNbBlock(NbVersions):")]
 nbPiega "The blocks of the review mode (`docs/blocchi.nim`)", blockCode
 
 nbText: """
@@ -476,7 +476,7 @@ const parts = [("anchor", "Where a comment points", "Finds the words selected in
                ("zoom", "A screenshot, large", "Shows a screenshot as large as the screen allows."),
                ("export", "The export", "Writes the text of every comment, and lets the reviewer copy it and each screenshot."),
                ("history", "History", "Lists the versions with the comments kept on each, and clears them.")]
-let script = readFile(docs / "assets" / "revisione.js")
+let script = readFile(docs / "assets" / "review.js")
 let chunks = script.split("  // part: ")[1 .. ^1]
 block:
   type Parte = object
