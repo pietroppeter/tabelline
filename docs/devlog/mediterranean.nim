@@ -53,15 +53,15 @@ and the ḍ of Sicilian too.
 
 ## Nine sources
 
-People and traditions to learn from, oldest first. For each: who they are, what they made, why they
+People and traditions to learn from, oldest first, in a gallery to swipe. For each: who they are, what they made, why they
 fit the islands, and what a page could take. The six colours under each are our reading of that
 kind of work, picked by eye in the roles above, not sampled from a picture; the references are
 where the facts come from.
 """
 
-nbCards "nine sources for a Mediterranean look, oldest first":
+nbGallery "nine sources for a Mediterranean look, oldest first: swipe or scroll sideways":
 
-  nbCard("Minoan frescoes and Attic vases", "", "1600–300 BC", nkPlain):
+  nbGalleryCard("Minoan frescoes and Attic vases", "1600–300 BC"):
     nbText: """
 **Who.** The painters of Bronze Age Crete and Thera (Santorini), and the potters of Corinth and
 Athens a thousand years later.
@@ -85,7 +85,7 @@ the rule above and below; dolphin blue for the sea.
 [Meander](https://en.wikipedia.org/wiki/Meander_(art))
 """
 
-  nbCard("The isolari and the portolan charts", "", "1200s–1528", nkPlain):
+  nbGalleryCard("The isolari and the portolan charts", "1200s–1528"):
     nbText: """
 **Who.** Cristoforo Buondelmonti, a Florentine priest who sailed the Aegean and wrote the *Liber
 insularum Archipelagi* (1420); Benedetto Bordone, a miniaturist from Padua, whose *Isolario*
@@ -114,7 +114,7 @@ for the text.
 [Aldus Manutius](https://en.wikipedia.org/wiki/Aldus_Manutius)
 """
 
-  nbCard("Henri Matisse and Raoul Dufy", "", "1905–1953", nkPlain):
+  nbGalleryCard("Henri Matisse and Raoul Dufy", "1905–1953"):
     nbText: """
 **Who.** Matisse painted at Collioure with André Derain in 1905, the summer that led to Fauvism, and lived
 in Nice from 1917; Dufy painted regattas, elegant gatherings and views of the French Riviera,
@@ -134,7 +134,7 @@ that does not quite meet its line, for highlighted cells.
 [Raoul Dufy](https://en.wikipedia.org/wiki/Raoul_Dufy)
 """
 
-  nbCard("Joan Miró in Mallorca", "", "1929–1983", nkPlain):
+  nbGalleryCard("Joan Miró in Mallorca", "1929–1983"):
     nbText: """
 **Who.** The Catalan painter, born in Barcelona. He married Pilar Juncosa in Palma in 1929,
 painted part of the *Constellations* there in 1940–1941, and made Palma his home, in a studio
@@ -153,7 +153,7 @@ default it would look like more of the same.
 [Fundació Pilar i Joan Miró](https://en.wikipedia.org/wiki/Fundaci%C3%B3_Pilar_i_Joan_Mir%C3%B3_in_Mallorca)
 """
 
-  nbCard("Herbert List and Constantine Manos", "", "1937–1964", nkPlain):
+  nbGalleryCard("Herbert List and Constantine Manos", "1937–1964"):
     nbText: """
 **Who.** List, a German photographer, travelled Greece from 1937 to 1939 for *Licht über Hellas*
 (1953), staged with a surrealist, metaphysical eye. Manos, born in South Carolina to Greek
@@ -172,7 +172,7 @@ notes as blocks of white with a hard shadow.
 [Constantine Manos](https://en.wikipedia.org/wiki/Constantine_Manos)
 """
 
-  nbCard("Gio Ponti and the maiolica of Vietri and Caltagirone", "", "1400s–1960", nkPlain):
+  nbGalleryCard("Gio Ponti and the maiolica of Vietri and Caltagirone", "1400s–1960"):
     nbText: """
 **Who.** Ponti, the Milanese architect and designer; the potters of Vietri sul Mare, on the Amalfi
 Coast, and of Caltagirone, in Sicily.
@@ -195,7 +195,7 @@ tile, a square sheet with a painted border; a row group as a band of tiles.
 [Scalinata di Santa Maria del Monte](https://it.wikipedia.org/wiki/Scalinata_di_Santa_Maria_del_Monte)
 """
 
-  nbCard("Ferdinando Scianna", "", "1965–", nkPlain):
+  nbGalleryCard("Ferdinando Scianna", "1965–"):
     nbText: """
 **Who.** A Sicilian photographer, born in 1943 in Bagheria, near Palermo; a member of Magnum since
 1982 (full member in 1989).
@@ -213,7 +213,7 @@ sit beside the pictures, as the story's quotes do.
 [Ferdinando Scianna](https://en.wikipedia.org/wiki/Ferdinando_Scianna)
 """
 
-  nbCard("Luigi Ghirri", "", "1973–1992", nkPlain):
+  nbGalleryCard("Luigi Ghirri", "1973–1992"):
     nbText: """
 **Who.** An Italian photographer, born in 1943 near Reggio Emilia, who died in 1992.
 
@@ -230,7 +230,7 @@ the softest of the nine, pale colours and a lot of empty sky.
 [Luigi Ghirri](https://en.wikipedia.org/wiki/Luigi_Ghirri)
 """
 
-  nbCard("Massimo Vitali", "", "1995–", nkPlain):
+  nbGalleryCard("Massimo Vitali", "1995–"):
     nbText: """
 **Who.** An Italian photographer, born in 1944 in Como and living in Lucca, once a photojournalist
 and a film camera operator.

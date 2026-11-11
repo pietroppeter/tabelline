@@ -331,6 +331,11 @@ body details.foldcode pre > code { font-size: 12.5px; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }
 .tinte .tinta span { display: block; height: 2.4rem; margin-bottom: .3rem; outline: 1px solid var(--neutral-2); }
 .tinte .tinta strong { display: block; font-size: .95rem; }
+/* in a gallery card the swatches are small, three to a row */
+.nb-scheda .tinte { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.nb-scheda .tinte .tinta { font-size: .78rem; line-height: 1.25; }
+.nb-scheda .tinte .tinta span { height: 1.4rem; margin-bottom: .2rem; }
+.nb-scheda .tinte .tinta strong { font-size: .82rem; }
 
 /* parts of a long page (nbPart): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
