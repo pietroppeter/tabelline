@@ -28,6 +28,7 @@ var book = initBookWithToc:
   section("gt: articles", "vignettes/index.md"):
     entry("Creating Summary Lines", "summary_lines")
     entry("Case Study: gtcars", "case_study_gtcars")
+    entry("Case Study: Clinical Tables", "case_study_clinical")
   entry("What the book will port", "next", numbered = false)
   section("The Table Contest", "contest.nim"):
     entry("Guide to table making, with table.glue", "contest/table_glue")

@@ -1,0 +1,122 @@
+{
+  "rx_adsl": {
+    "STUDYID": {
+      "label": "Unique Study Identifier"
+    },
+    "STUDYIDN": {
+      "label": "Unique Study Identifier (N)"
+    },
+    "USUBJID": {
+      "label": "Unique Subject Identifier"
+    },
+    "TRTA": {
+      "label": "Actual Treatment",
+      "levels": ["Placebo", "Drug 1"]
+    },
+    "TRTAN": {
+      "label": "Actual Treatment (N)"
+    },
+    "ITTFL": {
+      "label": "ITT Population Flag"
+    },
+    "RANDFL": {
+      "label": "Randomization Flag"
+    },
+    "SCRFREAS": {
+      "label": "Reason for Screen Failure"
+    },
+    "AGE": {
+      "label": "Age",
+      "units": "Years"
+    },
+    "AAGEGR1": {
+      "label": "Age Group",
+      "levels": ["<40", ">=40"]
+    },
+    "SEX": {
+      "label": "Sex",
+      "levels": ["Male", "Female", "Undifferentiated"]
+    },
+    "ETHNIC": {
+      "label": "Ethnicity",
+      "levels": ["Hispanic or Latino", "Not Hispanic or Latino", "Missing"]
+    },
+    "BLBMI": {
+      "label": "Body Mass Index",
+      "units": "kg/m2"
+    },
+    "EVNTFL": {
+      "label": "Event Flag"
+    }
+  },
+  "rx_addv": {
+    "STUDYID": {
+      "label": "Unique Study Identifier"
+    },
+    "STUDYIDN": {
+      "label": "Unique Study Identifier (N)"
+    },
+    "USUBJID": {
+      "label": "Unique Subject Identifier"
+    },
+    "TRTA": {
+      "label": "Actual Treatment",
+      "levels": ["Placebo", "Drug 1"]
+    },
+    "TRTAN": {
+      "label": "Actual Treatment (N)"
+    },
+    "ITTFL": {
+      "label": "ITT Population Flag"
+    },
+    "AGE": {
+      "label": "Age",
+      "units": "Years"
+    },
+    "AAGEGR1": {
+      "label": "Age Group",
+      "levels": ["<40", ">=40"]
+    },
+    "SEX": {
+      "label": "Sex",
+      "levels": ["Male", "Female", "Undifferentiated"]
+    },
+    "ETHNIC": {
+      "label": "Ethnicity",
+      "levels": ["Hispanic or Latino", "Not Hispanic or Latino", "Missing"]
+    },
+    "BLBMI": {
+      "label": "Body Mass Index",
+      "units": "kg/m2"
+    },
+    "DVTERM": {
+      "label": "Protocol Deviation Term"
+    },
+    "PARAMCD": {
+      "label": "Parameter Code",
+      "levels": ["PDANYM", "PDEV01", "PDEV02", "PDEV03", "PDEV04", "PDEV05"]
+    },
+    "PARAM": {
+      "label": "Parameter",
+      "levels": ["At least one major Protocol Deviation", "GTQ not completed month 3.", "Lab values not taken month 3.", "GTQ not completed month 6.", "Month 3 Visit not done.", "Month 6 Visit not done."]
+    },
+    "PARCAT1": {
+      "label": "Parameter Category 1"
+    },
+    "DVCAT": {
+      "label": "Protocol Deviation Category"
+    },
+    "ACAT1": {
+      "label": "Analysis Category 1"
+    },
+    "AVAL": {
+      "label": "Analysis Value"
+    },
+    "CRIT1": {
+      "label": "Analysis Criterion 1"
+    },
+    "CRIT1FL": {
+      "label": "Criterion 1 Evaluation Flag"
+    }
+  }
+}

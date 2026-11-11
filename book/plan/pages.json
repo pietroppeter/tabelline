@@ -940,6 +940,7 @@
    {
     "title": "Case Study: Clinical Tables",
     "path": "vignettes/case-study-clinical-tables.Rmd",
+    "book": "vignettes/case_study_clinical.html",
     "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
     "port": "port",
     "note": "",

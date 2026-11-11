@@ -395,7 +395,8 @@
     {
      "path": "vignettes/case-study-clinical-tables.Rmd",
      "title": "Case Study: Clinical Tables",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/case_study_clinical.html"
     },
     {
      "path": "vignettes/creating-summary-lines.Rmd",

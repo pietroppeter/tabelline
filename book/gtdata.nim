@@ -1,12 +1,13 @@
 ## The datasets of Great Tables that the book's pages use and tabelline does not ship
 ## (`tabelline/datasets` has `exibble`): `islands`, `airquality`, `sza`, `gtcars`, `countrypops`,
 ## `illness` and `metro` (with its images of the metro lines), as CSV files in
-## book/data/great-tables/, copied from the `great_tables` package (MIT). They are read when the
+## book/data/great-tables/, copied from the `great_tables` package (MIT), and gt's `rx_adsl` and
+## `rx_addv` in book/data/gt/, written from the `gt` R package (MIT) with their labels. They are read when the
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
 ##
 ## `head`, `take` and `select` are here too: Great Tables takes a data frame, and the guide cuts its
 ## data with pandas and Polars; tabelline's `TableData` has no verbs of its own (data frames come later).
-import std/[os, strutils]
+import std/[json, os, strutils]
 import tabelline
 
 const dataDir = currentSourcePath().parentDir & "/data/great-tables/"
@@ -18,6 +19,12 @@ const
   countrypopsCsv = staticRead(dataDir & "countrypops.csv")
   illnessCsv = staticRead(dataDir & "illness.csv")
   metroCsv = staticRead(dataDir & "metro.csv")
+
+const
+  gtDir = currentSourcePath().parentDir & "/data/gt/"
+  rxAdslCsv = staticRead(gtDir & "rx_adsl.csv")
+  rxAddvCsv = staticRead(gtDir & "rx_addv.csv")
+  rxMetaJson = staticRead(gtDir & "rx_meta.json")
 
 const metroImages* = dataDir & "metro_images"
   ## The folder of the metro lines' images (`metro_1.svg`, ...), for `fmtImage(path = ...)`.
@@ -37,6 +44,14 @@ proc illness*(): TableData = parseCsv(illnessCsv)
   ## Daily tests of a patient with yellow fever, days 3 to 9, with their normal ranges.
 proc metro*(): TableData = parseCsv(metroCsv)
   ## The stations of the Paris Metro, with their lines and passengers in 2021.
+
+proc rxAdsl*(): TableData = parseCsv(rxAdslCsv)
+  ## gt's `rx_adsl`: the subjects of a fictional clinical trial, one row each (an ADSL dataset).
+proc rxAddv*(): TableData = parseCsv(rxAddvCsv)
+  ## gt's `rx_addv`: the protocol deviations of the same trial (an ADDV dataset).
+proc rxMeta*(): JsonNode = parseJson(rxMetaJson)
+  ## What R keeps with the columns of `rx_adsl` and `rx_addv`: `label`, `units` and, for a
+  ## factor, its `levels` in order (`rxMeta()["rx_adsl"]["SEX"]["levels"]`).
 
 proc tail*(d: TableData, n = 5): TableData =
   ## The last `n` rows.

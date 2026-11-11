@@ -18,15 +18,15 @@ to the backlog.
 | Data | Data frames (pandas' `head`, `select`, `loc`, Polars' pivot: the book's helpers in `gtdata` and plain Nim) | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | later |
 | Data | `readCsv` reads `"0400"` as the number 400; text with leading zeros could stay text | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
 | Parts | `tabStub` (the stub is only chosen in `tabella(rownameCol = ...)`) | [Stub](get-started/basic_stub.html) | **new** |
-| Parts | `tabSpanner` gathers its columns, in the order given (tabelline leaves them where they are) | [Column Labels](get-started/basic_column_labels.html) | **new** |
+| Parts | `tabSpanner` gathers its columns, in the order given (tabelline leaves them where they are) | [Column Labels](get-started/basic_column_labels.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Parts | Summary rows of the same label from two calls make one row, as in gt (Great Tables, like tabelline, makes two) | [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
 | Parts | Markdown (a link) in a row group label, as gt's `tab_row_group(label = md(...))` | [Find an example by feature](features.html) | **new** |
-| Columns | Columns by position, negative ones too (`["date", 1, -1]`) | [Column Selection](get-started/column_selection.html) | **new** |
-| Columns | Columns by any function of the name, and rules combined: `\|`, `&`, `exclude`; gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html) | **new** |
+| Columns | Columns by position, negative ones too (`["date", 1, -1]`) | [Column Selection](get-started/column_selection.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
+| Columns | Columns by any function of the name, and rules combined: `\|`, `&`, `exclude`; gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Rows | Negative row indices (`[0, -1]`; in Nim, `^1`) | [Row Selection](get-started/row_selection.html) | **new** |
 | Formats | The format functions with every argument of their verb: `pattern`, `locale` (`formatDate` has it, `formatNumber` not), `expStyle` | [Formatting Values](get-started/basic_formatting.html), [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
 | Formats | Nanoplots with dates as the *x* values, and a colour for each point | [Nanoplots](get-started/nanoplots.html) | **new** |
-| Text | Full Markdown in `md()`, HTML entities included | [Header and Footer](get-started/basic_header.html) | **new** |
+| Text | Full Markdown in `md()`, HTML entities and line breaks (two spaces and a newline) included | [Header and Footer](get-started/basic_header.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Options | White text on every dark background set by options (the stub; a heading given by colour name: tabelline picks the text colour only for `#rrggbb` colours) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
 | Options | `optAllCaps` on the stub and the row group labels too | [Premade Themes](get-started/table_theme_premade.html), [v0.3.0](blog/v0_3.html) | **new** |
