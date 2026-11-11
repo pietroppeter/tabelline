@@ -11,6 +11,9 @@
 import std/[httpclient, json, os, strutils, sequtils, algorithm]
 
 const
+  notPublished = ["loc.summary", "loc.summary_stub"]
+    ## In Great Tables' index but without a page on its site (the link check found them, 11 Nov
+    ## 2026): left out, so no link leads to a 404.
   gtYml = "https://raw.githubusercontent.com/rstudio/gt/master/pkgdown/_pkgdown.yml"
   greatTablesYml = "https://raw.githubusercontent.com/posit-dev/great-tables/main/docs/_quarto.yml"
 
@@ -27,7 +30,7 @@ when isMainModule:
   let client = newHttpClient()
   let gt = names(client.getContent(gtYml), {'a'..'z', '0'..'9', '_'})
   let greatTables = names(client.getContent(greatTablesYml), {'a'..'z', 'A'..'Z', '0'..'9', '_', '.'})
-    .filterIt(not it.endsWith(".css") and it != "interlinks")
+    .filterIt(not it.endsWith(".css") and it != "interlinks" and it notin notPublished)
   let outFile = currentSourcePath().parentDir.parentDir / "docs" / "coverage" / "references.json"
   writeFile(outFile, pretty(%*{
     "gt": {"source": gtYml, "url": "https://gt.rstudio.com/reference/{name}.html", "names": gt},
