@@ -20,10 +20,11 @@ const parts*: seq[Part] = @[
 
 proc showParts*(t: sink Tabella): Tabella =
   ## Colours every part of `t`; later styles win, so this goes last.
-  t.tabStyle(style.fill(partTints[0]), loc.title(), loc.subtitle())
-   .tabStyle(style.fill(partTints[1]), loc.columnLabels(), loc.spanners())
-   .tabStyle(style.fill(partTints[2]), loc.stubhead())
-   .tabStyle(style.fill(partTints[3]), loc.stub())
-   .tabStyle(style.fill(partTints[4]), loc.rowGroups())
-   .tabStyle(style.fill(partTints[5]) & style.text(color = tint("--ink")), loc.body())   # over data colours too
-   .tabStyle(style.fill(partTints[6]), loc.sourceNotes(), loc.footnotes())
+  tabella(t):
+    tabStyle style.fill(partTints[0]), loc.title(), loc.subtitle()
+    tabStyle style.fill(partTints[1]), loc.columnLabels(), loc.spanners()
+    tabStyle style.fill(partTints[2]), loc.stubhead()
+    tabStyle style.fill(partTints[3]), loc.stub()
+    tabStyle style.fill(partTints[4]), loc.rowGroups()
+    tabStyle style.fill(partTints[5]) & style.text(color = tint("--ink")), loc.body()   # over data colours too
+    tabStyle style.fill(partTints[6]), loc.sourceNotes(), loc.footnotes()

@@ -15,7 +15,8 @@ the id SHALL come from a hash of the table, so the same table always renders the
 and `save(path)` SHALL write that page to a file.
 
 ```nim
-let t = tabella(planets(), id = "planets").tabHeader("Planets")
+let t = tabella(planets(), id = "planets"):
+  tabHeader "Planets"
 let h = t.toHtml
 echo h.startsWith("<div id=\"planets\""), " ", "#planets .tb_table" in h, " ", h == t.toHtml
 let page = t.toHtml(makePage = true)
@@ -41,7 +42,10 @@ centred above, spanners and column labels, group labels as rows, the formatted c
 in HTML, and the footnotes and source notes below.
 
 ```nim
-echo tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Tabellina").tabFootnote("by heart", loc.title())
+let t = tabella(tavolaPitagorica(3), rownameCol = "×"):
+  tabHeader "Tabellina"
+  tabFootnote "by heart", loc.title()
+echo t
 ```
 
 ```text
@@ -61,9 +65,11 @@ echo tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Tabellina").tabF
 rows, and the notes below.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet").colsHide(["type", "mass", "diameter", "density",
-  "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .tabHeader("Moons").toMarkdown
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance",
+            "orbital_period", "mean_temp", "rings"]
+  tabHeader "Moons"
+echo t.toMarkdown
 ```
 
 ```text
