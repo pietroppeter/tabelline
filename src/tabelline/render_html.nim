@@ -5,7 +5,7 @@
 ## Class names start with `tb_` (gt uses `gt_`).
 
 import std/[strutils, strformat, sequtils, tables, hashes]
-import core, formats, build, colors
+import core, formats, build, colors, verbs
 
 func alignClass(a: Align): string =
   case a
@@ -145,21 +145,49 @@ proc buildTabellaCss(): (string, seq[string]) =
   (css, used)
 
 let (tabellaCssValue, cssOptions) = buildTabellaCss()
-let tabellaCss* = tabellaCssValue
+
+proc themedDefaults(): Table[string, string] =
+  ## The options as `optCssTheme()` leaves them, on a table with the default options.
+  for name, value in fieldPairs(Tabella().optCssTheme().options):
+    when value is string: result[name] = value
+
+let themed = themedDefaults()
+
+proc isThemed(o: TabOptions): bool =
+  ## Whether the table takes the page's theme with `optCssTheme()` (its default arguments): every
+  ## option that the theme points to a page's variable still does.
+  for name, value in fieldPairs(o):
+    when value is string:
+      if name in cssOptions and "var(--" in themed[name] and value != themed[name]: return false
+  true
+
+proc themeRule(): string =
+  ## The variables of `optCssTheme()`, once for every table that takes it (class `tb_css_theme`),
+  ## instead of on each table.
+  var parts: seq[string]
+  for name in cssOptions:
+    if themed[name] != defaults[name]: parts.add "--tb-" & kebab(name) & ": " & themed[name]
+  ":where(.tabella.tb_css_theme) { " & parts.join("; ") & "; }\n"
+
+let tabellaCss* = tabellaCssValue & themeRule()
   ## The CSS of every table, the same for all of them: each value is a CSS variable named after
   ## its option (`--tb-table-font-size` for `tableFontSize`), falling back to the default. A
   ## table sets the variables of the options it changes on its `<div>` (`toHtml`); a page can
-  ## set one for all its tables (`.tabella { --tb-table-font-size: 14px }`).
+  ## set one for all its tables (`.tabella { --tb-table-font-size: 14px }`). A table that takes
+  ## the page's theme (`optCssTheme()`) gets the class `tb_css_theme`, whose rule here sets the
+  ## theme's variables once for all of them.
 
 let tabellaStyle* = "<style>\n" & tabellaCss & "</style>"
   ## `tabellaCss` in a `<style>` element, as `toHtml` writes it.
 
 proc styleVars*(o: TabOptions): string =
-  ## The variables of the options `o` changes, for the `style` of the table's `<div>`.
+  ## The variables of the options `o` changes, for the `style` of the table's `<div>`: changed
+  ## from the defaults, or from `optCssTheme()` for a table that takes it (`isThemed`).
+  let base = if o.isThemed: themed else: defaults
   var parts: seq[string]
   for name, value in fieldPairs(o):
     when value is string:
-      if name in cssOptions and value != defaults[name]:
+      if name in cssOptions and value != base[name]:
         parts.add "--tb-" & kebab(name) & ": " & value
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel).
@@ -300,11 +328,12 @@ proc tableHtml(t: Tabella, withStyle: bool): string =
   head = head.replace("class=\"tb_title", &"id=\"{id}-title\" class=\"tb_title")
   let vars = styleVars(t.options)
   let style = if vars.len > 0: &" style=\"{vars}\"" else: ""
+  let cls = if t.options.isThemed: "tabella tb_css_theme" else: "tabella"
   var css = ""
   if withStyle: css.add tabellaStyle & "\n"
   let own = ownCss(id, t.options)
   if own.len > 0: css.add "<style>\n" & own & "</style>\n"
-  &"""<div id="{id}" class="tabella"{style}>
+  &"""<div id="{id}" class="{cls}"{style}>
 {css}<table class="tb_table"{aria}>
 {caption}<thead>
 {head}{labels}</thead>

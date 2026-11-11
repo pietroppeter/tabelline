@@ -210,7 +210,12 @@ From the change `share-table-styles`, in the order it will be written.
 3. `toHtml(t, withStyle = true)`: with the stylesheet in front, as today; `false` without.
 4. The rules of one table only stay in a `style` of that table, scoped to its id: `optCss`, and
    the vertical lines between columns (a rule that must come after the others).
-5. `nbTable` keeps a flag in the page's context: the first table writes `tabellaCss`, the others
+5. A table that takes the page's theme (`optCssTheme()`, as every table of this site) would
+   carry the same 18 variables as all the others, pointing to the page's colours (`--ink`,
+   `--paper`, ...). It gets the class `tb_css_theme` instead, and one rule of the stylesheet
+   sets those variables for every such table; the table carries only what it changes from the
+   theme.
+6. `nbTable` keeps a flag in the page's context: the first table writes `tabellaCss`, the others
    do not. `nb.tableHtml(t)` does the same for blocks that put a table inside their own HTML.
 """
 

@@ -208,7 +208,7 @@ let d = tableData:
 let t = tabella(d):
   tabStyle style.fill(fromColumn("colour", naValue = "#eee")), loc.body("name")
   tabStyleBody style.text(weight = "bold"), values = ["Earth"], targets = "row"
-let html = t.toHtml
+let html = t.toHtml(withStyle = false)
 echo html.count("background-color: #4f7cac"), " ", html.count("background-color: #eee"), " ", html.count("font-weight: bold")
 ```
 

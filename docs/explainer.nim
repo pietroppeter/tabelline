@@ -448,7 +448,9 @@ is a CSS variable named after its option, with the default as fallback, so a tab
 
 So a table looks the same on any page, unless you ask it to take the page's colours
 ([tables that follow the page](#tables-that-follow-the-page)). A page can also set an option for
-all its tables at once: `.tabella { --tb-table-font-size: 14px }`.
+all its tables at once: `.tabella { --tb-table-font-size: 14px }`. A table that takes the page's
+theme (`optCssTheme()`) gets the class `tb_css_theme` instead of the theme's variables: one rule in
+`tabellaCss` sets them for every such table.
 
 A page with many tables needs the rules once. `small3.toHtml(withStyle = false)` leaves the
 `<style>` out: write `tabellaStyle` (the `<style>` element) once, or save `tabellaCss` to a file

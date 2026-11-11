@@ -42,7 +42,16 @@ suite "building and rendering":
     check "var(--tb-heading-background-color, var(--tb-table-background-color, #FFFFFF))" in tabellaCss
     # every rule weighs what an id weighs
     for line in tabellaCss.splitLines:
-      if "{" in line: check line.startsWith(":where(.tabella):not(#_)")
+      if "{" in line and not line.startsWith(":where(.tabella.tb_css_theme)"): check line.startsWith(":where(.tabella):not(#_)")
+  test "the page's theme: one class instead of its variables":
+    let themed = tabella(planets(), id = "t").optCssTheme()
+    check themed.toHtml(withStyle = false).splitLines[0] == "<div id=\"t\" class=\"tabella tb_css_theme\">"
+    let changed = tabella(planets(), id = "t").optCssTheme().tabOptions(tableFontSize = "14px", tableBorderTopWidth = "2px")
+    check changed.toHtml(withStyle = false).splitLines[0] == "<div id=\"t\" class=\"tabella tb_css_theme\" style=\"--tb-table-font-size: 14px; --tb-table-border-top-width: 2px\">"
+    # another theme is not the default theme: its variables go on the table
+    let other = tabella(planets(), id = "t").optCssTheme(ink = "--fg").toHtml(withStyle = false).splitLines[0]
+    check "tb_css_theme" notin other and "--tb-table-font-color: var(--fg" in other
+    check ":where(.tabella.tb_css_theme) { --tb-table-font-color: var(--ink, #1C1C1C);" in tabellaCss
   test "the table's own rules, scoped to its id":
     let h = tabella(planets(), id = "p").tabOptions(tableBodyVlinesColor = "red").optCss(".tb_row { color: blue }").toHtml(withStyle = false)
     check "#p .tb_row, #p .tb_col_headings th { border-left: 1px solid red" in h

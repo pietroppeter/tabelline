@@ -119,7 +119,8 @@ echo tabella(extractSummary(t))
 `tabellaCss` SHALL be the rules of every table, the same for all of them, with each value read
 from a CSS variable named `--tb-` and the option in kebab-case, falling back to the option's
 default. A table SHALL carry, in the `style` of its `<div>`, a variable for each option it sets
-to a value other than the default, and none for the others.
+to a value other than the default (or than `optCssTheme()`'s, for a table that takes it), and
+none for the others.
 
 ```nim
 echo tabella(planets()).toHtml(withStyle = false).splitLines[0].contains("style=")
@@ -132,6 +133,10 @@ false
 <div id="p" class="tabella" style="--tb-table-font-size: 14px">
 true
 ```
+
+#### Scenario: A table that takes the page's theme
+- **WHEN** a table calls `optCssTheme()` with its default arguments
+- **THEN** its `<div>` has the class `tb_css_theme`, whose rule in `tabellaCss` sets the theme's variables, and carries only the options it changes from the theme
 
 #### Scenario: Options a page sets for all its tables
 - **WHEN** a page's CSS sets `.tabella { --tb-table-font-size: 14px }`
