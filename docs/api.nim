@@ -22,30 +22,50 @@ nb.useTabelline(section = "Reference", cadence = "kept up to date",
 
 let api = apiReference()
 
-# The modules in the order a reader meets them: the macro that makes a table, the verbs, what
-# they take (formats, units, colours, locales), what a table is made of, and the output.
+# The modules from the most fundamental to the one that brings them all: a module comes after
+# every module it imports (`dependencyOrder`), and among those that could come next, in the order
+# of this list, which also gives each its heading.
 const knownOrder = [
-  ("tabelline", "Making a table", "`import tabelline` brings every module below but the last two."),
-  ("tabelline/verbs", "The verbs", ""),
+  ("tabelline/core", "Data, text and selectors", ""),
+  ("tabelline/colors", "Colours", ""),
+  ("tabelline/localize", "Locales", ""),
   ("tabelline/formats", "Formats", ""),
   ("tabelline/units", "Units", ""),
-  ("tabelline/localize", "Locales", ""),
-  ("tabelline/colors", "Colours", ""),
-  ("tabelline/pictures", "Pictures", ""),
-  ("tabelline/nanoplots", "Nanoplots", ""),
-  ("tabelline/core", "Data, text and selectors", ""),
+  ("tabelline/verbs", "The verbs", ""),
   ("tabelline/build", "Building a table", ""),
   ("tabelline/render_html", "HTML", ""),
   ("tabelline/render_text", "Text and Markdown", ""),
   ("tabelline/extract", "Reading a table back", ""),
+  ("tabelline/pictures", "Pictures", ""),
+  ("tabelline/nanoplots", "Nanoplots", ""),
+  ("tabelline", "Everything at once", "`import tabelline` brings every module above."),
   ("tabelline/datasets", "Datasets", "`import tabelline/datasets`: small tables for examples."),
   ("tabelline/nimib", "In nimib", "`import tabelline/nimib`: tables in a nimib notebook."),
 ]
 
-# a module not listed yet goes at the end, under its own name
-var order = @knownOrder
+# a module not listed yet goes at the end of the list, under its own name
+var listed = @knownOrder
 for m in api:
-  if not knownOrder.anyIt(it[0] == m.name): order.add (m.name, m.name, "")
+  if not knownOrder.anyIt(it[0] == m.name): listed.add (m.name, m.name, "")
+
+proc dependencyOrder(listed: seq[(string, string, string)]): seq[(string, string, string)] =
+  ## Each module after the modules it imports (the data modules are not on the page); among the
+  ## modules whose imports are all placed, the first in `listed`.
+  var left = listed
+  while left.len > 0:
+    var k = 0
+    while k < left.len:
+      let m = api.filterIt(it.name == left[k][0])[0]
+      var waiting = false
+      for imp in m.imports:
+        if imp != m.name and left.anyIt(it[0] == imp): waiting = true
+      if not waiting: break
+      inc k
+    if k == left.len: k = 0   # a cycle: take the first
+    result.add left[k]
+    left.delete k
+
+let order = dependencyOrder(listed)
 
 func sectionTitle(s: string): string =
   ## The source's section names are short (`cols`); the page spells some out.
@@ -206,6 +226,7 @@ name works too, [`api/#tabHeader`](#tabHeader), for the first name of that spell
 Modules and sections are linked by their headings, such as [`api/#formats`](#formats).
 """, nkInfo, "Links to a name, for people and agents")
 nbToc
+nbPart 1, "", prPrimary
 
 # ------------------------------------------------------------------------------------ the modules
 
@@ -259,7 +280,7 @@ block:
   for f in facts.mitems:
     if f.value.len == 0: f.value = "—"
   let t = tabella(facts, rownameCol = "fact", groupnameCol = "module"):
-    tabHeader "The modules", "what each exports and imports, in the order of this page"
+    tabHeader "The modules", "each after the modules it imports, as on this page"
     colsLabel:
       value: ""
     fmtMarkdown "value"
@@ -267,6 +288,7 @@ block:
     optCssTheme()
   nbTable t
 
+nbPart 2, "", prSecondary
 for (module, title, intro) in order:
   let m = api.filterIt(it.name == module)[0]
   nbText: &"## {title}"
@@ -327,6 +349,7 @@ for (module, title, intro) in order:
         let sigs = if s.kind in ["type", "const"]: s.signatures else: s.signatures.mapIt(phoneSignature(it))
         nbApi s.name, anchorOf(m, s), aliasOf.getOrDefault(anchorOf(m, s)), s.kind, sigs, linked(s.doc), links, exCode, exHtml
 
+nbPart 3, "", prSuccess
 nbText: """
 ## How it is built
 
