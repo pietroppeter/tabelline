@@ -277,8 +277,8 @@ nbText: """
   is new. *Great Tables:* no `rows_hide`.
 - **Summary columns.** The aggregates of `summaryRows`, across a row. *gt:* `summary_columns`,
   new. *Great Tables:* not yet.
-- **Indents of 1em.** 5px is hard to see on a phone. *gt:* 5px a level. *Great Tables:* no
-  `tab_stub_indent`.
+- **Indents of 1em.** 5px is hard to see on a phone. *gt:* 5px a level. *Great Tables:*
+  `tab_stub_indent` too.
 - **Decimal marks with figure spaces.** No CSS, so it works in text too. *gt* and *Great
   Tables:* the same characters.
 
@@ -404,15 +404,15 @@ nbText: """
 - **Unicode in text.** A table printed in a terminal or written as Markdown shows `kg/m³`, `H₂O`
   and `2¼`, with Unicode superscripts and subscripts; where a character has none (there is no
   subscript f) it writes `T_(eff)`. *gt:* the text output keeps the notation as it was typed.
-  *Great Tables:* `fmt_units` for HTML only.
+  *Great Tables:* `fmt_units` in HTML and LaTeX.
 - **Symbols are characters.** `:mu:` is µ and `->` is →, plain characters in every output.
   *gt:* reaction arrows drawn as small SVG pictures, and three equilibrium arrows (all ⇌ here).
-  *Great Tables:* no `fmt_chem`.
+  *Great Tables:* `fmt_chem` too.
 - **One label helper.** Every renderer gets a column label from `columnLabel`, so `{{...}}` and
   `colsUnits` work the same in HTML, text and Markdown. *gt:* `cols_units` and `{{...}}` in
   `cols_label`. *Great Tables:* `{{...}}` in `cols_label` and `define_units`, no `cols_units`.
 - **`accuracy` and `denominator`.** Two arguments say which is which. *gt:* one `accuracy`
-  takes "low", "med", "high" or a number. *Great Tables:* no `fmt_fraction`.
+  takes "low", "med", "high" or a number. *Great Tables:* `fmt_fraction`, the same `accuracy`.
 - **`fmt` is a proc of a float.** The proc that formats one number is simpler in Nim. *gt:*
   `fmt_bins(fmt = ~ fmt_integer(.))`, a formula that formats a small gt table. *Great Tables:*
   no `fmt_bins`.
@@ -422,7 +422,7 @@ nbText: """
   is run again for a new CLDR release. Names are English until the locales of group 4. *gt:*
   CLDR data stored in the package, in every locale. *Great Tables:* no `fmt_country`.
 - **Not yet:** a currency for every ISO code in `fmtAuto` (it knows the common ones until group
-  4), and gt's `fmt_units` in LaTeX. *Great Tables* has no `fmt_auto` or `fmt_passthrough`.
+  4), and gt's `fmt_units` in LaTeX. *Great Tables* has `fmt_passthrough`, no `fmt_auto`.
 
 ## 4 · Every locale
 
@@ -594,7 +594,7 @@ from [Rethinking tabelline's datasets](../datasets/)), and renames `agg.sd` to `
   row covers the rest. *gt:* `from_column(column, na_value, fn)`. *Great Tables:* `from_column`
   too.
 - **`pattern` is plain text.** `tabStyleBody` looks for it in the value; a regular expression
-  would need PCRE. *gt:* a regular expression. *Great Tables:* no `tab_style_body`.
+  would need PCRE. *gt:* a regular expression. *Great Tables:* `tab_style_body` too.
 - **The preview is a table.** `tabellaPreview` returns a `Tabella` and takes a body of verbs, as `tabella`.
   *gt:* `gt_preview()` returns a gt table too. *Great Tables:* no preview.
 - **`agg.std`.** The name of Great Tables and Polars, short and plain. *gt:* `"sd"`, R's name.
@@ -903,9 +903,10 @@ can give each point its own colour. gt's `gtcars`, `countrypops`, `illness` and 
 ### Choices
 
 - **A list of columns, not a second argument.** `rownameCol = ["maker", "model"]`. *gt:* the
-  same, `rowname_col = c("maker", "model")`. *Great Tables:* one stub column.
+  same, `rowname_col = c("maker", "model")`. *Great Tables:* a list too,
+  `rowname_col=["maker", "model"]`.
 - **Repeats are drawn once.** A level spans the rows that repeat it, under the same higher
-  levels and in the same group. *gt:* the same idea; *Great Tables:* no levels.
+  levels and in the same group. *gt:* the same idea.
 - **Options that mean nothing in HTML wait.** The 36 options left are for interactive tables,
   pages, LaTeX and Quarto: they come with those outputs. *gt:* all 196 in `tab_options()`.
 - **Stripes leave the stub alone.** As in gt, `rowStripingIncludeStub` is off: the stub is no
@@ -914,7 +915,118 @@ can give each point its own colour. gt's `gtcars`, `countrypops`, `illness` and 
   *gt* and *Great Tables:* `google_font()` links Google's servers.
 - **A list of options repeats.** `dataPointFillColor = @["red", "blue"]` colours the points
   red, blue, red, ... *Great Tables:* a list must have one value or one per point.
+"""
 
+nbText: """
+## Next to gt and Great Tables
+
+tabelline began on a Saturday night, four days before this release, as a port of gt and Great
+Tables. With 0.2 it is worth counting again, against the newest of each: Great Tables 1.1 and
+gt 1.4, by their references. The [feature map](../../coverage/) has every group.
+
+### Feature by feature
+"""
+
+block:
+  type Side = object
+    side, what: string
+  let rows = @[
+    Side(side: "only tabelline", what: "rowsAdd, rowsHide, rowOrder, colsAdd, summaryColumns; fmtSpelledNum, fmtBins, fmtAuto, fmtCountry (31 formats to 28); tabellaPreview, tabCaption, extractCells, optTableLines; 657 CLDR locales to 574; text and Markdown output, nimib"),
+    Side(side: "both", what: "summary rows, nanoplots, icons, images, units, chemistry, fractions, merged columns, stub indent, a stub of several columns, body styles, colour by value, every location, about as many options (164 to 175), tables from a data frame (nanuq's in tabelline, Pandas and Polars in Great Tables)"),
+    Side(side: "only Great Tables", what: "interactive tables, LaTeX, PNG and PDF, Google fonts, Shiny, 16 datasets (tabelline has 9, four of them gt's)"),
+  ]
+  let t = tabella(rows, rownameCol = "side"):
+    tabHeader "tabelline 0.2 and Great Tables 1.1"
+    colsLabel:
+      what: "what it has"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    optCssTheme()
+  nbTable t
+
+nbText: """
+So, feature by feature, tabelline 0.2 does more to a table than Great Tables does; Great Tables
+still takes a table to more places. gt is still ahead of both in features: it has the first two
+rows above, all but the text, Markdown and nimib output, and also LaTeX, RTF and Word, groups of
+tables, and 36 options tabelline does not have yet. Those outputs are the next release, *Out of
+the browser*. tabelline has two things of Great Tables that gt does not: rotated labels
+(`colsLabelRotate`) and any CSS in a style (`style.css`).
+
+### Where it goes its own way
+
+Some things are in neither of them. They came from writing these pages, and they make
+tabelline a little different, not only a port:
+"""
+
+block:
+  type Own = object
+    what, tabelline, theirs: string
+  let rows = @[
+    Own(what: "many tables on a page", tabelline: "one stylesheet, `tabellaCss`, written once; each table writes only the options it changes, as CSS variables, and a page can set an option for all its tables", theirs: "each table carries its whole stylesheet in a style element scoped to its id (gt compiles it with sass for every table); `as_raw_html(inline_css = TRUE)` writes styles on every element"),
+    Own(what: "a table in a terminal", tabelline: "`echo t` prints it as text, `toMarkdown` for a README; units, formulas and fractions in Unicode, nanoplots as sparklines", theirs: "HTML (and LaTeX, RTF, Word in gt)"),
+    Own(what: "a table that follows the page", tabelline: "`optCssTheme()`: colours and font from the page's CSS variables", theirs: "`opt_stylize()` and `tab_options()`, with fixed colours"),
+    Own(what: "several values in a cell", tabelline: "lists and records (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`), formatted item by item, read with the dot (`v.hi`), named in merge patterns (`{lo}–{hi}`)", theirs: "list columns for nanoplots; `cols_merge` names columns only"),
+    Own(what: "the format of a summary cell", tabelline: "its column's format and locale, unless `summaryRows` gives a `fmt`", theirs: "gt uses `fmt_number()`; Great Tables leaves the value as it is"),
+    Own(what: "what it needs", tabelline: "the core needs Nim's standard library, nothing else; nimib and nanuq only for their own optional modules (`tabelline/nimib`, `tabelline/nanuq`); nothing loaded from the network", theirs: "gt imports 20 R packages, Great Tables 8 Python ones"),
+  ]
+  let t = tabella(rows, rownameCol = "what"):
+    tabHeader "Not in gt or Great Tables"
+    colsLabel:
+      tabelline: "tabelline"
+      theirs: "gt and Great Tables"
+    fmtMarkdown ["tabelline", "theirs"]
+    optCssTheme()
+  nbTable t
+
+nbText: """
+The first row is the one of [One stylesheet for every table](../sharing-styles/): the
+[API reference](../../api/) has 152 tables, and sharing their style took it from 1.71 MB to 0.88 MB. The format of a summary cell is
+one of the choices of [What the book found for 0.2](../book-found-0-2/); another sides with Great
+Tables: aggregates skip missing values, as Polars does, where gt needs `na.rm = TRUE`.
+
+### A syntax of its own
+
+The verbs are gt's, in camelCase. The way they are written is Nim's: a table is a block, one
+verb per line, and a verb that takes pairs takes them as an indented block. A row is `it`, and
+a condition on rows is plain Nim:
+"""
+
+nbTabs """(
+    GT(planets, rowname_col="planet", groupname_col="type")
+    .cols_hide(["mass", "diameter", "density", "gravity", "day_length",
+                "distance", "orbital_period", "mean_temp", "rings"])
+    .tab_style(style.text(weight="bold"),
+               loc.body(columns="moons", rows=pl.col("moons") > 10))
+    .summary_rows(fns={"total": pl.col("moons").sum()})
+)""", """gt(planets, rowname_col = "planet", groupname_col = "type") |>
+  cols_hide(c(mass, diameter, density, gravity, day_length,
+              distance, orbital_period, mean_temp, rings)) |>
+  tab_style(cell_text(weight = "bold"),
+            cells_body(columns = moons, rows = moons > 10)) |>
+  summary_rows(fns = list(total = ~ sum(.)))""":
+  nbCode:
+    let syntax = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+      colsHide ["mass", "diameter", "density", "gravity", "day_length",
+                "distance", "orbital_period", "mean_temp", "rings"]
+      tabStyle style.text(weight = "bold"), loc.body("moons", where(it.moons > 10))
+      summaryRows:
+        total: agg.sum
+      optCssTheme()
+    nbTable syntax
+
+nbNote("""
+`tabella(data): body` is a macro: each line of the body is a verb called on the table, with no
+dots and no pipes. `where(it.moons > 10)` is a template that makes a proc of the row, checked by
+the compiler like any Nim code; `summaryRows:` takes its pairs one per line. Without the sugar it is a chain of procs:
+`initTabella(...)`, then `.colsHide(...)`, `.tabStyle(...)` and
+`.summaryRows(fns = {"total": agg.sum})`.
+""", nkCode)
+
+nbText: """
+In a notebook there is one step less. R and Python notebooks show the last value of a cell;
+in nimib, `nbTable data: body` makes the table and shows it, without naming it.
+"""
+
+nbText: """
 ## How it is built
 
 Everything above runs in one place, `build.nim`, the step every renderer shares. For each cell
