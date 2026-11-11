@@ -60,7 +60,7 @@ that the same layout can feed both an SVG and a pixie painter (#93's addendum). 
    the PATH, then in the usual places), shows `toHtml(makePage = true)`, measures the
    `.tabella > table` box and takes a screenshot of it, or prints it to PDF. `startChrome()` keeps
    one Chrome for many pictures. Without Chrome, a clear error.
-8. **The reference test.** `tests/test_layout.nim` checks the layout without Chrome (sizes of the
+8. **The reference test.** `tests/test_image.nim` checks the layout without Chrome (sizes of the
    four PoC tables, marks, both SVG modes are well formed). `tools/image/compare.nim` draws the
    same tables with Chrome and compares the boxes: widths and heights within 4 px, run by hand
    and in CI where Chrome is installed.

@@ -5,7 +5,7 @@
 - [x] 1.3 `render_svg.nim`: `toSvg(drawing, text)` and `toSvg(t, width, text, vars)`, `stFont` (font subset) and `stPaths` (outlines)
 - [x] 1.4 `save.nim`: `save(t, path, scale, width)` by the extension, `addWriter`, `hasWriter`; `save` moves out of `render_html.nim`
 - [x] 1.5 Nanoplots write `none` instead of `transparent`
-- [x] 1.6 Tests (`tests/test_layout.nim`): sizes of the image tables, both SVG modes well formed, `save` errors, a writer added
+- [x] 1.6 Tests (`tests/test_image.nim`): sizes of the image tables, both SVG modes well formed, `save` errors, a writer added
 
 ## 2. pixie
 
