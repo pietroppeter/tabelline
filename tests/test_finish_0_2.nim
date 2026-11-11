@@ -28,7 +28,7 @@ suite "a stub of several columns":
       tabStyle style.text(weight = "bold"), loc.body()
     let h = t.toHtml
     check h.count("background-color: #EEEEEE") == 3
-    check h.count("font-weight: bold") == 8   # kind and hp, four rows
+    check h.count("style=\"font-weight: bold\"") == 8   # kind and hp, four rows
   test "extract and Markdown":
     let t = initTabella(cars, rownameCol = ["mfr", "model"])
     let b = t.extractBody
