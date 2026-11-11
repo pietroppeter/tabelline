@@ -379,7 +379,7 @@ You get to customize the line and the data point marker with the latter display 
 Aside from a single stream of *y* values, we can plot pairs of *x* and *y* values. This works only for the `"line"` type of plot. We can set up a column of Polars `struct` values in a DataFrame to have this input data prepared for `GT.fmt_nanoplot()`. Notice that the dictionary values in the enclosed list must have the `"x"` and `"y"` keys. Further to this, the list lengths for each of `"x"` and `"y"` must match (i.e., to make valid pairs of *x* and *y*).
 """
 
-python """
+tabs """
 weather_2 = pl.DataFrame(
     {
         "station": ["Station " + str(x) for x in range(1, 4)],
@@ -442,11 +442,32 @@ gt(weather_2) |>
       show_data_line = FALSE
     )
   )
-"""
+""":
+  nbCode:
+    let weather2 = tableData:
+      station: ["Station 1", "Station 2", "Station 3"]
+      temperatures: [
+        (x: @[6.1, 8.0, 10.1, 10.5, 11.2, 12.4, 13.1, 15.3],
+         y: @[24.2, 28.2, 30.2, 30.5, 30.5, 33.1, 33.5, 32.7]),
+        (x: @[7.1, 8.2, 10.3, 10.75, 11.25, 12.5, 13.5, 14.2],
+         y: @[18.2, 18.1, 20.3, 20.5, 21.4, 21.9, 23.1, 23.3]),
+        (x: @[6.3, 7.1, 10.3, 11.0, 12.07, 13.1, 15.12, 16.42],
+         y: @[15.2, 17.77, 21.42, 21.63, 25.23, 26.84, 27.2, 27.44])]
+
+    let scatter = tabella(weather2):
+      fmtNanoplot "temperatures",
+        plotType = "line",
+        expandX = @[5.0, 16.0],
+        expandY = @[10.0, 40.0],
+        options = nanoplotOptions(
+          showDataArea = false,
+          showDataLine = false)
+    nbTable scatter
 
 tabelline """
-No Nim here: tabelline's nanoplots take *y* values only, evenly spaced; pairs of *x* and *y*
-values, with `expandX`, are a gap.
+A cell can hold a record: a Nim tuple with the fields `x` and `y` is the dictionary of
+Polars' `struct`, and `fmtNanoplot` places each *y* at its *x*. A list (`@[1.0, 4, 2]`) is a
+cell of *y* values too, as Polars' list columns are.
 """
 
 nbText: """

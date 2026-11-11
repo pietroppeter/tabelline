@@ -24,8 +24,7 @@ to the backlog.
 | Columns | Columns by any function of the name, and rules combined: `\|`, `&`, `exclude`; gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html) | **new** |
 | Rows | Negative row indices (`[0, -1]`; in Nim, `^1`) | [Row Selection](get-started/row_selection.html) | **new** |
 | Formats | The format functions with every argument of their verb: `pattern`, `locale` (`formatDate` has it, `formatNumber` not), `expStyle` | [Formatting Values](get-started/basic_formatting.html) | **new** |
-| Formats | Nanoplots of pairs of *x* and *y* values, with `expandX` | [Nanoplots](get-started/nanoplots.html) | **new** |
-| Formats | A list of values in a cell (Polars' list columns), for nanoplots: tabelline takes them as a string | [v0.4.0](blog/v0_4.html) | **new** |
+| Formats | Nanoplots with dates as the *x* values, and a colour for each point | [Nanoplots](get-started/nanoplots.html) | **new** |
 | Text | Full Markdown in `md()`, HTML entities included | [Header and Footer](get-started/basic_header.html) | **new** |
 | Options | White text on every dark background set by options (the stub; a heading given by colour name: tabelline picks the text colour only for `#rrggbb` colours) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
@@ -63,6 +62,7 @@ Gaps the port found that tabelline 0.2 closed; the chapters now use what it gain
 | Columns | `colsUnits`, units in gt's notation | [Column Labels](get-started/basic_column_labels.html) |
 | Formats | Every date style of gt, and its time styles, in every language of CLDR | [Formatting Values](get-started/basic_formatting.html) |
 | Formats | Nanoplots: line, bar and box plots, reference lines and areas, `nanoplotOptions` | [Nanoplots](get-started/nanoplots.html) |
+| Formats | Lists and records in a cell: a list of values (Polars' list columns) and pairs of *x* and *y* (Polars' struct), with `expandX` | [Nanoplots](get-started/nanoplots.html), [v0.4.0](blog/v0_4.html) |
 | Options | 142 options: the container, the column label top border, hlines style and width, vlines, font style, the source notes and grand summary backgrounds, the stub border, the row group borders, the table body borders | [Table Theme Options](get-started/table_theme_options.html) |
 | Styles | `fromColumn`: a style whose value comes from a column of the row | [Styling the Table Body](get-started/basic_styling.html) |
 | Code | Pairs as blocks (`colsLabel:` then `Ozone: ...`), every table as `tabella(data): body` | every page |
