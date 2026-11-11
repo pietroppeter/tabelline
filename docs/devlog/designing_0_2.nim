@@ -808,12 +808,21 @@ nbText: """
   `toValue` from a seq, an array, an object or a tuple. *gt:* one value per cell; gtExtras
   draws from tibble list-columns. *Great Tables:* Polars list columns, for nanoplots.
 - **Records are not from gt.** A record shows as "lo: 0.8, hi: 1.6", formatted field by
-  field. *gt:* the closest is `cols_merge`, a pattern of several columns in one cell. *Great
-  Tables:* the same.
+  field. The closest thing is a merge (group 2): `colsMerge` shows several columns in one cell
+  with a pattern, and `colsMergeRange` writes "0.8–1.6". The two do different jobs. A merge
+  keeps the values in their own columns, which sort, style and add up on their own, and joins
+  them only when the table is shown; a record is one value, which is how the data came (a
+  range, a point, a pair of lists for a nanoplot). A merge takes a record column as it takes
+  any other: it joins the record's text. To show a record as "0.8–1.6", keep `lo` and `hi` as
+  two columns and merge them. *gt:* `cols_merge` and its three variants. *Great Tables:* the
+  same.
 - **x and y as Great Tables has them.** A record with fields `x` and `y`. *gt:* x values come
   from another column (`columns_x_vals` in `cols_nanoplot`). *Great Tables:* a dict
   `{"x": [...], "y": [...]}`; its x values can be dates too, tabelline's are numbers for now.
-- **The dot is Nim sugar.** `it.mass` and `v.hi` are a Nim *dot operator*: when a name is not
+- **The dot is Nim sugar.** In a row predicate `it` is the row: the Nim idiom of `filterIt`
+  and `mapIt` (`std/sequtils`), where a template names the current element `it`, and
+  `where(cond)` turns `cond` into a proc of a row named `it`. `it.mass` and `v.hi` are a Nim
+  *dot operator*: when a name is not
   a field or a proc of the value, the dot reads it by name. A name the value already has
   (`kind`, `len`, `index`) is that, a keyword (`type`) needs brackets, and a misspelled name is
   found when the code runs. *gt:* names are strings (`"mass"`) or bare names in the tidyverse.
