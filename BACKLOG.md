@@ -37,11 +37,10 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Plots in cells
 
-- **More nanoplots** (M). Nanoplots are in 0.2 (#63). Left: x values (gt's `columns_x_vals`, a
-  cell with x and y), per-point options (a list of colours), `alt` from a column.
-- **A list of values in a cell** (M, from the book's port of the Great Tables blog). Great
-  Tables takes a Polars list column for nanoplots; tabelline reads numbers from text ("1 2 3").
-  A list (or record) kind of `Value` would carry them as they are, and would serve data frames.
+- **More nanoplots** (M). Nanoplots are in 0.2 (#63). Left: x values as dates, per-point
+  options (a list of colours), `alt` from a column.
+- **A list of values in a cell** (M, *in progress*: `add-lists-records`). Lists and records in
+  a cell, the dot (`v.x`, `it.mass`), nanoplots of x and y.
 
 ## Options and building
 

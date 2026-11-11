@@ -147,7 +147,7 @@ the symbols \*, †, ‡, §.
 ```nim
 let t = tabella(planets(), rownameCol = "planet"):
   colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "rings"]
-  tabFootnote "Hotter than Mercury.", loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus"))
+  tabFootnote "Hotter than Mercury.", loc.body(cols = "mean_temp", rows = where(it.planet == "Venus"))
   tabFootnote "As of 2024.", loc.columnLabels("moons")
 echo t
 ```
@@ -587,7 +587,7 @@ added to SHALL stay as it was.
 ```nim
 let t = tabella(planets(), rownameCol = "planet"):
   colsHide everything()
-  colsAdd "moons per Earth mass", proc (r: Row): Value = toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97)
+  colsAdd "moons per Earth mass", proc (r: Row): Value = toValue(r.moons.toFloat / r.mass.toFloat * 5.97)
   fmtNumber "moons per Earth mass", decimals = 1
 echo t
 ```

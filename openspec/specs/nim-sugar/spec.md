@@ -36,11 +36,11 @@ echo t
 ### Requirement: Selectors that read like Nim
 Columns SHALL be selected by a name, an array or seq of names, or a rule (`everything()`,
 `numeric()`, `textual()`, `startsWith`, `endsWith`, `containing`); rows by an index, an array,
-a slice or `where(cond)`, where `it` is the row and `it["col"]` its value.
+a slice or `where(cond)`, where `it` is the row and `it.col` its value.
 
 ```nim
 let d = planets()
-echo startsWith("d").resolve(d), " ", where(it["moons"] > 20).resolve(d), " ", toRowSel(1..2).resolve(d)
+echo startsWith("d").resolve(d), " ", where(it.moons > 20).resolve(d), " ", toRowSel(1..2).resolve(d)
 ```
 
 ### Requirement: Blocks for lists of pairs

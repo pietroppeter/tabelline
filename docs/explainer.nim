@@ -249,7 +249,7 @@ nbCode:
     colsLabel {"winner": "grand prize", "entry": "the table", "tools": "made with", "note": "also"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "winner")
     tabStyle style.text(size = "85%", color = "var(--muted)"), loc.body(cols = "note")
-    tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it["year"] == 2025))
+    tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it.year == 2025))
     tabSourceNote md("Posit blog, [2020](https://www.r-bloggers.com/2020/12/winners-of-the-2020-rstudio-table-contest/), [2021](https://www.r-bloggers.com/2021/12/winners-of-the-2021-table-contest/), [2022](https://posit.co/blog/winners-of-the-2022-table-contest/), [2024](https://posit.co/blog/2024-table-contest-winners/), [2025](https://posit.co/blog/2025-table-contest-winners/)")
     optStylize(style = 1, color = "blue")
 nbTable contestTable
@@ -517,10 +517,10 @@ nbCode:
   t = tabella(t):
     dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
     tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"),
-             loc.stub(rows = where(it["planet"] == "Earth"))
+             loc.stub(rows = where(it.planet == "Earth"))
     tabFootnote "Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons")
     tabFootnote "Venus is hotter than Mercury: its thick atmosphere traps the heat.",
-                loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus"))
+                loc.body(cols = "mean_temp", rows = where(it.planet == "Venus"))
     tabSourceNote md("Source: NASA, [Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/).")
 nbTable t
 
@@ -681,8 +681,8 @@ nbCode:
     euro: [1100.0, 950, 150, 520, 400.25, 119.75, 30]
   let month = tabella(budget, rownameCol = "item"):
     tabHeader "A month's budget"
-    tabStubIndent where($it["item"] in ["rent", "bills", "groceries", "eating out"]), 1
-    rowsHide where($it["item"] == "old phone plan")
+    tabStubIndent where($it.item in ["rent", "bills", "groceries", "eating out"]), 1
+    rowsHide where($it.item == "old phone plan")
     rowsAdd [(item: "Total", euro: 1620.0)]
     fmtNumber "euro", decimals = 2, dropTrailingZeros = true
     colsAlignDecimal "euro"
@@ -833,6 +833,28 @@ nbCode:
       tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.body(cols = $i, rows = [i - 1])
     optCssTheme()
 nbTable squares
+
+nbText: """
+### Columns and fields by name
+
+In a row predicate (`where`) or a proc of a row, `it.mass` is the column `mass` of that row, the
+same as `it["mass"]`. A cell can also hold more than one value: a list (from a `seq`) or a
+record (from an object or a named tuple), and `v.name` is a field of a record:
+"""
+nbCode:
+  let sistema = tableData:
+    planet: ["Earth", "Mars", "Jupiter"]
+    moons: [@["Moon"], @["Phobos", "Deimos"], @["Io", "Europa", "Ganymede", "Callisto"]]
+    biggest: [(name: "Moon", km: 3474.8), (name: "Phobos", km: 22.5), (name: "Ganymede", km: 5268.2)]
+  let lune = tabella(sistema, rownameCol = "planet"):
+    rowsHide where(it.moons.len < 2)
+    fmtNumber "biggest", decimals = 0
+  echo lune
+  echo sistema["biggest", 2].name
+
+nbNote("""
+The dot is a Nim *dot operator*: when a name is not a field or a proc of the value, `it.mass` becomes `it["mass"]`. So a name the value already has (`kind`, `len`, `index`) is that, and a Nim keyword (`type`) cannot follow a dot: write `it["type"]`. A misspelled name is found when the code runs, not when it compiles. A format works on each item of a list and each field of a record; icons, images, flags and nanoplots take a list whole.
+""", nkCode)
 
 nbText: """
 ### Pairs as blocks

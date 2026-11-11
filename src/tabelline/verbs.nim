@@ -592,11 +592,12 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
         let x = v.toFloat
         if lo.isNaN or x < lo: lo = x
         if hi.isNaN or x > hi: hi = x
-      elif not v.isNull and $v notin levels: levels.add $v
+      elif not v.isNull and v.kind notin {vkList, vkRecord} and $v notin levels: levels.add $v
     if not domain[0].isNaN: lo = domain[0]
     if not domain[1].isNaN: hi = domain[1]
     for i in ix:
       let v = result.data[n, i]
+      if v.kind in {vkList, vkRecord}: continue   # several values: no one colour
       let c =
         if v.isNull: naColor
         elif numericCol and v.isNumber:
@@ -909,7 +910,7 @@ proc colsAdd*[T](t: sink Tabella, name: string, values: openArray[T], before = "
 
 proc colsAdd*(t: sink Tabella, name: string, fn: proc (r: Row): Value, before = "", after = ""): Tabella =
   ## A column computed from each row: `colsAdd("density", proc (r: Row): Value =
-  ## toValue(r["mass"].toFloat / r["volume"].toFloat))`.
+  ## toValue(r.mass.toFloat / r.volume.toFloat))`.
   var vs: seq[Value]
   for i in 0 ..< t.data.nrows: vs.add fn(Row(data: t.data, index: i))
   colsAdd(t, name, vs, before, after)
@@ -1097,7 +1098,7 @@ proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target) =
 
 proc tabStyle*(t: sink Tabella, fn: proc (r: Row): CellStyle, locations: varargs[Loc]): Tabella =
   ## Styles each body or stub cell at `locations` with a style computed from its row:
-  ## `tabStyle((r: Row) => (if r["moons"] > 10: style.fill("var(--x-soft)") else: CellStyle()), loc.body())`.
+  ## `tabStyle((r: Row) => (if r.moons > 10: style.fill("var(--x-soft)") else: CellStyle()), loc.body())`.
   result = t
   for l in locations:
     let target = l.resolve(result)

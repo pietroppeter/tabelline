@@ -118,7 +118,7 @@ how many came before it.
 nbShowCode:
   let t = tabella(story("dates.csv"), rownameCol = "name"):
     optCssTheme()
-    rowsHide where(it["year"] != 2027)
+    rowsHide where(it.year != 2027)
     tabHeader "FOSDEM 2027", "the 27th edition, as announced"
     colsHide ["year", "edition", "format", "day_of_year", "in_window", "url"]
     colsAdd "devrooms", proc (r: Row): Value = toValue(78)
@@ -226,11 +226,11 @@ January, except in 2021, online. In green, the years in that week:
 nbShowCode:
   let dates = story("dates.csv")
     .withColumn("era", proc (it: Row): Value =
-      let y = it["year"].toFloat
+      let y = it.year.toFloat
       toValue(if y <= 2003: "the first ones" elif y <= 2008: "late February"
               elif y <= 2010: "moving" else: "the week of 1 February"))
-    .withColumn("edition", proc (it: Row): Value = link($it["year"], $it["url"]))   # the year opens its site
-  let inWindow = where(it["in_window"] == true)
+    .withColumn("edition", proc (it: Row): Value = link($it.year, $it.url))   # the year opens its site
+  let inWindow = where(it.in_window == true)
   let t = tabella(dates, rownameCol = "edition", groupnameCol = "era"):
     optCssTheme()
     tabHeader "Every FOSDEM", "Saturday and Sunday, 2001 to 2027"
@@ -290,7 +290,7 @@ nbShowCode:
       columns = ["events", "devroom_talks", "main_track_talks"]
       missingText = ""
     tabFootnote "Partial: until 2006 the devroom talks are known only where a devroom page is archived.",
-      loc.stub(rows = where(2004 <= it["year"] and it["year"] <= 2006))
+      loc.stub(rows = where(2004 <= it.year and it.year <= 2006))
     tabSourceNote "FOSDEM's schedules; an event is anything on them, with stands and BOFs."
     tabOptions(tableFontSize = "12px", dataRowPadding = "2px", columnLabelsPaddingHorizontal = "3px",
                dataRowPaddingHorizontal = "3px", summaryRowPadding = "2px", summaryRowPaddingHorizontal = "3px")
@@ -345,7 +345,7 @@ years.
 """
 
 nbShowCode:
-  let online = where(it["format"] == "online")
+  let online = where(it.format == "online")
   let t = tabella(story("online.csv"), rownameCol = "year"):
     optCssTheme()
     tabHeader "Online and back", "the editions of 2018 to 2026"
@@ -394,8 +394,8 @@ nbShowCode:
                   "back after a pause", "new in 2027"]
   let rooms = story("devrooms_2027.csv")
     .sortedBy(proc (it: Row): (int, float, string) =
-      (groups.find($it["group"]), it["first"].toFloat, toLowerAscii($it["devroom"])))
-    .withColumn("devroom", proc (it: Row): Value = link($it["devroom"], $it["cfp"]))   # its call for talks
+      (groups.find($it.group), it.first.toFloat, toLowerAscii($it.devroom)))
+    .withColumn("devroom", proc (it: Row): Value = link($it.devroom, $it.cfp))   # its call for talks
   let t = tabella(rooms, rownameCol = "devroom", groupnameCol = "group"):
     optCssTheme()
     tabHeader "The devrooms of 2027", "and the year each first ran"
@@ -439,11 +439,11 @@ year, 2002 to 2026:
 nbShowCode:
   let longest = story("devrooms_longest.csv")
     .withColumn("now", proc (it: Row): Value =
-      toValue(if it["in_2027"] == true: "in 2027 too" else: "no longer held"))
+      toValue(if it.in_2027 == true: "in 2027 too" else: "no longer held"))
   let t = tabella(longest, rownameCol = "devroom", groupnameCol = "now"):
     optCssTheme()
     tabHeader "The longest-running devrooms", "held in ten editions or more"
-    colsAdd "per_year", proc (r: Row): Value = toValue(talksPerYear(($r["names"]).split("; ")))
+    colsAdd "per_year", proc (r: Row): Value = toValue(talksPerYear(($r.names).split("; ")))
     colsHide ["names", "n_names", "in_2027"]
     rowGroupOrder ["in 2027 too", "no longer held"]
     colsMergeRange "first", "last"
@@ -530,11 +530,11 @@ nbShowCode:
       total: agg.sum
       columns = ["new", "back", "last_time"]
       missingText = ""
-    subZero "last_time", rows = where(it["year"] == 2027), zeroText = ""
-    tabStyle style.fill(tint("--success-soft")), loc.body(cols("new"), rows = where(13 <= it["new"]))
+    subZero "last_time", rows = where(it.year == 2027), zeroText = ""
+    tabStyle style.fill(tint("--success-soft")), loc.body(cols("new"), rows = where(13 <= it.new))
     tabFootnote "Not held again up to 2027.", loc.columnLabels(cols("last_time"))
     tabFootnote "Partial: the old sites list some devrooms without their pages.",
-      loc.stub(rows = where(it["year"] <= 2006))
+      loc.stub(rows = where(it.year <= 2006))
     tabSourceNote "FOSDEM's schedules and devroom pages; 2002–2006 partial."
     tabOptions(tableFontSize = "13px", dataRowPadding = "2px", summaryRowPadding = "2px")
   nbTable t
@@ -569,13 +569,13 @@ nbTabs(python = "", r = gtCell("keynotes <-")):
   nbCode:
     var lastYear = 0
     let keynotes = story("keynotes.csv")
-      .withColumn("title", proc (it: Row): Value = link($it["title"], $it["url"]))   # a link to the talk
-      .withColumn("day", proc (it: Row): Value = toValue(($it["day"])[0 .. 2]))
+      .withColumn("title", proc (it: Row): Value = link($it.title, $it.url))   # a link to the talk
+      .withColumn("day", proc (it: Row): Value = toValue(($it.day)[0 .. 2]))
       .withColumn("edition", proc (it: Row): Value =        # the year, on its first keynote only
-        let y = it["year"].toFloat.int
+        let y = it.year.toFloat.int
         result = toValue(if y == lastYear: "" else: $y)
         lastYear = y)
-    let opening = where(it["opening"] == true)
+    let opening = where(it.opening == true)
     let t = tabella(keynotes, rownameCol = "edition"):
       optCssTheme()
       tabHeader "The keynotes", "every edition; shaded, the one that opened it"
@@ -591,9 +591,9 @@ nbTabs(python = "", r = gtCell("keynotes <-")):
         video: ""
       tabStyle style.fill(tint("--primary-soft")), loc.body(rows = opening), loc.stub(rows = opening)
       tabStyle style.text(size = "12px", color = tint("--muted")), loc.body(cols("day"))
-      tabFootnote "The schedule says only \"RMS\".", loc.body(cols("title"), rows = where(it["year"] == 2002))
+      tabFootnote "The schedule says only \"RMS\".", loc.body(cols("title"), rows = where(it.year == 2002))
       tabFootnote "Online: no keynotes; the first talk of the day, in the community track.",
-        loc.body(cols("title"), rows = where(it["year"] == 2021 or it["year"] == 2022))
+        loc.body(cols("title"), rows = where(it.year == 2021 or it.year == 2022))
       tabSourceNote md("FOSDEM's schedules ([archive.fosdem.org](https://archive.fosdem.org/)): talks of type keynote, 2007–2025, without the welcome, the closing and the quiz; before 2007 and in 2026, the opening talk only.")
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
@@ -627,7 +627,7 @@ nbShowCode:
   let t = tabella(top, rownameCol = "person"):
     optCssTheme()
     tabHeader "Coming back", "the people who spoke at the most editions"
-    colsAdd "per_edition", proc (r: Row): Value = toValue(perEdition[$r["person"]])
+    colsAdd "per_edition", proc (r: Row): Value = toValue(perEdition[$r.person])
     colsHide ["first_year", "last_year"]
     tabSpanner "talks", ["talks", "keynotes", "main_track_talks", "devroom_talks"]
     colsLabel:
@@ -725,13 +725,13 @@ Nim for Pythonistas in the Python devroom in 2025. In 2018 Nim had a stand.
 nbShowCode:
   let nim = story("nim.csv")
     .withColumn("title", proc (it: Row): Value =
-      link(if it["kind"] == "stand": "The Nim stand" else: $it["title"], $it["url"]))
+      link(if it["kind"] == "stand": "The Nim stand" else: $it.title, $it.url))
     .withColumn("track", proc (it: Row): Value =
       if it["kind"] == "stand":       # "K (level 2)" is "building K, level 2"
-        toValue("building " & ($it["track"]).replace(" (level ", ", level ").strip(chars = {')'}))
-      else: toValue(($it["track"]).replace(" devroom", "")))
+        toValue("building " & ($it.track).replace(" (level ", ", level ").strip(chars = {')'}))
+      else: toValue(($it.track).replace(" devroom", "")))
     .withColumn("how", proc (it: Row): Value =       # said only when the talk is not about Nim
-      if it["how"] == "about Nim" or it["how"] == "stand": null() else: toValue("*" & $it["how"] & "*"))
+      if it.how == "about Nim" or it.how == "stand": null() else: toValue("*" & $it.how & "*"))
   let t = tabella(nim, groupnameCol = "year"):
     optCssTheme()
     tabHeader "Nim at FOSDEM", "the talks about Nim, or about projects built with it"
@@ -748,7 +748,7 @@ nbShowCode:
       track: "devroom"
       video: ""
     tabStyle style.text(size = "12px"), loc.body(cols("track"))
-    tabStyle style.fill(tint("--primary-soft")), loc.body(rows = where(it["track"] == "Nim Programming Language"))
+    tabStyle style.fill(tint("--primary-soft")), loc.body(rows = where(it.track == "Nim Programming Language"))
     tabFootnote "Online, with a devroom of its own.", loc.rowGroups("2022")
     tabSourceNote md("FOSDEM's schedules: titles with \"Nim\", the 2022 Nim devroom, and abstracts read by hand (talks that only mention Nim are left out); the stand from [archive.fosdem.org/2018/stands](https://archive.fosdem.org/2018/stands/).")
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")

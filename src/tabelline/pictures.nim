@@ -108,17 +108,12 @@ proc iconSvg*(name: string, height = "1em", fill = "", fillAlpha = NaN, stroke =
     (if title.len > 0: "<title>" & escapeHtml(title) & "</title>" else: "") &
     "<path d=\"" & i.path & "\"/></svg>"
 
-func iconNames(s: string): seq[string] =
-  for part in s.split(','):
-    let p = part.strip
-    if p.len > 0: result.add p
-
 proc fmtIcon*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "1em", sep = " ",
               strokeColor = "", strokeWidth = "", strokeAlpha = NaN, fillColor = "",
               fillColors: openArray[(string, string)] = [], fillAlpha = NaN, marginLeft = "",
               marginRight = "", a11y = "semantic"): Tabella =
-  ## Names of Font Awesome Free icons as icons: "star", or several separated by commas
-  ## ("hard-drive, clock"), joined by `sep`. `fillColor` colours them all, `fillColors` by name
+  ## Names of Font Awesome Free icons as icons: "star", or several, in a list or separated by
+  ## commas ("hard-drive, clock"), joined by `sep`. `fillColor` colours them all, `fillColors` by name
   ## (`{"circle-check": "green"}`); by default they take the colour of the text. In text output
   ## the names stay. An unknown name raises `ValueError` here, not when the table is rendered.
   if a11y notin ["semantic", "decorative", "none"]:
@@ -130,18 +125,19 @@ proc fmtIcon*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "1em"
     for i in ix:
       let v = t.data[n, i]
       if v.isNull: continue
-      for name in iconNames($v):
+      for name in cellNames(v):
         if not hasIcon(name): raise newException(ValueError, "no Font Awesome Free icon named " & name.escape)
   var byName: Table[string, string]
   for (k, c) in fillColors: byName[k] = c
-  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    let list = iconNames($v)
+  result = fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let list = cellNames(v)
     if ctx == rcText: return list.join(", ")
     var parts: seq[string]
     for name in list:
       parts.add iconSvg(name, height, byName.getOrDefault(name, fillColor), fillAlpha, strokeColor,
                       strokeWidth, strokeAlpha, marginLeft, marginRight, a11y = a11y)
     "<span style=\"white-space:nowrap;\">" & parts.join(escapeHtml(sep)) & "</span>", rows)
+  result.formats[^1].wholeValue = true
 
 # ---------------------------------------------------------------------------------------- images
 
@@ -162,7 +158,7 @@ proc imageDataUrl*(file: string): string =
 
 proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", width = "",
                sep = " ", path = "", filePattern = "{x}", encode = true, alt = ""): Tabella =
-  ## File names as images: each cell holds one or more names (separated by commas), found in
+  ## File names as images: each cell holds one or more names (a list, or separated by commas), found in
   ## `path` and written with `filePattern` ("{x}.png" for a cell "moon"). With `encode` (the
   ## default) a local file is read now and inlined as a data URL, so the page needs nothing else;
   ## an address (`https://...`) is left as it is. Without `height` or `width` an image is 2em
@@ -180,12 +176,12 @@ proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", 
     for i in ix:
       let v = t.data[n, i]
       if v.isNull: continue
-      for name in iconNames($v):
+      for name in cellNames(v):
         let s = source(name)
         if s notin urls: urls[s] = (if encode and not s.isUrl: imageDataUrl(s) else: s)
   let h = if height.len == 0 and width.len == 0: "2em" else: height
-  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    let list = iconNames($v)
+  result = fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let list = cellNames(v)
     if ctx == rcText: return list.join(", ")
     var parts: seq[string]
     for name in list:
@@ -197,3 +193,4 @@ proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", 
       parts.add "<img src=\"" & escapeHtml(urls.getOrDefault(source(name), source(name))) & "\" alt=\"" &
         escapeHtml(a) & "\" style=\"" & style.join(";") & "\">"
     "<span style=\"white-space:nowrap;\">" & parts.join(escapeHtml(sep)) & "</span>", rows)
+  result.formats[^1].wholeValue = true

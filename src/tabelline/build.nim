@@ -59,6 +59,17 @@ func columnLabel*(c: ColInfo, ctx: RenderContext): string =
     let pattern = if c.unitsPattern.len > 0: c.unitsPattern else: "{1}, {2}"
     result = pattern.multiReplace(("{1}", result), ("{2}", formatUnits(c.units, ctx)))
 
+proc applyFormat(f: FormatRule, v: Value, ctx: RenderContext): string =
+  ## A format on a value; on a list or a record, item by item, unless the format takes it whole.
+  if f.wholeValue or v.kind notin {vkList, vkRecord}: return f.fn(v, ctx)
+  proc one(x: Value): string =
+    if x.isNull: ""
+    elif x.kind == vkList: "[" & applyFormat(f, x, ctx) & "]"
+    elif x.kind == vkRecord: "{" & applyFormat(f, x, ctx) & "}"
+    else: f.fn(x, ctx)
+  if v.kind == vkList: v.items.mapIt(one(it)).join(", ")
+  else: v.fields.mapIt((if ctx == rcHtml: escapeHtml(it[0]) else: it[0]) & ": " & one(it[1])).join(", ")
+
 proc formatCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string =
   ## The shown text of one cell: the last format that covers it, then any substitution.
   let v = t.data[col, row]
@@ -67,7 +78,7 @@ proc formatCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string 
     for k in countdown(t.formats.high, 0):
       let f = t.formats[k]
       if col in f.columns and (f.rows.len == 0 or row in f.rows):
-        result = f.fn(v, ctx)
+        result = applyFormat(f, v, ctx)
         done = true
         break
     if not done:
