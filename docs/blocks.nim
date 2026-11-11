@@ -15,6 +15,7 @@
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
+##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
@@ -691,6 +692,169 @@ template nbApi*(tname, tanchor, talias, tkind: string, tsignatures: seq[string],
   ## empty, a second, shorter one (`#tabHeader`).
   nb.add newNbApi(name = tname, anchor = tanchor, alias = talias, symKind = tkind, signatures = tsignatures, doc = tdoc,
                   links = tlinks, exampleCode = texampleCode, exampleHtml = texampleHtml)
+
+# --------------------------------------------------------------------------------- a tournament
+
+type TournamentEntry* = object
+  ## A player of a tournament: a name, a short line under it, and colours shown as a strip.
+  name*, what*: string
+  colours*: seq[string]
+
+func entry*(name, what: string, colours: openArray[string] = []): TournamentEntry =
+  TournamentEntry(name: name, what: what, colours: @colours)
+
+func bye*(): TournamentEntry = TournamentEntry()
+  ## An empty place in the draw: the player it meets goes through.
+
+const torneoScript = """<script>
+(function () {
+  document.querySelectorAll('.torneo:not([data-ready])').forEach(function (box) {
+    box.dataset.ready = '1';
+    var data = JSON.parse(box.querySelector('script[type="application/json"]').textContent);
+    var slots = data.slots, n = slots.length, store = 'tabelline-torneo:' + data.key;
+    var rounds = Math.round(Math.log(n) / Math.LN2), picks = {};
+    try { picks = JSON.parse(localStorage.getItem(store) || '{}') || {}; } catch (e) {}
+    box.querySelector('.torneo-plain').hidden = true;
+    var out = box.querySelector('.torneo-turni'), fine = box.querySelector('.torneo-fine');
+    var esito = box.querySelector('.torneo-esito'), area = fine.querySelector('textarea');
+    fine.hidden = false;
+    function roundName(r) {
+      var left = rounds - r;
+      return left === 1 ? 'Final' : left === 2 ? 'Semi-finals' : left === 3 ? 'Quarter-finals' : r === 0 ? 'First round' : 'Round ' + (r + 1);
+    }
+    // the two players of match m of round r: a place in the draw, -1 for a bye, null if not known yet
+    function players(r, m) {
+      if (r === 0) return [slots[2 * m].name ? 2 * m : -1, slots[2 * m + 1].name ? 2 * m + 1 : -1];
+      return [winner(r - 1, 2 * m), winner(r - 1, 2 * m + 1)];
+    }
+    function winner(r, m) {
+      var p = players(r, m);
+      if (p[0] === null || p[1] === null) return null;
+      if (p[0] === -1) return p[1];
+      if (p[1] === -1) return p[0];
+      var k = picks[r + '-' + m];
+      return k === 0 || k === 1 ? p[k] : null;
+    }
+    function save() { try { localStorage.setItem(store, JSON.stringify(picks)); } catch (e) {} }
+    function pick(r, m, k) {
+      if (picks[r + '-' + m] === k) return;
+      picks[r + '-' + m] = k;
+      // a later match loses its pick only if it picked the player who changed
+      for (var rr = r, mm = m; rr + 1 < rounds; ) {
+        var side = mm & 1; rr++; mm >>= 1;
+        if (picks[rr + '-' + mm] === side) delete picks[rr + '-' + mm]; else break;
+      }
+      save(); render();
+    }
+    function button(r, m, k, idx, ready, w) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'torneo-player';
+      if (idx === null) { b.disabled = true; b.textContent = 'the winner of an earlier match'; return b; }
+      var e = slots[idx], strip = document.createElement('span');
+      strip.className = 'torneo-tinte'; strip.setAttribute('aria-hidden', 'true');
+      (e.colours || []).forEach(function (c) { var i = document.createElement('i'); i.style.background = c; strip.appendChild(i); });
+      var name = document.createElement('strong'); name.textContent = e.name;
+      b.appendChild(strip); b.appendChild(name);
+      if (e.what) { var s = document.createElement('span'); s.className = 'torneo-what'; s.textContent = e.what; b.appendChild(s); }
+      b.setAttribute('aria-pressed', w === idx ? 'true' : 'false');
+      if (w !== null && w !== idx) b.classList.add('torneo-out');
+      if (!ready) b.disabled = true;
+      else b.addEventListener('click', function () { pick(r, m, k); });
+      return b;
+    }
+    function walk(visit) {   // every match, in order, with its number (byes have none)
+      var num = 0;
+      for (var r = 0; r < rounds; r++) {
+        visit(r, null);
+        for (var m = 0; m < n >> (r + 1); m++) {
+          var p = players(r, m), isBye = p[0] === -1 || p[1] === -1;
+          if (!isBye) num++;
+          visit(r, m, p, isBye ? 0 : num);
+        }
+      }
+    }
+    function render() {
+      out.textContent = '';
+      var list;
+      walk(function (r, m, p, num) {
+        if (m === null) {
+          var h = document.createElement('p'); h.className = 'torneo-turno'; h.textContent = roundName(r);
+          list = document.createElement('div'); list.className = 'torneo-partite';
+          out.appendChild(h); out.appendChild(list); return;
+        }
+        if (!num) {
+          var who = p[0] === -1 ? p[1] : p[0];
+          if (who === null || who === -1) return;
+          var y = document.createElement('p'); y.className = 'torneo-bye';
+          y.textContent = slots[who].name + ' goes through: a bye.'; list.appendChild(y); return;
+        }
+        var w = winner(r, m), ready = p[0] !== null && p[1] !== null;
+        var match = document.createElement('div'); match.className = 'torneo-partita';
+        var label = document.createElement('span'); label.className = 'torneo-num'; label.textContent = 'match ' + num;
+        match.appendChild(label);
+        match.appendChild(button(r, m, 0, p[0], ready, w));
+        match.appendChild(button(r, m, 1, p[1], ready, w));
+        list.appendChild(match);
+      });
+      var champ = winner(rounds - 1, 0);
+      esito.textContent = champ !== null && champ >= 0 ? 'The winner: ' + slots[champ].name + '.' :
+        Object.keys(picks).length ? 'Keep going: the one you tap goes on to the next round.' :
+        'Tap the one you would keep, in each match.';
+    }
+    function result() {
+      var lines = ['## ' + data.label, ''];
+      walk(function (r, m, p, num) {
+        if (m === null) { if (r > 0) lines.push(''); lines.push(roundName(r) + ':'); return; }
+        if (!num) { var who = p[0] === -1 ? p[1] : p[0]; if (who !== null && who >= 0) lines.push('- ' + slots[who].name + ' (a bye)'); return; }
+        var w = winner(r, m);
+        if (p[0] === null || p[1] === null) lines.push('- match ' + num + ': not played yet');
+        else if (w === null) lines.push('- match ' + num + ': ' + slots[p[0]].name + ' or ' + slots[p[1]].name + ', not played yet');
+        else lines.push('- match ' + num + ': **' + slots[w].name + '** over ' + slots[w === p[0] ? p[1] : p[0]].name);
+      });
+      var champ = winner(rounds - 1, 0);
+      lines.push('', champ !== null && champ >= 0 ? 'Winner: **' + slots[champ].name + '**' : 'No winner yet.');
+      return lines.join('\n');
+    }
+    fine.querySelector('[data-act="copy"]').addEventListener('click', function (ev) {
+      var text = result(), b = ev.currentTarget;
+      area.value = text; area.hidden = false; area.select();
+      function done(ok) { b.textContent = ok ? 'Copied: paste it in the chat' : 'Select the text below and copy it'; }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      else { var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} done(ok); }
+    });
+    fine.querySelector('[data-act="reset"]').addEventListener('click', function () {
+      picks = {}; save(); area.hidden = true; render();
+    });
+    render();
+  });
+})();
+</script>"""
+
+newNbBlock(NbTournament):
+  key: string
+  label: string
+  slots: seq[TournamentEntry]
+  toHtml:
+    var j = newJArray()
+    for e in blk.slots: j.add %*{"name": e.name, "what": e.what, "colours": e.colours}
+    let data = ($ %*{"key": blk.key, "label": blk.label, "slots": j}).replace("</", "<\\/")
+    var plain = ""
+    for i in countup(0, blk.slots.high - 1, 2):
+      let (a, b) = (blk.slots[i].name, blk.slots[i + 1].name)
+      plain.add "<li>" & (if a.len == 0: esc(b) & " (a bye)" elif b.len == 0: esc(a) & " (a bye)"
+                         else: esc(a) & " or " & esc(b)) & "</li>"
+    &"""<section class="torneo" aria-label="{esc(blk.label)}"><script type="application/json">{data}</script>""" &
+      &"""<ol class="torneo-plain">{plain}</ol><div class="torneo-turni"></div>""" &
+      """<div class="torneo-fine" hidden><p class="torneo-esito" aria-live="polite"></p>""" &
+      """<button type="button" data-act="copy">Copy the result</button><button type="button" data-act="reset">Start again</button>""" &
+      """<textarea readonly hidden aria-label="the result, in Markdown"></textarea></div></section>""" & torneoScript
+
+template nbTournament*(tkey, tlabel: string, tslots: openArray[TournamentEntry]) =
+  ## A tournament to play on the page: a draw of players (a power of two, `bye()` for an empty
+  ## place), matches of two, round by round, until one is left. A reader taps the one to keep in
+  ## each match; the picks are remembered (by `tkey`), and **Copy the result** gives them as
+  ## Markdown, to paste in a chat. Without JavaScript, the first round as a list.
+  nb.add newNbTournament(key = tkey, label = tlabel, slots = @tslots)
 
 # ------------------------------------------------------------------------------------- the page
 

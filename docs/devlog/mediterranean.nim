@@ -1,4 +1,4 @@
-## devlog: 11 Nov 2026 D | Designing a Mediterranean look | The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. Designed in rounds, in this post. Nine sources to learn from, from Minoan frescoes to the luzzu of Malta, each with who they are, what they made, why they fit and what a page could take; rules for turning a source into six colours, checked on every palette; a gallery of the discarded; three directions.
+## devlog: 11 Nov 2026 D | Designing a Mediterranean look | The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. Designed in rounds, in this post. Fourteen sources to learn from, from Minoan frescoes to the houses of Djerba, each with who they are, what they made, why they fit and what a page could take; rules for turning a source into six colours, checked on every palette; a gallery of the discarded; three directions, and a tournament.
 ## A dated post: it tells how the Mediterranean look was designed, round by round, and is not rewritten afterwards.
 import std/[os, strutils]
 import nimib
@@ -13,7 +13,8 @@ nb.useTabelline(title = "Designing a Mediterranean look", homeHref = "../", back
 nbTitle "11 November 2026", "Designing a Mediterranean look", """
 The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. It is
 designed in rounds, in this post. Round 1: nine sources to learn from, what a page could take from
-each, and three directions to choose from.
+each, and three directions to choose from. Round 4: eighteen sources looked at, fourteen still in, and
+a tournament to choose among them.
 """
 
 nbText: """
@@ -135,14 +136,14 @@ block:  # every colour of every source, checked against the rules
     nbTable t
 
 nbText: """
-## Nine sources
+## Fourteen sources
 
 People and traditions to learn from, oldest first, in a gallery to swipe. For each: who they are, what they made, why they
 fit the islands, and what a page could take. The six colours under each follow the rules above,
 picked by eye, not sampled from a picture; the references are where the facts come from.
 """
 
-nbGallery "nine sources for a Mediterranean look, oldest first: swipe or scroll sideways":
+nbGallery "fourteen sources for a Mediterranean look, oldest first: swipe or scroll sideways":
 
   nbGalleryCard("Minoan frescoes and Attic vases", "1600–300 BC"):
     nbText: """
@@ -166,6 +167,28 @@ the rule above and below; dolphin blue for the sea.
 [Black-figure](https://en.wikipedia.org/wiki/Black-figure_pottery) and
 [red-figure pottery](https://en.wikipedia.org/wiki/Red-figure_pottery) ·
 [Meander](https://en.wikipedia.org/wiki/Meander_(art))
+"""
+
+  nbGalleryCard("The mosaics of the Villa Romana del Casale", "300s AD"):
+    nbText: """
+**Who.** The mosaicists, whose names are lost, who paved a great Roman villa near Piazza Armerina,
+in the middle of Sicily, in the first quarter of the 4th century AD.
+
+**What.** Some 3,500 m² of mosaic and *opus sectile* floors, kept almost whole by a landslide and
+floods that covered them: for the Grove Dictionary of Art, the richest, largest and most varied
+collection of Roman mosaics that remains. Hunts, among them a great one with a captive tigress. A
+World Heritage Site since 1997.
+
+**Why it fits.** The biggest island's own pictures, made of small stones set one beside the other,
+as a table is made of cells.
+
+**For a page.** A table as a floor of tesserae: cells parted by a thin line of mortar, a border of
+small squares, earth colours and one glass blue.
+"""
+    nbSwatches sourceSwatches("casale")
+    nbText: """
+[Villa Romana del Casale](https://en.wikipedia.org/wiki/Villa_Romana_del_Casale) ·
+[UNESCO](https://whc.unesco.org/en/list/832)
 """
 
   nbGalleryCard("The isolari and the portolan charts", "1200s–1528"):
@@ -239,25 +262,6 @@ that does not quite meet its line, for highlighted cells.
 [Raoul Dufy](https://en.wikipedia.org/wiki/Raoul_Dufy)
 """
 
-  nbGalleryCard("Joan Miró in Mallorca", "1929–1983"):
-    nbText: """
-**Who.** The Catalan painter, born in Barcelona. He married Pilar Juncosa in Palma in 1929,
-painted part of the *Constellations* there in 1940–1941, and made Palma his home, in a studio
-designed for him by Josep Lluís Sert; he died there in 1983.
-
-**What.** Flat primaries and black signs: stars, birds, eyes, ladders.
-
-**Why it fits.** An islander by choice, who drew signs rather than pictures.
-
-**For a page.** Black signs as markers. But his red, blue and yellow are Munari's: next to our
-default it would look like more of the same.
-"""
-    nbSwatches sourceSwatches("miro")
-    nbText: """
-[Joan Miró](https://en.wikipedia.org/wiki/Joan_Mir%C3%B3) ·
-[Fundació Pilar i Joan Miró](https://en.wikipedia.org/wiki/Fundaci%C3%B3_Pilar_i_Joan_Mir%C3%B3_in_Mallorca)
-"""
-
   nbGalleryCard("Gio Ponti and the maiolica of Vietri and Caltagirone", "1400s–1960"):
     nbText: """
 **Who.** Ponti, the Milanese architect and designer; the potters of Vietri sul Mare, on the Amalfi
@@ -279,6 +283,31 @@ tile, a square sheet with a painted border; a row group as a band of tiles.
 [Vietri sul Mare](https://en.wikipedia.org/wiki/Vietri_sul_Mare) ·
 [Caltagirone](https://it.wikipedia.org/wiki/Caltagirone) ·
 [Scalinata di Santa Maria del Monte](https://it.wikipedia.org/wiki/Scalinata_di_Santa_Maria_del_Monte)
+"""
+
+  nbGalleryCard("Ferdinand Bauer and the Flora Graeca", "1786–1840"):
+    nbText: """
+**Who.** Ferdinand Bauer (1760–1826), an Austrian botanical illustrator, and John Sibthorp, an
+Oxford professor, who met in Vienna, where Sibthorp had gone to study the *Vienna Dioscurides*.
+
+**What.** From March 1786 to December 1787 they surveyed the plants and animals of the eastern
+Mediterranean, in Greece and Asia Minor; Bauer came back with over 1,500 sketches. Unable to carry
+all the colours he needed, he covered his sketches with colour numbers, by a table of colours, and
+painted them later at leisure. The *Flora Graeca* came out from 1806 to 1840, ten volumes of plates
+engraved by James Sowerby; only 30 sets were issued at first.
+
+**Why it fits.** The plants of the islands drawn one at a time, as the isolari drew the islands; and
+colours by number, from a table: a look made with a table.
+
+**For a page.** Hairlines and much white; a legend as Bauer's table of colours, numbers that stand
+for colours; italic Latin names. The colours here are named after plants of the region, not
+sampled from his plates.
+"""
+    nbSwatches sourceSwatches("bauer")
+    nbText: """
+[Ferdinand Bauer](https://en.wikipedia.org/wiki/Ferdinand_Bauer) ·
+[Flora Graeca](https://en.wikipedia.org/wiki/Flora_Graeca) ·
+[Digital Flora Graeca](https://www.bodleian.ox.ac.uk/science/resources/sherardian-library/flora_graeca) (Bodleian)
 """
 
   nbGalleryCard("Leo Lionni", "1960s–1999"):
@@ -325,6 +354,52 @@ outlines; a table's title as the name over a stage.
 [Gianni Rodari](https://en.wikipedia.org/wiki/Gianni_Rodari)
 """
 
+  nbGalleryCard("Maria Lai", "1943–2013"):
+    nbText: """
+**Who.** An artist from Ulassai, in Sardinia (1919–2013), who studied in Venice under Arturo
+Martini and worked in weaving, embroidery, writing, sculpture and drawing; she died in Cardedu, near
+Ulassai, and in 2006 opened a museum of her work in the village's old railway station.
+
+**What.** *Legarsi alla montagna* (1981): for three days, 27 km of blue ribbon tied the houses of
+Ulassai to each other and to the mountain above, after a local tale of a child saved by a blue
+ribbon; a knot or a loaf of bread for a friendship, a taut ribbon for a quarrel. Then works of
+thread on cloth, and *sewn fables*, books made with needle and thread, such as *Tenendo per mano il
+sole* (1984).
+
+**Why it fits.** An islander who stayed on her island, less known than the others, and soft:
+linen, thread, bread and one blue. Her ribbon says what the story says with Braudel: islands are
+tied to each other, not alone.
+
+**For a page.** Rules stitched rather than drawn; a ribbon of the primary blue that ties the rows
+or sections that belong together; a book of tables as a sewn book.
+"""
+    nbSwatches sourceSwatches("lai")
+    nbText: """
+[Maria Lai](https://en.wikipedia.org/wiki/Maria_Lai) ·
+[her CV](https://www.m77gallery.com/wp-content/uploads/2018/09/M77-CV-Maria-Lai.pdf) (M77 gallery)
+"""
+
+  nbGalleryCard("Mediterraneo, by Gabriele Salvatores", "1991"):
+    nbText: """
+**Who.** Gabriele Salvatores, an Italian director, and Enzo Monteleone, who wrote the film.
+
+**What.** *Mediterraneo* (1991): in 1941 a group of misfit Italian soldiers is sent to Megisti, a
+small Greek island, for four months of lookout duty, and the war forgets them there; their
+lieutenant, an amateur painter, restores the murals of the church. Filmed on Kastellorizo (Megisti),
+it won the Academy Award for Best Foreign Language Film in 1992, and brought tourists to the island.
+
+**Why it fits.** A small island seen by people who came from elsewhere and stayed: what the story's
+"how they live now" and "getting there" are about. The only film among the sources.
+
+**For a page.** Whitewash and harbour water; the plaster of the harbour's houses for the other
+roles; titles as a film's, a few words, widely spaced.
+"""
+    nbSwatches sourceSwatches("mediterraneo")
+    nbText: """
+[Mediterraneo](https://en.wikipedia.org/wiki/Mediterraneo) ·
+[Kastellorizo](https://en.wikipedia.org/wiki/Kastellorizo)
+"""
+
   nbGalleryCard("Massimo Vitali", "1995–"):
     nbText: """
 **Who.** An Italian photographer, born in 1944 in Como and living in Lucca, once a photojournalist
@@ -345,12 +420,58 @@ umbrellas as status colours, and the turquoise of shallow sea.
 [massimovitali.com](https://www.massimovitali.com/)
 """
 
+  nbGalleryCard("The houses of Corricella, Procida", "today"):
+    nbText: """
+**Who.** The people of Procida, one of the Phlegraean Islands off Naples (9,971 inhabitants), who
+turned from farming to fishing from the 1300s; and the more than 30 films shot there, among them
+*Il Postino* and *The Talented Mr. Ripley*.
+
+**What.** Corricella, the fishing port, known for its houses, each painted in a different pastel
+shade; above it Terra Murata, the walled village. Italian Capital of Culture in 2022.
+
+**Why it fits.** Colours chosen house by house, by the people of an island, and soft: pastels
+side by side, none shouting. With Djerba, the houses of two shores.
+
+**For a page.** A table as a harbour front: each row group a house of its own pale colour, the
+pink for sections, the green of the shutters for what works.
+"""
+    nbSwatches sourceSwatches("procida")
+    nbText: """
+[Procida](https://en.wikipedia.org/wiki/Procida) ·
+[Corricella](https://en.wikipedia.org/wiki/Corricella)
+"""
+
+  nbGalleryCard("The menzel of Djerba", "today"):
+    nbText: """
+**Who.** The people of Djerba, an island off southern Tunisia, where Phoenicians from Tyre and Sidon
+came in the 12th century BC and spread pottery and purple dye.
+
+**What.** The *menzel*, a family's house and farm of two to five hectares: a few houses around a
+courtyard, with no windows outside, under vaults and domes; wells and cisterns for the rain (less
+than 250 mm a year), hedges of prickly pear and agave, sometimes a weaving workshop and an olive
+press underground. Since 2023 the island is a World Heritage Site, "a testimony to a settlement
+pattern in an island territory".
+
+**Why it fits.** The southern shore, which no other source comes from, and an island in the
+story's own table of world heritage.
+
+**For a page.** Inward-looking cards: a plain outside, colour inside, as a courtyard; domes for
+the circles; the purple of the murex for sections, and the clay of the pots.
+"""
+    nbSwatches sourceSwatches("djerba")
+    nbText: """
+[Djerba](https://en.wikipedia.org/wiki/Djerba) ·
+[Menzel](https://en.wikipedia.org/wiki/Menzel_(Djerba)) ·
+[UNESCO](https://whc.unesco.org/en/list/1640)
+"""
+
 nbText: """
 ## Discarded
 
 A source that is discarded moves here, and a new one takes its place, found by looking in another
 direction and with what the discarded one taught. Eighteen sources at most are looked at in all:
-once nine new ones have come in, a discard only makes the gallery shorter. So far 12 of 18.
+once nine new ones have come in, a discard only makes the gallery shorter. All 18 are in now: from
+here on, the gallery only shrinks.
 
 1. **Luigi Ghirri**, round 2: the softest light, but not of the islands. In his place came the
    **luzzu of Malta**: made on an island, in colours with rules, the lesson his card taught.
@@ -358,9 +479,37 @@ once nine new ones have come in, a discard only makes the gallery shorter. So fa
    were too many, and black and white gives a look no colours of its own. In their place came two
    artists of children's books, **Leo Lionni** and **Emanuele Luzzati**: the look of a children's
    book is what Munari has, and they bring the sea and the theatre of a port.
+3. **Joan Miró**, round 4: he fits, but he is too well known and his palette too sharp. In his
+   place came **Maria Lai**, a Sardinian artist less known abroad, whose colours are linen, thread,
+   bread and one blue ribbon. Then five more, to reach eighteen, each from a direction not yet
+   looked at: mosaics (the **Villa Romana del Casale**), botanical illustration (**Ferdinand Bauer**),
+   a film (**Mediterraneo**), and the houses of two shores (**Procida** and **Djerba**), the first
+   source from the south.
 """
 
 nbGallery "discarded sources, newest first: swipe or scroll sideways":
+
+  nbGalleryCard("Joan Miró in Mallorca", "1929–1983"):
+    nbText: """
+**Who.** The Catalan painter, born in Barcelona. He married Pilar Juncosa in Palma in 1929,
+painted part of the *Constellations* there in 1940–1941, and made Palma his home, in a studio
+designed for him by Josep Lluís Sert; he died there in 1983.
+
+**What.** Flat primaries and black signs: stars, birds, eyes, ladders.
+
+**Why it fits.** An islander by choice, who drew signs rather than pictures.
+
+**For a page.** Black signs as markers. But his red, blue and yellow are Munari's: next to our
+default it would look like more of the same.
+
+**Why discarded** (round 4). It fits, but Miró is too well known, and his palette too sharp: a
+famous palette brings its painter along, and flat primaries are Munari's already.
+"""
+    nbSwatches sourceSwatches("miro")
+    nbText: """
+[Joan Miró](https://en.wikipedia.org/wiki/Joan_Mir%C3%B3) ·
+[Fundació Pilar i Joan Miró](https://en.wikipedia.org/wiki/Fundaci%C3%B3_Pilar_i_Joan_Mir%C3%B3_in_Mallorca)
+"""
 
   nbGalleryCard("Herbert List and Constantine Manos", "1937–1964"):
     nbText: """
@@ -431,20 +580,23 @@ and even his soft black stays under 10:1.
 nbText: """
 ## How sources are chosen
 
-Every source, kept or discarded, by kind. The process, as it stands after three rounds:
+Every source, kept or discarded, by kind. The process, as it stands after four rounds:
 
 1. **Look wide first.** Painters, photographers, map makers, potters, boatbuilders, illustrators:
-   no more than two of a kind among the nine, so one kind of picture does not decide the look
+   no more than two of a kind among the candidates, so one kind of picture does not decide the look
    (four photographers were too many).
 2. **Of the Mediterranean, and best of its islands.** A source that only lends its light is
    discarded (Ghirri).
-3. **Colours of its own.** A source must give at least four of the six colours from its own
+3. **Less known over famous, soft over sharp.** A famous palette brings its painter along, and a
+   sharp one shouts over the tables (Miró).
+4. **Colours of its own.** A source must give at least four of the six colours from its own
    materials, by the rules above; black and white sources borrow too much from the place.
-4. **Something for a page.** Each card ends with what a page could take: a rule, a motif, a way to
+5. **Something for a page.** Each card ends with what a page could take: a rule, a motif, a way to
    draw a table. A source with nothing to give there is not a source for a look.
-5. **Facts with references.** Every fact on a card comes from a page that is linked on it.
-6. **A fixed budget.** Pietro discards; each discard brings a new source from another direction,
-   until eighteen have been looked at; after that the gallery only shrinks.
+6. **Facts with references.** Every fact on a card comes from a page that is linked on it.
+7. **A fixed budget.** Pietro discards; each discard brings a new source from another direction,
+   until eighteen have been looked at; after that the gallery only shrinks, and a tournament
+   (below) helps to choose.
 """
 
 block:  # every source, by kind
@@ -458,28 +610,34 @@ block:  # every source, by kind
     src("Isolari and portolan charts", "map makers", "Florence, Venice", "1200s–1528", "candidates", 1),
     src("Luzzu of Malta", "boatbuilders", "Malta, Gozo", "1900s–today", "candidates", 2),
     src("Matisse and Dufy", "painters", "Collioure, Nice", "1905–1953", "candidates", 1),
-    src("Joan Miró", "painter", "Mallorca", "1929–1983", "candidates", 1),
     src("Gio Ponti and the maiolica", "designer, potters", "Sorrento, Vietri, Caltagirone", "1400s–1960", "candidates", 1),
     src("Leo Lionni", "children's books", "Genoa, Tuscany", "1960s–1999", "candidates", 3),
     src("Emanuele Luzzati", "children's books, theatre", "Genoa", "1944–2007", "candidates", 3),
+    src("Maria Lai", "weaving, sewn books", "Sardinia", "1943–2013", "candidates", 4),
     src("Massimo Vitali", "photographer", "Italian beaches", "1995–", "candidates", 1),
+    src("Villa Romana del Casale", "mosaicists", "Sicily", "300s AD", "candidates", 4),
+    src("Ferdinand Bauer, Flora Graeca", "botanical illustrator", "Greece, Asia Minor", "1786–1840", "candidates", 4),
+    src("Mediterraneo", "film", "Kastellorizo", "1991", "candidates", 4),
+    src("Houses of Corricella", "houses", "Procida", "today", "candidates", 4),
+    src("Menzel of Djerba", "houses", "Djerba", "today", "candidates", 4),
+    src("Joan Miró", "painter", "Mallorca", "1929–1983", "discarded", 4),
     src("Herbert List and Constantine Manos", "photographers", "Greece", "1937–1964", "discarded", 3),
     src("Ferdinando Scianna", "photographer", "Sicily", "1965–", "discarded", 3),
     src("Luigi Ghirri", "photographer", "Emilia", "1973–1992", "discarded", 2),
   ]
   let t = tabella(sources, rownameCol = "source", groupnameCol = "status"):
-    tabHeader "Twelve sources of eighteen", "nine candidates, three discarded"
+    tabHeader "Eighteen sources of eighteen", "fourteen candidates, four discarded"
     colsLabel:
       round: "round"
     colsHide "period"
-    tabSourceNote "Round: when a candidate came in, or when a source was discarded. Round 1 proposed the first nine; each discard brought one new source."
+    tabSourceNote "Round: when a candidate came in, or when a source was discarded. Round 1 proposed the first nine; each discard brought one new source, and round 4 five more, to reach eighteen."
     optCssTheme()
   nbTable t
 
 nbText: """
 ## What each could give
 
-The nine side by side: what each would bring to the parts of a page.
+The fourteen side by side: what each would bring to the parts of a page.
 """
 
 block:
@@ -491,15 +649,20 @@ block:
     i("Minoan and Attic", "terracotta and black, dolphin blue", "a meander as the top rule", "dolphins and octopus, sparingly"),
     i("Isolari, portolans", "vellum, brown ink, cinnabar", "thin rhumb lines", "the compass rose as the circle"),
     i("Matisse, Dufy", "ultramarine, pink, lemon", "colour that misses its line", "cut-out paper shapes"),
-    i("Miró", "Munari's primaries, black", "plain", "black signs, stars"),
     i("Ponti, maiolica", "cobalt, terracotta, yellow, green", "a row group as a band of tiles", "a card as a tile"),
     i("Lionni", "red fish, sea blue, black", "many small marks, one shape", "collage edges"),
     i("Luzzati", "magenta, gold, blue, black outlines", "the title as a stage's name", "painted backdrops"),
     i("Luzzu", "hull blue, maroon, lemon, green", "a coloured band on the top rule", "a band whose colour says what"),
+    i("Lai", "linen, black thread, ribbon blue, bread", "stitched rules", "a ribbon that ties rows together"),
     i("Vitali", "bleached, turquoise, red, yellow", "dense and small", "small marks"),
+    i("Casale", "limestone, red and yellow ochre, glass blue", "cells parted by mortar", "a border of small squares"),
+    i("Bauer", "white, iron-gall ink, plant colours", "a legend as a table of colours", "hairlines, italic Latin"),
+    i("Mediterraneo", "whitewash, harbour water, plaster", "titles as a film's", "few words, widely spaced"),
+    i("Procida", "pastels, pink, shutter green", "row groups as houses", "a harbour front"),
+    i("Djerba", "plaster, murex purple, clay", "plain outside, colour inside", "domes for circles"),
   ]
   let t = tabella(ideas, rownameCol = "source"):
-    tabHeader "Nine sources, part by part", "what a Mediterranean look could take from each"
+    tabHeader "Fourteen sources, part by part", "what a Mediterranean look could take from each"
     colsLabel:
       colours: "colours"
       tables: "tables"
@@ -510,7 +673,9 @@ block:
 nbText: """
 ## Three directions
 
-The nine fold into three looks. Each borrows its structure from one source and may take colours
+The first nine fold into three looks; the five of round 4 can join them (the mosaics and Bauer an
+isolario, Procida a maiolica, Djerba and Mediterraneo a harbour), or win on their own in the
+tournament. Each borrows its structure from one source and may take colours
 from another.
 
 1. **Isolario**: the island book. Vellum paper, brown-black ink, cinnabar red for sections and
@@ -526,6 +691,42 @@ Our pick is the first, with the maiolica's colours. It has the deepest roots in 
 islands drawn one at a time; it is the furthest from Munari and from the quaderno; and it is a book
 of the Mediterranean, as the story is.
 
+"""
+
+nbText: """
+## A tournament
+
+Eighteen are in, and discarding gets harder: so the fourteen candidates play a tournament. In each
+match tap the source you would keep; the one you tap goes on to the next round, until one is left.
+The two sources of our pick, the isolari and the maiolica, start a round later (a bye), at the two
+ends of the draw; every first-round match is between two of a kind: two ancient floors and walls,
+the houses of two shores, two harbours, two children's books, two hands at work (a brush, a needle),
+two beaches. Your picks stay on this device; **Copy the result** gives them as Markdown, to paste in
+the chat.
+"""
+
+block:  # the draw: the places of a 16 bracket, two of them byes
+  func player(name, what, key: string): TournamentEntry =
+    var colours: seq[string]
+    for c in sourceColours(key): colours.add c.hex
+    entry(name, what, colours)
+  nbTournament "mediterranean-sources", "Tournament of the Mediterranean sources", [
+    player("The isolari and the portolan charts", "map makers, 1200s–1528", "isolari"), bye(),
+    player("Minoan frescoes and Attic vases", "painters, potters, 1600–300 BC", "minoan"),
+    player("The mosaics of the Villa Romana del Casale", "mosaicists, 300s AD", "casale"),
+    player("The houses of Corricella, Procida", "houses, today", "procida"),
+    player("The menzel of Djerba", "houses, today", "djerba"),
+    player("The luzzu of Malta", "boatbuilders, 1900s–today", "luzzu"),
+    player("Mediterraneo, by Gabriele Salvatores", "a film, 1991", "mediterraneo"),
+    player("Leo Lionni", "children's books, 1960s–1999", "lionni"),
+    player("Emanuele Luzzati", "children's books, theatre, 1944–2007", "luzzati"),
+    player("Ferdinand Bauer and the Flora Graeca", "botanical illustrator, 1786–1840", "bauer"),
+    player("Maria Lai", "weaving, sewn books, 1943–2013", "lai"),
+    player("Henri Matisse and Raoul Dufy", "painters, 1905–1953", "matisse"),
+    player("Massimo Vitali", "photographer, 1995–", "vitali"),
+    player("Gio Ponti and the maiolica", "designer, potters, 1400s–1960", "maiolica"), bye()]
+
+nbText: """
 ## Rounds
 
 1. **Round 1**: nine sources, each with who, what, why it fits, ideas for a page and references;
@@ -539,8 +740,10 @@ of the Mediterranean, as the story is.
 3. **Round 3**: four photographers were too many: List and Manos, and Scianna, discarded; two
    artists of children's books in their place, Leo Lionni and Emanuele Luzzati; a table of every
    source by kind and status, and how sources are chosen.
+4. **Round 4**: discarding is hard, so only one: Miró, too well known and too sharp; Maria Lai in
+   his place; five more sources to reach eighteen; and a tournament of the fourteen.
 
-Next, Pietro picks a direction (or a mix), and a round builds it on this page: the six colours,
+Next, Pietro plays the tournament (or picks a direction, or a mix), and a round builds the winner on this page: the six colours,
 typefaces that pass the line of names above, and the motifs, on a real table of the islands, in
 Munari and in the new look side by side.
 """

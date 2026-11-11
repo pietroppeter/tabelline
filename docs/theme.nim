@@ -337,6 +337,30 @@ body details.foldcode pre > code { font-size: 12.5px; }
 .nb-scheda .tinte .tinta span { height: 1.4rem; margin-bottom: .2rem; }
 .nb-scheda .tinte .tinta strong { font-size: .82rem; }
 
+/* a tournament (nbTournament): rounds of matches, two buttons each, and the result to copy */
+.torneo { margin: 1rem 0 1.4rem; }
+.torneo-turno { margin: 1.2rem 0 .45rem; font: 700 .76rem/1.2 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.torneo-partite { display: grid; gap: .8rem; }
+.torneo-partita { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+.torneo-num { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); }
+.torneo-player { display: flex; flex-direction: column; align-items: stretch; gap: .3rem; text-align: left; font: inherit;
+  color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .45rem .55rem .55rem;
+  cursor: pointer; min-height: 3.4rem; -webkit-tap-highlight-color: transparent; }
+.torneo-player strong { font-size: .88rem; line-height: 1.25; }
+.torneo-what { font-size: .74rem; color: var(--muted); }
+.torneo-player[aria-pressed="true"] { border-color: var(--primary); box-shadow: inset 0 0 0 2px var(--primary); }
+.torneo-player.torneo-out { opacity: .45; }
+.torneo-player:disabled { cursor: default; color: var(--muted); border-style: dashed; font-size: .8rem; }
+.torneo-tinte { display: flex; height: .5rem; }
+.torneo-tinte i { flex: 1; }
+.torneo-bye { margin: 0; font-size: .85rem; color: var(--muted); }
+.torneo-fine { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.torneo-esito { flex: 1 1 100%; margin: 0; font-weight: 700; }
+.torneo-fine button { font: inherit; font-size: .9rem; padding: .4rem .8rem; background: var(--shade); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
+.torneo-fine textarea { flex: 1 1 100%; min-height: 10rem; font: 12.5px/1.4 ui-monospace, Menlo, monospace; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); }
+
 /* parts of a long page (nbPart): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
 .parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
@@ -644,6 +668,24 @@ const mediterraneanSources*: seq[(string, array[6, MediColour])] = @[
   ("luzzati", [("#F6F0E2", "stage paper", "paper", false), ("#201A1A", "black outline", "ink", false),
                ("#B5266F", "magenta", "primary", false), ("#2A5C9A", "Ligurian blue", "secondary", false),
                ("#E0B030", "gold", "warning", false), ("#3E8E53", "green", "success", false)]),
+  ("lai", [("#EFE7D6", "unbleached linen", "paper", false), ("#2A2522", "black thread", "ink", false),
+           ("#3F6EA6", "ribbon blue", "primary", false), ("#A8653A", "bread crust", "secondary", false),
+           ("#D9A84A", "saffron", "warning", true), ("#5E7F4E", "lentisk", "success", true)]),
+  ("casale", [("#F2EBDD", "limestone tessera", "paper", false), ("#22201E", "black tessera", "ink", false),
+              ("#A4432C", "red ochre", "primary", false), ("#3E5F7A", "slate-blue glass", "secondary", false),
+              ("#D9A441", "yellow ochre", "warning", false), ("#4F7A55", "green serpentine", "success", false)]),
+  ("bauer", [("#F7F3E8", "rag paper", "paper", false), ("#2B2620", "iron-gall ink", "ink", false),
+             ("#A63A6E", "cyclamen", "primary", false), ("#3B5BA5", "borage blue", "secondary", false),
+             ("#E2B443", "rockrose yellow", "warning", false), ("#4E7D3A", "sage leaf", "success", false)]),
+  ("procida", [("#F6F2EA", "whitewash", "paper", false), ("#1E2228", "boat tar", "ink", false),
+               ("#B4475E", "Corricella pink", "primary", false), ("#2F6F9E", "fishermen's blue", "secondary", false),
+               ("#EBC23F", "lemon plaster", "warning", false), ("#3F7F5C", "shutter green", "success", false)]),
+  ("mediterraneo", [("#F5F1E8", "whitewashed lane", "paper", false), ("#1F1D1C", "priest's cassock", "ink", false),
+                    ("#1E6A9A", "harbour water", "primary", false), ("#A84B32", "red plaster", "secondary", false),
+                    ("#D6A23E", "ochre plaster", "warning", false), ("#4E7A3F", "caper bush", "success", true)]),
+  ("djerba", [("#F7F5EF", "plaster of a dome", "paper", false), ("#1F2230", "loom black", "ink", false),
+              ("#7A2E6A", "murex purple", "primary", false), ("#A65A35", "clay of the pots", "secondary", false),
+              ("#D4AE3E", "olive oil", "warning", false), ("#3F7A4A", "date palm", "success", false)]),
   ("ghirri", [("#F6F3EA", "faded print", "paper", false), ("#3B3F45", "soft black", "ink", false),
               ("#8FB3C7", "pale sky", "primary", false), ("#E8B4B0", "faded pink", "secondary", false),
               ("#EAD9A0", "pale yellow", "warning", false), ("#9DBFB0", "sea green", "success", false)]),
