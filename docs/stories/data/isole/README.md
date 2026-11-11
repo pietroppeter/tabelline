@@ -1,0 +1,22 @@
+# The islands' data
+
+The tables of the story *Islands of the Mediterranean* (`docs/stories/isole.nim`), and how they
+are made (told in `docs/stories/isole_data.nim`). Each CSV starts with a `#` line saying what it
+is made from.
+
+```
+cd src
+nim r -d:ssl fetch.nim <raw dir>                    # Wikipedia pages, Wikidata queries, Natural Earth
+nim r -d:release extract.nim <raw dir> <stage dir>  # staging CSVs: outlines, lists, weather boxes
+cd .. && nim r -d:release --path:<nanuq>/src src/process.nim <stage dir> .   # the tables, with nanuq
+```
+
+`regions.csv`, `history.csv` and `highlights.csv` are written by hand; the rest is generated.
+
+## Sources and licences
+
+- Wikipedia (text and tables: List of islands in the Mediterranean, the islands' and towns'
+  weather boxes, the EU regions' GDP and unemployment lists), CC BY-SA 4.0.
+- Wikidata (items, places, heritage sites, airports, passengers), CC0.
+- Natural Earth, 10m land and minor islands (outlines), public domain.
+- tabelline's own `isole` dataset (country and population).
