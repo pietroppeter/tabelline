@@ -148,8 +148,11 @@ proc specHtml(s: Spec, kind = "spec"): string =
         for b in sc.bullets: result.add "<li>" & whenThen(b) & "</li>"
         result.add "</ul></div>"
       result.add "</div>"
-  # a pull request is built from its branch (GITHUB_HEAD_REF), where a new change's files already exist
-  let branch = getEnv("GITHUB_HEAD_REF", "main")
+  # a pull request is built from its branch (GITHUB_HEAD_REF), where a new change's files already exist;
+  # on a push GitHub sets GITHUB_HEAD_REF to "" (not unset), so an empty value means main too
+  let branch = block:
+    let b = getEnv("GITHUB_HEAD_REF")
+    if b.len > 0: b else: "main"
   result.add &"""<p class="src">source: <a href="{repoUrl}/blob/{branch}/{s.path}"><code>{s.path}</code></a></p></details>"""
 
 var total, passing, nreq = 0
