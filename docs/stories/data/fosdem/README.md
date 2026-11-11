@@ -35,7 +35,7 @@ The story's own small tables are in `story/`, made from these by `src/insights.n
 dates, sizes, online years, devroom families (renames matched by hand, listed in
 `devroom_renames.csv`), the devrooms of 2027, opening talks and keynotes, recurring speakers and
 newcomers. `story/fosdem-gt.json` keeps the HTML of the
-story's gt tables (it is written in R with gt until tabelline 0.2 and 0.3 are built), to compare
+story's gt tables (it is written in R with gt until tabelline 0.2 is built), to compare
 with the tabelline port.
 
 ## Coverage by year
