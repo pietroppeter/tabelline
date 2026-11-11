@@ -1,6 +1,6 @@
 {
  "gt-getstarted": {
-  "commit": "636b8ae275380681b0a7a25eaf3893901bef2b57",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Column Labels",
@@ -355,7 +355,7 @@
   ]
  },
  "gt-blog": {
-  "commit": "636b8ae275380681b0a7a25eaf3893901bef2b57",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
@@ -900,7 +900,7 @@
   ]
  },
  "gt-examples": {
-  "commit": "636b8ae275380681b0a7a25eaf3893901bef2b57",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Gini coefficient (with gt-extras)",
@@ -2859,24 +2859,6 @@
      "Text transforms",
      "Title and subtitle",
      "Widths"
-    ]
-   },
-   {
-    "title": "Age by Spanish Origin - 1980 U.S. Census",
-    "path": "robkempOFM/rstudio_table_competition",
-    "year": 2021,
-    "by": "Rob Kemp",
-    "package": "flextable",
-    "post": "https://forum.posit.co/t/age-by-spanish-origin-1980-u-s-census-table-contest-submission/121561",
-    "files": 1,
-    "url": "https://github.com/robkempOFM/rstudio_table_competition",
-    "port": "port",
-    "note": "",
-    "ready": "other",
-    "calls": 43,
-    "needs": {},
-    "uses": [
-     "Interactive tables"
     ]
    },
    {
@@ -6696,7 +6678,7 @@
   ]
  },
  "gt-reference": {
-  "commit": "636b8ae275380681b0a7a25eaf3893901bef2b57",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "GT()",
