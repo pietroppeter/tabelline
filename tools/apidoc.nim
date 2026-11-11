@@ -25,16 +25,57 @@ type
   ApiModule* = object
     name*, path*: string        ## path: relative to the repository root
     doc*: string                ## the module's doc comment, Markdown
+    imports*: seq[string]       ## what it imports: `std/strutils`, `pkg/nimib`, `tabelline/core`
     symbols*: seq[ApiSymbol]
 
 let root* = currentSourcePath().parentDir.parentDir
 
-const modules* = ["tabelline", "tabelline/verbs", "tabelline/formats", "tabelline/units",
-                  "tabelline/localize", "tabelline/colors", "tabelline/core", "tabelline/build",
-                  "tabelline/render_html", "tabelline/render_text", "tabelline/extract",
-                  "tabelline/datasets", "tabelline/nimib"]
-  ## Every module a user imports, in no particular order; locales, countries and currencies hold
-  ## only data.
+const dataOnly* = ["locales", "countries", "currencies"]
+  ## Modules that hold only data (CLDR tables), left out: a user never imports them.
+
+proc modules*(): seq[string] =
+  ## Every module a user imports: `tabelline` and src/tabelline/*.nim but the data.
+  result = @["tabelline"]
+  for f in walkFiles(root / "src" / "tabelline" / "*.nim"):
+    let n = f.splitFile.name
+    if n notin dataOnly: result.add "tabelline/" & n
+
+func importsOf(lines: seq[string], module: string): seq[string] =
+  ## The modules named by the `import` and `from ... import` lines at the top level, written
+  ## in full: `import core` in tabelline/verbs is `tabelline/core`.
+  var stmts: seq[string]
+  var i = 0
+  while i < lines.len:
+    let l = lines[i]
+    if l.startsWith("import ") or l.startsWith("from "):
+      var st = l
+      while st.strip.endsWith(",") and i + 1 < lines.len:
+        inc i
+        st.add " " & lines[i].strip
+      stmts.add st
+    inc i
+  let dir = if "/" in module: module.parentDir else: "tabelline"
+  for st in stmts:
+    var body = if st.startsWith("from "): st[5 .. ^1].split(" import ")[0] else: st[7 .. ^1]
+    body = body.split(" except ")[0]
+    var items: seq[string]
+    let br = body.find('[')
+    if br >= 0:
+      let prefix = body[0 ..< br].strip
+      for x in body[br + 1 ..< body.rfind(']')].split(","):
+        items.add prefix & x.strip
+    else:
+      for x in body.split(","): items.add x.strip
+    for it in items:
+      let it = it.strip
+      if it.len == 0: continue
+      let full =
+        if it.startsWith("std/") or it.startsWith("pkg/"): it
+        elif it == "../tabelline": "tabelline"
+        elif it.startsWith("tabelline/"): it
+        elif "/" notin it: dir & "/" & it
+        else: it
+      if full notin result: result.add full
 
 proc kindName(k: string): string = k.replace("sk", "").toLowerAscii
 
@@ -113,10 +154,11 @@ proc apiModule*(module: string): ApiModule =
   let j = jsondoc(module)
   let path = "src" / module & ".nim"
   let lines = readFile(root / path).splitLines
-  result = ApiModule(name: module, path: path, doc: moduleDoc(lines))
+  result = ApiModule(name: module, path: path, doc: moduleDoc(lines), imports: importsOf(lines, module))
   var byName = initOrderedTable[string, int]()
   for e in j["entries"]:
-    let name = e["name"].getStr
+    # an operator comes quoted and HTML-escaped: `&lt;`
+    let name = e["name"].getStr.strip(chars = {'`'}).multiReplace(("&lt;", "<"), ("&gt;", ">"), ("&quot;", "\""), ("&amp;", "&"))
     let code = e["code"].getStr
     # jsondoc calls a func a proc: the signature's first word says which it is
     let first = code.split({' ', '[', '('}, 1)[0]
@@ -134,7 +176,7 @@ proc apiModule*(module: string): ApiModule =
       result.symbols[k].doc = docBlock(lines, line - 1)
 
 proc apiReference*(): seq[ApiModule] =
-  for m in modules: result.add apiModule(m)
+  for m in modules(): result.add apiModule(m)
 
 when isMainModule:
   let api = apiReference()

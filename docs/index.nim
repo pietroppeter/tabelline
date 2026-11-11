@@ -55,6 +55,7 @@ let groups: seq[Group] = @[
   ("Learn tabelline", "Start here.", @[
     ("explainer/", "Guide", "gt and Great Tables from zero: what they are, how they work inside, who uses them; then tabelline, step by step."),
     ("book/", "Book", "The gt and Great Tables guides, redone in Nim page by page, with the original next to every example."),
+    ("api/", "Reference", "Every name tabelline exports, with its signature, its gt and Great Tables names and an example: a link for each."),
   ]),
   ("Where it's going", "What tabelline has today and what comes next.", @[
     ("roadmap/", "Roadmap", "What each release from 0.1 to 0.5 adds, and the real tables it is tried on."),

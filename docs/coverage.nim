@@ -160,7 +160,6 @@ block:
     N(what: "a table from a seq of objects or tuples", why: "Nim data as it is, one column per field", closest: "a data frame"),
     N(what: "`parseCsv`, `readCsv`, `addColumn`, `toTableData`", why: "the core uses only Nim's standard library, so it reads its own data", closest: "readr, Polars or pandas, before `gt()` / `GT()`"),
     N(what: "`rowOrder`", why: "sorts the rows shown and leaves the data as it is; Nim has no dplyr", closest: "`dplyr::arrange()` or `df.sort()` before the table"),
-    N(what: "`colsReorder`", why: "puts some columns in a new order in the places they hold, so two can swap", closest: "`cols_move()`, `cols_move_to_start()`"),
     N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
     N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),

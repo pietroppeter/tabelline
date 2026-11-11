@@ -358,10 +358,20 @@ details.spec .purpose { display: block; color: var(--ink); font-size: .95rem; ma
 .src { font-size: .8rem; color: var(--muted); }
 details.links summary { cursor: pointer; }
 
+/* a part of a page folded under a line (nbFold): closed at first */
+details.fold { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); margin: 1rem 0 1.6rem; }
+details.fold > summary { list-style: none; cursor: pointer; padding: .55rem 0; display: flex; gap: .6rem; font: 700 1rem var(--font); }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: "+"; width: .8rem; color: var(--secondary); }
+details.fold[open] > summary::before { content: "−"; }
+details.fold[open] > summary { border-bottom: 1px solid var(--line); }
+
 /* the API reference (nbApi): one sheet per name, its straight top edge in ink */
 .api { border-top: 2px solid var(--ink); margin: 1.6rem 0 0; padding: .3rem 0 .2rem; scroll-margin-top: 1rem; }
 .api h4 { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin: .2rem 0 .4rem; }
 .api h4 code { font: 700 1.05rem var(--mono); color: var(--ink); background: none; padding: 0; overflow-wrap: anywhere; }
+.api .api-anchor { margin-left: auto; font: 700 1rem var(--font); color: var(--muted); text-decoration: none; padding: 0 .3rem; }
+.api .api-anchor:hover, .api:target .api-anchor { color: var(--primary-text); }
 .api .api-kind { font: 700 .7rem/1 var(--font); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .api pre.api-sig { margin: .3rem 0; }
 .api > p { margin: .4rem 0; }
