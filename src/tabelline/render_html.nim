@@ -43,9 +43,16 @@ func kebab(name: string): string =
     if c.isUpperAscii: result.add '-'; result.add c.toLowerAscii
     else: result.add c
 
+proc stringOptions(o: TabOptions): seq[(string, string)] =
+  ## The options that are strings, as (name, value). `fieldPairs` unrolls its body once per field
+  ## (there are about 160): written once here, so the other procs loop over this list instead of
+  ## unrolling their own copy (four copies made 8.6 MB of C that took 40 s to compile).
+  result = newSeqOfCap[(string, string)](200)
+  for name, value in fieldPairs(o):
+    when value is string: result.add (name, value)
+
 proc optionDefaults(): Table[string, string] =
-  for name, value in fieldPairs(TabOptions()):
-    when value is string: result[name] = value
+  for (name, value) in stringOptions(TabOptions()): result[name] = value
 
 let defaults = optionDefaults()
 
@@ -154,17 +161,15 @@ let (tabellaCssValue, cssOptions) = buildTabellaCss()
 
 proc themedDefaults(): Table[string, string] =
   ## The options as `optCssTheme()` leaves them, on a table with the default options.
-  for name, value in fieldPairs(Tabella().optCssTheme().options):
-    when value is string: result[name] = value
+  for (name, value) in stringOptions(Tabella().optCssTheme().options): result[name] = value
 
 let themed = themedDefaults()
 
 proc isThemed(o: TabOptions): bool =
   ## Whether the table takes the page's theme with `optCssTheme()` (its default arguments): every
   ## option that the theme points to a page's variable still does.
-  for name, value in fieldPairs(o):
-    when value is string:
-      if name in cssOptions and "var(--" in themed[name] and value != themed[name]: return false
+  for (name, value) in stringOptions(o):
+    if name in cssOptions and "var(--" in themed[name] and value != themed[name]: return false
   true
 
 proc themeRule(): string =
@@ -191,10 +196,9 @@ proc styleVars*(o: TabOptions): string =
   ## from the defaults, or from `optCssTheme()` for a table that takes it (`isThemed`).
   let base = if o.isThemed: themed else: defaults
   var parts: seq[string]
-  for name, value in fieldPairs(o):
-    when value is string:
-      if name in cssOptions and value != base[name]:
-        parts.add "--tb-" & kebab(name) & ": " & value
+  for (name, value) in stringOptions(o):
+    if name in cssOptions and value != base[name]:
+      parts.add "--tb-" & kebab(name) & ": " & value
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel).
     bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"

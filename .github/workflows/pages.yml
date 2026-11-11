@@ -60,8 +60,12 @@ jobs:
       - name: No new HTML, styles or colours in the pages
         run: nim r tools/drift.nim
 
+      # compiled and run as two steps, so the timings show which of the two is slow
+      - name: Compile the pages
+        run: nim c -d:release -d:nimibQuiet --hints:off docs/all.nim
+
       - name: Build the pages
-        run: nim r -d:release -d:nimibQuiet docs/all.nim
+        run: docs/all
 
       # The book reruns only the chapters whose inputs changed, starting from the chapters' JSON
       # of the live book (book/bookbuild.nim). It never runs Python: the Great Tables outputs are
@@ -73,10 +77,11 @@ jobs:
           BOOK_NO_PYTHON: "1"
           BOOK_NO_R: "1"
 
-      # Every link of the pages and the book leads to a page (and its #anchor) of the site, or to a
-      # page of another site that does not answer 404 or 410.
+      # Every link of the pages and the book leads to a page (and its #anchor) of the site. Links to
+      # other sites (no 404 or 410) are checked only once a week and by hand: they break without a
+      # change here, and checking them took half a minute on every run.
       - name: Links
-        run: nim r -d:ssl --hints:off tools/links.nim --external
+        run: nim r -d:ssl --hints:off tools/links.nim ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '--external' || '' }}
 
       - name: Assemble site
         run: |

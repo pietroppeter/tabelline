@@ -389,17 +389,20 @@
     {
      "path": "vignettes/case-study-gtcars.Rmd",
      "title": "Case Study: gtcars",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/case_study_gtcars.html"
     },
     {
      "path": "vignettes/case-study-clinical-tables.Rmd",
      "title": "Case Study: Clinical Tables",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/case_study_clinical.html"
     },
     {
      "path": "vignettes/creating-summary-lines.Rmd",
      "title": "Creating Summary Lines",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/summary_lines.html"
     },
     {
      "path": "vignettes/gt-datasets.Rmd",

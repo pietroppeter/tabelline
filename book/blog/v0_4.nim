@@ -166,8 +166,8 @@ As can be seen, the method accepts bundles of values per cell that are formatted
 """
 
 tabelline """
-A cell of tabelline holds one value (a number, a text, a date...), not a list, so the bundles
-are strings here.
+tabelline takes the same strings, and a cell can also hold a list, as Polars' list columns do:
+`@[20.0, 23, 6, 7]` is a nanoplot of four values.
 """
 
 nbText: """
