@@ -18,7 +18,7 @@ rules:
       behaviour from gt (R) and Great Tables (Python), or saying there are none
     - Name verbs after gt in camelCase (tab_header is tabHeader); say why when a name differs
   specs:
-    - Give every requirement that describes Nim API an example, as the way-of-working spec says: a
+    - Give every requirement that describes Nim API an example, as the way-of-working spec says, a
       ```nim block after the requirement text, followed by a ```text block with what it prints.
       `echo t` prints a table as text, so an example shows the table it makes
     - Outputs are written by hand in a proposal and corrected with `nim r tools/specexamples.nim --update`
