@@ -126,6 +126,13 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [tabelline in eight languages](https://pietroppeter.github.io/tabelline/devlog/polyglot/)
+  (11 Nov 2026 G): proofs of concept in `experiments/polyglot/`: tabelline as a C library in two
+  layers (a JSON spec; handles and verbs, every verb generated from its signature), called from C,
+  Zig, Rust, Julia, Java, Erlang, Gleam and Elixir, each printing the same HTML as Nim.
+- [Great tables in every language](https://pietroppeter.github.io/tabelline/devlog/polyglot-survey/)
+  (11 Nov 2026 F): a survey of 28 languages: printers, grids and display tables, the five
+  libraries that speak gt's grammar (keisen and lt among them), and why a C ABI reaches the rest.
 - [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
   (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
   found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):

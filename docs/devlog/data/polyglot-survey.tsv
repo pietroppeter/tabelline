@@ -1,0 +1,29 @@
+language	library	url	kind	stars	outputs	note
+R	gt	https://github.com/rstudio/gt	gt's grammar	2162	HTML, LaTeX, RTF, Word, PNG	the original, since 2018
+Python	Great Tables	https://github.com/posit-dev/great-tables	gt's grammar	2921	HTML, LaTeX, PNG	a port of gt by Posit
+Nim	tabelline	https://github.com/pietroppeter/tabelline	gt's grammar	3	HTML, text, Markdown	this site
+Typst	keisen	https://github.com/mcanouil/keisen	gt's grammar	20	PDF (Typst)	"inspired by gt", August 2026
+R + JS	lt	https://github.com/yihui/lt	gt's grammar	27	HTML	a JSON spec and a tiny JS runtime, May 2026
+Julia	PrettyTables.jl	https://github.com/ronisbr/PrettyTables.jl	gt's parts	480	text, HTML, LaTeX, Markdown, Typst	gt's table parts, its own API
+Julia	SummaryTables.jl	https://github.com/PumasAI/SummaryTables.jl	gt's parts	105	HTML, docx, LaTeX, Typst	clinical tables (table one)
+Kotlin	Kotlin DataFrame	https://github.com/Kotlin/dataframe	gt's parts	1076	HTML	toHtml with formatting, of a data frame
+Rust	tabled	https://github.com/zhiburt/tabled	printers	2372	text (HTML by a companion crate)	structs as tables, by derive
+Rust	comfy-table	https://github.com/Nukesor/comfy-table	printers	1415	text	terminal, wraps to the width
+Go	tablewriter	https://github.com/olekukonko/tablewriter	printers	4824	text, HTML, Markdown, SVG	the most starred printer here
+Go	go-pretty	https://github.com/jedib0t/go-pretty	printers	3557	text, HTML, Markdown, CSV	sorting, paging, merging
+C	libfort	https://github.com/seleznevae/libfort	printers	538	text	two files to copy
+C++	tabulate	https://github.com/p-ranav/tabulate	printers	2181	text, Markdown, LaTeX	styled cells, nested tables
+Zig	prettytable-zig	https://github.com/dying-will-bullet/prettytable-zig	printers	34	text	a port of Rust's prettytable
+Gleam	tobble	https://github.com/ollien/tobble	printers	11	text	"not a full layout library"
+Elixir	table_rex	https://github.com/djm/table_rex	printers	263	text	text tables for display
+Elixir	Kino.DataTable	https://github.com/livebook-dev/kino	grids	452	Livebook	an interactive table in notebooks
+Ruby	terminal-table	https://github.com/tj/terminal-table	printers	1579	text	column spans, alignment
+Ruby	tabulo	https://github.com/matt-harvey/tabulo	printers	249	text	column-based, very configurable
+Kotlin	picnic	https://github.com/JakeWharton/picnic	printers	976	text	HTML-like tables drawn as text
+Java	Tablesaw	https://github.com/jtablesaw/tablesaw	printers	3768	text, HTML	a data frame that prints
+C#	Spectre.Console	https://github.com/spectreconsole/spectre.console	printers	11691	text	a terminal widget
+Swift	SwiftyTextTable	https://github.com/scottrhoyt/SwiftyTextTable	printers	332	text	terminal tables
+OCaml	printbox	https://github.com/c-cube/printbox	printers	82	text, HTML	nested boxes and tables
+Clojure	Clerk	https://github.com/nextjournal/clerk	grids	2092	notebook	a table viewer in notebooks
+JavaScript	AG Grid	https://github.com/ag-grid/ag-grid	grids	15679	browser	grids, to explore data
+TypeScript	TanStack Table	https://github.com/TanStack/table	grids	28565	browser	headless grids

@@ -103,14 +103,50 @@ const
     "library", "require"]
   otherLiterals = ["True", "False", "None", "TRUE", "FALSE", "NULL", "NA", "Inf", "NaN"]
   jsLiterals = ["true", "false", "null", "undefined", "Infinity"]
+  # the languages of the polyglot posts (devlog/polyglot_*), shown, not run
+  cKeywords = ["if", "else", "for", "while", "return", "static", "const", "int", "char", "double",
+    "void", "size_t", "struct", "typedef", "include", "define", "do", "sizeof", "unsigned"]
+  zigKeywords = ["const", "var", "fn", "pub", "try", "return", "defer", "if", "else", "for",
+    "while", "struct", "enum", "error", "orelse", "catch", "extern", "opaque", "comptime", "anytype"]
+  rustKeywords = ["fn", "let", "mut", "pub", "use", "mod", "impl", "struct", "enum", "match", "if",
+    "else", "for", "in", "return", "unsafe", "extern", "self", "Self", "macro_rules", "where"]
+  juliaKeywords = ["function", "end", "module", "using", "import", "export", "if", "else", "elseif",
+    "for", "while", "return", "struct", "mutable", "const", "begin", "do", "in", "let"]
+  javaKeywords = ["public", "private", "static", "final", "class", "interface", "new", "return",
+    "if", "else", "for", "while", "try", "catch", "throw", "throws", "import", "package", "var",
+    "void", "int", "long", "double", "case", "switch", "default", "extends", "implements"]
+  erlangKeywords = ["fun", "end", "case", "of", "when", "receive", "after", "begin", "try", "catch",
+    "module", "export", "on_load", "define"]
+  gleamKeywords = ["pub", "fn", "let", "assert", "case", "type", "opaque", "import", "use", "const"]
+  elixirKeywords = ["def", "defp", "defmodule", "do", "end", "fn", "case", "when", "if", "else",
+    "cond", "with", "alias", "import", "require", "raise"]
+  codeLangs = ["c", "zig", "rust", "julia", "java", "erlang", "gleam", "elixir", "json"]
 
 func highlightOther*(code, lang: string): string =
   ## A small highlighter for the R, Python, JavaScript (and YAML) code that pages show but do not
   ## run: keywords, strings, numbers, comments and function calls, with the classes of the Nim code.
-  let keywords = if lang == "r": @rKeywords elif lang == "python": @pythonKeywords
-                 elif lang == "js": @jsKeywords else: @[]
-  let literals = if lang == "js": @jsLiterals else: @otherLiterals
-  let comment = if lang == "js": "//" else: "#"
+  let keywords = case lang
+    of "r": @rKeywords
+    of "python": @pythonKeywords
+    of "js": @jsKeywords
+    of "c": @cKeywords
+    of "zig": @zigKeywords
+    of "rust": @rustKeywords
+    of "julia": @juliaKeywords
+    of "java": @javaKeywords
+    of "erlang": @erlangKeywords
+    of "gleam": @gleamKeywords
+    of "elixir": @elixirKeywords
+    else: @[]
+  let literals = if lang in ["js", "c", "zig", "rust", "julia", "java", "erlang", "gleam", "elixir", "json"]:
+                   @jsLiterals & @["True", "False", "Nil", "nil", "NaN", "nothing", "missing"]
+                 else: @otherLiterals
+  let comment = case lang
+    of "js", "c", "zig", "rust", "java", "gleam": "//"
+    of "erlang": "%"
+    of "json": "\0"
+    else: "#"
+  let quotes = if lang in ["rust", "zig", "erlang", "elixir", "gleam", "java", "c"]: {'"'} else: {'"', '\''}
   func span(cls, s: string): string = "<span class=\"hljs-" & cls & "\">" & esc(s) & "</span>"
   var i = 0
   while i < code.len:
@@ -119,7 +155,7 @@ func highlightOther*(code, lang: string): string =
       var j = i
       while j < code.len and code[j] != '\n': inc j
       result.add span("comment", code[i ..< j]); i = j
-    elif c in {'"', '\''}:
+    elif c in quotes:
       var j = i + 1
       while j < code.len and code[j] != c and code[j] != '\n':
         if code[j] == '\\': inc j
@@ -151,7 +187,7 @@ func highlightFences(html: string): string =
   ## Code fences in Markdown, highlighted like the code that ran: Nim with nimib's highlighter,
   ## R, Python, JavaScript and YAML with `highlightOther`, shell with its comments.
   result = html
-  for lang in ["nim", "r", "python", "js", "yaml", "sh"]:
+  for lang in @["nim", "r", "python", "js", "yaml", "sh"] & @codeLangs:
     let openTag = "<pre><code class=\"language-" & lang & "\">"
     const close = "</code></pre>"
     var res = ""
@@ -459,6 +495,15 @@ proc langOf(file: string): string =
   of ".R", ".r": "r"
   of ".js": "js"
   of ".yaml", ".yml": "yaml"
+  of ".c", ".h": "c"
+  of ".zig": "zig"
+  of ".rs": "rust"
+  of ".jl": "julia"
+  of ".java": "java"
+  of ".erl": "erlang"
+  of ".gleam": "gleam"
+  of ".ex", ".exs": "elixir"
+  of ".json": "json"
   else: "sh"
 
 proc foldCode*(nb: var Nb, file: string, start = "", stop = "", title = "", lang = "") =
