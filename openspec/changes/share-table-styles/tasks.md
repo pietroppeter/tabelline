@@ -14,7 +14,7 @@
 ## 3. Docs
 
 - [ ] 3.1 `docs/coverage.nim`: a line in *Not from gt* (`withStyle`, `tableStyle`: one style per page; closest: `as_raw_html(inline_css = TRUE)`)
-- [ ] 3.2 The guide (explainer) says how a page writes a style once, under "How it is built"
+- [ ] 3.2 A section of the guide, "A table's HTML and its style": what `toHtml` writes (the `<div>`, the `<style>`, the `<table>`), what the style class is and why tables share it, how to use `withStyle = false` and `tableStyle` outside nimib (one page, a site stylesheet, another notebook library), and the risk (a page rule stronger than two classes wins), each with a small example
 - [ ] 3.3 Fix any page rule whose result changed with the lower specificity (from the screenshots), in `docs/theme.nim` or `book/theme/edo.css`
 
 ## 4. Checks
