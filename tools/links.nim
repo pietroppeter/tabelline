@@ -9,7 +9,7 @@
 ## 404 or 410, so a page that moved or went away is caught (Great Tables renamed its Get Started
 ## guide into the User Guide, and every link to it broke); a timeout, a refusal or a 5xx is a
 ## warning, since it says nothing sure about the link. CI runs it on every PR and once a week.
-import std/[os, strutils, sets, tables, uri, httpclient, asyncdispatch, algorithm, sequtils]
+import std/[os, osproc, strutils, sets, tables, uri, httpclient, asyncdispatch, algorithm, sequtils]
 
 const
   root = currentSourcePath().parentDir.parentDir
@@ -20,9 +20,10 @@ const
   agent = "tabelline-links (+https://github.com/pietroppeter/tabelline)"
   parallel = 16
   skipped = ["github.com/pietroppeter/tabelline/edit/", "github.com/pietroppeter/tabelline/new/"]
-  # a link to a file of this repository on main is checked in the checkout: a PR that adds the
-  # file (a new OpenSpec change) links it before it is on main
-  ownBlob = "https://github.com/pietroppeter/tabelline/blob/main/"
+  # a link to a file of this repository, on main or on the branch being built, is checked in the
+  # checkout, without the network: a PR that adds the file (a new OpenSpec change) links it before
+  # it is on main, and a link with no branch (blob//) or another branch is broken
+  ownBlob = "https://github.com/pietroppeter/tabelline/blob/"
 
 type Link = object
   page, href: string
@@ -84,6 +85,8 @@ proc checkAll(urls: seq[string]): Future[seq[(int, string)]] {.async.} =
 
 proc main() =
   let external = "--external" in commandLineParams()
+  # on a push GitHub sets GITHUB_HEAD_REF to "", so only a non-empty value names a branch
+  let branches = if getEnv("GITHUB_HEAD_REF").len > 0: @["main", getEnv("GITHUB_HEAD_REF")] else: @["main"]
   var ids: Table[string, HashSet[string]]
   var links: seq[Link]
   for path in walkDirRec(site):
@@ -106,7 +109,19 @@ proc main() =
     if href.startsWith(ownBase):
       href = relativePath(site / href[ownBase.len .. ^1], site / l.page.parentDir).replace('\\', '/')
     if href.startsWith(ownBlob):
-      let path = href[ownBlob.len .. ^1].split('#')[0].decodeUrl
+      let rest = href[ownBlob.len .. ^1].split('#')[0].decodeUrl
+      let branch = branches.filterIt(rest.startsWith(it & "/"))
+      let sha = rest.split('/')[0]
+      if branch.len == 0 and sha.len >= 7 and sha.allIt(it in HexDigits):
+        # a link pinned to a commit: the file must be in that commit (the checkout has the history)
+        let spec = sha & ":" & rest[sha.len + 1 .. ^1].strip(leading = false, chars = {'/'})
+        if execCmdEx("git cat-file -e " & quoteShell(spec), workingDir = root).exitCode != 0:
+          broken.add l.page & ": " & l.href & " (no " & spec & " in the history)"
+        continue
+      if branch.len == 0:
+        broken.add l.page & ": " & l.href & " (not on " & branches.join(" or ") & ")"
+        continue
+      let path = rest[branch[0].len + 1 .. ^1]
       if not (fileExists(root / path) or dirExists(root / path)):
         broken.add l.page & ": " & l.href & " (no " & path & " in the repository)"
       continue
