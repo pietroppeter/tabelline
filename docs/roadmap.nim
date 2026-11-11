@@ -21,9 +21,6 @@ What goes in each release comes from the [feature map](../coverage/); why the wo
 three is told in the devlog post [Three threads for every release](../devlog/three-threads/).
 This page says where each thread stands.
 
-The first plan had five releases. tabelline 0.2 took in what was planned for 0.3 (every format,
-every locale) and 0.4 (pictures in cells), with their stories and their ports, so the last one,
-out of the browser, is now 0.3.
 """
 nbToc
 

@@ -16,7 +16,7 @@
   {
    "version": "0.2",
    "title": "Rows, every format, pictures",
-   "plan": "Summary rows, merged columns, rows added and hidden, decimal alignment; units, fractions and every CLDR locale; icons, images and nanoplots; more options. It took in the first plan's 0.3 and 0.4."
+   "plan": "Summary rows, merged columns, rows added and hidden, decimal alignment; units, fractions and every CLDR locale; icons, images and nanoplots; more options."
   },
   {
    "version": "0.3",
