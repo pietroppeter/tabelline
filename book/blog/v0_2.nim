@@ -186,7 +186,7 @@ wide_pops |>
     nbTable oceania
 
 tabelline """
-tabelline has no data frames yet (they are planned for 0.3), so the filter and the pivot
+tabelline has no data frames yet (they are planned for a later release), so the filter and the pivot
 that Polars does in one chain are a loop over the rows here: each country gets its three
 populations, and the rows are sorted by the last one.
 """

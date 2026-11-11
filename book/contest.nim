@@ -6,7 +6,7 @@ const id = "table-contest"
 let
   all = pagesOf(id)
   soon = contestEntries(id, upTo = "now")
-  later = contestEntries(id, since = "0.3")
+  later = contestEntries(id, since = "new")
   other = contestEntries(id, other = true)
   licensed = soon.countIt(it{"licence"}.getStr != "")
 

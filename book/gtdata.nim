@@ -5,7 +5,7 @@
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
 ##
 ## `head`, `take` and `select` are here too: Great Tables takes a data frame, and the guide cuts its
-## data with pandas and Polars; tabelline's `TableData` has no verbs of its own (data frames come in 0.3).
+## data with pandas and Polars; tabelline's `TableData` has no verbs of its own (data frames come later).
 import std/os
 import tabelline
 

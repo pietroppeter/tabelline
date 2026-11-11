@@ -37,9 +37,9 @@ import std/[algorithm, sets]
 import common
 
 const
-  now = "now"          ## in tabelline on main: 0.1 and 0.2, which took in the first plan's 0.3 and 0.4
+  now = "now"          ## in tabelline on main: 0.1 and 0.2
   shipped = ["0.1", "0.2"]
-  releases = [now, "0.3"]  ## the next release is the last one the coverage map plans
+  releases = [now]     ## anything planned after 0.2 is `later`
   later = "later"      ## not planned for a release yet
   newGap = "new"       ## a gap the coverage map does not have yet
   otherTool = "other"  ## a contest entry made with another table package than gt: not measured

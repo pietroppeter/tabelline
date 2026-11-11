@@ -598,10 +598,10 @@
     "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 31,
     "needs": {
-     "0.3": [
+     "later": [
       "LaTeX"
      ]
     },
@@ -2527,10 +2527,10 @@
     "url": "https://github.com/RichardHooijmaijers/tutorial-R3port",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 102,
     "needs": {
-     "0.3": [
+     "later": [
       "LaTeX"
      ]
     },
@@ -5246,10 +5246,8 @@
     "ready": "later",
     "calls": 895,
     "needs": {
-     "0.3": [
-      "Groups of tables, split tables"
-     ],
      "later": [
+      "Groups of tables, split tables",
       "Interactive tables"
      ]
     },
@@ -6129,10 +6127,8 @@
     "ready": "later",
     "calls": 207,
     "needs": {
-     "0.3": [
-      "Groups of tables, split tables"
-     ],
      "later": [
+      "Groups of tables, split tables",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -7753,10 +7749,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.gtsave.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 11,
     "needs": {
-     "0.3": [
+     "later": [
       "Images and PDF"
      ]
     },
@@ -7786,10 +7782,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.as_latex.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 7,
     "needs": {
-     "0.3": [
+     "later": [
       "LaTeX"
      ]
     },
@@ -7981,10 +7977,10 @@
     "url": "https://gt.rstudio.com/reference/as_latex.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 8,
     "needs": {
-     "0.3": [
+     "later": [
       "LaTeX"
      ]
     },
@@ -8017,10 +8013,10 @@
     "url": "https://gt.rstudio.com/reference/as_rtf.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 8,
     "needs": {
-     "0.3": [
+     "later": [
       "RTF and Word"
      ]
     },
@@ -8037,10 +8033,10 @@
     "url": "https://gt.rstudio.com/reference/as_word.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 8,
     "needs": {
-     "0.3": [
+     "later": [
       "RTF and Word"
      ]
     },
@@ -9612,10 +9608,10 @@
     "url": "https://gt.rstudio.com/reference/gt_split.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 17,
     "needs": {
-     "0.3": [
+     "later": [
       "Groups of tables, split tables"
      ]
     },
@@ -9635,10 +9631,10 @@
     "url": "https://gt.rstudio.com/reference/gtsave.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "later",
     "calls": 11,
     "needs": {
-     "0.3": [
+     "later": [
       "Images and PDF"
      ]
     },

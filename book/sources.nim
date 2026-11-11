@@ -10,7 +10,7 @@ const
   sourcesJson = staticRead("plan/sources.json")
   pagesJson = staticRead("plan/pages.json")
   coverageJson = staticRead("../docs/coverage/gt.json")
-  releases = ["now", "0.3", "new", "later", "other"]  ## as in book/plan/plan.nim
+  releases = ["now", "new", "later", "other"]  ## as in book/plan/plan.nim
 
 let
   sources* = parseJson(sourcesJson)

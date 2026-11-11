@@ -15,7 +15,7 @@ to the backlog.
 
 | Step | What | Where it shows | Plan |
 | ---- | ---- | -------------- | ---- |
-| Data | Data frames (pandas' `head`, `select`, `loc`, Polars' pivot: the book's helpers in `gtdata` and plain Nim) | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | 0.3 |
+| Data | Data frames (pandas' `head`, `select`, `loc`, Polars' pivot: the book's helpers in `gtdata` and plain Nim) | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | later |
 | Data | `readCsv` reads `"0400"` as the number 400; text with leading zeros could stay text | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
 | Parts | `tabStub` (the stub is only chosen in `tabella(rownameCol = ...)`) | [Stub](get-started/basic_stub.html) | **new** |
 | Parts | `tabSpanner` gathers its columns, in the order given (tabelline leaves them where they are) | [Column Labels](get-started/basic_column_labels.html) | **new** |
