@@ -3,9 +3,7 @@ bookInit()
 
 nbText: "# Styling the whole table"
 
-attribution gtGuide("Styling the whole table", "targeted-styles",
-  "tabelline has no summary rows yet (planned for 0.2): the Nim tables leave out the grand " &
-  "summary row, and the section on styling it has Python only.")
+attribution gtGuide("Styling the whole table", "targeted-styles", "")
 
 nbText: """
 In [Styling the Table Body](basic_styling.html), we discussed styling table data with `GT.tab_style()`.
@@ -141,30 +139,40 @@ gt_tbl |>
       tabSourceNote "yo"
       tabSpanner "spanner", ["char", "fctr"]
       tabStubhead "stubhead"
-      # no grand summary rows yet
+      grandSummaryRows:
+        Total: agg.sum
 
-    nbTable gt
-      .tabStyle(style.fill(next()), loc.body())
+    let kitchenSink = tabella(gt):
+      tabStyle style.fill(next()), loc.body()
       # Columns -----------
-      .tabStyle(style.fill(next()), loc.columnLabels(cols = "num"))
-      .tabStyle(style.fill(next()), loc.columnHeader())
-      .tabStyle(style.fill(next()), loc.spannerLabels("spanner"))
+      tabStyle style.fill(next()), loc.columnLabels(cols = "num")
+      tabStyle style.fill(next()), loc.columnHeader()
+      tabStyle style.fill(next()), loc.spannerLabels("spanner")
       # Header -----------
-      .tabStyle(style.fill(next()), loc.header())
-      .tabStyle(style.fill(next()), loc.subtitle())
-      .tabStyle(style.fill(next()), loc.title())
+      tabStyle style.fill(next()), loc.header()
+      tabStyle style.fill(next()), loc.subtitle()
+      tabStyle style.fill(next()), loc.title()
       # Footer -----------
-      .tabStyle(style.borders(weight = "3px"), loc.sourceNotes())
-      .tabStyle(style.fill(next()), loc.footer())
+      tabStyle style.borders(weight = "3px"), loc.sourceNotes()
+      tabStyle style.fill(next()), loc.footer()
       # Stub --------------
-      .tabStyle(style.fill(next()), loc.rowGroups())
-      .tabStyle(style.borders(weight = "3px"), loc.stub(rows = 1))
-      .tabStyle(style.fill(next()), loc.stub())
-      .tabStyle(style.fill(next()), loc.stubhead())
+      tabStyle style.fill(next()), loc.rowGroups()
+      tabStyle style.borders(weight = "3px"), loc.stub(rows = 1)
+      tabStyle style.fill(next()), loc.stub()
+      tabStyle style.fill(next()), loc.stubhead()
+      # Summary Rows --------------
+      tabStyle style.fill(next()), loc.grandSummary()
+      tabStyle style.fill(next()), loc.grandSummaryStub()
+    nbTable kitchenSink
 
 tabelline """
-tabelline has every location of Great Tables but the summary ones (summary rows are planned
-for 0.2), the composite ones included: `loc.header()`, `loc.columnHeader()` and `loc.footer()`.
+tabelline has every location of Great Tables, the composite ones included: `loc.header()`,
+`loc.columnHeader()` and `loc.footer()`. `grandSummaryRows` takes its aggregates as a block,
+one per line, a label and an aggregate of the `agg` namespace (`Total: agg.sum`): by default
+it sums up the numeric columns, as `numeric_only=True` does in pandas. A column with no
+format of its own shows its sum with two decimals (5,552.33), where Great Tables shows the
+sum as Python prints it (5552.3331); `missingText` (a dash, `—`, by default; Great Tables
+writes `---`) fills the cells of the other columns.
 A composite location sits *under* its parts, as in Great Tables: the fill of
 `loc.columnHeader()` does not cover the blue of `loc.columnLabels(cols = "num")` given before
 it. `loc.spannerLabels` takes the labels of the spanners (`loc.spanners` is the same), as
@@ -186,7 +194,9 @@ gt.tab_style(style.fill("yellow"), loc.body())
 gt_tbl |> tab_style(cell_fill("yellow"), cells_body())
 """:
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.body())
+    let bodyStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.body()
+    nbTable bodyStyled
 
 nbText: """
 ## Column labels
@@ -207,10 +217,11 @@ gt_tbl |>
   tab_style(cell_fill("red"), cells_column_spanners(spanners = "spanner"))
 """:
   nbCode:
-    nbTable gt
-      .tabStyle(style.fill("yellow"), loc.columnHeader())
-      .tabStyle(style.fill("blue"), loc.columnLabels(cols = "num"))
-      .tabStyle(style.fill("red"), loc.spannerLabels("spanner"))
+    let labelsStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.columnHeader()
+      tabStyle style.fill("blue"), loc.columnLabels(cols = "num")
+      tabStyle style.fill("red"), loc.spannerLabels("spanner")
+    nbTable labelsStyled
 
 nbText: """
 ## Header
@@ -229,10 +240,11 @@ gt_tbl |>
   tab_style(cell_fill("red"), cells_title("subtitle"))
 """:
   nbCode:
-    nbTable gt
-      .tabStyle(style.fill("yellow"), loc.header())
-      .tabStyle(style.fill("blue"), loc.title())
-      .tabStyle(style.fill("red"), loc.subtitle())
+    let headerStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.header()
+      tabStyle style.fill("blue"), loc.title()
+      tabStyle style.fill("red"), loc.subtitle()
+    nbTable headerStyled
 
 nbText: """
 ## Footer
@@ -261,9 +273,10 @@ gt_tbl |>
   )
 """:
   nbCode:
-    nbTable gt
-      .tabStyle(style.fill("yellow"), loc.sourceNotes())
-      .tabStyle(style.borders(weight = "3px"), loc.footer())
+    let footerStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.sourceNotes()
+      tabStyle style.borders(weight = "3px"), loc.footer()
+    nbTable footerStyled
 
 nbText: """
 ## Stub
@@ -288,10 +301,11 @@ gt_tbl |>
   )
 """:
   nbCode:
-    nbTable gt
-      .tabStyle(style.fill("yellow"), loc.stub())
-      .tabStyle(style.fill("blue"), loc.rowGroups())
-      .tabStyle(style.borders(style = "dashed", weight = "3px", color = "red"), loc.stub(rows = [1]))
+    let stubStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.stub()
+      tabStyle style.fill("blue"), loc.rowGroups()
+      tabStyle style.borders(style = "dashed", weight = "3px", color = "red"), loc.stub(rows = [1])
+    nbTable stubStyled
 
 nbText: """
 ## Stubhead
@@ -303,13 +317,15 @@ gt.tab_style(style.fill("yellow"), loc.stubhead())
 gt_tbl |> tab_style(cell_fill("yellow"), cells_stubhead())
 """:
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.stubhead())
+    let stubheadStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.stubhead()
+    nbTable stubheadStyled
 
 nbText: """
 ## Grand Summary Rows
 """
 
-python """
+tabs """
 (
     gt.tab_style(
         style.fill("yellow"),
@@ -329,10 +345,11 @@ gt_tbl |>
     cell_fill("lightblue"),
     cells_grand_summary()
   )
-"""
-
-tabelline """
-No Nim here: summary rows, with their locations, are planned for 0.2.
-"""
+""":
+  nbCode:
+    let summaryStyled = tabella(gt):
+      tabStyle style.fill("yellow"), loc.grandSummaryStub()
+      tabStyle style.fill("lightblue"), loc.grandSummary()
+    nbTable summaryStyled
 
 bookSave()

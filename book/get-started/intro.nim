@@ -146,8 +146,9 @@ gt(islands_mini, rowname_col = "name") |>
 tabelline """
 `tabella(data): body` is a macro, one of tabelline's three (with `tableData:` and
 `tabOptions`): it reads each line of `body` as a verb applied to the table, so the chain of
-methods becomes a list of lines. Everything else is plain Nim procs, and the same table
-chains too: `tabella(islandsMini, rownameCol = "name").tabHeader(...).tabSourceNote(...)`.
+methods becomes a list of lines. Everything else is plain Nim procs:
+`tabHeader "Large Landmasses of the World"` in the body stands for
+`t = t.tabHeader("Large Landmasses of the World")`.
 """
 
 tabs """
@@ -196,23 +197,26 @@ gt_airquality
 """:
   nbCode:
     let airqualityM = airquality().head(10)
-    airqualityM.addColumn("Year", toValues(newSeqWith(10, 1973)))
 
     let gtAirquality = tabella(airqualityM):
+      colsAdd "Year", newSeqWith(10, 1973)
       tabHeader "New York Air Quality Measurements",
                 "Daily measurements in New York City (May 1-10, 1973)"
       tabSpanner "Time", ["Year", "Month", "Day"]
       tabSpanner "Measurement", ["Ozone", "Solar_R", "Wind", "Temp"]
       colsMoveToStart ["Year", "Month", "Day"]
-      colsLabel {"Ozone": html"Ozone,<br>ppbV", "Solar_R": html"Solar R.,<br>cal/m<sup>2</sup>",
-                 "Wind": html"Wind,<br>mph", "Temp": html"Temp,<br>&deg;F"}
+      colsLabel:
+        Ozone: html"Ozone,<br>ppbV"
+        Solar_R: html"Solar R.,<br>cal/m<sup>2</sup>"
+        Wind: html"Wind,<br>mph"
+        Temp: html"Temp,<br>&deg;F"
 
     nbTable gtAirquality
 
 tabelline """
-Adding a column is done on the data, with `addColumn` (a `TableData` is a `ref`, so this
-changes `airqualityM` in place); `newSeqWith` is from `std/sequtils`. In gt this is
-`cols_add()`; tabelline's own `colsAdd` is planned for 0.2.
+`colsAdd` adds a column to the table, as gt's `cols_add()`, where Great Tables adds it to the
+data frame (`assign`); `newSeqWith` is from `std/sequtils`. `colsLabel` takes its pairs as a
+block, one column per line.
 """
 
 bookSave()

@@ -46,9 +46,10 @@ gt(islands_mini) |>
 
     # Make a display table with the `islands_tbl` table;
     # put a heading just above the column labels
-    nbTable tabella(islandsMini).tabHeader(
-      title = "Large Landmasses of the World",
-      subtitle = "The top ten largest are presented")
+    let withHeader = tabella(islandsMini):
+      tabHeader title = "Large Landmasses of the World",
+                subtitle = "The top ten largest are presented"
+    nbTable withHeader
 
 nbText: """
 The **Header** table component provides an opportunity to describe the data that's presented. Using `subtitle=` allows us to insert a subtitle, which is an optional part of the **Header**. We may also style the `title=` and `subtitle=` using Markdown! We do this by wrapping the values passed to `title=` or `subtitle=` with the `md()` helper function (we may also use `html()` in a similar fashion). Here is an example with the table data truncated for brevity:
@@ -80,9 +81,9 @@ gt_tbl
   nbCode:
     # Make a display table with the `islands_tbl` table;
     # put a heading just above the column labels
-    let gtTbl = tabella(islands().head(2)).tabHeader(
-      title = md("Large Landmasses of the *World* 🌐"),
-      subtitle = md("The top **ten** largest are presented"))
+    let gtTbl = tabella(islands().head(2)):
+      tabHeader title = md("Large Landmasses of the *World* 🌐"),
+                subtitle = md("The top **ten** largest are presented")
 
     nbTable gtTbl
 
@@ -119,8 +120,9 @@ gt_tbl |>
 """:
   nbCode:
     # Display the `islands_tbl` data with a heading and two source notes
-    nbTable gtTbl
-      .tabSourceNote("Source: The World Almanac and Book of Facts, 1975, page 406.")
-      .tabSourceNote(md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."))
+    let withNotes = tabella(gtTbl):
+      tabSourceNote "Source: The World Almanac and Book of Facts, 1975, page 406."
+      tabSourceNote md("Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley.")
+    nbTable withNotes
 
 bookSave()

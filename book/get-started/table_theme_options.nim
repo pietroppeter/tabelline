@@ -3,10 +3,7 @@ bookInit()
 
 nbText: "# Table Theme Options"
 
-attribution gtGuide("Table Theme Options", "table-theme-options",
-  "tabelline has 56 of the 170 or so options of Great Tables (the rest are planned for 0.2) " &
-  "and no summary rows yet (0.2): the Nim tables set the options it has, and say which are " &
-  "missing, in comments.")
+attribution gtGuide("Table Theme Options", "table-theme-options", "")
 
 nbText: """
 Great Tables exposes options to customize the appearance of tables via two methods:
@@ -60,7 +57,8 @@ gt_ex
       tabHeader "THE HEADING", "(a subtitle)"
       tabStubhead "THE STUBHEAD"
       tabSourceNote "THE SOURCE NOTE"
-      # no grand summary rows yet
+      grandSummaryRows:
+        "GRAND SUMMARY ROW": agg.sum
 
     nbTable gtEx
 
@@ -100,21 +98,23 @@ gt_ex |>
   )
 """:
   nbCode:
-    nbTable gtEx.tabOptions(
-      tableWidth = "100%",  # no containerWidth
-      tableBackgroundColor = "lightblue",
-      headingBackgroundColor = "gold",
-      columnLabelsBackgroundColor = "aquamarine",
-      rowGroupBackgroundColor = "lightyellow",
-      stubBackgroundColor = "lightgreen",
-      # no sourceNotesBackgroundColor, no grand summary rows
-    )
+    let parts = tabella(gtEx):
+      tabOptions:
+        containerWidth = "100%"
+        tableBackgroundColor = "lightblue"
+        headingBackgroundColor = "gold"
+        columnLabelsBackgroundColor = "aquamarine"
+        rowGroupBackgroundColor = "lightyellow"
+        stubBackgroundColor = "lightgreen"
+        sourceNotesBackgroundColor = "#f1e2af"
+        grandSummaryRowBackgroundColor = "lightpink"
+    nbTable parts
 
 tabelline """
 `tabOptions` is a macro (with `tabella(data): body` and `tableData:`, one of tabelline's
-three): the options are `TabOptions`' fields, in camelCase, and a name it does
-not have fails when compiling, not when running. tabelline has no `container` part, so the
-width goes to `tableWidth`.
+three): the options are `TabOptions`' fields, in camelCase, one `name = value` per line of its
+block, and a name it does not have fails when compiling, not when running. The grand summary
+row sums up the numeric columns, as `numeric_only=True` does in pandas.
 """
 
 nbText: """
@@ -147,10 +147,8 @@ Here are the parts supported in `GT.tab_options()`:
 """
 
 tabelline """
-The same names in camelCase: `rowGroupBorderColor` (tabelline has one colour for both
-borders of a row group). The parts tabelline has options for are table, heading,
-column_labels, row_group, stub, table_body (`dataRowPadding`, `tableBodyHlinesColor`, row
-striping), footnotes and source_notes.
+The same names in camelCase: `rowGroupBorderTopColor`. tabelline has every part of Great
+Tables, and the summary rows: 142 options in all.
 """
 
 nbText: """
@@ -175,10 +173,12 @@ gt_ex |>
   )
 """:
   nbCode:
-    # no columnLabelsBorderTop* options yet: the top border of the table, which is right above
-    # the column labels when the table has no header
-    nbTable tabella(exibble().head(5), rownameCol = "row", groupnameCol = "group")
-      .tabOptions(tableBorderTopColor = "blue", tableBorderTopWidth = "5px")
+    let borders = tabella(gtEx):
+      tabOptions:
+        columnLabelsBorderTopColor = "blue"
+        columnLabelsBorderTopStyle = "solid"
+        columnLabelsBorderTopWidth = "5px"
+    nbTable borders
 
 nbText: """
 ## Styling background color
@@ -195,7 +195,9 @@ gt_ex |>
   )
 """:
   nbCode:
-    nbTable gtEx.tabOptions(headingBackgroundColor = "purple")
+    let purple = tabella(gtEx):
+      tabOptions headingBackgroundColor = "purple"
+    nbTable purple
 
 tabelline """
 On a dark background (a `#rrggbb` colour) tabelline writes the heading in white; with a colour
@@ -225,13 +227,18 @@ gt_ex |>
   )
 """:
   nbCode:
-    nbTable gtEx.tabOptions(tableBodyHlinesColor = "red")  # no style or width yet
+    let hlines = tabella(gtEx):
+      tabOptions:
+        tableBodyHlinesColor = "red"
+        tableBodyHlinesStyle = "dashed"
+        tableBodyHlinesWidth = "4px"
+    nbTable hlines
 
 nbText: """
 In order to define the vertical lines between cells, set `vline` styles. For example, the code below makes both horizontal and vertical lines between cells solid.
 """
 
-python """
+tabs """
 gt_ex.tab_options(
     table_body_hlines_style="solid",
     table_body_vlines_style="solid",
@@ -242,11 +249,13 @@ gt_ex |>
     table_body.hlines.style = "solid",
     table_body.vlines.style = "solid"
   )
-"""
-
-tabelline """
-No Nim here: tabelline has no `vlines` options yet.
-"""
+""":
+  nbCode:
+    let lines = tabella(gtEx):
+      tabOptions:
+        tableBodyHlinesStyle = "solid"
+        tableBodyVlinesStyle = "solid"
+    nbTable lines
 
 nbText: """
 ## Set options across table parts
@@ -272,11 +281,13 @@ gt_ex |>
   )
 """:
   nbCode:
-    nbTable gtEx.tabOptions(
-      tableBackgroundColor = "green",
-      tableFontColor = "darkblue",
-      # no tableFontStyle yet
-      tableFontNames = "Times New Roman")
+    let fonts = tabella(gtEx):
+      tabOptions:
+        tableBackgroundColor = "green"
+        tableFontColor = "darkblue"
+        tableFontStyle = "italic"
+        tableFontNames = "Times New Roman"
+    nbTable fonts
 
 nbText: """
 Options set across the whole table, can be overridden by styling a specific part.
@@ -295,9 +306,11 @@ gt_ex |>
   )
 """:
   nbCode:
-    nbTable gtEx.tabOptions(
-      tableBackgroundColor = "orange",
-      headingBackgroundColor = "pink")
+    let overridden = tabella(gtEx):
+      tabOptions:
+        tableBackgroundColor = "orange"
+        headingBackgroundColor = "pink"
+    nbTable overridden
 
 nbText: """
 ## A basic theme
@@ -392,21 +405,28 @@ gt(exibble, rowname_col = "row", groupname_col = "group") |>
       tabHeader "THE HEADING", "(a subtitle)"
       tabStubhead "THE STUBHEAD"
       tabSourceNote "THE SOURCE NOTE"
-      tabOptions(
+      tabOptions:
         # table ----
-        tableBorderTopColor = "#004D80",
-        tableBorderBottomColor = "#004D80",
+        tableBorderTopColor = "#004D80"
+        tableBorderBottomColor = "#004D80"
         # heading ----
-        headingBorderBottomColor = "#0076BA",
-        # column labels ---- (no border top yet)
-        columnLabelsBorderBottomColor = "#0076BA",
-        columnLabelsBackgroundColor = "#FFFFFF",
-        # row group ---- (one colour for both borders)
-        rowGroupBorderColor = "#0076BA",
-        # stub ---- (no stub border style or colour yet)
-        stubBackgroundColor = "#0076BA",
-        # table body ---- (no body borders, no hlines style yet: transparent lines instead)
-        tableBodyHlinesColor = "transparent")
+        headingBorderBottomColor = "#0076BA"
+        # column labels ----
+        columnLabelsBorderTopColor = "#0076BA"
+        columnLabelsBorderBottomColor = "#0076BA"
+        columnLabelsBackgroundColor = "#FFFFFF"
+        # row group ----
+        rowGroupBorderTopColor = "#0076BA"
+        rowGroupBorderBottomColor = "#0076BA"
+        # stub ----
+        stubBackgroundColor = "#0076BA"
+        stubBorderStyle = "solid"
+        stubBorderColor = "#0076BA"
+        # table body ----
+        tableBodyBorderTopColor = "#0076BA"
+        tableBodyBorderBottomColor = "#0076BA"
+        tableBodyHlinesStyle = "none"
+        tableBodyVlinesStyle = "none"
     nbTable blue
 
 tabelline """

@@ -60,8 +60,9 @@ gt(islands_mini, rowname_col = "name") |>
   tab_stubhead(label = "landmass")
 """:
   nbCode:
-    nbTable tabella(islandsMini, rownameCol = "name")
-      .tabStubhead("landmass")
+    let withStubhead = tabella(islandsMini, rownameCol = "name"):
+      tabStubhead "landmass"
+    nbTable withStubhead
 
 nbText: """
 A very important thing to note here is that the table now has one column. Before, when there was no **Stub**, two columns were present (with the **Column Labels** of `"name"` and `"size"`) but now column number `1` (the only column remaining) is `size`.
@@ -91,8 +92,9 @@ gt(island_groups, rowname_col = "name", groupname_col = "group") |>
     islandGroups.addColumn("group", toValues(
       @["subregion", "subregion", "country", "country"] & newSeqWith(6, "continent")))
 
-    nbTable tabella(islandGroups, rownameCol = "name", groupnameCol = "group")
-      .tabStubhead("landmass")
+    let grouped = tabella(islandGroups, rownameCol = "name", groupnameCol = "group"):
+      tabStubhead "landmass"
+    nbTable grouped
 
 nbText: """
 ## GT convenience arguments
