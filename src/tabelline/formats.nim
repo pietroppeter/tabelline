@@ -680,12 +680,14 @@ proc fmtEmail*(t: sink Tabella, columns: ColSel, rows = allRows(), label = "", a
   linkFormat(t, columns, rows, "mailto:", label, asButton, color, target, showUnderline)
 
 proc fmtFlag*(t: sink Tabella, columns: ColSel, rows = allRows(), sep = " ", useTitle = true): Tabella =
-  ## Two-letter country codes as flag emoji (nothing is loaded); with `useTitle` the code is
-  ## the HTML title, shown on hover.
-  fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    let f = formatFlag($v, sep)
+  ## Two-letter country codes as flag emoji (nothing is loaded), one or several (a list, or
+  ## separated by commas); with `useTitle` the code is the HTML title, shown on hover.
+  result = fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
+    let codes = cellNames(v).join(",")
+    let f = formatFlag(codes, sep)
     if ctx == rcText or not useTitle: escapeHtml(f)
-    else: "<span title=\"" & escapeHtml(($v).strip) & "\">" & escapeHtml(f) & "</span>", rows)
+    else: "<span title=\"" & escapeHtml(cellNames(v).join(", ")) & "\">" & escapeHtml(f) & "</span>", rows)
+  result.formats[^1].wholeValue = true
 
 # ------------------------------------------------------------------------------ substitutions
 

@@ -59,19 +59,31 @@ func columnLabel*(c: ColInfo, ctx: RenderContext): string =
     let pattern = if c.unitsPattern.len > 0: c.unitsPattern else: "{1}, {2}"
     result = pattern.multiReplace(("{1}", result), ("{2}", formatUnits(c.units, ctx)))
 
+proc applyFormat(f: FormatRule, v: Value, ctx: RenderContext): string =
+  ## A format on a value; on a list or a record, item by item, unless the format takes it whole.
+  if f.wholeValue or v.kind notin {vkList, vkRecord}: return f.fn(v, ctx)
+  proc one(x: Value): string =
+    if x.isNull: ""
+    elif x.kind == vkList: "[" & applyFormat(f, x, ctx) & "]"
+    elif x.kind == vkRecord: "{" & applyFormat(f, x, ctx) & "}"
+    else: f.fn(x, ctx)
+  if v.kind == vkList: v.items.mapIt(one(it)).join(", ")
+  else: v.fields.mapIt((if ctx == rcHtml: escapeHtml(it[0]) else: it[0]) & ": " & one(it[1])).join(", ")
+
+proc formatValue*(t: Tabella, row: int, col: string, v: Value, ctx: RenderContext): string =
+  ## `v` as the cell at `row` of `col` would be formatted: the last format that covers the cell.
+  ## A missing value is "".
+  if v.isNull: return ""
+  for k in countdown(t.formats.high, 0):
+    let f = t.formats[k]
+    if col in f.columns and (f.rows.len == 0 or row in f.rows):
+      return applyFormat(f, v, ctx)
+  if ctx == rcHtml: escapeHtml($v) else: $v
+
 proc formatCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string =
   ## The shown text of one cell: the last format that covers it, then any substitution.
   let v = t.data[col, row]
-  var done = false
-  if not v.isNull:
-    for k in countdown(t.formats.high, 0):
-      let f = t.formats[k]
-      if col in f.columns and (f.rows.len == 0 or row in f.rows):
-        result = f.fn(v, ctx)
-        done = true
-        break
-    if not done:
-      result = (if ctx == rcHtml: escapeHtml($v) else: $v)
+  result = t.formatValue(row, col, v, ctx)
   for s in t.substitutions:
     if col in s.columns and (s.rows.len == 0 or row in s.rows) and (s.nullsToo == v.isNull):
       if s.applies != nil:
@@ -147,39 +159,39 @@ proc displayOrder*(t: Tabella): seq[int] =
   result = if t.rowOrder.len > 0: t.rowOrder else: toSeq(0 ..< t.data.nrows)
   if t.hiddenRows.len > 0: result = result.filterIt(it notin t.hiddenRows)
 
-func fillPattern*(pattern: string, texts: seq[string], missing: seq[bool]): string =
-  ## `pattern` with `{1}`, `{2}`, ... replaced by `texts`; a part in `<<...>>` is dropped when a
-  ## value it names is missing (as in gt's `cols_merge`).
-  proc refs(part: string): seq[int] =
-    var i = 0
-    while i < part.len:
-      if part[i] == '{':
-        let j = part.find('}', i)
-        if j > i:
-          try: result.add parseInt(part[i + 1 ..< j]) - 1
-          except ValueError: discard
-          i = j
-      inc i
-  proc fill(part: string): string =
-    result = part
-    for k in countdown(texts.high, 0): result = result.replace("{" & $(k + 1) & "}", texts[k])
+func fillPattern*(pattern: string, lookup: proc (r: PatternRef): (string, bool) {.noSideEffect.}): string =
+  ## `pattern` with each `{...}` replaced by `lookup` (its text, and whether the value is
+  ## missing); a part in `<<...>>` is dropped when a value it names is missing (as in gt's
+  ## `cols_merge`).
+  proc fill(part: string): (string, bool) =
+    var text = part
+    var anyMissing = false
+    for (tok, r) in patternRefs(part):
+      let (s, miss) = lookup(r)
+      text = text.replace("{" & tok & "}", s)
+      anyMissing = anyMissing or miss
+    (text, anyMissing)
   var i = 0
   while i < pattern.len:
     let a = pattern.find("<<", i)
-    if a < 0:
-      result.add fill(pattern[i .. ^1])
+    let b = if a < 0: -1 else: pattern.find(">>", a + 2)
+    if a < 0 or b < 0:
+      result.add fill(pattern[i .. ^1])[0]
       break
-    let b = pattern.find(">>", a + 2)
-    if b < 0:
-      result.add fill(pattern[i .. ^1])
-      break
-    result.add fill(pattern[i ..< a])
-    let part = pattern[a + 2 ..< b]
-    if not part.refs.anyIt(it >= 0 and it < missing.len and missing[it]): result.add fill(part)
+    result.add fill(pattern[i ..< a])[0]
+    let (text, miss) = fill(pattern[a + 2 ..< b])
+    if not miss: result.add text
     i = b + 2
 
+func fillPattern*(pattern: string, texts: seq[string], missing: seq[bool]): string =
+  ## `pattern` with `{1}`, `{2}`, ... replaced by `texts`; a part in `<<...>>` is dropped when a
+  ## value it names is missing.
+  fillPattern(pattern, proc (r: PatternRef): (string, bool) =
+    if r.field.len > 0 or r.column notin 0 ..< texts.len: ("", false)
+    else: (texts[r.column], r.column < missing.len and missing[r.column]))
+
 proc mergedCell(t: Tabella, m: MergeRule, row: int, ctx: RenderContext): string =
-  var texts, missing: seq[string]
+  var texts: seq[string]
   var isMissing: seq[bool]
   for c in m.columns:
     texts.add t.formatCell(row, c, ctx)
@@ -187,8 +199,20 @@ proc mergedCell(t: Tabella, m: MergeRule, row: int, ctx: RenderContext): string 
   if m.kind == mkNPct and m.columns.len > 1:   # no percentage after a zero count
     let n = t.data[m.columns[0], row]
     if n.isNumber and n.toFloat == 0: isMissing[1] = true
-  discard missing
-  fillPattern(m.pattern, texts, isMissing)
+  var fieldTexts: seq[(PatternRef, string, bool)]   # the fields the pattern reads, formatted
+  for (tok, r) in patternRefs(m.pattern):
+    if r.field.len > 0 and r.column in 0 ..< m.columns.len:
+      let col = m.columns[r.column]
+      let v = t.data[col, row]
+      let f = if v.kind == vkRecord and r.field in v: v[r.field] else: null()
+      fieldTexts.add (r, t.formatValue(row, col, f, ctx), f.isNull)
+  fillPattern(m.pattern, proc (r: PatternRef): (string, bool) =
+    if r.field.len == 0:
+      if r.column in 0 ..< texts.len: (texts[r.column], isMissing[r.column]) else: ("", false)
+    else:
+      for (fr, s, miss) in fieldTexts:
+        if fr == r: return (s, miss)
+      ("", true))
 
 proc shownCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string =
   ## The text of a body cell: merged with other columns (`colsMerge`) or formatted.
