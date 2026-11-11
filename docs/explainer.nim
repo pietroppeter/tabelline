@@ -495,10 +495,9 @@ setCurrentDir root / "explainer"
 nbCode:
   small3.save("tavola.svg")
 setCurrentDir cwd
+nbDrawing root / "explainer" / "tavola.svg", "The same table, as the SVG picture tabelline drew"
 
 nbText: """
-![The table as an SVG picture, drawn by tabelline](tavola.svg)
-
 The SVG holds the letters it uses of the font, so its text can be selected.
 `small3.toSvg(text = stPaths)` writes each letter as its outline instead: no font at all, for
 programs that ignore fonts inside an SVG (PowerPoint, Inkscape, LibreOffice). Two optional modules
