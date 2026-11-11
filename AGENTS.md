@@ -75,7 +75,7 @@ working rules that are easy to miss.
   the links to other sites too (404 and 410 fail). CI runs both on every PR and once a week, so a
   page that moves upstream (Great Tables' Get Started became its User Guide) is caught.
 - The home page shows the simplest example, then the gallery of the stories, and links the pages in three groups, by the question
-  a reader brings: Learn tabelline (Guide, Book), Where it's going (Feature map, Roadmap), How
+  a reader brings: Learn tabelline (Guide, Book, Reference), Where it's going (Feature map, Roadmap), How
   it's made (Devlog, Specs, Design guide, For coding agents). Name pages in plain words a newcomer
   reads without knowing how tabelline is made. The devlog lists only posts. A new page gets a card
   there (`docs/index.nim`), a line in the README, and in `docs/agents.nim`'s llms.txt list.

@@ -19,7 +19,8 @@ nbText: """
 0.2 was going to add rows and merges; on the day 0.1 shipped, it grew to hold every format,
 every locale and pictures in cells too, and then cells that hold more than one value. That is
 six groups of features, each built in its own pull request and explained here when it is ready,
-from the simplest idea up.
+from the simplest idea up. Every name they add is in the [Reference](../../api/), and
+[A reference in our own style](../reference/) tells how that page was made.
 """
 
 nbToc()

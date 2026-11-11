@@ -96,7 +96,7 @@ gt_polars.fmt_integer("num", rows=pl.col("currency") < 40)
 gt_ex |> fmt_integer(num, rows = currency < 40)
 """:
   nbCode:
-    nbTable gtEx.fmtInteger("num", rows = where(it["currency"] < 40))
+    nbTable gtEx.fmtInteger("num", rows = where(it.currency < 40))
 
 nbText: """
 Here's a more realistic example, which highlights the row with the highest value for currency.
@@ -128,7 +128,7 @@ gt_ex |>
 
     nbTable gtEx.tabStyle(
       style.fill("yellow"),
-      loc.body(cols = everything(), rows = where(it["currency"] == top)))
+      loc.body(cols = everything(), rows = where(it.currency == top)))
 
 tabelline """
 `where` sees one row at a time, so a condition on the whole column (its maximum) is computed
@@ -150,7 +150,7 @@ gt_ex.fmt_integer("num", rows=lambda D: D["currency"] < 40)
 gt_ex |> fmt_integer(num, rows = lil_exibble$currency < 40)
 """:
   nbCode:
-    nbTable gtEx.fmtInteger("num", rows = where(it["currency"] < 40))
+    nbTable gtEx.fmtInteger("num", rows = where(it.currency < 40))
 
 nbText: """
 Here's the styling example from the previous polars section.
@@ -179,6 +179,6 @@ gt_ex |>
   nbCode:
     nbTable gtEx.tabStyle(
       style.fill("yellow"),
-      loc.body(cols = everything(), rows = where(it["currency"] == top)))
+      loc.body(cols = everything(), rows = where(it.currency == top)))
 
 bookSave()
