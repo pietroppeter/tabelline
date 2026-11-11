@@ -56,7 +56,7 @@ main <- function() {
                   simplifyVector = FALSE)
   # a seed from the chapter's name
   set.seed(sum(utf8ToInt(req$chapter) * seq_along(utf8ToInt(req$chapter))) %% .Machine$integer.max)
-  env <- new.env(parent = globalenv())
+  env <- globalenv()  # as knitr does: gt finds the functions of a formula (`~ f(.)`) only there
   outputs <- lapply(req$cells, function(code) {
     tryCatch(run(code, env), error = function(e)
       list(printed = "", html = "", error = conditionMessage(e)))

@@ -940,6 +940,7 @@
    {
     "title": "Case Study: Clinical Tables",
     "path": "vignettes/case-study-clinical-tables.Rmd",
+    "book": "vignettes/case_study_clinical.html",
     "url": "https://gt.rstudio.com/articles/case-study-clinical-tables.html",
     "port": "port",
     "note": "",
@@ -976,6 +977,7 @@
    {
     "title": "Case Study: gtcars",
     "path": "vignettes/case-study-gtcars.Rmd",
+    "book": "vignettes/case_study_gtcars.html",
     "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
     "port": "port",
     "note": "",
@@ -1005,6 +1007,7 @@
    {
     "title": "Creating Summary Lines",
     "path": "vignettes/creating-summary-lines.Rmd",
+    "book": "vignettes/summary_lines.html",
     "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
     "port": "port",
     "note": "",
