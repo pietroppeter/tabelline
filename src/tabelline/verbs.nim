@@ -809,7 +809,7 @@ proc optCssTheme*(t: sink Tabella, ink = "--ink", paper = "--paper", line = "--l
   optCssTheme(t, cssTheme(ink, paper, line, shade, primary, font))
 
 func px(x: float): string =
-  var s = formatFloat(x, ffDecimal, 1)
+  var s = fixed(x, 1)
   if s.endsWith(".0"): s.setLen(s.len - 2)
   s & "px"
 

@@ -10,8 +10,22 @@
 ##
 ## The data of `isole` and `citta` is in `data/` (CSV, with its source in a `#` line), read when
 ## compiling; `docs/devlog/data/datasets/` has the programs that wrote it.
+##
+## `-d:tabellineDatasets=false` leaves out all but `planets`, `exibble` and `tavolaPitagorica`
+## (450 KB, most of it `countrypops`), for a JavaScript build that names datasets at run time:
+## the others then raise `ValueError` and say so.
 
 import core
+
+const tabellineDatasets* {.booldefine.} = true
+  ## Whether the bigger datasets are in the build (see above).
+
+template dataFile(name: string): string =
+  when tabellineDatasets: staticRead(name) else: ""
+
+proc leftOut(name: string) =
+  when not tabellineDatasets:
+    raise newException(ValueError, "the dataset " & name & " is not in this build (-d:tabellineDatasets=false)")
 
 const planetsCsv* = """planet,type,mass,diameter,density,gravity,day_length,distance,orbital_period,mean_temp,moons,rings
 Mercury,Terrestrial,0.330,4879,5429,3.7,4222.6,57.9,88.0,167,0,false
@@ -38,36 +52,36 @@ const exibbleCsv* = """num,char,fctr,date,time,datetime,currency,row,group
 8880000,honeydew,eight,2015-08-15,20:20,,0.44,row_8,grp_b
 """
 
-const isoleCsv* = staticRead("data/isole.csv")
+const isoleCsv* = dataFile("data/isole.csv")
   ## island, country, area (km²), population, city (the largest). Wikipedia, "List of islands in
   ## the Mediterranean", read 8 Nov 2026.
-const cittaCsv* = staticRead("data/citta.csv")
+const cittaCsv* = dataFile("data/citta.csv")
   ## city, state (three-letter code), population within city limits, counted (the date of the
   ## count). Wikipedia, "List of cities in the European Union by population within city limits",
   ## read 8 Nov 2026.
 
 const
-  gtcarsCsv = staticRead("data/gtcars.csv")
-  countrypopsCsv = staticRead("data/countrypops.csv")
-  illnessCsv = staticRead("data/illness.csv")
-  metroCsv = staticRead("data/metro.csv")
+  gtcarsCsv = dataFile("data/gtcars.csv")
+  countrypopsCsv = dataFile("data/countrypops.csv")
+  illnessCsv = dataFile("data/illness.csv")
+  metroCsv = dataFile("data/metro.csv")
 
-proc gtcars*(): TableData = parseCsv(gtcarsCsv)
+proc gtcars*(): TableData = (leftOut "gtcars"; parseCsv(gtcarsCsv))
   ## 47 deluxe automobiles from the 2014-2017 model years, with their performance and price
   ## (gt's `gtcars`).
-proc countrypops*(): TableData = parseCsv(countrypopsCsv)
+proc countrypops*(): TableData = (leftOut "countrypops"; parseCsv(countrypopsCsv))
   ## The population of every country, every year from 1960 to 2022 (World Bank; gt's
   ## `countrypops`).
-proc illness*(): TableData = parseCsv(illnessCsv)
+proc illness*(): TableData = (leftOut "illness"; parseCsv(illnessCsv))
   ## Daily tests of a patient with yellow fever, days 3 to 9, with their normal ranges (gt's
   ## `illness`).
-proc metro*(): TableData = parseCsv(metroCsv)
+proc metro*(): TableData = (leftOut "metro"; parseCsv(metroCsv))
   ## The stations of the Paris Metro, with their lines and passengers in 2021 (gt's `metro`).
 
 proc planets*(): TableData = parseCsv(planetsCsv)
 proc exibble*(): TableData = parseCsv(exibbleCsv)
-proc isole*(): TableData = parseCsv(isoleCsv, comment = "#")
-proc citta*(): TableData = parseCsv(cittaCsv, comment = "#")
+proc isole*(): TableData = (leftOut "isole"; parseCsv(isoleCsv, comment = "#"))
+proc citta*(): TableData = (leftOut "citta"; parseCsv(cittaCsv, comment = "#"))
 
 proc tavolaPitagorica*(n = 10): TableData =
   ## An n×n times table: a column `×` with 1..n, then one column per factor ("1" .. "n").

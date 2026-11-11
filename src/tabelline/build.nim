@@ -282,24 +282,27 @@ func fractionWidth(s, mark: string): int =
   let p = s.rfind(mark)
   if p < 0: 0 else: s[p .. ^1].runeLen
 
-proc alignDecimals(b: var Built, j: int, mark: string) =
-  var cells: seq[ptr string]
+iterator columnCells(b: var Built, j: int): var string =
+  ## Cell `j` of every row, summary rows included. (Not a list of `ptr string`: under the
+  ## JavaScript backend a change through such a pointer was lost.)
   for g in b.groups.mitems:
-    for r in g.rows.mitems: cells.add addr r.cells[j]
-    for s in g.summaryTop.mitems: cells.add addr s.cells[j]
-    for s in g.summaryBottom.mitems: cells.add addr s.cells[j]
-  for s in b.grandTop.mitems: cells.add addr s.cells[j]
-  for s in b.grandBottom.mitems: cells.add addr s.cells[j]
+    for r in g.rows.mitems: yield r.cells[j]
+    for s in g.summaryTop.mitems: yield s.cells[j]
+    for s in g.summaryBottom.mitems: yield s.cells[j]
+  for s in b.grandTop.mitems: yield s.cells[j]
+  for s in b.grandBottom.mitems: yield s.cells[j]
+
+proc alignDecimals(b: var Built, j: int, mark: string) =
   var widest = 0
-  for c in cells: widest = max(widest, fractionWidth(c[], mark))
-  for c in cells:
-    let w = fractionWidth(c[], mark)
-    if w < 0 or c[].len == 0 or w == widest: continue
+  for c in b.columnCells(j): widest = max(widest, fractionWidth(c, mark))
+  for c in b.columnCells(j):
+    let w = fractionWidth(c, mark)
+    if w < 0 or c.len == 0 or w == widest: continue
     var pad = widest - w
     if w == 0:    # no mark: a punctuation space stands for it
-      c[].add "\u2008"
+      c.add "\u2008"
       dec pad
-    for _ in 1 .. pad: c[].add "\u2007"
+    for _ in 1 .. pad: c.add "\u2007"
 
 proc build*(t: Tabella, ctx: RenderContext): Built =
   result.ctx = ctx

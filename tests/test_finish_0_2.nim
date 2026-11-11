@@ -108,13 +108,18 @@ suite "the other options":
 
 suite "images, fonts, nanoplots, datasets":
   test "localImage and webImage":
-    let file = getTempDir() / "tabelline_dot.svg"
-    writeFile(file, "<svg xmlns=\"http://www.w3.org/2000/svg\"/>")
-    let t = tabella(planets()):
-      tabHeader localImage(file, alt = "dot"), webImage("https://example.org/a/sun.png")
-    let h = t.toHtml
-    check "src=\"data:image/svg+xml;base64," in h and "src=\"https://example.org/a/sun.png\" alt=\"sun.png\"" in h
-    check "dot" in $t and "sun.png" in $t
+    when defined(js):  # no files in JavaScript
+      let t = tabella(planets()):
+        tabHeader webImage("https://example.org/a/sun.png")
+      check "src=\"https://example.org/a/sun.png\" alt=\"sun.png\"" in t.toHtml
+    else:
+      let file = getTempDir() / "tabelline_dot.svg"
+      writeFile(file, "<svg xmlns=\"http://www.w3.org/2000/svg\"/>")
+      let t = tabella(planets()):
+        tabHeader localImage(file, alt = "dot"), webImage("https://example.org/a/sun.png")
+      let h = t.toHtml
+      check "src=\"data:image/svg+xml;base64," in h and "src=\"https://example.org/a/sun.png\" alt=\"sun.png\"" in h
+      check "dot" in $t and "sun.png" in $t
   test "font stacks":
     check systemFonts() == "system-ui, sans-serif"
     check systemFonts("monospace-code").startsWith("ui-monospace")

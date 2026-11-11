@@ -42,6 +42,11 @@ suite "fmt verbs":
     let t = tabella(d).fmtNumber("x", decimals = 1).fmtNumber("x", decimals = 3, rows = [0])
     check t.formatCell(0, "x", rcText) == "1.500"
     check t.formatCell(1, "x", rcText) == "2.2"   # round half to even in formatFloat
+  test "a tie rounds to the even digit, under C and JavaScript":
+    check formatNumber(2.25, 1) == "2.2" and formatNumber(2.35, 1) == "2.4"
+    check formatNumber(-2.25, 1) == "−2.2" and formatNumber(0.125, 2) == "0.12"
+    check formatNumber(2.5, 0) == "2" and formatNumber(3.5, 0) == "4"
+    check formatNumber(0.15, 1) == "0.1" and formatNumber(1.005, 2) == "1.00"   # not ties: below
   test "missing values are blank unless substituted":
     let t = tabella(d).fmtNumber("x")
     check t.formatCell(2, "x", rcText) == ""

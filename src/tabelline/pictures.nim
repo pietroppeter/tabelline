@@ -18,14 +18,18 @@ type
     name*, style*, label*, path*: string
     width*: int
 
-const fontawesomeTsv = staticRead("data/fontawesome.tsv")
+const tabellineIcons* {.booldefine.} = true
+  ## `-d:tabellineIcons=false` leaves the icons out of a build (1.5 MB, most of a JavaScript
+  ## build that can call every verb); `fmtIcon` then raises `ValueError` and says so.
+const fontawesomeTsv = when tabellineIcons: staticRead("data/fontawesome.tsv") else: ""
 
 var iconTable: Table[string, seq[Icon]]
 var iconAliases: Table[string, string]
 
 proc loadIcons() =
   if iconTable.len > 0: return
-  for line in fontawesomeTsv.splitLines:
+  let tsv = fontawesomeTsv  # once: the JS backend writes a const string out at every use
+  for line in tsv.splitLines:
     if line.len == 0 or line[0] == '#': continue
     let f = line.split('\t')
     if f.len == 3 and f[1] == "=": iconAliases[f[0]] = f[2]
@@ -64,7 +68,10 @@ proc hasIcon*(name: string): bool =
 proc icon*(name: string): Icon =
   ## The icon for a name (see `findIcon`); raises `ValueError` for an unknown one.
   let (found, i) = findIcon(name)
-  if not found: raise newException(ValueError, "no Font Awesome Free icon named " & name.escape)
+  if not found:
+    when not tabellineIcons:
+      raise newException(ValueError, "no icons in this build (-d:tabellineIcons=false), so no " & name.escape)
+    raise newException(ValueError, "no Font Awesome Free icon named " & name.escape)
   i
 
 func cssLength(s: string): (float, string) =
@@ -75,7 +82,7 @@ func cssLength(s: string): (float, string) =
   (parseFloat(s[0 ..< k]), s[k .. ^1])
 
 func lengthText(x: float, unit: string): string =
-  var s = formatFloat(round(x, 2), ffDecimal, 2)
+  var s = fixed(round(x, 2), 2)
   s = s.strip(leading = false, chars = {'0'}).strip(leading = false, chars = {'.'})
   s & unit
 
@@ -126,7 +133,7 @@ proc fmtIcon*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "1em"
       let v = t.data[n, i]
       if v.isNull: continue
       for name in cellNames(v):
-        if not hasIcon(name): raise newException(ValueError, "no Font Awesome Free icon named " & name.escape)
+        if not hasIcon(name): discard icon(name)  # raises, and says why
   var byName: Table[string, string]
   for (k, c) in fillColors: byName[k] = c
   result = fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
@@ -153,8 +160,11 @@ proc imageDataUrl*(file: string): string =
   ## "data:image/png;base64,...". Raises `ValueError` for a file that is not there.
   let ext = file.splitFile.ext.toLowerAscii
   if ext notin imageTypes: raise newException(ValueError, "not an image file (png, jpg, gif, svg, webp, avif, bmp, ico): " & file.escape)
-  if not fileExists(file): raise newException(ValueError, "no image file " & file.escape)
-  "data:" & imageTypes[ext] & ";base64," & encode(readFile(file))
+  when defined(js):
+    raise newException(ValueError, "no files in JavaScript: give an address, not " & file.escape)
+  else:
+    if not fileExists(file): raise newException(ValueError, "no image file " & file.escape)
+    "data:" & imageTypes[ext] & ";base64," & encode(readFile(file))
 
 proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", width = "",
                sep = " ", path = "", filePattern = "{x}", encode = true, alt = ""): Tabella =
