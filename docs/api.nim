@@ -212,8 +212,8 @@ nbToc
 nbText: """
 ## Modules
 
-What each module is for, then what it imports: from tabelline, and from Nim's standard library.
-Only `tabelline/nimib` needs a package from outside, nimib.
+What each module is for, what it exports, and what it imports: from tabelline, and from Nim's
+standard library. Only `tabelline/nimib` needs a package from outside, nimib.
 """
 
 func firstSentence(doc: string): string =
@@ -222,50 +222,50 @@ func firstSentence(doc: string): string =
   result = if k >= 0: p[0 .. k] else: p
   if result.startsWith("tabelline: "): result = result[11 .. ^1].capitalizeAscii
 
+func short(name: string): string = name.replace("tabelline/", "")
+proc moduleLink(name: string): string =
+  for (module, title, _) in order:
+    if module == name: return &"[{short(name)}](#{slugify(title)})"
+  short(name)
+
+func kindsOf(m: ApiModule): string =
+  ## What a module exports, by kind: "41 procs, 20 types, 2 consts".
+  var counts: seq[(string, int)]
+  for s in m.symbols:
+    var found = false
+    for c in counts.mitems:
+      if c[0] == s.kind: (inc c[1]; found = true)
+    if not found: counts.add (s.kind, 1)
+  counts.mapIt(&"{it[1]} {it[0]}" & (if it[1] > 1: "s" else: "")).join(", ")
+
 block:
-  type
-    ModuleRow = object
-      module, what: string
-      names: int
-    ImportRow = object
-      module, imports, importedBy, std: string
-  func short(name: string): string = name.replace("tabelline/", "")
-  proc link(name: string): string =
-    for (module, title, _) in order:
-      if module == name: return &"[{short(name)}](#{slugify(title)})"
-    short(name)
-  var rows: seq[ModuleRow]
-  var deps: seq[ImportRow]
+  # one group per module, the facts as rows: a table a phone reads down
+  type ModuleFact = object
+    module, fact, value: string
+  var facts: seq[ModuleFact]
   for (module, title, _) in order:
     let m = api.filterIt(it.name == module)[0]
     let own = m.imports.filterIt(it == "tabelline" or it.startsWith("tabelline/"))
-    rows.add ModuleRow(module: link(module), what: firstSentence(m.doc), names: m.symbols.len)
-    deps.add ImportRow(module: link(module),
-                       imports: own.mapIt(if it.lastPathPart in dataOnly: short(it) & " (data)" else: link(it)).join(", "),
-                       importedBy: api.filterIt(module in it.imports).mapIt(link(it.name)).join(", "),
-                       std: m.imports.filterIt(it.startsWith("std/") or it.startsWith("pkg/"))
-                              .mapIt(it.replace("std/", "")).join(", "))
-  let t = tabella(rows):
-    tabHeader "The modules", "in the order of this page"
+    let users = api.filterIt(module in it.imports).mapIt(moduleLink(it.name))
+    let other = m.imports.filterIt(it.startsWith("std/") or it.startsWith("pkg/")).mapIt(it.replace("std/", ""))
+    let g = "tabelline" & (if module == "tabelline": "" else: "/" & short(module))
+    facts.add ModuleFact(module: g, fact: "what it is", value: firstSentence(m.doc))
+    facts.add ModuleFact(module: g, fact: "exports",
+                         value: &"[{m.symbols.len} names](#{slugify(title)}): {kindsOf(m)}")
+    facts.add ModuleFact(module: g, fact: "imports",
+                         value: own.mapIt(if it.lastPathPart in dataOnly: short(it) & " (data)" else: moduleLink(it)).join(", "))
+    facts.add ModuleFact(module: g, fact: "imported by", value: users.join(", "))
+    facts.add ModuleFact(module: g, fact: "from Nim", value: other.join(", "))
+  for f in facts.mitems:
+    if f.value.len == 0: f.value = "—"
+  let t = tabella(facts, rownameCol = "fact", groupnameCol = "module"):
+    tabHeader "The modules", "what each exports and imports, in the order of this page"
     colsLabel:
-      module: "module"
-      what: "what it is"
-      names: "names"
-    fmtMarkdown ["module", "what"]
+      value: ""
+    fmtMarkdown "value"
+    tabSourceNote "From Nim: modules of the standard library, and pkg/nimib, the one package from outside. (data): a module of CLDR tables, not documented here."
     optCssTheme()
   nbTable t
-  let d = tabella(deps):
-    tabHeader "What each module imports", "and what imports it"
-    colsLabel:
-      module: "module"
-      imports: "from tabelline"
-      importedBy: "imported by"
-      std: "from Nim"
-    fmtMarkdown ["module", "imports", "importedBy"]
-    tabSourceNote "From Nim: modules of the standard library (std/), and pkg/nimib, the one package outside it."
-    tabOptions(tableFontSize = "14px")
-    optCssTheme()
-  nbTable d
 
 for (module, title, intro) in order:
   let m = api.filterIt(it.name == module)[0]
@@ -273,6 +273,27 @@ for (module, title, intro) in order:
   var head = &"`{module}` · [{m.path}]({repoUrl}/blob/main/{m.path})"
   if intro.len > 0: head.add " · " & intro
   nbText: head & "\n\n" & linked(firstSentence(m.doc))
+  block:
+    # every name the module exports, with its kind, grouped by the source's sections
+    type NameRow = object
+      section, name, kind: string
+    var sectionsSeen: seq[string]
+    for s in m.symbols:
+      if s.section notin sectionsSeen: sectionsSeen.add s.section
+    let grouped = sectionsSeen.len > 1
+    var names: seq[NameRow]
+    for sec in sectionsSeen:
+      for s in m.symbols.filterIt(it.section == sec):
+        let n = if s.signatures.len > 1: &" ×{s.signatures.len}" else: ""
+        names.add NameRow(section: sectionTitle(sec), name: &"[`{s.name}`](#{anchorOf(m, s)})", kind: s.kind & n)
+    let t = tabella(names, groupnameCol = (if grouped: "section" else: "")):
+      colsHide "section"
+      fmtMarkdown "name"
+      tabSourceNote "×3: three overloads. A name opens its entry below."
+      optVerticalPadding(scale = 0.4)
+      tabOptions(tableFontSize = "15px", tableWidth = "100%")
+      optCssTheme()
+    nbTable t
   let documented = m.symbols.countIt(it.doc.len > 0)
   nbFold(&"{m.symbols.len} names, {documented} with a doc comment"):
     # the module's doc comment, after the sentence already shown above the fold
@@ -289,8 +310,6 @@ for (module, title, intro) in order:
       let syms = m.symbols.filterIt(it.section == sec)
       if sec.len > 0 and sections.len > 1:
         nbText: &"### {sectionTitle(sec)}"
-      if syms.len > 3:
-        nbText: syms.mapIt(&"[`{it.name}`](#{anchorOf(m, it)})").deduplicate.join(" · ")
       for s in syms:
         var links: seq[ApiLink]
         let sn = snake(s.name)
