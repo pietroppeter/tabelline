@@ -123,6 +123,9 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [A reference in our own style](https://pietroppeter.github.io/tabelline/devlog/reference/)
+  (11 Nov 2026 A): how the Reference page was made from `nim jsondoc` and the source, the
+  choices behind it against gt and Great Tables, and its four rounds of review.
 - [Designing tabelline 0.2](https://pietroppeter.github.io/tabelline/devlog/designing-0-2/)
   (10 Nov 2026 A): 0.2 takes in 0.3 and 0.4, in five groups, each from zero with its choices;
   written while 0.2 is built.

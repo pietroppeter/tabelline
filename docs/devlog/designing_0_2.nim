@@ -18,7 +18,9 @@ nbText: """
 0.1 had the parts of a table, from the title to the footer, and the formats for single values.
 0.2 was going to add rows and merges; on the day 0.1 shipped, it became the release that takes in
 0.3 and 0.4 as well. That is five groups of features, built in five pull requests, each one
-explained here when it is ready, from the simplest idea up.
+explained here when it is ready, from the simplest idea up. Every name they add is in the
+[Reference](../../api/), and [A reference in our own style](../reference/) tells how that page
+was made.
 """
 
 nbToc()
