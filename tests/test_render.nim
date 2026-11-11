@@ -93,6 +93,22 @@ suite "building and rendering":
     check "background-color: #000000; color: #FFFFFF" in h
     check "background-color: #FFFFFF; color: #1a1a1a" in h
 
+  test "every CSS colour name":
+    check parseColor("darkgreen") == (0.0, 100.0, 0.0)
+    check parseColor("RebeccaPurple").toHex == "#663399"
+    check parseColor("bisque").toHex == "#FFE4C4"
+    check parseColor("#abc").toHex == "#AABBCC"
+    for bad in ["transparent", "var(--x)", "#12345", "notacolour"]:
+      expect ValueError: discard parseColor(bad)
+    let t = tabella(tavolaPitagorica(3)).dataColor(everything(), palette = @["lightblue", "darkgreen"])
+    check "background-color: #006400; color: #FFFFFF" in t.toHtml
+
+  test "white text on a dark heading given by name":
+    let t = tabella(planets()).tabHeader("Planets").tabOptions(headingBackgroundColor = "darkgreen")
+    check "--tb-heading-color: #FFFFFF" in t.toHtml
+    let v = tabella(planets()).tabHeader("Planets").tabOptions(headingBackgroundColor = "var(--x)")
+    check "--tb-heading-color: #FFFFFF" notin v.toHtml
+
   test "spanners over two levels":
     let t = tabella(planets()).colsHide(["type", "density", "gravity", "day_length", "mean_temp", "rings", "moons"])
       .tabSpanner("Size", ["mass", "diameter"]).tabSpanner("Orbit", ["distance", "orbital_period"])

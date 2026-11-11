@@ -61,7 +61,7 @@ nbText: """
 ## Where things are
 
 - `src/tabelline/`: the library. The core needs only Nim's standard library; nimib is used only
-  by `src/tabelline/nimib.nim`.
+  by `src/tabelline/nimib.nim`, and nanuq only by `src/tabelline/nanuq.nim`.
 - `openspec/specs/`: how tabelline behaves, requirement by requirement, each with an example.
   New work starts as a change in `openspec/changes/`. Rendered on the [specs page](../specs/),
   which can show part of them: `specs/?spec=<names>` or `specs/?change=<names>`.

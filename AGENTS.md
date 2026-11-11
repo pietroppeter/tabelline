@@ -22,7 +22,8 @@ working rules that are easy to miss.
 ## Code
 
 - The core (`src/tabelline/`) needs only Nim's standard library. nimib is used only by
-  `src/tabelline/nimib.nim` and the docs. Optional interop goes in its own module.
+  `src/tabelline/nimib.nim` and the docs. Optional interop goes in its own module
+  (`src/tabelline/nanuq.nim`, for nanuq's data frames).
 - Verbs take a `Tabella` (`sink`) and return the new one; formats and styles resolve columns and
   rows when the verb is called and run when the table is rendered (`build.nim`), so every renderer
   agrees. Macros only where a proc cannot do the job (today: `tabella(data): body`, `tableData:`,

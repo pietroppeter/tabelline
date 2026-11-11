@@ -287,7 +287,7 @@ A table library is mostly careful string building, which Nim does well, at compi
 
 So tabelline is **written from scratch, in plain Nim**, with no dependencies: the core uses only
 the standard library, and nimib is needed only for the `nbTable` block
-([where a table goes](#where-a-table-goes)). It copies the design of
+([where a table goes](#where-a-table-goes)), as nanuq is only for a table from a nanuq data frame. It copies the design of
 gt and Great Tables (the two layers, lazy building, the parts, scoped CSS) and their names, in
 camelCase, so that their documentation and gallery can be read as tabelline's: `tab_header`
 is `tabHeader`, `fmt_number` is `fmtNumber`, `loc.body()` and `style.fill()` are the same. Where
@@ -321,6 +321,21 @@ type
 Data comes from Nim values with no ceremony: a `seq` of objects or named tuples (each field a
 column, read with `fieldPairs`), a CSV text (types inferred), or the `tableData:` block, where
 each value is converted on its own, so `nil` can stand for a missing number.
+
+Data that needs work first (grouped, summarised, pivoted, as data in R and Python usually is
+before gt sees it) comes from a data frame. tabelline makes tables, not data frames:
+`import tabelline/nanuq` makes `tabella(df)` work for a DataFrame of
+[nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim, copying each column as ints,
+floats, bools or text, and Polars' nulls as missing values. It is the one module that needs
+nanuq, so the core keeps needing only the standard library:
+
+```nim
+import nanuq, nanuq/datasets
+import tabelline, tabelline/nanuq
+let byIsland = penguins().groupBy("island").agg(len().alias("n"))
+let t = tabella(byIsland):
+  tabHeader "Penguins by island"
+```
 
 ### The spec
 
@@ -484,7 +499,13 @@ nbSave
 ```
 
 On this page, an `nbTable` line after the code puts each table in the page; it is usually left out
-of the code shown.
+of the code shown. When the code need not be shown, `nbTable` takes the data and the body itself,
+and the table needs no name:
+
+```nim
+nbTable planets(), rownameCol = "planet":
+  tabHeader "The planets"
+```
 """
 
 nbText: """
@@ -541,7 +562,9 @@ nbCode:
 nbTable t
 
 nbText: """
-Step 4: colour by value, style a row, and add the notes. The footnote marks are numbered in
+Step 4: colour by value, style a row, and add the notes. A palette is a list of colours,
+each a hex value or one of the 148 CSS colour names (`"darkgreen"`, `"rebeccapurple"`), or the
+name of one of tabelline's palettes, as `"rdbu"` here. The footnote marks are numbered in
 reading order, wherever they were added.
 """
 nbCode:

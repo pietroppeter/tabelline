@@ -41,6 +41,7 @@ const knownOrder = [
   ("tabelline", "Everything at once", "`import tabelline` brings every module above."),
   ("tabelline/datasets", "Datasets", "`import tabelline/datasets`: small tables for examples."),
   ("tabelline/nimib", "In nimib", "`import tabelline/nimib`: tables in a nimib notebook."),
+  ("tabelline/nanuq", "From nanuq", "`import tabelline/nanuq`: a table from a nanuq (Polars) DataFrame."),
 ]
 
 # a module not listed yet goes at the end of the list, under its own name
@@ -234,7 +235,8 @@ nbText: """
 ## Modules
 
 What each module is for, what it exports, and what it imports: from tabelline, and from Nim's
-standard library. Only `tabelline/nimib` needs a package from outside, nimib.
+standard library. Only two need a package from outside: `tabelline/nimib` needs nimib, and
+`tabelline/nanuq` needs nanuq.
 """
 
 func firstSentence(doc: string): string =

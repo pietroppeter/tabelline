@@ -7,6 +7,8 @@
 ##   let t = tabella(planets()):
 ##     tabHeader "The planets"
 ## nbTable t
+## nbTable planets():          # or in one step, when the code need not be shown
+##   tabHeader "The planets"
 ## nbSave
 ## ```
 ##
@@ -14,7 +16,7 @@
 ## backends (`nbInit` for HTML, `nbInitMd` for Markdown, as in a README). The first table of a
 ## page carries `tabellaCss`, the stylesheet of every table; the others leave it out.
 
-import std/json
+import std/[json, macros]
 import pkg/nimib
 import ../tabelline
 
@@ -39,6 +41,26 @@ proc tableHtml*(nb: var Nb, t: Tabella): string =
 proc table*(nb: var Nb, t: Tabella) =
   nb.add newNbTable(html = nb.tableHtml(t), markdown = t.toMarkdown)
 
-template nbTable*(t: Tabella) =
-  ## Adds the table `t` to the page.
-  nb.table(t)
+template asTabella(x: typed): Tabella =
+  when x is Tabella: x else: initTabella(x)
+
+macro nbTable*(args: varargs[untyped]): untyped =
+  ## Adds a table to the page: `nbTable t` for a table `t`, and `nbTable data` for a table of
+  ## `data` as it is. With a body, `nbTable data: body` adds `tabella(data): body`, in one step,
+  ## without naming the table (the other arguments of `tabella`, such as `rownameCol`, go too):
+  ##
+  ## ```nim
+  ## nbTable planets(), rownameCol = "planet":
+  ##   tabHeader "Planets"
+  ##   fmtNumber "mass", decimals = 1
+  ## ```
+  ## A body works on a table too: `nbTable t: tabHeader "Again"` adds `t` with a heading.
+  ## (A macro: written as a template, Nim would give the body to `nbTable`, not to `tabella`.)
+  let nb = ident"nb"
+  let hasBody = args.len >= 2 and args[^1].kind == nnkStmtList
+  if args.len == 1 and not hasBody:
+    result = newCall(bindSym"table", nb, newCall(bindSym"asTabella", args[0]))
+  else:
+    var call = newCall(bindSym"tabella")
+    for a in args: call.add a
+    result = newCall(bindSym"table", nb, call)

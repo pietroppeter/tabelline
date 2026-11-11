@@ -200,8 +200,9 @@ proc styleVars*(o: TabOptions): string =
     if name in cssOptions and value != base[name]:
       parts.add "--tb-" & kebab(name) & ": " & value
   func onDark(bg: string): bool =
-    ## A background that white text reads better on (by contrast, not by one channel).
-    bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
+    ## A background that white text reads better on (by contrast, not by one channel): a hex
+    ## value or a CSS colour name; anything else (a `var(--x)`, `transparent`) is left alone.
+    try: idealTextColor(bg) == "#FFFFFF" except ValueError: false
   if onDark(o.headingBackgroundColor): parts.add "--tb-heading-color: " & o.tableFontColorLight
   if onDark(o.columnLabelsBackgroundColor): parts.add "--tb-column-labels-color: " & o.tableFontColorLight
   # where the table sits, unless its margins are given

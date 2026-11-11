@@ -51,8 +51,17 @@ jobs:
           key: nimcache-2.2.4-${{ hashFiles('src/**/*.nim', 'docs/**/*.nim', 'book/**/*.nim', 'tests/*.nim', 'tools/*.nim', '*.nims', 'nim.cfg', 'atlas.lock') }}
           restore-keys: nimcache-2.2.4-
 
+      # nanuq's prebuilt Polars library (about 50 MB), downloaded once for tabelline/nanuq
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/nanuq
+          key: nanuq-${{ hashFiles('atlas.lock') }}
+
       - name: Tests
         run: nim r tests/all.nim
+
+      - name: Tests of tabelline/nanuq
+        run: nim r -d:nanuqLib=prebuilt tests/test_nanuq.nim
 
       - name: Spec examples
         run: nim r tools/specexamples.nim
