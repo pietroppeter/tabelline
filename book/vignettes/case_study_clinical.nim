@@ -322,14 +322,8 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 """:
   nbCode:
-    # The names in `names` that start with one of `prefixes`
-    proc startingWith(names: seq[string], prefixes: varargs[string]): seq[string] =
-      for name in names:
-        for prefix in prefixes:
-          if name.startsWith(prefix): (result.add name; break)
-
     let rxAdslFmt = tabella(rxAdslTbl):
-      fmtInteger startingWith(adslSummary.columns, "val_", "min_", "max_"),
+      fmtInteger startsWith(["val_", "min_", "max_"]),
         rows = where($it.label in ["n", "Median", "Min - Max"] or ($it.category).endsWith(", n (%)"))
       fmtPercent startsWith("pct_"), decimals = 1
       fmtNumber startsWith("val_"), rows = where(it.label == "Mean (SD)"), decimals = 1
@@ -338,8 +332,8 @@ rx_adsl_tbl
     nbTable rxAdslFmt
 
 tabelline """
-`startsWith` takes one prefix, and tabelline cannot join rules yet (gt's `starts_with()` takes
-several): `startingWith` lists the names, and a list of names is a selection.
+`startsWith` takes several prefixes, as gt's `starts_with()` does, in brackets:
+`startsWith("val_", "min_")` with two texts would be Nim's own `startsWith` of strutils.
 """
 
 nbText: """
@@ -753,7 +747,7 @@ rx_resp_tbl
   nbCode:
     let rxRespFmt = tabella(rxRespTbl):
       fmtInteger startsWith("n_")
-      fmtNumber startingWith(rxResponders.columns, "pct_", "ci_"), decimals = 1
+      fmtNumber startsWith(["pct_", "ci_"]), decimals = 1
       fmtNumber startsWith("or"), decimals = 2
 
     nbTable rxRespFmt
@@ -819,16 +813,14 @@ rx_resp_tbl
         colsMerge ["n_resp_" & arm, "n_total_" & arm, "pct_" & arm], pattern = "{1}/{2} ({3})"
         colsMerge ["ci_low_" & arm, "ci_up_" & arm], pattern = "[{1}, {2}]"
       colsMerge ["or_ci_low", "or_ci_up"], pattern = "[{1}, {2}]"
-      # a spanner's columns must be next to each other
-      colsMove "ci_low_Placebo", after = "n_resp_Placebo"
       tabSpanner "Drug 1", cols("n_resp_Drug 1", "ci_low_Drug 1")
       tabSpanner "Placebo", cols("n_resp_Placebo", "ci_low_Placebo")
 
     nbTable rxRespMerged
 
 tabelline """
-gt's `tab_spanner()` gathers its columns next to the first one: tabelline leaves columns where
-they are (a gap of the book), so `colsMove` gathers them first.
+A spanner gathers its columns next to the first one, as gt's `tab_spanner()` does
+(`gather = false` leaves them where they are).
 """
 
 nbText: """
@@ -912,7 +904,7 @@ rx_resp_tbl
 """:
   nbCode:
     let rxRespLabelled = tabella(rxRespGrouped):
-      colsAlign alCenter, startingWith(rxResponders.columns, "n_", "ci", "or")
+      colsAlign alCenter, startsWith(["n_", "ci", "or"])
       colsLabel:
         AAGEGR1: ""
         n_resp_Placebo: "Event Rate (%)"
@@ -922,14 +914,14 @@ rx_resp_tbl
         "or": "Odds ratio"
         or_ci_low: "[95% CI]"
       colsWidth rxResponders.columns.mapIt((it, if it == "AAGEGR1": "80px" else: "120px"))
-      colsAlign alLeft, "AAGEGR1"
+      colsAlign alLeft, positions(0)
 
     nbTable rxRespLabelled
 
 tabelline """
 In a block of pairs a name that is not a Nim name is written as a string: `"n_resp_Drug 1"`,
-and `"or"`, a keyword of Nim. tabelline has no columns by position (gt's `1`), so the first
-column is named.
+and `"or"`, a keyword of Nim. Columns by position count from 0 in tabelline, as in Python:
+gt's `columns = 1` is `positions(0)`.
 """
 
 nbText: """
@@ -1304,9 +1296,6 @@ addv_tbl
 """:
   nbCode:
     let addvSpanned = tabella(addvMerged):
-      # Yes before No, as gt's spanners gather their columns in the order given
-      for arm in arms:
-        colsMove "n_" & arm & "_N", after = "n_" & arm & "_Y"
       tabSpanner md"COVID-19 Related", cols("n_Placebo_Y", "n_Placebo_N")
       tabSpanner md"COVID-19 Related", cols("n_Drug 1_Y", "n_Drug 1_N")
       tabSpanner md("Placebo  \n  N=90 (100%)  \n   n (%)"), cols("n_Placebo_Y", "n_Placebo_N"), level = 2
@@ -1322,8 +1311,9 @@ addv_tbl
 
 tabelline """
 Two spanners with the same label are told apart by their columns, so tabelline needs no `id`;
-a spanner over another one takes `level = 2`, where gt finds the level itself. tabelline's `md`
-does not break a line at two spaces and a newline yet, so the labels of the arms stay on one line.
+a spanner over another one takes `level = 2`, where gt finds the level itself. A spanner gathers
+its columns in the order given, Yes before No, as gt's does, and `md` breaks a line at two spaces
+and a newline, as Markdown does.
 """
 
 nbText: """

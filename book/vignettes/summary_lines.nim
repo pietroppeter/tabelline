@@ -68,8 +68,8 @@ exibble_a
     nbTable exibbleA
 
 tabelline """
-tabelline's data has no verbs yet (data frames come later): the book's `select` keeps the columns named,
-where dplyr drops the ones named.
+tabelline makes tables, not data: the book's `select` (`gtdata`) keeps the columns named, where
+dplyr drops the ones named.
 """
 
 nbText: """
@@ -335,9 +335,8 @@ We can also store these argument values as local variables and pass them in both
 """
 
 tabelline """
-Not in tabelline, nor in Great Tables: each call of `summaryRows` adds its own rows, so the table
-above has two rows *avg* in *grp_a*, one for `num` and one for `currency`, where gt makes one.
-To get one row for both columns, give one call both columns, with the same aggregates.
+tabelline squashes them too, as gt does: two calls of `summaryRows` with the same label make one
+row, *avg* in *grp_a* for both `num` and `currency`. Great Tables adds a row for each call.
 """
 
 tabs """
@@ -674,14 +673,15 @@ exibble_d |>
   nbCode:
     # The summary rows of `exibbleD` as a table of their
     # own, grouped and labelled as they were
-    let standalone = tabella(extractSummary(exibbleD), rownameCol = "label",
+    let standalone = tabella(extractSummary(exibbleD, values = true), rownameCol = "label",
                              groupnameCol = "group"):
+      fmtNumber "num", decimals = 1
       subMissing()
     nbTable standalone
 
 tabelline """
-The cells come already formatted (`2.926 × 10²` and so on), so they cannot be formatted again
-with one decimal, as gt does: `extractSummary` keeping the numbers too is a gap.
+`extractSummary` gives the cells as shown (`2.926 × 10²` and so on); with `values = true` it
+gives the numbers, which take a format again, as gt's do.
 """
 
 nbText: """
@@ -817,6 +817,6 @@ exibble_j |>
 """:
   nbCode:
     # Extract the summary rows of `exibbleJ`, and print them
-    echo tabella(extractSummary(exibbleJ))
+    echo tabella(extractSummary(exibbleJ, values = true))
 
 bookSave()

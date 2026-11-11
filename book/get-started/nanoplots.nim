@@ -106,9 +106,8 @@ Both forms of the `numbers` column in the two DataFrames look the same to `GT.fm
 """
 
 tabelline """
-A cell of tabelline's `TableData` holds one value, so a list of values is a text: numbers
-separated by spaces, commas or semicolons, maybe in brackets (`"[1, 2, NA]"`), where `NA` is a
-missing value. To plot several columns of numbers, one plot per row, `colsNanoplot` joins them
+A cell holds a list of values (`@[20.0, 23, 6]`), or a text of numbers separated by spaces,
+commas or semicolons, maybe in brackets (`"[1, 2, NA]"`), where `NA` is a missing value. To plot several columns of numbers, one plot per row, `colsNanoplot` joins them
 into a new column, as gt's `cols_nanoplot()` does.
 """
 
@@ -320,8 +319,7 @@ gt(random_numbers_df) |>
 
 tabelline """
 The colours of a nanoplot go into its SVG as they are, so any CSS colour works here, `bisque`
-too, where tabelline's own colour names are 17 (see
-[Colorizing with Data](colorizing_with_data.html)).
+too, as it does in `dataColor` (see [Colorizing with Data](colorizing_with_data.html)).
 """
 
 nbText: """

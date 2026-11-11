@@ -13,9 +13,9 @@
 
 - [x] 3.1 `src/tabelline/nanuq.nim`: `toTableData(df)`, `initTabella(df, ...)`
 - [x] 3.2 nanuq in the `docs` feature, pinned; `tests/test_nanuq.nim`, run by CI
-- [ ] 3.3 The clinical case study shapes its data with nanuq
+- [x] 3.3 The clinical case study shapes its data with nanuq
 
 ## 4. Docs and checks
 
-- [ ] 4.1 The guide, the Reference, *Not from gt*, the book's gaps, BACKLOG, CHANGELOG, README
-- [ ] 4.2 `nim r tests/all.nim`, `nim r tools/specexamples.nim --changes`, rebuild docs and book
+- [x] 4.1 The guide, the Reference, *Not from gt*, the book's gaps, BACKLOG, CHANGELOG, README
+- [x] 4.2 `nim r tests/all.nim`, `nim r tools/specexamples.nim --changes`, rebuild docs and book

@@ -33,8 +33,9 @@ glimpse(gtcars)
     echo glimpse(gtcars())
 
 tabelline """
-`glimpse` is the book's (`gtdata`), as `head` and `select` are: tabelline's data has no verbs
-yet, so the book writes them in a few lines of Nim, and data frames come later.
+`gtcars` is one of tabelline's datasets (`tabelline/datasets`, which `gtdata` brings). `glimpse`
+is the book's, as `head` and `select` are: tabelline makes tables, not data, so the book writes
+them in a few lines of Nim. For real data steps, the clinical case study uses nanuq's data frames.
 """
 
 nbText: """
