@@ -51,6 +51,7 @@ None.
 
 - `rendering`: one stylesheet, `tabellaCss`; options as CSS variables; `withStyle`.
 - `nimib-integration`: `nbTable` writes `tabellaCss` once per page; `nb.tableHtml`.
+- `styling`: two examples read the variables a table sets instead of its CSS.
 
 ## Impact
 

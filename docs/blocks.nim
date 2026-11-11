@@ -560,7 +560,7 @@ newNbBlock(NbParts):
       &"""<div class="vista-dati">{blk.dati}</div><div class="vista-parti" hidden>{blk.parti}{legend}</div>"""
 
 proc addParts*(nb: var Nb, t: Tabella) =
-  nb.add newNbParts(dati = t.toHtml, parti = showParts(t).toHtml)
+  nb.add newNbParts(dati = nb.tableHtml(t), parti = nb.tableHtml(showParts(t)))
 
 template nbParts*(t: Tabella) =
   ## The table `t`, with a switch that shows its parts in their colours, and their legend.

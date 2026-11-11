@@ -1,5 +1,6 @@
-## Rendering to HTML: one `<div>` with a `<style>` scoped to its id and a `<table>`, as gt and
-## Great Tables do. The parts follow gt's layout: the heading and the column labels in `<thead>`,
+## Rendering to HTML: one `<div>` holding a `<table>`, styled by `tabellaCss`, one stylesheet for
+## every table, with the options the table changes as CSS variables on the `<div>`. (gt and Great
+## Tables write a `<style>` per table, scoped to its id.) The parts follow gt's layout: the heading and the column labels in `<thead>`,
 ## the row groups, stub and body in `<tbody>`, footnotes and source notes in `<tfoot>`.
 ## Class names start with `tb_` (gt uses `gt_`).
 
@@ -29,79 +30,86 @@ const nanoplotCss* = """
 [i] .tb_nanoplot_static .y-axis-line text { stroke: white; stroke-width: 0.20em; fill: #1A1C1F; }
 """
   ## The rules that show the values on hover (or always, without `interactiveDataValues`), with
-  ## `[i]` for the table's id: `tableCss` adds them to every table.
+  ## `[i]` for the table: they are part of `tabellaCss`.
 
-proc tableCss*(id: string, o: TabOptions): string =
-  ## The table's CSS, every rule scoped to `#id`.
-  let headingBg = if o.headingBackgroundColor.len > 0: o.headingBackgroundColor else: o.tableBackgroundColor
-  let labelsBg = if o.columnLabelsBackgroundColor.len > 0: o.columnLabelsBackgroundColor else: o.tableBackgroundColor
-  let groupBg = if o.rowGroupBackgroundColor.len > 0: o.rowGroupBackgroundColor else: o.tableBackgroundColor
-  let stubBg = if o.stubBackgroundColor.len > 0: o.stubBackgroundColor else: "transparent"
-  let summaryBg = if o.summaryRowBackgroundColor.len > 0: o.summaryRowBackgroundColor else: "transparent"
-  let grandBg = if o.grandSummaryRowBackgroundColor.len > 0: o.grandSummaryRowBackgroundColor else: "transparent"
-  let footBg = if o.footnotesBackgroundColor.len > 0: o.footnotesBackgroundColor else: o.tableBackgroundColor
-  let sourceBg = if o.sourceNotesBackgroundColor.len > 0: o.sourceNotesBackgroundColor else: o.tableBackgroundColor
-  let groupTop = if o.rowGroupBorderTopColor.len > 0: o.rowGroupBorderTopColor else: o.rowGroupBorderColor
-  let groupBottom = if o.rowGroupBorderBottomColor.len > 0: o.rowGroupBorderBottomColor else: o.rowGroupBorderColor
-  let stubBorder = if o.stubBorderColor.len > 0: o.stubBorderColor else: o.tableBodyHlinesColor
-  func onDark(bg: string): bool =
-    ## A background that white text reads better on (by contrast, not by one channel).
-    bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
-  let headingColor = if onDark(o.headingBackgroundColor): "#FFFFFF" else: o.tableFontColor
-  let labelsColor = if onDark(o.columnLabelsBackgroundColor): "#FFFFFF" else: o.tableFontColor
-  let i = "#" & id
-  let vlines = if o.tableBodyVlinesColor.len == 0: ""
-               else: i & " .tb_row, " & i & " .tb_col_headings th { border-left: " & o.tableBodyVlinesWidth & " " &
-                     o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor & "; border-right: " &
-                     o.tableBodyVlinesWidth & " " & o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor & "; }\n"
+const scope = ":where(.tabella):not(#_)"
+  ## Every rule of `tabellaCss` starts with it: it matches every table and weighs what an id
+  ## weighs (`:not(#_)` counts as an id, `:where` counts nothing), as `#id` did before 0.2, so a
+  ## page's theme wins or loses against a table's rule as it did then.
+
+func kebab(name: string): string =
+  ## `tableFontSize` is `table-font-size`.
+  for c in name:
+    if c.isUpperAscii: result.add '-'; result.add c.toLowerAscii
+    else: result.add c
+
+proc optionDefaults(): Table[string, string] =
+  for name, value in fieldPairs(TabOptions()):
+    when value is string: result[name] = value
+
+let defaults = optionDefaults()
+
+proc buildTabellaCss(): (string, seq[string]) =
+  ## The stylesheet of every table, and the options it reads.
+  var used: seq[string]
+  proc v(name: string, fallback = ""): string =
+    ## The value of an option: its variable, falling back to its default (or `fallback`, when
+    ## the default is "" and means "the same as another option").
+    if name notin used: used.add name
+    let d = defaults[name]
+    "var(--tb-" & kebab(name) & ", " & (if d.len > 0: d else: fallback) & ")"
+  proc w(name, fallback: string): string =
+    ## A value tabelline works out from the options (it has no option of its own).
+    "var(--tb-" & name & ", " & fallback & ")"
+  let i = scope
   var css = fmt("""
-[i] { overflow-x: [o.containerOverflowX]; overflow-y: [o.containerOverflowY]; width: [o.containerWidth];
-  height: [o.containerHeight]; padding: [o.containerPaddingY] [o.containerPaddingX]; }
+[i] { overflow-x: [v("containerOverflowX")]; overflow-y: [v("containerOverflowY")]; width: [v("containerWidth")];
+  height: [v("containerHeight")]; padding: [v("containerPaddingY")] [v("containerPaddingX")]; }
 [i] table, [i] thead, [i] tbody, [i] tfoot, [i] tr, [i] td, [i] th { border-style: none; }
 [i] .tb_table { display: table; border-collapse: collapse; line-height: normal;
-  margin-left: [o.tableMarginLeft]; margin-right: [o.tableMarginRight]; width: [o.tableWidth];
-  color: [o.tableFontColor]; font-family: [o.tableFontNames]; font-size: [o.tableFontSize];
-  background-color: [o.tableBackgroundColor]; table-layout: [o.tableLayout];
-  font-weight: [o.tableFontWeight]; font-style: [o.tableFontStyle];
-  border-top: [o.tableBorderTopWidth] [o.tableBorderTopStyle] [o.tableBorderTopColor];
-  border-bottom: [o.tableBorderBottomWidth] [o.tableBorderBottomStyle] [o.tableBorderBottomColor];
-  border-left: [o.tableBorderLeftWidth] [o.tableBorderLeftStyle] [o.tableBorderLeftColor];
-  border-right: [o.tableBorderRightWidth] [o.tableBorderRightStyle] [o.tableBorderRightColor]; }
-[i] .tb_caption { caption-side: top; padding: 4px 5px; color: [o.tableFontColor]; font-style: italic; }
-[i] .tb_heading { background-color: [headingBg]; text-align: [o.headingAlign]; color: [headingColor]; }
-[i] .tb_heading th { border-left: [o.headingBorderLrWidth] [o.headingBorderLrStyle] [o.headingBorderLrColor];
-  border-right: [o.headingBorderLrWidth] [o.headingBorderLrStyle] [o.headingBorderLrColor]; }
-[i] .tb_title { font-size: [o.headingTitleFontSize]; font-weight: [o.headingTitleFontWeight];
-  padding: [o.headingPadding] [o.headingPaddingHorizontal]; }
-[i] .tb_subtitle { font-size: [o.headingSubtitleFontSize]; font-weight: [o.headingSubtitleFontWeight]; padding: 0 [o.headingPaddingHorizontal] [o.headingPadding] [o.headingPaddingHorizontal]; }
-[i] .tb_heading_last { border-bottom: [o.headingBorderBottomWidth] [o.headingBorderBottomStyle] [o.headingBorderBottomColor]; }
-[i] .tb_col_headings th { background-color: [labelsBg]; color: [labelsColor];
-  font-size: [o.columnLabelsFontSize]; font-weight: [o.columnLabelsFontWeight];
-  text-transform: [o.columnLabelsTextTransform]; vertical-align: bottom;
-  padding: [o.columnLabelsPadding] [o.columnLabelsPaddingHorizontal]; overflow-x: hidden; }
-[i] .tb_col_headings_last th { border-bottom: [o.columnLabelsBorderBottomWidth] [o.columnLabelsBorderBottomStyle] [o.columnLabelsBorderBottomColor]; }
+  margin-left: [v("tableMarginLeft")]; margin-right: [v("tableMarginRight")]; width: [v("tableWidth")];
+  color: [v("tableFontColor")]; font-family: [v("tableFontNames")]; font-size: [v("tableFontSize")];
+  background-color: [v("tableBackgroundColor")]; table-layout: [v("tableLayout")];
+  font-weight: [v("tableFontWeight")]; font-style: [v("tableFontStyle")];
+  border-top: [v("tableBorderTopWidth")] [v("tableBorderTopStyle")] [v("tableBorderTopColor")];
+  border-bottom: [v("tableBorderBottomWidth")] [v("tableBorderBottomStyle")] [v("tableBorderBottomColor")];
+  border-left: [v("tableBorderLeftWidth")] [v("tableBorderLeftStyle")] [v("tableBorderLeftColor")];
+  border-right: [v("tableBorderRightWidth")] [v("tableBorderRightStyle")] [v("tableBorderRightColor")]; }
+[i] .tb_caption { caption-side: top; padding: 4px 5px; color: [v("tableFontColor")]; font-style: italic; }
+[i] .tb_heading { background-color: [v("headingBackgroundColor", v("tableBackgroundColor"))]; text-align: [v("headingAlign")]; color: [w("heading-color", v("tableFontColor"))]; }
+[i] .tb_heading th { border-left: [v("headingBorderLrWidth")] [v("headingBorderLrStyle")] [v("headingBorderLrColor")];
+  border-right: [v("headingBorderLrWidth")] [v("headingBorderLrStyle")] [v("headingBorderLrColor")]; }
+[i] .tb_title { font-size: [v("headingTitleFontSize")]; font-weight: [v("headingTitleFontWeight")];
+  padding: [v("headingPadding")] [v("headingPaddingHorizontal")]; }
+[i] .tb_subtitle { font-size: [v("headingSubtitleFontSize")]; font-weight: [v("headingSubtitleFontWeight")]; padding: 0 [v("headingPaddingHorizontal")] [v("headingPadding")] [v("headingPaddingHorizontal")]; }
+[i] .tb_heading_last { border-bottom: [v("headingBorderBottomWidth")] [v("headingBorderBottomStyle")] [v("headingBorderBottomColor")]; }
+[i] .tb_col_headings th { background-color: [v("columnLabelsBackgroundColor", v("tableBackgroundColor"))]; color: [w("column-labels-color", v("tableFontColor"))];
+  font-size: [v("columnLabelsFontSize")]; font-weight: [v("columnLabelsFontWeight")];
+  text-transform: [v("columnLabelsTextTransform")]; vertical-align: bottom;
+  padding: [v("columnLabelsPadding")] [v("columnLabelsPaddingHorizontal")]; overflow-x: hidden; }
+[i] .tb_col_headings_last th { border-bottom: [v("columnLabelsBorderBottomWidth")] [v("columnLabelsBorderBottomStyle")] [v("columnLabelsBorderBottomColor")]; }
 [i] .tb_heading + .tb_col_headings th, [i] thead > .tb_col_headings:first-child th {
-  border-top: [o.columnLabelsBorderTopWidth] [o.columnLabelsBorderTopStyle] [o.columnLabelsBorderTopColor]; }
-[i] .tb_col_headings th:first-child { border-left: [o.columnLabelsBorderLrWidth] [o.columnLabelsBorderLrStyle] [o.columnLabelsBorderLrColor]; }
-[i] .tb_col_headings th:last-child { border-right: [o.columnLabelsBorderLrWidth] [o.columnLabelsBorderLrStyle] [o.columnLabelsBorderLrColor]; }
-[i] .tb_col_headings th + th { border-left: [o.columnLabelsVlinesWidth] [o.columnLabelsVlinesStyle] [o.columnLabelsVlinesColor]; }
+  border-top: [v("columnLabelsBorderTopWidth")] [v("columnLabelsBorderTopStyle")] [v("columnLabelsBorderTopColor")]; }
+[i] .tb_col_headings th:first-child { border-left: [v("columnLabelsBorderLrWidth")] [v("columnLabelsBorderLrStyle")] [v("columnLabelsBorderLrColor")]; }
+[i] .tb_col_headings th:last-child { border-right: [v("columnLabelsBorderLrWidth")] [v("columnLabelsBorderLrStyle")] [v("columnLabelsBorderLrColor")]; }
+[i] .tb_col_headings th + th { border-left: [v("columnLabelsVlinesWidth")] [v("columnLabelsVlinesStyle")] [v("columnLabelsVlinesColor")]; }
 [i] .tb_spanner { display: inline-block; width: 100%; padding-bottom: 4px;
-  border-bottom: 2px solid [o.columnLabelsBorderBottomColor]; }
+  border-bottom: 2px solid [v("columnLabelsBorderBottomColor")]; }
 [i] .tb_spanner_empty { border-bottom: none; }
-[i] .tb_group_heading { background-color: [groupBg]; font-weight: [o.rowGroupFontWeight];
-  font-size: [o.rowGroupFontSize]; text-transform: [o.rowGroupTextTransform];
-  padding: [o.rowGroupPadding] [o.rowGroupPaddingHorizontal]; text-align: left;
-  border-top: [o.rowGroupBorderTopWidth] [o.rowGroupBorderTopStyle] [groupTop];
-  border-bottom: [o.rowGroupBorderBottomWidth] [o.rowGroupBorderBottomStyle] [groupBottom];
-  border-left: [o.rowGroupBorderLeftWidth] [o.rowGroupBorderLeftStyle] [o.rowGroupBorderLeftColor];
-  border-right: [o.rowGroupBorderRightWidth] [o.rowGroupBorderRightStyle] [o.rowGroupBorderRightColor]; }
-[i] .tb_row { padding: [o.dataRowPadding] [o.dataRowPaddingHorizontal]; margin: 10px;
-  border-top: [o.tableBodyHlinesWidth] [o.tableBodyHlinesStyle] [o.tableBodyHlinesColor]; vertical-align: middle; overflow-x: hidden; }
-[i] tbody { border-top: [o.tableBodyBorderTopWidth] [o.tableBodyBorderTopStyle] [o.tableBodyBorderTopColor];
-  border-bottom: [o.tableBodyBorderBottomWidth] [o.tableBodyBorderBottomStyle] [o.tableBodyBorderBottomColor]; }
-[i] .tb_stub { background-color: [stubBg]; font-weight: [o.stubFontWeight]; text-align: left;
-  font-size: [o.stubFontSize]; text-transform: [o.stubTextTransform];
-  border-right: [o.stubBorderWidth] [o.stubBorderStyle] [stubBorder]; }
+[i] .tb_group_heading { background-color: [v("rowGroupBackgroundColor", v("tableBackgroundColor"))]; font-weight: [v("rowGroupFontWeight")];
+  font-size: [v("rowGroupFontSize")]; text-transform: [v("rowGroupTextTransform")];
+  padding: [v("rowGroupPadding")] [v("rowGroupPaddingHorizontal")]; text-align: left;
+  border-top: [v("rowGroupBorderTopWidth")] [v("rowGroupBorderTopStyle")] [v("rowGroupBorderTopColor", v("rowGroupBorderColor"))];
+  border-bottom: [v("rowGroupBorderBottomWidth")] [v("rowGroupBorderBottomStyle")] [v("rowGroupBorderBottomColor", v("rowGroupBorderColor"))];
+  border-left: [v("rowGroupBorderLeftWidth")] [v("rowGroupBorderLeftStyle")] [v("rowGroupBorderLeftColor")];
+  border-right: [v("rowGroupBorderRightWidth")] [v("rowGroupBorderRightStyle")] [v("rowGroupBorderRightColor")]; }
+[i] .tb_row { padding: [v("dataRowPadding")] [v("dataRowPaddingHorizontal")]; margin: 10px;
+  border-top: [v("tableBodyHlinesWidth")] [v("tableBodyHlinesStyle")] [v("tableBodyHlinesColor")]; vertical-align: middle; overflow-x: hidden; }
+[i] tbody { border-top: [v("tableBodyBorderTopWidth")] [v("tableBodyBorderTopStyle")] [v("tableBodyBorderTopColor")];
+  border-bottom: [v("tableBodyBorderBottomWidth")] [v("tableBodyBorderBottomStyle")] [v("tableBodyBorderBottomColor")]; }
+[i] .tb_stub { background-color: [v("stubBackgroundColor", "transparent")]; font-weight: [v("stubFontWeight")]; text-align: left;
+  font-size: [v("stubFontSize")]; text-transform: [v("stubTextTransform")];
+  border-right: [v("stubBorderWidth")] [v("stubBorderStyle")] [v("stubBorderColor", v("tableBodyHlinesColor"))]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
 [i] .tb_indent_1 { text-indent: 1em; } [i] .tb_indent_2 { text-indent: 2em; } [i] .tb_indent_3 { text-indent: 3em; }
 [i] .tb_indent_4 { text-indent: 4em; } [i] .tb_indent_5 { text-indent: 5em; }
@@ -110,40 +118,72 @@ proc tableCss*(id: string, o: TabOptions): string =
   vertical-align: -0.4em; text-align: left; }
 [i] .tb_supsub sup, [i] .tb_supsub sub { font-size: inherit; vertical-align: baseline; line-height: inherit; }
 [i] .tb_frac { white-space: nowrap; } [i] .tb_frac sup, [i] .tb_frac sub { font-size: 70%; }
-[i] .tb_striped { background-color: [o.rowStripingBackgroundColor]; }
-[i] .tb_summary_row { background-color: [summaryBg]; text-transform: [o.summaryRowTextTransform];
-  padding: [o.summaryRowPadding] [o.summaryRowPaddingHorizontal]; vertical-align: middle; }
-[i] .tb_first_summary_row { border-top: [o.summaryRowBorderWidth] [o.summaryRowBorderStyle] [o.summaryRowBorderColor]; }
-[i] .tb_last_summary_row_top { border-bottom: [o.summaryRowBorderWidth] [o.summaryRowBorderStyle] [o.summaryRowBorderColor]; }
-[i] .tb_grand_summary_row { background-color: [grandBg]; text-transform: [o.grandSummaryRowTextTransform];
-  padding: [o.grandSummaryRowPadding] [o.grandSummaryRowPaddingHorizontal]; vertical-align: middle; }
-[i] .tb_first_grand_summary_row { border-top: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
-[i] .tb_last_grand_summary_row_top { border-bottom: [o.grandSummaryRowBorderWidth] [o.grandSummaryRowBorderStyle] [o.grandSummaryRowBorderColor]; }
+[i] .tb_striped { background-color: [v("rowStripingBackgroundColor")]; }
+[i] .tb_summary_row { background-color: [v("summaryRowBackgroundColor", "transparent")]; text-transform: [v("summaryRowTextTransform")];
+  padding: [v("summaryRowPadding")] [v("summaryRowPaddingHorizontal")]; vertical-align: middle; }
+[i] .tb_first_summary_row { border-top: [v("summaryRowBorderWidth")] [v("summaryRowBorderStyle")] [v("summaryRowBorderColor")]; }
+[i] .tb_last_summary_row_top { border-bottom: [v("summaryRowBorderWidth")] [v("summaryRowBorderStyle")] [v("summaryRowBorderColor")]; }
+[i] .tb_grand_summary_row { background-color: [v("grandSummaryRowBackgroundColor", "transparent")]; text-transform: [v("grandSummaryRowTextTransform")];
+  padding: [v("grandSummaryRowPadding")] [v("grandSummaryRowPaddingHorizontal")]; vertical-align: middle; }
+[i] .tb_first_grand_summary_row { border-top: [v("grandSummaryRowBorderWidth")] [v("grandSummaryRowBorderStyle")] [v("grandSummaryRowBorderColor")]; }
+[i] .tb_last_grand_summary_row_top { border-bottom: [v("grandSummaryRowBorderWidth")] [v("grandSummaryRowBorderStyle")] [v("grandSummaryRowBorderColor")]; }
 [i] .tb_left { text-align: left; } [i] .tb_center { text-align: center; } [i] .tb_right { text-align: right; font-variant-numeric: tabular-nums; }
-[i] .tb_footnotes { color: [o.tableFontColor]; background-color: [footBg]; }
-[i] .tb_sourcenotes { color: [o.tableFontColor]; background-color: [sourceBg]; }
-[i] .tb_footnote { font-size: [o.footnotesFontSize]; padding: [o.footnotesPadding] [o.footnotesPaddingHorizontal]; text-align: left;
-  border-left: [o.footnotesBorderLrWidth] [o.footnotesBorderLrStyle] [o.footnotesBorderLrColor];
-  border-right: [o.footnotesBorderLrWidth] [o.footnotesBorderLrStyle] [o.footnotesBorderLrColor]; }
-[i] .tb_footnotes:not(:has(+ .tb_footnotes)) .tb_footnote { border-bottom: [o.footnotesBorderBottomWidth] [o.footnotesBorderBottomStyle] [o.footnotesBorderBottomColor]; }
-[i] .tb_sourcenote { font-size: [o.sourceNotesFontSize]; padding: [o.sourceNotesPadding] [o.sourceNotesPaddingHorizontal]; text-align: left;
-  border-left: [o.sourceNotesBorderLrWidth] [o.sourceNotesBorderLrStyle] [o.sourceNotesBorderLrColor];
-  border-right: [o.sourceNotesBorderLrWidth] [o.sourceNotesBorderLrStyle] [o.sourceNotesBorderLrColor]; }
-[i] .tb_sourcenotes:last-child .tb_sourcenote { border-bottom: [o.sourceNotesBorderBottomWidth] [o.sourceNotesBorderBottomStyle] [o.sourceNotesBorderBottomColor]; }
+[i] .tb_footnotes { color: [v("tableFontColor")]; background-color: [v("footnotesBackgroundColor", v("tableBackgroundColor"))]; }
+[i] .tb_sourcenotes { color: [v("tableFontColor")]; background-color: [v("sourceNotesBackgroundColor", v("tableBackgroundColor"))]; }
+[i] .tb_footnote { font-size: [v("footnotesFontSize")]; padding: [v("footnotesPadding")] [v("footnotesPaddingHorizontal")]; text-align: left;
+  border-left: [v("footnotesBorderLrWidth")] [v("footnotesBorderLrStyle")] [v("footnotesBorderLrColor")];
+  border-right: [v("footnotesBorderLrWidth")] [v("footnotesBorderLrStyle")] [v("footnotesBorderLrColor")]; }
+[i] .tb_footnotes:not(:has(+ .tb_footnotes)) .tb_footnote { border-bottom: [v("footnotesBorderBottomWidth")] [v("footnotesBorderBottomStyle")] [v("footnotesBorderBottomColor")]; }
+[i] .tb_sourcenote { font-size: [v("sourceNotesFontSize")]; padding: [v("sourceNotesPadding")] [v("sourceNotesPaddingHorizontal")]; text-align: left;
+  border-left: [v("sourceNotesBorderLrWidth")] [v("sourceNotesBorderLrStyle")] [v("sourceNotesBorderLrColor")];
+  border-right: [v("sourceNotesBorderLrWidth")] [v("sourceNotesBorderLrStyle")] [v("sourceNotesBorderLrColor")]; }
+[i] .tb_sourcenotes:last-child .tb_sourcenote { border-bottom: [v("sourceNotesBorderBottomWidth")] [v("sourceNotesBorderBottomStyle")] [v("sourceNotesBorderBottomColor")]; }
 [i] tfoot tr:first-child td { padding-top: 8px; }
 [i] .tb_footnote_marks { font-size: 75%; vertical-align: 0.4em; font-weight: normal; font-style: normal; }
-""", '[', ']') & vlines
-  let extra = o.extraCss.strip
-  if extra.len > 0:
-    # scope each rule of extraCss to the table, unless it already names it
-    for rule in o.extraCss.split('}'):
-      let r = rule.strip
-      if r.len == 0: continue
-      let parts = r.split('{', 1)
-      if parts.len < 2: continue
-      let sels = parts[0].split(',').mapIt(it.strip).mapIt(if it.startsWith("#"): it else: i & " " & it)
-      css.add sels.join(", ") & " { " & parts[1].strip & " }\n"
-  css
+""", '[', ']')
+  css.add nanoplotCss.replace("[i]", i)
+  (css, used)
+
+let (tabellaCssValue, cssOptions) = buildTabellaCss()
+let tabellaCss* = tabellaCssValue
+  ## The CSS of every table, the same for all of them: each value is a CSS variable named after
+  ## its option (`--tb-table-font-size` for `tableFontSize`), falling back to the default. A
+  ## table sets the variables of the options it changes on its `<div>` (`toHtml`); a page can
+  ## set one for all its tables (`.tabella { --tb-table-font-size: 14px }`).
+
+let tabellaStyle* = "<style>\n" & tabellaCss & "</style>"
+  ## `tabellaCss` in a `<style>` element, as `toHtml` writes it.
+
+proc styleVars*(o: TabOptions): string =
+  ## The variables of the options `o` changes, for the `style` of the table's `<div>`.
+  var parts: seq[string]
+  for name, value in fieldPairs(o):
+    when value is string:
+      if name in cssOptions and value != defaults[name]:
+        parts.add "--tb-" & kebab(name) & ": " & value
+  func onDark(bg: string): bool =
+    ## A background that white text reads better on (by contrast, not by one channel).
+    bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
+  if onDark(o.headingBackgroundColor): parts.add "--tb-heading-color: #FFFFFF"
+  if onDark(o.columnLabelsBackgroundColor): parts.add "--tb-column-labels-color: #FFFFFF"
+  parts.join("; ").replace("\"", "'")
+
+proc ownCss(id: string, o: TabOptions): string =
+  ## The rules of one table only, scoped to its id: the vertical lines (a rule that must come
+  ## after the others, and only when there are lines) and `optCss` (scoped unless a rule already
+  ## names an id).
+  let i = "#" & id
+  if o.tableBodyVlinesColor.len > 0:
+    let line = o.tableBodyVlinesWidth & " " & o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor
+    result.add i & " .tb_row, " & i & " .tb_col_headings th { border-left: " & line & "; border-right: " & line & "; }\n"
+  if o.extraCss.strip.len == 0: return
+  for rule in o.extraCss.split('}'):
+    let r = rule.strip
+    if r.len == 0: continue
+    let parts = r.split('{', 1)
+    if parts.len < 2: continue
+    let sels = parts[0].split(',').mapIt(it.strip).mapIt(if it.startsWith("#"): it else: i & " " & it)
+    result.add sels.join(", ") & " { " & parts[1].strip & " }\n"
 
 proc bodyHtml(t: Tabella, b: Built): string =
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
@@ -227,8 +267,9 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
     if levels == 0 or c.hasAnySpanner: result.add labelCell(c, 1)
   result.add "</tr>\n"
 
-proc tableHtml(t: Tabella): string =
-  ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`).
+proc tableHtml(t: Tabella, withStyle: bool): string =
+  ## The table as an HTML fragment: a `<div>`, `tabellaCss` when `withStyle`, the table's own
+  ## rules if it has any, and the `<table>`.
   let b = t.build(rcHtml)
   let m = t.options
   let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
@@ -255,23 +296,28 @@ proc tableHtml(t: Tabella): string =
   # a stable id: the same table always gets the same id, so built pages do not churn
   let id = if t.id.len > 0: t.id
            else: "tabella-" & toHex(hash(caption & head & labels & body & foot & $t.options), 8).toLowerAscii
-  let nanoCss = if body.contains("tb_nanoplot"): nanoplotCss.replace("[i]", "#" & id) else: ""
   let aria = if t.title.isEmpty: "" else: &" aria-labelledby=\"{id}-title\""
   head = head.replace("class=\"tb_title", &"id=\"{id}-title\" class=\"tb_title")
-  &"""<div id="{id}" class="tabella">
-<style>
-{tableCss(id, t.options)}{nanoCss}</style>
-<table class="tb_table"{aria}>
+  let vars = styleVars(t.options)
+  let style = if vars.len > 0: &" style=\"{vars}\"" else: ""
+  var css = ""
+  if withStyle: css.add tabellaStyle & "\n"
+  let own = ownCss(id, t.options)
+  if own.len > 0: css.add "<style>\n" & own & "</style>\n"
+  &"""<div id="{id}" class="tabella"{style}>
+{css}<table class="tb_table"{aria}>
 {caption}<thead>
 {head}{labels}</thead>
 {body}{foot}</table>
 </div>"""
 
-proc toHtml*(t: Tabella, makePage = false): string =
-  ## The table as an HTML fragment (a `<div>` with its own scoped `<style>`), ready to put in a
-  ## page. With `makePage = true`, a whole standalone page holding it, titled after the table, as
-  ## Great Tables' `as_raw_html(make_page = True)`.
-  let html = t.tableHtml
+proc toHtml*(t: Tabella, makePage = false, withStyle = true): string =
+  ## The table as an HTML fragment (a `<div>` holding the `<table>`), ready to put in a page.
+  ## With `withStyle = true` the fragment starts with `tabellaCss` in a `<style>`, so it works
+  ## alone; with `false` it leaves it out, for a page that writes `tabellaCss` once for all its
+  ## tables (`nbTable` does). With `makePage = true`, a whole standalone page holding it, titled
+  ## after the table, as Great Tables' `as_raw_html(make_page = True)`.
+  let html = t.tableHtml(withStyle or makePage)
   if not makePage: return html
   let tt = if not t.title.isEmpty: textToPlain(t.title) else: "tabella"
   &"""<!doctype html>

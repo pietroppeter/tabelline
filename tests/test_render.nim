@@ -20,19 +20,33 @@ suite "building and rendering":
     check b.marks[colKey("moons")] == @[1]
     check b.marks[cellKey(0, "moons")] == @[2]
 
-  test "html has the parts, scoped css and a stable id":
+  test "html has the parts, the stylesheet and a stable id":
     let t = base.tabHeader("Planets", "subtitle").tabSpanner("Size", ["mass", "diameter"])
       .tabSourceNote("NASA").tabStyle(style.fill("#FFF3B0"), loc.body(cols = "moons", rows = [2]))
     let h = t.toHtml
     check h.startsWith("<div id=\"tabella-")
     check h == t.toHtml
-    let id = h[9 ..< h.find('"', 9)]
-    check ("#" & id & " .tb_table") in h
+    check tabellaStyle in h
     for part in ["tb_title", "tb_subtitle", "tb_spanner", "tb_stubhead", "tb_group_heading", "tb_stub", "tb_sourcenote"]:
       check part in h
     check "background-color: #FFF3B0" in h
     check h.count("<tr class=\"tb_group_heading_row\">") == 3
 
+  test "one stylesheet, options as variables":
+    check tabellaCss notin base.toHtml(withStyle = false)
+    check "<style>" notin base.toHtml(withStyle = false)
+    check base.toHtml(withStyle = false).splitLines[0] == "<div id=\"" & base.toHtml[9 ..< base.toHtml.find('"', 9)] & "\" class=\"tabella\">"
+    let small = tabella(planets(), id = "p").tabOptions(tableFontSize = "14px", headingTitleFontWeight = "bold")
+    check small.toHtml(withStyle = false).startsWith("<div id=\"p\" class=\"tabella\" style=\"--tb-table-font-size: 14px; --tb-heading-title-font-weight: bold\">")
+    check "var(--tb-table-font-size, 16px)" in tabellaCss
+    check "var(--tb-heading-background-color, var(--tb-table-background-color, #FFFFFF))" in tabellaCss
+    # every rule weighs what an id weighs
+    for line in tabellaCss.splitLines:
+      if "{" in line: check line.startsWith(":where(.tabella):not(#_)")
+  test "the table's own rules, scoped to its id":
+    let h = tabella(planets(), id = "p").tabOptions(tableBodyVlinesColor = "red").optCss(".tb_row { color: blue }").toHtml(withStyle = false)
+    check "#p .tb_row, #p .tb_col_headings th { border-left: 1px solid red" in h
+    check "#p .tb_row { color: blue }" in h
   test "an explicit id":
     check tabella(planets(), id = "my-table").toHtml.startsWith("<div id=\"my-table\"")
 

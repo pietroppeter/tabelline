@@ -21,7 +21,34 @@ nbText: """
 The [API reference](https://github.com/pietroppeter/tabelline/pull/65) being built has 156 tables, one for every proc, and weighs 1.9 MB.
 1.1 MB of it is CSS, the same rules 156 times. Pietro: "We should share CSS as much as possible,
 how to do that?" This post is the answer, from what a table is made of to how the change is
-built. It is planned in the OpenSpec change `share-table-styles` and not built yet.
+built. It is the OpenSpec change `share-table-styles`, built for 0.2.
+
+## CSS in five minutes
+
+All the CSS the rest of the post needs, from zero.
+
+**A rule** says how some elements look: a *selector* that picks them, and *declarations*
+(property and value) in braces.
+
+```css
+.tb_title { font-size: 125%; color: navy; }
+```
+
+**Selectors.** `td` picks every element named `td`; `.tb_title` every element with that class
+(`class="tb_title"`); `#planets` the one element with that id (`id="planets"`). A space means
+"inside": `#planets .tb_title` is a title inside the element with id `planets`.
+
+**Where rules live.** In a `style` element, anywhere in the page, they apply to the whole page,
+wherever they sit. In a `style` attribute (`style="color: navy"`) they apply to that one
+element.
+
+**Who wins.** When two rules set the same property on the same element, the heavier selector
+wins. Weight is counted as ids first, then classes, then element names: one id beats any number
+of classes. Only when the weights are equal does the later rule win.
+
+**Variables.** A property whose name starts with `--` is a variable: `--size: 14px`.
+`var(--size, 16px)` reads it, or uses `16px` when it is not set. A variable set on an element is
+seen by everything inside it, so setting one on a table's `div` reaches all its cells.
 
 ## What a table's HTML holds
 
@@ -33,7 +60,7 @@ and the `table` itself.
 <style>
 #tabella-8f3a .tb_table { font-size: 16px; border-top: 2px solid gray; ... }
 #tabella-8f3a .tb_title { font-size: 125%; ... }
-...                                      (about 90 rules, 6 KB)
+...                                      (about 90 rules, 7 KB)
 </style>
 <table class="tb_table"> ... the cells ... </table>
 </div>
@@ -54,20 +81,20 @@ Measured on the built site of 10 November (23 pages, the book not counted).
 block:
   type Size = object
     page: string
-    size, styles: float
+    size, styles, after: float
     tables, looks: int
   let rows = @[
-    Size(page: "Specs", size: 695, styles: 401, tables: 72, looks: 2),
-    Size(page: "Designing tabelline 0.1", size: 461, styles: 282, tables: 51, looks: 7),
-    Size(page: "Milano Cortina", size: 512, styles: 194, tables: 32, looks: 5),
-    Size(page: "Guide", size: 489, styles: 159, tables: 27, looks: 8),
-    Size(page: "Designing tabelline 0.2", size: 335, styles: 148, tables: 24, looks: 2),
-    Size(page: "Rethinking the datasets", size: 289, styles: 97, tables: 16, looks: 1)]
+    Size(page: "Specs", size: 695, styles: 401, tables: 72, looks: 2, after: 332),
+    Size(page: "Designing tabelline 0.1", size: 461, styles: 282, tables: 51, looks: 7, after: 194),
+    Size(page: "Milano Cortina", size: 512, styles: 194, tables: 32, looks: 5, after: 368),
+    Size(page: "Guide", size: 489, styles: 159, tables: 27, looks: 8, after: 361),
+    Size(page: "Designing tabelline 0.2", size: 335, styles: 148, tables: 24, looks: 2, after: 226),
+    Size(page: "Rethinking the datasets", size: 289, styles: 97, tables: 16, looks: 1, after: 223)]
   let t = tabella(rows, rownameCol = "page"):
-    tabHeader "Repeated CSS", "the six pages with the most table styles"
-    colsLabel {"size": "page (KB)", "styles": "table styles (KB)", "tables": "tables", "looks": "different looks"}
-    fmtNumber ["size", "styles"], decimals = 0
-    tabSourceNote "All 23 pages: 6.68 MB, of which 1.71 MB table styles."
+    tabHeader "Repeated CSS", "the six pages with the most table styles, and their size with one stylesheet"
+    colsLabel {"size": "page (KB)", "styles": "table styles (KB)", "tables": "tables", "looks": "different looks", "after": "after (KB)"}
+    fmtNumber ["size", "styles", "after"], decimals = 0
+    tabSourceNote "All 24 pages: 6.72 MB, of which 1.71 MB table styles; 5.51 MB after. The book's 19 pages: 5.90 MB, 5.11 MB after."
     optCssTheme()
   nbTable t
 
@@ -105,7 +132,9 @@ carries nothing.
 
 We chose the third. It is the simplest to explain (one stylesheet, options as variables), there is
 nothing to keep track of, and the 156 tables of the reference page cost one stylesheet and a few
-variables each. It also gives something new: a page can set an option for all its tables at once,
+variables each. The stylesheet is 13 KB, twice a table's old style, because every value carries
+its `var(...)`; a page pays it once. The last column of the table above is what the pages weigh
+with it. It also gives something new: a page can set an option for all its tables at once,
 `.tabella { --tb-table-font-size: 14px }`.
 """
 
@@ -162,8 +191,9 @@ block:
   nbTable t
 
 nbText: """
-The screenshots of every page of the site and the book, before and after, still check it: a
-difference is a bug in the stylesheet.
+To check it, the computed style of every element of every table of the site and the book (48,597
+elements, 39 properties each: colours, fonts, borders, paddings, sizes) was read in Chromium
+before and after the change: the same, all of them.
 
 ## How it is built
 
@@ -178,7 +208,8 @@ From the change `share-table-styles`, in the order it will be written.
    variable on the `div`. What Nim works out today (white text on a dark heading) it still works
    out, and writes as a variable.
 3. `toHtml(t, withStyle = true)`: with the stylesheet in front, as today; `false` without.
-4. `optCss`, a table's own extra rules, stays in a `style` of that table, scoped to its id.
+4. The rules of one table only stay in a `style` of that table, scoped to its id: `optCss`, and
+   the vertical lines between columns (a rule that must come after the others).
 5. `nbTable` keeps a flag in the page's context: the first table writes `tabellaCss`, the others
    do not. `nb.tableHtml(t)` does the same for blocks that put a table inside their own HTML.
 """

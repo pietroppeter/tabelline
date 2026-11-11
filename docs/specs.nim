@@ -7,6 +7,7 @@ import std/[os, strutils, json, algorithm, strformat, sequtils]
 import nimib
 import blocks
 import ../tools/specexamples
+from tabelline import tabellaStyle
 
 let docs = currentSourcePath().parentDir
 nbInit
@@ -185,7 +186,8 @@ not run JavaScript gets the whole page, so to read one spec, read its markdown:
 # The specs and changes are rendered from OpenSpec's markdown by this page's own procs above: a
 # one-off renderer, so they go in as HTML. Their CSS is in theme.nim, the filter in blocks.nim.
 nbText "## Specs"
-var specsHtml = """<div class="filterbar nota info" id="filterbar" hidden></div>"""
+# the examples' tables come without the stylesheet of every table: it is written once, here
+var specsHtml = tabellaStyle & """<div class="filterbar nota info" id="filterbar" hidden></div>"""
 for s in specs: specsHtml.add specHtml(s)
 nbRawHtml: specsHtml
 

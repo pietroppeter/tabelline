@@ -78,7 +78,7 @@ white.
 let t = tabella(planets()).tabOptions(rowStriping = true, headingAlign = "left")
 echo t.options.rowStriping, " ", t.options.headingAlign, " ", t.options.tableFontSize
 let s = tabella(planets()).tabHeader("Planets").optStylize(2, "red")
-echo "background-color: #8A1C1C; text-align: center; color: #FFFFFF" in s.toHtml
+echo "--tb-heading-background-color: #8A1C1C" in s.toHtml and "--tb-heading-color: #FFFFFF" in s.toHtml
 let o = tabella(planets()).optCssTheme().options
 echo o.tableFontColor
 echo o.tableBodyHlinesColor
@@ -93,6 +93,10 @@ var(--ink, #1C1C1C)
 var(--line, color-mix(in oklab, var(--ink, #1C1C1C) 14%, var(--paper, #FFFFFF)))
 var(--foreground, #1C1C1C) #D64545
 ```
+
+#### Scenario: A preset on a table
+- **WHEN** a preset such as `optStylize(2, "red")` is applied
+- **THEN** the table sets the options it changes as variables on its `<div>`, and white text on the dark heading
 
 ### Requirement: Any CSS
 `style.css(declarations)` SHALL make a style from any CSS declarations (`"letter-spacing: 0.1em;
@@ -206,10 +210,15 @@ top and bottom), the stub (with its size and text transform), the footnotes and 
 let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
   colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
   tabOptions(rowGroupBorderTopStyle = "dashed", stubBorderWidth = "1px", tableBodyHlinesStyle = "dotted")
-let css = t.toHtml
-echo "2px dashed" in css, " ", "1px solid #D3D3D3" in css, " ", "1px dotted" in css
+echo styleVars(t.options).split("; ").join("\n")
 ```
 
 ```text
-true true true
+--tb-row-group-border-top-style: dashed
+--tb-table-body-hlines-style: dotted
+--tb-stub-border-width: 1px
 ```
+
+#### Scenario: Defaults draw the table as before
+- **WHEN** a table leaves an option at its default
+- **THEN** the table sets no variable for it, and the stylesheet's fallback draws it as before

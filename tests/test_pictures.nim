@@ -116,8 +116,9 @@ suite "nanoplots":
       trend: ["1 2", "10 20"]
     let a = tabella(d).fmtNanoplot("trend", autoscale = true).toHtml
     check a.count(">20</text>") >= 2
-  test "no nanoplot CSS without nanoplots":
-    check ".tb_nanoplot" notin tabella(planets()).toHtml
+  test "the nanoplot rules are in the stylesheet, not in each table":
+    check ".tb_nanoplot" in tabellaCss
+    check ".tb_nanoplot" notin tabella(planets()).toHtml(withStyle = false)
   test "colsNanoplot: a plot of several columns":
     let d = tableData:
       name: ["a", "b"]
