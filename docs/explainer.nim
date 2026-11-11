@@ -336,8 +336,9 @@ proc tabHeader*(t: sink Tabella, title: Text, subtitle: Text = toText("")): Tabe
   result.subtitle = subtitle
 ```
 
-So `tabella(data).tabHeader("Title").fmtNumber("x")` reads like gt's pipe and Great Tables'
-method chain, and a table is never changed behind your back.
+So the verbs chain, `tabella(data).tabHeader("Title").fmtNumber("x")`, like gt's pipe and
+Great Tables' methods, and a table is never changed behind your back. These pages write the
+same table as `tabella(data): body`, one verb per line, which the macro turns into that chain.
 """
 
 nbNote("""
@@ -414,7 +415,8 @@ and none of that needs nimib. Here is a small one, as text and as Markdown:
 """
 
 nbCode:
-  let small3 = tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Up to 3 × 3")
+  let small3 = tabella(tavolaPitagorica(3), rownameCol = "×"):
+    tabHeader "Up to 3 × 3"
   echo small3              # text, as `$` gives
   echo small3.toMarkdown   # Markdown
 
@@ -425,7 +427,8 @@ For HTML, `small3.toHtml` gives the table as a string to put in a page of your o
 
 ```nim
 import tabelline
-let small3 = tabella(tavolaPitagorica(3), rownameCol = "×").tabHeader("Up to 3 × 3")
+let small3 = tabella(tavolaPitagorica(3), rownameCol = "×"):
+  tabHeader "Up to 3 × 3"
 small3.save("tavola.html")
 ```
 
@@ -443,7 +446,8 @@ to an HTML page and to a Markdown README:
 import nimib, tabelline, tabelline/nimib
 nbInit                         # or nbInitMd, for a README.md
 nbCode:
-  let t = tabella(planets()).tabHeader("The planets")
+  let t = tabella(planets()):
+    tabHeader "The planets"
 nbTable t
 nbSave
 ```
@@ -462,33 +466,47 @@ they are a dataframe:
 nbCode:
   let p = planets()
   echo p.names
-  echo tabella(p).colsHide(["density", "gravity", "day_length", "orbital_period", "rings"])
+  let first = tabella(p):
+    colsHide ["density", "gravity", "day_length", "orbital_period", "rings"]
+  echo first
 
 nbText: """
-`echo` draws a text table. From here on, `nbTable t` shows the HTML after each step. Step 1: name the planets as the stub, group them by type, and give the table a header.
+`echo` draws a text table. `tabella(p): body` makes a table of `p` and applies the verbs of
+`body`, one per line. From here on, `nbTable t` shows the HTML after each step. Step 1: name the
+planets as the stub, group them by type, and give the table a header.
 """
 
 nbCode:
-  var t = tabella(p, rownameCol = "planet", groupnameCol = "type")
-    .tabHeader(md("The **planets** of the Solar System"), "from the smallest orbit to the largest")
-    .tabStubhead("planet")
-    .colsHide(["density", "gravity", "day_length", "rings"])
+  var t = tabella(p, rownameCol = "planet", groupnameCol = "type"):
+    tabHeader md("The **planets** of the Solar System"), "from the smallest orbit to the largest"
+    tabStubhead "planet"
+    colsHide ["density", "gravity", "day_length", "rings"]
 nbTable t
 
-nbText: "Step 2: labels with units, and spanners to say what goes together."
+nbText: """
+Step 2: labels with units, and spanners to say what goes together. `tabella(t): body` adds
+verbs to a table already made. A verb that takes pairs, as `colsLabel`, takes them as a block,
+one per line:
+"""
 nbCode:
-  t = t.colsLabel({"mass": md("mass<br>10^24^ kg"), "diameter": md("diameter<br>km"),
-                   "distance": md("from the Sun<br>10^6^ km"), "orbital_period": md("year<br>days"),
-                   "mean_temp": md("mean<br>°C"), "moons": md("moons")})
-    .tabSpanner("Size", ["mass", "diameter"])
-    .tabSpanner("Orbit", ["distance", "orbital_period"])
+  t = tabella(t):
+    colsLabel:
+      mass: md("mass<br>10^24^ kg")
+      diameter: md("diameter<br>km")
+      distance: md("from the Sun<br>10^6^ km")
+      orbital_period: md("year<br>days")
+      mean_temp: md("mean<br>°C")
+      moons: md("moons")
+    tabSpanner "Size", ["mass", "diameter"]
+    tabSpanner "Orbit", ["distance", "orbital_period"]
 nbTable t
 
 nbText: "Step 3: format the numbers, so that they line up and say only what matters."
 nbCode:
-  t = t.fmtNumber("mass", decimals = 3, dropTrailingZeros = true)
-    .fmtInteger(["diameter", "distance", "orbital_period"])
-    .fmtNumber("mean_temp", decimals = 0, forceSign = true)
+  t = tabella(t):
+    fmtNumber "mass", decimals = 3, dropTrailingZeros = true
+    fmtInteger ["diameter", "distance", "orbital_period"]
+    fmtNumber "mean_temp", decimals = 0, forceSign = true
 nbTable t
 
 nbText: """
@@ -496,12 +514,14 @@ Step 4: colour by value, style a row, and add the notes. The footnote marks are 
 reading order, wherever they were added.
 """
 nbCode:
-  t = t.dataColor("mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0))
-    .tabStyle(style.fill("var(--warning-soft)") & style.text(weight = "bold"), loc.stub(rows = where(it["planet"] == "Earth")))
-    .tabFootnote("Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons"))
-    .tabFootnote("Venus is hotter than Mercury: its thick atmosphere traps the heat.",
-                 loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus")))
-    .tabSourceNote(md("Source: NASA, [Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/)."))
+  t = tabella(t):
+    dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
+    tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"),
+             loc.stub(rows = where(it["planet"] == "Earth"))
+    tabFootnote "Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons")
+    tabFootnote "Venus is hotter than Mercury: its thick atmosphere traps the heat.",
+                loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus"))
+    tabSourceNote md("Source: NASA, [Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/).")
 nbTable t
 
 nbText: """
@@ -510,9 +530,16 @@ Step 5: add it up. `summaryRows` adds rows under each group, one for each aggreg
 formatted like its column, so the masses keep their three decimals:
 """
 nbCode:
-  t = t.summaryRows(fns = {"total": agg.sum}, columns = ["mass", "moons"], missingText = "")
-    .grandSummaryRows(fns = {"in all": agg.sum, "largest": agg.max},
-                      columns = ["mass", "diameter", "moons"], missingText = "")
+  t = tabella(t):
+    summaryRows:
+      total: agg.sum
+      columns = ["mass", "moons"]
+      missingText = ""
+    grandSummaryRows:
+      "in all": agg.sum
+      largest: agg.max
+      columns = ["mass", "diameter", "moons"]
+      missingText = ""
 nbTable t
 
 nbText: """
@@ -522,11 +549,15 @@ explains it). Next to it, `optStylize`:
 """
 nbCode:
   nbTable t.optCssTheme()
-  nbTable t.optStylize(style = 2, color = "gray").tabOptions(headingAlign = "left", tableFontSize = "14px")
+  let stylized = tabella(t):
+    optStylize style = 2, color = "gray"
+    tabOptions:
+      headingAlign = "left"
+      tableFontSize = "14px"
+  nbTable stylized
 
 nbText: """
-The same steps can be written as a recipe, one verb per line, with the `tabella(data): body`
-macro. This is the table above, in one go:
+The six steps, in one `tabella(data): body`, are a recipe of the whole table (shortened here):
 
 ```nim
 let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
@@ -600,13 +631,15 @@ nbCode:
     density: [997.0, 789.0, 2160.0]
     cups: [1.0, 0.75, 0.125]
     origin: ["IT", "FR", "DE"]
-  nbTable tabella(lab, rownameCol = "substance")
-    .fmtChem("formula")
-    .fmtInteger("density")
-    .colsLabel({"density": "density, {{kg m^-3}}"})
-    .fmtFraction("cups")
-    .fmtCountry("origin")
-    .optCssTheme()
+  let labTable = tabella(lab, rownameCol = "substance"):
+    fmtChem "formula"
+    fmtInteger "density"
+    colsLabel:
+      density: "density, {{kg m^-3}}"
+    fmtFraction "cups"
+    fmtCountry "origin"
+    optCssTheme()
+  nbTable labTable
 
 nbText: """
 ## Rows and columns of your own
@@ -763,10 +796,11 @@ nbCode:
   let classe = @[Pupil(name: "Ada", tabellina: 7, stars: 3, passed: true),
                  Pupil(name: "Bruno", tabellina: 8, stars: 1, passed: false),
                  Pupil(name: "Carla", tabellina: 9, stars: 2, passed: true)]
-  echo tabella(classe)
-    .tabHeader("Who knows which tabellina")
-    .fmt("stars", (v: Value) => "★".repeat(v.i))
-    .fmtTf("passed", trueText = "bravo!", falseText = "ripassa")
+  let pupils = tabella(classe):
+    tabHeader "Who knows which tabellina"
+    fmt "stars", (v: Value) => "★".repeat(v.i)
+    fmtTf "passed", trueText = "bravo!", falseText = "ripassa"
+  echo pupils
 
 nbText: """
 `fmt` takes any proc from a `Value` to a string: here `sugar`'s `=>` makes stars.
@@ -780,7 +814,9 @@ nbCode:
   let d = tableData:
     materia: ["matematica", "italiano", "scienze", "storia"]
     voto: [9, 8, nil, 7]
-  echo tabella(d).subMissing(missingText = "assente")
+  let voti = tabella(d):
+    subMissing missingText = "assente"
+  echo voti
 
 nbText: """
 ### Loops inside a recipe
@@ -903,7 +939,12 @@ A preset only fills options, so any option set after it still wins, for what the
 name, such as the width of the rules:
 """
 nbCode:
-  nbTable small.optCssTheme().tabOptions(tableBorderTopWidth = "1px", tableBorderBottomWidth = "1px")
+  let ruled = tabella(small):
+    optCssTheme()
+    tabOptions:
+      tableBorderTopWidth = "1px"
+      tableBorderBottomWidth = "1px"
+  nbTable ruled
 
 nbText: """
 ### On your own page
@@ -921,7 +962,9 @@ keep, for every table of a site, is a `CssTheme`, made by `cssTheme` with the sa
 ```nim
 let site = cssTheme(ink = "--foreground", paper = "--background",
                     line = "--border", shade = "--muted")
-nbTable tabella(planets()).optCssTheme(site)
+let t = tabella(planets()):
+  optCssTheme site
+nbTable t
 ```
 
 ### How it is built

@@ -14,8 +14,8 @@ stub, `groupnameCol` SHALL group the rows by a column in order of first appearan
 SHALL take a `Tabella` and return a new one, leaving the data untouched.
 
 ```nim
-let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
 echo t
 ```
 
@@ -52,8 +52,11 @@ and subtitle, the stub's label, and add a source note. Labels and notes SHALL be
 Markdown with `md(...)`, or HTML with `html(...)`.
 
 ```nim
-echo tabella(tavolaPitagorica(3), rownameCol = "×")
-  .tabHeader("Times table", "from 1 to 3").tabStubhead("×").tabSourceNote(md("Learned **by heart**"))
+let t = tabella(tavolaPitagorica(3), rownameCol = "×"):
+  tabHeader "Times table", "from 1 to 3"
+  tabStubhead "×"
+  tabSourceNote md("Learned **by heart**")
+echo t
 ```
 
 ```text
@@ -76,11 +79,13 @@ SHALL put a label over columns; spanners of a higher level sit above lower ones,
 of one level SHALL NOT overlap.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(["type", "density", "gravity", "day_length", "mean_temp", "rings", "moons"])
-  .colsLabel({"orbital_period": "year"})
-  .tabSpanner("Size", ["mass", "diameter"])
-  .tabSpanner("Orbit", ["distance", "orbital_period"])
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "density", "gravity", "day_length", "mean_temp", "rings", "moons"]
+  colsLabel:
+    orbital_period: "year"
+  tabSpanner "Size", ["mass", "diameter"]
+  tabSpanner "Orbit", ["distance", "orbital_period"]
+echo t
 ```
 
 ```text
@@ -108,9 +113,10 @@ Rows SHALL be grouped by `groupnameCol` or by `tabRowGroup(label, rows)`. Groups
 the order they are made, after the rows that are in no group.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(["type", "mass", "diameter", "density", "gravity", "day_length", "orbital_period", "mean_temp", "rings"])
-  .tabRowGroup("Giants", where(it["type"] != "Terrestrial"))
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "orbital_period", "mean_temp", "rings"]
+  tabRowGroup "Giants", where(it["type"] != "Terrestrial")
+echo t
 ```
 
 ```text
@@ -139,10 +145,11 @@ several places SHALL get one mark. `footnotesMarks` SHALL choose numbers, letter
 the symbols \*, †, ‡, §.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "rings"])
-  .tabFootnote("Hotter than Mercury.", loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus")))
-  .tabFootnote("As of 2024.", loc.columnLabels("moons"))
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "rings"]
+  tabFootnote "Hotter than Mercury.", loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus"))
+  tabFootnote "As of 2024.", loc.columnLabels("moons")
+echo t
 ```
 
 ```text
@@ -177,7 +184,9 @@ let d = tableData:
   orbit.period.days: [365.2, 687.0]
   orbit.period.years: [1.0, 1.88]
   orbit.distance: [149.6, 228.0]
-echo tabella(d, rownameCol = "planet").tabSpannerDelim()
+let t = tabella(d, rownameCol = "planet"):
+  tabSpannerDelim()
+echo t
 ```
 
 ```text
@@ -201,7 +210,8 @@ screen readers, and for figures in documents), a first line in text, an italic l
 `rmCaption()` SHALL take it away.
 
 ```nim
-let t = tabella(tavolaPitagorica(2)).tabCaption("Table 1: the times table of 2")
+let t = tabella(tavolaPitagorica(2)):
+  tabCaption "Table 1: the times table of 2"
 echo "<caption class=\"tb_caption\">Table 1: the times table of 2</caption>" in t.toHtml
 echo t
 ```
@@ -224,9 +234,14 @@ what they do not need. With no arguments, `rmSpanners`, `rmFootnotes` and `rmSou
 remove all of them; indices SHALL count from 0 in the order the parts were added.
 
 ```nim
-let base = tabella(tavolaPitagorica(2), rownameCol = "×").tabHeader("Times", "of two")
-  .tabSourceNote("One.").tabSourceNote("Two.")
-echo base.rmHeader().rmSourceNotes([0])
+let base = tabella(tavolaPitagorica(2), rownameCol = "×"):
+  tabHeader "Times", "of two"
+  tabSourceNote "One."
+  tabSourceNote "Two."
+let less = tabella(base):
+  rmHeader()
+  rmSourceNotes [0]
+echo less
 ```
 
 ```text
@@ -244,7 +259,9 @@ Two.
 labels.
 
 ```nim
-echo tabella(tavolaPitagorica(2), rownameCol = "×").colsLabelWith(proc (s: string): string = "×" & s)
+let t = tabella(tavolaPitagorica(2), rownameCol = "×"):
+  colsLabelWith proc (s: string): string = "×" & s
+echo t
 ```
 
 ```text
@@ -267,7 +284,10 @@ let d = tableData:
   b: [2]
   c: [3]
   d: [4]
-echo tabella(d).colsMoveToEnd("a").colsReorder(["d", "b"])
+let t = tabella(d):
+  colsMoveToEnd "a"
+  colsReorder ["d", "b"]
+echo t
 ```
 
 ```text
@@ -284,10 +304,11 @@ break ties), within their groups, with missing values last; `rowGroupOrder(group
 row groups in the given order, the others after them as they were.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .rowOrder("moons", reverse = true)
-  .rowGroupOrder(["Ice giant", "Gas giant"])
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  rowOrder "moons", reverse = true
+  rowGroupOrder ["Ice giant", "Gas giant"]
+echo t
 ```
 
 ```text
@@ -319,8 +340,8 @@ Labels and notes SHALL be plain text (escaped in HTML), `md(text)` (inline Markd
 stays as it is) or `html(text)` (used as is in HTML, its tags stripped in text and Markdown).
 
 ```nim
-let t = tabella(tavolaPitagorica(2))
-  .tabHeader(md("The **times** table"), html("of <span style=\"color: red\">two</span>"))
+let t = tabella(tavolaPitagorica(2)):
+  tabHeader md("The **times** table"), html("of <span style=\"color: red\">two</span>")
 echo "<strong>times</strong>" in t.toHtml, " ", "<span style=\"color: red\">two</span>" in t.toHtml
 echo t
 ```
@@ -347,9 +368,11 @@ after the group's label, before its rows. A table with summary rows and no row n
 a stub, for the labels. `summaryRows` SHALL raise a `ValueError` on a table without row groups.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .summaryRows(fns = {"total": agg.sum})
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  summaryRows:
+    total: agg.sum
+echo t
 ```
 
 ```text
@@ -399,10 +422,13 @@ table, whatever its group, at the bottom (or at the top with `side = sTop`), set
 body by a double rule.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .summaryRows(fns = {"total": agg.sum})
-  .grandSummaryRows(fns = {"all moons": agg.sum})
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  summaryRows:
+    total: agg.sum
+  grandSummaryRows:
+    "all moons": agg.sum
+echo t
 ```
 
 ```text
@@ -446,11 +472,17 @@ format the rows of one call instead, from a proc of a float, of a value, or a `F
 
 ```nim
 let middle = aggregate(proc (vs: seq[Value]): Value = vs[vs.len div 2])
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(["type", "mass", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .fmtInteger("diameter")
-  .grandSummaryRows(fns = {"planets": agg.count, "largest": agg.max, "middle one": middle})
-  .grandSummaryRows(fns = {"mean": agg.mean}, fmt = (x: float) => formatNumber(x, decimals = 1))
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "mass", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  fmtInteger "diameter"
+  grandSummaryRows:
+    planets: agg.count
+    largest: agg.max
+    "middle one": middle
+  grandSummaryRows:
+    mean: agg.mean
+    fmt = (x: float) => formatNumber(x, decimals = 1)
+echo t
 ```
 
 ```text
@@ -483,12 +515,15 @@ rule (a group's) or a double rule (the table's); in Markdown with the label in i
 group's) or in bold (the table's).
 
 ```nim
-let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .summaryRows(fns = {"total": agg.sum}, groups = ["Ice giant"])
-  .grandSummaryRows(fns = {"all moons": agg.sum})
-  .tabOptions(grandSummaryRowBackgroundColor = "#FFF3B0")
-  .tabStyle(style.text(weight = "bold"), loc.grandSummary())
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  summaryRows:
+    total: agg.sum
+    groups = ["Ice giant"]
+  grandSummaryRows:
+    "all moons": agg.sum
+  tabOptions grandSummaryRowBackgroundColor = "#FFF3B0"
+  tabStyle style.text(weight = "bold"), loc.grandSummary()
 echo t.toMarkdown
 echo "background-color: #FFF3B0" in t.toHtml
 ```
@@ -528,9 +563,10 @@ let d = tableData:
   ended: [nil, 2003, 2017]
   target: ["Jupiter, Saturn", "Jupiter", "Saturn"]
   moon: [nil, "Io", "Titan"]
-echo tabella(d, rownameCol = "mission")
-  .colsMergeRange("launch", "ended")
-  .colsMerge(["target", "moon"], pattern = "{1}<< and {2}>>")
+let t = tabella(d, rownameCol = "mission"):
+  colsMergeRange "launch", "ended"
+  colsMerge ["target", "moon"], pattern = "{1}<< and {2}>>"
+echo t
 ```
 
 ```text
@@ -549,10 +585,11 @@ one, from `Value`s, from Nim values, or from a proc of each row. The data of the
 added to SHALL stay as it was.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(everything())
-  .colsAdd("moons per Earth mass", proc (r: Row): Value = toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97))
-  .fmtNumber("moons per Earth mass", decimals = 1)
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide everything()
+  colsAdd "moons per Earth mass", proc (r: Row): Value = toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97)
+  fmtNumber "moons per Earth mass", decimals = 1
+echo t
 ```
 
 ```text
@@ -582,9 +619,12 @@ let medals = tableData:
   gold: [16, 12, 7]
   silver: [8, 10, 8]
   bronze: [13, 5, 9]
-echo tabella(medals, rownameCol = "country")
-  .summaryColumns(fns = {"total": agg.sum})
-  .grandSummaryRows(fns = {"all": agg.sum})
+let t = tabella(medals, rownameCol = "country"):
+  summaryColumns:
+    total: agg.sum
+  grandSummaryRows:
+    all: agg.sum
+echo t
 ```
 
 ```text
@@ -606,10 +646,11 @@ of the group column SHALL put a row in its group, made when new. `rowsHide(rows)
 which summary rows then leave out, and `rowsUnhide(rows)` SHALL show them again.
 
 ```nim
-echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
-  .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
-  .rowsHide(where(it["type"] != "Ice giant"))
-  .rowsAdd([(planet: "Pluto", `type`: "Dwarf planet", moons: 5)])
+let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"]
+  rowsHide where(it["type"] != "Ice giant")
+  rowsAdd [(planet: "Pluto", `type`: "Dwarf planet", moons: 5)]
+echo t
 ```
 
 ```text
@@ -635,9 +676,10 @@ as a number or as `"increase"` or `"decrease"` (one level more or less than now)
 let budget = tableData:
   item: ["Hardware", "Laptops", "Screens", "Travel"]
   eur: [5200, 4000, 1200, 900]
-echo tabella(budget, rownameCol = "item")
-  .tabStubIndent([1, 2], "increase")
-  .fmtInteger("eur")
+let t = tabella(budget, rownameCol = "item"):
+  tabStubIndent [1, 2], "increase"
+  fmtInteger "eur"
+echo t
 ```
 
 ```text
@@ -659,7 +701,10 @@ punctuation space for a number with no mark, and SHALL align the columns right.
 ```nim
 let d = tableData:
   x: [1.5, 10.25, 3.0, 120.125]
-echo tabella(d).fmtNumber("x", decimals = 3, dropTrailingZeros = true).colsAlignDecimal("x").toMarkdown
+let t = tabella(d):
+  fmtNumber "x", decimals = 3, dropTrailingZeros = true
+  colsAlignDecimal "x"
+echo t.toMarkdown
 ```
 
 ```text
