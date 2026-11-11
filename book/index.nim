@@ -55,11 +55,13 @@ nbText: """
 - **Great Tables: Get Started**: the first section of the
   [Great Tables user guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html), page by
   page, from the parts of a table to formats, nanoplots, styles, themes and selections.
+- **Great Tables: the blog**: the posts of the Great Tables blog that show what a release
+  brought: the introduction, data colouring, column widths, options and images, nanoplots.
 - **What the book will port**: every source planned, page by page, with what each page needs
   and the release of tabelline that can port it.
 - **Find an example by feature**: for every feature of tabelline, the pages of the sources that
   show it, the help pages of gt and Great Tables first.
-- **What the port found**: everything tabelline still lacks to do what the guide does, in one
+- **What the port found**: everything tabelline still lacks to do what the guide and the posts do, in one
   list, for the next releases, and what 0.2 closed. What 0.1 gained from it is told in the devlog,
   [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/).
 

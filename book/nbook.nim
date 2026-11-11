@@ -20,6 +20,11 @@ var book = initBookWithToc:
     entry("Column Selection", "column_selection")
     entry("Row Selection", "row_selection")
     entry("Location selection", "loc_selection")
+  section("Great Tables: the blog", "blog/index.md"):
+    entry("Introducing Great Tables", "introducing")
+    entry("v0.2.0: Easy Data Coloring", "v0_2")
+    entry("v0.3.0: So Many Style Options!", "v0_3")
+    entry("v0.4.0: Nanoplots and More", "v0_4")
   entry("What the book will port", "next", numbered = false)
   section("The Table Contest", "contest.nim"):
     entry("Guide to table making, with table.glue", "contest/table_glue")
