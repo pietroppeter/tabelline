@@ -343,14 +343,19 @@ func isEmpty*(t: Text): bool = t.s.len == 0
 
 type
   ColSelKind* = enum
-    csNames, csAll, csStartsWith, csEndsWith, csContains, csNumeric, csTextual
+    csNames, csAll, csStartsWith, csEndsWith, csContains, csNumeric, csTextual, csPositions,
+    csUnion, csMinus
   ColSel* = object
     ## Which columns a verb applies to. A string or an array of strings converts to one, and
     ## `everything()`, `startsWith(...)`, `endsWith(...)`, `containing(...)`, `numeric()`,
-    ## `textual()` select by rule. Resolved against the data when the verb is called.
+    ## `textual()`, `positions(...)` select by rule; `a + b` is the columns of either (in the
+    ## order of the data), `a - b` those of `a` that are not in `b`. Resolved against the data
+    ## when the verb is called.
     case kind*: ColSelKind
     of csNames: names*: seq[string]
-    of csStartsWith, csEndsWith, csContains: part*: string
+    of csStartsWith, csEndsWith, csContains: parts*: seq[string]
+    of csPositions: positions*: seq[int]
+    of csUnion, csMinus: sels*: seq[ColSel]
     else: discard
 
 converter toColSel*(name: string): ColSel = ColSel(kind: csNames, names: @[name])
@@ -358,11 +363,22 @@ converter toColSel*[N: static int](names: array[N, string]): ColSel = ColSel(kin
 converter toColSel*(names: seq[string]): ColSel = ColSel(kind: csNames, names: names)
 func cols*(names: varargs[string]): ColSel = ColSel(kind: csNames, names: @names)
 func everything*(): ColSel = ColSel(kind: csAll)
-func startsWith*(prefix: string): ColSel = ColSel(kind: csStartsWith, part: prefix)
-func endsWith*(suffix: string): ColSel = ColSel(kind: csEndsWith, part: suffix)
-func containing*(part: string): ColSel = ColSel(kind: csContains, part: part)
+func startsWith*(prefixes: varargs[string]): ColSel = ColSel(kind: csStartsWith, parts: @prefixes)
+  ## The columns whose name starts with any of `prefixes`: `startsWith(["pop_", "pct_"])` (in
+  ## brackets: `startsWith(a, b)` with two texts is `strutils.startsWith`).
+func endsWith*(suffixes: varargs[string]): ColSel = ColSel(kind: csEndsWith, parts: @suffixes)
+func containing*(parts: varargs[string]): ColSel = ColSel(kind: csContains, parts: @parts)
 func numeric*(): ColSel = ColSel(kind: csNumeric)
 func textual*(): ColSel = ColSel(kind: csTextual)
+func positions*(ix: varargs[int]): ColSel = ColSel(kind: csPositions, positions: @ix)
+  ## Columns by their place in the data, from 0, as rows are: `positions(0, 2)`; a negative
+  ## place counts from the end (-1 is the last column).
+func positions*(s: HSlice[int, int]): ColSel = ColSel(kind: csPositions, positions: toSeq(s))
+  ## `positions(2 .. 4)`: the third to the fifth column.
+func `+`*(a, b: ColSel): ColSel = ColSel(kind: csUnion, sels: @[a, b])
+  ## The columns of `a` or `b`: `startsWith("pop") + "year"`.
+func `-`*(a, b: ColSel): ColSel = ColSel(kind: csMinus, sels: @[a, b])
+  ## The columns of `a` that are not in `b`: `numeric() - "year"`.
 
 func resolve*(sel: ColSel, d: TableData): seq[string] =
   case sel.kind
@@ -372,11 +388,33 @@ func resolve*(sel: ColSel, d: TableData): seq[string] =
         raise newException(KeyError, "no column named " & n.escape & " (columns: " & d.names.join(", ") & ")")
     sel.names
   of csAll: d.names
-  of csStartsWith: d.names.filterIt(it.startsWith(sel.part))
-  of csEndsWith: d.names.filterIt(it.endsWith(sel.part))
-  of csContains: d.names.filterIt(sel.part in it)
+  of csStartsWith: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(n.startsWith(it))))
+  of csEndsWith: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(n.endsWith(it))))
+  of csContains: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(it in n)))
   of csNumeric: d.columns.filterIt(it.isNumeric).mapIt(it.name)
   of csTextual: d.columns.filterIt(it.kindOf == vkString).mapIt(it.name)
+  of csPositions:
+    let names = d.names
+    var res: seq[string]
+    for p in sel.positions:
+      let k = if p < 0: names.len + p else: p
+      if k < 0 or k >= names.len:
+        raise newException(KeyError, "no column at position " & $p & " (" & $names.len & " columns)")
+      if names[k] notin res: res.add names[k]
+    res
+  of csUnion:
+    let a = sel.sels[0].resolve(d)
+    let b = sel.sels[1].resolve(d)
+    d.names.filterIt(it in a or it in b)
+  of csMinus:
+    let b = sel.sels[1].resolve(d)
+    sel.sels[0].resolve(d).filterIt(it notin b)
 
 type
   RowSelKind* = enum
@@ -703,6 +741,28 @@ type
     sourceNotesBorderLrWidth* = "2px"
     sourceNotesBorderLrColor* = "#D3D3D3"
     extraCss* = ""          ## more CSS, scoped to the table when it starts with ` ` or `.`
+    tableAlign* = "center"         ## or "left", "right": where the table sits in its container
+    tableNoDataMessage* = "No data to display"   ## shown in the body of a table with no rows
+    tableAdditionalCss* = ""       ## more CSS, as `optCss` (both add)
+    tableFontColorLight* = "#FFFFFF"   ## text on dark cells (`dataColor`, dark headings)
+    columnLabelsHidden* = false
+    columnLabelsUnitsPattern* = "{1}, {2}"   ## label and units, when `colsUnits` gives no pattern
+    rowGroupDefaultLabel* = ""     ## a heading for the rows outside any group ("" for none)
+    rowGroupAsColumn* = false      ## group labels as the first column of the stub
+    stubIndentLength* = "1em"      ## the indent of one level (`tabStubIndent`)
+    stubSeparate* = true           ## a rule between the stub and the body
+    stubRowGroupFontSize* = "100%"
+    stubRowGroupFontWeight* = "initial"
+    stubRowGroupTextTransform* = "inherit"
+    stubRowGroupBorderStyle* = "solid"
+    stubRowGroupBorderWidth* = "2px"
+    stubRowGroupBorderColor* = "#D3D3D3"
+    footnotesMultiline* = true     ## one footnote per line; false: all on one line
+    footnotesSep* = " "            ## between footnotes on one line
+    sourceNotesMultiline* = true
+    sourceNotesSep* = " "
+    rowStripingIncludeStub* = false
+    rowStripingIncludeTableBody* = true
 
   Tabella* = object
     ## A display table: the data and everything said about how to show it.
@@ -712,6 +772,7 @@ type
     caption*: Text
     stubhead*: Text
     rownameCol*, groupnameCol*: string
+    stubCols*: seq[string]                     ## the stub's other columns, left of `rownameCol`
     groupLabels*: OrderedTable[string, Text]   ## group id -> label, in display order
     rowGroups*: seq[string]                    ## group id of each row ("" when ungrouped)
     rowOrder*: seq[int]                        ## rows in display order (empty: as in the data)
@@ -747,6 +808,16 @@ func hasStub*(t: Tabella): bool = t.rownameCol.len > 0 or t.hasSummaries
   ## with summary rows and no row names gets an empty stub).
 func hasRowNames*(t: Tabella): bool = t.rownameCol.len > 0
 func hasGroups*(t: Tabella): bool = t.groupLabels.len > 0
+func stubColumns*(t: Tabella): seq[string] =
+  ## The columns of the stub, the highest level first: `tabella(data, rownameCol = ["mfr",
+  ## "model"])` gives `@["mfr", "model"]`.
+  t.stubCols & (if t.rownameCol.len > 0: @[t.rownameCol] else: @[])
+func groupAsColumn*(t: Tabella): bool = t.options.rowGroupAsColumn and t.hasGroups
+  ## The group labels are a column of the stub (`rowGroupAsColumn`), not a row above each group.
+func stubWidth*(t: Tabella): int =
+  ## How many columns the stub takes: the group labels (as a column), the higher levels, the
+  ## row names (or the summary labels).
+  (if t.groupAsColumn: 1 else: 0) + (if t.hasStub: 1 + t.stubCols.len else: 0)
 
 type PatternRef* = object
   ## One `{...}` of a merge pattern: `{2}` is column 2, `{2.lo}` the field `lo` of the record in

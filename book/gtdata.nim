@@ -1,6 +1,6 @@
 ## The datasets of Great Tables that the book's pages use and tabelline does not ship
-## (`tabelline/datasets` has `exibble`): `islands`, `airquality`, `sza`, `gtcars`, `countrypops`,
-## `illness` and `metro` (with its images of the metro lines), as CSV files in
+## (`tabelline/datasets` has `exibble`, `gtcars`, `countrypops`, `illness` and `metro`, exported
+## here): `islands`, `airquality` and `sza`, and the images of the metro lines, as files in
 ## book/data/great-tables/, copied from the `great_tables` package (MIT), and gt's `rx_adsl` and
 ## `rx_addv` in book/data/gt/, written from the `gt` R package (MIT) with their labels. They are read when the
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
@@ -8,17 +8,14 @@
 ## `head`, `take` and `select` are here too: Great Tables takes a data frame, and the guide cuts its
 ## data with pandas and Polars; tabelline's `TableData` has no verbs of its own (data frames come later).
 import std/[json, os, strutils]
-import tabelline
+import tabelline, tabelline/datasets
+export datasets
 
 const dataDir = currentSourcePath().parentDir & "/data/great-tables/"
 const
   islandsCsv = staticRead(dataDir & "islands.csv")
   airqualityCsv = staticRead(dataDir & "airquality.csv")
   szaCsv = staticRead(dataDir & "sza.csv")
-  gtcarsCsv = staticRead(dataDir & "gtcars.csv")
-  countrypopsCsv = staticRead(dataDir & "countrypops.csv")
-  illnessCsv = staticRead(dataDir & "illness.csv")
-  metroCsv = staticRead(dataDir & "metro.csv")
 
 const
   gtDir = currentSourcePath().parentDir & "/data/gt/"
@@ -35,15 +32,6 @@ proc airquality*(): TableData = parseCsv(airqualityCsv)
   ## Daily air quality in New York, May to September 1973 (R's `airquality`).
 proc sza*(): TableData = parseCsv(szaCsv)
   ## Solar zenith angles by latitude, month and half hour of true solar time.
-
-proc gtcars*(): TableData = parseCsv(gtcarsCsv)
-  ## 47 deluxe automobiles from the 2014-2017 model years, with their performance and price.
-proc countrypops*(): TableData = parseCsv(countrypopsCsv)
-  ## The population of every country, every year from 1960 to 2022 (World Bank).
-proc illness*(): TableData = parseCsv(illnessCsv)
-  ## Daily tests of a patient with yellow fever, days 3 to 9, with their normal ranges.
-proc metro*(): TableData = parseCsv(metroCsv)
-  ## The stations of the Paris Metro, with their lines and passengers in 2021.
 
 proc rxAdsl*(): TableData = parseCsv(rxAdslCsv)
   ## gt's `rx_adsl`: the subjects of a fictional clinical trial, one row each (an ADSL dataset).

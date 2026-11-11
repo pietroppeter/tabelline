@@ -2,8 +2,48 @@
 
 ## Unreleased
 
+## 0.2.0 (11 Nov 2026)
+
+tabelline 0.2 is the big one: it brings most of the rest of gt and Great Tables. Tables can now sum
+up, merge and add rows and columns, format in every CLDR locale, and hold pictures. The pages
+write every table as `tabella(data): body`, one verb per line.
+
+- **Summing up**: `summaryRows` for each group and `grandSummaryRows` for the whole table, with
+  `agg.sum`, `agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count`, `agg.std` or your own;
+  `summaryColumns` across each row.
+- **Rows and columns**: `colsMerge` and its variants, `colsAdd`, `rowsAdd`, `rowsHide`,
+  `tabStubIndent`, `colsAlignDecimal`, `colsLabelRotate`.
+- **More formats**: units and chemistry (`fmtUnits`, `fmtChem`, `colsUnits`, `{{...}}` in labels),
+  `fmtFraction`, `fmtBins`, `fmtAuto`, `fmtPassthrough`, `fmtCountry`: 31 formats in all.
+- **Every locale**: the 657 locales of CLDR 49 for numbers, percents, 305 currencies and dates,
+  generated once and committed, so nothing is downloaded.
+- **Pictures in cells**: `fmtIcon` (every Font Awesome Free icon), `fmtImage` (local files
+  inlined), `fmtNanoplot` and `colsNanoplot` (line, bar and box plots, a port of Great Tables').
+- **Table tools**: `tabellaPreview`, `extractCells`/`extractBody`/`extractSummary`, `fromColumn`,
+  `tabStyle` with a proc of the row, `tabStyleBody`; the datasets `isole()` and `citta()`.
+- **More than one value**: lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`),
+  formatted item by item, read with the dot (`v.hi`, `it.mass`), plotted as x and y.
+- **The tails**: a stub of several columns, groups as a column, 164 options (160 of gt's 196),
+  `localImage` and `webImage`, `systemFonts`, a colour for each nanoplot point, and gt's
+  `gtcars`, `countrypops`, `illness` and `metro`.
+- **One stylesheet for every table**: `tabellaCss`, with each option a CSS variable, written once
+  per page.
+- **Nim sugar**: every verb that takes pairs takes them as an indented block (`summaryRows:` then
+  `total: agg.sum`), and `tabella(t): body` adds verbs to a table already made.
+
+Docs: the Reference (every exported name), the Guide (with *Nim sugar* and *Pipes, methods and
+a recipe*), the story *FOSDEM, twenty-six times* written with 0.2, the book's Get Started and
+the first posts of the Great Tables blog, three of gt's articles (summary lines, gtcars and
+clinical tables), and the posts *Designing tabelline 0.2* and *What the book found for 0.2*.
+
+Next comes *Out of the browser*: LaTeX, RTF and Word, images and PDF of a table, groups of
+tables, and tables from data frames.
+
+### Since 0.1.0
+
 - Lists and records in a cell: `toValue` makes a list from a `seq` and a record from an object or named tuple (`list`, `record` by hand); `v[i]`, `v["x"]` and the dot `v.x`, which on a row reads a column (`where(it.mass > 1)`, Nim's experimental `dotOperators`); formats apply item by item and field by field; `fmtIcon`, `fmtImage` and `fmtFlag` take a list; `fmtNanoplot` reads lists and records of `x` and `y` (points placed along x; `nanoplotXValues`, `expandX`); a `colsMerge` pattern reads record fields (`{lo}`, `{2.lo}`). Examples rewritten to `it.x` (#76).
 - One stylesheet for every table: `tabellaCss` holds the rules of every table, each value a CSS variable named after its option (`--tb-table-font-size`), and a table sets on its `<div>` only the options it changes; `toHtml(withStyle = false)`, `tabellaStyle`, `styleVars`; `nbTable` and `nb.tableHtml` write the stylesheet once per page; a table with `optCssTheme()` gets the class `tb_css_theme` instead of the theme's variables. Every rule starts with `:where(.tabella):not(#_)`, so it weighs what `#id` did; the computed style of every table of the docs and the book is unchanged. The docs go from 8.50 to 6.29 MB (the Reference from 1.71 to 0.88 MB), the book from 7.54 to 6.59 MB; post *One stylesheet for every table* (#72).
+- The tails of 0.2: a stub of several columns (`tabella(data, rownameCol = ["mfr", "model"])`, a repeated value drawn once; `stubColumns`, `loc.stub(rows, cols)`); groups as a column of the stub (`rowGroupAsColumn`); 22 more options, 164 in all (hidden labels, a units pattern, a default group label, notes on one line, a no-data message, the stub's indent, rule and group column, stripes in the stub, which is no longer striped by default, as in gt); `localImage` and `webImage`; `systemFonts`, `fontStackNames`, `defaultFonts`; per-point nanoplot options and dates on x; `gtcars()`, `countrypops()`, `illness()` and `metro()` in `tabelline/datasets`, which the book now reads; and what the book found: `positions(...)`, `a + b` and `a - b` for columns, several parts in `startsWith`/`endsWith`/`containing`, `tabSpanner` gathers its columns (as gt), summary rows of the same label make one row (as gt), `extractSummary(values = true)`, hard line breaks in `md` (#78).
 - Docs: the Guide's *Nim sugar* opens with a list of all of tabelline's sugar, and two new sections: *Pipes, methods and a recipe* (the same table as R's pipe, Python's methods, Nim's dot and the `tabella` block, and what each language does underneath) and *Small words* (`where`, `&`, the namespaces, the converters) (#75).
 - Docs: the Guide and the specs write every table as `tabella(data): body`, one verb per line, with the pair verbs and `tabOptions` as blocks, instead of a chain of dots (#74).
 - Icons, images and nanoplots: `fmtIcon` (every Font Awesome Free icon, 2,163, as inline SVG; `icon`, `hasIcon`, `iconSvg`), `fmtImage` (local files inlined as data URLs; `imageDataUrl`), `fmtNanoplot` (line, bar and box plots in a cell, a port of Great Tables' nanoplots, sparklines in text; `nanoplotOptions`, `nanoplotSvg`), `colsNanoplot` (#63).
@@ -20,6 +60,9 @@
 - Fix: `subZero`, `subSmallVals`, `subLargeVals` and `subValues` with an empty text (`zeroText = ""`) left the value as it was; they now empty the cell, as gt does (#64).
 - Fix: in a grouped table, a row whose group value is missing was shown twice, before the groups
   and again in the group above it; it is now shown once, before the groups (#53).
+- The Reference: every name tabelline exports, with its signature, doc comment, links to gt and Great Tables and the shortest spec example that uses it, built from `nim jsondoc` and the source (`tools/apidoc.nim`); the post *A reference in our own style* (#65).
+- The book follows 0.2: Get Started complete, with the Nanoplots chapter and no workarounds left for what 0.2 added (#67); a new section, *Great Tables: the blog*, ports the first four posts of the Great Tables blog (#70).
+- Docs: the roadmap has three releases, with *Out of the browser* next; the feature map and the Guide follow it (#66, #73).
 
 ## 0.1.0 (10 Nov 2026)
 

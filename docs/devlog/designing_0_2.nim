@@ -17,8 +17,8 @@ tabelline 0.2: summing up, rows and columns, more formats, every locale, picture
 nbText: """
 0.1 had the parts of a table, from the title to the footer, and the formats for single values.
 0.2 was going to add rows and merges; on the day 0.1 shipped, it grew to hold every format,
-every locale and pictures in cells too, and then cells that hold more than one value. That is
-six groups of features, each built in its own pull request and explained here when it is ready,
+every locale and pictures in cells too, then cells that hold more than one value, and last the
+tails of what was still partial. That is seven groups of features, each built in its own pull request and explained here when it is ready,
 from the simplest idea up. Every name they add is in the [Reference](../../api/), and
 [A reference in our own style](../reference/) tells how that page was made.
 """
@@ -26,12 +26,12 @@ from the simplest idea up. Every name they add is in the [Reference](../../api/)
 nbToc()
 
 nbText: """
-## Six groups
+## Seven groups
 
 Each group needs the ones before it: summing up comes first because summary columns, in the
 second group, reuse its aggregates; pictures come last because nanoplots need the formats and
 the options of the groups before them, and lists and records come after them because they feed
-the pictures.
+the pictures. The tails come last: they finish what the others began.
 """
 
 block:
@@ -44,9 +44,10 @@ block:
     G(group: "4 · Every locale", what: "numbers, currencies and dates from CLDR; rotated labels, more options, extract, preview, body styles, datasets", status: "built"),
     G(group: "5 · Pictures in cells", what: "icons, images and nanoplots, all inlined", status: "built"),
     G(group: "6 · More than one value", what: "lists and records in a cell, the dot (v.x, it.mass), nanoplots of x and y", status: "built"),
+    G(group: "7 · The tails", what: "a stub of several columns, groups as a column, the other options, images anywhere, font stacks, gt's datasets", status: "built"),
   ]
   let t = tabella(rows, rownameCol = "group"):
-    tabHeader "0.2 in six groups"
+    tabHeader "0.2 in seven groups"
     colsLabel:
       what: "what it adds"
       status: "now"
@@ -834,7 +835,7 @@ nbText: """
   and its three variants, with patterns of columns only (`{1}`, `{2}`). *Great Tables:* the same.
 - **x and y as Great Tables has them.** A record with fields `x` and `y`. *gt:* x values come
   from another column (`columns_x_vals` in `cols_nanoplot`). *Great Tables:* a dict
-  `{"x": [...], "y": [...]}`; its x values can be dates too, tabelline's are numbers for now.
+  `{"x": [...], "y": [...]}`; its x values can be dates too, and so can tabelline's (group 7).
 - **The dot is Nim sugar.** In a row predicate `it` is the row: the Nim idiom of `filterIt`
   and `mapIt` (`std/sequtils`), where a template names the current element `it`, and
   `where(cond)` turns `cond` into a proc of a row named `it`. `it.mass` and `v.hi` are a Nim
@@ -846,6 +847,73 @@ nbText: """
 - **Formats item by item.** A format on a list formats each item; the verbs that need the whole
   list (icons, images, flags, nanoplots) say so. *gt:* no lists to format. *Great Tables:* the
   same.
+
+## 7 · The tails
+
+### A stub of several columns
+
+The stub held one column, the row names. Now it can hold a few, the highest level first, and a
+value equal to the one above it is drawn once, over all the rows that repeat it:
+"""
+
+nbCode:
+  let garage = tableData:
+    maker: ["Ferrari", "Ferrari", "Fiat", "Fiat", "Lancia"]
+    model: ["Roma", "Purosangue", "500e", "Panda", "Ypsilon"]
+    hp: [612, 725, 118, 70, 156]
+  let cars = tabella(garage, rownameCol = ["maker", "model"]):
+    optCssTheme()
+  nbTable cars
+
+nbNote("""
+`rownameCol` takes a list instead of a name. `loc.stub(cols = "maker")` styles one level; `stubColumns(cars)` is `@["maker", "model"]`. In text the repeated value is left blank.
+""", nkCode)
+
+nbText: """
+### Groups as a column
+
+A group's label can be a column of the stub too, beside its rows, instead of a row above them:
+"""
+
+nbCode:
+  let fleet = tableData:
+    model: ["Roma", "Purosangue", "500e", "Panda"]
+    kind: ["sport", "sport", "city", "city"]
+    hp: [612, 725, 118, 70]
+  let byKind = tabella(fleet, rownameCol = "model", groupnameCol = "kind", rowGroupAsColumn = true):
+    summaryRows:
+      most: agg.max
+    optCssTheme()
+  nbTable byKind
+
+nbNote("""
+`rowGroupAsColumn = true` when the table is made, or `tabOptions(rowGroupAsColumn = true)` later. The label spans the group's rows and its summary rows.
+""", nkCode)
+
+nbText: """
+### The other options, images and fonts
+
+`tabOptions` now has 164 options, 160 of gt's 196: hidden column labels, a units pattern for all
+columns, a label for the rows outside any group, notes on one line, a message for a table with
+no rows, the indent of a level, stripes in the stub. An image can go in a title or a label
+(`localImage`, `webImage`), a font stack has a name (`systemFonts("old-style")`), and a nanoplot
+can give each point its own colour. gt's `gtcars`, `countrypops`, `illness` and `metro` are in
+`tabelline/datasets`.
+
+### Choices
+
+- **A list of columns, not a second argument.** `rownameCol = ["maker", "model"]`. *gt:* the
+  same, `rowname_col = c("maker", "model")`. *Great Tables:* one stub column.
+- **Repeats are drawn once.** A level spans the rows that repeat it, under the same higher
+  levels and in the same group. *gt:* the same idea; *Great Tables:* no levels.
+- **Options that mean nothing in HTML wait.** The 36 options left are for interactive tables,
+  pages, LaTeX and Quarto: they come with those outputs. *gt:* all 196 in `tab_options()`.
+- **Stripes leave the stub alone.** As in gt, `rowStripingIncludeStub` is off: the stub is no
+  longer striped by default. *Great Tables:* the same.
+- **No `google_font()`.** tabelline loads nothing remote; inline a font in the page instead.
+  *gt* and *Great Tables:* `google_font()` links Google's servers.
+- **A list of options repeats.** `dataPointFillColor = @["red", "blue"]` colours the points
+  red, blue, red, ... *Great Tables:* a list must have one value or one per point.
 
 ## How it is built
 

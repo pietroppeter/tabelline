@@ -1,11 +1,11 @@
 {
  "title": "gt coverage",
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "gt": "gt 1.4 (R) and Great Tables 0.17 (Python), by their reference indexes",
  "release": {
-  "version": "0.1.0",
-  "tag": "v0.1.0",
-  "date": "2026-11-10"
+  "version": "0.2.0",
+  "tag": "v0.2.0",
+  "date": "2026-11-11"
  },
  "plans": [
   {
@@ -96,9 +96,8 @@
     {
      "feature": "Stub indent, multi-column stub",
      "gt": "tab_stub_indent()",
-     "status": "partial",
-     "note": "tabStubIndent (levels 0 to 5, increase, decrease); multi-column stubs not yet.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "tabStubIndent (levels 0 to 5, increase, decrease, the length of a level in stubIndentLength); a stub of several columns, tabella(data, rownameCol = [\"mfr\", \"model\"]), a value spanning the rows below it that repeat it; groups as a column of the stub (rowGroupAsColumn).",
      "size": "S",
      "where": "R"
     },
@@ -326,17 +325,15 @@
     {
      "feature": "Images",
      "gt": "fmt_image(), local_image(), web_image(), ggplot_image()",
-     "status": "partial",
-     "note": "fmtImage: local files inlined as data URLs, addresses left as they are. Not yet: local_image(), web_image(), ggplot_image().",
-     "plan": "0.2",
+     "status": "done",
+     "note": "fmtImage: local files inlined as data URLs, addresses left as they are; localImage() and webImage() for a title, a label or a note. Not planned: ggplot_image() (an R plot).",
      "size": "M"
     },
     {
      "feature": "Plots in cells",
      "gt": "fmt_nanoplot(), cols_nanoplot()",
-     "status": "partial",
-     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text; a list of numbers or a record of x and y in a cell. Not yet: x values as dates, per-point options.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text; a list of numbers or a record of x and y in a cell, x as numbers or dates; options for each point.",
      "size": "L"
     },
     {
@@ -571,9 +568,8 @@
     {
      "feature": "Table options",
      "gt": "tab_options()",
-     "status": "partial",
-     "note": "142 of gt's 200 options: container, fonts, widths, every rule of the heading, labels, groups, body, stub and footer, padding, striping, summary rows. Not yet: hidden labels, groups as a column, multiline footer, LaTeX and page options.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "164 options: 160 of gt's 196 (container, fonts, widths, every rule of the heading, labels, groups, body, stub and footer, padding, striping, summary rows, hidden labels, groups as a column, notes on one line, the no-data message), and 4 of tabelline's own. Not yet: the options of interactive tables, pages, LaTeX and Quarto, which come with those outputs.",
      "size": "M"
     },
     {
@@ -609,8 +605,8 @@
     {
      "feature": "Fonts",
      "gt": "google_font(), system_fonts(), default_fonts()",
-     "status": "partial",
-     "note": "Font stacks by name; Google fonts would load remote files, so not planned as such (inline a font instead)."
+     "status": "done",
+     "note": "optTableFont, systemFonts() (Great Tables' fifteen stacks) and defaultFonts(). Not planned: google_font(), which loads remote files (inline a font in the page instead)."
     },
     {
      "feature": "Interactive tables",
@@ -713,9 +709,8 @@
     {
      "feature": "Datasets",
      "gt": "exibble, gtcars, countrypops, sza, towny, ...",
-     "status": "partial",
-     "note": "exibble, planets, tavolaPitagorica, isole (twin of islands) and citta (twin of towny); more as examples need them.",
-     "plan": "0.2",
+     "status": "done",
+     "note": "exibble, gtcars, countrypops, illness and metro from gt; planets, tavolaPitagorica, isole (twin of islands) and citta (twin of towny); more as examples need them.",
      "size": "S"
     },
     {

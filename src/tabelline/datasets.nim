@@ -5,6 +5,8 @@
 ## - `tavolaPitagorica(n)`: the times table, *la tavola pitagorica*, as every Italian pupil knows it.
 ## - `isole`: the 194 islands of the Mediterranean, by area (Wikipedia), the twin of gt's `islands`.
 ## - `citta`: the 95 largest cities of the European Union (Wikipedia), the twin of gt's `towny`.
+## - `gtcars`, `countrypops`, `illness`, `metro`: four of gt's datasets, as Great Tables ships
+##   them (MIT, `licenses/great-tables-MIT.txt`), the ones the book's pages use.
 ##
 ## The data of `isole` and `citta` is in `data/` (CSV, with its source in a `#` line), read when
 ## compiling; `docs/devlog/data/datasets/` has the programs that wrote it.
@@ -43,6 +45,24 @@ const cittaCsv* = staticRead("data/citta.csv")
   ## city, state (three-letter code), population within city limits, counted (the date of the
   ## count). Wikipedia, "List of cities in the European Union by population within city limits",
   ## read 8 Nov 2026.
+
+const
+  gtcarsCsv = staticRead("data/gtcars.csv")
+  countrypopsCsv = staticRead("data/countrypops.csv")
+  illnessCsv = staticRead("data/illness.csv")
+  metroCsv = staticRead("data/metro.csv")
+
+proc gtcars*(): TableData = parseCsv(gtcarsCsv)
+  ## 47 deluxe automobiles from the 2014-2017 model years, with their performance and price
+  ## (gt's `gtcars`).
+proc countrypops*(): TableData = parseCsv(countrypopsCsv)
+  ## The population of every country, every year from 1960 to 2022 (World Bank; gt's
+  ## `countrypops`).
+proc illness*(): TableData = parseCsv(illnessCsv)
+  ## Daily tests of a patient with yellow fever, days 3 to 9, with their normal ranges (gt's
+  ## `illness`).
+proc metro*(): TableData = parseCsv(metroCsv)
+  ## The stations of the Paris Metro, with their lines and passengers in 2021 (gt's `metro`).
 
 proc planets*(): TableData = parseCsv(planetsCsv)
 proc exibble*(): TableData = parseCsv(exibbleCsv)

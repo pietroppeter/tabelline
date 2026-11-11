@@ -7,22 +7,22 @@
 ## rows. The values show when the pointer is over the plot (no JavaScript: CSS `:hover`). In text
 ## output a nanoplot is a sparkline ("▁▃▅█").
 
-import std/[strutils, math, algorithm, sequtils, hashes]
+import std/[strutils, math, algorithm, sequtils, hashes, times]
 from std/unicode import runeLen
 import core, formats, verbs
 
 type
   NanoplotOptions* = object
     ## The look of a nanoplot, after Great Tables' `nanoplot_options()` (see `nanoplotOptions`).
-    dataPointRadius*: float
-    dataPointStrokeColor*, dataPointFillColor*: string
-    dataPointStrokeWidth*: float
+    dataPointRadius*: seq[float]     ## one value, or one per point (repeating)
+    dataPointStrokeColor*, dataPointFillColor*: seq[string]
+    dataPointStrokeWidth*: seq[float]
     dataLineStrokeColor*: string
     dataLineStrokeWidth*: float
     dataLineType*: string
     dataAreaFillColor*: string
-    dataBarStrokeColor*, dataBarFillColor*: string
-    dataBarStrokeWidth*: float
+    dataBarStrokeColor*, dataBarFillColor*: seq[string]   ## one value, or one per bar
+    dataBarStrokeWidth*: seq[float]
     dataBarNegativeStrokeColor*, dataBarNegativeFillColor*: string
     dataBarNegativeStrokeWidth*: float
     referenceLineColor*, referenceAreaFillColor*: string
@@ -33,12 +33,30 @@ type
     currency*: string
     yValFmtFn*, yAxisFmtFn*, yRefLineFmtFn*: proc (x: float): string
 
-func nanoplotOptions*(dataPointRadius = 10.0, dataPointStrokeColor = "#FFFFFF",
-                      dataPointStrokeWidth = 4.0, dataPointFillColor = "#FF0000",
+func perPoint[T](x: T | seq[T]): seq[T] =
+  when x is seq: (if x.len == 0: raise newException(ValueError, "an empty list of options") else: x)
+  else: @[x]
+
+func perPointF(x: SomeNumber | seq[float] | seq[int]): seq[float] =
+  ## A per-point number: one, or a list of floats or ints.
+  when x is seq:
+    if x.len == 0: raise newException(ValueError, "an empty list of options")
+    for v in x: result.add float(v)
+  else: @[float(x)]
+
+func at*[T](s: seq[T], i: int): T =
+  ## The value of a per-point option for point `i`: the list repeats.
+  s[i mod s.len]
+
+func nanoplotOptions*(dataPointRadius: SomeNumber | seq[float] | seq[int] = 10.0,
+                      dataPointStrokeColor: string | seq[string] = "#FFFFFF",
+                      dataPointStrokeWidth: SomeNumber | seq[float] | seq[int] = 4.0,
+                      dataPointFillColor: string | seq[string] = "#FF0000",
                       dataLineType = "curved", dataLineStrokeColor = "#4682B4",
                       dataLineStrokeWidth = 8.0, dataAreaFillColor = "#FF0000",
-                      dataBarStrokeColor = "#3290CC", dataBarStrokeWidth = 4.0,
-                      dataBarFillColor = "#3FB5FF", dataBarNegativeStrokeColor = "#CC3243",
+                      dataBarStrokeColor: string | seq[string] = "#3290CC",
+                      dataBarStrokeWidth: SomeNumber | seq[float] | seq[int] = 4.0,
+                      dataBarFillColor: string | seq[string] = "#3FB5FF", dataBarNegativeStrokeColor = "#CC3243",
                       dataBarNegativeStrokeWidth = 4.0, dataBarNegativeFillColor = "#D75A68",
                       referenceLineColor = "#75A8B0", referenceAreaFillColor = "#A6E6F2",
                       verticalGuideStrokeColor = "#911EB4", verticalGuideStrokeWidth = 12.0,
@@ -55,12 +73,15 @@ func nanoplotOptions*(dataPointRadius = 10.0, dataPointStrokeColor = "#FFFFFF",
   ## y axis and the reference line yourself.
   if dataLineType notin ["curved", "straight"]:
     raise newException(ValueError, "dataLineType is \"curved\" or \"straight\", not " & dataLineType.escape)
-  NanoplotOptions(dataPointRadius: dataPointRadius, dataPointStrokeColor: dataPointStrokeColor,
-    dataPointStrokeWidth: dataPointStrokeWidth, dataPointFillColor: dataPointFillColor,
+  NanoplotOptions(dataPointRadius: perPointF(dataPointRadius),
+    dataPointStrokeColor: perPoint[string](dataPointStrokeColor),
+    dataPointStrokeWidth: perPointF(dataPointStrokeWidth),
+    dataPointFillColor: perPoint[string](dataPointFillColor),
     dataLineType: dataLineType, dataLineStrokeColor: dataLineStrokeColor,
     dataLineStrokeWidth: dataLineStrokeWidth, dataAreaFillColor: dataAreaFillColor,
-    dataBarStrokeColor: dataBarStrokeColor, dataBarStrokeWidth: dataBarStrokeWidth,
-    dataBarFillColor: dataBarFillColor, dataBarNegativeStrokeColor: dataBarNegativeStrokeColor,
+    dataBarStrokeColor: perPoint[string](dataBarStrokeColor),
+    dataBarStrokeWidth: perPointF(dataBarStrokeWidth),
+    dataBarFillColor: perPoint[string](dataBarFillColor), dataBarNegativeStrokeColor: dataBarNegativeStrokeColor,
     dataBarNegativeStrokeWidth: dataBarNegativeStrokeWidth,
     dataBarNegativeFillColor: dataBarNegativeFillColor, referenceLineColor: referenceLineColor,
     referenceAreaFillColor: referenceAreaFillColor,
@@ -95,11 +116,26 @@ func nanoplotValues*(v: Value): seq[float] =
       try: result.add parseFloat(w.replace("−", "-"))
       except ValueError: raise newException(ValueError, "not a number in a nanoplot: " & w.escape)
 
-func nanoplotXValues*(v: Value): seq[float] =
+proc dateValue(s: string): float =
+  ## An ISO date or date and time ("2026-11-11", "2026-11-11T10:30", "2026-11-11 10:30:00") as
+  ## seconds since 1970, or NaN for anything else.
+  let t = s.strip
+  for f in ["yyyy-MM-dd", "yyyy-MM-dd'T'HH:mm", "yyyy-MM-dd HH:mm", "yyyy-MM-dd'T'HH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss"]:
+    try: return parse(t, f, utc()).toTime.toUnixFloat
+    except TimeParseError, ValueError: discard
+  NaN
+
+proc nanoplotXValues*(v: Value): seq[float] =
   ## The places of the values on the x axis: the field `x` of a record (`(x: @[1, 2, 4], y:
-  ## @[3, 5, 4])`, Great Tables' dict of x and y); empty for any other cell, whose values are
-  ## evenly spaced.
-  if v.isRecord and "x" in v: nanoplotValues(v["x"]) else: @[]
+  ## @[3, 5, 4])`, Great Tables' dict of x and y), numbers or ISO dates and times
+  ## (`@["2026-01-05", "2026-02-11"]`, placed by time); empty for any other cell, whose values
+  ## are evenly spaced.
+  if not (v.isRecord and "x" in v): return @[]
+  let x = v["x"]
+  if x.isList and x.items.anyIt(it.kind == vkString and not dateValue($it).isNaN):
+    return x.items.mapIt(if it.isNull: NaN elif it.isNumber: it.toFloat else: dateValue($it))
+  nanoplotValues(x)
 
 func present(xs: openArray[float]): seq[float] = xs.filterIt(not it.isNaN)
 
@@ -212,9 +248,10 @@ func missingMarker(x, radius, strokeWidth: float, fill: string): string =
   "<circle cx=\"" & n(x) & "\" cy=\"" & n(safeY + dataH / 2) & "\" r=\"" & n(radius * 1.5) &
     "\" stroke=\"red\" stroke-width=\"" & n(strokeWidth) & "\" fill=\"" & fill & "\"></circle>"
 
-func barStyle(v: float, o: NanoplotOptions): (string, float, string) =
+func barStyle(v: float, o: NanoplotOptions, i = 0): (string, float, string) =
+  ## The stroke, its width and the fill of bar `i` of value `v`.
   if v < 0: (o.dataBarNegativeStrokeColor, o.dataBarNegativeStrokeWidth, o.dataBarNegativeFillColor)
-  elif v > 0: (o.dataBarStrokeColor, o.dataBarStrokeWidth, o.dataBarFillColor)
+  elif v > 0: (o.dataBarStrokeColor.at(i), o.dataBarStrokeWidth.at(i), o.dataBarFillColor.at(i))
   else: (zeroBarColor, 4.0, zeroBarColor)
 
 func patternId(color: string): string =
@@ -292,7 +329,7 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   # the data area and the data line
   if not bar:
     if o.showDataArea:
-      let bottom = bottomY - safeY + o.dataPointRadius
+      let bottom = bottomY - safeY + o.dataPointRadius.at(0)
       for (a, b) in segments:
         var pts: seq[string]
         for i in a ..< b: pts.add n(xs[i]) & "," & n(ys[i])
@@ -319,13 +356,13 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
       n(zeroY) & "\" stroke=\"" & zeroLineColor & "\" stroke-width=\"4\"></line>"
     for i in 0 ..< count:
       if y[i].isNaN:
-        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius, o.dataBarStrokeWidth, "transparent")
+        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius.at(i), o.dataBarStrokeWidth.at(i), "transparent")
         continue
       let (ry, h) =
         if y[i] < 0: (zeroY, ys[i] - zeroY)
         elif y[i] > 0: (ys[i], zeroY - ys[i])
         else: (zeroY - 1, 2.0)
-      let (stroke, sw, fill) = barStyle(y[i], o)
+      let (stroke, sw, fill) = barStyle(y[i], o, i)
       layers.add "<rect x=\"" & n(xs[i] - (xd - 10) / 2) & "\" y=\"" & n(ry) & "\" width=\"" & n(xd - 10) &
         "\" height=\"" & n(h) & "\" stroke=\"" & stroke & "\" stroke-width=\"" & n(sw) & "\" fill=\"" & fill & "\"></rect>"
   # the reference line
@@ -336,10 +373,10 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   if not bar and o.showDataPoints:
     for i in 0 ..< count:
       if y[i].isNaN:
-        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius, o.dataPointStrokeWidth, "white")
+        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius.at(i), o.dataPointStrokeWidth.at(i), "white")
         continue
-      layers.add "<circle cx=\"" & n(xs[i]) & "\" cy=\"" & n(ys[i]) & "\" r=\"" & n(o.dataPointRadius) & "\" stroke=\"" &
-        o.dataPointStrokeColor & "\" stroke-width=\"" & n(o.dataPointStrokeWidth) & "\" fill=\"" & o.dataPointFillColor & "\"></circle>"
+      layers.add "<circle cx=\"" & n(xs[i]) & "\" cy=\"" & n(ys[i]) & "\" r=\"" & n(o.dataPointRadius.at(i)) & "\" stroke=\"" &
+        o.dataPointStrokeColor.at(i) & "\" stroke-width=\"" & n(o.dataPointStrokeWidth.at(i)) & "\" fill=\"" & o.dataPointFillColor.at(i) & "\"></circle>"
   # the y axis: its bounds, on hover
   if o.showYAxisGuide:
     let asInt = lo.isWhole and hi.isWhole
@@ -369,7 +406,7 @@ proc singleValue(y: float, all: seq[float], plotType, refLine: string, o: Nanopl
   ## The layers of a horizontal bar or line from the zero line to `y`, on the scale of `all`.
   let others = present(all)
   let refL = if refLine.len > 0 and o.showReferenceLine: refValue(refLine, others) else: NaN
-  let thick = o.dataPointRadius * 4
+  let thick = o.dataPointRadius.at(0) * 4
   let mid = bottomY / 2
   let (y1, y2) = (mid - thick * 1.5, mid + thick * 1.5)
   var pool = others & @[y, 0.0]
@@ -405,8 +442,8 @@ proc singleValue(y: float, all: seq[float], plotType, refLine: string, o: Nanopl
   let px = if y < 0: x1 else: x2
   "<line x1=\"" & n(x1) & "\" y1=\"" & n(mid) & "\" x2=\"" & n(x2) & "\" y2=\"" & n(mid) & "\" stroke=\"" &
     o.dataLineStrokeColor & "\" stroke-width=\"" & n(o.dataLineStrokeWidth) & "\"></line>" & guide & zeroLine & refTag &
-    "<circle cx=\"" & n(px) & "\" cy=\"" & n(mid) & "\" r=\"" & n(o.dataPointRadius) & "\" stroke=\"" &
-    o.dataPointStrokeColor & "\" stroke-width=\"" & n(o.dataPointStrokeWidth) & "\" fill=\"" & o.dataPointFillColor & "\"></circle>"
+    "<circle cx=\"" & n(px) & "\" cy=\"" & n(mid) & "\" r=\"" & n(o.dataPointRadius.at(0)) & "\" stroke=\"" &
+    o.dataPointStrokeColor.at(0) & "\" stroke-width=\"" & n(o.dataPointStrokeWidth.at(0)) & "\" fill=\"" & o.dataPointFillColor.at(0) & "\"></circle>"
 
 # -------------------------------------------------------------------------------------- box plots
 
@@ -444,9 +481,9 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
   let allInt = vals.allIt(it.isWhole)
   proc label(v: float, fn: proc (x: float): string): string = nanoplotLabel(v, allInt and v.isWhole, o.currency, fn)
   let mid = bottomY / 2
-  let thick = o.dataPointRadius * 6
+  let thick = o.dataPointRadius.at(0) * 6
   let (top, bot) = (mid - thick / 2, mid + thick / 2)
-  let stroke = " stroke=\"" & o.dataBarStrokeColor & "\" stroke-width=\"" & n(o.dataBarStrokeWidth) & "\""
+  let stroke = " stroke=\"" & o.dataBarStrokeColor.at(0) & "\" stroke-width=\"" & n(o.dataBarStrokeWidth.at(0)) & "\""
   proc vline(px, half: float): string =
     "<line x1=\"" & n(px) & "\" y1=\"" & n(mid - half) & "\" x2=\"" & n(px) & "\" y2=\"" & n(mid + half) & "\"" & stroke & "></line>"
   proc boxLabel(px, py: float, text, anchor: string): string =
@@ -468,7 +505,7 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
   if o.showDataPoints:
     if vals.len >= 20:
       for v in s.outliers:
-        layers.add "<circle cx=\"" & n(x(v)) & "\" cy=\"" & n(mid) & "\" r=\"4\" stroke=\"" & o.dataBarStrokeColor &
+        layers.add "<circle cx=\"" & n(x(v)) & "\" cy=\"" & n(mid) & "\" r=\"4\" stroke=\"" & o.dataBarStrokeColor.at(0) &
           "\" stroke-width=\"2\" fill=\"white\"></circle>"
     else:
       for i, v in vals:

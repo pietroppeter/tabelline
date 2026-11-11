@@ -418,7 +418,7 @@ func splitLink(s: string): (string, string) =
 
 func inlineMarkdown*(s: string): string =
   ## A small inline Markdown: `**bold**`, `*italic*`, `` `code` ``, `[text](url)`, `~sub~`, `^sup^`,
-  ## and `<br>` for a line break.
+  ## and `<br>`, two spaces before a newline or a backslash before it for a line break.
   ## Enough for labels and notes, with no dependency (nimib's full Markdown is not needed here).
   var i = 0
   var open: seq[string]
@@ -429,6 +429,11 @@ func inlineMarkdown*(s: string): string =
     let c = s[i]
     if c == '<' and s.continuesWith("<br>", i):
       result.add "<br>"; i += 4; continue
+    if c == ' ' and s.continuesWith("  \n", i):   # Markdown's hard line break: two spaces, a newline
+      var j = i
+      while j < s.len and s[j] == ' ': inc j
+      if j < s.len and s[j] == '\n': (result.add "<br>"; i = j + 1; continue)
+    if c == '\\' and s.continuesWith("\\\n", i): (result.add "<br>"; i += 2; continue)
     if c == '\\' and i + 1 < s.len: (result.add escapeHtml($s[i + 1]); i += 2; continue)
     if c == '*' and i + 1 < s.len and s[i + 1] == '*': (toggle("strong"); i += 2; continue)
     if c == '*': (toggle("em"); inc i; continue)
@@ -460,11 +465,21 @@ func textToHtml*(t: Text): string =
   of tkHtml: t.s
 
 func stripTags(s: string): string =
+  ## The text of some HTML: tags dropped, an image read as its `alt`.
   var inTag = false
+  var tag = ""
   for c in s:
-    if c == '<': inTag = true
-    elif c == '>': inTag = false
-    elif not inTag: result.add c
+    if c == '<': (inTag = true; tag = "")
+    elif c == '>' and inTag:
+      inTag = false
+      if tag.toLowerAscii.startsWith("br") and (tag.len == 2 or tag[2] in {' ', '/'}): result.add " "
+      elif tag.toLowerAscii.startsWith("img"):
+        let a = tag.find("alt=\"")
+        if a >= 0:
+          let e = tag.find('"', a + 5)
+          if e > a: result.add tag[a + 5 ..< e]
+    elif inTag: tag.add c
+    else: result.add c
   result.multiReplace(("&lt;", "<"), ("&gt;", ">"), ("&quot;", "\""), ("&amp;", "&"))
 
 func textToPlain*(t: Text): string =

@@ -97,8 +97,8 @@ const releases*: seq[Release] = @[
   ]),
   Release(version: "0.2", theme: "Rows, every format, pictures", threads: @[
     t("build", "Build tabelline 0.2",
-      "Five pull requests: summary rows; merged columns, rows added and hidden, stub indent, decimal alignment; units, fractions, chemistry, bins, country names; every locale of CLDR for numbers, currencies and dates, rotated labels, 142 options, previews; icons, images and nanoplots.",
-      "post Designing tabelline 0.2; tag v0.2.0", "in progress", "devlog/designing-0-2/"),
+      "Five pull requests: summary rows; merged columns, rows added and hidden, stub indent, decimal alignment; units, fractions, chemistry, bins, country names; every locale of CLDR for numbers, currencies and dates, rotated labels, 164 options, previews; icons, images and nanoplots.",
+      "post Designing tabelline 0.2; tag v0.2.0", "done", "devlog/designing-0-2/"),
     t("use", "Use it: the FOSDEM devrooms",
       "The history of FOSDEM's devrooms, year by year: names, renames, splits, and the dates of FOSDEM, which fall at different moments. Starts from the FOSDEM devrooms page of claude-artifacts (2024 to 2027) and goes back as far as the schedules go. Written first in R with gt, then ported.",
       "story", "in progress", "stories/fosdem/"),

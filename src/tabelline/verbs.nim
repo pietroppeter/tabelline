@@ -30,10 +30,37 @@ proc initTabella*(data: TableData, rownameCol = "", groupnameCol = "", id = "", 
       # a missing (or empty) group value leaves the row out of every group
       if g.len > 0 and g notin result.groupLabels: result.groupLabels[g] = toText(g)
 
+proc initTabella*(data: TableData, rownameCol: openArray[string], groupnameCol = "", id = "",
+                  locale = "", autoAlign = true, rowGroupAsColumn = false): Tabella =
+  ## A table whose stub is several columns, the highest level first, as gt's
+  ## `rowname_col = c("mfr", "model")`: a value equal to the one above it, under the same higher
+  ## levels and in the same group, is drawn once, spanning its rows (left blank in text).
+  if rownameCol.len == 0: return initTabella(data, "", groupnameCol, id, locale, autoAlign)
+  result = initTabella(data, rownameCol[^1], groupnameCol, id, locale, autoAlign)
+  result.options.rowGroupAsColumn = rowGroupAsColumn
+  for name in rownameCol[0 ..< ^1]:
+    if not data.hasColumn(name):
+      raise newException(KeyError, "no column named " & name.escape & " (columns: " & data.names.join(", ") & ")")
+    result.stubCols.add name
+    for c in result.boxhead.mitems:
+      if c.name == name: c.role = crStub
+
+proc initTabella*(data: TableData, rownameCol: string, groupnameCol: string, rowGroupAsColumn: bool,
+                  id = "", locale = "", autoAlign = true): Tabella =
+  ## A table whose group labels are the first column of the stub, as gt's
+  ## `gt(row_group_as_column = TRUE)`: the same as `tabOptions(rowGroupAsColumn = true)`.
+  result = initTabella(data, rownameCol, groupnameCol, id, locale, autoAlign)
+  result.options.rowGroupAsColumn = rowGroupAsColumn
+
 proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol = "", groupnameCol = "", id = "",
                                  locale = ""): Tabella =
   ## A display table straight from Nim objects or named tuples, one field per column.
   initTabella(toTableData(rows), rownameCol, groupnameCol, id, locale)
+
+proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol: openArray[string],
+                                 groupnameCol = "", id = "", locale = "", rowGroupAsColumn = false): Tabella =
+  ## A stub of several columns, from Nim objects or named tuples.
+  initTabella(toTableData(rows), rownameCol, groupnameCol, id, locale, rowGroupAsColumn = rowGroupAsColumn)
 
 proc initTabella*(t: sink Tabella): Tabella =
   ## A table already made, so that `tabella(t): body` adds verbs to it:
@@ -51,11 +78,23 @@ proc tabStubhead*(t: sink Tabella, label: Text): Tabella =
   result = t
   result.stubhead = label
 
-proc tabSpanner*(t: sink Tabella, label: Text, columns: ColSel, level = 1): Tabella =
-  ## A label over `columns` (shown together; keep them next to each other). Higher `level`s sit
-  ## above lower ones.
+proc tabSpanner*(t: sink Tabella, label: Text, columns: ColSel, level = 1, gather = true): Tabella =
+  ## A label over `columns`. Higher `level`s sit above lower ones. With `gather` (the default, as
+  ## in gt) the columns are moved next to the first of them, in the order given, so the label
+  ## spans them all; with `gather = false` they stay where they are.
   result = t
   let names = columns.resolve(result.data)
+  if gather and names.len > 1:
+    let first = result.boxhead.mapIt(it.name).filterIt(it in names)[0]
+    var moved: seq[ColInfo]
+    for n in names:
+      for c in result.boxhead:
+        if c.name == n: moved.add c
+    var order: seq[ColInfo]
+    for c in result.boxhead:
+      if c.name == first: order.add moved
+      elif c.name notin names: order.add c
+    result.boxhead = order
   for s in result.spanners:
     if s.level == level and s.columns.anyIt(it in names):
       raise newException(ValueError, "spanner " & label.s.escape & " overlaps spanner " & s.label.s.escape)
@@ -174,7 +213,8 @@ func subtitle*(_: LocNs): Loc = Loc(kind: lkSubtitle)
 func stubhead*(_: LocNs): Loc = Loc(kind: lkStubhead)
 func columnLabels*(_: LocNs, cols: ColSel = everything()): Loc = Loc(kind: lkColumnLabels, cols: cols)
 func spanners*(_: LocNs, labels: varargs[string]): Loc = Loc(kind: lkSpanners, names: @labels)
-func stub*(_: LocNs, rows = allRows()): Loc = Loc(kind: lkStub, rows: rows)
+func stub*(_: LocNs, rows = allRows(), cols: ColSel = everything()): Loc =
+  Loc(kind: lkStub, rows: rows, cols: cols)
 func rowGroups*(_: LocNs, groups: varargs[string]): Loc = Loc(kind: lkRowGroups, names: @groups)
 func body*(_: LocNs, cols: ColSel = everything(), rows = allRows()): Loc =
   Loc(kind: lkBody, cols: cols, rows: rows)
@@ -212,15 +252,18 @@ proc resolve*(l: Loc, t: Tabella): Target =
   of lkRowGroups:
     result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
   of lkStub:
-    for i in l.rows.resolve(t.data): result.cells.add (i, t.rownameCol)
+    let all = t.stubColumns
+    let names = l.cols.resolve(t.data).filterIt(it in all)
+    for i in l.rows.resolve(t.data):
+      for n in (if names.len > 0: names else: all): result.cells.add (i, n)
   of lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub:
     # the rows are found when the table is built, so the summary rows may come later
     result.names = l.names
     result.labels = l.labels
     if l.kind in {lkSummary, lkGrandSummary}:
-      result.columns = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
-  of lkBody:   # the data cells: the stub column is loc.stub, as in gt
-    let names = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
+      result.columns = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
+  of lkBody:   # the data cells: the stub columns are loc.stub, as in gt
+    let names = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
     for i in l.rows.resolve(t.data):
       for n in names: result.cells.add (i, n)
   else: discard
@@ -608,7 +651,8 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
           elif pal.len >= levels.len: pal[k]
           else: interpolate(pal, k / (levels.len - 1))
       var s = if apply == "text": style.text(color = c) else: style.fill(c)
-      if autoColorText and apply != "text": s = s & style.text(color = idealTextColor(c))
+      if autoColorText and apply != "text":
+        s = s & style.text(color = idealTextColor(c, light = result.options.tableFontColorLight))
       result.styles.add StyleRule(target: Target(kind: lkBody, cells: @[(i, n)]), style: s)
 
 # ----------------------------------------------------------------------------------- options
@@ -646,8 +690,42 @@ proc optAllCaps*(t: sink Tabella, on = true): Tabella =
     result.options.columnLabelsFontWeight = "normal"
 
 proc optTableFont*(t: sink Tabella, font: string): Tabella =
+  ## The table's font, as a CSS font stack: `optTableFont(systemFonts("humanist"))`.
   result = t
   result.options.tableFontNames = font
+
+const fontStacks = {
+  "system-ui": "system-ui, sans-serif",
+  "transitional": "'Charter', 'Bitstream Charter', 'Sitka Text', 'Cambria', serif",
+  "old-style": "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'P052', serif",
+  "humanist": "'Seravek', 'Gill Sans Nova', 'Ubuntu', 'Calibri', 'DejaVu Sans', 'source-sans-pro', sans-serif",
+  "geometric-humanist": "'Avenir', 'Montserrat', 'Corbel', 'URW Gothic', 'source-sans-pro', sans-serif",
+  "classical-humanist": "'Optima', 'Candara', 'Noto Sans', 'source-sans-pro', sans-serif",
+  "neo-grotesque": "'Inter', 'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', 'Arial', sans-serif",
+  "monospace-slab-serif": "'Nimbus Mono PS', 'Courier New', monospace",
+  "monospace-code": "ui-monospace, 'Cascadia Code', 'Source Code Pro', 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace",
+  "industrial": "'Bahnschrift', 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', 'sans-serif-condensed', sans-serif",
+  "rounded-sans": "ui-rounded, 'Hiragino Maru Gothic ProN', 'Quicksand', 'Comfortaa', 'Manjari', 'Arial Rounded MT', 'Arial Rounded MT Bold', 'Calibri', 'source-sans-pro', sans-serif",
+  "slab-serif": "'Rockwell', 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif",
+  "antique": "'Superclarendon', 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', 'Georgia', serif",
+  "didone": "'Didot', 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', 'P052', 'Sylfaen', serif",
+  "handwritten": "'Segoe Print', 'Bradley Hand', 'Chilanka', 'TSCu_Comic', 'casual', cursive"}
+
+const fontStackNames* = fontStacks.mapIt(it[0])
+  ## The names `systemFonts` knows, in Great Tables' order.
+
+func systemFonts*(name = "system-ui"): string =
+  ## One of Great Tables' fifteen font stacks, fonts that are on most systems, as CSS text:
+  ## `systemFonts("old-style")` is "'Iowan Old Style', 'Palatino Linotype', ..., serif". The
+  ## names are in `fontStackNames`; another name raises `ValueError`.
+  for (k, v) in fontStacks:
+    if k == name: return v
+  raise newException(ValueError, "no font stack named " & name.escape & " (" & fontStackNames.join(", ") & ")")
+
+func defaultFonts*(): string =
+  ## gt's default font stack, as CSS text (tabelline's default, `tableFontNames`, is close to it).
+  "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', " &
+    "'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
 
 proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
   ## A ready-made look, after gt's `opt_stylize()`: `style` 1 to 3, in one of `color`
@@ -935,7 +1013,7 @@ proc addSummaryColumns(t: var Tabella, columns: ColSel, fns: openArray[(string, 
                        fmt: FormatFn, side: Side, missingText: string) =
   if fns.len == 0: raise newException(ValueError, "no aggregates in fns")
   if side notin {sLeft, sRight}: raise newException(ValueError, "summary columns go at the left or the right")
-  let names = columns.resolve(t.data).filterIt(it != t.rownameCol and it != t.groupnameCol)
+  let names = columns.resolve(t.data).filterIt(it notin t.stubColumns and it != t.groupnameCol)
   # the format of the new columns: the call's, or the last one of the first summed-up column
   var f = fmt
   if f == nil and names.len > 0:
@@ -1076,7 +1154,7 @@ proc colsLabelRotate*(t: sink Tabella, columns: ColSel = everything(), dir = "si
             of "sideways-rl": "writing-mode: vertical-rl; text-align: left; vertical-align: middle"
             else: raise newException(ValueError, "dir is \"sideways-lr\" or \"sideways-rl\", not " & dir.escape)
   result = t
-  let names = columns.resolve(result.data).filterIt(it != result.rownameCol and it != result.groupnameCol)
+  let names = columns.resolve(result.data).filterIt(it notin result.stubColumns and it != result.groupnameCol)
   result.styles.add StyleRule(target: Target(kind: lkColumnLabels, names: names), style: style.css(css))
 
 # ---------------------------------------------------------------- styles from the data
@@ -1147,8 +1225,8 @@ proc tabStyleBody*(t: sink Tabella, style: CellStyle, columns: ColSel = everythi
         except ValueError: discard
     if pattern.len > 0 and pattern in $v: return true
     if not fn.isNil and fn(v): return true
-  let names = columns.resolve(result.data).filterIt(it != result.rownameCol)
-  let all = result.data.names.filterIt(it != result.rownameCol and it != result.groupnameCol)
+  let names = columns.resolve(result.data).filterIt(it notin result.stubColumns)
+  let all = result.data.names.filterIt(it notin result.stubColumns and it != result.groupnameCol)
   let ix = rows.resolve(result.data)
   var cells: seq[(int, string)]
   for i in ix:

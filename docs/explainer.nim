@@ -135,7 +135,7 @@ nbCode:
     Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns, nanoplot"),
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (142), 14 opt*"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (164), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, save, extractBody, extractCells, extractSummary"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
@@ -172,7 +172,7 @@ block:
 
 doAssert nFormats == 31, "the menu says 31 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
-doAssert nOptions == 142, "the menu says 142 options; there are " & $nOptions
+doAssert nOptions == 164, "the menu says 164 options; there are " & $nOptions
 
 
 nbText: """
@@ -725,6 +725,28 @@ nbNote("""
 """, nkCode)
 
 nbText: """
+The stub can be more than one column, the highest level first: a maker is written once over its
+models. The groups can be a column of the stub too, instead of a row above each group. Here are
+some of the cars of gt's `gtcars`, one of gt's datasets that tabelline ships:
+"""
+
+nbCode:
+  let deluxe = tabella(gtcars(), rownameCol = ["mfr", "model"], groupnameCol = "ctry_origin",
+                       rowGroupAsColumn = true):
+    rowsHide where($it.mfr notin ["Lamborghini", "Maserati", "Bentley", "Rolls-Royce", "Acura", "Nissan"])
+    colsHide ["year", "trim", "bdy_style", "hp", "hp_rpm", "trq", "trq_rpm", "mpg_c", "mpg_h",
+              "drivetrain", "trsmn"]
+    fmtCurrency "msrp", currency = "USD", decimals = 0
+    colsLabel:
+      msrp: "price"
+    optCssTheme()
+  nbTable deluxe
+
+nbNote("""
+`rownameCol` takes a list of columns; a value equal to the one above it, in the same group, spans its rows (in text it is left blank). `rowGroupAsColumn = true` is the same as `tabOptions(rowGroupAsColumn = true)`; the `stubRowGroup*` options style that column. `gtcars()`, `countrypops()`, `illness()` and `metro()` come from gt, as Great Tables ships them.
+""", nkCode)
+
+nbText: """
 ## Big tables, and tables as data
 
 A long table can be previewed: its first and last rows, with a row that says which are left out.
@@ -788,7 +810,7 @@ nbCode:
   nbTable warm
 
 nbNote("""
-`fmtIcon` reads the names in the column and draws the icons as SVG, in the colour of the text. `fmtNanoplot` on a column of numbers draws one bar per row; `nanoplotOptions` gives its colours, here the page's own. Point at a bar, or tap it, to read its value.
+`fmtIcon` reads the names in the column and draws the icons as SVG, in the colour of the text. `fmtNanoplot` on a column of numbers draws one bar per row; `nanoplotOptions` gives its colours, here the page's own. Point at a bar, or tap it, to read its value. An image can go anywhere text goes, a title or a label: `localImage(file)` inlines a file, `webImage(url)` links one.
 """, nkCode)
 
 nbText: """
@@ -807,7 +829,7 @@ nbCode:
   nbTable rowsOf
 
 nbNote("""
-`colsNanoplot` joins the six columns of each row into one cell, "1 2 3 4 5 6", hides them, and draws the new column with `fmtNanoplot`. `echo rowsOf` prints it as text, with a sparkline (▁▂▄▆█) in each row.
+`colsNanoplot` joins the six columns of each row into one cell, "1 2 3 4 5 6", hides them, and draws the new column with `fmtNanoplot`. The options for points and bars take a list too, one value for each point (`dataPointFillColor = @["red", "blue"]`, repeating). `echo rowsOf` prints it as text, with a sparkline (▁▂▄▆█) in each row.
 """, nkCode)
 
 nbText: """
@@ -1151,7 +1173,7 @@ tables were made once, when the page was built: nothing runs on them when the lo
 
 ## What comes next
 
-tabelline 0.1 had the basics of gt. 0.2, which this page shows and which is being finished,
+tabelline 0.1 had the basics of gt. 0.2, which this page shows,
 adds summary rows and merges, every format and every locale, and pictures in cells. The [roadmap](../roadmap/) has one more release after it. Each
 release is tried on real subjects (the stories) and on ported reference code (the
 [book](../book/)); the open steps are written down as specs (`openspec/`, on the

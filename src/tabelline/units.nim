@@ -206,9 +206,10 @@ proc fmtChem*(t: sink Tabella, columns: ColSel, rows = allRows()): Tabella =
   ## Cells written as chemical formulas or reactions: `"H2SO4"` is "H₂SO₄".
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string = formatChem($v, ctx), rows)
 
-proc colsUnits*(t: sink Tabella, units: openArray[(string, string)], unitsPattern = "{1}, {2}"): Tabella =
+proc colsUnits*(t: sink Tabella, units: openArray[(string, string)], unitsPattern = ""): Tabella =
   ## Units for column labels, in gt's notation: `colsUnits({"density": "kg/m^3"})` shows the
-  ## label "density, kg/m³". `unitsPattern` places them: `{1}` is the label, `{2}` the units.
+  ## label "density, kg/m³". `unitsPattern` places them: `{1}` is the label, `{2}` the units ("": the option
+  ## `columnLabelsUnitsPattern`, "{1}, {2}").
   ## Inside `tabella(data): body`, also as a block, one pair per line (see `tabella`):
   ## `colsUnits:` then `density: "kg/m^3"`.
   result = t

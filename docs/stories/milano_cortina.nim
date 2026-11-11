@@ -40,7 +40,7 @@ nbText: """
 Between 6 February and 15 March 2026 Italy held the Winter Olympics and then the Paralympics,
 in eight places from Milan to the Dolomites. Nine months later they can be told with numbers,
 and the numbers fit in tables. This story tells them, and makes every table with
-[tabelline](../../), whose 0.1 is about to be released: it is the *use it* story of 0.1 (see the
+[tabelline](../../): it was the *use it* story of 0.1 (see the
 [roadmap](../../roadmap/)), the one that uses the library as a user would, on data from outside.
 
 It learns from the coverage of [Il Post](https://www.ilpost.it/tag/milano-cortina-2026/), which
