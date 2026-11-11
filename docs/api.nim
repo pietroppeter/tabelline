@@ -337,7 +337,14 @@ sugar, and it changes how a signature reads:
 - **Converters fill in the types.** An argument of type [`Text`](#Text) takes a plain string
   ([`toText`](#toText)); a [`ColSel`](#ColSel), a column's name or a list of names
   ([`toColSel`](#toColSel)); a [`RowSel`](#RowSel), a row, a list or a range of rows
-  ([`toRowSel`](#toRowSel)), or [`where`](#where) with a condition on `it`.
+  ([`toRowSel`](#toRowSel)), or [`where`](#where) with a condition on `it`. A cell's
+  [`Value`](#Value) comes from a number, a text or a date, a list from a `seq`, and a record
+  from an object or a named tuple ([`toValue`](#toValue)); [`list`](#list) and
+  [`record`](#record) make them by hand.
+- **The dot reads by name.** `it.mass` is `it["mass"]` on a [`Row`](#Row), and `v.x` is
+  `v["x"]` on a record: a template `` `.` `` under Nim's experimental `dotOperators`, which the
+  compiler calls only when the name is not a field or a proc. So a name the type already has
+  (`kind`, `len`) is that, and a keyword (`type`) needs brackets.
 
 Beside types, a signature uses a few words of Nim. The one you meet most is `sink`, on the table
 every verb takes. It tells Nim that the proc takes ownership of the value: when the caller does
