@@ -12,6 +12,8 @@ type
     index*: int                  ## row in the data
     stub*: string                ## the stub cell, formatted ("" without a stub)
     indent*: int                 ## indent level of the stub cell (0 to 5)
+    levels*: seq[string]         ## the stub's higher levels (`stubCols`), formatted
+    spans*: seq[int]             ## how many rows each level spans: 0 when the one above covers it
     cells*: seq[string]          ## formatted cells of the visible data columns
   BuiltSummary* = object
     label*: string               ## the label in the stub, rendered
@@ -19,7 +21,8 @@ type
     cells*: seq[string]          ## formatted cells of the visible data columns
   BuiltGroup* = object
     id*: string
-    label*: string               ## rendered label ("" for rows outside any group)
+    label*: string               ## rendered label ("" for rows outside any group, unless
+                                 ## `rowGroupDefaultLabel` names them)
     rows*: seq[BuiltRow]
     summaryTop*, summaryBottom*: seq[BuiltSummary]   ## the group's summary rows
   Built* = object
@@ -52,11 +55,12 @@ func renderLabel*(t: Text, ctx: RenderContext): string =
   let kind = t.kind
   withUnits(t.s, ctx, func (s: string): string = renderText(Text(kind: kind, s: s), ctx))
 
-func columnLabel*(c: ColInfo, ctx: RenderContext): string =
-  ## The label of a column, with its units (`colsUnits`).
+func columnLabel*(c: ColInfo, ctx: RenderContext, unitsPattern = "{1}, {2}"): string =
+  ## The label of a column, with its units (`colsUnits`), placed by the column's pattern or else
+  ## by `unitsPattern` (the option `columnLabelsUnitsPattern`).
   result = renderLabel(c.label, ctx)
   if c.units.len > 0:
-    let pattern = if c.unitsPattern.len > 0: c.unitsPattern else: "{1}, {2}"
+    let pattern = if c.unitsPattern.len > 0: c.unitsPattern else: unitsPattern
     result = pattern.multiReplace(("{1}", result), ("{2}", formatUnits(c.units, ctx)))
 
 proc applyFormat(f: FormatRule, v: Value, ctx: RenderContext): string =
@@ -293,12 +297,24 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
   var order = @[""] & toSeq(t.groupLabels.keys).filterIt(it.len > 0)
   for gid in order:
     var g = BuiltGroup(id: gid, label: if gid.len > 0: t.groupLabels[gid].renderText(ctx) else: "")
+    if gid.len == 0 and t.hasGroups and t.options.rowGroupDefaultLabel.len > 0:
+      g.label = toText(t.options.rowGroupDefaultLabel).renderText(ctx)
     for i in t.displayOrder:
       if t.rowGroups[i] != gid: continue
       var r = BuiltRow(index: i, indent: t.indents.getOrDefault(i, 0))
       if t.hasRowNames: r.stub = t.transformCell(i, t.rownameCol, t.shownCell(i, t.rownameCol, ctx))
+      for c in t.stubCols: r.levels.add t.transformCell(i, c, t.shownCell(i, c, ctx))
       for c in result.columns: r.cells.add t.transformCell(i, c.name, t.shownCell(i, c.name, ctx))
       g.rows.add r
+    # a higher level equal to the one above it (under the same higher levels) spans both rows
+    for k in 0 ..< t.stubCols.len:
+      var first = -1
+      for n in 0 ..< g.rows.len:
+        g.rows[n].spans.add 1
+        if first >= 0 and g.rows[n].levels[0 .. k] == g.rows[first].levels[0 .. k]:
+          g.rows[n].spans[k] = 0
+          inc g.rows[first].spans[k]
+        else: first = n
     if g.rows.len > 0:
       for rule in t.summaries:
         if rule.grand or gid.len == 0 or (rule.groups.len > 0 and gid notin rule.groups): continue
@@ -331,6 +347,7 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
     keysInOrder.add groupKey(g.id)
     keysInOrder.addSummaryKeys(g.summaryTop, result.columns)
     for r in g.rows:
+      for c in t.stubCols: keysInOrder.add cellKey(r.index, c)
       if t.hasRowNames: keysInOrder.add cellKey(r.index, t.rownameCol)
       for c in result.columns: keysInOrder.add cellKey(r.index, c.name)
     keysInOrder.addSummaryKeys(g.summaryBottom, result.columns)

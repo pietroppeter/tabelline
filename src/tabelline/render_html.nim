@@ -111,8 +111,14 @@ proc buildTabellaCss(): (string, seq[string]) =
   font-size: [v("stubFontSize")]; text-transform: [v("stubTextTransform")];
   border-right: [v("stubBorderWidth")] [v("stubBorderStyle")] [v("stubBorderColor", v("tableBodyHlinesColor"))]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
-[i] .tb_indent_1 { text-indent: 1em; } [i] .tb_indent_2 { text-indent: 2em; } [i] .tb_indent_3 { text-indent: 3em; }
-[i] .tb_indent_4 { text-indent: 4em; } [i] .tb_indent_5 { text-indent: 5em; }
+[i] .tb_indent_1 { text-indent: [v("stubIndentLength")]; } [i] .tb_indent_2 { text-indent: calc(2 * [v("stubIndentLength")]); }
+[i] .tb_indent_3 { text-indent: calc(3 * [v("stubIndentLength")]); } [i] .tb_indent_4 { text-indent: calc(4 * [v("stubIndentLength")]); }
+[i] .tb_indent_5 { text-indent: calc(5 * [v("stubIndentLength")]); }
+[i] .tb_stub.tb_stub_level { border-right: none; vertical-align: top; }
+[i] .tb_stub_row_group { font-size: [v("stubRowGroupFontSize")]; font-weight: [v("stubRowGroupFontWeight")];
+  text-transform: [v("stubRowGroupTextTransform")]; vertical-align: top;
+  border-right: [v("stubRowGroupBorderWidth")] [v("stubRowGroupBorderStyle")] [v("stubRowGroupBorderColor")]; }
+[i] .tb_no_data { color: [v("tableFontColor")]; font-style: italic; }
 [i] sup, [i] sub { line-height: 0; }
 [i] .tb_supsub { display: inline-flex; flex-direction: column; font-size: 70%; line-height: 1.05;
   vertical-align: -0.4em; text-align: left; }
@@ -192,8 +198,12 @@ proc styleVars*(o: TabOptions): string =
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel).
     bg.len == 7 and bg.startsWith("#") and idealTextColor(bg) == "#FFFFFF"
-  if onDark(o.headingBackgroundColor): parts.add "--tb-heading-color: #FFFFFF"
-  if onDark(o.columnLabelsBackgroundColor): parts.add "--tb-column-labels-color: #FFFFFF"
+  if onDark(o.headingBackgroundColor): parts.add "--tb-heading-color: " & o.tableFontColorLight
+  if onDark(o.columnLabelsBackgroundColor): parts.add "--tb-column-labels-color: " & o.tableFontColorLight
+  # where the table sits, unless its margins are given
+  if o.tableAlign == "left" and o.tableMarginLeft == "auto": parts.add "--tb-table-margin-left: 0"
+  if o.tableAlign == "right" and o.tableMarginRight == "auto": parts.add "--tb-table-margin-right: 0"
+  if not o.stubSeparate: parts.add "--tb-stub-border-style: none"
   parts.join("; ").replace("\"", "'")
 
 proc ownCss(id: string, o: TabOptions): string =
@@ -204,8 +214,9 @@ proc ownCss(id: string, o: TabOptions): string =
   if o.tableBodyVlinesColor.len > 0:
     let line = o.tableBodyVlinesWidth & " " & o.tableBodyVlinesStyle & " " & o.tableBodyVlinesColor
     result.add i & " .tb_row, " & i & " .tb_col_headings th { border-left: " & line & "; border-right: " & line & "; }\n"
-  if o.extraCss.strip.len == 0: return
-  for rule in o.extraCss.split('}'):
+  let extra = [o.extraCss, o.tableAdditionalCss].filterIt(it.strip.len > 0).join("\n")
+  if extra.len == 0: return
+  for rule in extra.split('}'):
     let r = rule.strip
     if r.len == 0: continue
     let parts = r.split('{', 1)
@@ -214,60 +225,89 @@ proc ownCss(id: string, o: TabOptions): string =
     result.add sels.join(", ") & " { " & parts[1].strip & " }\n"
 
 proc bodyHtml(t: Tabella, b: Built): string =
-  let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
+  let ncols = b.columns.len + t.stubWidth
   let m = t.options
+  let asColumn = t.groupAsColumn
+  let stubSpan = 1 + t.stubCols.len     # the stub's columns, without the group column
   var striped = false
+  var groupCell = ""                    # the group's label, still to be drawn (as a column)
+  proc takeGroupCell(): string =
+    result = groupCell
+    groupCell = ""
   proc summaryHtml(ss: seq[BuiltSummary], grand, top: bool): string =
     # summary rows: a rule above the first (below the last, when they come first)
     let kind = if grand: "tb_grand_summary_row" else: "tb_summary_row"
+    let span = if grand: t.stubWidth else: stubSpan
+    let cs = if span > 1: &" colspan=\"{span}\"" else: ""
     for k, s in ss:
       var cls = kind
       if not top and k == 0: cls.add(if grand: " tb_first_grand_summary_row" else: " tb_first_summary_row")
       if top and k == ss.high: cls.add(if grand: " tb_last_grand_summary_row_top" else: " tb_last_summary_row_top")
       result.add &"""<tr class="{kind}_tr">"""
-      result.add &"""<th scope="row" class="tb_stub tb_left {cls}"{b.styleAttr(s.key)}>{s.label}{b.marksHtml(s.key, m)}</th>"""
+      if not grand: result.add takeGroupCell()
+      result.add &"""<th scope="row"{cs} class="tb_stub tb_left {cls}"{b.styleAttr(s.key)}>{s.label}{b.marksHtml(s.key, m)}</th>"""
       for j, c in b.columns:
         let key = s.key & c.name
         result.add &"""<td class="{alignClass(c.align)} {cls}"{b.styleAttr(key)}>{s.cells[j]}{b.marksHtml(key, m)}</td>"""
       result.add "</tr>\n"
   result.add "<tbody class=\"tb_table_body\">\n"
   result.add summaryHtml(b.grandTop, true, true)
+  var shown = 0
   for g in b.groups:
-    if g.id.len > 0:
-      result.add &"""<tr class="tb_group_heading_row"><th colspan="{ncols}" class="tb_group_heading" scope="colgroup" id="{escapeHtml(g.id)}"{b.styleAttr(groupKey(g.id))}>{g.label}{b.marksHtml(groupKey(g.id), m)}</th></tr>""" & "\n"
+    let gk = groupKey(g.id)
+    if asColumn:
+      let n = g.summaryTop.len + g.rows.len + g.summaryBottom.len
+      let rs = if n > 1: &" rowspan=\"{n}\"" else: ""
+      groupCell = &"""<th scope="rowgroup"{rs} class="tb_row tb_left tb_stub_row_group" id="{escapeHtml(g.id)}"{b.styleAttr(gk)}>{g.label}{b.marksHtml(gk, m)}</th>"""
+    elif g.id.len > 0 or g.label.len > 0:
+      result.add &"""<tr class="tb_group_heading_row"><th colspan="{ncols}" class="tb_group_heading" scope="colgroup" id="{escapeHtml(g.id)}"{b.styleAttr(gk)}>{g.label}{b.marksHtml(gk, m)}</th></tr>""" & "\n"
     striped = false
     result.add summaryHtml(g.summaryTop, false, true)
     for r in g.rows:
+      inc shown
       result.add "<tr>"
-      let stripe = if t.options.rowStriping and striped: " tb_striped" else: ""
+      result.add takeGroupCell()
+      let on = m.rowStriping and striped
+      let stripe = if on and m.rowStripingIncludeTableBody: " tb_striped" else: ""
+      let stubStripe = if on and m.rowStripingIncludeStub: " tb_striped" else: ""
+      for k, c in t.stubCols:
+        if r.spans[k] == 0: continue
+        let key = cellKey(r.index, c)
+        let rs = if r.spans[k] > 1: &" rowspan=\"{r.spans[k]}\"" else: ""
+        result.add &"""<th scope="rowgroup"{rs} class="tb_row tb_left tb_stub tb_stub_level"{b.styleAttr(key)}>{r.levels[k]}{b.marksHtml(key, m)}</th>"""
       if t.hasStub:
         let k = cellKey(r.index, t.rownameCol)
         let indent = if r.indent > 0: &" tb_indent_{r.indent}" else: ""
-        result.add &"""<th scope="row" class="tb_row tb_left tb_stub{indent}{stripe}"{b.styleAttr(k)}>{r.stub}{b.marksHtml(k, m)}</th>"""
+        result.add &"""<th scope="row" class="tb_row tb_left tb_stub{indent}{stubStripe}"{b.styleAttr(k)}>{r.stub}{b.marksHtml(k, m)}</th>"""
       for j, c in b.columns:
         let k = cellKey(r.index, c.name)
         result.add &"""<td class="tb_row {alignClass(c.align)}{stripe}"{b.styleAttr(k)}>{r.cells[j]}{b.marksHtml(k, m)}</td>"""
       result.add "</tr>\n"
       striped = not striped
     result.add summaryHtml(g.summaryBottom, false, false)
+  if shown == 0 and b.grandTop.len == 0 and b.grandBottom.len == 0:
+    result.add &"""<tr><td colspan="{max(ncols, 1)}" class="tb_row tb_center tb_no_data">{escapeHtml(m.tableNoDataMessage)}</td></tr>""" & "\n"
   result.add summaryHtml(b.grandBottom, true, false)
   result.add "</tbody>\n"
 
 proc columnLabelsHtml(t: Tabella, b: Built): string =
+  if t.options.columnLabelsHidden: return ""
   let levels = t.spannerLevels(b.columns)
   let m = t.options
+  let sw = t.stubWidth
+  let cs = if sw > 1: &" colspan=\"{sw}\"" else: ""
   func hasAnySpanner(c: ColInfo): bool =
     for lv in 1 .. levels:
       if t.spannerAt(c.name, lv) >= 0: return true
   proc labelCell(c: ColInfo, rowspan: int): string =
     let rs = if rowspan > 1: &" rowspan=\"{rowspan}\"" else: ""
     let w = if c.width.len > 0: &" width=\"{c.width}\"" else: ""
-    &"""<th class="tb_col_heading {alignClass(c.align)}" scope="col" id="{escapeHtml(c.name)}"{rs}{w}{b.styleAttr(colKey(c.name))}>{c.columnLabel(rcHtml)}{b.marksHtml(colKey(c.name), m)}</th>"""
+    &"""<th class="tb_col_heading {alignClass(c.align)}" scope="col" id="{escapeHtml(c.name)}"{rs}{w}{b.styleAttr(colKey(c.name))}>{c.columnLabel(rcHtml, m.columnLabelsUnitsPattern)}{b.marksHtml(colKey(c.name), m)}</th>"""
   for lv in countdown(levels, 1):
     let last = lv == 1 and false
     result.add "<tr class=\"tb_col_headings tb_spanner_row" & (if last: " tb_col_headings_last" else: "") & "\">"
-    if lv == levels and t.hasStub:
-      result.add &"""<th class="tb_col_heading tb_left tb_stubhead" rowspan="{levels + 1}" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
+    if lv == levels and sw > 0:
+      result.add &"""<th class="tb_col_heading tb_left tb_stubhead"{cs} rowspan="{levels + 1}" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
     var j = 0
     while j < b.columns.len:
       let c = b.columns[j]
@@ -289,8 +329,8 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
       j += span
     result.add "</tr>\n"
   result.add "<tr class=\"tb_col_headings tb_col_headings_last\">"
-  if levels == 0 and t.hasStub:
-    result.add &"""<th class="tb_col_heading tb_left tb_stubhead" scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
+  if levels == 0 and sw > 0:
+    result.add &"""<th class="tb_col_heading tb_left tb_stubhead"{cs} scope="col"{b.styleAttr("stubhead")}>{t.stubhead.renderLabel(rcHtml)}{b.marksHtml("stubhead", m)}</th>"""
   for c in b.columns:
     if levels == 0 or c.hasAnySpanner: result.add labelCell(c, 1)
   result.add "</tr>\n"
@@ -300,7 +340,7 @@ proc tableHtml(t: Tabella, withStyle: bool): string =
   ## rules if it has any, and the `<table>`.
   let b = t.build(rcHtml)
   let m = t.options
-  let ncols = b.columns.len + (if t.hasStub: 1 else: 0)
+  let ncols = max(1, b.columns.len + t.stubWidth)
   var head = ""
   if not t.title.isEmpty:
     let last = if t.subtitle.isEmpty: " tb_heading_last" else: ""
@@ -313,11 +353,15 @@ proc tableHtml(t: Tabella, withStyle: bool): string =
   if b.notes.len > 0 or b.plainNotes.len > 0 or t.sourceNotes.len > 0:
     # one <tfoot>: footnotes first, then source notes, as in gt
     foot.add "<tfoot>\n"
-    for (k, n) in b.footer:
-      let mark = if k > 0: footMarkHtml(k, m) & " " else: ""
-      foot.add &"""<tr class="tb_footnotes"><td class="tb_footnote" colspan="{ncols}"{b.styleAttr("footnotes")}>{mark}{n}</td></tr>""" & "\n"
-    for n in t.sourceNotes:
-      foot.add &"""<tr class="tb_sourcenotes"><td class="tb_sourcenote" colspan="{ncols}"{b.styleAttr("source_notes")}>{n.renderText(rcHtml)}</td></tr>""" & "\n"
+    let notes = b.footer.mapIt((if it[0] > 0: footMarkHtml(it[0], m) & " " else: "") & it[1])
+    proc footRows(items: seq[string], multiline: bool, sep, row, cell, key: string) =
+      # one row per note, or all of them in one row (`footnotesMultiline = false`)
+      let lines = if multiline or items.len == 0: items else: @[items.join(escapeHtml(sep))]
+      for n in lines:
+        foot.add &"""<tr class="{row}"><td class="{cell}" colspan="{ncols}"{b.styleAttr(key)}>{n}</td></tr>""" & "\n"
+    footRows(notes, m.footnotesMultiline, m.footnotesSep, "tb_footnotes", "tb_footnote", "footnotes")
+    footRows(t.sourceNotes.mapIt(it.renderText(rcHtml)), m.sourceNotesMultiline, m.sourceNotesSep,
+             "tb_sourcenotes", "tb_sourcenote", "source_notes")
     foot.add "</tfoot>\n"
   let caption = if t.caption.isEmpty: ""
                 else: &"""<caption class="tb_caption">{t.caption.renderText(rcHtml)}</caption>""" & "\n"

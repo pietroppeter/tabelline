@@ -30,10 +30,37 @@ proc initTabella*(data: TableData, rownameCol = "", groupnameCol = "", id = "", 
       # a missing (or empty) group value leaves the row out of every group
       if g.len > 0 and g notin result.groupLabels: result.groupLabels[g] = toText(g)
 
+proc initTabella*(data: TableData, rownameCol: openArray[string], groupnameCol = "", id = "",
+                  locale = "", autoAlign = true, rowGroupAsColumn = false): Tabella =
+  ## A table whose stub is several columns, the highest level first, as gt's
+  ## `rowname_col = c("mfr", "model")`: a value equal to the one above it, under the same higher
+  ## levels and in the same group, is drawn once, spanning its rows (left blank in text).
+  if rownameCol.len == 0: return initTabella(data, "", groupnameCol, id, locale, autoAlign)
+  result = initTabella(data, rownameCol[^1], groupnameCol, id, locale, autoAlign)
+  result.options.rowGroupAsColumn = rowGroupAsColumn
+  for name in rownameCol[0 ..< ^1]:
+    if not data.hasColumn(name):
+      raise newException(KeyError, "no column named " & name.escape & " (columns: " & data.names.join(", ") & ")")
+    result.stubCols.add name
+    for c in result.boxhead.mitems:
+      if c.name == name: c.role = crStub
+
+proc initTabella*(data: TableData, rownameCol: string, groupnameCol: string, rowGroupAsColumn: bool,
+                  id = "", locale = "", autoAlign = true): Tabella =
+  ## A table whose group labels are the first column of the stub, as gt's
+  ## `gt(row_group_as_column = TRUE)`: the same as `tabOptions(rowGroupAsColumn = true)`.
+  result = initTabella(data, rownameCol, groupnameCol, id, locale, autoAlign)
+  result.options.rowGroupAsColumn = rowGroupAsColumn
+
 proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol = "", groupnameCol = "", id = "",
                                  locale = ""): Tabella =
   ## A display table straight from Nim objects or named tuples, one field per column.
   initTabella(toTableData(rows), rownameCol, groupnameCol, id, locale)
+
+proc initTabella*[T: object | tuple](rows: openArray[T], rownameCol: openArray[string],
+                                 groupnameCol = "", id = "", locale = "", rowGroupAsColumn = false): Tabella =
+  ## A stub of several columns, from Nim objects or named tuples.
+  initTabella(toTableData(rows), rownameCol, groupnameCol, id, locale, rowGroupAsColumn = rowGroupAsColumn)
 
 proc initTabella*(t: sink Tabella): Tabella =
   ## A table already made, so that `tabella(t): body` adds verbs to it:
@@ -174,7 +201,8 @@ func subtitle*(_: LocNs): Loc = Loc(kind: lkSubtitle)
 func stubhead*(_: LocNs): Loc = Loc(kind: lkStubhead)
 func columnLabels*(_: LocNs, cols: ColSel = everything()): Loc = Loc(kind: lkColumnLabels, cols: cols)
 func spanners*(_: LocNs, labels: varargs[string]): Loc = Loc(kind: lkSpanners, names: @labels)
-func stub*(_: LocNs, rows = allRows()): Loc = Loc(kind: lkStub, rows: rows)
+func stub*(_: LocNs, rows = allRows(), cols: ColSel = everything()): Loc =
+  Loc(kind: lkStub, rows: rows, cols: cols)
 func rowGroups*(_: LocNs, groups: varargs[string]): Loc = Loc(kind: lkRowGroups, names: @groups)
 func body*(_: LocNs, cols: ColSel = everything(), rows = allRows()): Loc =
   Loc(kind: lkBody, cols: cols, rows: rows)
@@ -212,15 +240,18 @@ proc resolve*(l: Loc, t: Tabella): Target =
   of lkRowGroups:
     result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
   of lkStub:
-    for i in l.rows.resolve(t.data): result.cells.add (i, t.rownameCol)
+    let all = t.stubColumns
+    let names = l.cols.resolve(t.data).filterIt(it in all)
+    for i in l.rows.resolve(t.data):
+      for n in (if names.len > 0: names else: all): result.cells.add (i, n)
   of lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub:
     # the rows are found when the table is built, so the summary rows may come later
     result.names = l.names
     result.labels = l.labels
     if l.kind in {lkSummary, lkGrandSummary}:
-      result.columns = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
-  of lkBody:   # the data cells: the stub column is loc.stub, as in gt
-    let names = l.cols.resolve(t.data).filterIt(it != t.rownameCol)
+      result.columns = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
+  of lkBody:   # the data cells: the stub columns are loc.stub, as in gt
+    let names = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
     for i in l.rows.resolve(t.data):
       for n in names: result.cells.add (i, n)
   else: discard
@@ -608,7 +639,8 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
           elif pal.len >= levels.len: pal[k]
           else: interpolate(pal, k / (levels.len - 1))
       var s = if apply == "text": style.text(color = c) else: style.fill(c)
-      if autoColorText and apply != "text": s = s & style.text(color = idealTextColor(c))
+      if autoColorText and apply != "text":
+        s = s & style.text(color = idealTextColor(c, light = result.options.tableFontColorLight))
       result.styles.add StyleRule(target: Target(kind: lkBody, cells: @[(i, n)]), style: s)
 
 # ----------------------------------------------------------------------------------- options
@@ -935,7 +967,7 @@ proc addSummaryColumns(t: var Tabella, columns: ColSel, fns: openArray[(string, 
                        fmt: FormatFn, side: Side, missingText: string) =
   if fns.len == 0: raise newException(ValueError, "no aggregates in fns")
   if side notin {sLeft, sRight}: raise newException(ValueError, "summary columns go at the left or the right")
-  let names = columns.resolve(t.data).filterIt(it != t.rownameCol and it != t.groupnameCol)
+  let names = columns.resolve(t.data).filterIt(it notin t.stubColumns and it != t.groupnameCol)
   # the format of the new columns: the call's, or the last one of the first summed-up column
   var f = fmt
   if f == nil and names.len > 0:
@@ -1076,7 +1108,7 @@ proc colsLabelRotate*(t: sink Tabella, columns: ColSel = everything(), dir = "si
             of "sideways-rl": "writing-mode: vertical-rl; text-align: left; vertical-align: middle"
             else: raise newException(ValueError, "dir is \"sideways-lr\" or \"sideways-rl\", not " & dir.escape)
   result = t
-  let names = columns.resolve(result.data).filterIt(it != result.rownameCol and it != result.groupnameCol)
+  let names = columns.resolve(result.data).filterIt(it notin result.stubColumns and it != result.groupnameCol)
   result.styles.add StyleRule(target: Target(kind: lkColumnLabels, names: names), style: style.css(css))
 
 # ---------------------------------------------------------------- styles from the data
@@ -1147,8 +1179,8 @@ proc tabStyleBody*(t: sink Tabella, style: CellStyle, columns: ColSel = everythi
         except ValueError: discard
     if pattern.len > 0 and pattern in $v: return true
     if not fn.isNil and fn(v): return true
-  let names = columns.resolve(result.data).filterIt(it != result.rownameCol)
-  let all = result.data.names.filterIt(it != result.rownameCol and it != result.groupnameCol)
+  let names = columns.resolve(result.data).filterIt(it notin result.stubColumns)
+  let all = result.data.names.filterIt(it notin result.stubColumns and it != result.groupnameCol)
   let ix = rows.resolve(result.data)
   var cells: seq[(int, string)]
   for i in ix:

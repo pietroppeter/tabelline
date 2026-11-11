@@ -16,6 +16,7 @@ proc extractCells*(t: Tabella, columns: ColSel, rows = allRows(), ctx = rcText):
         if r.index notin wanted: continue
         result.add(if j >= 0: r.cells[j]
                    elif name == t.rownameCol: r.stub
+                   elif name in t.stubCols: r.levels[t.stubCols.find(name)]
                    else: t.shownCell(r.index, name, ctx))
 
 proc extractBody*(t: Tabella, ctx = rcText): TableData =
@@ -25,6 +26,7 @@ proc extractBody*(t: Tabella, ctx = rcText): TableData =
   let b = t.build(ctx)
   var cols: seq[(string, seq[Value])]
   if t.hasGroups: cols.add ("group", newSeq[Value]())
+  for c in t.stubCols: cols.add (c, newSeq[Value]())
   if t.hasRowNames: cols.add ("rowname", newSeq[Value]())
   for c in b.columns: cols.add (c.name, newSeq[Value]())
   for g in b.groups:
@@ -32,6 +34,9 @@ proc extractBody*(t: Tabella, ctx = rcText): TableData =
       var k = 0
       if t.hasGroups:
         cols[k][1].add toValue(g.label)
+        inc k
+      for v in r.levels:   # every row says its levels, as the data does
+        cols[k][1].add toValue(v)
         inc k
       if t.hasRowNames:
         cols[k][1].add toValue(r.stub)

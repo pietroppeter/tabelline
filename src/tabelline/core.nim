@@ -703,6 +703,28 @@ type
     sourceNotesBorderLrWidth* = "2px"
     sourceNotesBorderLrColor* = "#D3D3D3"
     extraCss* = ""          ## more CSS, scoped to the table when it starts with ` ` or `.`
+    tableAlign* = "center"         ## or "left", "right": where the table sits in its container
+    tableNoDataMessage* = "No data to display"   ## shown in the body of a table with no rows
+    tableAdditionalCss* = ""       ## more CSS, as `optCss` (both add)
+    tableFontColorLight* = "#FFFFFF"   ## text on dark cells (`dataColor`, dark headings)
+    columnLabelsHidden* = false
+    columnLabelsUnitsPattern* = "{1}, {2}"   ## label and units, when `colsUnits` gives no pattern
+    rowGroupDefaultLabel* = ""     ## a heading for the rows outside any group ("" for none)
+    rowGroupAsColumn* = false      ## group labels as the first column of the stub
+    stubIndentLength* = "1em"      ## the indent of one level (`tabStubIndent`)
+    stubSeparate* = true           ## a rule between the stub and the body
+    stubRowGroupFontSize* = "100%"
+    stubRowGroupFontWeight* = "initial"
+    stubRowGroupTextTransform* = "inherit"
+    stubRowGroupBorderStyle* = "solid"
+    stubRowGroupBorderWidth* = "2px"
+    stubRowGroupBorderColor* = "#D3D3D3"
+    footnotesMultiline* = true     ## one footnote per line; false: all on one line
+    footnotesSep* = " "            ## between footnotes on one line
+    sourceNotesMultiline* = true
+    sourceNotesSep* = " "
+    rowStripingIncludeStub* = false
+    rowStripingIncludeTableBody* = true
 
   Tabella* = object
     ## A display table: the data and everything said about how to show it.
@@ -712,6 +734,7 @@ type
     caption*: Text
     stubhead*: Text
     rownameCol*, groupnameCol*: string
+    stubCols*: seq[string]                     ## the stub's other columns, left of `rownameCol`
     groupLabels*: OrderedTable[string, Text]   ## group id -> label, in display order
     rowGroups*: seq[string]                    ## group id of each row ("" when ungrouped)
     rowOrder*: seq[int]                        ## rows in display order (empty: as in the data)
@@ -747,6 +770,16 @@ func hasStub*(t: Tabella): bool = t.rownameCol.len > 0 or t.hasSummaries
   ## with summary rows and no row names gets an empty stub).
 func hasRowNames*(t: Tabella): bool = t.rownameCol.len > 0
 func hasGroups*(t: Tabella): bool = t.groupLabels.len > 0
+func stubColumns*(t: Tabella): seq[string] =
+  ## The columns of the stub, the highest level first: `tabella(data, rownameCol = ["mfr",
+  ## "model"])` gives `@["mfr", "model"]`.
+  t.stubCols & (if t.rownameCol.len > 0: @[t.rownameCol] else: @[])
+func groupAsColumn*(t: Tabella): bool = t.options.rowGroupAsColumn and t.hasGroups
+  ## The group labels are a column of the stub (`rowGroupAsColumn`), not a row above each group.
+func stubWidth*(t: Tabella): int =
+  ## How many columns the stub takes: the group labels (as a column), the higher levels, the
+  ## row names (or the summary labels).
+  (if t.groupAsColumn: 1 else: 0) + (if t.hasStub: 1 + t.stubCols.len else: 0)
 
 type PatternRef* = object
   ## One `{...}` of a merge pattern: `{2}` is column 2, `{2.lo}` the field `lo` of the record in
