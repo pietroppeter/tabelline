@@ -33,12 +33,12 @@ block:
   type Poc = object
     poc, pr, how, code, needs: string
   let rows = @[
-    Poc(poc: "C. Chrome from Nim", pr: "#92", how: "starts Chrome, talks to it over a WebSocket (the DevTools protocol, as Great Tables' nokap), screenshots the table's box",
-        code: "212 lines; the WebSocket client is 57", needs: "Chrome"),
     Poc(poc: "A. Native SVG", pr: "#94", how: "lays the table out itself, measuring text with the font's own widths, and writes rectangles, lines and letters",
         code: "about 1,500 lines: fonts 460, layout and SVG 1,060", needs: "nothing: the standard library"),
     Poc(poc: "B. PNG with pixie", pr: "#93", how: "lays the table out itself, measuring with pixie, and paints pixels with pixie",
         code: "about 1,060 lines", needs: "pixie (an optional module), and two fonts"),
+    Poc(poc: "C. Chrome from Nim", pr: "#92", how: "starts Chrome, talks to it over a WebSocket (the DevTools protocol, as Great Tables' nokap), screenshots the table's box",
+        code: "212 lines; the WebSocket client is 57", needs: "Chrome"),
   ]
   let t = tabella(rows, rownameCol = "poc"):
     tabHeader "Three proofs of concept", "draft PRs, std lib only unless said"
@@ -50,7 +50,8 @@ block:
 nbText: """
 ## How close they came
 
-**Chrome** is the HTML table, so it is exact by definition: everything is drawn, spanners,
+Chrome comes first here, though it is the last letter: it was the reference the other two were
+measured against. **Chrome** is the HTML table, so it is exact by definition: everything is drawn, spanners,
 summaries, footnote marks, Markdown, colours, nanoplots, pictures. It became the reference for
 the other two.
 
@@ -147,7 +148,7 @@ the SVG's layout.
 
 ## The plan they point to
 
-A proposal for 0.3, to become an OpenSpec change if Pietro agrees:
+The plan for 0.3, which Pietro approved on 11 November; it becomes an OpenSpec change:
 
 1. **A layout in the core**, from the SVG proof: `build`, then cells, a CSS reader, runs of text,
    column widths, line breaks, collapsed borders. It measures through a small font interface
