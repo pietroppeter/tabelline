@@ -595,3 +595,47 @@ func tintMix*(token: string, share: int, other = "--paper"): string =
 
 # ----------------------------------------------------------------------------------- review mode
 
+
+# ------------------------------------------------------------------------- Mediterranean sources
+# The colours of the post "Designing a Mediterranean look" (round 1): for each source of the
+# look, six colours in the roles of a look (paper, ink, primary, secondary, warning, success),
+# picked by eye from the kind of work it is, not sampled from any picture. They are candidates;
+# the look that wins becomes a `Look` above.
+
+const mediterraneanSources* = [
+  ("minoan", [("#EFE6D2", "lime plaster", "paper"), ("#1E1A17", "black glaze", "ink"),
+              ("#C3693C", "terracotta", "primary"), ("#3F7FA6", "dolphin blue", "secondary"),
+              ("#D9A441", "yellow ochre", "warning"), ("#6E8B5A", "olive", "success")]),
+  ("isolari", [("#F3E9D2", "vellum", "paper"), ("#3A2E26", "iron-gall ink", "ink"),
+               ("#B8382B", "cinnabar", "primary"), ("#3D6A9E", "sea blue", "secondary"),
+               ("#C9A347", "gold leaf", "warning"), ("#4F8A6E", "verdigris", "success")]),
+  ("matisse", [("#FBF8F1", "white paper", "paper"), ("#1B2238", "night blue", "ink"),
+               ("#2643A6", "ultramarine", "primary"), ("#E46F8E", "Dufy pink", "secondary"),
+               ("#F2C230", "lemon", "warning"), ("#3E9E6B", "palm green", "success")]),
+  ("miro", [("#F7F4EC", "whitewashed wall", "paper"), ("#111111", "black sign", "ink"),
+            ("#D7261E", "red", "primary"), ("#1D4F9C", "blue", "secondary"),
+            ("#F6C700", "yellow", "warning"), ("#2E8B57", "green", "success")]),
+  ("list", [("#F7F6F2", "whitewash", "paper"), ("#141414", "shadow", "ink"),
+            ("#2C5D8F", "a blue door", "primary"), ("#7A7A76", "stone grey", "secondary"),
+            ("#D8D2C4", "dust", "warning"), ("#55604A", "caper leaf", "success")]),
+  ("maiolica", [("#FAF8F2", "tin glaze", "paper"), ("#1A2340", "manganese blue-black", "ink"),
+                ("#1E4FA1", "cobalt", "primary"), ("#3C8C5A", "copper green", "secondary"),
+                ("#F2B632", "antimony yellow", "warning"), ("#A0522D", "terracotta", "success")]),
+  ("scianna", [("#F2F0EB", "print white", "paper"), ("#0E0E0E", "silver black", "ink"),
+               ("#5A5A5A", "dark grey", "primary"), ("#9A9A9A", "mid grey", "secondary"),
+               ("#C9C6BF", "light grey", "warning"), ("#8C1C13", "feast red", "success")]),
+  ("ghirri", [("#F6F3EA", "faded print", "paper"), ("#3B3F45", "soft black", "ink"),
+              ("#8FB3C7", "pale sky", "primary"), ("#E8B4B0", "faded pink", "secondary"),
+              ("#EAD9A0", "pale yellow", "warning"), ("#9DBFB0", "sea green", "success")]),
+  ("vitali", [("#F8F6F0", "bleached sand", "paper"), ("#2E3134", "shade", "ink"),
+              ("#2FA4A9", "shallow sea", "primary"), ("#E04E39", "umbrella red", "secondary"),
+              ("#F3C64B", "umbrella yellow", "warning"), ("#E6D7BE", "sand", "success")]),
+]
+
+func sourceSwatches*(key: string): seq[(string, string, string)] =
+  ## The six colours of a Mediterranean source, for `nbSwatches`: colour, name, role.
+  for (k, colours) in mediterraneanSources:
+    if k == key:
+      for c in colours: result.add c
+      return
+  doAssert false, "no Mediterranean source: " & key
