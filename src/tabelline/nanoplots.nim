@@ -37,18 +37,25 @@ func perPoint[T](x: T | seq[T]): seq[T] =
   when x is seq: (if x.len == 0: raise newException(ValueError, "an empty list of options") else: x)
   else: @[x]
 
+func perPointF(x: SomeNumber | seq[float] | seq[int]): seq[float] =
+  ## A per-point number: one, or a list of floats or ints.
+  when x is seq:
+    if x.len == 0: raise newException(ValueError, "an empty list of options")
+    for v in x: result.add float(v)
+  else: @[float(x)]
+
 func at*[T](s: seq[T], i: int): T =
   ## The value of a per-point option for point `i`: the list repeats.
   s[i mod s.len]
 
-func nanoplotOptions*(dataPointRadius: float | seq[float] = 10.0,
+func nanoplotOptions*(dataPointRadius: SomeNumber | seq[float] | seq[int] = 10.0,
                       dataPointStrokeColor: string | seq[string] = "#FFFFFF",
-                      dataPointStrokeWidth: float | seq[float] = 4.0,
+                      dataPointStrokeWidth: SomeNumber | seq[float] | seq[int] = 4.0,
                       dataPointFillColor: string | seq[string] = "#FF0000",
                       dataLineType = "curved", dataLineStrokeColor = "#4682B4",
                       dataLineStrokeWidth = 8.0, dataAreaFillColor = "#FF0000",
                       dataBarStrokeColor: string | seq[string] = "#3290CC",
-                      dataBarStrokeWidth: float | seq[float] = 4.0,
+                      dataBarStrokeWidth: SomeNumber | seq[float] | seq[int] = 4.0,
                       dataBarFillColor: string | seq[string] = "#3FB5FF", dataBarNegativeStrokeColor = "#CC3243",
                       dataBarNegativeStrokeWidth = 4.0, dataBarNegativeFillColor = "#D75A68",
                       referenceLineColor = "#75A8B0", referenceAreaFillColor = "#A6E6F2",
@@ -66,14 +73,14 @@ func nanoplotOptions*(dataPointRadius: float | seq[float] = 10.0,
   ## y axis and the reference line yourself.
   if dataLineType notin ["curved", "straight"]:
     raise newException(ValueError, "dataLineType is \"curved\" or \"straight\", not " & dataLineType.escape)
-  NanoplotOptions(dataPointRadius: perPoint[float](dataPointRadius),
+  NanoplotOptions(dataPointRadius: perPointF(dataPointRadius),
     dataPointStrokeColor: perPoint[string](dataPointStrokeColor),
-    dataPointStrokeWidth: perPoint[float](dataPointStrokeWidth),
+    dataPointStrokeWidth: perPointF(dataPointStrokeWidth),
     dataPointFillColor: perPoint[string](dataPointFillColor),
     dataLineType: dataLineType, dataLineStrokeColor: dataLineStrokeColor,
     dataLineStrokeWidth: dataLineStrokeWidth, dataAreaFillColor: dataAreaFillColor,
     dataBarStrokeColor: perPoint[string](dataBarStrokeColor),
-    dataBarStrokeWidth: perPoint[float](dataBarStrokeWidth),
+    dataBarStrokeWidth: perPointF(dataBarStrokeWidth),
     dataBarFillColor: perPoint[string](dataBarFillColor), dataBarNegativeStrokeColor: dataBarNegativeStrokeColor,
     dataBarNegativeStrokeWidth: dataBarNegativeStrokeWidth,
     dataBarNegativeFillColor: dataBarNegativeFillColor, referenceLineColor: referenceLineColor,

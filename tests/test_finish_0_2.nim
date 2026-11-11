@@ -130,6 +130,7 @@ suite "images, fonts, nanoplots, datasets":
     let h = t.toHtml
     check h.count("fill=\"red\"") == 2 and h.count("fill=\"blue\"") == 2
     check h.count("r=\"9\"") == 2
+    check nanoplotOptions(dataPointRadius = 8, dataBarStrokeWidth = @[1, 2]).dataBarStrokeWidth == @[1.0, 2.0]
     let bars = tabella(d):
       fmtNanoplot "v", plotType = "bar", options = nanoplotOptions(dataBarFillColor = @["#111111", "#222222", "#333333"])
     check bars.toHtml.count("fill=\"#111111\"") == 2
