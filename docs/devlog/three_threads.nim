@@ -151,6 +151,12 @@ block:
     optCssTheme()
   nbTable t
 
+nbNote """
+**Later.** This is the plan as it was posted. On 10 and 11 Nov 2026 it became three releases:
+0.2 took in what 0.3 and 0.4 were to bring (every format and locale, pictures in cells), and
+Out of the browser is now 0.3. The [roadmap](../../roadmap/) has the plan as it is now.
+""", nkInfo
+
 nbText: """
 The first two subjects are chosen. For 0.1 the data is the work itself: a month of open source
 built with Claude, told simply, and from it the first design of *Operetta*, the way of working
