@@ -786,6 +786,9 @@ under the line, the line, as Bézier curves, the bars, the reference line, the p
 the guides that show a value on hover). A box plot computes its quartiles by linear
 interpolation and its whiskers by Tukey's rule (the farthest values within 1.5 boxes). The verb
 reads every cell of the column first, so the plots of a column share their scale.
+
+How the HTML of every table shares one stylesheet, also in 0.2, has a post of its own:
+[One stylesheet for every table](../sharing-styles/).
 """
 
 nbSave
