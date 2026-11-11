@@ -1,19 +1,14 @@
 ## ADDED Requirements
 
-### Requirement: One style per page
-`nbTable` SHALL write each style class's `<style>` once per page: the first table of the page
-with a class carries it, the next ones with the same class do not. `nb.tableHtml(t)` SHALL give
-the HTML of `t` with the same rule, for a block that puts a table inside its own HTML. A new page
-(`nbInit`) SHALL start with no style written.
+### Requirement: One stylesheet per page
+`nbTable` SHALL write `tabellaCss` once per page, with the first table of the page; the next
+tables SHALL not repeat it. `nb.tableHtml(t)` SHALL give the HTML of `t` with the same rule, for
+a block that puts a table inside its own HTML. A new page (`nbInit`) SHALL start without it.
 
 #### Scenario: A page of many tables
-- **WHEN** a page calls `nbTable` for 100 tables with the same options
-- **THEN** the page holds one `<style>` for them, in the first table's block
-
-#### Scenario: Two styles on a page
-- **WHEN** a page shows tables with two different sets of options
-- **THEN** the page holds two `<style>` elements, one per class
+- **WHEN** a page calls `nbTable` for 100 tables, with any options
+- **THEN** the page holds `tabellaCss` once, in the first table's block
 
 #### Scenario: A table in another block
-- **WHEN** a custom block renders `nb.tableHtml(t)` after an `nbTable` with the same style class
-- **THEN** its HTML has no `<style>`, and the table looks as it does alone
+- **WHEN** a custom block renders `nb.tableHtml(t)` after an `nbTable`
+- **THEN** its HTML has no `tabellaCss`, and the table looks as it does alone

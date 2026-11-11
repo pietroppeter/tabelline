@@ -5,34 +5,40 @@ table's id. A page with many tables repeats the same rules again and again: the 
 (PR #65) has 156 tables, all with the same options, and their styles are 1.1 MB of its 1.9 MB.
 Pietro, 11 Nov 2026 (thread "Build a styled API reference for tabelline"): "We should share CSS
 as much as possible". The style of a table depends only on its options (and on whether it has
-nanoplots), so tables with the same options can share one copy. This change comes from that
+nanoplots), so the rules can be shared and only the values differ. This change comes from that
 thread; the PR that builds it is still to be opened.
 
 ## What Changes
 
-- The style of a table is scoped to a class named after a hash of the style itself
-  (`tb-s-1a2b3c4d`), not to the table's id. Two tables with the same options get the same class
-  and the same CSS. The `<div>` keeps its id (for links and `aria-labelledby`) and gets the class.
-- `toHtml(t)` is unchanged for a reader: a fragment that works alone, with its `<style>` inside.
-  `toHtml(t, withStyle = false)` leaves the `<style>` out, and `tableStyle(t)` gives it: the
-  `<style>` element for the table's class, to be written once wherever the page wants it.
-- `nbTable` writes each distinct style once per page: the first table with a class carries its
-  `<style>`, the next ones with the same class do not. `nb.tableHtml(t)` does the same for a block
-  that puts a table inside its own HTML (`nbParts`, `nbTabs`, `nbBeside` in the docs).
-- **BREAKING (small)**: a selector that relied on `#id` having an id's weight (a page rule that
-  lost to tabelline's rules, now wins or the other way round) may change result. The class has a
-  class's weight, still written after the page's theme. The docs and the book are checked page by
-  page (screenshots before and after).
+- The ~90 rules of a table become one fixed stylesheet, `tabellaCss`, the same for every table:
+  rules on `.tabella` and the `tb_` classes, each value read from a CSS variable named after its
+  option, with the default as fallback (`font-size: var(--tb-heading-title-font-size, 125%)`).
+  The nanoplot rules are part of it.
+- A table carries only the options it changes, as variables in a `style` attribute on its
+  `<div>` (`style="--tb-table-font-size: 14px"`); a table with default options carries none.
+  The `<div>` keeps its id. `optCss` stays as today, a `<style>` of its own scoped to the id.
+- `toHtml(t)` still gives a fragment that works alone: `tabellaCss` in a `<style>` in front of the
+  table. `toHtml(t, withStyle = false)` leaves it out, for a page that writes `tabellaCss` once
+  or links it as a file.
+- `nbTable` writes `tabellaCss` once per page, with the first table; `nb.tableHtml(t)` does the
+  same for a block that puts a table inside its own HTML.
+- **BREAKING (small)**: the rules carry classes, not an id, so a page rule stronger than two
+  classes may now win over tabelline's. The docs and the book are checked page by page
+  (screenshots before and after).
+- Not chosen: scoping each table by a class named after a hash of its style (the first version of
+  this proposal), and merging the rules of all tables after the page is built. Both work; both
+  are harder to explain and to use (design.md).
 
 ## Differences from gt and Great Tables
 
 - gt and Great Tables scope every table's CSS to its id (`#abcdefghij .gt_table`), one `<style>`
-  per table; neither shares styles between tables. tabelline scopes by a class named after the
-  style, so equal styles are written once.
-- `withStyle` and `tableStyle` are new. Closest in gt: `as_raw_html(inline_css = TRUE)` (styles
-  inlined on each element, no `<style>`) and in Great Tables `as_raw_html(inline_css = True)`;
-  neither leaves the style out for the page to write once. Listed in *Not from gt* in the coverage
-  map.
+  per table; neither shares styles between tables. tabelline has one stylesheet for all tables.
+- gt and Great Tables write every value into the CSS; tabelline writes fixed rules and passes
+  the values as CSS variables. A page can set a variable for all its tables
+  (`.tabella { --tb-table-font-size: 14px }`).
+- `tabellaCss` and `withStyle` are new. Closest in gt: `as_raw_html(inline_css = TRUE)` (styles
+  inlined on each element), and the same in Great Tables; neither leaves the style out for the
+  page to write once. Listed in *Not from gt* in the coverage map.
 
 ## Capabilities
 
@@ -42,13 +48,13 @@ None.
 
 ### Modified Capabilities
 
-- `rendering`: the HTML is scoped by a style class; `withStyle` and `tableStyle`.
-- `nimib-integration`: `nbTable` writes each style once per page; `nb.tableHtml`.
+- `rendering`: one stylesheet, `tabellaCss`; options as CSS variables; `withStyle`.
+- `nimib-integration`: `nbTable` writes `tabellaCss` once per page; `nb.tableHtml`.
 
 ## Impact
 
-`src/tabelline/render_html.nim` (scoping, hash, `withStyle`, `tableStyle`, nanoplot rules),
-`src/tabelline/nimib.nim` (the page's set of written classes, `tableHtml`), `docs/blocks.nim`
+`src/tabelline/render_html.nim` (`tabellaCss`, the variables of each table, `withStyle`),
+`src/tabelline/nimib.nim` (`tabellaCss` once per page, `tableHtml`), `docs/blocks.nim`
 (blocks that call `toHtml` directly), `docs/coverage.nim` (*Not from gt*), tests, the specs page.
 Page sizes: the reference page, the guide and the book should shrink; before and after sizes
 go in the PR.
