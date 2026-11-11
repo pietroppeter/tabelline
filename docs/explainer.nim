@@ -388,7 +388,7 @@ nbCode:
     topic, gt, greatTables, tabelline, follows: string
   let rOrPython = @[
     Choice(topic: "make a table", gt: "gt(df, rowname_col = \"x\")", greatTables: "GT(df, rowname_col=\"x\")", tabelline: "tabella(df, rownameCol = \"x\")", follows: "both"),
-    Choice(topic: "chain verbs", gt: "the pipe |>", greatTables: "methods: .tab_header()", tabelline: "methods, or a tabella(df): block", follows: "Python, plus a block"),
+    Choice(topic: "chain verbs", gt: "the pipe |>", greatTables: "methods: .tab_header()", tabelline: "the dot (any proc), or a tabella(df): block", follows: "R's pipe, plus a block"),
     Choice(topic: "locations", gt: "cells_body(columns, rows)", greatTables: "loc.body(columns, rows)", tabelline: "loc.body(cols, rows)", follows: "Python"),
     Choice(topic: "styles", gt: "list(cell_fill(), cell_text())", greatTables: "[style.fill(), style.text()]", tabelline: "style.fill() & style.text()", follows: "Python, & for the list"),
     Choice(topic: "row numbers", gt: "from 1", greatTables: "from 0", tabelline: "from 0", follows: "Python"),
@@ -810,6 +810,73 @@ nbNote("""
 nbText: """
 ## Nim sugar
 
+Sugar is syntax that makes code sweeter to read and changes nothing of what it does. tabelline
+has a little of it, all on this page:
+
+- the dot and the recipe, `tabella(data): body` ([pipes, methods and a recipe](#pipes-methods-and-a-recipe));
+- tables from any `seq` of objects or tuples ([tables from Nim values](#tables-from-nim-values));
+- `tableData:`, data written as columns ([columns written as columns](#columns-written-as-columns));
+- `for` and `if` inside a recipe ([loops inside a recipe](#loops-inside-a-recipe));
+- verbs that take pairs, written as blocks ([pairs as blocks](#pairs-as-blocks));
+- small words that read like Nim: `where(it["mass"] > 1)`, `style.fill() & style.text()`, a
+  `string` where a `Text` is expected ([small words](#small-words));
+- `tabOptions(name = value)`, every option by name, checked when the program compiles.
+
+### Pipes, methods and a recipe
+
+gt and Great Tables build a table one step at a time, each in the way of its language. R passes
+the table along with the pipe, `|>`, which puts the value on its left as the first argument of
+the call on its right. Python calls methods, functions that belong to the `GT` class: the dot in
+`.tab_header()` works because `GT` defines `tab_header`. Nim has the dot too, and a third way
+that a macro writes. The same table, in the three (the tabs switch the language):
+"""
+
+nbTabs(python = """
+import polars as pl
+from great_tables import GT
+
+moons = pl.DataFrame({"planet": ["Earth", "Mars", "Jupiter"], "moons": [1, 2, 95]})
+(
+    GT(moons, rowname_col="planet")
+    .tab_header("Moons")
+    .cols_label(moons="known moons")
+)""", r = """
+library(gt)
+
+moons <- data.frame(planet = c("Earth", "Mars", "Jupiter"), moons = c(1, 2, 95))
+moons |>
+  gt(rowname_col = "planet") |>
+  tab_header("Moons") |>
+  cols_label(moons = "known moons")"""):
+  nbCode:
+    let moonsData = tableData:
+      planet: ["Earth", "Mars", "Jupiter"]
+      moons: [1, 2, 95]
+    let dots = tabella(moonsData, rownameCol = "planet")
+      .tabHeader("Moons")
+      .colsLabel({"moons": "known moons"})
+    let recipe = tabella(moonsData, rownameCol = "planet"):
+      tabHeader "Moons"
+      colsLabel:
+        moons: "known moons"
+    echo $dots == $recipe
+nbTable recipe
+
+nbText: """
+- **The dot is the pipe.** In Nim, `t.tabHeader("Moons")` is only another way to write
+  `tabHeader(t, "Moons")`: the value before the dot is the first argument (method call syntax,
+  or UFCS). So, as with R's pipe, every proc whose first parameter is a `Tabella` chains, one of
+  your own too, and no verb belongs to a class. In Python only what the class defines chains.
+- **The recipe is a macro.** `tabella(data): body` is metaprogramming: the macro reads the lines
+  of `body` while the program compiles and writes the chain, `tabHeader "Moons"` becoming
+  `t = tabHeader(t, "Moons")`. Neither the pipe nor methods can do this: one verb per line, with
+  no dots or parentheses, `for` and `if` in between, and the verbs that take pairs written as
+  indented blocks. The two make the same table (the `true` above); the pages of this site write
+  the recipe.
+- **R has metaprogramming too**, of another kind: tidy evaluation lets `cols_label(moons = ...)`
+  name a column without quotes, because R can read the code of an argument before running it.
+  Nim's happens when the program compiles, so a verb spelt wrong is an error before anything runs.
+
 ### Tables from Nim values
 
 Any `seq` of objects or named tuples is a table, one field per column:
@@ -895,6 +962,27 @@ nbCode:
 nbNote("""
 Three kinds of line make a block. `label: value` is a pair, for the verbs above (a label with spaces is a string, `"the largest"`, or in backquotes). `name = value` is a named argument, in any verb (`columns = "mass"`). In the summary verbs, `fmtNumber(decimals = 0)`, or any `fmt*` that has a `format*` function, formats the summary rows: it stands for `fmt = (x: float) => formatNumber(x, decimals = 0)`. `tabOptions:` takes `name = value` lines too. The pair form stays: `summaryRows fns = {"total": agg.sum}` makes the same call, and is the one to use outside `tabella(data): body` or when the pairs are built by code. For data, `tableData:` is the block form of `toTableData`.
 """, nkCode)
+
+nbText: """
+### Small words
+
+A few names read like Nim, and are plain procs, templates and converters, not macros.
+`where(it["type"] == "Terrestrial")` picks rows (a template: `it` is the row);
+`style.fill() & style.text()` joins two styles, where Python writes a list and R `list()`;
+`loc.body()` and `style.text()` keep locations and styles in namespaces, as Great Tables does;
+and converters turn a `string` into a `Text`, and a name or an array of names into a selection
+of columns, where one is expected, so `tabHeader "Moons"` and `colsUnhide ["moons"]` need
+nothing more.
+"""
+nbCode:
+  let giants = tabella(planets(), rownameCol = "planet"):
+    colsHide everything()
+    colsUnhide ["moons"]
+    rowsHide where(it["type"] == "Terrestrial")
+    tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"),
+             loc.body(rows = where(it["moons"].toFloat > 50))
+    optCssTheme()
+nbTable giants
 
 nbText: """
 ## Tables that follow the page
