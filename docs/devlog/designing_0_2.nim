@@ -932,8 +932,8 @@ block:
     side, what: string
   let rows = @[
     Side(side: "only tabelline", what: "rowsAdd, rowsHide, rowOrder, colsAdd, summaryColumns; fmtSpelledNum, fmtBins, fmtAuto, fmtCountry (31 formats to 28); tabellaPreview, tabCaption, extractCells, optTableLines; 657 CLDR locales to 574; text and Markdown output, nimib"),
-    Side(side: "both", what: "summary rows, nanoplots, icons, images, units, chemistry, fractions, merged columns, stub indent, a stub of several columns, body styles, colour by value, every location, about as many options (164 to 175)"),
-    Side(side: "only Great Tables", what: "interactive tables, LaTeX, PNG and PDF, Google fonts, Shiny, tables from Pandas and Polars, 16 datasets"),
+    Side(side: "both", what: "summary rows, nanoplots, icons, images, units, chemistry, fractions, merged columns, stub indent, a stub of several columns, body styles, colour by value, every location, about as many options (164 to 175), tables from a data frame (nanuq's in tabelline, Pandas and Polars in Great Tables)"),
+    Side(side: "only Great Tables", what: "interactive tables, LaTeX, PNG and PDF, Google fonts, Shiny, 16 datasets (tabelline has 9, four of them gt's)"),
   ]
   let t = tabella(rows, rownameCol = "side"):
     tabHeader "tabelline 0.2 and Great Tables 1.1"
@@ -965,7 +965,8 @@ block:
     Own(what: "a table in a terminal", tabelline: "`echo t` prints it as text, `toMarkdown` for a README; units, formulas and fractions in Unicode, nanoplots as sparklines", theirs: "HTML (and LaTeX, RTF, Word in gt)"),
     Own(what: "a table that follows the page", tabelline: "`optCssTheme()`: colours and font from the page's CSS variables", theirs: "`opt_stylize()` and `tab_options()`, with fixed colours"),
     Own(what: "several values in a cell", tabelline: "lists and records (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`), formatted item by item, read with the dot (`v.hi`), named in merge patterns (`{lo}–{hi}`)", theirs: "list columns for nanoplots; `cols_merge` names columns only"),
-    Own(what: "what it needs", tabelline: "Nim's standard library, nothing else; nothing loaded from the network", theirs: "gt imports 20 R packages, Great Tables 8 Python ones"),
+    Own(what: "the format of a summary cell", tabelline: "its column's format and locale, unless `summaryRows` gives a `fmt`", theirs: "gt uses `fmt_number()`; Great Tables leaves the value as it is"),
+    Own(what: "what it needs", tabelline: "the core needs Nim's standard library, nothing else; nimib and nanuq only for their own optional modules (`tabelline/nimib`, `tabelline/nanuq`); nothing loaded from the network", theirs: "gt imports 20 R packages, Great Tables 8 Python ones"),
   ]
   let t = tabella(rows, rownameCol = "what"):
     tabHeader "Not in gt or Great Tables"
@@ -978,7 +979,9 @@ block:
 
 nbText: """
 The first row is the one of [One stylesheet for every table](../sharing-styles/): the
-[API reference](../../api/) has 152 tables, and sharing their style took it from 1.71 MB to 0.88 MB.
+[API reference](../../api/) has 152 tables, and sharing their style took it from 1.71 MB to 0.88 MB. The format of a summary cell is
+one of the choices of [What the book found for 0.2](../book-found-0-2/); another sides with Great
+Tables: aggregates skip missing values, as Polars does, where gt needs `na.rm = TRUE`.
 
 ### A syntax of its own
 
@@ -1017,6 +1020,11 @@ the compiler like any Nim code; `summaryRows:` takes its pairs one per line. Wit
 `initTabella(...)`, then `.colsHide(...)`, `.tabStyle(...)` and
 `.summaryRows(fns = {"total": agg.sum})`.
 """, nkCode)
+
+nbText: """
+In a notebook there is one step less. R and Python notebooks show the last value of a cell;
+in nimib, `nbTable data: body` makes the table and shows it, without naming it.
+"""
 
 nbText: """
 ## How it is built

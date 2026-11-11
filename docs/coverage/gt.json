@@ -711,8 +711,8 @@
     {
      "feature": "Data frames",
      "gt": "(tibble, Pandas, Polars)",
-     "status": "missing",
-     "note": "Optional modules for nanuq (Polars) and datamancer.",
+     "status": "partial",
+     "note": "tabelline/nanuq: tabella(df) for a nanuq DataFrame (Polars for Nim), an optional module. Not yet datamancer.",
      "plan": "0.3",
      "size": "S"
     }
