@@ -1,7 +1,7 @@
 ## 1. Rendering
 
 - [ ] 1.1 Before: build the docs and the book on `main`, record each page's size and its bytes of table styles, and take 390px Munari screenshots of every page with a table
-- [ ] 1.2 `render_html.nim`: `tabellaCss`, the rules of `tableCss` on `.tabella` with every option as `var(--tb-<option>, <default>)` (nested fallbacks where an option falls back to another), nanoplot rules included
+- [ ] 1.2 `render_html.nim`: `tabellaCss`, the rules of `tableCss` on `.tabella` with every option as `var(--tb-<option>, <default>)` (nested fallbacks where an option falls back to another), nanoplot rules included, every selector starting with `:where(.tabella):not(#_)` so the rules weigh what `#id` weighs today
 - [ ] 1.3 The `<div>` keeps its id and gets `style="--tb-…"` for each option that differs from the default (and `onDark` values); `toHtml(t, makePage, withStyle = true)`; `optCss` stays in a per-table `<style>` scoped to the id
 - [ ] 1.4 Tests in `tests/`: default options write no variables; each option writes its variable; every `var(--tb-…)` in `tabellaCss` names a real option and its default; `toHtml(withStyle = false)` holds no `tabellaCss`; ids and `aria-labelledby` unchanged; a pixel check that a few tables (docs, book, nanoplots) look the same before and after
 
@@ -14,8 +14,8 @@
 ## 3. Docs
 
 - [ ] 3.1 `docs/coverage.nim`: a line in *Not from gt* (`tabellaCss`, options as CSS variables, `withStyle`; closest: `as_raw_html(inline_css = TRUE)`)
-- [ ] 3.2 A section of the guide, "A table's HTML and its style": what `toHtml` writes (the `<div>`, the `<style>`, the `<table>`), the one stylesheet and the variables each table carries, how to set a variable for every table of a page, how to use `withStyle = false` outside nimib (one page, a site stylesheet linked as a file, another notebook library), and the risk (a page rule stronger than two classes wins), each with a small example
-- [ ] 3.3 Fix any page rule whose result changed with the lower specificity (from the screenshots), in `docs/theme.nim` or `book/theme/edo.css`
+- [ ] 3.2 A section of the guide, "A table's HTML and its style": what `toHtml` writes (the `<div>`, the `<style>`, the `<table>`), the one stylesheet and the variables each table carries, how to set a variable for every table of a page, how to use `withStyle = false` outside nimib (one page, a site stylesheet linked as a file, another notebook library), and how a page rule wins or loses against the table's (the weight of an id, `:not(#_)`), each with a small example
+- [ ] 3.3 Compare the screenshots; any difference is a bug in `tabellaCss`, fixed there
 
 ## 4. Checks
 

@@ -29,7 +29,8 @@ to about 210 KB; the reference page of PR #65 (156 tables) loses about 1.1 MB.
 ## Decisions
 
 1. **One stylesheet, `tabellaCss*: string`, a constant.** The rules of `tableCss` today, with
-   `#id` replaced by `.tabella` and every option value by `var(--tb-<option>, <default>)`, where
+   `#id` replaced and every option value by `var(--tb-<option>, <default>)`, where
+   every selector starts with `:where(.tabella):not(#_)` (decision 6), and
    `<option>` is the field of `TabOptions` in kebab-case (`tableFontSize` is
    `--tb-table-font-size`). Defaults that come from another option nest:
    `var(--tb-heading-background-color, var(--tb-table-background-color, #FFFFFF))`, as
@@ -51,6 +52,13 @@ to about 210 KB; the reference page of PR #65 (156 tables) loses about 1.1 MB.
    in the body applies to the whole page, so a later table is styled even when the first sits in
    a tab or a fold that is closed.
 
+6. **Keep the id's weight.** `:not(#_)` matches every element whose id is not `_` (so every table),
+   and counts as an id in the weight of a selector; `:where(.tabella)` limits it to tables and
+   counts nothing. `:where(.tabella):not(#_) .tb_title` weighs (1,1,0), exactly what
+   `#tabella-8f3a .tb_title` weighs today, so a page rule wins or loses as before. Checked in
+   Chromium: a page rule `main .tabella .tb_title` loses to it, `#pg .tabella .tb_title` wins, as
+   today. `:where` is in every browser since 2021.
+
 ## Alternatives considered
 
 - **A class named after a hash of each table's style** (the first version of this proposal):
@@ -61,12 +69,9 @@ to about 210 KB; the reference page of PR #65 (156 tables) loses about 1.1 MB.
 
 ## Risks / Trade-offs
 
-- **Specificity drops** from an id (1,1,0) to classes (0,2,0). A page rule such as
-  `.tabella .tb_title` (docs theme) ties instead of losing, and since `tabellaCss` comes after the
-  theme in the page, tabelline still wins the tie; a page rule stronger than two classes
-  (`.content .tabella table tr` in the book) now wins over tabelline's rule on the same property.
-  Mitigation: screenshot every page of the docs and the book before and after (390 px, Munari)
-  and compare; fix the page rule, not the stylesheet.
+- **The weight trick reads oddly.** `:not(#_)` is a known CSS idiom, but surprising; a comment in
+  `tabellaCss` and a line in the guide say why it is there. The screenshots before and after
+  still check every page of the docs and the book.
 - **Variables inherit.** A `--tb-…` variable set on a page (`.tabella { --tb-table-font-size:
   14px }` or on `body`) reaches every table that does not set it itself. That is a feature (a
   page theme in one line) and is documented as such; nothing in the docs sets `--tb-` today.

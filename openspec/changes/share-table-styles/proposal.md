@@ -22,9 +22,10 @@ thread; the PR that builds it is still to be opened.
   or links it as a file.
 - `nbTable` writes `tabellaCss` once per page, with the first table; `nb.tableHtml(t)` does the
   same for a block that puts a table inside its own HTML.
-- **BREAKING (small)**: the rules carry classes, not an id, so a page rule stronger than two
-  classes may now win over tabelline's. The docs and the book are checked page by page
-  (screenshots before and after).
+- The rules keep the weight they have today, as if they named an id: each starts with
+  `:where(.tabella):not(#_)`, which matches every table and weighs exactly what `#id` weighs. So a
+  page's theme wins or loses against tabelline's rules as it does now. The docs and the book are
+  still checked page by page (screenshots before and after).
 - Not chosen: scoping each table by a class named after a hash of its style (the first version of
   this proposal), and merging the rules of all tables after the page is built. Both work; both
   are harder to explain and to use (design.md).
