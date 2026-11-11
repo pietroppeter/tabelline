@@ -777,6 +777,21 @@ nbNote("""
 """, nkCode)
 
 nbText: """
+"lo: 0.8, hi: 1.6" says what each number is, but a range reads better as "0.8–1.6". A merge
+pattern reads the fields of a record by name, so one column of records is enough:
+"""
+
+nbCode:
+  let spans = tabella(sensors, rownameCol = "sensor"):
+    fmtNumber "span", decimals = 1
+    colsMerge ["span"], pattern = "{lo}–{hi}"
+  echo spans
+
+nbNote("""
+In a `colsMerge` pattern, `{lo}` is the field `lo` of the first column and `{2.lo}` of the second; each is formatted as its column is, and a missing field drops its `<<...>>` part. A field that is not in every record fails when the verb is called.
+""", nkCode)
+
+nbText: """
 ### A plot of x and y
 
 A record of two lists, `x` and `y`, is what Great Tables takes for a nanoplot whose points are
@@ -813,9 +828,10 @@ nbText: """
   keeps the values in their own columns, which sort, style and add up on their own, and joins
   them only when the table is shown; a record is one value, which is how the data came (a
   range, a point, a pair of lists for a nanoplot). A merge takes a record column as it takes
-  any other: it joins the record's text. To show a record as "0.8–1.6", keep `lo` and `hi` as
-  two columns and merge them. *gt:* `cols_merge` and its three variants. *Great Tables:* the
-  same.
+  any other: it joins the record's text, and its pattern reads the record's fields: `{lo}` is
+  the field `lo` of the first column, `{2.lo}` of the second, each formatted as its column is.
+  So `colsMerge ["span"], pattern = "{lo}–{hi}"` shows a record as "0.8–1.6". *gt:* `cols_merge`
+  and its three variants, with patterns of columns only (`{1}`, `{2}`). *Great Tables:* the same.
 - **x and y as Great Tables has them.** A record with fields `x` and `y`. *gt:* x values come
   from another column (`columns_x_vals` in `cols_nanoplot`). *Great Tables:* a dict
   `{"x": [...], "y": [...]}`; its x values can be dates too, tabelline's are numbers for now.

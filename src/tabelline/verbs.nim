@@ -843,6 +843,20 @@ proc addMerge(t: var Tabella, kind: MergeKind, columns: seq[string], rows: RowSe
               autohide: bool) =
   for c in columns: discard t.data[c]       # raises on a column that does not exist
   let ix = if rows.kind == rsAll: @[] else: rows.resolve(t.data)
+  for (tok, r) in patternRefs(pattern):     # a field the pattern reads is in every record
+    if r.column notin 0 ..< columns.len:
+      raise newException(ValueError, "the pattern names {" & tok & "}, but there are " &
+        $columns.len & " columns")
+    if r.field.len > 0:
+      for row in (if ix.len > 0: ix else: toSeq(0 ..< t.data.nrows)):
+        let v = t.data[columns[r.column], row]
+        if v.isNull: continue
+        if v.kind != vkRecord:
+          raise newException(ValueError, "{" & tok & "} reads a field, but column " &
+            columns[r.column] & " holds " & $v.kind & " values, not records")
+        if r.field notin v:
+          raise newException(ValueError, "{" & tok & "}: the record in column " & columns[r.column] &
+            " has no field " & r.field & " (it has " & v.fields.mapIt(it[0]).join(", ") & ")")
   t.merges.add MergeRule(kind: kind, columns: columns, rows: ix, pattern: pattern)
   if autohide:
     for c in t.boxhead.mitems:
@@ -854,7 +868,9 @@ proc colsMerge*(t: sink Tabella, columns: openArray[string], rows = allRows(), p
   ## `{1}`, `{2}`, ... are the columns, and a part between `<<` and `>>` is left out when a value
   ## it names is missing: `colsMerge(["city", "country"], pattern = "{1}<< ({2})>>")`. Without a
   ## pattern the values are joined by spaces. The other columns are hidden (unless `autohide =
-  ## false`).
+  ## false`). A pattern reads the fields of a record too: `{2.lo}` is the field `lo` of column
+  ## 2, and `{lo}` of column 1, formatted as its column is, so a single column of records can be
+  ## shown in a pattern: `colsMerge(["span"], pattern = "{lo}–{hi}")`.
   result = t
   var p = pattern
   if p.len == 0:

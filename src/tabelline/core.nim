@@ -747,3 +747,32 @@ func hasStub*(t: Tabella): bool = t.rownameCol.len > 0 or t.hasSummaries
   ## with summary rows and no row names gets an empty stub).
 func hasRowNames*(t: Tabella): bool = t.rownameCol.len > 0
 func hasGroups*(t: Tabella): bool = t.groupLabels.len > 0
+
+type PatternRef* = object
+  ## One `{...}` of a merge pattern: `{2}` is column 2, `{2.lo}` the field `lo` of the record in
+  ## column 2, and `{lo}` the field `lo` of column 1.
+  column*: int      ## from 0
+  field*: string    ## "" for the whole value
+
+func patternRefs*(pattern: string): seq[(string, PatternRef)] =
+  ## The `{...}` of `pattern`, with the text inside the braces; a `{` with no `}` is text.
+  var i = 0
+  while i < pattern.len:
+    if pattern[i] == '{':
+      let j = pattern.find('}', i + 1)
+      if j < 0: break
+      let tok = pattern[i + 1 ..< j]
+      let dot = tok.find('.')
+      let head = if dot < 0: tok else: tok[0 ..< dot]
+      var r: PatternRef
+      var ok = true
+      try:
+        r.column = parseInt(head) - 1
+        if dot >= 0: r.field = tok[dot + 1 .. ^1]
+      except ValueError:
+        r.column = 0
+        r.field = tok
+        ok = tok.len > 0 and tok.allIt(it.isAlphaNumeric or it == '_')
+      if ok: result.add (tok, r)
+      i = j
+    inc i

@@ -89,3 +89,29 @@ suite "nanoplots of lists and records":
     let bad = tableData:
       run: [(x: @[1.0], y: @[5.0, 1])]
     expect ValueError: discard tabella(bad).fmtNanoplot("run")
+
+suite "records in a merge pattern":
+  test "fields by name, formatted as their column":
+    let d = tableData:
+      span: [(lo: 0.82, hi: 1.56), (lo: 9.13, hi: 12.71)]
+      unit: ["mm", ""]
+    let t = tabella(d):
+      fmtNumber "span", decimals = 1
+      colsMerge ["span", "unit"], pattern = "{lo}–{1.hi}<< {2}>>"
+    let txt = t.toText
+    check "0.8–1.6 mm" in txt and "9.1–12.7" in txt and "unit" notin txt
+  test "a missing field drops its part":
+    let d = tableData:
+      r: [record({"a": toValue(1), "b": toValue(nil)}), record({"a": toValue(2), "b": toValue(3)})]
+    let t = tabella(d).colsMerge(["r"], pattern = "{a}<< ({b})>>")
+    check "│ 1 " in t.toText and "2 (3)" in t.toText
+  test "a field that is not there fails at once":
+    let d = tableData:
+      span: [(lo: 1, hi: 2)]
+      n: [3]
+    expect ValueError: discard tabella(d).colsMerge(["span"], pattern = "{low}")
+    expect ValueError: discard tabella(d).colsMerge(["n"], pattern = "{x}")
+    expect ValueError: discard tabella(d).colsMerge(["span"], pattern = "{2}")
+  test "old patterns read as before":
+    check fillPattern("{1}<< ({2})>>", @["a", ""], @[false, true]) == "a"
+    check patternRefs("{1} {2.x} {y} {not a ref}").len == 3

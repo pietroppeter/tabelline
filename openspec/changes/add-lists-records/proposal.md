@@ -30,6 +30,9 @@ and the data frames planned for 0.3. Pietro also asked for the dot: `v.x` for a 
   says, in its order, and with `autoscale` every row shares the x axis too. `expandX` widens it.
   `nanoplotXValues` reads the places; `nanoplotSvg` takes `x` and `expandX`.
 - `dataColor` leaves list and record cells uncoloured; summaries count only numbers, as before.
+- A `colsMerge` pattern reads a record's fields: `{2.lo}` is the field `lo` of column 2, `{lo}`
+  of column 1, each formatted as its column is; `colsMerge(["span"], pattern = "{lo}–{hi}")`
+  shows a record as a range.
 
 ## Differences from gt and Great Tables
 
@@ -38,7 +41,8 @@ and the data frames planned for 0.3. Pietro also asked for the dot: `v.x` for a 
   list columns for nanoplots and, for x and y, a dict (`{"x": [...], "y": [...]}`). tabelline
   reads all of these: a list, a record of `x` and `y`, a text of numbers, several columns.
 - Records shown as text and formatted field by field are not from gt (closest: `cols_merge`, a
-  pattern of several columns in one cell); they get a line in *Not from gt*.
+  pattern of several columns in one cell); they get a line in *Not from gt*. gt's and Great
+  Tables' merge patterns name columns only (`{1}`, `{2}`); `{2.lo}` and `{lo}` are new.
 - The dot is Nim sugar: gt and Great Tables select by name in strings, Polars with `pl.col("x")`.
 - Great Tables' x values also take dates; tabelline's are numbers for now.
 

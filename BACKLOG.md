@@ -32,9 +32,6 @@ Rough size: S (hours), M (a day or two), L (more).
   are in 0.1); gt's `local_image()`, `web_image()`, `ggplot_image()`.
 - **More of the locales** (S-M). Every CLDR locale is in 0.2 (#62). Left: country names in
   other languages, `system = "ind"`, flexible styles with a time zone.
-- **A record in a pattern** (S). `colsMerge` (or a `fmtPattern`) whose pattern reads a
-  record's fields, `"{lo}–{hi}"`, so a record can show as "0.8–1.6" without two columns. From
-  the review of the Designing 0.2 post.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
   half away from zero as gt does in some cases.
 

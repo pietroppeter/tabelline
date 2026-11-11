@@ -166,6 +166,7 @@ block:
     N(what: "the datasets `planets` and `tavolaPitagorica`", why: "small examples for the docs (`exibble` is gt's)", closest: "gt's and Great Tables' datasets"),
     N(what: "blocks for lists of pairs (`summaryRows:` then `total: agg.sum`)", why: "inside `tabella(data): body`, a verb's pairs and named arguments one per line, as Nim writes a body", closest: "named lists (`fns = list(total = \"sum\")`) and dicts (`fns={\"total\": ...}`)"),
     N(what: "lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`), formatted item by item, and the dot (`v.hi`, `it.mass`)", why: "a cell that holds several values feeds nanoplots, icons and flags as it is, and the dot reads like Nim", closest: "Great Tables reads Polars list columns for nanoplots; `cols_merge` puts several columns in one cell"),
+    N(what: "record fields in a merge pattern (`colsMerge([\"span\"], pattern = \"{lo}–{hi}\")`)", why: "a record shows as a range, a value with its unit, without splitting it into columns", closest: "`cols_merge` patterns name columns only (`{1}`, `{2}`)"),
     N(what: "nanoplots in text: sparklines (`▁▃▅█`), bars beside a zero line, the five numbers of a box plot", why: "a nanoplot says something in the terminal and the specs too", closest: "nothing: gt and Great Tables draw nanoplots only in HTML"),
     N(what: "`toSuperscript`, `toSubscript`, and units, formulas and fractions in Unicode", why: "the text and Markdown outputs show `kg/m³` and `H₂O` too", closest: "gt's plain-text output, which keeps the notation as written"),
   ]

@@ -10,6 +10,7 @@
 - [x] 2.2 `fmtIcon`, `fmtImage`, `fmtFlag` take a list (`cellNames`)
 - [x] 2.3 `fmtNanoplot` reads lists and records of x and y; `nanoplotXValues`; `x` and `expandX`
 - [x] 2.4 `dataColor` skips lists and records
+- [x] 2.5 `colsMerge` patterns read record fields (`{2.lo}`, `{lo}`), checked when the verb is called
 
 ## 3. Docs and checks
 
