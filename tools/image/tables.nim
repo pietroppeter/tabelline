@@ -60,7 +60,7 @@ proc stylesTable*(): Tabella =
     tabHeader md("Hot and **cold** worlds"), md("temperature *and* gravity, coloured by value")
     fmtInteger ["diameter", "mean_temp"]
     fmtNumber "gravity", decimals = 1
-    dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0), reverse = true
+    dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
     dataColor "gravity", palette = @["#FFFFFF", "#2C7FB8"]
     tabStyle style.fill("#FFF3C4") & style.text(weight = "bold"),
              loc.stub(rows = where(it.planet == "Earth"))
