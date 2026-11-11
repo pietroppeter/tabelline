@@ -432,8 +432,36 @@ let small3 = tabella(tavolaPitagorica(3), rownameCol = "×"):
 small3.save("tavola.html")
 ```
 
-Each table carries its own CSS, scoped to its id, so it looks the same on any page, unless you ask
-it to take the page's colours ([tables that follow the page](#tables-that-follow-the-page)).
+### A table's HTML and its style
+
+`small3.toHtml` is a `<div class="tabella">` holding the `<table>`, and in front of it a `<style>`
+with `tabellaCss`: the rules of every table, the same for all of them. Each value in those rules
+is a CSS variable named after its option, with the default as fallback, so a table sets on its
+`<div>` only the options it changes:
+
+```html
+<div id="tabella-1f2e" class="tabella" style="--tb-table-font-size: 14px">
+<style> :where(.tabella):not(#_) .tb_table { font-size: var(--tb-table-font-size, 16px); ... } </style>
+<table class="tb_table"> ... </table>
+</div>
+```
+
+So a table looks the same on any page, unless you ask it to take the page's colours
+([tables that follow the page](#tables-that-follow-the-page)). A page can also set an option for
+all its tables at once: `.tabella { --tb-table-font-size: 14px }`. A table that takes the page's
+theme (`optCssTheme()`) gets the class `tb_css_theme` instead of the theme's variables: one rule in
+`tabellaCss` sets them for every such table.
+
+A page with many tables needs the rules once. `small3.toHtml(withStyle = false)` leaves the
+`<style>` out: write `tabellaStyle` (the `<style>` element) once, or save `tabellaCss` to a file
+and link it from every page of a site, and then each table without it. `nbTable` does this by
+itself: the first table of a page carries the rules, the others do not.
+
+Every rule starts with `:where(.tabella):not(#_)`: it picks every table and weighs as much as an
+id, so a rule of the page's own stylesheet wins or loses against the table's as it would against
+`#id`. Rules of one table only (`optCss`, the vertical lines) stay in a `<style>` of that table,
+scoped to its id. Why, and the other ways we considered:
+[One stylesheet for every table](../devlog/sharing-styles/).
 
 ### In nimib
 
@@ -1068,17 +1096,14 @@ block:
   nbText "```nim\n" & verbs[a ..< b].strip & "\n```"
 
 nbText: """
-**The table's CSS.** Every table carries its own CSS, scoped to its id, and writes the value
-of each option as it is. So the variables reach the browser untouched; these are the declarations
-that name them, in the CSS of the table on the right above:
+**The table's CSS.** Every table shares one stylesheet, `tabellaCss`, where each value is a
+variable named after its option, and a table sets on its `<div>` the options it changes. So the
+page's variables reach the browser untouched; these are the ones the table on the right above
+sets:
 """
 nbCode:
-  var seen: seq[string]
-  for declaration in small.optCssTheme().toHtml.split({'{', '}', ';'}):
-    let d = declaration.strip
-    if "var(--" in d and d notin seen:
-      seen.add d
-      echo d
+  for v in styleVars(small.optCssTheme().options).split("; "):
+    echo v
 
 nbText: """
 **The page's variables.** On these pages they are not written one by one. `docs/theme.nim` gives

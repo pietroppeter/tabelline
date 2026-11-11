@@ -123,6 +123,10 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [One stylesheet for every table](https://pietroppeter.github.io/tabelline/devlog/sharing-styles/)
+  (11 Nov 2026 B): what a table's HTML holds, three ways to share its 6 KB of CSS, the one chosen
+  (fixed rules, options as CSS variables) and the `:not(#_)` trick that keeps a theme's rules
+  winning and losing as before.
 - [A reference in our own style](https://pietroppeter.github.io/tabelline/devlog/reference/)
   (11 Nov 2026 A): how the Reference page was made from `nim jsondoc` and the source, the
   choices behind it against gt and Great Tables, and its four rounds of review.
