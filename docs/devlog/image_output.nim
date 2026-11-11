@@ -1,4 +1,4 @@
-## devlog: 11 Nov 2026 D | A table as a picture | gt and Great Tables save a table as a PNG by asking a browser to take a screenshot. What an image of a table is, every way tabelline could make one (a browser, SVG, pixie, Typst, a layout of its own), what each costs and gets, and the three proofs of concept that will try the most promising: an SVG written by tabelline, a PNG painted with pixie, and the browser driven from Nim as Great Tables' new gtsave() does.
+## devlog: 11 Nov 2026 D | A table as a picture | gt and Great Tables save a table as a PNG by asking a browser to take a screenshot. What an image of a table is, every way tabelline could make one (a browser, SVG, pixie, Typst, a layout of its own), what each costs and gets, and the three proofs of concept that will try the most promising: the browser driven from Nim as Great Tables' new gtsave() does, an SVG written by tabelline, and a PNG painted with pixie.
 ## A dated post: the research behind image output (planned for 0.3), written once and not updated
 ## afterwards. What the proofs of concept find goes in a second post.
 import std/os
@@ -14,8 +14,8 @@ nb.useTabelline(title = "A table as a picture", homeHref = "../", backLabel = "D
 nbTitle "11 November 2026 · research", "A table as a picture", """
 gt and Great Tables save a table as a PNG by asking a browser to take a screenshot. What an image
 of a table is, every way tabelline could make one, what each costs and gets, and the three proofs
-of concept that will try the most promising: an SVG written by tabelline, a PNG painted with pixie,
-and the browser driven from Nim.
+of concept that will try the most promising: the browser driven from Nim, an SVG written by
+tabelline, and a PNG painted with pixie.
 """
 
 nbText: """
@@ -213,13 +213,19 @@ appear, and read the long column as Markdown (`fmtMarkdown`), so that code shows
 nbText: """
 ## The choice: three proofs of concept
 
-Two ways stand out, and they are the two Pietro named: they are written in Nim, need nothing
-installed, run in CI, and teach us how to lay a table out ourselves, which every way but the
-browser needs.
+A small one comes first, because it is the reference for the other two: the browser itself, done
+as Great Tables now does it. Then two ways stand out, and they are the two Pietro named: they are
+written in Nim, need nothing installed, run in CI, and teach us how to lay a table out ourselves,
+which every way but the browser needs.
 
-A third, small one is the browser itself, done as Great Tables now does it.
+**A. The browser, as nokap does it, in Nim.** The smallest of the three, and the reference for
+the other two: a Nim module (`std/net` and a WebSocket handshake, no packages) that starts Chrome,
+opens the table's HTML and takes a screenshot of the table's box, as Great Tables' new `gtsave()`
+does. It would be the `save(t, "t.png")` for whoever has Chrome, and the picture that B and C are
+compared with. Questions it answers: how small can the client be? How fast is a second picture
+when Chrome is already running? Does it work in CI?
 
-**A. Native SVG, standard library only.** A new renderer, `toSvg(t)`, next to `toHtml` and
+**B. Native SVG, standard library only.** A new renderer, `toSvg(t)`, next to `toHtml` and
 `toText`, reading the same `Built` table. It measures text with the widths of a font we ship,
 read from the font file itself (an OpenType file has a table of widths, `hmtx`, that a hundred
 lines of Nim can read), and embeds that font in the SVG, so every viewer draws the letters we
@@ -227,20 +233,13 @@ measured. Nanoplots go in as they are. Questions it answers: how close to the HT
 How big is the file with the font in it? Does it open in Inkscape, PowerPoint, GitHub and on a
 phone? Can resvg or a browser make a good PNG of it?
 
-**B. PNG with pixie.** An optional module, `tabelline/pixie`, like `tabelline/nanuq`, so the core
+**C. PNG with pixie.** An optional module, `tabelline/pixie`, like `tabelline/nanuq`, so the core
 keeps only the standard library. pixie measures, wraps and draws the text (`typeset`, spans for
 bold and italic), fills and strokes the boxes, reads nanoplots' shapes through its SVG reader and
 pictures through its image readers, and writes a PNG at any scale. Questions it answers: how close
 to the HTML? How fast, and how big a binary? What breaks: wrapping, nanoplot labels, scripts?
 
-**C. The browser, as nokap does it, in Nim.** The smallest of the three, and the reference for
-the other two: a Nim module (`std/net` and a WebSocket handshake, no packages) that starts Chrome,
-opens the table's HTML and takes a screenshot of the table's box, as Great Tables' new `gtsave()`
-does. It would be the `save(t, "t.png")` for whoever has Chrome, and the picture that A and B are
-compared with. Questions it answers: how small can the client be? How fast is a second picture
-when Chrome is already running? Does it work in CI?
-
-Every proof of concept draws the same tables, puts its picture beside C's, and says where they
+Every proof of concept draws the same tables, puts its picture beside A's, and says where they
 differ.
 
 ## How the proofs will be judged

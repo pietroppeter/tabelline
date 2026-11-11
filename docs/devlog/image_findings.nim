@@ -33,12 +33,12 @@ block:
   type Poc = object
     poc, pr, how, code, needs: string
   let rows = @[
-    Poc(poc: "A. Native SVG", pr: "#94", how: "lays the table out itself, measuring text with the font's own widths, and writes rectangles, lines and letters",
-        code: "about 1,500 lines: fonts 460, layout and SVG 1,060", needs: "nothing: the standard library"),
-    Poc(poc: "B. PNG with pixie", pr: "#93", how: "lays the table out itself, measuring with pixie, and paints pixels with pixie",
-        code: "about 1,060 lines", needs: "pixie (an optional module), and two fonts"),
-    Poc(poc: "C. Chrome from Nim", pr: "#92", how: "starts Chrome, talks to it over a WebSocket (the DevTools protocol, as Great Tables' nokap), screenshots the table's box",
+    Poc(poc: "A. Chrome from Nim", pr: "#92", how: "starts Chrome, talks to it over a WebSocket (the DevTools protocol, as Great Tables' nokap), screenshots the table's box",
         code: "212 lines; the WebSocket client is 57", needs: "Chrome"),
+    Poc(poc: "B. Native SVG", pr: "#94", how: "lays the table out itself, measuring text with the font's own widths, and writes rectangles, lines and letters",
+        code: "about 1,500 lines: fonts 460, layout and SVG 1,060", needs: "nothing: the standard library"),
+    Poc(poc: "C. PNG with pixie", pr: "#93", how: "lays the table out itself, measuring with pixie, and paints pixels with pixie",
+        code: "about 1,060 lines", needs: "pixie (an optional module), and two fonts"),
   ]
   let t = tabella(rows, rownameCol = "poc"):
     tabHeader "Three proofs of concept", "draft PRs, std lib only unless said"
@@ -50,9 +50,8 @@ block:
 nbText: """
 ## How close they came
 
-Chrome comes first here, though it is the last letter: it was the reference the other two were
-measured against. **Chrome** is the HTML table, so it is exact by definition: everything is drawn, spanners,
-summaries, footnote marks, Markdown, colours, nanoplots, pictures. It became the reference for
+**Chrome** is the HTML table, so it is exact by definition: everything is drawn, spanners,
+summaries, footnote marks, Markdown, colours, nanoplots, pictures. It is the reference for
 the other two.
 
 **The SVG** lands within 1 to 4 CSS pixels of Chrome on all five tables; column widths and row
