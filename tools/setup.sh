@@ -11,7 +11,7 @@
 # 2. atlas: when `atlas` is missing or older than $ATLAS_MIN, the release $ATLAS_VERSION goes
 #    into ~/.local/bin. (Nim ships atlas, but older Nim releases ship an atlas without features.)
 # 3. libpcre3, which nimib's markdown loads at run time (Debian/Ubuntu, with apt).
-# 4. the dependencies at the commits in atlas.lock: `atlas rep --feature=docs`, into deps/.
+# 4. the dependencies at the commits in atlas.lock: `atlas rep --feature=docs --feature=pixie`, into deps/.
 #    nim.cfg (committed, written by atlas) puts them on the path.
 #
 # The library needs only Nim; nimib and its dependencies are for the docs and tabelline/nimib.
@@ -79,7 +79,7 @@ fi
 # 4. dependencies
 cd "$here"
 log "dependencies from atlas.lock into deps/"
-"$ATLAS" rep --feature=docs >"$tmp/atlas.log" 2>&1 || { cat "$tmp/atlas.log"; exit 1; }
+"$ATLAS" rep --feature=docs --feature=pixie >"$tmp/atlas.log" 2>&1 || { cat "$tmp/atlas.log"; exit 1; }
 git diff --quiet -- nim.cfg tabelline.nimble 2>/dev/null ||
   log "WARNING: atlas changed nim.cfg or tabelline.nimble (it restores them from atlas.lock): see git diff"
 for d in deps/*/; do log "  $(basename "$d") $(git -C "$d" describe --tags --always 2>/dev/null)"; done

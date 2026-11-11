@@ -18,3 +18,4 @@ book/gt/.venv/
 book/plan/cache/
 __pycache__/
 docs/assets/site.css
+build/
