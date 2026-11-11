@@ -55,6 +55,13 @@ proc gtBlog*(title, url, author, date, changes: string): Source =
          url: "https://posit-dev.github.io/great-tables/blog/" & url,
          authors: author, license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
 
+proc gtVignette*(title, page, changes: string): Source =
+  ## An article of gt's site (gt.rstudio.com/articles/), from its vignettes in R.
+  Source(title: "“" & title & "”, an article of gt", url: "https://gt.rstudio.com/articles/" &
+         page & ".html", authors: "Richard Iannone and the gt contributors",
+         license: "MIT", licenseUrl: "https://github.com/rstudio/gt/blob/master/LICENSE.md",
+         changes: changes, fromR: true)
+
 proc noteHtml(label, text: string): string =
   "<aside class=\"tb-note\"><p class=\"tb-note-label\">" & label & "</p>" &
     markdown(text, config = initGfmConfig()) & "</aside>"
@@ -144,7 +151,9 @@ const
     ("Great Tables", "outputs", "BOOK_NO_PYTHON", "🐍 Python",
      "uv run --quiet --project book/gt python book/gt/run.py"),
     ("gt", "outputs-r", "BOOK_NO_R", "🏴‍☠️ R", "Rscript book/gt/run.R")]
-  noR = "<p class=\"tb-no-r\">gt has no version of this example.</p>"
+  noCode: array[Lang, string] = [
+    "<p class=\"tb-no-r\">Great Tables has no version of this example.</p>",
+    "<p class=\"tb-no-r\">gt has no version of this example.</p>"]
 
 var refCells: seq[RefCell]
 
@@ -211,7 +220,7 @@ proc fillCells(nb: var Nb, lang: Lang) =
   for c in refCells:
     let mark = "<!--" & $lang & "-->"
     if c.code[lang].len == 0:
-      c.blk.html = c.blk.html.replace(mark, noR)
+      c.blk.html = c.blk.html.replace(mark, noCode[lang])
       continue
     let html = cellHtml(lang, c.code[lang], saved["outputs"][k], errors)
     inc k

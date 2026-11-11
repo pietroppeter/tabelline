@@ -399,7 +399,8 @@
     {
      "path": "vignettes/creating-summary-lines.Rmd",
      "title": "Creating Summary Lines",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/summary_lines.html"
     },
     {
      "path": "vignettes/gt-datasets.Rmd",

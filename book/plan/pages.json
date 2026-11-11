@@ -1005,6 +1005,7 @@
    {
     "title": "Creating Summary Lines",
     "path": "vignettes/creating-summary-lines.Rmd",
+    "book": "vignettes/summary_lines.html",
     "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
     "port": "port",
     "note": "",

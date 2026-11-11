@@ -25,6 +25,8 @@ var book = initBookWithToc:
     entry("v0.2.0: Easy Data Coloring", "v0_2")
     entry("v0.3.0: So Many Style Options!", "v0_3")
     entry("v0.4.0: Nanoplots and More", "v0_4")
+  section("gt: articles", "vignettes/index.md"):
+    entry("Creating Summary Lines", "summary_lines")
   entry("What the book will port", "next", numbered = false)
   section("The Table Contest", "contest.nim"):
     entry("Guide to table making, with table.glue", "contest/table_glue")
