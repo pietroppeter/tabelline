@@ -524,6 +524,7 @@
    {
     "title": "Great Tables v0.2.0: Easy Data Coloring",
     "path": "docs/blog/introduction-0.2.0/index.qmd",
+    "book": "blog/v0_2.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
     "port": "port",
     "note": "",
@@ -543,6 +544,7 @@
    {
     "title": "Great Tables v0.3.0: So Many Style Options!",
     "path": "docs/blog/introduction-0.3.0/index.qmd",
+    "book": "blog/v0_3.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
     "port": "port",
     "note": "",
@@ -575,6 +577,7 @@
    {
     "title": "Great Tables v0.4.0: Nanoplots and More",
     "path": "docs/blog/introduction-0.4.0/index.qmd",
+    "book": "blog/v0_4.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
     "port": "port",
     "note": "",
@@ -599,6 +602,7 @@
    {
     "title": "Introducing Great Tables",
     "path": "docs/blog/introduction_great_tables.qmd",
+    "book": "blog/introducing.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
     "port": "port",
     "note": "",
@@ -632,7 +636,7 @@
     "url": "https://posit-dev.github.io/great-tables/blog/latex-output-tables/",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 31,
     "needs": {
      "0.2": [
@@ -640,7 +644,7 @@
       "Plots in cells",
       "Table options"
      ],
-     "0.5": [
+     "0.3": [
       "LaTeX"
      ]
     },
@@ -2680,10 +2684,10 @@
     "url": "https://github.com/RichardHooijmaijers/tutorial-R3port",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 102,
     "needs": {
-     "0.5": [
+     "0.3": [
       "LaTeX"
      ]
     },
@@ -5564,7 +5568,7 @@
      "0.2": [
       "Table options"
      ],
-     "0.5": [
+     "0.3": [
       "Groups of tables, split tables"
      ],
      "later": [
@@ -6519,17 +6523,17 @@
     "url": "https://github.com/kevbaer/vb_tables_comp_entry",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.4",
     "calls": 207,
     "needs": {
      "0.2": [
       "Table options"
      ],
+     "0.3": [
+      "Groups of tables, split tables"
+     ],
      "0.4": [
       "Plots, icons and themes from gt-extras"
-     ],
-     "0.5": [
-      "Groups of tables, split tables"
      ]
     },
     "uses": [
@@ -8188,10 +8192,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.gtsave.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 11,
     "needs": {
-     "0.5": [
+     "0.3": [
       "Images and PDF"
      ]
     },
@@ -8221,10 +8225,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.as_latex.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 7,
     "needs": {
-     "0.5": [
+     "0.3": [
       "LaTeX"
      ]
     },
@@ -8416,10 +8420,10 @@
     "url": "https://gt.rstudio.com/reference/as_latex.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 8,
     "needs": {
-     "0.5": [
+     "0.3": [
       "LaTeX"
      ]
     },
@@ -8452,10 +8456,10 @@
     "url": "https://gt.rstudio.com/reference/as_rtf.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 8,
     "needs": {
-     "0.5": [
+     "0.3": [
       "RTF and Word"
      ]
     },
@@ -8472,10 +8476,10 @@
     "url": "https://gt.rstudio.com/reference/as_word.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 8,
     "needs": {
-     "0.5": [
+     "0.3": [
       "RTF and Word"
      ]
     },
@@ -10125,13 +10129,13 @@
     "url": "https://gt.rstudio.com/reference/gt_split.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 17,
     "needs": {
      "0.2": [
       "Table options"
      ],
-     "0.5": [
+     "0.3": [
       "Groups of tables, split tables"
      ]
     },
@@ -10151,10 +10155,10 @@
     "url": "https://gt.rstudio.com/reference/gtsave.html",
     "port": "port",
     "note": "",
-    "ready": "0.5",
+    "ready": "0.3",
     "calls": 11,
     "needs": {
-     "0.5": [
+     "0.3": [
       "Images and PDF"
      ]
     },

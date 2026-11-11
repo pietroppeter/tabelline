@@ -45,10 +45,13 @@ proc sourcesTable*(): Tabella =
     let ps = pagesOf(s["id"].getStr)
     var counts: seq[string]
     if s["status"].getStr == "ported":
-      counts.add "ported (Nanoplots in 0.4)"
+      counts.add "ported"
     else:
+      let inBook = ps.countIt(it{"book"}.getStr != "")
+      if inBook > 0: counts.add $inBook & " ported"
       for r in releases:
-        let n = ps.countIt(it["ready"].getStr == r and it["port"].getStr != "skip")
+        let n = ps.countIt(it["ready"].getStr == r and it["port"].getStr != "skip" and
+                           it{"book"}.getStr == "")
         if n > 0: counts.add $n & " " & (if r == "new": "with a new gap" else: whenLabel(r))
     rows.add SourceRow(source: mdLink(s["title"].getStr, s["url"].getStr) & "<br>*" &
                          s["licence"].getStr & " licence*",
@@ -88,10 +91,11 @@ proc pagesTable*(id: string, ported = false): Tabella =
         needs.add "*" & whenLabel(r).capitalizeAscii & ":* " & p["needs"][r].getElems.mapIt(it.getStr).join(", ")
     var page = mdLink(p["title"].getStr, p["url"].getStr)
     if p["note"].getStr != "": page.add "<br>" & p["note"].getStr
+    if p{"book"}.getStr != "": page.add "<br>**[In this book](" & p["book"].getStr & ")**"
     var ready = whenLabel(p["ready"].getStr).capitalizeAscii
     if p["port"].getStr == "skip": ready = "Left out"
     elif p["port"].getStr == "triage": ready = "To triage: " & ready
-    elif ported and p["ready"].getStr != "0.4": ready = "Ported"
+    elif ported or p{"book"}.getStr != "": ready = "Ported"
     rows.add PageRow(page: page, ready: ready,
                      needs: needs.join("<br>"))
   tabella(rows, rownameCol = "", groupnameCol = ""):

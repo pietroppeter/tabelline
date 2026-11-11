@@ -6,7 +6,6 @@ have other names), by Rich Iannone, Michael Chow and the Great Tables contributo
 the original closely: same text, same examples, same data, same order. The book's own remarks
 (how tabelline differs, what it does not have yet) are in boxes marked “× tabelline”.
 
-Left out: *Nanoplots* (tabelline gets them in 0.4), *Contributing* and *Extensions*, which are
-about Great Tables itself.
+Left out: *Contributing* and *Extensions*, which are about Great Tables itself.
 
 What tabelline lacks to do what these pages do is collected in [What the port found](../gaps.html).

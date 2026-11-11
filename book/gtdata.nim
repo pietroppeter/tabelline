@@ -1,5 +1,6 @@
-## The datasets of Great Tables that the Get Started guide uses and tabelline does not ship yet
-## (`tabelline/datasets` has `exibble`): `islands`, `airquality` and `sza`, as CSV files in
+## The datasets of Great Tables that the book's pages use and tabelline does not ship
+## (`tabelline/datasets` has `exibble`): `islands`, `airquality`, `sza`, `gtcars`, `countrypops`,
+## `illness` and `metro` (with its images of the metro lines), as CSV files in
 ## book/data/great-tables/, copied from the `great_tables` package (MIT). They are read when the
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
 ##
@@ -13,6 +14,13 @@ const
   islandsCsv = staticRead(dataDir & "islands.csv")
   airqualityCsv = staticRead(dataDir & "airquality.csv")
   szaCsv = staticRead(dataDir & "sza.csv")
+  gtcarsCsv = staticRead(dataDir & "gtcars.csv")
+  countrypopsCsv = staticRead(dataDir & "countrypops.csv")
+  illnessCsv = staticRead(dataDir & "illness.csv")
+  metroCsv = staticRead(dataDir & "metro.csv")
+
+const metroImages* = dataDir & "metro_images"
+  ## The folder of the metro lines' images (`metro_1.svg`, ...), for `fmtImage(path = ...)`.
 
 proc islands*(): TableData = parseCsv(islandsCsv)
   ## The 48 largest landmasses of the world, area in thousands of square miles (R's `islands`).
@@ -20,6 +28,21 @@ proc airquality*(): TableData = parseCsv(airqualityCsv)
   ## Daily air quality in New York, May to September 1973 (R's `airquality`).
 proc sza*(): TableData = parseCsv(szaCsv)
   ## Solar zenith angles by latitude, month and half hour of true solar time.
+
+proc gtcars*(): TableData = parseCsv(gtcarsCsv)
+  ## 47 deluxe automobiles from the 2014-2017 model years, with their performance and price.
+proc countrypops*(): TableData = parseCsv(countrypopsCsv)
+  ## The population of every country, every year from 1960 to 2022 (World Bank).
+proc illness*(): TableData = parseCsv(illnessCsv)
+  ## Daily tests of a patient with yellow fever, days 3 to 9, with their normal ranges.
+proc metro*(): TableData = parseCsv(metroCsv)
+  ## The stations of the Paris Metro, with their lines and passengers in 2021.
+
+proc tail*(d: TableData, n = 5): TableData =
+  ## The last `n` rows.
+  result = TableData()
+  for c in d.columns:
+    result.addColumn(c.name, c.values[max(0, c.values.len - n) .. ^1])
 
 proc head*(d: TableData, n = 5): TableData =
   ## The first `n` rows.
