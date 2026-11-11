@@ -21,9 +21,9 @@ same property, but a style at one part SHALL win over a style at a whole part th
 its first element.
 
 ```nim
-let t = tabella(tavolaPitagorica(3), rownameCol = "×")
-  .tabStyle(style.fill("#FFF3B0") & style.text(weight = "bold"), loc.body(cols = "2", rows = [1]))
-  .tabStyle(style.text(color = "#1F4E99"), loc.columnHeader())
+let t = tabella(tavolaPitagorica(3), rownameCol = "×"):
+  tabStyle style.fill("#FFF3B0") & style.text(weight = "bold"), loc.body(cols = "2", rows = [1])
+  tabStyle style.text(color = "#1F4E99"), loc.columnHeader()
 echo "background-color: #FFF3B0; font-weight: bold" in t.toHtml
 echo t.toHtml.count("color: #1F4E99")
 ```
@@ -47,9 +47,11 @@ let d = tableData:
   small: [1, 2]
   large: [100, 200]
   word: ["a", "b"]
-let t = tabella(d).dataColor(everything(), palette = @["#FFFFFF", "#000000"])
+let t = tabella(d):
+  dataColor everything(), palette = @["#FFFFFF", "#000000"]
 echo t.toHtml.count("background-color: #000000; color: #FFFFFF")
-let r = tabella(d).dataColor("small", palette = @["#FFFFFF", "#000000"], domain = (2.0, 1.0))
+let r = tabella(d):
+  dataColor "small", palette = @["#FFFFFF", "#000000"], domain = (2.0, 1.0)
 echo "background-color: #000000; color: #FFFFFF" in r.toHtml
 ```
 
@@ -75,15 +77,23 @@ On a heading or column labels background that light text reads better on, the te
 white.
 
 ```nim
-let t = tabella(planets()).tabOptions(rowStriping = true, headingAlign = "left")
+let t = tabella(planets()):
+  tabOptions:
+    rowStriping = true
+    headingAlign = "left"
 echo t.options.rowStriping, " ", t.options.headingAlign, " ", t.options.tableFontSize
-let s = tabella(planets()).tabHeader("Planets").optStylize(2, "red")
+let s = tabella(planets()):
+  tabHeader "Planets"
+  optStylize 2, "red"
 echo "background-color: #8A1C1C; text-align: center; color: #FFFFFF" in s.toHtml
-let o = tabella(planets()).optCssTheme().options
+let themed = tabella(planets()):
+  optCssTheme()
+let o = themed.options
 echo o.tableFontColor
 echo o.tableBodyHlinesColor
-let mine = tabella(planets()).optCssTheme(ink = "--foreground", primary = "#D64545").options
-echo mine.tableFontColor, " ", mine.headingBorderBottomColor
+let mine = tabella(planets()):
+  optCssTheme ink = "--foreground", primary = "#D64545"
+echo mine.options.tableFontColor, " ", mine.options.headingBorderBottomColor
 ```
 
 ```text
@@ -99,7 +109,8 @@ var(--foreground, #1C1C1C) #D64545
 font-variant: small-caps"`), joinable with the other styles.
 
 ```nim
-let t = tabella(tavolaPitagorica(2)).tabStyle(style.css("font-variant: small-caps; letter-spacing: 1px"), loc.columnLabels())
+let t = tabella(tavolaPitagorica(2)):
+  tabStyle style.css("font-variant: small-caps; letter-spacing: 1px"), loc.columnLabels()
 echo "font-variant: small-caps; letter-spacing: 1px" in t.toHtml
 ```
 
@@ -115,9 +126,13 @@ away (`"none"`) or bring back the defaults (`"default"`). New options SHALL hold
 (`dataRowPaddingHorizontal`, `tableBorderLeftStyle`, `tableBodyVlinesColor`, ...).
 
 ```nim
-let t = tabella(tavolaPitagorica(2)).optVerticalPadding(0.5).optTableOutline(color = "#333333")
+let t = tabella(tavolaPitagorica(2)):
+  optVerticalPadding 0.5
+  optTableOutline color = "#333333"
 echo t.options.dataRowPadding, " ", t.options.tableBorderLeftStyle, " ", t.options.tableBorderLeftColor
-echo tabella(tavolaPitagorica(2)).optTableLines("none").options.tableBodyHlinesColor
+let noLines = tabella(tavolaPitagorica(2)):
+  optTableLines "none"
+echo noLines.options.tableBodyHlinesColor
 ```
 
 ```text
@@ -134,11 +149,14 @@ first (`"marks_first"`, the default), last (`"marks_last"`), or keep the order n
 (`"preserve_order"`, which numbers the marks in that order too).
 
 ```nim
-echo tabella(tavolaPitagorica(2), rownameCol = "×")
-  .tabFootnote("A note with no mark.")
-  .tabFootnote("Two twos.", loc.body(cols = "2", rows = [1]))
-  .tabFootnote("The first row.", loc.stub(rows = [0]))
-  .optFootnoteMarks("standard").optFootnoteSpec("^", "(").optFootnoteOrder("marks_last")
+let t = tabella(tavolaPitagorica(2), rownameCol = "×"):
+  tabFootnote "A note with no mark."
+  tabFootnote "Two twos.", loc.body(cols = "2", rows = [1])
+  tabFootnote "The first row.", loc.stub(rows = [0])
+  optFootnoteMarks "standard"
+  optFootnoteSpec "^", "("
+  optFootnoteOrder "marks_last"
+echo t
 ```
 
 ```text
@@ -162,7 +180,8 @@ A note with no mark.
 with `#` are left as they are); `add = false` SHALL replace what was given before.
 
 ```nim
-let t = tabella(tavolaPitagorica(2), id = "tp").optCss(".tb_title { color: red; }")
+let t = tabella(tavolaPitagorica(2), id = "tp"):
+  optCss ".tb_title { color: red; }"
 echo "#tp .tb_title { color: red; }" in t.toHtml
 ```
 
@@ -205,7 +224,10 @@ top and bottom), the stub (with its size and text transform), the footnotes and 
 ```nim
 let t = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
   colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
-  tabOptions(rowGroupBorderTopStyle = "dashed", stubBorderWidth = "1px", tableBodyHlinesStyle = "dotted")
+  tabOptions:
+    rowGroupBorderTopStyle = "dashed"
+    stubBorderWidth = "1px"
+    tableBodyHlinesStyle = "dotted"
 let css = t.toHtml
 echo "2px dashed" in css, " ", "1px solid #D3D3D3" in css, " ", "1px dotted" in css
 ```

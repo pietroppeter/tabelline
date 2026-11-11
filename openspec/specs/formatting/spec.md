@@ -14,7 +14,10 @@ SHALL win. Missing values SHALL render blank unless a substitution says otherwis
 ```nim
 let d = tableData:
   x: [1.5, 2.25, nil]
-echo tabella(d).fmtNumber("x", decimals = 1).fmtNumber("x", decimals = 3, rows = [0])
+let t = tabella(d):
+  fmtNumber "x", decimals = 1
+  fmtNumber "x", decimals = 3, rows = [0]
+echo t
 ```
 
 ```text
@@ -36,11 +39,21 @@ special cases. Negative numbers SHALL use the minus sign (−).
 ```nim
 let d = tableData:
   n: [1234567.891, -0.5, 0.0123]
-echo tabella(d).fmtNumber("n", decimals = 2)
-echo tabella(d).fmtNumber("n", compact = true)
-echo tabella(d).fmtPercent("n", decimals = 1)
-echo tabella(d).fmtCurrency("n", currency = "EUR")
-echo tabella(d).fmtScientific("n", decimals = 1)
+let number = tabella(d):
+  fmtNumber "n", decimals = 2
+echo number
+let compact = tabella(d):
+  fmtNumber "n", compact = true
+echo compact
+let percent = tabella(d):
+  fmtPercent "n", decimals = 1
+echo percent
+let currency = tabella(d):
+  fmtCurrency "n", currency = "EUR"
+echo currency
+let scientific = tabella(d):
+  fmtScientific "n", decimals = 1
+echo scientific
 ```
 
 ```text
@@ -93,9 +106,15 @@ let d = tableData:
   n: [1234.5, 0.25]
 let p = tableData:
   share: [0.123, 0.5]
-echo tabella(d, locale = "it").fmtNumber("n", decimals = 2)
-echo tabella(d, locale = "de_CH").fmtNumber("n", decimals = 2)
-echo tabella(p, locale = "fr").fmtPercent("share")
+let italian = tabella(d, locale = "it"):
+  fmtNumber "n", decimals = 2
+echo italian
+let swiss = tabella(d, locale = "de_CH"):
+  fmtNumber "n", decimals = 2
+echo swiss
+let french = tabella(p, locale = "fr"):
+  fmtPercent "share"
+echo french
 echo getLocale("pt-XX").tag, " ", getLocale("it").months[10], " ", getLocale("ja").daysAbbr[0]
 ```
 
@@ -131,8 +150,11 @@ let d = tableData:
   day: ["2026-11-07", "2015-01-15"]
   ok: [true, false]
   stars: [3, 1]
-echo tabella(d).fmtDate("day", dateStyle = "day_month_year").fmtTf("ok", trueText = "yes", falseText = "no")
-  .fmt("stars", proc (v: Value): string = "*".repeat(v.i))
+let t = tabella(d):
+  fmtDate "day", dateStyle = "day_month_year"
+  fmtTf "ok", trueText = "yes", falseText = "no"
+  fmt "stars", proc (v: Value): string = "*".repeat(v.i)
+echo t
 ```
 
 ```text
@@ -151,7 +173,10 @@ zeros as a text. Substitutions SHALL apply after the formats.
 ```nim
 let d = tableData:
   n: [0, nil, 3]
-echo tabella(d).subMissing().subZero(zeroText = "none")
+let t = tabella(d):
+  subMissing()
+  subZero zeroText = "none"
+echo t
 ```
 
 ```text
@@ -195,8 +220,12 @@ SI prefix (from quecto to quetta) before an optional unit.
 ```nim
 let d = tableData:
   x: [12345.0, 0.000123, 1.5]
-echo tabella(d).fmtEngineering("x")
-echo tabella(d).fmtNumberSi("x", unit = "g")
+let engineering = tabella(d):
+  fmtEngineering "x"
+echo engineering
+let si = tabella(d):
+  fmtNumberSi "x", unit = "g"
+echo si
 ```
 
 ```text
@@ -225,8 +254,12 @@ With `inclSpace = "auto"` there SHALL be a space before letters and none before 
 ```nim
 let d = tableData:
   co2: [0.000421, 0.000280]
-echo tabella(d).fmtPartsper("co2", toUnits = "ppm", decimals = 0)
-echo tabella(d).fmtPartsper("co2", decimals = 3)
+let ppm = tabella(d):
+  fmtPartsper "co2", toUnits = "ppm", decimals = 0
+echo ppm
+let perMille = tabella(d):
+  fmtPartsper "co2", decimals = 3
+echo perMille
 ```
 
 ```text
@@ -252,7 +285,10 @@ zeros; sizes below one unit SHALL show whole bytes.
 ```nim
 let d = tableData:
   size: [512, 1500, 1536, 3_200_000_000]
-echo tabella(d).fmtBytes("size").fmtBytes("size", rows = [2], standard = "binary")
+let t = tabella(d):
+  fmtBytes "size"
+  fmtBytes "size", rows = [2], standard = "binary"
+echo t
 ```
 
 ```text
@@ -274,8 +310,12 @@ spell numbers from zero to one hundred in English, and leave others as digits.
 ```nim
 let d = tableData:
   n: [1, 3, 27, 42]
-echo tabella(d).fmtIndex("n", upper = false)
-echo tabella(d).fmtSpelledNum("n")
+let index = tabella(d):
+  fmtIndex "n", upper = false
+echo index
+let spelled = tabella(d):
+  fmtSpelledNum "n"
+echo spelled
 ```
 
 ```text
@@ -306,7 +346,9 @@ a date and a time, each in its style. Text that is not a time SHALL be left as i
 ```nim
 let d = tableData:
   launch: ["1969-07-16T13:32:00", "2026-11-07 09:05", "soon"]
-echo tabella(d).fmtDatetime("launch", dateStyle = "day_m_year", timeStyle = "h_m_p")
+let t = tabella(d):
+  fmtDatetime "launch", dateStyle = "day_m_year", timeStyle = "h_m_p"
+echo t
 echo formatTime("14:35:07", "iso-short"), " ", formatTime("14:35", "h_p")
 ```
 
@@ -330,8 +372,12 @@ The smallest output unit SHALL be rounded.
 ```nim
 let d = tableData:
   secs: [7503.0, 90061.0, 45.0]
-echo tabella(d).fmtDuration("secs")
-echo tabella(d).fmtDuration("secs", durationStyle = "colon-sep")
+let narrow = tabella(d):
+  fmtDuration "secs"
+echo narrow
+let colons = tabella(d):
+  fmtDuration "secs", durationStyle = "colon-sep"
+echo colons
 echo formatDuration(1.5, inputUnits = "days", durationStyle = "wide")
 ```
 
@@ -363,8 +409,11 @@ the texts SHALL be HTML (an SVG symbol, say), not escaped.
 ```nim
 let d = tableData:
   rings: [false, true, nil]
-echo tabella(d).fmtTf("rings", tfStyle = "circles", naText = "?")
-let t = tabella(d).fmtTf("rings", trueText = "<b>yes</b>", falseText = "no", html = true, colors = ["green", "gray"])
+let circles = tabella(d):
+  fmtTf "rings", tfStyle = "circles", naText = "?"
+echo circles
+let t = tabella(d):
+  fmtTf "rings", trueText = "<b>yes</b>", falseText = "no", html = true, colors = ["green", "gray"]
 echo "<span style=\"color: green\"><b>yes</b></span>" in t.toHtml
 ```
 
@@ -388,7 +437,8 @@ shown.
 ```nim
 let d = tableData:
   site: ["https://nim-lang.org", "[nimib](https://github.com/pietroppeter/nimib)"]
-let t = tabella(d).fmtUrl("site")
+let t = tabella(d):
+  fmtUrl "site"
 echo t
 echo "<a href=\"https://github.com/pietroppeter/nimib\">nimib</a>" in t.toHtml
 ```
@@ -411,7 +461,9 @@ nothing is loaded and every renderer shows them; with `useTitle` the code SHALL 
 ```nim
 let d = tableData:
   country: ["IT", "JPN", "FR,DE"]
-echo tabella(d).fmtFlag("country")
+let t = tabella(d):
+  fmtFlag "country"
+echo t
 ```
 
 ```text
@@ -435,7 +487,12 @@ a proc `fn` holds, as a text.
 ```nim
 let d = tableData:
   x: [0.004, 2.5, 3e13, -99.0]
-echo tabella(d).fmtNumber("x").subSmallVals().subLargeVals().subValues(values = [-99], replacement = "n/a")
+let t = tabella(d):
+  fmtNumber "x"
+  subSmallVals()
+  subLargeVals()
+  subValues values = [-99], replacement = "n/a"
+echo t
 ```
 
 ```text
@@ -457,12 +514,17 @@ SHALL replace a plain text, and `textCaseMatch(cases, default, replace, location
 texts that match a case (or, with `replace = "partial"`, the matching parts).
 
 ```nim
-echo tabella(planets(), rownameCol = "planet").tabStubhead("planet")
-  .colsHide(["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "moons"])
-  .textTransform(toUpperAscii, loc.stub())
-  .fmtTf("rings", tfStyle = "yes-no")
-  .textCaseMatch({"yes": "rings!"}, default = "", locations = loc.body("rings"))
-  .textReplace("planet", "Planet", loc.stubhead())
+let t = tabella(planets(), rownameCol = "planet"):
+  tabStubhead "planet"
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "moons"]
+  textTransform toUpperAscii, loc.stub()
+  fmtTf "rings", tfStyle = "yes-no"
+  textCaseMatch:
+    yes: "rings!"
+    default = ""
+    locations = loc.body("rings")
+  textReplace "planet", "Planet", loc.stubhead()
+echo t
 ```
 
 ```text
@@ -495,10 +557,19 @@ let d = tableData:
   quantity: ["speed of sound", "gravity", "air density"]
   value: [343.0, 9.81, 1.204]
   units: ["m /s", "m s^-2", "kg m^-3"]
-echo tabella(d, rownameCol = "quantity").fmtUnits("units").colsLabel({"value": "at {{20 degC}}"})
-echo tabella(planets(), rownameCol = "planet")
-  .colsHide(everything()).colsUnhide(["density", "gravity"])
-  .colsUnits({"density": "kg m^-3", "gravity": "m s^-2"}, unitsPattern = "{1} ({2})")
+let quantities = tabella(d, rownameCol = "quantity"):
+  fmtUnits "units"
+  colsLabel:
+    value: "at {{20 degC}}"
+echo quantities
+let gravity = tabella(planets(), rownameCol = "planet"):
+  colsHide everything()
+  colsUnhide ["density", "gravity"]
+  colsUnits:
+    density: "kg m^-3"
+    gravity: "m s^-2"
+    unitsPattern = "{1} ({2})"
+echo gravity
 ```
 
 ```text
@@ -534,7 +605,9 @@ a dot. `fmtChem(columns, rows)` SHALL show cells as formulas.
 let d = tableData:
   name: ["water", "copper sulfate", "sulfate", "carbon-14"]
   formula: ["H2O", "CuSO4 * 5H2O", "SO4^2-", "^14C"]
-echo tabella(d, rownameCol = "name").fmtChem("formula")
+let t = tabella(d, rownameCol = "name"):
+  fmtChem "formula"
+echo t
 echo formatChem("2H2 + O2 -> 2H2O")
 ```
 
@@ -561,10 +634,13 @@ when `simplify`). A fraction that rounds to a whole number SHALL show just the n
 ```nim
 let d = tableData:
   x: [0.25, 1.5, 2.333, 0.999, -0.125]
-echo tabella(d).colsAdd("diagonal", d["x"].values).colsAdd("sixteenths", d["x"].values)
-  .fmtFraction("x")
-  .fmtFraction("diagonal", layout = "diagonal")
-  .fmtFraction("sixteenths", denominator = 16)
+let t = tabella(d):
+  colsAdd "diagonal", d["x"].values
+  colsAdd "sixteenths", d["x"].values
+  fmtFraction "x"
+  fmtFraction "diagonal", layout = "diagonal"
+  fmtFraction "sixteenths", denominator = 16
+echo t
 ```
 
 ```text
@@ -588,7 +664,9 @@ end. Other text SHALL be shown as it is. `fmtBins(columns, rows, sep, fmt)` SHAL
 let d = tableData:
   population: ["[0,1e+06)", "[1e+06,1e+07)", "[1e+07,1e+08)"]
   countries: [52, 61, 83]
-echo tabella(d).fmtBins("population", fmt = proc (x: float): string = formatCompact(x, 0))
+let t = tabella(d):
+  fmtBins "population", fmt = proc (x: float): string = formatCompact(x, 0)
+echo t
 ```
 
 ```text
@@ -616,7 +694,10 @@ let d = tableData:
   count: [3, 2500000, 12]
   ratio: [0.5, 0.0000123, 1.25]
   price_eur: [3.5, 10.0, 99.99]
-echo tabella(d).fmtAuto().fmtPassthrough("item", pattern = "item {x}")
+let t = tabella(d):
+  fmtAuto()
+  fmtPassthrough "item", pattern = "item {x}"
+echo t
 ```
 
 ```text
@@ -638,7 +719,10 @@ spaces, and `fmtCountry(columns, rows, pattern, sep)` SHALL format cells so.
 ```nim
 let d = tableData:
   codes: ["IT", "jpn", "FR, DE", "XX"]
-echo tabella(d).colsAdd("names", d["codes"].values).fmtCountry("names")
+let t = tabella(d):
+  colsAdd "names", d["codes"].values
+  fmtCountry "names"
+echo t
 ```
 
 ```text
@@ -662,9 +746,15 @@ amounts in parentheses; `useSubunits = false` SHALL drop the decimals.
 ```nim
 let d = tableData:
   amount: [1234.5, -3.25]
-echo tabella(d).fmtCurrency("amount", currency = "CAD", accounting = true)
-echo tabella(d, locale = "it").fmtCurrency("amount", currency = "EUR")
-echo tabella(d).fmtCurrency("amount", currency = "BHD", placement = "right")
+let accounting = tabella(d):
+  fmtCurrency "amount", currency = "CAD", accounting = true
+echo accounting
+let euro = tabella(d, locale = "it"):
+  fmtCurrency "amount", currency = "EUR"
+echo euro
+let dinar = tabella(d):
+  fmtCurrency "amount", currency = "BHD", placement = "right"
+echo dinar
 echo formatCurrency(1500, "JPY"), " ", currencyInfo("CHF")
 ```
 
@@ -700,7 +790,9 @@ order; a time style SHALL be one of `timeStyles` or of `timeSkeletons` ("Hm", "h
 ```nim
 let d = tableData:
   day: ["2026-11-07", "2015-01-15"]
-echo tabella(d, locale = "de").fmtDate("day", dateStyle = "yMMMEd")
+let german = tabella(d, locale = "de"):
+  fmtDate "day", dateStyle = "yMMMEd"
+echo german
 for loc in ["en", "it", "ja", "ru"]:
   echo loc, ": ", formatDate("2026-11-07", "wday_day_month_year", loc), " · ",
     formatDate("2026-11-07", "yMMMd", loc), " · ", formatTime("14:35", "hm", loc)
