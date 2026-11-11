@@ -1,4 +1,4 @@
-## devlog: 11 Nov 2026 B | One stylesheet for every table | Every tabelline table carries its own 6 KB of CSS, and a page with many tables carries it many times: a quarter of the site is repeated CSS. What a table's HTML holds, three ways to share its style, the one we chose (fixed rules, options as CSS variables), and a CSS trick that keeps a page's theme winning and losing exactly as before.
+## devlog: 11 Nov 2026 B | One stylesheet for every table | Every tabelline table carries its own 6 KB of CSS, and a page with many tables carries it many times: almost a third of the site is repeated CSS. What a table's HTML holds, three ways to share its style, the one we chose (fixed rules, options as CSS variables), and a CSS trick that keeps a page's theme winning and losing exactly as before.
 ## A dated post: it tells why and how tables share their style (change `share-table-styles`), and is not updated afterwards.
 import std/os
 import nimib
@@ -12,7 +12,7 @@ nb.useTabelline(title = "One stylesheet for every table", homeHref = "../", back
 
 nbTitle "11 November 2026", "One stylesheet for every table", """
 Every tabelline table carries its own 6 KB of CSS, and a page with many tables carries it many
-times: a quarter of the site is repeated CSS. What a table's HTML holds, three ways to share its
+times: almost a third of the site is repeated CSS. What a table's HTML holds, three ways to share its
 style, the one we chose, and a CSS trick that keeps a page's theme winning and losing exactly as
 before.
 """
@@ -75,7 +75,7 @@ themselves. So the 90 rules are the same for every table; only the values change
 
 ## How much of the site it is
 
-Measured on the built site of 10 November (23 pages, the book not counted).
+Measured on the built site of 11 November, the book not counted.
 """
 
 block:
@@ -84,22 +84,23 @@ block:
     size, styles, after: float
     tables, looks: int
   let rows = @[
-    Size(page: "Specs", size: 695, styles: 401, tables: 72, looks: 2, after: 332),
-    Size(page: "Designing tabelline 0.1", size: 461, styles: 282, tables: 51, looks: 7, after: 194),
-    Size(page: "Milano Cortina", size: 512, styles: 194, tables: 32, looks: 5, after: 368),
-    Size(page: "Guide", size: 489, styles: 159, tables: 27, looks: 8, after: 361),
-    Size(page: "Designing tabelline 0.2", size: 335, styles: 148, tables: 24, looks: 2, after: 226),
-    Size(page: "Rethinking the datasets", size: 289, styles: 97, tables: 16, looks: 1, after: 223)]
+    Size(page: "Reference", size: 1710, styles: 854, tables: 152, looks: 4, after: 875),
+    Size(page: "Specs", size: 699, styles: 400, tables: 72, looks: 2, after: 318),
+    Size(page: "Designing tabelline 0.1", size: 462, styles: 282, tables: 51, looks: 7, after: 195),
+    Size(page: "Milano Cortina", size: 512, styles: 193, tables: 32, looks: 5, after: 334),
+    Size(page: "Guide", size: 517, styles: 171, tables: 29, looks: 8, after: 365),
+    Size(page: "Designing tabelline 0.2", size: 335, styles: 148, tables: 24, looks: 2, after: 202),
+    Size(page: "Rethinking the datasets", size: 289, styles: 96, tables: 16, looks: 1, after: 207)]
   let t = tabella(rows, rownameCol = "page"):
-    tabHeader "Repeated CSS", "the six pages with the most table styles, and their size with one stylesheet"
+    tabHeader "Repeated CSS", "the pages with the most table styles, and their size with one stylesheet"
     colsLabel {"size": "page (KB)", "styles": "table styles (KB)", "tables": "tables", "looks": "different looks", "after": "after (KB)"}
     fmtNumber ["size", "styles", "after"], decimals = 0
-    tabSourceNote "All 24 pages: 6.72 MB, of which 1.71 MB table styles; 5.51 MB after. The book's 19 pages: 5.90 MB, 5.11 MB after."
+    tabSourceNote "All 25 pages with tables: 8.50 MB, of which 2.59 MB table styles; 6.29 MB after. The book's 23 pages: 7.54 MB, 6.59 MB after. Measured on 11 November."
     optCssTheme()
   nbTable t
 
 nbText: """
-The specs page has 72 tables and only two looks: 400 KB of CSS where 12 KB would do.
+The specs page has 72 tables and only two looks: 400 KB of CSS where 13 KB would do.
 
 ## Three ways to share
 
@@ -132,7 +133,7 @@ carries nothing.
 
 We chose the third. It is the simplest to explain (one stylesheet, options as variables), there is
 nothing to keep track of, and the 152 tables of the Reference cost one stylesheet and a few
-variables each: the page goes from 1.71 MB to 0.89 MB (153 KB to 105 KB compressed). The stylesheet is 13 KB, twice a table's old style, because every value carries
+variables each: the page goes from 1.71 MB to 0.88 MB (153 KB to 104 KB compressed). The stylesheet is 13 KB, twice a table's old style, because every value carries
 its `var(...)`; a page pays it once. The last column of the table above is what the pages weigh
 with it. It also gives something new: a page can set an option for all its tables at once,
 `.tabella { --tb-table-font-size: 14px }`.
