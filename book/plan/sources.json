@@ -389,7 +389,8 @@
     {
      "path": "vignettes/case-study-gtcars.Rmd",
      "title": "Case Study: gtcars",
-     "port": "port"
+     "port": "port",
+     "book": "vignettes/case_study_gtcars.html"
     },
     {
      "path": "vignettes/case-study-clinical-tables.Rmd",

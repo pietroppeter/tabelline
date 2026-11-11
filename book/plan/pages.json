@@ -976,6 +976,7 @@
    {
     "title": "Case Study: gtcars",
     "path": "vignettes/case-study-gtcars.Rmd",
+    "book": "vignettes/case_study_gtcars.html",
     "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
     "port": "port",
     "note": "",

@@ -6,7 +6,7 @@
 ##
 ## `head`, `take` and `select` are here too: Great Tables takes a data frame, and the guide cuts its
 ## data with pandas and Polars; tabelline's `TableData` has no verbs of its own (data frames come later).
-import std/os
+import std/[os, strutils]
 import tabelline
 
 const dataDir = currentSourcePath().parentDir & "/data/great-tables/"
@@ -62,3 +62,17 @@ proc select*(d: TableData, names: openArray[string]): TableData =
   ## The columns `names`, in that order (pandas' `df[[...]]`).
   result = TableData()
   for n in names: result.addColumn(n, d[n].values)
+
+proc glimpse*(d: TableData, width = 72): string =
+  ## A glance at `d`, as dplyr's `glimpse()` and Polars' `glimpse()`: the number of rows and
+  ## columns, then a line for each column with its kind and its first values.
+  result = "Rows: " & $d.nrows & "\nColumns: " & $d.ncols & "\n"
+  var w = 0
+  for c in d.columns: w = max(w, c.name.len)
+  for c in d.columns:
+    var line = "$ " & c.name & spaces(w - c.name.len) & " <" & ($c.kindOf)[2 .. ^1].toLowerAscii & "> "
+    for k, v in c.values:
+      let s = (if k > 0: ", " else: "") & (if v.isNull: "NA" else: $v)
+      if line.len + s.len > width: (line.add ", …"; break)
+      line.add s
+    result.add line & "\n"
