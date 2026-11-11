@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- CI: `tools/setup.sh` installs libpcre3 from Ubuntu 24.04's .deb (archive.ubuntu.com, checked by sha256, cached by CI) before trying apt, so a broken apt mirror no longer fails every run.
 - Book findings: every CSS colour name (148) for `dataColor` and the other colour helpers, and white text on a dark heading or column labels background given by name; `nbTable data: body`, a table in one step in a notebook; `tabelline/nanuq`, `tabella(df)` for a nanuq (Polars for Nim) DataFrame, an optional module (nanuq is in the `docs` feature); the clinical case study shapes its data with nanuq, and the chapters use what 0.2 gained (#86).
 ## 0.2.0 (11 Nov 2026)
 
