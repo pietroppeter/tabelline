@@ -489,9 +489,12 @@ widths of the letters of Inter, the font it ships, and writes rectangles, rules 
 needs nothing installed, and the picture is the same on every machine:
 """
 
-createDir root / "explainer"   # the page's folder, where the picture goes
+createDir root / "explainer"   # the picture goes in the page's folder
+let cwd = getCurrentDir()
+setCurrentDir root / "explainer"
 nbCode:
-  small3.save(root / "explainer" / "tavola.svg")
+  small3.save("tavola.svg")
+setCurrentDir cwd
 
 nbText: """
 ![The table as an SVG picture, drawn by tabelline](tavola.svg)
