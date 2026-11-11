@@ -126,7 +126,7 @@ block:  # every colour of every source, checked against the rules
     fmtNumber "hue", decimals = 0, pattern = "{x}°"
     colsWidth:
       swatch: "1.6em"
-    tabSourceNote "Contrast after WCAG 2 (3:1 for shapes, 4.5:1 for small text); hue in degrees, red at 0°, yellow at 60°, green at 120°, blue at 240°. Ghirri is checked too: he is in the discarded gallery."
+    tabSourceNote "Contrast after WCAG 2 (3:1 for shapes, 4.5:1 for small text); hue in degrees, red at 0°, yellow at 60°, green at 120°, blue at 240°. The discarded sources are checked too."
     optCssTheme()
   for i, r in rows:
     t = t.tabStyle(style.fill(sourceColours(r.source)[["ink", "primary", "secondary", "warning", "success"].find(r.role) + 1].hex),
@@ -258,25 +258,6 @@ default it would look like more of the same.
 [Fundació Pilar i Joan Miró](https://en.wikipedia.org/wiki/Fundaci%C3%B3_Pilar_i_Joan_Mir%C3%B3_in_Mallorca)
 """
 
-  nbGalleryCard("Herbert List and Constantine Manos", "1937–1964"):
-    nbText: """
-**Who.** List, a German photographer, travelled Greece from 1937 to 1939 for *Licht über Hellas*
-(1953), staged with a surrealist, metaphysical eye. Manos, born in South Carolina to Greek
-parents, lived in Greece from 1961 to 1964 for *A Greek Portfolio* (1972), and joined Magnum in 1963.
-
-**What.** Black and white: hard sun, whitewash, deep shadow; temples and statues for List, people and landscapes for Manos.
-
-**Why it fits.** The Greek islands in two values: the most readable look there can be.
-
-**For a page.** Whitewash for paper and shadow for ink, and the other colours from the islands
-themselves (a blue door, bougainvillea, broom, capers); notes as blocks of white with a hard shadow.
-"""
-    nbSwatches sourceSwatches("list")
-    nbText: """
-[Herbert List](https://en.wikipedia.org/wiki/Herbert_List) ·
-[Constantine Manos](https://en.wikipedia.org/wiki/Constantine_Manos)
-"""
-
   nbGalleryCard("Gio Ponti and the maiolica of Vietri and Caltagirone", "1400s–1960"):
     nbText: """
 **Who.** Ponti, the Milanese architect and designer; the potters of Vietri sul Mare, on the Amalfi
@@ -300,23 +281,48 @@ tile, a square sheet with a painted border; a row group as a band of tiles.
 [Scalinata di Santa Maria del Monte](https://it.wikipedia.org/wiki/Scalinata_di_Santa_Maria_del_Monte)
 """
 
-  nbGalleryCard("Ferdinando Scianna", "1965–"):
+  nbGalleryCard("Leo Lionni", "1960s–1999"):
     nbText: """
-**Who.** A Sicilian photographer, born in 1943 in Bagheria, near Palermo; a member of Magnum since
-1982 (full member in 1989).
+**Who.** A writer and illustrator of children's books, born in Amsterdam in 1910, who grew up
+partly in Italy, studied economics in Genoa, worked in advertising and at *Fortune* in the United
+States, and came back to Italy in 1962; he died in Tuscany in 1999.
 
-**What.** *Feste religiose in Sicilia* (1965), with an essay by Leonardo Sciascia; the Prix Nadar in 1966;
-then reportage, books on Bagheria, and fashion: Dolce & Gabbana's Sicily, in 1987.
+**What.** More than forty children's books, four of them Caldecott Honor books, *Swimmy* (1963)
+among them: a small black fish in a school of red ones, in the sea. He was the first children's
+illustrator to make collage his main medium.
 
-**Why it fits.** Sicily, the biggest island, seen from inside, and in books where a writer's words
-sit beside the pictures, as the story's quotes do.
+**Why it fits.** The sea told to children: the look of a children's book, as Munari is, but wet.
+Swimmy is also a lesson for tables: many small marks that make one shape.
 
-**For a page.** Black and white with grain, captions that matter, and one red, for feasts, as the
-primary; the other colours from Sicily's painted carts and lemon groves.
+**For a page.** Collage edges for the shapes; red for sections, sea blue for cards; a small black
+mark among red ones for the row that matters.
 """
-    nbSwatches sourceSwatches("scianna")
+    nbSwatches sourceSwatches("lionni")
     nbText: """
-[Ferdinando Scianna](https://en.wikipedia.org/wiki/Ferdinando_Scianna)
+[Leo Lionni](https://en.wikipedia.org/wiki/Leo_Lionni) ·
+[Swimmy](https://en.wikipedia.org/wiki/Swimmy_(book))
+"""
+
+  nbGalleryCard("Emanuele Luzzati", "1944–2007"):
+    nbText: """
+**Who.** A painter, illustrator, stage designer and animator from Genoa (1921–2007), who studied in
+Lausanne after the racial laws of 1938 and came back to Italy after the war.
+
+**What.** Stage designs from 1944; with Giulio Gianini, animated films, two of them nominated for
+an Oscar, *La gazza ladra* (1964) and *Pulcinella* (1973); children's books of his own
+(*Tarantella di Pulcinella*, *I tre fratelli*), Italo Calvino's Italian fairy tales and Gianni
+Rodari's rhymes.
+
+**Why it fits.** A Mediterranean port city's theatre for children: Pulcinella, tarantellas, bright
+flat colour on a stage.
+
+**For a page.** A page as a little stage: headings like painted backdrops, magenta and gold, black
+outlines; a table's title as the name over a stage.
+"""
+    nbSwatches sourceSwatches("luzzati")
+    nbText: """
+[Emanuele Luzzati](https://en.wikipedia.org/wiki/Emanuele_Luzzati) ·
+[Gianni Rodari](https://en.wikipedia.org/wiki/Gianni_Rodari)
 """
 
   nbGalleryCard("Massimo Vitali", "1995–"):
@@ -344,13 +350,61 @@ nbText: """
 
 A source that is discarded moves here, and a new one takes its place, found by looking in another
 direction and with what the discarded one taught. Eighteen sources at most are looked at in all:
-once nine new ones have come in, a discard only makes the gallery shorter. So far 10 of 18.
+once nine new ones have come in, a discard only makes the gallery shorter. So far 12 of 18.
 
 1. **Luigi Ghirri**, round 2: the softest light, but not of the islands. In his place came the
    **luzzu of Malta**: made on an island, in colours with rules, the lesson his card taught.
+2. **Herbert List and Constantine Manos**, and **Ferdinando Scianna**, round 3: four photographers
+   were too many, and black and white gives a look no colours of its own. In their place came two
+   artists of children's books, **Leo Lionni** and **Emanuele Luzzati**: the look of a children's
+   book is what Munari has, and they bring the sea and the theatre of a port.
 """
 
 nbGallery "discarded sources, newest first: swipe or scroll sideways":
+
+  nbGalleryCard("Herbert List and Constantine Manos", "1937–1964"):
+    nbText: """
+**Who.** List, a German photographer, travelled Greece from 1937 to 1939 for *Licht über Hellas*
+(1953), staged with a surrealist, metaphysical eye. Manos, born in South Carolina to Greek
+parents, lived in Greece from 1961 to 1964 for *A Greek Portfolio* (1972), and joined Magnum in 1963.
+
+**What.** Black and white: hard sun, whitewash, deep shadow; temples and statues for List, people and landscapes for Manos.
+
+**Why it fits.** The Greek islands in two values: the most readable look there can be.
+
+**For a page.** Whitewash for paper and shadow for ink, and the other colours from the islands
+themselves (a blue door, bougainvillea, broom, capers); notes as blocks of white with a hard shadow.
+
+**Why discarded** (round 3). Four photographers were too many, and these two are black and white:
+every colour but paper and ink had to come from the place, so the look would not be theirs.
+"""
+    nbSwatches sourceSwatches("list")
+    nbText: """
+[Herbert List](https://en.wikipedia.org/wiki/Herbert_List) ·
+[Constantine Manos](https://en.wikipedia.org/wiki/Constantine_Manos)
+"""
+
+  nbGalleryCard("Ferdinando Scianna", "1965–"):
+    nbText: """
+**Who.** A Sicilian photographer, born in 1943 in Bagheria, near Palermo; a member of Magnum since
+1982 (full member in 1989).
+
+**What.** *Feste religiose in Sicilia* (1965), with an essay by Leonardo Sciascia; the Prix Nadar in 1966;
+then reportage, books on Bagheria, and fashion: Dolce & Gabbana's Sicily, in 1987.
+
+**Why it fits.** Sicily, the biggest island, seen from inside, and in books where a writer's words
+sit beside the pictures, as the story's quotes do.
+
+**For a page.** Black and white with grain, captions that matter, and one red, for feasts, as the
+primary; the other colours from Sicily's painted carts and lemon groves.
+
+**Why discarded** (round 3). One photographer too many, and black and white: three of his five
+colours came from the place.
+"""
+    nbSwatches sourceSwatches("scianna")
+    nbText: """
+[Ferdinando Scianna](https://en.wikipedia.org/wiki/Ferdinando_Scianna)
+"""
 
   nbGalleryCard("Luigi Ghirri", "1973–1992"):
     nbText: """
@@ -375,6 +429,54 @@ and even his soft black stays under 10:1.
 
 
 nbText: """
+## How sources are chosen
+
+Every source, kept or discarded, by kind. The process, as it stands after three rounds:
+
+1. **Look wide first.** Painters, photographers, map makers, potters, boatbuilders, illustrators:
+   no more than two of a kind among the nine, so one kind of picture does not decide the look
+   (four photographers were too many).
+2. **Of the Mediterranean, and best of its islands.** A source that only lends its light is
+   discarded (Ghirri).
+3. **Colours of its own.** A source must give at least four of the six colours from its own
+   materials, by the rules above; black and white sources borrow too much from the place.
+4. **Something for a page.** Each card ends with what a page could take: a rule, a motif, a way to
+   draw a table. A source with nothing to give there is not a source for a look.
+5. **Facts with references.** Every fact on a card comes from a page that is linked on it.
+6. **A fixed budget.** Pietro discards; each discard brings a new source from another direction,
+   until eighteen have been looked at; after that the gallery only shrinks.
+"""
+
+block:  # every source, by kind
+  type Source = object
+    source, kind, place, period, status: string
+    round: int
+  func src(source, kind, place, period, status: string, round: int): Source =
+    Source(source: source, kind: kind, place: place, period: period, status: status, round: round)
+  let sources = @[
+    src("Minoan frescoes and Attic vases", "painters, potters", "Crete, Thera, Athens", "1600–300 BC", "candidates", 1),
+    src("Isolari and portolan charts", "map makers", "Florence, Venice", "1200s–1528", "candidates", 1),
+    src("Luzzu of Malta", "boatbuilders", "Malta, Gozo", "1900s–today", "candidates", 2),
+    src("Matisse and Dufy", "painters", "Collioure, Nice", "1905–1953", "candidates", 1),
+    src("Joan Miró", "painter", "Mallorca", "1929–1983", "candidates", 1),
+    src("Gio Ponti and the maiolica", "designer, potters", "Sorrento, Vietri, Caltagirone", "1400s–1960", "candidates", 1),
+    src("Leo Lionni", "children's books", "Genoa, Tuscany", "1960s–1999", "candidates", 3),
+    src("Emanuele Luzzati", "children's books, theatre", "Genoa", "1944–2007", "candidates", 3),
+    src("Massimo Vitali", "photographer", "Italian beaches", "1995–", "candidates", 1),
+    src("Herbert List and Constantine Manos", "photographers", "Greece", "1937–1964", "discarded", 3),
+    src("Ferdinando Scianna", "photographer", "Sicily", "1965–", "discarded", 3),
+    src("Luigi Ghirri", "photographer", "Emilia", "1973–1992", "discarded", 2),
+  ]
+  let t = tabella(sources, rownameCol = "source", groupnameCol = "status"):
+    tabHeader "Twelve sources of eighteen", "nine candidates, three discarded"
+    colsLabel:
+      round: "round"
+    colsHide "period"
+    tabSourceNote "Round: when a candidate came in, or when a source was discarded. Round 1 proposed the first nine; each discard brought one new source."
+    optCssTheme()
+  nbTable t
+
+nbText: """
 ## What each could give
 
 The nine side by side: what each would bring to the parts of a page.
@@ -390,9 +492,9 @@ block:
     i("Isolari, portolans", "vellum, brown ink, cinnabar", "thin rhumb lines", "the compass rose as the circle"),
     i("Matisse, Dufy", "ultramarine, pink, lemon", "colour that misses its line", "cut-out paper shapes"),
     i("Miró", "Munari's primaries, black", "plain", "black signs, stars"),
-    i("List, Manos", "black and white, one blue", "heavy black rules", "hard shadows"),
     i("Ponti, maiolica", "cobalt, terracotta, yellow, green", "a row group as a band of tiles", "a card as a tile"),
-    i("Scianna", "black and white, one red", "plain, captions first", "none"),
+    i("Lionni", "red fish, sea blue, black", "many small marks, one shape", "collage edges"),
+    i("Luzzati", "magenta, gold, blue, black outlines", "the title as a stage's name", "painted backdrops"),
     i("Luzzu", "hull blue, maroon, lemon, green", "a coloured band on the top rule", "a band whose colour says what"),
     i("Vitali", "bleached, turquoise, red, yellow", "dense and small", "small marks"),
   ]
@@ -433,6 +535,10 @@ of the Mediterranean, as the story is.
    Scianna's red became primary; Vitali's sand gave way to a stone pine; Dufy's pink and Vitali's
    sea got darker to reach 3:1); Ghirri discarded, the luzzu in his place; a gallery of the
    discarded.
+
+3. **Round 3**: four photographers were too many: List and Manos, and Scianna, discarded; two
+   artists of children's books in their place, Leo Lionni and Emanuele Luzzati; a table of every
+   source by kind and status, and how sources are chosen.
 
 Next, Pietro picks a direction (or a mix), and a round builds it on this page: the six colours,
 typefaces that pass the line of names above, and the motifs, on a real table of the islands, in
