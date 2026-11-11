@@ -67,7 +67,13 @@ Rough size: S (hours), M (a day or two), L (more).
 ## Outputs
 
 - **LaTeX** (M). `toLatex`, booktabs style, as gt's `as_latex`.
-- **Images** (M). `saveImage` with headless Chromium.
+- **Images** (M, planned for 0.3). `save(t, "t.svg")` and `save(t, "t.png")`, chosen by the
+  extension as gt's `gtsave`. Ten ways compared in the devlog post
+  [A table as a picture](https://pietroppeter.github.io/tabelline/devlog/image-output/); three proofs
+  of concept: Chrome driven from Nim as Great Tables' `gtsave()` does with nokap (the reference
+  for the other two), a native SVG (standard library only), and a PNG painted with pixie (an
+  optional module). Plan approved 11 Nov 2026: see the post
+  [Three pictures of a table](https://pietroppeter.github.io/tabelline/devlog/image-findings/).
 - **Tabellone** (L). A Tabella shown as a grid: `toGrid(t)` and `nbGrid`, with virtual rows,
   sort, filter, sticky header and stub, spanners as column groups, and the table's header and
   footer around the grid. In this repository as a module; rows served from Nim (a row model)
