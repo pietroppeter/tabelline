@@ -33,7 +33,8 @@ write every table as `tabella(data): body`, one verb per line.
 
 Docs: the Reference (every exported name), the Guide (with *Nim sugar* and *Pipes, methods and
 a recipe*), the story *FOSDEM, twenty-six times* written with 0.2, the book's Get Started and
-the first posts of the Great Tables blog, and the post *Designing tabelline 0.2*.
+the first posts of the Great Tables blog, three of gt's articles (summary lines, gtcars and
+clinical tables), and the posts *Designing tabelline 0.2* and *What the book found for 0.2*.
 
 Next comes *Out of the browser*: LaTeX, RTF and Word, images and PDF of a table, groups of
 tables, and tables from data frames.
