@@ -629,6 +629,69 @@ template nbDrawing*(tsvg, talt: string) =
   ## in the page's colours, with a caption in Markdown.
   nb.addDrawing(tsvg, talt)
 
+# ------------------------------------------------------------------------------------ a fold
+
+newNbBlock(NbFold of NbContainer):
+  label: string
+  toHtml:
+    &"""<details class="fold"><summary>{inline(blk.label)}</summary>""" & nbContainerToHtml(blk, nb) & "</details>"
+
+template nbFold*(tlabel: string, body: untyped) =
+  ## A part of a page folded under a line in Markdown, closed at first: a long list a reader
+  ## opens when they need it, such as a module of the API reference. A link to something inside
+  ## it (`#name`) opens it.
+  let fold = newNbFold(label = tlabel)
+  nb.withContainer(fold):
+    body
+  nb.add fold
+
+# ------------------------------------------------------------------------------- the API reference
+
+type ApiLink* = object
+  ## A link under an API entry: what it is (`gt`, `source`), its text and where it goes.
+  label*, text*, href*: string
+
+newNbBlock(NbApi):
+  name: string
+  anchor: string
+  alias: string
+  symKind: string
+  signatures: seq[string]
+  doc: string
+  links: seq[ApiLink]
+  exampleCode: string
+  exampleHtml: string
+  toHtml:
+    var s = &"""<section class="api" id="{blk.anchor}">""" &
+      (if blk.alias.len > 0: &"""<span class="api-alias" id="{blk.alias}"></span>""" else: "") &
+      &"""<h4><code>{esc(blk.name)}</code><span class="api-kind">{blk.symKind}</span>""" &
+      &"""<a class="api-anchor" href="#{blk.anchor}" title="a link to {esc(blk.name)}, to copy">#</a></h4>"""
+    for sig in blk.signatures:
+      s.add "<pre class=\"api-sig\"><code class=\"nohighlight nim hljs\">" & highlightNim(sig) & "</code></pre>"
+    s.add(if blk.doc.len > 0: highlightFences(markdownToHtml(blk.doc))
+          else: """<p class="api-none">No doc comment yet.</p>""")
+    if blk.exampleCode.len > 0:
+      s.add """<details class="api-ex"><summary>an example, from the specs</summary>""" &
+        "<pre><code class=\"nohighlight nim hljs\">" & highlightNim(blk.exampleCode) & "</code></pre>" &
+        blk.exampleHtml & "</details>"
+    if blk.links.len > 0:
+      s.add """<p class="api-links">"""
+      for i, l in blk.links:
+        if i > 0: s.add " · "
+        s.add &"""{l.label} <a href="{l.href}">{inline(l.text)}</a>"""
+      s.add "</p>"
+    s & "</section>"
+
+template nbApi*(tname, tanchor, talias, tkind: string, tsignatures: seq[string], tdoc: string,
+                tlinks: seq[ApiLink] = @[], texampleCode = "", texampleHtml = "") =
+  ## One name of the API: its kind (proc, template, type...), its signatures (one per overload,
+  ## highlighted), its doc comment in Markdown (or a line that says there is none yet), an
+  ## example folded under it (code, and the table it makes) and links (gt's name, the source).
+  ## `tanchor` is its `id`, for links from outside (`#verbs-tabHeader`); `talias`, when not
+  ## empty, a second, shorter one (`#tabHeader`).
+  nb.add newNbApi(name = tname, anchor = tanchor, alias = talias, symKind = tkind, signatures = tsignatures, doc = tdoc,
+                  links = tlinks, exampleCode = texampleCode, exampleHtml = texampleHtml)
+
 # ------------------------------------------------------------------------------------- the page
 
 const temaHeadScript = """<script>
@@ -680,6 +743,21 @@ const bodyScript = """<script>
       d.hidden = on; p.hidden = !on;
     });
   });
+})();
+(function () {
+  // a link to something inside a closed fold (nbFold) opens the fold, then goes there
+  function reveal() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = id && document.getElementById(id);
+    if (!el) return;
+    var shut = false;
+    for (var d = el.closest('details.fold'); d; d = d.parentElement && d.parentElement.closest('details.fold')) {
+      if (!d.open) { d.open = true; shut = true; }
+    }
+    if (shut) el.scrollIntoView();
+  }
+  window.addEventListener('hashchange', reveal);
+  reveal();
 })();
 (function () {
   // the specs page: ?spec=a,b&change=c (or after #) shows only those, opened

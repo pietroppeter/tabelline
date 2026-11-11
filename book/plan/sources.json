@@ -193,22 +193,26 @@
     {
      "path": "docs/blog/introduction_great_tables.qmd",
      "title": "Introducing Great Tables",
-     "port": "port"
+     "port": "port",
+     "book": "blog/introducing.html"
     },
     {
      "path": "docs/blog/introduction-0.2.0/index.qmd",
      "title": "Great Tables v0.2.0: Easy Data Coloring",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_2.html"
     },
     {
      "path": "docs/blog/introduction-0.3.0/index.qmd",
      "title": "Great Tables v0.3.0: So Many Style Options!",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_3.html"
     },
     {
      "path": "docs/blog/introduction-0.4.0/index.qmd",
      "title": "Great Tables v0.4.0: Nanoplots and More",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_4.html"
     },
     {
      "path": "docs/blog/introduction-0.12.0/index.qmd",

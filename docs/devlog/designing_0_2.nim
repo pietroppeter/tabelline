@@ -1,4 +1,4 @@
-## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2 takes in what was planned for 0.3 and 0.4: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
+## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
 ## A dated post, written while 0.2 is built: each group is added when its PR is ready for review.
 import std/[os, sugar, strutils, sequtils, tables, algorithm]
 import nimib
@@ -11,14 +11,16 @@ nb.doc.filename = docs / "devlog" / "designing-0-2" / "index.html"
 nb.useTabelline(title = "Designing tabelline 0.2", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "10 November 2026", "Designing tabelline 0.2", """
-tabelline 0.2 takes in what was planned for 0.3 and 0.4: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
+tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
 """
 
 nbText: """
 0.1 had the parts of a table, from the title to the footer, and the formats for single values.
-0.2 was going to add rows and merges; on the day 0.1 shipped, it became the release that takes in
-0.3 and 0.4 as well. That is five groups of features, built in five pull requests, each one
-explained here when it is ready, from the simplest idea up.
+0.2 was going to add rows and merges; on the day 0.1 shipped, it grew to hold every format,
+every locale and pictures in cells too. That is five groups of features, built in five pull
+requests, each one explained here when it is ready, from the simplest idea up. Every name they
+add is in the [Reference](../../api/), and [A reference in our own style](../reference/) tells
+how that page was made.
 """
 
 nbToc()

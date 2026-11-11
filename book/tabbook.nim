@@ -49,6 +49,12 @@ proc gtGuide*(title, page, changes: string): Source =
          authors: "Rich Iannone, Michael Chow and the Great Tables contributors",
          license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
 
+proc gtBlog*(title, url, author, date, changes: string): Source =
+  ## A post of the Great Tables blog (posit-dev.github.io/great-tables/blog/), by its address.
+  Source(title: "“" & title & "”, a post of the Great Tables blog (" & date & ")",
+         url: "https://posit-dev.github.io/great-tables/blog/" & url,
+         authors: author, license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
+
 proc noteHtml(label, text: string): string =
   "<aside class=\"tb-note\"><p class=\"tb-note-label\">" & label & "</p>" &
     markdown(text, config = initGfmConfig()) & "</aside>"
@@ -156,8 +162,8 @@ proc runCells(lang: Lang, chapter: string, cells: seq[string]): JsonNode =
   let (output, code) = execCmdEx(info.run, input = req, workingDir = bookDir.parentDir)
   if code != 0:
     raise newException(IOError, info.tool & " failed on " & chapter & ":\n" & output)
-  # uv and R may print a warning before the JSON
-  let j = parseJson(output[output.find({'[', '{'}) .. ^1])
+  # uv and R may print a warning before the JSON, and R one after it (a cell's `warning()`)
+  let j = parseJson(output[output.find({'[', '{'}) .. output.rfind({']', '}'})])
   if j.kind == JArray: %*{"outputs": j} else: j
 
 proc cellHtml(lang: Lang, code: string, o: JsonNode, errors: var seq[string]): string =

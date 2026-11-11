@@ -4,7 +4,8 @@
 ## import nimib, tabelline, tabelline/nimib
 ## nbInit
 ## nbCode:
-##   let t = tabella(planets()).tabHeader("The planets")
+##   let t = tabella(planets()):
+##     tabHeader "The planets"
 ## nbTable t
 ## nbSave
 ## ```

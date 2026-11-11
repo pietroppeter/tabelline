@@ -97,6 +97,7 @@ let pages = [
   ("Guide", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
   ("Stories", "stories/", "real subjects told in tables made with tabelline, one for every release"),
   ("Book", "book/", "the Great Tables and gt guides ported to tabelline, with what the book will port and what the port found"),
+  ("Reference", "api/", "every name tabelline exports: signatures, doc comments, gt and Great Tables names, examples; `nim r tools/apidoc.nim` prints it as JSON"),
   ("Feature map", "coverage/", "what of gt and Great Tables tabelline has"),
   ("Roadmap", "roadmap/", "the releases, from 0.1 to 0.3"),
   ("Devlog", "devlog/", "dated posts on how tabelline is made, newest first"),

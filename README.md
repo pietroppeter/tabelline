@@ -96,35 +96,42 @@ tabelline changes; dated posts are in the devlog.
    entries](https://pietroppeter.github.io/tabelline/book/contest.html) and [what the port
    found](https://pietroppeter.github.io/tabelline/book/gaps.html) missing. Its sources are in
    `book/` (see [The book](#the-book) below).
+3. [Reference](https://pietroppeter.github.io/tabelline/api/): every name tabelline exports, from
+   the source: its signature, doc comment, gt and Great Tables names, and an example that ran,
+   with a table of the modules and what they import. Each name has a link of its own
+   (`api/#verbs-tabHeader`, or `api/#tabHeader`).
 
 **Where it's going**
 
-3. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
+4. [Feature map](https://pietroppeter.github.io/tabelline/coverage/): every feature group of gt
    and Great Tables, whether tabelline has it, and the release that plans the rest (data in
    `docs/coverage/gt.json`).
-4. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.3
+5. [Roadmap](https://pietroppeter.github.io/tabelline/roadmap/): what each release from 0.1 to 0.3
    adds and the real tables it is tried on, with the threads of each (build it, use it, port the
    references), from `docs/piano.nim`.
 
 **How it's made**
 
-5. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): dated posts, newest first.
-6. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
+6. [Devlog](https://pietroppeter.github.io/tabelline/devlog/): dated posts, newest first.
+7. [Specs](https://pietroppeter.github.io/tabelline/specs/): how tabelline behaves today, written
    down with [OpenSpec](https://github.com/Fission-AI/OpenSpec) in `openspec/`, with examples that
    run against the code while the page is built.
-7. [Design guide](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
+8. [Design guide](https://pietroppeter.github.io/tabelline/design/): the two looks, the shapes, the
    colours, the type and every component, with when to use each.
-8. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
+9. [For coding agents](https://pietroppeter.github.io/tabelline/agents/): setup, commands, where
    things are, and the rules from AGENTS.md; also [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt).
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
 - [One stylesheet for every table](https://pietroppeter.github.io/tabelline/devlog/sharing-styles/)
-  (11 Nov 2026 A): what a table's HTML holds, three ways to share its 6 KB of CSS, the one chosen
+  (11 Nov 2026 B): what a table's HTML holds, three ways to share its 6 KB of CSS, the one chosen
   (fixed rules, options as CSS variables) and the `:not(#_)` trick that keeps a theme's rules
   winning and losing as before.
+- [A reference in our own style](https://pietroppeter.github.io/tabelline/devlog/reference/)
+  (11 Nov 2026 A): how the Reference page was made from `nim jsondoc` and the source, the
+  choices behind it against gt and Great Tables, and its four rounds of review.
 - [Designing tabelline 0.2](https://pietroppeter.github.io/tabelline/devlog/designing-0-2/)
-  (10 Nov 2026 A): 0.2 takes in 0.3 and 0.4, in five groups, each from zero with its choices;
+  (10 Nov 2026 A): summing up, rows and columns, more formats, every locale, pictures in cells: five groups, each from zero with its choices;
   written while 0.2 is built.
 - [Review mode](https://pietroppeter.github.io/tabelline/devlog/review-mode/)
   (9 Nov 2026 A): select text on a page, comment on it, go through the comments with a bar at the

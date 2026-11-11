@@ -1,8 +1,8 @@
 ## The plan of the releases: for each one, the three threads that make it (build, use it, port
 ## the references) and what each will produce. Shared by the roadmap (kept up to date) and
 ## the devlog post that introduced it. Change it here when a thread starts, ships or changes
-## its plan. `firstPlan` is the plan as it was posted on 7 Nov 2026, for that post: 0.2 took in
-## 0.3 and 0.4 (10 Nov 2026), so `releases` has three.
+## its plan. `firstPlan` is the plan as it was posted on 7 Nov 2026, kept for that post; `releases`
+## is the plan now (since 10 Nov 2026, three releases).
 
 type
   Thread* = object
@@ -97,7 +97,7 @@ const releases*: seq[Release] = @[
   ]),
   Release(version: "0.2", theme: "Rows, every format, pictures", threads: @[
     t("build", "Build tabelline 0.2",
-      "What was planned for 0.2, 0.3 and 0.4, in five pull requests: summary rows; merged columns, rows added and hidden, stub indent, decimal alignment; units, fractions, chemistry, bins, country names; every locale of CLDR for numbers, currencies and dates, rotated labels, 142 options, previews; icons, images and nanoplots.",
+      "Five pull requests: summary rows; merged columns, rows added and hidden, stub indent, decimal alignment; units, fractions, chemistry, bins, country names; every locale of CLDR for numbers, currencies and dates, rotated labels, 142 options, previews; icons, images and nanoplots.",
       "post Designing tabelline 0.2; tag v0.2.0", "in progress", "devlog/designing-0-2/"),
     t("use", "Use it: the FOSDEM devrooms",
       "The history of FOSDEM's devrooms, year by year: names, renames, splits, and the dates of FOSDEM, which fall at different moments. Starts from the FOSDEM devrooms page of claude-artifacts (2024 to 2027) and goes back as far as the schedules go. Written first in R with gt, then ported.",

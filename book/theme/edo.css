@@ -67,6 +67,7 @@ body { font-size: 1.8rem; line-height: 1.6; }
 .content a:hover { background: color-mix(in srgb, var(--warning) 55%, transparent); }
 .content .header:link, .content .header:visited { color: var(--ink); text-decoration: none; }
 .content img { max-width: 100%; border: 2px solid var(--ink); }
+.content table img { border: 0; }  /* a picture in a cell (fmtImage) is part of the table, not a figure */
 blockquote { border-left: 6px solid var(--warning); border-top: 0; border-bottom: 0; margin: 1.5rem 0; padding: .2rem 1.6rem; }
 
 /* code: a white sheet with a black edge; outputs on grey paper. Code is smaller than text. */

@@ -1,4 +1,4 @@
-## devlog: 11 Nov 2026 A | One stylesheet for every table | Every tabelline table carries its own 6 KB of CSS, and a page with many tables carries it many times: a quarter of the site is repeated CSS. What a table's HTML holds, three ways to share its style, the one we chose (fixed rules, options as CSS variables), and a CSS trick that keeps a page's theme winning and losing exactly as before.
+## devlog: 11 Nov 2026 B | One stylesheet for every table | Every tabelline table carries its own 6 KB of CSS, and a page with many tables carries it many times: a quarter of the site is repeated CSS. What a table's HTML holds, three ways to share its style, the one we chose (fixed rules, options as CSS variables), and a CSS trick that keeps a page's theme winning and losing exactly as before.
 ## A dated post: it tells why and how tables share their style (change `share-table-styles`), and is not updated afterwards.
 import std/os
 import nimib
@@ -18,8 +18,8 @@ before.
 """
 
 nbText: """
-The [API reference](https://github.com/pietroppeter/tabelline/pull/65) being built has 156 tables, one for every proc, and weighs 1.9 MB.
-1.1 MB of it is CSS, the same rules 156 times. Pietro: "We should share CSS as much as possible,
+The [Reference](../../api/) has 152 tables and weighs
+1.7 MB: most of it is CSS, the same rules 152 times. Pietro: "We should share CSS as much as possible,
 how to do that?" This post is the answer, from what a table is made of to how the change is
 built. It is the OpenSpec change `share-table-styles`, built for 0.2.
 
@@ -131,8 +131,8 @@ carries nothing.
 ```
 
 We chose the third. It is the simplest to explain (one stylesheet, options as variables), there is
-nothing to keep track of, and the 156 tables of the reference page cost one stylesheet and a few
-variables each. The stylesheet is 13 KB, twice a table's old style, because every value carries
+nothing to keep track of, and the 152 tables of the Reference cost one stylesheet and a few
+variables each: the page goes from 1.71 MB to 0.89 MB (153 KB to 105 KB compressed). The stylesheet is 13 KB, twice a table's old style, because every value carries
 its `var(...)`; a page pays it once. The last column of the table above is what the pages weigh
 with it. It also gives something new: a page can set an option for all its tables at once,
 `.tabella { --tb-table-font-size: 14px }`.
