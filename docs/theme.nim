@@ -602,45 +602,54 @@ func tintMix*(token: string, share: int, other = "--paper"): string =
 
 
 # ------------------------------------------------------------------------- Mediterranean sources
-# The colours of the post "Designing a Mediterranean look" (round 1): for each source of the
-# look, six colours in the roles of a look (paper, ink, primary, secondary, warning, success),
-# picked by eye from the kind of work it is, not sampled from any picture. They are candidates;
-# the look that wins becomes a `Look` above.
+# The colours of the post "Designing a Mediterranean look": for each source of the look, six
+# colours in the roles of a look, picked by the rules of the post (devlog/mediterranean.nim, "From
+# a source to six colours"): each named after a material of the source, or of the place it shows
+# when the source has no such colour (`fromPlace`). Picked by eye, not sampled from a picture.
+# They are candidates; the look that wins becomes a `Look` above.
 
-const mediterraneanSources* = [
-  ("minoan", [("#EFE6D2", "lime plaster", "paper"), ("#1E1A17", "black glaze", "ink"),
-              ("#C3693C", "terracotta", "primary"), ("#3F7FA6", "dolphin blue", "secondary"),
-              ("#D9A441", "yellow ochre", "warning"), ("#6E8B5A", "olive", "success")]),
-  ("isolari", [("#F3E9D2", "vellum", "paper"), ("#3A2E26", "iron-gall ink", "ink"),
-               ("#B8382B", "cinnabar", "primary"), ("#3D6A9E", "sea blue", "secondary"),
-               ("#C9A347", "gold leaf", "warning"), ("#4F8A6E", "verdigris", "success")]),
-  ("matisse", [("#FBF8F1", "white paper", "paper"), ("#1B2238", "night blue", "ink"),
-               ("#2643A6", "ultramarine", "primary"), ("#E46F8E", "Dufy pink", "secondary"),
-               ("#F2C230", "lemon", "warning"), ("#3E9E6B", "palm green", "success")]),
-  ("miro", [("#F7F4EC", "whitewashed wall", "paper"), ("#111111", "black sign", "ink"),
-            ("#D7261E", "red", "primary"), ("#1D4F9C", "blue", "secondary"),
-            ("#F6C700", "yellow", "warning"), ("#2E8B57", "green", "success")]),
-  ("list", [("#F7F6F2", "whitewash", "paper"), ("#141414", "shadow", "ink"),
-            ("#2C5D8F", "a blue door", "primary"), ("#7A7A76", "stone grey", "secondary"),
-            ("#D8D2C4", "dust", "warning"), ("#55604A", "caper leaf", "success")]),
-  ("maiolica", [("#FAF8F2", "tin glaze", "paper"), ("#1A2340", "manganese blue-black", "ink"),
-                ("#1E4FA1", "cobalt", "primary"), ("#3C8C5A", "copper green", "secondary"),
-                ("#F2B632", "antimony yellow", "warning"), ("#A0522D", "terracotta", "success")]),
-  ("scianna", [("#F2F0EB", "print white", "paper"), ("#0E0E0E", "silver black", "ink"),
-               ("#5A5A5A", "dark grey", "primary"), ("#9A9A9A", "mid grey", "secondary"),
-               ("#C9C6BF", "light grey", "warning"), ("#8C1C13", "feast red", "success")]),
-  ("ghirri", [("#F6F3EA", "faded print", "paper"), ("#3B3F45", "soft black", "ink"),
-              ("#8FB3C7", "pale sky", "primary"), ("#E8B4B0", "faded pink", "secondary"),
-              ("#EAD9A0", "pale yellow", "warning"), ("#9DBFB0", "sea green", "success")]),
-  ("vitali", [("#F8F6F0", "bleached sand", "paper"), ("#2E3134", "shade", "ink"),
-              ("#2FA4A9", "shallow sea", "primary"), ("#E04E39", "umbrella red", "secondary"),
-              ("#F3C64B", "umbrella yellow", "warning"), ("#E6D7BE", "sand", "success")]),
+type MediColour* = tuple[hex, name, role: string, fromPlace: bool]
+
+const mediterraneanSources*: seq[(string, array[6, MediColour])] = @[
+  ("minoan", [("#EFE6D2", "lime plaster", "paper", false), ("#1E1A17", "black glaze", "ink", false),
+              ("#C3693C", "terracotta", "primary", false), ("#3F7FA6", "dolphin blue", "secondary", false),
+              ("#D9A441", "yellow ochre", "warning", false), ("#6E8B5A", "olive", "success", true)]),
+  ("isolari", [("#F3E9D2", "vellum", "paper", false), ("#3A2E26", "iron-gall ink", "ink", false),
+               ("#B8382B", "cinnabar", "primary", false), ("#3D6A9E", "azurite", "secondary", false),
+               ("#C9A347", "gold leaf", "warning", false), ("#4F8A6E", "verdigris", "success", false)]),
+  ("matisse", [("#FBF8F1", "white paper", "paper", false), ("#1B2238", "night blue", "ink", false),
+               ("#2643A6", "ultramarine", "primary", false), ("#D9577A", "Dufy pink", "secondary", false),
+               ("#F2C230", "lemon", "warning", false), ("#3E9E6B", "palm green", "success", false)]),
+  ("miro", [("#F7F4EC", "whitewashed wall", "paper", false), ("#111111", "black sign", "ink", false),
+            ("#D7261E", "red", "primary", false), ("#1D4F9C", "blue", "secondary", false),
+            ("#F6C700", "yellow", "warning", false), ("#2E8B57", "green", "success", false)]),
+  ("list", [("#F7F6F2", "whitewash", "paper", false), ("#141414", "shadow", "ink", false),
+            ("#2C5D8F", "a blue door", "primary", true), ("#B23A73", "bougainvillea", "secondary", true),
+            ("#E3B83B", "broom flower", "warning", true), ("#55704A", "caper leaf", "success", true)]),
+  ("maiolica", [("#FAF8F2", "tin glaze", "paper", false), ("#1A2340", "manganese blue-black", "ink", false),
+                ("#1E4FA1", "cobalt", "primary", false), ("#A0522D", "terracotta", "secondary", false),
+                ("#F2B632", "antimony yellow", "warning", false), ("#3C8C5A", "copper green", "success", false)]),
+  ("scianna", [("#F2F0EB", "print white", "paper", false), ("#0E0E0E", "silver black", "ink", false),
+               ("#9E1B13", "feast red", "primary", false), ("#2F5D9E", "cart blue", "secondary", true),
+               ("#E9C33A", "lemon", "warning", true), ("#4E7A3A", "lemon leaf", "success", true)]),
+  ("vitali", [("#F8F6F0", "bleached sand", "paper", false), ("#2E3134", "shade", "ink", false),
+              ("#23898E", "shallow sea", "primary", false), ("#E04E39", "umbrella red", "secondary", false),
+              ("#F3C64B", "umbrella yellow", "warning", false), ("#4F7B4A", "stone pine", "success", true)]),
+  ("luzzu", [("#F1EADB", "limestone", "paper", true), ("#1C1F26", "tar", "ink", false),
+             ("#1F5AA6", "hull blue", "primary", false), ("#7A2630", "waterline maroon", "secondary", false),
+             ("#F2CF2E", "lemon mustaċċ", "warning", false), ("#2E8B4E", "green", "success", false)]),
+  ("ghirri", [("#F6F3EA", "faded print", "paper", false), ("#3B3F45", "soft black", "ink", false),
+              ("#8FB3C7", "pale sky", "primary", false), ("#E8B4B0", "faded pink", "secondary", false),
+              ("#EAD9A0", "pale yellow", "warning", false), ("#9DBFB0", "sea green", "success", false)]),
 ]
+
+func sourceColours*(key: string): array[6, MediColour] =
+  ## The six colours of a Mediterranean source, in the order of the roles.
+  for (k, colours) in mediterraneanSources:
+    if k == key: return colours
+  doAssert false, "no Mediterranean source: " & key
 
 func sourceSwatches*(key: string): seq[(string, string, string)] =
   ## The six colours of a Mediterranean source, for `nbSwatches`: colour, name, role.
-  for (k, colours) in mediterraneanSources:
-    if k == key:
-      for c in colours: result.add c
-      return
-  doAssert false, "no Mediterranean source: " & key
+  for c in sourceColours(key):
+    result.add (c.hex, c.name, c.role & (if c.fromPlace: ", from the place" else: ""))
