@@ -56,8 +56,6 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Interop
 
-- **nanuq** (S-M). `tabella(df)` for a nanuq (Polars) DataFrame, as an optional module
-  `tabelline/nanuq`, so the core keeps no dependencies.
 - **datamancer** (S). The same for SciNim's datamancer.
 - **Arraymancer tensors** (S). A 2D tensor as a table.
 - **unchained** (S-M). Vindaar's unchained (units checked at compile time) as an optional
@@ -81,10 +79,6 @@ Rough size: S (hours), M (a day or two), L (more).
 ## nimib
 
 - **nimibook and nimiSlides** (S). Check that tables look right in their themes.
-- **`nbTable` with a body** (S, from the 0.2 book port). `nbTable tabella(data): body` does not
-  compile (the body goes to `nbTable`), so every page names a table first (`let t = tabella(...):`
-  then `nbTable t`). `nbTable(data, args): body` (or `nbTabella`) would show a recipe in one go
-  and make the no-dots rule cheap in pages.
 
 ## Docs
 
@@ -118,10 +112,8 @@ Rough size: S (hours), M (a day or two), L (more).
   label; `loc.rowGroups` by row index or condition.
 - **Stub and spanners** (S). A `tabStub` verb; `tabSpanner` gathering its columns in the given
   order; the spanner's fill covering the whole cell.
-- **Colours** (S). All CSS colour names (only 17 today: `rebeccapurple`, `bisque`,
-  `darkgreen` raise ValueError); `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
-  `dataColor` defaults (palette, NA grey); white text on dark option backgrounds (stub, heading by
-  colour name).
+- **Colours** (S). `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
+  `dataColor` defaults (palette, NA grey); white text on a dark stub background set by options.
 - **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
 - **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.
 - **Summary cells in a column with no format** (S, from the 0.2 book port). tabelline formats

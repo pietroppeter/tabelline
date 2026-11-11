@@ -41,13 +41,8 @@ exibble |>
     let exibbleMini = exibble().select(["currency", "date", "row"]).head(4)
 
     let colored = tabella(exibbleMini, rownameCol = "row"):
-      dataColor cols("currency"), palette = @["lightblue", "#006400"]
+      dataColor cols("currency"), palette = @["lightblue", "darkgreen"]
     nbTable colored
-
-tabelline """
-`dataColor` knows 17 CSS colour names; `"darkgreen"` is not one of them, so it is written as its
-hex value, `"#006400"`.
-"""
 
 nbText: """
 Note that we use `columns=` to specify which columns get the colorizing treatment (just `currency` here) and the `palette=` is given as a list of color values. From this we can see that the `65100.0` value polarizes the data coloring process; it is `"darkgreen"` while all other values are `"lightblue"` (with no interpolated colors in between). Also, isn't it nice that the text adapts to the background color?
@@ -90,7 +85,7 @@ exibble |>
   nbCode:
     let grayedOut = tabella(exibbleMini, rownameCol = "row"):
       dataColor cols("currency"),
-        palette = @["lightblue", "#006400"],
+        palette = @["lightblue", "darkgreen"],
         domain = (0.0, 50.0),
         naColor = "lightgray"
       fmtCurrency "currency",

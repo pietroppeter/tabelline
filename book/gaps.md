@@ -15,29 +15,22 @@ to the backlog.
 
 | Step | What | Where it shows | Plan |
 | ---- | ---- | -------------- | ---- |
-| Data | Data frames (pandas' `head`, `select`, `loc`, Polars' pivot: the book's helpers in `gtdata` and plain Nim) | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | later |
+| Data | The Get Started pages and the blog still take pandas' `head`, `select` and `loc` from the book's helpers in `gtdata`: nanuq has them, the chapters have not moved to it yet | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | later |
 | Data | `readCsv` reads `"0400"` as the number 400; text with leading zeros could stay text | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
 | Parts | `tabStub` (the stub is only chosen in `tabella(rownameCol = ...)`) | [Stub](get-started/basic_stub.html) | **new** |
-| Parts | `tabSpanner` gathers its columns, in the order given (tabelline leaves them where they are) | [Column Labels](get-started/basic_column_labels.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
-| Parts | Summary rows of the same label from two calls make one row, as in gt (Great Tables, like tabelline, makes two) | [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
 | Parts | Markdown (a link) in a row group label, as gt's `tab_row_group(label = md(...))` | [Find an example by feature](features.html) | **new** |
-| Columns | Columns by position, negative ones too (`["date", 1, -1]`) | [Column Selection](get-started/column_selection.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
-| Columns | Columns by any function of the name, and rules combined: `\|`, `&`, `exclude`; gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
+| Columns | Columns by any function of the name; the columns two rules share (`&`: `a + b` and `a - b` are there); gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Rows | Negative row indices (`[0, -1]`; in Nim, `^1`) | [Row Selection](get-started/row_selection.html) | **new** |
 | Formats | The format functions with every argument of their verb: `pattern`, `locale` (`formatDate` has it, `formatNumber` not), `expStyle` | [Formatting Values](get-started/basic_formatting.html), [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
-| Formats | Nanoplots with dates as the *x* values, and a colour for each point | [Nanoplots](get-started/nanoplots.html) | **new** |
-| Text | Full Markdown in `md()`, HTML entities and line breaks (two spaces and a newline) included | [Header and Footer](get-started/basic_header.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
-| Options | White text on every dark background set by options (the stub; a heading given by colour name: tabelline picks the text colour only for `#rrggbb` colours) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
+| Text | Full Markdown in `md()`, HTML entities included | [Header and Footer](get-started/basic_header.html) | **new** |
+| Options | White text on a dark stub background set by options (tabelline picks the text colour for the heading and the column labels only) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
 | Options | `optAllCaps` on the stub and the row group labels too | [Premade Themes](get-started/table_theme_premade.html), [v0.3.0](blog/v0_3.html) | **new** |
-| Options | `systemFonts`, Great Tables' font stacks by name (`"industrial"`), for `tableFontNames` and `optTableFont` | [v0.3.0](blog/v0_3.html) | **new** |
 | Styles | `loc.stub` by row label (`"banana"`), and mixed with indices | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.rowGroups` by a row of the group, or by a condition | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.body(mask = ...)`: a condition for each cell | [Styling the Table Body](get-started/basic_styling.html), [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | A fill on a spanner colours its whole cell, not only the label | [Styling the whole table](get-started/targeted_styles.html) | **new** |
-| Styles | Every CSS colour name (tabelline knows 17; `rebeccapurple`, `bisque` and `darkgreen` fail; R does not know `rebeccapurple` either) | [Colorizing with Data](get-started/colorizing_with_data.html), [v0.2.0](blog/v0_2.html) | **new** |
 | Styles | `dataColor`'s defaults: Great Tables' palette and its grey for missing values | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
-| Export | `extractSummary` gives the summary cells as shown (text); gt's `extract_summary()` gives the values | [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
 | Export | Saving a table as an image (`gtsave`); tabelline has the HTML (`toHtml`) | [v0.4.0](blog/v0_4.html) | **new** |
 
 ## Differences kept
@@ -70,4 +63,14 @@ Gaps the port found that tabelline 0.2 closed; the chapters now use what it gain
 | Options | 142 options: the container, the column label top border, hlines style and width, vlines, font style, the source notes and grand summary backgrounds, the stub border, the row group borders, the table body borders | [Table Theme Options](get-started/table_theme_options.html) |
 | Styles | `fromColumn`: a style whose value comes from a column of the row | [Styling the Table Body](get-started/basic_styling.html) |
 | Code | Pairs as blocks (`colsLabel:` then `Ozone: ...`), every table as `tabella(data): body` | every page |
+| Code | A table in one step in a notebook, `nbTable data: body`, without naming it | every page |
+| Data | Data frames: `tabella(df)` for a nanuq (Polars for Nim) DataFrame, `import tabelline/nanuq`; the case study shapes its data with nanuq, as R does with dplyr | [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
+| Parts | `tabSpanner` gathers its columns next to the first, in the order given (`gather = false` leaves them) | [Column Labels](get-started/basic_column_labels.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
+| Parts | Summary rows of the same label from two calls make one row, as in gt | [Creating Summary Lines](vignettes/summary_lines.html) |
+| Columns | Columns by position, from 0, and from the end (`positions(0, -1)`, `positions(2 .. 4)`); rules joined (`a + b`, `a - b`, `startsWith(["pop_", "pct_"])`) | [Column Selection](get-started/column_selection.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
+| Formats | Nanoplots with an option for each point (a colour, a size), and dates as the *x* values | [Nanoplots](get-started/nanoplots.html) |
+| Text | Line breaks in `md()`: two spaces, or a backslash, before a newline | [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
+| Options | `systemFonts`, Great Tables' font stacks by name (`"industrial"`) | [v0.3.0](blog/v0_3.html) |
+| Export | `extractSummary(values = true)`: the summary cells as values, as gt's `extract_summary()` | [Creating Summary Lines](vignettes/summary_lines.html) |
+| Styles | Every CSS colour name (148; `rebeccapurple`, `bisque`, `darkgreen`), and white text on a dark heading given by name | [Colorizing with Data](get-started/colorizing_with_data.html), [v0.2.0](blog/v0_2.html) |
 

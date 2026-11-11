@@ -34,11 +34,13 @@ library(purrr)
 rx_adsl |> str()
 """:
   nbCode:
-    import std/[algorithm, json, math, sequtils, stats, strutils, tables]
-    import tabelline, gtdata
+    import std/[json, math, sequtils, streams, strutils]
+    import nanuq
+    import tabelline, tabelline/nanuq, gtdata
 
     # gt's `rx_adsl`; `rxMeta()` has the labels, units and levels R keeps with its columns
-    echo glimpse(rxAdsl())
+    let rxAdsl = readCsv(newStringStream(rxAdslCsv))
+    echo rxAdsl.glimpse
 
 tabelline """
 gt's datasets `rx_adsl` and `rx_addv` come with the book as CSV files, with what R keeps with
@@ -185,65 +187,57 @@ adsl_summary <-
   ))()
 """:
   nbCode:
-    # A table from rows, each a table of column names and values,
-    # with the columns `names`, in that order (a missing value is null)
-    proc fromRows(rows: seq[OrderedTable[string, Value]], names: seq[string]): TableData =
-      result = TableData()
-      for name in names: result.addColumn(name, rows.mapIt(it.getOrDefault(name, null())))
-
-    proc median(x: seq[float]): float =
-      let s = x.sorted
-      (s[(s.len - 1) div 2] + s[s.len div 2]) / 2
-
     let meta = rxMeta()["rx_adsl"]
     let arms = meta["TRTA"]["levels"].to(seq[string])
 
-    proc customSummary(df: TableData, groupVar, sumVar: string): seq[OrderedTable[string, Value]] =
+    proc customSummary(df: DataFrame, groupVar, sumVar: string): DataFrame =
       let info = meta[sumVar]
-      let inArm = proc (arm: string): seq[int] =
-        toSeq(0 ..< df.nrows).filterIt($df[groupVar, it] == arm)
 
       if info.hasKey("levels"):
         let categoryLbl = info["label"].getStr & ", n (%)"
 
-        for level in info["levels"].to(seq[string]):
-          var row = {"label": toValue(level), "category": toValue(categoryLbl)}.toOrderedTable
-          for arm in arms:
-            let val = inArm(arm).countIt($df[sumVar, it] == level)
-            row["val_" & arm] = toValue(val)
-            row["pct_" & arm] = toValue(val / inArm(arm).len)
-          # a level no subject has makes no row, as in dplyr
-          if arms.anyIt(row["val_" & it] > 0): result.add row
+        df.groupBy(groupVar, sumVar)
+          .agg(len().alias("val"))
+          .withColumns((col("val") / col("val").sum.over(groupVar)).alias("pct"))
+          .pivot(groupVar, index = sumVar, values = ["val", "pct"])
+          .fillNull(0)
+          .sort([col(sumVar).cast(Enum(info["levels"].to(seq[string])))])
+          .rename({sumVar: "label"})
+          .withColumns(lit(categoryLbl).alias("category"))
       else:
         let categoryLbl = info["label"].getStr & " (" & info["units"].getStr & ")"
+        let x = col(sumVar).cast(float)
 
-        for label in ["n", "Mean (SD)", "Median", "Min - Max"]:
-          result.add {"label": toValue(label), "category": toValue(categoryLbl)}.toOrderedTable
-        for arm in arms:
-          let x = inArm(arm).filterIt(not df[sumVar, it].isNull).mapIt(df[sumVar, it].toFloat)
-          result[0]["val_" & arm] = toValue(x.len)
-          result[1]["val_" & arm] = toValue(mean(x))
-          result[1]["sd_" & arm] = toValue(standardDeviationS(x))
-          result[2]["val_" & arm] = toValue(median(x))
-          result[3]["min_" & arm] = toValue(min(x))
-          result[3]["max_" & arm] = toValue(max(x))
+        df.groupBy(groupVar)
+          .agg(
+            x.isNotNull.sum.cast(float).alias("n"),
+            x.mean.alias("mean"),
+            x.std.alias("sd"),
+            x.median.alias("median"),
+            x.min.alias("min"),
+            x.max.alias("max"),
+            lit(nil).cast(float).alias("min_max"))
+          .unpivot(["n", "mean", "median", "min_max"], index = [groupVar, "sd", "min", "max"],
+                   variableName = "label", valueName = "val")
+          .withColumns(
+            `when`(col("label") == "mean").then(col("sd")).otherwise(nil).alias("sd"),
+            `when`(col("label") == "min_max").then(col("max")).otherwise(nil).alias("max"),
+            `when`(col("label") == "min_max").then(col("min")).otherwise(nil).alias("min"),
+            col("label").replace({"mean": "Mean (SD)", "min_max": "Min - Max", "median": "Median"}))
+          .pivot(groupVar, index = "label", values = ["val", "sd", "min", "max"])
+          .withColumns(lit(categoryLbl).alias("category"))
 
-    let rxAdslData = rxAdsl()
-    let adslItt = rxAdslData.take(where(it.ITTFL == "Y").resolve(rxAdslData))
-    var summaryRowsData: seq[OrderedTable[string, Value]]
-    for sumVar in ["AGE", "AAGEGR1", "SEX", "ETHNIC", "BLBMI"]:
-      summaryRowsData.add customSummary(adslItt, "TRTA", sumVar)
-
-    var names = @["label"]
-    for prefix in ["val_", "sd_", "min_", "max_"]: names.add arms.mapIt(prefix & it)
-    names.add "category"
-    names.add arms.mapIt("pct_" & it)
-    let adslSummary = fromRows(summaryRowsData, names)
+    let adslItt = rxAdsl.filter(col("ITTFL") == "Y")
+    let adslSummary = concat(
+      ["AGE", "AAGEGR1", "SEX", "ETHNIC", "BLBMI"].mapIt(customSummary(adslItt, "TRTA", it)),
+      how = ConcatMethod.DiagonalRelaxed)
 
 tabelline """
-tabelline's data has no verbs to group, count and pivot (data frames come later), so the summary
-is written in plain Nim: a row is an `OrderedTable` of column names and values, and `fromRows`
-makes the table. `rxMeta()` gives the labels and the order of the levels, as R's attributes do.
+tabelline makes tables, not data: the data steps are written with
+[nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim, as R writes them with dplyr and
+tidyr (`unpivot` is `pivot_longer`, `pivot` is `pivot_wider`), and `import tabelline/nanuq`
+makes `tabella(df)` work for its data frames. `` `when` `` takes backticks: `when` is a word of
+Nim. `rxMeta()` gives the labels and the order of the levels, as R's attributes do.
 """
 
 nbText: """
@@ -328,15 +322,9 @@ rx_adsl_tbl <-
 rx_adsl_tbl
 """:
   nbCode:
-    # The columns of `d` whose names start with one of `prefixes`
-    proc startingWith(d: TableData, prefixes: varargs[string]): seq[string] =
-      for name in d.names:
-        for prefix in prefixes:
-          if name.startsWith(prefix): (result.add name; break)
-
     let rxAdslFmt = tabella(rxAdslTbl):
-      fmtInteger startingWith(adslSummary, "val_", "min_", "max_"),
-        rows = where($it.label in ["n", "Median", "Min - Max"])
+      fmtInteger startsWith(["val_", "min_", "max_"]),
+        rows = where($it.label in ["n", "Median", "Min - Max"] or ($it.category).endsWith(", n (%)"))
       fmtPercent startsWith("pct_"), decimals = 1
       fmtNumber startsWith("val_"), rows = where(it.label == "Mean (SD)"), decimals = 1
       fmtNumber startsWith("sd_"), rows = where(it.label == "Mean (SD)"), decimals = 2
@@ -344,8 +332,8 @@ rx_adsl_tbl
     nbTable rxAdslFmt
 
 tabelline """
-`startsWith` takes one prefix, and tabelline cannot join rules yet (gt's `starts_with()` takes
-several): `startingWith` lists the names, and a list of names is a selection.
+`startsWith` takes several prefixes, as gt's `starts_with()` does, in brackets:
+`startsWith("val_", "min_")` with two texts would be Nim's own `startsWith` of strutils.
 """
 
 nbText: """
@@ -495,7 +483,7 @@ rx_adsl_tbl
     # Count subjects per arm and make the labels of the columns
     var collblList: seq[(string, string)]
     for arm in arms:
-      let n = adslItt["TRTA"].values.countIt($it == arm)
+      let n = adslItt.filter(col("TRTA") == arm).height
       collblList.add ("val_" & arm, arm & " N=" & $n & " (100%)")
 
     let rxAdslLabelled = tabella(rxAdslAligned):
@@ -667,35 +655,36 @@ rx_responders <-
 
     const z = 1.959963984540054  # R's qnorm(0.975)
 
-    var respRows: seq[OrderedTable[string, Value]]
-    for age in meta["AAGEGR1"]["levels"].to(seq[string]):
-      var row = {"AAGEGR1": toValue(age)}.toOrderedTable
-      var x, n: Table[string, int]
-      for arm in arms:
-        let subjects = toSeq(0 ..< adslItt.nrows).filterIt(
-          $adslItt["TRTA", it] == arm and $adslItt["AAGEGR1", it] == age)
-        x[arm] = subjects.countIt($adslItt["EVNTFL", it] == "Y")
-        n[arm] = subjects.len
-        let (low, up) = clopperPearson(x[arm], n[arm])
-        row["n_resp_" & arm] = toValue(x[arm])
-        row["n_total_" & arm] = toValue(n[arm])
-        row["pct_" & arm] = toValue(100 * x[arm] / n[arm])
-        row["ci_up_" & arm] = toValue(100 * up)
-        row["ci_low_" & arm] = toValue(100 * low)
-      let odds = proc (arm: string): float = x[arm] / (n[arm] - x[arm])
-      if odds("Placebo") != 0:
-        let oddsRatio = odds("Drug 1") / odds("Placebo")
-        let se = sqrt(1 / x["Placebo"] + 1 / x["Drug 1"] +
-                      1 / (n["Placebo"] - x["Placebo"]) + 1 / (n["Drug 1"] - x["Drug 1"]))
-        row["or"] = toValue(oddsRatio)
-        row["or_ci_low"] = toValue(exp(ln(oddsRatio) - z * se))
-        row["or_ci_up"] = toValue(exp(ln(oddsRatio) + z * se))
-      respRows.add row
+    let counts = adslItt
+      .groupBy("TRTA", "AAGEGR1")
+      .agg((col("EVNTFL") == "Y").sum.alias("n_resp"), len().alias("n_total"))
+      .sort([col("TRTA").cast(Enum(arms)),
+             col("AAGEGR1").cast(Enum(meta["AAGEGR1"]["levels"].to(seq[string])))])
 
-    var respNames = @["AAGEGR1"]
-    for prefix in ["n_resp_", "n_total_", "pct_", "ci_up_", "ci_low_"]: respNames.add arms.mapIt(prefix & it)
-    respNames.add ["or", "or_ci_low", "or_ci_up"]
-    let rxResponders = fromRows(respRows, respNames)
+    # the intervals in Nim, one for each row: nanuq has no quantiles of the F distribution
+    let intervals = zip(counts.toList("n_resp", int), counts.toList("n_total", int))
+      .mapIt(clopperPearson(it[0], it[1]))
+
+    let (resp, total) = (col("n_resp"), col("n_total"))
+    proc byArm(name, arm: string): Expr = col(name & "_" & arm)
+
+    let rxResponders = counts
+      .withColumns(
+        series("ci_up", intervals.mapIt(100 * it[1])),
+        series("ci_low", intervals.mapIt(100 * it[0])))
+      .withColumns((100 * resp / total).alias("pct"), (resp / (total - resp)).alias("odds"))
+      .pivot("TRTA", index = "AAGEGR1",
+             values = ["n_resp", "n_total", "pct", "ci_up", "ci_low", "odds"])
+      .withColumns(
+        `when`(byArm("odds", "Placebo") == 0).then(nil)
+          .otherwise(byArm("odds", "Drug 1") / byArm("odds", "Placebo")).alias("or"),
+        sqrt(1 / byArm("n_resp", "Placebo") + 1 / byArm("n_resp", "Drug 1") +
+             1 / (byArm("n_total", "Placebo") - byArm("n_resp", "Placebo")) +
+             1 / (byArm("n_total", "Drug 1") - byArm("n_resp", "Drug 1"))).alias("se"))
+      .withColumns(
+        exp(log(col("or")) - z * col("se")).alias("or_ci_low"),
+        exp(log(col("or")) + z * col("se")).alias("or_ci_up"))
+      .drop(["odds_Placebo", "odds_Drug 1", "se"])
 
 tabelline """
 Nim's standard library has no quantiles of the F distribution (R's `qf()`): the book finds the
@@ -758,7 +747,7 @@ rx_resp_tbl
   nbCode:
     let rxRespFmt = tabella(rxRespTbl):
       fmtInteger startsWith("n_")
-      fmtNumber startingWith(rxResponders, "pct_", "ci_"), decimals = 1
+      fmtNumber startsWith(["pct_", "ci_"]), decimals = 1
       fmtNumber startsWith("or"), decimals = 2
 
     nbTable rxRespFmt
@@ -824,16 +813,14 @@ rx_resp_tbl
         colsMerge ["n_resp_" & arm, "n_total_" & arm, "pct_" & arm], pattern = "{1}/{2} ({3})"
         colsMerge ["ci_low_" & arm, "ci_up_" & arm], pattern = "[{1}, {2}]"
       colsMerge ["or_ci_low", "or_ci_up"], pattern = "[{1}, {2}]"
-      # a spanner's columns must be next to each other
-      colsMove "ci_low_Placebo", after = "n_resp_Placebo"
       tabSpanner "Drug 1", cols("n_resp_Drug 1", "ci_low_Drug 1")
       tabSpanner "Placebo", cols("n_resp_Placebo", "ci_low_Placebo")
 
     nbTable rxRespMerged
 
 tabelline """
-gt's `tab_spanner()` gathers its columns next to the first one: tabelline leaves columns where
-they are (a gap of the book), so `colsMove` gathers them first.
+A spanner gathers its columns next to the first one, as gt's `tab_spanner()` does
+(`gather = false` leaves them where they are).
 """
 
 nbText: """
@@ -917,7 +904,7 @@ rx_resp_tbl
 """:
   nbCode:
     let rxRespLabelled = tabella(rxRespGrouped):
-      colsAlign alCenter, startingWith(rxResponders, "n_", "ci", "or")
+      colsAlign alCenter, startsWith(["n_", "ci", "or"])
       colsLabel:
         AAGEGR1: ""
         n_resp_Placebo: "Event Rate (%)"
@@ -926,15 +913,15 @@ rx_resp_tbl
         "ci_low_Drug 1": "[95% CI]"
         "or": "Odds ratio"
         or_ci_low: "[95% CI]"
-      colsWidth rxResponders.names.mapIt((it, if it == "AAGEGR1": "80px" else: "120px"))
-      colsAlign alLeft, "AAGEGR1"
+      colsWidth rxResponders.columns.mapIt((it, if it == "AAGEGR1": "80px" else: "120px"))
+      colsAlign alLeft, positions(0)
 
     nbTable rxRespLabelled
 
 tabelline """
 In a block of pairs a name that is not a Nim name is written as a string: `"n_resp_Drug 1"`,
-and `"or"`, a keyword of Nim. tabelline has no columns by position (gt's `1`), so the first
-column is named.
+and `"or"`, a keyword of Nim. Columns by position count from 0 in tabelline, as in Python:
+gt's `columns = 1` is `positions(0)`.
 """
 
 nbText: """
@@ -1045,33 +1032,25 @@ addv_sum <-
 addv_sum
 """:
   nbCode:
-    let addv = rxAddv()
+    let rxAddv = readCsv(newStringStream(rxAddvCsv))
     let params = rxMeta()["rx_addv"]["PARAM"]["levels"].to(seq[string])
-    let addvRows = toSeq(0 ..< addv.nrows)
 
-    # The subjects of each arm
-    var ntot: Table[string, int]
-    for arm in arms:
-      ntot[arm] = addvRows.filterIt($addv["TRTA", it] == arm).mapIt($addv["USUBJID", it]).deduplicate.len
+    let firstRow = newDataFrame:
+      PARAM: ["Subjects with at least:"]
 
-    # A row for each category and parameter, in order, after a first row of text only
-    var keys = addvRows.mapIt(($addv["PARCAT1", it], params.find($addv["PARAM", it]))).deduplicate.sorted
-    var addvSumRows = @[{"PARAM": toValue("Subjects with at least:")}.toOrderedTable]
-    for (parcat, k) in keys:
-      var row = {"PARCAT1": toValue(parcat), "PARAM": toValue(params[k])}.toOrderedTable
-      for arm in arms:
-        for flag in ["N", "Y"]:
-          let n = addvRows.filterIt($addv["TRTA", it] == arm and $addv["PARCAT1", it] == parcat and
-            $addv["PARAM", it] == params[k] and $addv["CRIT1FL", it] == flag and
-            not addv["AVAL", it].isNull).mapIt(addv["AVAL", it].toFloat.int).sum
-          row["n_" & arm & "_" & flag] = toValue(n)
-          row["pct_" & arm & "_" & flag] = toValue(100 * n / ntot[arm])
-      addvSumRows.add row
-
-    var addvNames = @["PARCAT1", "PARAM"]
-    for prefix in ["n_", "pct_"]:
-      for arm in arms: addvNames.add [prefix & arm & "_N", prefix & arm & "_Y"]
-    let addvSum = fromRows(addvSumRows, addvNames)
+    let addvSum = concat([firstRow,
+      rxAddv
+        .withColumns(col("USUBJID").nUnique.over("TRTA").alias("NTOT"))
+        .groupBy("TRTA", "PARCAT1", "PARAM", "CRIT1FL")
+        .agg(
+          col("AVAL").sum.alias("n"),
+          (100 * col("AVAL").sum / col("NTOT").mean).alias("pct"))
+        .sort([col("TRTA").cast(Enum(arms)), col("PARCAT1"),
+               col("PARAM").cast(Enum(params)), col("CRIT1FL")])
+        .withColumns(concatStr([col("TRTA"), col("CRIT1FL")], separator = "_").alias("arm_flag"))
+        .pivot("arm_flag", index = ["PARCAT1", "PARAM"], values = ["n", "pct"])
+        .fillNull(0)],
+      how = ConcatMethod.DiagonalRelaxed)
 
     echo tabella(addvSum)
 
@@ -1317,9 +1296,6 @@ addv_tbl
 """:
   nbCode:
     let addvSpanned = tabella(addvMerged):
-      # Yes before No, as gt's spanners gather their columns in the order given
-      for arm in arms:
-        colsMove "n_" & arm & "_N", after = "n_" & arm & "_Y"
       tabSpanner md"COVID-19 Related", cols("n_Placebo_Y", "n_Placebo_N")
       tabSpanner md"COVID-19 Related", cols("n_Drug 1_Y", "n_Drug 1_N")
       tabSpanner md("Placebo  \n  N=90 (100%)  \n   n (%)"), cols("n_Placebo_Y", "n_Placebo_N"), level = 2
@@ -1335,8 +1311,9 @@ addv_tbl
 
 tabelline """
 Two spanners with the same label are told apart by their columns, so tabelline needs no `id`;
-a spanner over another one takes `level = 2`, where gt finds the level itself. tabelline's `md`
-does not break a line at two spaces and a newline yet, so the labels of the arms stay on one line.
+a spanner over another one takes `level = 2`, where gt finds the level itself. A spanner gathers
+its columns in the order given, Yes before No, as gt's does, and `md` breaks a line at two spaces
+and a newline, as Markdown does.
 """
 
 nbText: """

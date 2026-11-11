@@ -19,8 +19,8 @@ const
 
 const
   gtDir = currentSourcePath().parentDir & "/data/gt/"
-  rxAdslCsv = staticRead(gtDir & "rx_adsl.csv")
-  rxAddvCsv = staticRead(gtDir & "rx_addv.csv")
+  rxAdslCsv* = staticRead(gtDir & "rx_adsl.csv")
+  rxAddvCsv* = staticRead(gtDir & "rx_addv.csv")
   rxMetaJson = staticRead(gtDir & "rx_meta.json")
 
 const metroImages* = dataDir & "metro_images"

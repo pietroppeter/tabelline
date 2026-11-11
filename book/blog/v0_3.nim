@@ -122,16 +122,12 @@ gt_tbl |> opt_table_font(stack = "industrial")
       fmtCurrency "currency"
       tabSourceNote "This is only a subset of the dataset."
 
-    const industrial = "Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', " &
-      "'Nimbus Sans Narrow', sans-serif-condensed, sans-serif"
-
     let industrialTbl = tabella(gtTbl):
-      tabOptions tableFontNames = industrial
+      tabOptions tableFontNames = systemFonts("industrial")
     nbTable industrialTbl
 
 tabelline """
-tabelline has no `systemFonts` yet: the *industrial* stack is written out here, as Great Tables
-defines it. A table already made takes more verbs with `tabella(gtTbl): body`, and `gtTbl`
+`systemFonts("industrial")` is Great Tables' *industrial* stack, as `system_fonts()` gives it. A table already made takes more verbs with `tabella(gtTbl): body`, and `gtTbl`
 itself stays as it was, so each example below starts from it again.
 """
 

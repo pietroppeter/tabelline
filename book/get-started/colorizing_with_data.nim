@@ -219,15 +219,15 @@ gt(sza_pivot, rowname_col = "month") |>
 
     let zenith = tabella(szaPivot, rownameCol = "month"):
       dataColor domain = (90.0, 0.0),
-                palette = @["#663399", "white", "orange"],  # rebeccapurple
+                palette = @["rebeccapurple", "white", "orange"],
                 naColor = "white"
       tabHeader title = "Solar Zenith Angles from 05:30 to 12:00",
                 subtitle = html"Average monthly values at latitude of 20&deg;N."
     nbTable zenith
 
 tabelline """
-Two differences. tabelline knows only 17 colour names (`rebeccapurple` is not one of them,
-so it is given in hex, as in the R tab: R does not know it either); all the CSS names are a gap. tabelline's CSV reader reads `tst` (`"0400"`) and `latitude` as numbers,
+tabelline knows every CSS colour name, `rebeccapurple` too (R does not know it, so the R tab
+gives it in hex). One difference: tabelline's CSV reader reads `tst` (`"0400"`) and `latitude` as numbers,
 where pandas keeps them as text, so the filter compares numbers. A `domain` from high to
 low, `(90.0, 0.0)`, runs the palette the other way, as in Great Tables.
 """

@@ -60,7 +60,10 @@ NASA Planetary Fact Sheet
 ```
 
 The same verbs chain, too: `tabella(planets()).tabHeader("The planets").fmtNumber("mass")`.
-In a nimib notebook, `import tabelline/nimib` and `nbTable t`.
+In a nimib notebook, `import tabelline/nimib` and `nbTable t`, or in one step
+`nbTable planets(): tabHeader "The planets"`. For a data frame of
+[nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim), `import tabelline/nanuq` and
+`tabella(df)`.
 
 ## Stories
 
@@ -123,6 +126,10 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
+  (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
+  found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):
+  thirteen built in 0.2, lists and records and data frames among them, and two differences kept.
 - [One stylesheet for every table](https://pietroppeter.github.io/tabelline/devlog/sharing-styles/)
   (11 Nov 2026 B): what a table's HTML holds, three ways to share its 6 KB of CSS, the one chosen
   (fixed rules, options as CSS variables) and the `:not(#_)` trick that keeps a theme's rules
@@ -180,10 +187,10 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - `src/tabelline/pictures.nim`: icons (`fmtIcon`, every Font Awesome Free icon, from `data/fontawesome.tsv`, written by `tools/fontawesome.nim`; licence in `licenses/`) and images (`fmtImage`, inlined as data URLs).
 - `src/tabelline/nanoplots.nim`: nanoplots (`fmtNanoplot`, `colsNanoplot`), a port of Great Tables' SVG, and sparklines in text.
 - `src/tabelline/verbs.nim`: `tab*`, `cols*`, locations, `dataColor`, options and `opt*` presets.
-- `src/tabelline/colors.nim`: palettes, interpolation, text contrast.
+- `src/tabelline/colors.nim`: the 148 CSS colour names, palettes, interpolation, text contrast.
 - `src/tabelline/build.nim`: the build step all renderers share. `src/tabelline/extract.nim`: the built table as data (`extractCells`, `extractBody`, `extractSummary`).
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
-- `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`, `isole`, `citta` (the last two from `src/tabelline/data/`).
+- `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/nanuq.nim`: `tabella(df)` for a nanuq DataFrame (`tests/test_nanuq.nim`, not in `tests/all.nim`). `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`, `isole`, `citta` (the last two from `src/tabelline/data/`).
 - `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
 - `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/theme.nim` is the style of both looks, from the tokens, and `docs/blocks.nim` the blocks every page is made of; `docs/review.nim` is the review mode, blocks and styles in one module that can move to nimib).
 - `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).
