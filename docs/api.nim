@@ -134,7 +134,7 @@ proc anchorOf(m: ApiModule, s: ApiSymbol): string =
   m.name.lastPathPart & "-" & name
 var anchors = initTable[string, string]()  # plain name -> the anchor it stands for
 var aliasOf = initTable[string, string]()  # anchor -> its plain name, when it has one
-var headingIds = ["modules", "how-it-is-built", "indice"].toHashSet  # a name must not take a heading's id
+var headingIds = ["modules", "reading-a-signature", "how-it-is-built", "indice"].toHashSet  # a name must not take a heading's id
 for (module, title, _) in order:
   headingIds.incl slugify(title)
   for m in api:
@@ -302,6 +302,86 @@ block:
     optCssTheme()
   t = t.linkedGroups(facts.mapIt(it.module), order.mapIt("tabelline" & (if it[0] == "tabelline": "" else: "/" & short(it[0]))),
                      order.mapIt(slugify(it[1])))
+  nbTable t
+
+# ----------------------------------------------------------------------------- reading a signature
+# The signatures are what Nim sees; a table is written with tabelline's sugar, which leaves out
+# part of them. What the sugar does, and the few words of Nim a signature uses, counted live.
+
+nbText: """
+## Reading a signature
+
+A signature here is what Nim sees, and it is not always what you write. tabelline has some
+sugar, and it changes how a signature reads:
+
+- **A verb inside `tabella(data): body` drops its table.** Every verb takes the table first and
+  returns the new one:
+
+  ```nim
+  proc tabHeader(
+      t: sink Tabella,
+      title: Text,
+      subtitle: Text = toText("")
+  ): Tabella
+  ```
+
+  In the body of [`tabella`](#tabelline-tabella), the macro passes the table in and takes the
+  result back: `tabHeader "Title", "Subtitle"` stands for `t = t.tabHeader("Title", "Subtitle")`.
+  So in a body, read a verb's signature from its second argument, and ignore what it returns.
+- **A list of pairs can be a block.** The verbs whose first argument is a list of pairs
+  (`colsLabel`, `colsWidth`, `colsUnits`, `textCaseMatch`, `summaryRows`, `grandSummaryRows`,
+  `summaryColumns`) also take it as an indented block, one `label: value` per line, and any verb
+  takes `name = value` lines as named arguments.
+- **[`tabOptions`](#tabOptions) is a macro.** Its signature says `varargs[untyped]`: it takes
+  any field of [`TabOptions`](#TabOptions) by name, `rowStriping = true`, checked when compiling.
+- **Converters fill in the types.** An argument of type [`Text`](#Text) takes a plain string
+  ([`toText`](#toText)); a [`ColSel`](#ColSel), a column's name or a list of names
+  ([`toColSel`](#toColSel)); a [`RowSel`](#RowSel), a row, a list or a range of rows
+  ([`toRowSel`](#toRowSel)), or [`where`](#where) with a condition on `it`.
+
+Beside types, a signature uses a few words of Nim. The one you meet most is `sink`, on the table
+every verb takes. It tells Nim that the proc takes ownership of the value: when the caller does
+not use it again, as in a chain or a `tabella` body, Nim moves it instead of copying it; when the
+caller does, Nim copies it. The code means the same either way, and you never write `sink`
+yourself. Nim has no one name for these words. Its manual speaks of *sink parameters* and *var
+parameters*, and of `lent` as a borrowed result, all part of its move semantics; `openArray`,
+`varargs` and `static` are types made for parameters. The [guide](../explainer/#the-spec) has a
+note on `sink` too.
+"""
+
+block:
+  type Word = object
+    word, means, uses: string
+  let words = @[
+    ("sink", "tabHeader", "takes ownership of the argument: moved when the caller is done with it, copied otherwise; you write nothing"),
+    ("lent", "[]", "returns a value borrowed from the argument, without a copy, which you cannot change"),
+    ("var", "table", "can change the argument, which must be a variable"),
+    ("openArray", "interpolate", "takes an array or a seq"),
+    ("varargs", "tabella", "takes any number of arguments; in a macro, `varargs[untyped]` takes code"),
+    ("static", "toColSel", "a value known when compiling, such as the length of an array"),
+  ]
+  var rows: seq[Word]
+  for (w, example, means) in words:
+    var n = 0
+    var first = ""
+    for (module, _, _) in order:
+      for m in api:
+        if m.name != module: continue
+        for sym in m.symbols:
+          if sym.signatures.anyIt(it.contains(re("\\b" & w & "[ \\[]"))):
+            inc n
+            if sym.name == example: first = "[`" & sym.name & "`](#" & anchorOf(m, sym) & ")"
+    doAssert n == 0 or first.len > 0, w & ": no " & example & " among the names that use it"
+    rows.add Word(word: "`" & w & "`", means: means,
+                  uses: if n == 0: "—" else: $n & (if n == 1: " name: " else: " names, such as ") & first)
+  var t = tabella(rows, rownameCol = "word"):
+    tabHeader "The words of Nim in a signature"
+    colsLabel:
+      means: "what it means"
+      uses: "on this page"
+    fmtMarkdown columns = ["word", "means", "uses"]
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    optCssTheme()
   nbTable t
 
 nbPart 2, "", prSecondary

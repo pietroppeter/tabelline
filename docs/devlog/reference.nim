@@ -105,6 +105,12 @@ Tables do.
   `tabelline`, which brings them all, is last. The table of contents has the same order, coloured
   by part. *gt* and *Great Tables:* by family, starting from the table itself (`gt()`, `GT`).
 
+- **How to read a signature.** After the modules, a section says what the sugar of
+  `tabella(data): body` leaves out of a signature (the table a verb takes and returns), what the
+  blocks and converters fill in, and what Nim's own words mean: `sink`, on every verb, and the
+  few others, each with how many names use it. *gt* and *Great Tables:* R and Python
+  signatures need no such note; Great Tables' methods take `self`, which its reference leaves out.
+
 ### The names of a module
 
 - **A table of names, by section.** Under each module's heading and first sentence, a table lists
@@ -167,8 +173,8 @@ block:
           made: "the names tables, the *exports* row, the table turned so that it reads on a phone"),
     Round(round: "3", asked: "the table of contents coloured by part; `core` first",
           made: "pink, blue and green parts; the modules in dependency order"),
-    Round(round: "4", asked: "each module and each section linked from its table; the modules a module exports again",
-          made: "linked groups in both tables, the *exports again* row"),
+    Round(round: "4", asked: "each module and each section linked from its table; the modules a module exports again; then how the sugar changes a signature, and what `sink` is",
+          made: "linked groups in both tables, the *exports again* row, the section Reading a signature"),
   ]
   let t = tabella(rows, rownameCol = "round"):
     tabHeader "From the request to the page"
@@ -183,8 +189,10 @@ nbText: """
 ## What is still open
 
 - **Verbs as they are written.** A verb's signature starts with `t: sink Tabella`, which a
-  reader never writes inside `tabella(data): body`. The page could show the verb as it is
-  called there.
+  reader never writes inside `tabella(data): body`. The page explains it once, in
+  [Reading a signature](../../api/#reading-a-signature), with the other sugar and the words of
+  Nim a signature uses (`sink`, `lent`, `var`, `openArray`, `varargs`, `static`); each verb's
+  entry could still show the verb as it is called in a body.
 - **The weight of the page.** Every example table carries its own CSS, so the page is heavy. A
   change of its own, one table style per page, takes that away.
 - **Doc comments.** A third of the names have none yet.
