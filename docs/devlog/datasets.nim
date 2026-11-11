@@ -110,7 +110,7 @@ already has: rows parsed from somewhere else, or built with types of its own.
 nbNote """
 **Missing.** There is no reader for JSON, and no verbs on the data
 (filter, sort, head, join): the book writes its own `head`, `take` and `select`. Data frames
-are planned for 0.3.
+are planned for a later release.
 """, nkMissing
 
 # -------------------------------------------------------------------------- counted uses
