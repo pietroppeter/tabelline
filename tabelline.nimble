@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.2.0"
 author        = "Pietro Peterlongo"
 description   = "Great tables for Nim: display tables built from parts, formatted and styled, rendered to HTML"
 license       = "MIT"

@@ -1100,7 +1100,7 @@ tables were made once, when the page was built: nothing runs on them when the lo
 
 ## What comes next
 
-tabelline 0.1 had the basics of gt. 0.2, which this page shows and which is being finished,
+tabelline 0.1 had the basics of gt. 0.2, which this page shows,
 adds summary rows and merges, every format and every locale, and pictures in cells. The [roadmap](../roadmap/) has one more release after it. Each
 release is tried on real subjects (the stories) and on ported reference code (the
 [book](../book/)); the open steps are written down as specs (`openspec/`, on the

@@ -2,6 +2,38 @@
 
 ## Unreleased
 
+## 0.2.0 (11 Nov 2026)
+
+tabelline 0.2 is the big one: it brings most of the rest of gt and Great Tables. Tables can now sum
+up, merge and add rows and columns, format in every CLDR locale, and hold pictures. The pages
+write every table as `tabella(data): body`, one verb per line.
+
+- **Summing up**: `summaryRows` for each group and `grandSummaryRows` for the whole table, with
+  `agg.sum`, `agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count`, `agg.std` or your own;
+  `summaryColumns` across each row.
+- **Rows and columns**: `colsMerge` and its variants, `colsAdd`, `rowsAdd`, `rowsHide`,
+  `tabStubIndent`, `colsAlignDecimal`, `colsLabelRotate`.
+- **More formats**: units and chemistry (`fmtUnits`, `fmtChem`, `colsUnits`, `{{...}}` in labels),
+  `fmtFraction`, `fmtBins`, `fmtAuto`, `fmtPassthrough`, `fmtCountry`: 31 formats in all.
+- **Every locale**: the 657 locales of CLDR 49 for numbers, percents, 305 currencies and dates,
+  generated once and committed, so nothing is downloaded.
+- **Pictures in cells**: `fmtIcon` (every Font Awesome Free icon), `fmtImage` (local files
+  inlined), `fmtNanoplot` and `colsNanoplot` (line, bar and box plots, a port of Great Tables').
+- **Table tools**: `tabellaPreview`, `extractCells`/`extractBody`/`extractSummary`, `fromColumn`,
+  `tabStyle` with a proc of the row, `tabStyleBody`; 142 of gt's options; the datasets `isole()`
+  and `citta()`.
+- **Nim sugar**: every verb that takes pairs takes them as an indented block (`summaryRows:` then
+  `total: agg.sum`), and `tabella(t): body` adds verbs to a table already made.
+
+Docs: the Reference (every exported name), the Guide (with *Nim sugar* and *Pipes, methods and
+a recipe*), the story *FOSDEM, twenty-six times* written with 0.2, the book's Get Started and
+the first posts of the Great Tables blog, and the post *Designing tabelline 0.2*.
+
+Next is 0.3, *Out of the browser*: LaTeX, RTF and Word, images and PDF of a table, groups of
+tables, and tables from data frames.
+
+### Since 0.1.0
+
 - Docs: the Guide's *Nim sugar* opens with a list of all of tabelline's sugar, and two new sections: *Pipes, methods and a recipe* (the same table as R's pipe, Python's methods, Nim's dot and the `tabella` block, and what each language does underneath) and *Small words* (`where`, `&`, the namespaces, the converters) (#75).
 - Docs: the Guide and the specs write every table as `tabella(data): body`, one verb per line, with the pair verbs and `tabOptions` as blocks, instead of a chain of dots (#74).
 - Icons, images and nanoplots: `fmtIcon` (every Font Awesome Free icon, 2,163, as inline SVG; `icon`, `hasIcon`, `iconSvg`), `fmtImage` (local files inlined as data URLs; `imageDataUrl`), `fmtNanoplot` (line, bar and box plots in a cell, a port of Great Tables' nanoplots, sparklines in text; `nanoplotOptions`, `nanoplotSvg`), `colsNanoplot` (#63).
@@ -18,6 +50,9 @@
 - Fix: `subZero`, `subSmallVals`, `subLargeVals` and `subValues` with an empty text (`zeroText = ""`) left the value as it was; they now empty the cell, as gt does (#64).
 - Fix: in a grouped table, a row whose group value is missing was shown twice, before the groups
   and again in the group above it; it is now shown once, before the groups (#53).
+- The Reference: every name tabelline exports, with its signature, doc comment, links to gt and Great Tables and the shortest spec example that uses it, built from `nim jsondoc` and the source (`tools/apidoc.nim`); the post *A reference in our own style* (#65).
+- The book follows 0.2: Get Started complete, with the Nanoplots chapter and no workarounds left for what 0.2 added (#67); a new section, *Great Tables: the blog*, ports the first four posts of the Great Tables blog (#70).
+- Docs: the roadmap has three releases, with *Out of the browser* as 0.3; the feature map and the Guide follow it (#66, #73).
 
 ## 0.1.0 (10 Nov 2026)
 

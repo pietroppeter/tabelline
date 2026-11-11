@@ -1,11 +1,11 @@
 {
  "title": "gt coverage",
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "gt": "gt 1.4 (R) and Great Tables 0.17 (Python), by their reference indexes",
  "release": {
-  "version": "0.1.0",
-  "tag": "v0.1.0",
-  "date": "2026-11-10"
+  "version": "0.2.0",
+  "tag": "v0.2.0",
+  "date": "2026-11-11"
  },
  "plans": [
   {
