@@ -678,8 +678,42 @@ proc optAllCaps*(t: sink Tabella, on = true): Tabella =
     result.options.columnLabelsFontWeight = "normal"
 
 proc optTableFont*(t: sink Tabella, font: string): Tabella =
+  ## The table's font, as a CSS font stack: `optTableFont(systemFonts("humanist"))`.
   result = t
   result.options.tableFontNames = font
+
+const fontStacks = {
+  "system-ui": "system-ui, sans-serif",
+  "transitional": "'Charter', 'Bitstream Charter', 'Sitka Text', 'Cambria', serif",
+  "old-style": "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'P052', serif",
+  "humanist": "'Seravek', 'Gill Sans Nova', 'Ubuntu', 'Calibri', 'DejaVu Sans', 'source-sans-pro', sans-serif",
+  "geometric-humanist": "'Avenir', 'Montserrat', 'Corbel', 'URW Gothic', 'source-sans-pro', sans-serif",
+  "classical-humanist": "'Optima', 'Candara', 'Noto Sans', 'source-sans-pro', sans-serif",
+  "neo-grotesque": "'Inter', 'Roboto', 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', 'Arial', sans-serif",
+  "monospace-slab-serif": "'Nimbus Mono PS', 'Courier New', monospace",
+  "monospace-code": "ui-monospace, 'Cascadia Code', 'Source Code Pro', 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace",
+  "industrial": "'Bahnschrift', 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', 'sans-serif-condensed', sans-serif",
+  "rounded-sans": "ui-rounded, 'Hiragino Maru Gothic ProN', 'Quicksand', 'Comfortaa', 'Manjari', 'Arial Rounded MT', 'Arial Rounded MT Bold', 'Calibri', 'source-sans-pro', sans-serif",
+  "slab-serif": "'Rockwell', 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif",
+  "antique": "'Superclarendon', 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', 'Georgia', serif",
+  "didone": "'Didot', 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', 'P052', 'Sylfaen', serif",
+  "handwritten": "'Segoe Print', 'Bradley Hand', 'Chilanka', 'TSCu_Comic', 'casual', cursive"}
+
+const fontStackNames* = fontStacks.mapIt(it[0])
+  ## The names `systemFonts` knows, in Great Tables' order.
+
+func systemFonts*(name = "system-ui"): string =
+  ## One of Great Tables' fifteen font stacks, fonts that are on most systems, as CSS text:
+  ## `systemFonts("old-style")` is "'Iowan Old Style', 'Palatino Linotype', ..., serif". The
+  ## names are in `fontStackNames`; another name raises `ValueError`.
+  for (k, v) in fontStacks:
+    if k == name: return v
+  raise newException(ValueError, "no font stack named " & name.escape & " (" & fontStackNames.join(", ") & ")")
+
+func defaultFonts*(): string =
+  ## gt's default font stack, as CSS text (tabelline's default, `tableFontNames`, is close to it).
+  "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', " &
+    "'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
 
 proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
   ## A ready-made look, after gt's `opt_stylize()`: `style` 1 to 3, in one of `color`

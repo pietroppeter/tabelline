@@ -460,11 +460,20 @@ func textToHtml*(t: Text): string =
   of tkHtml: t.s
 
 func stripTags(s: string): string =
+  ## The text of some HTML: tags dropped, an image read as its `alt`.
   var inTag = false
+  var tag = ""
   for c in s:
-    if c == '<': inTag = true
-    elif c == '>': inTag = false
-    elif not inTag: result.add c
+    if c == '<': (inTag = true; tag = "")
+    elif c == '>' and inTag:
+      inTag = false
+      if tag.toLowerAscii.startsWith("img"):
+        let a = tag.find("alt=\"")
+        if a >= 0:
+          let e = tag.find('"', a + 5)
+          if e > a: result.add tag[a + 5 ..< e]
+    elif inTag: tag.add c
+    else: result.add c
   result.multiReplace(("&lt;", "<"), ("&gt;", ">"), ("&quot;", "\""), ("&amp;", "&"))
 
 func textToPlain*(t: Text): string =

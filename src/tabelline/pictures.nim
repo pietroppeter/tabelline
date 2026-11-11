@@ -194,3 +194,18 @@ proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", 
         escapeHtml(a) & "\" style=\"" & style.join(";") & "\">"
     "<span style=\"white-space:nowrap;\">" & parts.join(escapeHtml(sep)) & "</span>", rows)
   result.formats[^1].wholeValue = true
+
+proc imgTag(src, height, alt: string): Text =
+  html("<img src=\"" & escapeHtml(src) & "\" alt=\"" & escapeHtml(alt) & "\" style=\"height:" &
+       escapeHtml(height) & ";vertical-align:middle\">")
+
+proc localImage*(file: string, height = "2em", alt = ""): Text =
+  ## A local image as `Text`, for a title, a label, a note or a cell of `fmtMarkdown`: the file is
+  ## read now and inlined as a data URL, as gt's `local_image()`. `alt` (by default the file's
+  ## name) is what a screen reader reads, and what text output shows.
+  imgTag(imageDataUrl(file), height, if alt.len > 0: alt else: file.extractFilename)
+
+proc webImage*(url: string, height = "2em", alt = ""): Text =
+  ## An image on the web as `Text`, the address left as it is (the page loads it), as gt's
+  ## `web_image()`. `alt` is by default the last part of the address.
+  imgTag(url, height, if alt.len > 0: alt else: url.split('/')[^1])
