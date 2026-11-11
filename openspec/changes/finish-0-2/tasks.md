@@ -12,7 +12,11 @@
 - [x] 2.3 Per-point options of `nanoplotOptions`; dates on x
 - [x] 2.4 `gtcars`, `countrypops`, `illness`, `metro` in `tabelline/datasets`; the book reads them from there
 
-## 3. Docs and checks
+## 3. What the book found
+
+- [x] 3.0 `positions`, `+`, `-`, several parts; `tabSpanner(gather)`; summary rows merged by label; `extractSummary(values)`; hard line breaks in `md`
+
+## 4. Docs and checks
 
 - [x] 3.1 Tests in `tests/test_finish_0_2.nim`
 - [x] 3.2 The Guide (a stub of several columns, images, per-point options, 164 options), the Feature map, *Not from gt*, the devlog post "Designing tabelline 0.2"

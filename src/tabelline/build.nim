@@ -19,6 +19,7 @@ type
     label*: string               ## the label in the stub, rendered
     key*: string                 ## the location key of its stub cell (`summaryKey`)
     cells*: seq[string]          ## formatted cells of the visible data columns
+    values*: seq[Value]          ## the values behind them (missing where a column is not summed)
   BuiltGroup* = object
     id*: string
     label*: string               ## rendered label ("" for rows outside any group, unless
@@ -248,22 +249,32 @@ proc formatSummary(t: Tabella, rule: SummaryRule, agg: Aggregate, v: Value, col:
   let s = if v.kind == vkFloat: formatNumber(v.f, decimals = 2) else: $v
   if ctx == rcHtml: escapeHtml(s) else: s
 
-proc summaryOf(t: Tabella, rule: SummaryRule, rows: seq[int], columns: seq[ColInfo],
-               group: string, ctx: RenderContext): seq[BuiltSummary] =
-  ## The summary rows of `rule` over the data `rows`, one per aggregate.
+proc addSummaryOf(ss: var seq[BuiltSummary], t: Tabella, rule: SummaryRule, rows: seq[int],
+                  columns: seq[ColInfo], group: string, ctx: RenderContext) =
+  ## The summary rows of `rule` over the data `rows`, one per aggregate, added to `ss`. A label
+  ## already there is the same row: the rule fills its columns in it (as gt merges them).
   for (label, agg) in rule.fns:
-    var s = BuiltSummary(label: if ctx == rcHtml: escapeHtml(label) else: label,
-                         key: if rule.grand: grandKey(label) else: summaryKey(group, label))
-    for c in columns:
-      if c.name notin rule.columns:
+    let shown = if ctx == rcHtml: escapeHtml(label) else: label
+    var k = -1
+    for n, s in ss:
+      if s.label == shown: k = n
+    if k < 0:
+      var s = BuiltSummary(label: shown,
+                           key: if rule.grand: grandKey(label) else: summaryKey(group, label))
+      for c in columns:
         s.cells.add(if ctx == rcHtml: escapeHtml(rule.missingText) else: rule.missingText)
-        continue
+        s.values.add Value(kind: vkNull)
+      ss.add s
+      k = ss.high
+    for j, c in columns:
+      if c.name notin rule.columns: continue
       var values: seq[Value]
       for i in rows:
         let v = t.data[c.name, i]
         if not v.isNull: values.add v
-      s.cells.add t.formatSummary(rule, agg, agg.fn(values), c.name, ctx)
-    result.add s
+      let v = agg.fn(values)
+      ss[k].values[j] = v
+      ss[k].cells[j] = t.formatSummary(rule, agg, v, c.name, ctx)
 
 func fractionWidth(s, mark: string): int =
   ## How many characters, the mark included, come after the integer part of `s`.
@@ -319,14 +330,14 @@ proc build*(t: Tabella, ctx: RenderContext): Built =
       for rule in t.summaries:
         if rule.grand or gid.len == 0 or (rule.groups.len > 0 and gid notin rule.groups): continue
         let rows = g.rows.mapIt(it.index)
-        if rule.top: g.summaryTop.add t.summaryOf(rule, rows, result.columns, gid, ctx)
-        else: g.summaryBottom.add t.summaryOf(rule, rows, result.columns, gid, ctx)
+        if rule.top: g.summaryTop.addSummaryOf(t, rule, rows, result.columns, gid, ctx)
+        else: g.summaryBottom.addSummaryOf(t, rule, rows, result.columns, gid, ctx)
       result.groups.add g
   for rule in t.summaries:
     if not rule.grand: continue
     let rows = t.displayOrder
-    if rule.top: result.grandTop.add t.summaryOf(rule, rows, result.columns, "", ctx)
-    else: result.grandBottom.add t.summaryOf(rule, rows, result.columns, "", ctx)
+    if rule.top: result.grandTop.addSummaryOf(t, rule, rows, result.columns, "", ctx)
+    else: result.grandBottom.addSummaryOf(t, rule, rows, result.columns, "", ctx)
 
   # decimal alignment: pad each cell after its mark with figure spaces, so the marks line up
   for j, c in result.columns:

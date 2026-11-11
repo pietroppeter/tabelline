@@ -44,9 +44,10 @@ proc extractBody*(t: Tabella, ctx = rcText): TableData =
       for j, s in r.cells: cols[k + j][1].add toValue(s)
   toTableData(cols)
 
-proc extractSummary*(t: Tabella, ctx = rcText): TableData =
+proc extractSummary*(t: Tabella, ctx = rcText, values = false): TableData =
   ## The summary rows as a table of texts: `group` ("" for a grand summary row), `label`, and a
-  ## cell for each visible column, as shown.
+  ## cell for each visible column, as shown; with `values = true` the values themselves, as
+  ## gt's `extract_summary()` gives them (missing where a column is not summed).
   let b = t.build(ctx)
   var cols: seq[(string, seq[Value])] = @[("group", newSeq[Value]()), ("label", newSeq[Value]())]
   for c in b.columns: cols.add (c.name, newSeq[Value]())
@@ -54,7 +55,7 @@ proc extractSummary*(t: Tabella, ctx = rcText): TableData =
     for s in rows:
       cols[0][1].add toValue(gid)
       cols[1][1].add toValue(s.label)
-      for j, x in s.cells: cols[2 + j][1].add toValue(x)
+      for j, x in s.cells: cols[2 + j][1].add(if values: s.values[j] else: toValue(x))
   for g in b.groups:
     add(g.id, g.summaryTop)
     add(g.id, g.summaryBottom)

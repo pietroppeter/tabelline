@@ -1,6 +1,6 @@
 ## The tails of 0.2: a stub of several columns, groups as a column, the other HTML options,
 ## images anywhere, font stacks, per-point nanoplot options, gt's datasets.
-import std/[unittest, strutils, os]
+import std/[unittest, strutils, os, sequtils]
 import tabelline, tabelline/datasets
 
 let cars = tableData:
@@ -140,3 +140,35 @@ suite "images, fonts, nanoplots, datasets":
   test "gt's datasets":
     check gtcars().nrows == 47 and gtcars().ncols == 15
     check countrypops().ncols == 5 and illness().nrows == 39 and metro().nrows == 314
+
+suite "what the book found":
+  test "columns by place, and rules combined":
+    let d = planets()
+    check positions(0, -1).resolve(d) == @["planet", "rings"]
+    check startsWith(["ma", "mo"]).resolve(d) == @["mass", "moons"]
+    check (positions(2 .. 3) + "moons").resolve(d) == @["mass", "diameter", "moons"]
+    check (everything() - textual()).resolve(d).len == 10
+    expect KeyError: discard positions(40).resolve(d)
+  test "a spanner gathers its columns":
+    let t = tabella(planets()):
+      tabSpanner "x", ["mass", "moons"]
+    check t.visibleData.mapIt(it.name)[0 .. 3] == @["planet", "type", "mass", "moons"]
+    let s = tabella(planets()):
+      tabSpanner "x", ["mass", "moons"], gather = false
+    check s.visibleData.mapIt(it.name)[3] == "diameter"
+  test "summary rows with the same label are one row; their values":
+    let t = tabella(planets(), groupnameCol = "type"):
+      summaryRows:
+        total: agg.sum
+        columns = "moons"
+      summaryRows:
+        total: agg.sum
+        columns = "mass"
+    let s = extractSummary(t, values = true)
+    check s.nrows == 3
+    check s["moons", 1] == 241 and s["mass", 1].kind == vkFloat
+    check $extractSummary(t)["moons", 1] == "241"
+  test "a hard line break in Markdown":
+    check textToHtml(md("a  \nb")) == "a<br>b"
+    check textToHtml(md("a\\\nb")) == "a<br>b"
+    check textToPlain(md("a  \nb")) == "a b"

@@ -35,11 +35,20 @@ datasets that the book already uses. Built in the release PR, #78.
   stroke colour and width, fill; bar stroke colour and width, fill) take a list as well as one
   value: the n-th point or bar takes the n-th value, and the list repeats. The `x` of a record
   takes ISO dates and times too, placed by time.
+- **What the book found** (book PR #82): `positions(0, 2)` selects columns by place, `a + b`
+  and `a - b` combine rules, and `startsWith`, `endsWith` and `containing` take several parts;
+  `tabSpanner` gathers its columns (`gather = true`, as gt); two summary verbs that give a row
+  of the same label make one row (as gt); `extractSummary(t, values = true)` gives values; in
+  `md(...)` two spaces (or a backslash) before a newline are a line break.
 - **gt's datasets.** `gtcars()`, `countrypops()`, `illness()` and `metro()` in
   `tabelline/datasets`, from gt (MIT), the same rows and columns as the book uses today; the book
   reads them from there.
 
 ## Differences from gt and Great Tables
+
+- Column places start from 0, as rows do (gt counts from 1); `+` and `-` stand for tidyselect's
+  `c()`/`|` and `-`/`!`. Great Tables keeps two summary rows of the same label; tabelline
+  merges them, as gt.
 
 - Multi-column stubs: as gt (`rowname_col = c(...)`, gt 1.x). Great Tables has one stub column.
   `loc.stub(columns = ...)` is gt's `cells_stub(columns = ...)`, with the name `cols` of tabelline's other locations.
@@ -60,7 +69,9 @@ datasets that the book already uses. Built in the release PR, #78.
 
 ### Modified Capabilities
 
-- `table-parts`: Stub of several columns, Groups as a column (new).
+- `table-parts`: Stub of several columns, Groups as a column, A spanner gathers its columns,
+  Summary rows with the same label are one row, A line break in Markdown (new).
+- `nim-sugar`: Columns by place, and rules combined (new).
 - `styling`: The other options for an HTML table (new).
 - `formatting`: Images anywhere, Named font stacks, Nanoplot options for each point (new).
 - `table-data`: gt's datasets (new).

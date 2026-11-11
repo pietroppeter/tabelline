@@ -343,14 +343,19 @@ func isEmpty*(t: Text): bool = t.s.len == 0
 
 type
   ColSelKind* = enum
-    csNames, csAll, csStartsWith, csEndsWith, csContains, csNumeric, csTextual
+    csNames, csAll, csStartsWith, csEndsWith, csContains, csNumeric, csTextual, csPositions,
+    csUnion, csMinus
   ColSel* = object
     ## Which columns a verb applies to. A string or an array of strings converts to one, and
     ## `everything()`, `startsWith(...)`, `endsWith(...)`, `containing(...)`, `numeric()`,
-    ## `textual()` select by rule. Resolved against the data when the verb is called.
+    ## `textual()`, `positions(...)` select by rule; `a + b` is the columns of either (in the
+    ## order of the data), `a - b` those of `a` that are not in `b`. Resolved against the data
+    ## when the verb is called.
     case kind*: ColSelKind
     of csNames: names*: seq[string]
-    of csStartsWith, csEndsWith, csContains: part*: string
+    of csStartsWith, csEndsWith, csContains: parts*: seq[string]
+    of csPositions: positions*: seq[int]
+    of csUnion, csMinus: sels*: seq[ColSel]
     else: discard
 
 converter toColSel*(name: string): ColSel = ColSel(kind: csNames, names: @[name])
@@ -358,11 +363,22 @@ converter toColSel*[N: static int](names: array[N, string]): ColSel = ColSel(kin
 converter toColSel*(names: seq[string]): ColSel = ColSel(kind: csNames, names: names)
 func cols*(names: varargs[string]): ColSel = ColSel(kind: csNames, names: @names)
 func everything*(): ColSel = ColSel(kind: csAll)
-func startsWith*(prefix: string): ColSel = ColSel(kind: csStartsWith, part: prefix)
-func endsWith*(suffix: string): ColSel = ColSel(kind: csEndsWith, part: suffix)
-func containing*(part: string): ColSel = ColSel(kind: csContains, part: part)
+func startsWith*(prefixes: varargs[string]): ColSel = ColSel(kind: csStartsWith, parts: @prefixes)
+  ## The columns whose name starts with any of `prefixes`: `startsWith(["pop_", "pct_"])` (in
+  ## brackets: `startsWith(a, b)` with two texts is `strutils.startsWith`).
+func endsWith*(suffixes: varargs[string]): ColSel = ColSel(kind: csEndsWith, parts: @suffixes)
+func containing*(parts: varargs[string]): ColSel = ColSel(kind: csContains, parts: @parts)
 func numeric*(): ColSel = ColSel(kind: csNumeric)
 func textual*(): ColSel = ColSel(kind: csTextual)
+func positions*(ix: varargs[int]): ColSel = ColSel(kind: csPositions, positions: @ix)
+  ## Columns by their place in the data, from 0, as rows are: `positions(0, 2)`; a negative
+  ## place counts from the end (-1 is the last column).
+func positions*(s: HSlice[int, int]): ColSel = ColSel(kind: csPositions, positions: toSeq(s))
+  ## `positions(2 .. 4)`: the third to the fifth column.
+func `+`*(a, b: ColSel): ColSel = ColSel(kind: csUnion, sels: @[a, b])
+  ## The columns of `a` or `b`: `startsWith("pop") + "year"`.
+func `-`*(a, b: ColSel): ColSel = ColSel(kind: csMinus, sels: @[a, b])
+  ## The columns of `a` that are not in `b`: `numeric() - "year"`.
 
 func resolve*(sel: ColSel, d: TableData): seq[string] =
   case sel.kind
@@ -372,11 +388,33 @@ func resolve*(sel: ColSel, d: TableData): seq[string] =
         raise newException(KeyError, "no column named " & n.escape & " (columns: " & d.names.join(", ") & ")")
     sel.names
   of csAll: d.names
-  of csStartsWith: d.names.filterIt(it.startsWith(sel.part))
-  of csEndsWith: d.names.filterIt(it.endsWith(sel.part))
-  of csContains: d.names.filterIt(sel.part in it)
+  of csStartsWith: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(n.startsWith(it))))
+  of csEndsWith: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(n.endsWith(it))))
+  of csContains: d.names.filterIt((block:
+    let n = it
+    sel.parts.anyIt(it in n)))
   of csNumeric: d.columns.filterIt(it.isNumeric).mapIt(it.name)
   of csTextual: d.columns.filterIt(it.kindOf == vkString).mapIt(it.name)
+  of csPositions:
+    let names = d.names
+    var res: seq[string]
+    for p in sel.positions:
+      let k = if p < 0: names.len + p else: p
+      if k < 0 or k >= names.len:
+        raise newException(KeyError, "no column at position " & $p & " (" & $names.len & " columns)")
+      if names[k] notin res: res.add names[k]
+    res
+  of csUnion:
+    let a = sel.sels[0].resolve(d)
+    let b = sel.sels[1].resolve(d)
+    d.names.filterIt(it in a or it in b)
+  of csMinus:
+    let b = sel.sels[1].resolve(d)
+    sel.sels[0].resolve(d).filterIt(it notin b)
 
 type
   RowSelKind* = enum

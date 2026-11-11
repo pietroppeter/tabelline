@@ -78,11 +78,23 @@ proc tabStubhead*(t: sink Tabella, label: Text): Tabella =
   result = t
   result.stubhead = label
 
-proc tabSpanner*(t: sink Tabella, label: Text, columns: ColSel, level = 1): Tabella =
-  ## A label over `columns` (shown together; keep them next to each other). Higher `level`s sit
-  ## above lower ones.
+proc tabSpanner*(t: sink Tabella, label: Text, columns: ColSel, level = 1, gather = true): Tabella =
+  ## A label over `columns`. Higher `level`s sit above lower ones. With `gather` (the default, as
+  ## in gt) the columns are moved next to the first of them, in the order given, so the label
+  ## spans them all; with `gather = false` they stay where they are.
   result = t
   let names = columns.resolve(result.data)
+  if gather and names.len > 1:
+    let first = result.boxhead.mapIt(it.name).filterIt(it in names)[0]
+    var moved: seq[ColInfo]
+    for n in names:
+      for c in result.boxhead:
+        if c.name == n: moved.add c
+    var order: seq[ColInfo]
+    for c in result.boxhead:
+      if c.name == first: order.add moved
+      elif c.name notin names: order.add c
+    result.boxhead = order
   for s in result.spanners:
     if s.level == level and s.columns.anyIt(it in names):
       raise newException(ValueError, "spanner " & label.s.escape & " overlaps spanner " & s.label.s.escape)
