@@ -977,8 +977,8 @@ block:
   nbTable t
 
 nbText: """
-The first row is the one of [One stylesheet for every table](../sharing-styles/): the Reference
-has 152 tables, and sharing their style took it from 1.71 MB to 0.88 MB.
+The first row is the one of [One stylesheet for every table](../sharing-styles/): the
+[API reference](../../api/) has 152 tables, and sharing their style took it from 1.71 MB to 0.88 MB.
 
 ### A syntax of its own
 
