@@ -360,7 +360,10 @@ nbText: """
   `startsWith("pop")`, ...). It is resolved when the verb is called, so a typo fails at once,
   with the list of the columns there are.
 - `RowSel` selects rows: indices (`[0, 2]`, `0..3`) or a predicate,
-  `where(it["type"] == "Gas giant")`, which reads like Nim's `filterIt`.
+  `where(it["type"] == "Gas giant")`. `it` is a Nim idiom: in `filterIt`, `mapIt` and the
+  other `...It` templates of `std/sequtils`, the template names the current element `it` for
+  the code you write. `where` does the same: it turns the condition into a proc of one row,
+  named `it`.
 - `loc` and `style` are empty objects used as namespaces, so `loc.body(cols = "mass")` and
   `style.fill("var(--warning-soft)") & style.text(weight = "bold")` read exactly like Great Tables.
 - `TabOptions` uses Nim 2's default field values for its options.
@@ -837,8 +840,9 @@ nbTable squares
 nbText: """
 ### Columns and fields by name
 
-In a row predicate (`where`) or a proc of a row, `it.mass` is the column `mass` of that row, the
-same as `it["mass"]`. A cell can also hold more than one value: a list (from a `seq`) or a
+In a row predicate, `it` is the row (the Nim idiom of `filterIt`, seen in
+[Small types for small ideas](#small-types-for-small-ideas)), and `it.mass` is its column
+`mass`, the same as `it["mass"]`. A cell can also hold more than one value: a list (from a `seq`) or a
 record (from an object or a named tuple), and `v.name` is a field of a record:
 """
 nbCode:
