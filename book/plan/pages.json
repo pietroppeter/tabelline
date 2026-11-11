@@ -1,6 +1,6 @@
 {
  "gt-getstarted": {
-  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Column Labels",
@@ -26,15 +26,9 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/formatting-values.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 24,
-    "needs": {
-     "0.3": [
-      "Currency",
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -82,13 +76,9 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/styling-the-table-body.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 70,
-    "needs": {
-     "0.2": [
-      "Body styles from a column"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -205,10 +195,10 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/nanoplots.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 24,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Plots in cells"
      ]
     },
@@ -234,13 +224,9 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/row-selection.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 19,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -259,7 +245,6 @@
     "calls": 20,
     "needs": {
      "0.2": [
-      "Summary rows",
       "Table options"
      ]
     },
@@ -279,13 +264,9 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/premade-themes.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 23,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -306,13 +287,9 @@
     "url": "https://posit-dev.github.io/great-tables/user-guide/styling-the-whole-table.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 112,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locations",
@@ -335,7 +312,6 @@
     "calls": 12,
     "needs": {
      "0.2": [
-      "Summary rows",
       "Table options"
      ]
     },
@@ -379,7 +355,7 @@
   ]
  },
  "gt-blog": {
-  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
@@ -400,17 +376,12 @@
     "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 31,
     "needs": {
      "0.2": [
+      "Plots in cells",
       "Table options"
-     ],
-     "0.3": [
-      "Dates"
-     ],
-     "0.4": [
-      "Plots in cells"
      ]
     },
     "uses": [
@@ -500,17 +471,11 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 61,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Icons"
      ]
     },
     "uses": [
@@ -536,13 +501,9 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 71,
-    "needs": {
-     "0.3": [
-      "Rotated labels"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Booleans",
@@ -566,13 +527,9 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.2.0/",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 20,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Colour by value",
@@ -589,17 +546,12 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.3.0/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 23,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -626,10 +578,10 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.4.0/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 31,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Plots in cells"
      ]
     },
@@ -650,18 +602,9 @@
     "url": "https://posit-dev.github.io/great-tables/blog/introduction_great_tables.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 58,
-    "needs": {
-     "0.2": [
-      "Body styles from a column"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -693,15 +636,9 @@
     "calls": 31,
     "needs": {
      "0.2": [
-      "Table options"
-     ],
-     "0.3": [
-      "Currency",
-      "Units"
-     ],
-     "0.4": [
       "Images",
-      "Plots in cells"
+      "Plots in cells",
+      "Table options"
      ],
      "0.5": [
       "LaTeX"
@@ -769,10 +706,10 @@
     "url": "https://posit-dev.github.io/great-tables/blog/open-transit-tools/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 5,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -856,10 +793,10 @@
     "url": "https://posit-dev.github.io/great-tables/blog/rendering-images/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 48,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -935,14 +872,10 @@
     "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 39,
     "needs": {
-     "0.3": [
-      "Dates",
-      "Units"
-     ],
-     "0.4": [
+     "0.2": [
       "Plots in cells"
      ]
     },
@@ -967,7 +900,7 @@
   ]
  },
  "gt-examples": {
-  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "Gini coefficient (with gt-extras)",
@@ -1002,15 +935,13 @@
     "url": "https://posit-dev.github.io/great-tables/examples/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 109,
     "needs": {
      "0.2": [
-      "Table options"
-     ],
-     "0.4": [
       "Images",
-      "Plots in cells"
+      "Plots in cells",
+      "Table options"
      ]
     },
     "uses": [
@@ -1046,10 +977,10 @@
     "url": "https://posit-dev.github.io/great-tables/examples/sports-earnings/",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 26,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -1081,9 +1012,7 @@
     "calls": 258,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Stub indent, multi-column stub",
-      "Summary rows",
       "Table options"
      ]
     },
@@ -1120,16 +1049,9 @@
     "url": "https://gt.rstudio.com/articles/case-study-gtcars.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 128,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ],
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align",
@@ -1156,18 +1078,11 @@
     "url": "https://gt.rstudio.com/articles/creating-summary-lines.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 99,
     "needs": {
      "0.2": [
-      "Extract",
-      "Summary rows",
       "Table options"
-     ],
-     "0.3": [
-      "Bins, auto format, passthrough",
-      "Currency",
-      "Locales"
      ]
     },
     "uses": [
@@ -1194,17 +1109,11 @@
     "url": "https://gt.rstudio.com/articles/gt-datasets.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 169,
     "needs": {
      "0.2": [
-      "Merge columns",
-      "Summary rows",
       "Table options"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates"
      ]
     },
     "uses": [
@@ -1262,11 +1171,7 @@
     "needs": {
      "0.2": [
       "Stub indent, multi-column stub",
-      "Summary rows",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ],
      "later": [
       "Interactive tables"
@@ -1348,8 +1253,10 @@
     "ready": "0.4",
     "calls": 285,
     "needs": {
+     "0.2": [
+      "Images"
+     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -1472,14 +1379,11 @@
     "url": "https://github.com/jdjohn215/2020-RStudio-Table-Contest",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 263,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -1582,13 +1486,10 @@
     "url": "https://github.com/soroosj/TidyTuesday/tree/master/2020-09-01",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 197,
     "needs": {
      "0.2": [
-      "Summary rows"
-     ],
-     "0.4": [
       "Images"
      ]
     },
@@ -1625,14 +1526,12 @@
     "url": "https://github.com/gkaramanis/tidytuesday/tree/master/2020/2020-week40",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 169,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -1688,15 +1587,8 @@
     "calls": 2514,
     "needs": {
      "0.2": [
-      "Summary rows",
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates"
-     ],
-     "0.4": [
-      "Images"
      ],
      "later": [
       "Interactive tables"
@@ -1852,17 +1744,12 @@
     "url": "https://github.com/Ryo-N7/soccer_gt_timelines",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 953,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -1915,18 +1802,12 @@
     "url": "https://github.com/beeb22/tidytuesday",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 1353,
     "needs": {
      "0.2": [
-      "Summary rows",
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2460,18 +2341,12 @@
     "url": "https://github.com/agstn/RStudio_table_contest_2020",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 255,
     "needs": {
      "0.2": [
-      "Merge columns",
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2514,10 +2389,10 @@
     "url": "https://github.com/richardvogg/Data-Simulation",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 335,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -2653,14 +2528,12 @@
     "url": "https://github.com/Anavoron/Rstudio-table-contest-2020",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 207,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2693,17 +2566,12 @@
     "url": "https://github.com/ekholme/viz_portfolio/tree/master/R",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 167,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2739,17 +2607,12 @@
     "url": "https://github.com/committedtotape/education-spending",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 292,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2879,14 +2742,12 @@
     "url": "https://github.com/Z3tt/Rstudio_TableContest_2020",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 494,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -2926,13 +2787,8 @@
     "calls": 2180,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
-     ],
-     "0.4": [
-      "Images"
      ],
      "later": [
       "Interactive tables"
@@ -2977,10 +2833,10 @@
     "calls": 219,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -3006,24 +2862,6 @@
     ]
    },
    {
-    "title": "Age by Spanish Origin - 1980 U.S. Census",
-    "path": "robkempOFM/rstudio_table_competition",
-    "year": 2021,
-    "by": "Rob Kemp",
-    "package": "flextable",
-    "post": "https://forum.posit.co/t/age-by-spanish-origin-1980-u-s-census-table-contest-submission/121561",
-    "files": 1,
-    "url": "https://github.com/robkempOFM/rstudio_table_competition",
-    "port": "port",
-    "note": "",
-    "ready": "other",
-    "calls": 43,
-    "needs": {},
-    "uses": [
-     "Interactive tables"
-    ]
-   },
-   {
     "title": "Apex Legends",
     "path": "michaelbgarcia/rstudiotablecontest_2021",
     "year": 2021,
@@ -3034,14 +2872,12 @@
     "url": "https://github.com/michaelbgarcia/rstudiotablecontest_2021",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 228,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -3288,17 +3124,12 @@
     "url": "https://github.com/AbdoulMa/RStudio-Table-Contest-2021",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 530,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.3": [
-      "Locales"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -3422,14 +3253,12 @@
     "url": "https://github.com/Edgar-Zamora/My-Work/tree/master/Tidyverse",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 749,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -3491,10 +3320,10 @@
     "calls": 642,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -3604,9 +3433,6 @@
      "0.2": [
       "Table options"
      ],
-     "0.3": [
-      "Dates"
-     ],
      "0.4": [
       "Plots, icons and themes from gt-extras"
      ]
@@ -3679,14 +3505,12 @@
     "url": "https://github.com/b4billy/R_Studio_Table_Contest_2021",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 76,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -3721,10 +3545,10 @@
     "calls": 919,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -3803,13 +3627,10 @@
     "calls": 136,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -3852,10 +3673,10 @@
     "calls": 1007,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -3899,13 +3720,9 @@
     "url": "https://github.com/GeorgeNAL/Diamond-League-Earnings",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 171,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align",
@@ -3979,7 +3796,6 @@
     "calls": 452,
     "needs": {
      "0.2": [
-      "Summary rows",
       "Table options"
      ]
     },
@@ -4021,10 +3837,10 @@
     "calls": 114,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -4082,9 +3898,6 @@
      "0.2": [
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
       "Plots, icons and themes from gt-extras"
      ]
@@ -4123,17 +3936,10 @@
     "calls": 2563,
     "needs": {
      "0.2": [
-      "Body styles from a column",
-      "Summary rows",
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Currency",
-      "Dates",
-      "Locales"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -4187,14 +3993,12 @@
     "url": "https://github.com/shaf1430/Currency-Crisis",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 248,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -4309,14 +4113,10 @@
     "calls": 9286,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Currency",
-      "Locales"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -4400,14 +4200,10 @@
     "calls": 506,
     "needs": {
      "0.2": [
-      "Summary rows",
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -4468,14 +4264,12 @@
     "url": "https://github.com/nrennie/2022-table-contest",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 182,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -4680,13 +4474,10 @@
     "calls": 540,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Locales"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -4888,8 +4679,10 @@
     "ready": "later",
     "calls": 169,
     "needs": {
+     "0.2": [
+      "Images"
+     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -5043,8 +4836,6 @@
     "calls": 52,
     "needs": {
      "0.2": [
-      "Align on the decimal mark",
-      "Body styles from a column",
       "Table options"
      ]
     },
@@ -5124,15 +4915,9 @@
     "calls": 177,
     "needs": {
      "0.2": [
-      "Add columns",
-      "Merge columns",
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
-      "Icons",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -5271,11 +5056,9 @@
     "calls": 873,
     "needs": {
      "0.2": [
-      "Add columns",
-      "Merge columns"
+      "Plots in cells"
      ],
      "0.4": [
-      "Plots in cells",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -5316,14 +5099,12 @@
     "url": "https://github.com/jrycw/posit-gt-2024",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 186,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -5412,14 +5193,12 @@
     "url": "https://github.com/brouwern/posit_tables_2024",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 192,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -5473,10 +5252,10 @@
     "url": "https://github.com/ATL2001/great_GPX",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 174,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Plots in cells"
      ]
     },
@@ -5509,7 +5288,7 @@
     "ready": "later",
     "calls": 272,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ],
      "later": [
@@ -5657,10 +5436,10 @@
     "calls": 321,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -5701,11 +5480,10 @@
     "calls": 881,
     "needs": {
      "0.2": [
-      "Merge columns",
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -5745,14 +5523,12 @@
     "url": "https://github.com/steodose/Table-Contest-2024",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 80,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -5851,10 +5627,10 @@
     "calls": 1062,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -5894,10 +5670,10 @@
     "calls": 365,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -6020,16 +5796,13 @@
     "url": "https://github.com/melissavanbussel/spotify-dashboard",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 797,
     "needs": {
      "0.2": [
-      "Body styles from a column",
-      "Table options"
-     ],
-     "0.4": [
       "Images",
-      "Plots in cells"
+      "Plots in cells",
+      "Table options"
      ]
     },
     "uses": [
@@ -6067,14 +5840,10 @@
     "calls": 513,
     "needs": {
      "0.2": [
-      "Body styles from a column",
+      "Images",
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -6169,18 +5938,13 @@
     "url": "https://github.com/jorammutenge/contest",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 177,
     "needs": {
      "0.2": [
-      "Table options"
-     ],
-     "0.3": [
-      "Dates"
-     ],
-     "0.4": [
       "Images",
-      "Plots in cells"
+      "Plots in cells",
+      "Table options"
      ]
     },
     "uses": [
@@ -6233,8 +5997,10 @@
     "ready": "0.4",
     "calls": 350,
     "needs": {
+     "0.2": [
+      "Images"
+     ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ]
     },
@@ -6321,10 +6087,10 @@
     "calls": 516,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
      ],
      "0.4": [
-      "Images",
       "Plots, icons and themes from gt-extras"
      ],
      "later": [
@@ -6443,14 +6209,12 @@
     "url": "https://github.com/JauntyJJS/2025_table",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 597,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -6591,9 +6355,6 @@
      "0.2": [
       "Table options"
      ],
-     "0.3": [
-      "Currency"
-     ],
      "0.4": [
       "Plots, icons and themes from gt-extras"
      ],
@@ -6725,7 +6486,6 @@
     "calls": 1103,
     "needs": {
      "0.2": [
-      "Summary rows",
       "Table options"
      ]
     },
@@ -6805,15 +6565,13 @@
     "url": "https://github.com/jorgethomasm/forecasting-wind-power",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 1552,
     "needs": {
      "0.2": [
-      "Table options"
-     ],
-     "0.4": [
       "Images",
-      "Plots in cells"
+      "Plots in cells",
+      "Table options"
      ]
     },
     "uses": [
@@ -6850,14 +6608,12 @@
     "url": "https://github.com/emaleckova/2025-Table-Contest",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 715,
     "needs": {
      "0.2": [
+      "Images",
       "Table options"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -6922,7 +6678,7 @@
   ]
  },
  "gt-reference": {
-  "commit": "effe7394c7ea4fa55b1e07626298e4bbe23be9ce",
+  "commit": "8d3af4718c6e367ff245397dbf9a8878105b3936",
   "pages": [
    {
     "title": "GT()",
@@ -6930,15 +6686,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Currency",
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -7067,13 +6817,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_style.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 21,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -7153,14 +6899,11 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.tab_options.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 11,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -7267,13 +7010,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_currency.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 3,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency"
@@ -7329,14 +7068,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_date.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 3,
-    "needs": {
-     "0.3": [
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Dates",
@@ -7349,13 +7083,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_time.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 3,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locales",
@@ -7368,13 +7098,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_tf.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Booleans",
@@ -7389,13 +7115,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_datetime.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 3,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locales",
@@ -7408,14 +7130,11 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_units.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 33,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Units"
      ]
     },
     "uses": [
@@ -7442,10 +7161,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 5,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -7461,13 +7180,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_icon.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.1",
     "calls": 30,
-    "needs": {
-     "0.4": [
-      "Icons"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align",
@@ -7504,10 +7219,10 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.fmt_nanoplot.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 27,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Plots in cells"
      ]
     },
@@ -7645,13 +7360,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_align_decimal.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 3,
-    "needs": {
-     "0.2": [
-      "Align on the decimal mark"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align on the decimal mark",
@@ -7711,13 +7422,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_label_rotate.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Rotated labels"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Any CSS",
@@ -7818,13 +7525,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 18,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -7839,13 +7542,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_uncert.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Labels",
@@ -7859,13 +7558,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_range.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Labels",
@@ -7878,13 +7573,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.cols_merge_n_pct.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 7,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Labels",
@@ -7902,7 +7593,6 @@
     "calls": 49,
     "needs": {
      "0.2": [
-      "Summary rows",
       "Table options"
      ]
     },
@@ -7921,13 +7611,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.grand_summary_rows.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 25,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Numbers and integers",
@@ -7942,13 +7628,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.header.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -7962,13 +7644,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.title.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -7983,13 +7661,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.subtitle.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8003,13 +7677,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.stubhead.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8025,13 +7695,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.column_header.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 11,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8046,13 +7712,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.spanner_labels.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8081,13 +7743,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.grand_summary_stub.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 11,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Numbers and integers",
@@ -8102,13 +7760,9 @@
     "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L552",
     "port": "port",
     "note": "The reference has no page for it yet (404): the link goes to its docstring in the code",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 13,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Row groups",
@@ -8123,13 +7777,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.stub.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 16,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8146,13 +7796,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.row_groups.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8168,13 +7814,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.grand_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 11,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Numbers and integers",
@@ -8189,13 +7831,9 @@
     "url": "https://github.com/posit-dev/great-tables/blob/466333f77be11a31c02b7eeded8609961862b925/great_tables/_locations.py#L741",
     "port": "port",
     "note": "The reference has no page for it yet (404): the link goes to its docstring in the code",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 13,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Row groups",
@@ -8210,13 +7848,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/loc.body.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8276,14 +7910,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.with_locale.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Currency",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align",
@@ -8297,13 +7926,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/from_column.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 15,
-    "needs": {
-     "0.2": [
-      "Body styles from a column"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -8317,14 +7942,11 @@
     "url": "https://posit-dev.github.io/great-tables/reference/google_font.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 14,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -8344,14 +7966,11 @@
     "url": "https://posit-dev.github.io/great-tables/reference/system_fonts.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 11,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -8390,13 +8009,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_align_table_header.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8415,13 +8030,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_row_striping.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8440,13 +8051,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_all_caps.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 16,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8465,13 +8072,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_vertical_padding.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8490,13 +8093,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_horizontal_padding.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8515,13 +8114,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_table_outline.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8540,13 +8135,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_table_font.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 14,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8560,13 +8151,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_stylize.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8585,13 +8172,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/GT.opt_css.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -8608,9 +8191,6 @@
     "ready": "0.5",
     "calls": 11,
     "needs": {
-     "0.3": [
-      "Currency"
-     ],
      "0.5": [
       "Images and PDF"
      ]
@@ -8644,9 +8224,6 @@
     "ready": "0.5",
     "calls": 7,
     "needs": {
-     "0.3": [
-      "Currency"
-     ],
      "0.5": [
       "LaTeX"
      ]
@@ -8729,13 +8306,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_currency.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 1,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Currency"
     ]
@@ -8785,13 +8358,9 @@
     "url": "https://posit-dev.github.io/great-tables/reference/vals.fmt_date.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 1,
-    "needs": {
-     "0.3": [
-      "Dates"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Dates"
     ]
@@ -9040,13 +8609,9 @@
     "url": "https://gt.rstudio.com/reference/cells_grand_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 15,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9062,13 +8627,9 @@
     "url": "https://gt.rstudio.com/reference/cells_row_groups.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -9116,13 +8677,9 @@
     "url": "https://gt.rstudio.com/reference/cells_stub_grand_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 14,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9138,13 +8695,9 @@
     "url": "https://gt.rstudio.com/reference/cells_stub_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 17,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9176,13 +8729,9 @@
     "url": "https://gt.rstudio.com/reference/cells_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 22,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9215,16 +8764,9 @@
     "url": "https://gt.rstudio.com/reference/cols_add.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 36,
-    "needs": {
-     "0.2": [
-      "Add columns"
-     ],
-     "0.3": [
-      "Units"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -9265,13 +8807,9 @@
     "url": "https://gt.rstudio.com/reference/cols_align_decimal.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.2": [
-      "Align on the decimal mark"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Align on the decimal mark",
@@ -9323,14 +8861,9 @@
     "url": "https://gt.rstudio.com/reference/cols_label_with.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 38,
-    "needs": {
-     "0.3": [
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9352,13 +8885,9 @@
     "url": "https://gt.rstudio.com/reference/cols_merge.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 20,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9373,15 +8902,11 @@
     "url": "https://gt.rstudio.com/reference/cols_merge_n_pct.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 20,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -9406,13 +8931,9 @@
     "url": "https://gt.rstudio.com/reference/cols_merge_range.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9427,13 +8948,9 @@
     "url": "https://gt.rstudio.com/reference/cols_merge_uncert.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 7,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Labels",
@@ -9493,20 +9010,12 @@
     "url": "https://gt.rstudio.com/reference/cols_nanoplot.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 166,
     "needs": {
      "0.2": [
-      "Body styles from a column",
-      "Merge columns",
+      "Plots in cells",
       "Table options"
-     ],
-     "0.3": [
-      "Dates",
-      "Units"
-     ],
-     "0.4": [
-      "Plots in cells"
      ]
     },
     "uses": [
@@ -9556,14 +9065,9 @@
     "url": "https://gt.rstudio.com/reference/cols_units.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 70,
-    "needs": {
-     "0.3": [
-      "Currency",
-      "Units"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9605,13 +9109,9 @@
     "url": "https://gt.rstudio.com/reference/currency.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 4,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency"
@@ -9627,7 +9127,6 @@
     "calls": 81,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Table options"
      ]
     },
@@ -9672,17 +9171,9 @@
     "url": "https://gt.rstudio.com/reference/extract_body.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 16,
-    "needs": {
-     "0.2": [
-      "Extract"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -9699,13 +9190,9 @@
     "url": "https://gt.rstudio.com/reference/extract_cells.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.2": [
-      "Extract"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Extract",
@@ -9720,14 +9207,9 @@
     "url": "https://gt.rstudio.com/reference/extract_summary.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 20,
-    "needs": {
-     "0.2": [
-      "Extract",
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -9758,13 +9240,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_auto.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Bins, auto format, passthrough"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Bins, auto format, passthrough",
@@ -9777,13 +9255,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_bins.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 23,
-    "needs": {
-     "0.3": [
-      "Bins, auto format, passthrough"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Bins, auto format, passthrough",
@@ -9816,16 +9290,10 @@
     "url": "https://gt.rstudio.com/reference/fmt_chem.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 61,
     "needs": {
      "0.2": [
-      "Merge columns"
-     ],
-     "0.3": [
-      "Chemistry"
-     ],
-     "0.4": [
       "Plots in cells"
      ]
     },
@@ -9859,17 +9327,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_country.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 88,
     "needs": {
      "0.2": [
-      "Add columns",
-      "Merge columns",
       "Table options"
-     ],
-     "0.3": [
-      "Country names",
-      "Locales"
      ]
     },
     "uses": [
@@ -9902,19 +9364,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_currency.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 44,
-    "needs": {
-     "0.2": [
-      "Body styles from a column",
-      "Merge columns",
-      "Summary rows"
-     ],
-     "0.3": [
-      "Currency",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -9937,14 +9389,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_date.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 11,
-    "needs": {
-     "0.3": [
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Dates",
@@ -9957,13 +9404,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_datetime.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locales",
@@ -9976,13 +9419,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_duration.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 10,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -9996,16 +9435,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_email.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 73,
     "needs": {
      "0.2": [
-      "Body styles from a column",
-      "Merge columns",
       "Table options"
-     ],
-     "0.3": [
-      "Country names"
      ]
     },
     "uses": [
@@ -10035,13 +9469,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_engineering.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 17,
-    "needs": {
-     "0.3": [
-      "Units"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Engineering, SI prefixes",
@@ -10056,17 +9486,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_flag.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 44,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ],
-     "0.3": [
-      "Bins, auto format, passthrough",
-      "Country names"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Bins, auto format, passthrough",
@@ -10089,15 +9511,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_fraction.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 33,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency",
-      "Fractions"
      ]
     },
     "uses": [
@@ -10125,22 +9543,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_icon.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.1",
     "calls": 69,
-    "needs": {
-     "0.2": [
-      "Add columns",
-      "Body styles from a column",
-      "Merge columns"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates"
-     ],
-     "0.4": [
-      "Icons"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -10168,13 +9573,10 @@
     "url": "https://gt.rstudio.com/reference/fmt_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 23,
     "needs": {
      "0.2": [
-      "Merge columns"
-     ],
-     "0.4": [
       "Images"
      ]
     },
@@ -10203,7 +9605,6 @@
     "calls": 21,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Table options"
      ]
     },
@@ -10226,13 +9627,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_integer.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 27,
-    "needs": {
-     "0.2": [
-      "Add columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -10282,15 +9679,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_number.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 41,
-    "needs": {
-     "0.2": [
-      "Add columns",
-      "Body styles from a column",
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -10307,17 +9698,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_number_si.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 25,
-    "needs": {
-     "0.2": [
-      "Body styles from a column",
-      "Merge columns"
-     ],
-     "0.3": [
-      "Units"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -10350,13 +9733,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_passthrough.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Bins, auto format, passthrough"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Bins, auto format, passthrough"
@@ -10383,17 +9762,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_roman.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 18,
-    "needs": {
-     "0.2": [
-      "Add columns",
-      "Merge columns"
-     ],
-     "0.3": [
-      "Units"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -10413,16 +9784,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_scientific.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 34,
     "needs": {
      "0.2": [
-      "Body styles from a column",
       "Table options"
-     ],
-     "0.3": [
-      "Chemistry",
-      "Units"
      ]
     },
     "uses": [
@@ -10451,15 +9817,12 @@
     "url": "https://gt.rstudio.com/reference/fmt_spelled_num.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 64,
     "needs": {
      "0.2": [
       "Stub indent, multi-column stub",
       "Table options"
-     ],
-     "0.3": [
-      "Locales"
      ]
     },
     "uses": [
@@ -10489,18 +9852,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_tf.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 70,
     "needs": {
      "0.2": [
-      "Add columns",
-      "Body styles from a column",
-      "Merge columns",
       "Stub indent, multi-column stub"
-     ],
-     "0.3": [
-      "Currency",
-      "Locales"
      ]
     },
     "uses": [
@@ -10531,13 +9887,9 @@
     "url": "https://gt.rstudio.com/reference/fmt_time.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 11,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locales",
@@ -10550,15 +9902,11 @@
     "url": "https://gt.rstudio.com/reference/fmt_units.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 45,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Table options"
-     ],
-     "0.3": [
-      "Units"
      ]
     },
     "uses": [
@@ -10594,7 +9942,6 @@
     "calls": 68,
     "needs": {
      "0.2": [
-      "Merge columns",
       "Table options"
      ]
     },
@@ -10626,15 +9973,11 @@
     "url": "https://gt.rstudio.com/reference/from_column.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 24,
     "needs": {
      "0.2": [
-      "Body styles from a column",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -10657,10 +10000,10 @@
     "url": "https://gt.rstudio.com/reference/ggplot_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 13,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -10678,14 +10021,11 @@
     "url": "https://gt.rstudio.com/reference/google_font.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 19,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -10706,13 +10046,9 @@
     "url": "https://gt.rstudio.com/reference/grand_summary_rows.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 32,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -10731,14 +10067,9 @@
     "url": "https://gt.rstudio.com/reference/gt.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Dates",
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Dates",
@@ -10758,9 +10089,6 @@
     "ready": "later",
     "calls": 14,
     "needs": {
-     "0.3": [
-      "Currency"
-     ],
      "later": [
       "Interactive tables",
       "grid graphics, Shiny"
@@ -10784,13 +10112,9 @@
     "url": "https://gt.rstudio.com/reference/gt_preview.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 2,
-    "needs": {
-     "0.2": [
-      "Preview of a big table"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Preview of a big table"
     ]
@@ -10806,9 +10130,6 @@
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ],
      "0.5": [
       "Groups of tables, split tables"
@@ -11048,10 +10369,10 @@
     "url": "https://gt.rstudio.com/reference/local_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 12,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
@@ -11084,13 +10405,9 @@
     "url": "https://gt.rstudio.com/reference/opt_align_table_header.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11109,13 +10426,9 @@
     "url": "https://gt.rstudio.com/reference/opt_all_caps.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11134,13 +10447,9 @@
     "url": "https://gt.rstudio.com/reference/opt_css.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -11194,13 +10503,9 @@
     "url": "https://gt.rstudio.com/reference/opt_footnote_spec.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 25,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -11223,13 +10528,9 @@
     "url": "https://gt.rstudio.com/reference/opt_horizontal_padding.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11278,13 +10579,9 @@
     "url": "https://gt.rstudio.com/reference/opt_row_striping.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11303,13 +10600,9 @@
     "url": "https://gt.rstudio.com/reference/opt_stylize.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11328,13 +10621,9 @@
     "url": "https://gt.rstudio.com/reference/opt_table_font.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 14,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -11348,13 +10637,9 @@
     "url": "https://gt.rstudio.com/reference/opt_table_lines.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11373,13 +10658,9 @@
     "url": "https://gt.rstudio.com/reference/opt_table_outline.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 13,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11398,13 +10679,9 @@
     "url": "https://gt.rstudio.com/reference/opt_vertical_padding.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Summary rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11456,9 +10733,6 @@
     "ready": "later",
     "calls": 14,
     "needs": {
-     "0.3": [
-      "Currency"
-     ],
      "later": [
       "Interactive tables",
       "grid graphics, Shiny"
@@ -11617,14 +10891,11 @@
     "url": "https://gt.rstudio.com/reference/row_order.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 27,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -11643,17 +10914,9 @@
     "url": "https://gt.rstudio.com/reference/rows_add.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 62,
-    "needs": {
-     "0.2": [
-      "Add columns",
-      "Add rows"
-     ],
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Add columns",
@@ -11676,13 +10939,9 @@
     "url": "https://gt.rstudio.com/reference/rows_hide.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.2": [
-      "Hide rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Footnotes",
@@ -11698,13 +10957,9 @@
     "url": "https://gt.rstudio.com/reference/rows_unhide.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.2": [
-      "Hide rows"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Column selectors",
@@ -11816,13 +11071,9 @@
     "url": "https://gt.rstudio.com/reference/summary_columns.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 24,
-    "needs": {
-     "0.3": [
-      "Summary columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Hide and unhide",
@@ -11843,8 +11094,7 @@
     "calls": 40,
     "needs": {
      "0.2": [
-      "Stub indent, multi-column stub",
-      "Summary rows"
+      "Stub indent, multi-column stub"
      ]
     },
     "uses": [
@@ -11868,13 +11118,9 @@
     "url": "https://gt.rstudio.com/reference/system_fonts.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Currency"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Currency",
@@ -11906,15 +11152,11 @@
     "url": "https://gt.rstudio.com/reference/tab_footnote.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 69,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency",
-      "Dates"
      ]
     },
     "uses": [
@@ -11945,18 +11187,12 @@
     "url": "https://gt.rstudio.com/reference/tab_header.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 53,
     "needs": {
      "0.2": [
-      "Merge columns",
+      "Images",
       "Stub indent, multi-column stub"
-     ],
-     "0.3": [
-      "Chemistry"
-     ],
-     "0.4": [
-      "Images"
      ]
     },
     "uses": [
@@ -12007,14 +11243,11 @@
     "url": "https://gt.rstudio.com/reference/tab_options.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 22,
     "needs": {
      "0.2": [
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -12100,9 +11333,6 @@
     "ready": "later",
     "calls": 57,
     "needs": {
-     "0.3": [
-      "Currency"
-     ],
      "later": [
       "Table info"
      ]
@@ -12131,19 +11361,12 @@
     "url": "https://gt.rstudio.com/reference/tab_stub_indent.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 55,
     "needs": {
      "0.2": [
-      "Body styles from a column",
       "Stub indent, multi-column stub",
-      "Summary rows",
       "Table options"
-     ],
-     "0.3": [
-      "Chemistry",
-      "Currency",
-      "Units"
      ]
     },
     "uses": [
@@ -12192,17 +11415,11 @@
     "url": "https://gt.rstudio.com/reference/tab_style.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 138,
     "needs": {
      "0.2": [
-      "Add columns",
-      "Body styles from a column",
-      "Merge columns",
       "Table options"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -12238,13 +11455,9 @@
     "url": "https://gt.rstudio.com/reference/tab_style_body.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 34,
-    "needs": {
-     "0.2": [
-      "Body styles from a column"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Body styles from a column",
@@ -12297,13 +11510,9 @@
     "url": "https://gt.rstudio.com/reference/text_replace.html",
     "port": "port",
     "note": "",
-    "ready": "0.2",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.2": [
-      "Merge columns"
-     ]
-    },
+    "needs": {},
     "uses": [
      "A table from data",
      "Locations",
@@ -12317,14 +11526,11 @@
     "url": "https://gt.rstudio.com/reference/text_transform.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.2",
     "calls": 48,
     "needs": {
      "0.2": [
       "Stub indent, multi-column stub"
-     ],
-     "0.3": [
-      "Currency"
      ]
     },
     "uses": [
@@ -12357,7 +11563,6 @@
     "calls": 31,
     "needs": {
      "0.2": [
-      "Add columns",
       "Table options"
      ]
     },
@@ -12384,13 +11589,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_bytes.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12402,13 +11603,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_currency.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12420,13 +11617,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_date.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12438,13 +11631,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_datetime.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 8,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12456,13 +11645,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_duration.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 12,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12474,13 +11659,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_engineering.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12505,13 +11686,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_index.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12549,13 +11726,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_number.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 7,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12567,13 +11740,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_number_si.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 9,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12585,13 +11754,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_partsper.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12603,13 +11768,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_percent.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 7,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12634,13 +11795,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_scientific.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 6,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12652,13 +11809,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_spelled_num.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 4,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12670,13 +11823,9 @@
     "url": "https://gt.rstudio.com/reference/vec_fmt_time.html",
     "port": "port",
     "note": "",
-    "ready": "0.3",
+    "ready": "0.1",
     "calls": 5,
-    "needs": {
-     "0.3": [
-      "Locales"
-     ]
-    },
+    "needs": {},
     "uses": [
      "Formats for single values",
      "Locales"
@@ -12688,10 +11837,10 @@
     "url": "https://gt.rstudio.com/reference/web_image.html",
     "port": "port",
     "note": "",
-    "ready": "0.4",
+    "ready": "0.2",
     "calls": 24,
     "needs": {
-     "0.4": [
+     "0.2": [
       "Images"
      ]
     },
