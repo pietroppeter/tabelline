@@ -1,13 +1,18 @@
 ## devlog: 11 Nov 2026 G | tabelline in eight languages | Nim compiles to C, so tabelline can be a C library, and every language that calls C can draw a tabelline table. Proofs of concept for C, Zig, Rust, Julia, Java, Erlang, Gleam and Elixir: a C ABI in two layers, every verb generated from tabelline's own signatures, one binding per language in its own style, and a check that all of them print the same HTML as Nim, byte for byte.
-## A dated post: the proofs of concept in experiments/polyglot, and is not updated afterwards.
+## A dated post: the proofs of concept (now in tabelline-polyglot, a docs dependency in deps/), and is not updated afterwards.
 import std/[os, json, strutils]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks
-import ../../experiments/polyglot/capi/[spec, verbs_json]
+import capi/[spec, verbs_json]  # from tabelline-polyglot (the docs feature, in deps/)
 
 let docs = currentSourcePath().parentDir.parentDir
-let poc = docs.parentDir / "experiments" / "polyglot"
+let poc = docs.parentDir / "deps" / "tabelline_polyglot"
+
+template fold(file: string, start = "", stop = "", title = "") =
+  ## a file of tabelline-polyglot, folded under its path there (or `title`)
+  nb.foldCode(poc / file, start, stop, if title.len > 0: title else: file)
+
 nbInit
 nb.doc.filename = docs / "devlog" / "polyglot" / "index.html"
 nb.useTabelline(title = "tabelline in eight languages", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
@@ -27,7 +32,8 @@ yet; proofs that a port can start from a working table.
 From the simplest to the most complex: one table to draw, a Nim library seen from C, the two
 layers of the C API, how every verb gets there without being written twice, the eight
 languages, the check, and what a real repository would add. The code is in
-`experiments/polyglot/` of this repository, until it moves to a repository of its own.
+[tabelline-polyglot](https://github.com/pietroppeter/tabelline-polyglot), a repository of its
+own since the afternoon this was written.
 
 ## One table to draw
 
@@ -49,7 +55,7 @@ nbText: """
 In tabelline it is ten verbs, one per line:
 """
 
-nbFoldCode "experiments/polyglot/nim/planets.nim", start = "let t = tabella", stop = "stdout.write",
+fold "nim/planets.nim", start = "let t = tabella", stop = "stdout.write",
   title = "nim/planets.nim, the reference"
 
 nbText: """
@@ -90,7 +96,7 @@ one key, its name, and its arguments as the value: an array for positional ones,
 named ones.
 """
 
-nbFoldCode "experiments/polyglot/spec/planets.json", title = "spec/planets.json"
+fold "spec/planets.json", title = "spec/planets.json"
 
 nbText: """
 The arguments are written as JSON writes them, and read back as tabelline's types: a column
@@ -108,7 +114,7 @@ tbl_free(html);
 ```
 """
 
-nbFoldCode "experiments/polyglot/c/spec.c", title = "c/spec.c: any spec file, rendered"
+fold "c/spec.c", title = "c/spec.c: any spec file, rendered"
 
 nbText: """
 ## Layer 2: a table you build
@@ -121,10 +127,10 @@ records. Settings (`rownameCol`, `groupnameCol`, `id`, `locale`) come next, then
 call each, with their arguments in JSON, and last the rendering.
 """
 
-nbFoldCode "experiments/polyglot/capi/tabelline.h", start = "typedef struct", stop = "#ifdef __cplusplus",
+fold "capi/tabelline.h", start = "typedef struct", stop = "#ifdef __cplusplus",
   title = "capi/tabelline.h, the whole API"
 
-nbFoldCode "experiments/polyglot/c/planets.c", start = "  tbl_table *t", stop = "  return 0;",
+fold "c/planets.c", start = "  tbl_table *t", stop = "  return 0;",
   title = "c/planets.c, the planets in C"
 
 nbText: """
@@ -147,7 +153,7 @@ forms are in; the six left out take a Nim proc (`fmt`, a style function), nanopl
 theme object.
 """
 
-nbFoldCode "experiments/polyglot/capi/verbs_json.nim", start = "macro verbsFromSignatures", stop = "verbsFromSignatures(",
+fold "capi/verbs_json.nim", start = "macro verbsFromSignatures", stop = "verbsFromSignatures(",
   title = "capi/verbs_json.nim: the macro"
 
 nbText: """
@@ -192,7 +198,7 @@ methods. Its nicest part is the arguments: `t.verb("fmtNumber", .{ .columns = "m
 escape.
 """
 
-nbFoldCode "experiments/polyglot/zig/planets.zig", start = "    try t.verb(\"tabHeader\"", stop = "    const html",
+fold "zig/planets.zig", start = "    try t.verb(\"tabHeader\"", stop = "    const html",
   title = "zig/planets.zig"
 
 nbText: """
@@ -204,7 +210,7 @@ A crate on crates.io would need the library built for each platform, or `build.r
 with Nim; both are known paths (Python's wheels do the first).
 """
 
-nbFoldCode "experiments/polyglot/rust/examples/planets.rs", start = "    let t = Table::new()", stop = "    print!",
+fold "rust/examples/planets.rs", start = "    let t = Table::new()", stop = "    print!",
   title = "rust/examples/planets.rs"
 
 nbText: """
@@ -216,7 +222,7 @@ in Julia's naming (`fmtNumber` becomes `fmt_number`). Called with a table it app
 called without one it returns a function, so tables read as pipelines.
 """
 
-nbFoldCode "experiments/polyglot/julia/planets.jl", start = "t = tabella(", stop = "print(render",
+fold "julia/planets.jl", start = "t = tabella(", stop = "print(render",
   title = "julia/planets.jl"
 
 nbText: """
@@ -226,7 +232,7 @@ Scala and Clojure can use it as it is. One surprise: `System.out` writes in the 
 encoding, which in a bare container is ASCII, so the example writes bytes.
 """
 
-nbFoldCode "experiments/polyglot/jvm/src/Planets.java", start = "            t.strings(", stop = "            System.out",
+fold "jvm/src/Planets.java", start = "            t.strings(", stop = "            System.out",
   title = "jvm/src/Planets.java"
 
 nbText: """
@@ -238,7 +244,7 @@ big table does not block the schedulers that run everything else. On the BEAM a 
 naturally a value (a map, a record), so it is built in the language and only rendered by C.
 """
 
-nbFoldCode "experiments/polyglot/beam/c_src/tabelline_nif.c", start = "static ERL_NIF_TERM render_spec", stop = "static ERL_NIF_TERM version",
+fold "beam/c_src/tabelline_nif.c", start = "static ERL_NIF_TERM render_spec", stop = "static ERL_NIF_TERM version",
   title = "beam/c_src/tabelline_nif.c"
 
 nbText: """
@@ -250,7 +256,7 @@ until `render`, which writes the spec and calls the NIF. It has no dependencies,
 `gleam_stdlib`, because the sandbox could not reach Hex; a real package would use `gleam_json`.
 """
 
-nbFoldCode "experiments/polyglot/gleam/src/planets.gleam", start = "    |> tabelline.rowname", stop = "  print(html)",
+fold "gleam/src/planets.gleam", start = "    |> tabelline.rowname", stop = "  print(html)",
   title = "gleam/src/planets.gleam"
 
 nbText: """
@@ -258,7 +264,7 @@ Elixir uses the same NIF, with keyword lists for named arguments (they keep thei
 labels keep theirs) and `|>`; names are Elixir's (`:fmt_number`, `column_labels:`).
 """
 
-nbFoldCode "experiments/polyglot/elixir/planets.exs", start = "|> Tabelline.set(", stop = "|> Tabelline.render!",
+fold "elixir/planets.exs", start = "|> Tabelline.set(", stop = "|> Tabelline.render!",
   title = "elixir/planets.exs"
 
 nbText: """
@@ -306,14 +312,16 @@ what its ecosystem expects:
   needs callbacks across the ABI; nanoplot options and themes need their own JSON.
 - **A stable ABI.** Versioned names, and a promise about what changes.
 
-The repository it could become, `tabelline-polyglot`:
+The repository it became, the same afternoon,
+[tabelline-polyglot](https://github.com/pietroppeter/tabelline-polyglot):
 
 ```text
 tabelline-polyglot/
   capi/      libtabelline + tabelline.h (layer 1: the spec; layer 2: handles and verbs)
-  spec/      the JSON spec, documented, and planets.json
+  spec/      the JSON spec: planets.json
+  nim/       the reference, in tabelline itself
   c/ zig/ rust/ julia/ jvm/ beam/ gleam/ elixir/   a binding and an example each
-  tools/     polyglot.nim: build everything, run every example, compare with Nim
+  tools/     setup.sh; polyglot.nim: build everything, run every example, compare with Nim
 ```
 
 And the hope behind it: a binding that works shows gt's grammar in a language that has never had
@@ -321,6 +329,9 @@ it. Someone who loves that language will want it written properly, in that langu
 working table is a good place to start from.
 
 ## How it is built
+
+In [tabelline-polyglot](https://github.com/pietroppeter/tabelline-polyglot), with tabelline as a
+pinned dependency; this page imports its `capi/` (a dependency of tabelline's docs, in `deps/`).
 
 - `capi/verbs_json.nim`: `conv(json, T)` for every type a verb takes, and the macro
   `verbsFromSignatures`, which writes `applyVerb` and `verbForms` from the verbs' signatures.

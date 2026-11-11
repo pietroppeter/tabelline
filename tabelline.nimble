@@ -18,3 +18,5 @@ feature "docs":
   # `import tabelline/nanuq` (tabella(df) for a Polars DataFrame) and the book's case studies;
   # nanuq downloads its prebuilt Polars library (about 50 MB) the first time it is compiled
   requires "https://github.com/pietroppeter/nanuq >= 0.6.1"
+  # the devlog post *tabelline in eight languages* imports its capi/ and shows its code
+  requires "https://github.com/pietroppeter/tabelline-polyglot#799bdb4e0883a91f8f7e785611dc2137daa25de8"
