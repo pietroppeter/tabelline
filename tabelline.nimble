@@ -18,3 +18,7 @@ feature "docs":
   # `import tabelline/nanuq` (tabella(df) for a Polars DataFrame) and the book's case studies;
   # nanuq downloads its prebuilt Polars library (about 50 MB) the first time it is compiled
   requires "https://github.com/pietroppeter/nanuq >= 0.6.1"
+
+# `import tabelline/pptx` (a table as a native PowerPoint table) needs xoffy, Office files from Nim
+feature "office":
+  requires "https://github.com/pietroppeter/xoffy >= 0.1.0"
