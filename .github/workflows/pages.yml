@@ -43,11 +43,6 @@ jobs:
         with:
           path: deps
           key: deps-${{ hashFiles('atlas.lock') }}
-      # libpcre3's .deb, so setup.sh installs it without apt (whose Azure mirror can be down)
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/tabelline/debs
-          key: debs-libpcre3-8.39-15build1
       - run: sh tools/setup.sh
 
       - uses: actions/cache@v4
