@@ -126,6 +126,10 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [tabelline in a Lustre app](https://pietroppeter.github.io/tabelline/devlog/gleam-lustre/)
+  (11 Nov 2026 I): tabelline passes its tests under `nim js` (three bugs found and fixed), a lean
+  build without icons and datasets, Gleam's binding on both targets with the same HTML, a table
+  as a Lustre element, and a demo in the browser.
 - [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
   (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
   found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):
