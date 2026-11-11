@@ -5,7 +5,8 @@ nbText: "# Great Tables `v0.4.0`: Nanoplots and More"
 
 attribution gtBlog("Great Tables v0.4.0: Nanoplots and More", "introduction-0.4.0/", "Rich Iannone",
   "19 Mar 2024", "The code of the first table is shown, not folded. The link of `save()` points " &
-  "to its reference page today, `gtsave()`; the one to the *Get Started* guide on nanoplots, to " &
+  "to its reference page today, `gtsave()`; the one to Polars' list columns, to their page " &
+  "today; the one to the *Get Started* guide on nanoplots, to " &
   "the book's port of it.")
 
 nbText: """
@@ -161,7 +162,7 @@ random_numbers_df |>
     nbTable linesAndBars
 
 nbText: """
-As can be seen, the method accepts bundles of values per cell that are formatted as strings (with spaces between each of the values). You can also use [Polars list columns](https://docs.pola.rs/user-guide/expressions/lists/) as acceptable input.
+As can be seen, the method accepts bundles of values per cell that are formatted as strings (with spaces between each of the values). You can also use [Polars list columns](https://docs.pola.rs/user-guide/expressions/lists-and-arrays/) as acceptable input.
 """
 
 tabelline """
