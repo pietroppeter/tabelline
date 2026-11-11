@@ -624,12 +624,41 @@ nbCode:
     bronze: [13, 5, 9]
     first: [1924, 1928, 1936]
     last: [2026, 2026, 2026]
-  nbTable tabella(medals, rownameCol = "country")
-    .colsMergeRange("first", "last")
-    .colsLabel("first", "medals since")
-    .summaryColumns(fns = {"total": agg.sum}, columns = ["gold", "silver", "bronze"])
-    .grandSummaryRows(fns = {"all": agg.sum}, columns = ["gold", "silver", "bronze", "total"])
-    .optCssTheme()
+  let podium = tabella(medals, rownameCol = "country"):
+    colsMergeRange "first", "last"
+    colsLabel:
+      first: "medals since"
+    summaryColumns:
+      total: agg.sum
+      columns = ["gold", "silver", "bronze"]
+    grandSummaryRows:
+      all: agg.sum
+      columns = ["gold", "silver", "bronze", "total"]
+    optCssTheme()
+  nbTable podium
+
+nbText: """
+Rows can be indented under the row above, hidden (they stay in the data, but are not shown nor
+added up) or added, and the numbers lined up on their decimal mark, whatever their decimals:
+"""
+
+nbCode:
+  let budget = tableData:
+    item: ["Home", "rent", "bills", "Food", "groceries", "eating out", "old phone plan"]
+    euro: [1100.0, 950, 150, 520, 400.25, 119.75, 30]
+  let month = tabella(budget, rownameCol = "item"):
+    tabHeader "A month's budget"
+    tabStubIndent where($it["item"] in ["rent", "bills", "groceries", "eating out"]), 1
+    rowsHide where($it["item"] == "old phone plan")
+    rowsAdd [(item: "Total", euro: 1620.0)]
+    fmtNumber "euro", decimals = 2, dropTrailingZeros = true
+    colsAlignDecimal "euro"
+    optCssTheme()
+  nbTable month
+
+nbNote("""
+`tabStubIndent` takes a level from 0 to 5 (or `"increase"`, `"decrease"`). `rowsAdd` takes a table, or Nim objects or tuples with some of the columns; the others are missing. `colsAlignDecimal` pads each number on the right with figure spaces, as wide as a digit, so the marks fall in one column; it works in text output too.
+""", nkCode)
 
 nbText: """
 ## Big tables, and tables as data
@@ -651,6 +680,22 @@ nbCode:
 nbNote("""
 `tabellaPreview` takes a body of verbs, as `tabella` does. `tabStyleBody` finds the cells whose value is "ITA" and styles their row; `extractCells` gives back what the reader sees, in order, as text.
 """, nkCode)
+
+nbText: """
+A colour, or any value of a style, can be read from another column of the same row with
+`fromColumn`, so the data says how each cell looks:
+"""
+
+nbCode:
+  let rocky = tableData:
+    planet: ["Mercury", "Venus", "Earth", "Mars"]
+    moons: [0, 0, 1, 2]
+    tone: ["var(--neutral-2)", "var(--warning-soft)", "var(--success-soft)", "var(--primary-soft)"]
+  let tones = tabella(rocky, rownameCol = "planet"):
+    tabStyle style.fill(fromColumn("tone")), loc.body(cols = "moons")
+    colsHide "tone"
+    optCssTheme()
+  nbTable tones
 
 nbText: """
 ## Pictures in cells
@@ -924,16 +969,18 @@ tables were made once, when the page was built: nothing runs on them when the lo
 
 ## What comes next
 
-This is tabelline 0.1: it has the basics of gt, and most of gt is still ahead. The
-[roadmap](../roadmap/) has four more releases, each tried on a real subject (a story) and on
-ported reference code (the [book](../book/)); the open steps are written down as specs
-(`openspec/`, on the [specs page](../specs/)) and in the backlog.
+tabelline 0.1 had the basics of gt. 0.2, which this page shows and which is being finished,
+took in what the first plan left for 0.3 and 0.4: summary rows and merges, every format and every
+locale, pictures in cells. The [roadmap](../roadmap/) has one more release after it. Each
+release is tried on real subjects (the stories) and on ported reference code (the
+[book](../book/)); the open steps are written down as specs (`openspec/`, on the
+[specs page](../specs/)) and in the backlog.
 """
 block:
   var next = ""
   for r in releases[1 .. ^1]:
     for th in r.threads:
-      if th.kind == "build": next.add "- **" & r.version & ", " & r.theme & "**: " & th.what & "\n"
+      if th.kind == "build" and th.status != "done": next.add "- **" & r.version & ", " & r.theme & "**: " & th.what & "\n"
   nbText next & "\nSome things are left aside for now, such as interactive tables: the " &
     "[roadmap](../roadmap/#left-aside) says which, and why."
 

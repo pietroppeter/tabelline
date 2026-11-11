@@ -139,10 +139,14 @@ gt_airquality |>
   )
 """:
   nbCode:
-    nbTable gtAirquality
-      .colsMoveToStart(["Year", "Month", "Day"])
-      .colsLabel({"Ozone": html"Ozone,<br>ppbV", "Solar_R": html"Solar R.,<br>cal/m<sup>2</sup>",
-                  "Wind": html"Wind,<br>mph", "Temp": html"Temp,<br>&deg;F"})
+    let relabeled = tabella(gtAirquality):
+      colsMoveToStart ["Year", "Month", "Day"]
+      colsLabel:
+        Ozone: html"Ozone,<br>ppbV"
+        Solar_R: html"Solar R.,<br>cal/m<sup>2</sup>"
+        Wind: html"Wind,<br>mph"
+        Temp: html"Temp,<br>&deg;F"
+    nbTable relabeled
 
 nbText: """
 Note that even though columns were moved using `GT.cols_move_to_start()`, the *spanner column labels* still spanned above the correct *column labels*. There are a number of methods on `GT` to move columns, including `GT.cols_move()`, `GT.cols_move_to_end()`; there's even a method to hide columns: `GT.cols_hide()`.
@@ -152,9 +156,11 @@ Multiple columns can be renamed in a single use of `GT.cols_label()`. Further to
 
 tabelline """
 tabelline has `colsMove`, `colsMoveToStart`, `colsMoveToEnd`, `colsReorder`, `colsHide` and
-`colsUnhide`. `colsLabel` takes a table constructor of `"column": label` pairs, Nim's
-version of keyword arguments, where a label is a string, `md"..."` or `html"..."`. With
-`md`, the same labels need no HTML: `md"Solar R.,<br>cal/m^2^"`.
+`colsUnhide`. Inside `tabella(data): body`, `colsLabel` takes its pairs as a block, one
+`column: label` per line, where a label is a string, `md"..."` or `html"..."` (outside a body,
+the same pairs go in a table constructor, `colsLabel({"Ozone": ...})`). With `md`, the same
+labels need no HTML: `md"Solar R.,<br>cal/m^2^"`; and `colsUnits` writes units in gt's
+notation, so `Solar_R: "cal/m^2"` in a `colsUnits:` block shows "Solar_R, cal/m²".
 """
 
 nbText: """
@@ -175,8 +181,9 @@ gt(airquality_mini) |>
   cols_move_to_start(columns = ends_with("R"))
 """:
   nbCode:
-    nbTable tabella(airqualityMini)
-      .colsMoveToStart(endsWith("R"))
+    let moved = tabella(airqualityMini):
+      colsMoveToStart endsWith("R")
+    nbTable moved
 
 nbText: """
 Inputs like strings, integers, and polars selectors are also supported. For more information, see [Column Selection](column_selection.html).

@@ -131,7 +131,7 @@ block:
   type Row = object
     release, build, use, port: string
   var rows: seq[Row]
-  for r in releases:
+  for r in firstPlan:
     var row = Row(release: &"**{r.version}**<br>{r.theme}")
     for th in r.threads:
       case th.kind

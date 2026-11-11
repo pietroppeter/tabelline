@@ -74,8 +74,11 @@ proc formatCell*(t: Tabella, row: int, col: string, ctx: RenderContext): string 
       result = (if ctx == rcHtml: escapeHtml($v) else: $v)
   for s in t.substitutions:
     if col in s.columns and (s.rows.len == 0 or row in s.rows) and (s.nullsToo == v.isNull):
-      let r = s.fn(v, ctx)
-      if r.len > 0 or s.nullsToo: result = r
+      if s.applies != nil:
+        if s.applies(v): result = s.fn(v, ctx)
+      else:
+        let r = s.fn(v, ctx)
+        if r.len > 0 or s.nullsToo: result = r
 
 func markText*(n: int, marks: FootnoteMarks, custom: seq[string] = @[]): string =
   ## The mark of footnote `n` (from 1): numbers, letters, capitals, the four standard symbols

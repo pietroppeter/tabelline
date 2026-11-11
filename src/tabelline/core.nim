@@ -392,6 +392,7 @@ type
     rows*: seq[int]         ## empty: every row
     fn*: FormatFn
     nullsToo*: bool         ## also called on missing values (substitutions are)
+    applies*: proc (v: Value): bool  ## a substitution: the values it replaces, even with ""
 
   LocKind* = enum
     lkTitle, lkSubtitle, lkStubhead, lkSpanners, lkColumnLabels, lkStub, lkRowGroups, lkBody,

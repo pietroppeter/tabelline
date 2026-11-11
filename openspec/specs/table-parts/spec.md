@@ -438,7 +438,7 @@ echo tabella(planets(), rownameCol = "planet", groupnameCol = "type")
 
 ### Requirement: Aggregates and their format
 An aggregate SHALL be a proc from the column's non-missing values to a `Value`. `agg.sum`,
-`agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count` and `agg.sd` (of a sample) SHALL be
+`agg.mean`, `agg.median`, `agg.min`, `agg.max`, `agg.count` and `agg.std` (of a sample) SHALL be
 built in, and `aggregate(proc)` SHALL make one from any proc that returns a value or something
 `toValue` converts. A summary cell SHALL be formatted with the last format given to its whole
 column, `agg.count` as an integer, and a number with no format with two decimals; `fmt` SHALL
@@ -669,4 +669,68 @@ echo tabella(d).fmtNumber("x", decimals = 3, dropTrailingZeros = true).colsAlign
 | 10.25  |
 | 3     |
 | 120.125 |
+```
+
+### Requirement: Rotated labels
+`colsLabelRotate(columns, dir)` SHALL turn the column labels of `columns` on their side in HTML,
+read from the bottom up (`"sideways-lr"`, the default) or from the top down (`"sideways-rl"`);
+the text and Markdown outputs SHALL keep them as they are. Another `dir` SHALL raise a
+`ValueError`.
+
+```nim
+let t = tabella(planets(), rownameCol = "planet"):
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
+  colsLabelRotate ["moons", "rings"]
+echo t.toHtml.count("writing-mode: vertical-rl; transform: rotate(180deg)")
+```
+
+```text
+2
+```
+
+### Requirement: Preview of a big table
+`tabellaPreview(data, topN, bottomN, inclRownums)` SHALL make a table of the first `topN` rows
+and the last `bottomN` rows of `data`, with a shaded row between them that names the rows left
+out ("6..99"), and the row numbers (from 1) in the stub when `inclRownums`. A table with no more
+than `topN + bottomN + 1` rows SHALL be shown whole. Like `tabella`, it SHALL take a body of verbs.
+
+```nim
+let preview = tabellaPreview(planets(), topN = 2, bottomN = 1):
+  colsHide ["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp"]
+echo preview
+```
+
+```text
+┌──────┬─────────┬─────────────┬───────┬───────┐
+│      │ planet  │ type        │ moons │ rings │
+╞══════╪═════════╪═════════════╪═══════╪═══════╡
+│ 1    │ Mercury │ Terrestrial │     0 │ false │
+│ 2    │ Venus   │ Terrestrial │     0 │ false │
+│ 3..7 │         │             │       │       │
+│ 8    │ Neptune │ Ice giant   │    16 │ true  │
+└──────┴─────────┴─────────────┴───────┴───────┘
+```
+
+### Requirement: Columns of nanoplots
+`colsNanoplot(columns, rows, plotType, ..., newColName = "nanoplots", newColLabel, before,
+after, autohide = true)` SHALL add a column with a nanoplot per row of the values of `columns`,
+in their order (a missing value is `NA`), at the end or `before` or `after` a column, labelled
+`newColLabel` (its name by default), and SHALL hide `columns` unless `autohide` is false. The
+other arguments SHALL be those of `fmtNanoplot`.
+
+```nim
+let t = tabella(tavolaPitagorica(4), rownameCol = "×"):
+  colsNanoplot ["1", "2", "3", "4"], newColLabel = "the row", autoscale = true
+echo t
+```
+
+```text
+┌───┬───────────┐
+│   │ the row   │
+╞═══╪═══════════╡
+│ 1 │ ▁▁▂▂ 1–4  │
+│ 2 │ ▁▂▃▄ 2–8  │
+│ 3 │ ▂▃▅▆ 3–12 │
+│ 4 │ ▂▄▆█ 4–16 │
+└───┴───────────┘
 ```

@@ -81,8 +81,8 @@ starwars_smry <- na.omit(starwars) %>%
     groups.sort(proc (a, b: auto): int = cmp(a[0], b[0]))  # as group_by: by sex, then eye color
 
 tabelline """
-tabelline is for the table, not the data: there is no `group_by` or `quantile` (data frames come
-in 0.3), so the groups are a Nim table and the quartiles a short proc, R's default way to
+tabelline is for the table, not the data: there is no `group_by` or `quantile` (it reads no data
+frames yet), so the groups are a Nim table and the quartiles a short proc, R's default way to
 compute them.
 """
 
@@ -206,12 +206,15 @@ starwars_tbl %>%
       r.sex = sexes[r.sex]
       r.eye_color = eyes[r.eye_color]
 
-    nbTable tabella(toTableData(named), groupnameCol = "sex", rownameCol = "eye_color")
-      .colsLabel({"tbv_height": "Height, cm", "tbv_mass": "Mass, kg"})
-      .colsAlign(alCenter)
-      .tabStubhead("Eye color")
-      .tabSpanner("Median (25th, 75th percentile)", columns = startsWith("tbv"))
-      .tabSourceNote(md("For more on these data, see `?dplyr::starwars`"))
+    let starwarsGt = tabella(toTableData(named), groupnameCol = "sex", rownameCol = "eye_color"):
+      colsLabel:
+        tbv_height: "Height, cm"
+        tbv_mass: "Mass, kg"
+      colsAlign alCenter
+      tabStubhead "Eye color"
+      tabSpanner "Median (25th, 75th percentile)", columns = startsWith("tbv")
+      tabSourceNote md("For more on these data, see `?dplyr::starwars`")
+    nbTable starwarsGt
 
 tabelline """
 Everything this table needs is in tabelline 0.1: row groups and a stub from the data

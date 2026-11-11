@@ -157,16 +157,15 @@ gt(df) |>
       x: [1, 2]
       background: ["lightyellow", "lightblue"]
 
-    # no fromColumn yet: one style for each row
-    var t = tabella(df)
-    for i in 0 ..< df.nrows:
-      t = t.tabStyle(style.fill($df["background", i]), loc.body(cols = "x", rows = i))
+    let t = tabella(df):
+      tabStyle style = style.fill(color = fromColumn("background")),
+               locations = loc.body(cols = "x")
     nbTable t
 
 tabelline """
-`fromColumn` (with `tabStyleBody`) is planned for 0.2. Until then a loop does it: a verb can
-be called as many times as needed, and each call adds a style. `tableData:`, a
-macro, makes a `TableData` from columns, one per line, as Polars' dictionary does.
+`fromColumn("background")` stands for the value of that column in each row of the location,
+as in Great Tables. `tableData:`, a macro, makes a `TableData` from columns, one per line, as
+Polars' dictionary does.
 """
 
 nbText: """
@@ -229,10 +228,11 @@ gt(with_color) |>
   cols_hide(columns = background)
 """:
   nbCode:
-    var tc = tabella(withColor)
-    for i in 0 ..< withColor.nrows:
-      tc = tc.tabStyle(style.fill($withColor["background", i]), loc.body(cols = "Temp", rows = i))
-    nbTable tc.colsHide("background")
+    let tc = tabella(withColor):
+      tabStyle style = style.fill(color = fromColumn("background")),
+               locations = loc.body(cols = "Temp")
+      colsHide "background"
+    nbTable tc
 
 nbText: """
 Note the two methods used above:
@@ -272,9 +272,10 @@ gt_air |>
 """:
   nbCode:
     # a style for the rows where Temp > 70, another for the others
-    nbTable gtAir
-      .tabStyle(style.fill("lightyellow"), loc.body("Temp", where(it["Temp"] > 70)))
-      .tabStyle(style.fill("lightblue"), loc.body("Temp", where(not (it["Temp"] > 70))))
+    let byTemp = tabella(gtAir):
+      tabStyle style.fill("lightyellow"), loc.body("Temp", where(it["Temp"] > 70))
+      tabStyle style.fill("lightblue"), loc.body("Temp", where(not (it["Temp"] > 70)))
+    nbTable byTemp
 
 tabelline """
 `where(cond)` selects the rows where `cond` holds, with `it` the row: tabelline's version of a

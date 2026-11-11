@@ -28,15 +28,16 @@ Rough size: S (hours), M (a day or two), L (more).
   replacement stays as text, HTML works); `subZero(zeroText = "")` cannot write an empty cell (an empty text means no
   substitution).
 
-- **Images and icons** (M, *in progress*: `add-pictures`). Left: SVG flags (emoji flags are in
-  0.1); gt's `local_image()`, `web_image()`, `ggplot_image()`.
-- **Locales** (M, *in progress*: `add-locales`). Every CLDR locale for numbers, currencies and dates. Left: country names in other languages, `system = "ind"`, flexible styles with a time zone.
+- **More pictures** (S-M). Icons and images are in 0.2 (#63). Left: SVG flags (emoji flags
+  are in 0.1); gt's `local_image()`, `web_image()`, `ggplot_image()`.
+- **More of the locales** (S-M). Every CLDR locale is in 0.2 (#62). Left: country names in
+  other languages, `system = "ind"`, flexible styles with a time zone.
 - **Rounding** (S). `formatFloat` rounds half to even (2.25 → "2.2"); decide whether to round
   half away from zero as gt does in some cases.
 
 ## Plots in cells
 
-- **Nanoplots** (L, *in progress*: `add-pictures`). Left: x values (gt's `columns_x_vals`, a
+- **More nanoplots** (M). Nanoplots are in 0.2 (#63). Left: x values (gt's `columns_x_vals`, a
   cell with x and y), per-point options (a list of colours), `alt` from a column.
 
 ## Options and building
@@ -77,6 +78,10 @@ Rough size: S (hours), M (a day or two), L (more).
 ## nimib
 
 - **nimibook and nimiSlides** (S). Check that tables look right in their themes.
+- **`nbTable` with a body** (S, from the 0.2 book port). `nbTable tabella(data): body` does not
+  compile (the body goes to `nbTable`), so every page names a table first (`let t = tabella(...):`
+  then `nbTable t`). `nbTable(data, args): body` (or `nbTabella`) would show a recipe in one go
+  and make the no-dots rule cheap in pages.
 
 ## Docs
 
@@ -116,3 +121,6 @@ Rough size: S (hours), M (a day or two), L (more).
   colour name).
 - **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
 - **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.
+- **Summary cells in a column with no format** (S, from the 0.2 book port). tabelline formats
+  them as numbers (5,552.33); Great Tables shows the raw value (5552.3331). Keep ours, but say so
+  in the summary rows spec and its list of differences.

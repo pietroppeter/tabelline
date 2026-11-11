@@ -1,7 +1,8 @@
 ## The plan of the releases: for each one, the three threads that make it (build, use it, port
 ## the references) and what each will produce. Shared by the roadmap (kept up to date) and
 ## the devlog post that introduced it. Change it here when a thread starts, ships or changes
-## its plan.
+## its plan. `firstPlan` is the plan as it was posted on 7 Nov 2026, for that post: 0.2 took in
+## 0.3 and 0.4 (10 Nov 2026), so `releases` has three.
 
 type
   Thread* = object
@@ -24,7 +25,7 @@ const threadKinds* = [
    "Takes reference code from outside (the gt and Great Tables guides, their examples, Table Contest entries) and ports it to tabelline, with the original next to it, in the tabelline book: a nimibook in this repository, in the Edo palette. Every gap it finds goes to the build thread or the backlog."),
 ]
 
-const releases*: seq[Release] = @[
+const firstPlan*: seq[Release] = @[
   Release(version: "0.1", theme: "The basics", threads: @[
     t("build", "Build tabelline 0.1",
       "The 24 small groups proposed in the coverage map (formats, substitutions, caption, rm verbs, order of rows, options, locations), then the release.",
@@ -73,6 +74,54 @@ const releases*: seq[Release] = @[
     t("build", "Build tabelline 0.5",
       "LaTeX, RTF and Word, images and PDF of a table, groups of tables and split tables, extract.",
       "post Designing tabelline 0.5; tag v0.5.0"),
+    t("use", "Use it: a clinical table",
+      "The demographic and adverse event tables of a clinical study report, from the public CDISC pilot data, in Word, RTF and PDF.",
+      "story"),
+    t("port", "Port the pharma tables",
+      "Tables from the pharmaverse examples and gt's LaTeX and RTF articles, where licences allow.",
+      "tabelline book"),
+  ]),
+]
+
+const releases*: seq[Release] = @[
+  Release(version: "0.1", theme: "The basics", threads: @[
+    t("build", "Build tabelline 0.1",
+      "The 24 small groups proposed in the coverage map (formats, substitutions, caption, rm verbs, order of rows, options, locations), then the release.",
+      "post Designing tabelline 0.1; tag v0.1.0", "done"),
+    t("use", "Use it: Milano Cortina 2026",
+      "The Winter Olympics and Paralympics of 2026 in tables, in three parts of three (the Games, the money, what stays), learning from Il Post, with data from Wikipedia and NOAA.",
+      "story", "done", "stories/milano-cortina/"),
+    t("port", "Port the Great Tables guide, Get Started",
+      "The first section of the Great Tables user guide (header and footer, stub, column labels, formats, styles, selections) and gt's Introduction to creating gt tables. Both MIT.",
+      "tabelline book (nimibook, Edo), first chapters", "in progress", "book/"),
+  ]),
+  Release(version: "0.2", theme: "Rows, every format, pictures", threads: @[
+    t("build", "Build tabelline 0.2",
+      "What was planned for 0.2, 0.3 and 0.4, in five pull requests: summary rows; merged columns, rows added and hidden, stub indent, decimal alignment; units, fractions, chemistry, bins, country names; every locale of CLDR for numbers, currencies and dates, rotated labels, 142 options, previews; icons, images and nanoplots.",
+      "post Designing tabelline 0.2; tag v0.2.0", "in progress", "devlog/designing-0-2/"),
+    t("use", "Use it: the FOSDEM devrooms",
+      "The history of FOSDEM's devrooms, year by year: names, renames, splits, and the dates of FOSDEM, which fall at different moments. Starts from the FOSDEM devrooms page of claude-artifacts (2024 to 2027) and goes back as far as the schedules go. Written first in R with gt, then ported.",
+      "story", "in progress", "stories/fosdem/"),
+    t("use", "Use it: the climate of Italian cities",
+      "Climate normals of Italian cities, in Italian, English and Japanese: units, months, decimal marks.",
+      "story"),
+    t("use", "Use it: the moons of the Solar System",
+      "The planets' moons with NASA images (public domain), icons for their kind, and nanoplots of their orbits and sizes.",
+      "story"),
+    t("port", "Port the gt case studies",
+      "gt's gtcars and sza case studies and the Great Tables examples gallery: groups, summaries, merges.",
+      "tabelline book"),
+    t("port", "Port the formats and the Table Contest",
+      "The format examples of gt's reference (fmt_units, fmt_fraction, ...) and Posit Table Contest entries whose licence allows a port.",
+      "tabelline book"),
+    t("port", "Port nanoplots and images",
+      "The Great Tables nanoplots guide and blog posts, gt's image and icon examples.",
+      "tabelline book"),
+  ]),
+  Release(version: "0.3", theme: "Out of the browser", threads: @[
+    t("build", "Build tabelline 0.3",
+      "LaTeX, RTF and Word, images and PDF of a table, groups of tables and split tables, and tables from data frames (which ones is still to decide).",
+      "post Designing tabelline 0.3; tag v0.3.0"),
     t("use", "Use it: a clinical table",
       "The demographic and adverse event tables of a clinical study report, from the public CDISC pilot data, in Word, RTF and PDF.",
       "story"),

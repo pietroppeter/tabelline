@@ -11,6 +11,7 @@ var book = initBookWithToc:
     entry("Stub (Row Labels)", "basic_stub")
     entry("Column Labels", "basic_column_labels")
     entry("Formatting Values", "basic_formatting")
+    entry("Nanoplots", "nanoplots")
     entry("Styling the Table Body", "basic_styling")
     entry("Styling the whole table", "targeted_styles")
     entry("Colorizing with Data", "colorizing_with_data")

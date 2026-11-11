@@ -77,20 +77,27 @@ gt(data)
       ("", "loc.column_labels()", "columns", "loc.columnLabels(cols)"),
       ("row stub", "loc.stub()", "rows", "loc.stub(rows)"),
       ("", "loc.row_groups()", "rows", "loc.rowGroups(names)"),
-      ("", "loc.grand_summary_stub()", "rows", "planned for 0.2"),
+      ("", "", "", "loc.summaryStub(groups, rows)"),
+      ("", "loc.grand_summary_stub()", "rows", "loc.grandSummaryStub(rows)"),
       ("table body", "loc.body()", "columns and rows", "loc.body(cols, rows)"),
-      ("", "loc.grand_summary_rows()", "columns and rows", "planned for 0.2"),
+      ("", "", "", "loc.summary(groups, columns, rows)"),
+      ("", "loc.grand_summary_rows()", "columns and rows", "loc.grandSummary(columns, rows)"),
       ("footer", "loc.footer()", "composite", "loc.footer()"),
       ("", "loc.source_notes()", "", "loc.sourceNotes()"),
       ("", "", "", "loc.footnotes()"),
       ("", "loc.stubhead()", "", "loc.stubhead()")]
 
-    nbTable tabella(data).colsLabel({"part": "table part"})
+    let locations = tabella(data):
+      colsLabel:
+        part: "table part"
+    nbTable locations
 
 tabelline """
-A table straight from a seq of named tuples, one field per column: `tabella(data)`. The last
-two rows are not in the original's list: tabelline's `loc.footnotes()`, and `loc.stubhead()`,
-which Great Tables has but leaves out here.
+A table straight from a seq of named tuples, one field per column: `tabella(data)`. Four rows
+are not in the original's list: the summary rows of each group, `loc.summaryStub()` and
+`loc.summary()`, which Great Tables leaves out (it has no summary rows of groups yet, only
+grand ones), tabelline's `loc.footnotes()`, and `loc.stubhead()`, which Great Tables has but
+leaves out here.
 """
 
 nbText: """
@@ -146,9 +153,10 @@ gt(small_exibble) |>
   )
 """:
   nbCode:
-    nbTable tabella(plExibble)
-      .tabHeader("A title", "A subtitle")
-      .tabStyle(style.fill("yellow"), loc.title())
+    let titled = tabella(plExibble):
+      tabHeader "A title", "A subtitle"
+      tabStyle style.fill("yellow"), loc.title()
+    nbTable titled
 
 nbText: """
 ## Composite locations
@@ -176,9 +184,10 @@ gt(small_exibble) |>
   )
 """:
   nbCode:
-    nbTable tabella(plExibble)
-      .tabHeader("A title", "A subtitle")
-      .tabStyle(style.fill("yellow"), loc.title(), loc.subtitle())  # no loc.header yet
+    let header = tabella(plExibble):
+      tabHeader "A title", "A subtitle"
+      tabStyle style.fill("yellow"), loc.header()
+    nbTable header
 
 nbText: """
 ## Body columns, rows and mask
@@ -209,11 +218,10 @@ gt(small_exibble) |>
   nbCode:
     import std/strutils
 
-    nbTable tabella(plExibble).tabStyle(
-      style.fill("yellow"),
-      loc.body(
-        cols = startsWith("cha"),
-        rows = where("a" in $it["char"])))
+    let cells = tabella(plExibble):
+      tabStyle style.fill("yellow"),
+               loc.body(cols = startsWith("cha"), rows = where("a" in $it["char"]))
+    nbTable cells
 
 nbText: """
 Alternatively, use `mask=` in `loc.body()` to apply conditional styling to rows on a per-column basis.
@@ -273,9 +281,9 @@ gt(small_exibble) |>
   )
 """:
   nbCode:
-    nbTable tabella(plExibble).tabStyle(
-      style.fill("yellow"),
-      loc.columnLabels(startsWith("cha")))
+    let labels = tabella(plExibble):
+      tabStyle style.fill("yellow"), loc.columnLabels(startsWith("cha"))
+    nbTable labels
 
 nbText: """
 However, note that `loc.spanner_labels()` currently only accepts list of string names.

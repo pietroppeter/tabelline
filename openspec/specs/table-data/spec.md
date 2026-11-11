@@ -93,10 +93,13 @@ echo tabella(parseCsv("# from a notebook\na,b\n1,2.5\n2,3\n", comment = "#"))
 
 ### Requirement: Datasets
 `tabelline/datasets` SHALL provide `planets()` (NASA's planetary fact sheet), `exibble()` (gt's
-example table) and `tavolaPitagorica(n)` (the n×n times table), built into the module.
+example table), `tavolaPitagorica(n)` (the n×n times table), `isole()` (the islands of the
+Mediterranean, the twin of gt's `islands`) and `citta()` (the largest cities of the European
+Union, the twin of gt's `towny`), built into the module.
 
 ```nim
 echo tabella(tavolaPitagorica(4), rownameCol = "×")
+echo isole().nrows, " islands, ", citta().nrows, " cities; the largest: ", isole()["island", 0], ", ", citta()["city", 0]
 ```
 
 ```text
@@ -108,4 +111,5 @@ echo tabella(tavolaPitagorica(4), rownameCol = "×")
 │ 3 │ 3 │ 6 │  9 │ 12 │
 │ 4 │ 4 │ 8 │ 12 │ 16 │
 └───┴───┴───┴────┴────┘
+194 islands, 95 cities; the largest: Sicily, Berlin
 ```

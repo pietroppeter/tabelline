@@ -58,8 +58,8 @@ let groups: seq[Group] = @[
     ("api/", "Reference", "Every name tabelline exports, with its signature, its gt and Great Tables names and an example: a link for each."),
   ]),
   ("Where it's going", "What tabelline has today and what comes next.", @[
-    ("roadmap/", "Roadmap", "What each release from 0.1 to 0.5 adds, and the real tables it is tried on."),
     ("coverage/", "Feature map", "Every feature of gt and Great Tables, and whether tabelline has it yet."),
+    ("roadmap/", "Roadmap", "What each release adds, and the real tables it is tried on."),
   ]),
   ("How it's made", "For anyone who wants to look inside or help.", @[
     ("devlog/", "Devlog", "Dated posts on how tabelline is made, newest first. The other pages are kept up to date; posts stay as they were written."),
