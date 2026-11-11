@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs: the Guide's *Nim sugar* opens with a list of all of tabelline's sugar, and two new sections: *Pipes, methods and a recipe* (the same table as R's pipe, Python's methods, Nim's dot and the `tabella` block, and what each language does underneath) and *Small words* (`where`, `&`, the namespaces, the converters) (#75).
 - Docs: the Guide and the specs write every table as `tabella(data): body`, one verb per line, with the pair verbs and `tabOptions` as blocks, instead of a chain of dots (#74).
 - Icons, images and nanoplots: `fmtIcon` (every Font Awesome Free icon, 2,163, as inline SVG; `icon`, `hasIcon`, `iconSvg`), `fmtImage` (local files inlined as data URLs; `imageDataUrl`), `fmtNanoplot` (line, bar and box plots in a cell, a port of Great Tables' nanoplots, sparklines in text; `nanoplotOptions`, `nanoplotSvg`), `colsNanoplot` (#63).
 - Locales and table tools: every CLDR 49 locale (657) for numbers, percents, currencies (305, with their decimals and the locale's placement) and dates (month and day names, gt's flexible styles); `colsLabelRotate`, `fromColumn` and `tabStyle` with a proc of the row, `tabStyleBody`, `tabellaPreview`, `extractCells`, `extractBody`, `extractSummary`; 142 of gt's options; the datasets `isole()` and `citta()`; a verb inside `tabella(data): body` takes an indented block, one pair or named argument per line (`summaryRows:` then `total: agg.sum`) (#62).
