@@ -71,8 +71,9 @@ block:
 nbText: """
 ## The plan
 
-Five releases to cover most of gt. Each one is a theme; inside it, every group becomes an
-OpenSpec change before it is built. Sizes are rough: S is hours, M a day or two, L more.
+Three releases to cover most of gt (0.2 took in the first plan's 0.3 and 0.4). Each one is a
+theme; inside it, every group becomes an OpenSpec change before it is built. Sizes are rough: S
+is hours, M a day or two, L more.
 """
 
 block:

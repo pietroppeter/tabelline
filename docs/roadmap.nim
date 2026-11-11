@@ -1,4 +1,4 @@
-## The roadmap, docs/roadmap/index.html: the releases from 0.1 to 0.5, and for each the three
+## The roadmap, docs/roadmap/index.html: the releases from 0.1 to 0.3, and for each the three
 ## threads that make it (build it, use it, port the references), with their status. Kept up
 ## to date: the data is docs/piano.nim, updated when a thread starts, ships or changes its plan.
 import std/[os, strutils, strformat]
@@ -14,12 +14,16 @@ nb.useTabelline(section = "Roadmap", cadence = "kept up to date",
                description = "The releases of tabelline, and the three threads that make each one.")
 
 nbTitle "Roadmap · kept up to date", "The roadmap", """
-Five releases to cover most of gt, and three threads for each: one builds it, one uses it, one ports the code that already exists.
+Three releases to cover most of gt, and three kinds of thread for each: one builds it, one uses it, one ports the code that already exists.
 """
 nbText: """
 What goes in each release comes from the [feature map](../coverage/); why the work is split in
 three is told in the devlog post [Three threads for every release](../devlog/three-threads/).
 This page says where each thread stands.
+
+The first plan had five releases. tabelline 0.2 took in what was planned for 0.3 (every format,
+every locale) and 0.4 (pictures in cells), with their stories and their ports, so the last one,
+out of the browser, is now 0.3.
 """
 nbToc
 
@@ -51,7 +55,7 @@ block:
       rows.add Row(release: &"{r.version} · {r.theme}", thread: &"{icon} **{th.title}**<br>{th.what}",
                    output: (if th.href.len > 0: &"[{th.output}](../{th.href})" else: th.output), status: th.status)
   var t = tabella(rows, groupnameCol = "release"):
-    tabHeader "Releases and their threads", "0.1 to 0.5"
+    tabHeader "Releases and their threads", "0.1 to 0.3"
     colsLabel {"thread": "thread, and what it does", "output": "makes"}
     fmtMarkdown ["thread", "output"]
     colsWidth {"output": "24%", "status": "5em"}
@@ -70,13 +74,13 @@ block:
   type Source = object
     source, who, licence, release: string
   let rows = @[
-    Source(source: "[Great Tables user guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html)", who: "Posit (Rich Iannone, Michael Chow)", licence: "MIT", release: "0.1, 0.2, 0.4"),
+    Source(source: "[Great Tables user guide](https://posit-dev.github.io/great-tables/user-guide/introduction.html)", who: "Posit (Rich Iannone, Michael Chow)", licence: "MIT", release: "0.1, 0.2"),
     Source(source: "[gt articles](https://gt.rstudio.com/articles/)", who: "Posit (Rich Iannone)", licence: "MIT", release: "0.1, 0.2"),
     Source(source: "[Great Tables examples](https://posit-dev.github.io/great-tables/examples/)", who: "Posit", licence: "MIT", release: "0.2"),
-    Source(source: "gt reference examples", who: "Posit", licence: "MIT", release: "0.3, 0.5"),
-    Source(source: "[Great Tables blog](https://posit-dev.github.io/great-tables/blog/)", who: "Posit", licence: "MIT", release: "0.4"),
-    Source(source: "[Posit Table Contest](https://posit.co/blog/2024-table-contest-winners/)", who: "the entrants", licence: "each entry its own", release: "0.3"),
-    Source(source: "[pharmaverse examples](https://pharmaverse.github.io/examples/)", who: "pharmaverse", licence: "to check", release: "0.5"),
+    Source(source: "gt reference examples", who: "Posit", licence: "MIT", release: "0.2, 0.3"),
+    Source(source: "[Great Tables blog](https://posit-dev.github.io/great-tables/blog/)", who: "Posit", licence: "MIT", release: "0.2"),
+    Source(source: "[Posit Table Contest](https://posit.co/blog/2024-table-contest-winners/)", who: "the entrants", licence: "each entry its own", release: "0.2"),
+    Source(source: "[pharmaverse examples](https://pharmaverse.github.io/examples/)", who: "pharmaverse", licence: "to check", release: "0.3"),
   ]
   let t = tabella(rows, rownameCol = "source"):
     tabHeader "Reference code to port"

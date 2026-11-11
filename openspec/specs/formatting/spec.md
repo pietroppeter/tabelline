@@ -83,13 +83,20 @@ echo tabella(d).fmtScientific("n", decimals = 1)
 
 ### Requirement: Locales
 A table SHALL take a `locale` (as `tabella(data, locale = "it")`) that sets the digit group and
-decimal marks of its number formats; a format's own `locale`, `sepMark` or `decMark` SHALL win.
+decimal marks of its number formats, the pattern of its percentages and currencies, and the
+names and order of its dates and times, from Unicode CLDR; a format's own `locale`, `sepMark` or
+`decMark` SHALL win. A tag SHALL be read in any case, with `-` or `_`; an unknown region SHALL
+fall back to its language, and an unknown language to English.
 
 ```nim
 let d = tableData:
   n: [1234.5, 0.25]
+let p = tableData:
+  share: [0.123, 0.5]
 echo tabella(d, locale = "it").fmtNumber("n", decimals = 2)
-echo tabella(d, locale = "fr").fmtNumber("n", decimals = 2)
+echo tabella(d, locale = "de_CH").fmtNumber("n", decimals = 2)
+echo tabella(p, locale = "fr").fmtPercent("share")
+echo getLocale("pt-XX").tag, " ", getLocale("it").months[10], " ", getLocale("ja").daysAbbr[0]
 ```
 
 ```text
@@ -102,9 +109,16 @@ echo tabella(d, locale = "fr").fmtNumber("n", decimals = 2)
 ┌──────────┐
 │        n │
 ╞══════════╡
-│ 1 234,50 │
-│     0,25 │
+│ 1'234.50 │
+│     0.25 │
 └──────────┘
+┌────────┐
+│  share │
+╞════════╡
+│ 12,3 % │
+│ 50,0 % │
+└────────┘
+pt novembre 日
 ```
 
 ### Requirement: Other formats
@@ -409,6 +423,7 @@ echo tabella(d).fmtFlag("country")
 │ 🇫🇷 🇩🇪   │
 └─────────┘
 ```
+
 ### Requirement: Small, large and given values
 `subSmallVals(columns, rows, threshold = 0.01, smallPattern = "<{x}", sign)` SHALL show numbers
 closer to zero than the threshold (but not zero) as the pattern, with the threshold for `{x}`;
@@ -635,4 +650,163 @@ echo tabella(d).colsAdd("names", d["codes"].values).fmtCountry("names")
 │ FR, DE │ France, Germany │
 │ XX     │ XX              │
 └────────┴─────────────────┘
+```
+
+### Requirement: Currencies
+`fmtCurrency(columns, rows, currency, decimals, placement, accounting, useSubunits, locale)` SHALL
+take any ISO 4217 code that CLDR knows, with its symbol and its number of decimals; the symbol
+SHALL go where the locale's pattern puts it, or on the `placement` given ("left", "right"), with a
+no-break space when the symbol ends or starts with a letter. `accounting` SHALL write negative
+amounts in parentheses; `useSubunits = false` SHALL drop the decimals.
+
+```nim
+let d = tableData:
+  amount: [1234.5, -3.25]
+echo tabella(d).fmtCurrency("amount", currency = "CAD", accounting = true)
+echo tabella(d, locale = "it").fmtCurrency("amount", currency = "EUR")
+echo tabella(d).fmtCurrency("amount", currency = "BHD", placement = "right")
+echo formatCurrency(1500, "JPY"), " ", currencyInfo("CHF")
+```
+
+```text
+┌─────────────┐
+│      amount │
+╞═════════════╡
+│ CA$1,234.50 │
+│   (CA$3.25) │
+└─────────────┘
+┌────────────┐
+│     amount │
+╞════════════╡
+│ 1.234,50 € │
+│    −3,25 € │
+└────────────┘
+┌───────────────┐
+│        amount │
+╞═══════════════╡
+│ 1,234.500 BHD │
+│    −3.250 BHD │
+└───────────────┘
+¥1,500 (name: "Swiss Franc", symbol: "CHF", digits: 2)
+```
+
+### Requirement: Dates and times in every locale
+`fmtDate`, `fmtTime` and `fmtDatetime` SHALL take a `locale` (or the table's) for the names of
+months, days, quarters, eras, AM and PM. A date style SHALL be one of gt's fixed styles
+(`dateStyles`: "iso", "wday_month_day_year", "day_month_year", "year_week", ...) or one of gt's
+flexible styles (`dateSkeletons`: "yMMMd", "yMMMEd", "yQQQQ", ...), written in the locale's
+order; a time style SHALL be one of `timeStyles` or of `timeSkeletons` ("Hm", "hm", "hms", ...).
+
+```nim
+let d = tableData:
+  day: ["2026-11-07", "2015-01-15"]
+echo tabella(d, locale = "de").fmtDate("day", dateStyle = "yMMMEd")
+for loc in ["en", "it", "ja", "ru"]:
+  echo loc, ": ", formatDate("2026-11-07", "wday_day_month_year", loc), " · ",
+    formatDate("2026-11-07", "yMMMd", loc), " · ", formatTime("14:35", "hm", loc)
+```
+
+```text
+┌────────────────────┐
+│ day                │
+╞════════════════════╡
+│ Sa., 7. Nov. 2026  │
+│ Do., 15. Jan. 2015 │
+└────────────────────┘
+en: Saturday 7 November 2026 · Nov 7, 2026 · 2:35 PM
+it: sabato 7 novembre 2026 · 7 nov 2026 · 2:35 PM
+ja: 土曜日 7 11月 2026 · 2026年11月7日 · 午後2:35
+ru: суббота 7 ноября 2026 · 7 нояб. 2026 г. · 2:35 PM
+```
+
+### Requirement: Icons
+`fmtIcon(columns, rows, height = "1em", sep, ...)` SHALL show each cell's names of Font Awesome
+Free icons (several separated by commas) as inline SVG, `height` high and as wide as their
+shape, in the text's colour unless `fillColor` or, by name, `fillColors` is given. A name SHALL
+be a short name (the regular style when there are two), a full name ("fas fa-star") or an older
+name ("user-large"); an unknown name SHALL raise `ValueError` when the verb is called. In text
+output the names SHALL stay.
+
+```nim
+let d = tableData:
+  planet: ["Earth", "Jupiter"]
+  kind: ["mountain", "cloud, star"]
+let t = tabella(d):
+  fmtIcon "kind", fillColors = {"star": "gold"}
+echo t
+echo t.toHtml.count("class=\"tb_icon\""), " ", icon("star").style, " ", icon("fas fa-star").style, " ", hasIcon("user-large")
+```
+
+```text
+┌─────────┬─────────────┐
+│ planet  │ kind        │
+╞═════════╪═════════════╡
+│ Earth   │ mountain    │
+│ Jupiter │ cloud, star │
+└─────────┴─────────────┘
+3 regular solid true
+```
+
+### Requirement: Images
+`fmtImage(columns, rows, height, width, sep, path, filePattern = "{x}", encode = true, alt)`
+SHALL show each cell's file names (several separated by commas) as images, found in `path` and
+written with `filePattern`. With `encode`, a local file SHALL be read when the verb is called
+and inlined as a data URL, its type from its extension; an address (`https://...`) SHALL be
+left as it is. Without `height` or `width` an image SHALL be 2em high. In text output the names
+SHALL stay.
+
+```nim
+let dir = getTempDir()
+writeFile(dir / "dot.svg", "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><circle cx='1' cy='1' r='1'/></svg>")
+let d = tableData:
+  pic: ["dot"]
+let t = tabella(d):
+  fmtImage "pic", path = dir, filePattern = "{x}.svg"
+echo t
+echo t.toHtml.contains("<img src=\"data:image/svg+xml;base64,")
+```
+
+```text
+┌─────┐
+│ pic │
+╞═════╡
+│ dot │
+└─────┘
+true
+```
+
+### Requirement: Nanoplots
+`fmtNanoplot(columns, rows, plotType = "line", plotHeight = "2em", missingVals = "gap",
+autoscale, referenceLine, referenceArea, expandY, options, alt)` SHALL draw a plot in each cell,
+as inline SVG: a line plot ("line"), a bar plot ("bar") or a box plot ("boxplot") of the cell's
+values (numbers separated by spaces, commas or semicolons, `NA` for a missing one), or, in a
+column of numbers, a horizontal bar or line from a zero line shared by the rows. The values
+SHALL show when the pointer is over the plot, without JavaScript. A missing value SHALL break
+the line ("gap"), be marked ("marker"), count as 0 ("zero") or be left out ("remove").
+`referenceLine` SHALL be a number or a statistic of the values ("mean", "median", "min", "max",
+"q1", "q3", "first", "last"), and `referenceArea` two of them. With `autoscale` every plot of the
+column SHALL share its y axis. `nanoplotOptions(...)` SHALL hold the look, with Great Tables'
+defaults. In text output a nanoplot SHALL be a sparkline, a bar of blocks beside a zero line, or
+the five numbers of a box plot.
+
+```nim
+let d = tableData:
+  city: ["Oslo", "Rome"]
+  trend: ["1 4 2 8 5", "3, NA, 6, 2"]
+  change: [4.2, -1.5]
+let t = tabella(d, rownameCol = "city"):
+  fmtNanoplot "trend", referenceLine = "mean"
+  fmtNanoplot "change", plotType = "bar"
+echo t
+echo t.toHtml.count("class=\"tb_nanoplot\""), " ", nanoplotLabel(1234), " ", nanoplotLabel(0.25)
+```
+
+```text
+┌──────┬───────────┬───────────────────┐
+│      │ trend     │            change │
+╞══════╪═══════════╪═══════════════════╡
+│ Oslo │ ▁▄▂█▅ 1–8 │    │███████ 4.20  │
+│ Rome │ ▃ █▁ 2–6  │ ███│        −1.50 │
+└──────┴───────────┴───────────────────┘
+4 1.23K 0.25
 ```
