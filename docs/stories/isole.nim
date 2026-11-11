@@ -87,7 +87,12 @@ the events that show up as a dip in a line.
 
 ## One island to start
 
-The largest island of the Mediterranean, in one row: its outline, how big it is, how many live
+Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
+
+> Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
+
+*First of all, let us choose a starting point: a shore or a scene, a port or an event, a voyage
+or a tale.* This story starts from an island: the largest of the Mediterranean, in one row: its outline, how big it is, how many live
 there, and how high it goes.
 """
 
@@ -123,7 +128,14 @@ Sicily is a triangle of 25,834 km² with five million people, and its highest po
 ## Twenty-two islands
 
 Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
-is the 34th. These 22 are the *main islands* of this story.
+is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
+
+> Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
+> forma di coralli, altre di sirena.
+
+*There are islands shaped like fish, a dolphin, say, or a torpedo ray, others shaped like
+corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
+di Spagna* (2001).
 """
 
 nbShowCode:
@@ -167,7 +179,15 @@ Cres 3,079, one for every 13 hectares.
 
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
 the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
-times Malta. Grouped by country, each with the share of its country's land it is.
+times Malta. Grouped by country, each with the share of its country's land it is. Alone, an
+outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)
+warns against that look:
+
+> Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
+> tratta di una mistificazione.
+
+*Looking at a map, an island gives us the illusion of being a small world of its own. […] But
+it is a mystification.*
 """
 
 const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0,
@@ -211,7 +231,8 @@ Malta are the islands of their countries: Cyprus all of it, Malta the larger of 
 
 ## All 195
 
-The whole list is long. A preview shows its two ends, the largest and the smallest islands,
+*Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
+set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
 with the place of each in the list:
 """
 
@@ -323,7 +344,9 @@ fell, in 1797. The language column is the island's own, beside the state's.
 """, nkCode)
 
 nbText: """
-Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
+*They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
+Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
+Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
 islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
 
 ### What the world keeps
@@ -479,7 +502,12 @@ Malta, at 3.1%, has fewer out of work than almost anywhere in Europe.
 
 ## Getting there
 
-Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
+> La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
+> bitte, sartie. Devi prendere una nave o un aereo.
+
+*The first lesson of islands is that you can't leave on foot. Water, air, wind, waves, ropes,
+bollards, shrouds. You have to take a ship or a plane*: the first lines of Antonella Anedda's
+*Isolatria* (2013), on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
 some since the 1960s; for each island, the sum of its airports (an island that has a large
 airport leaves its airstrips out). The dip in the middle of every line is 2020.
 """
@@ -534,7 +562,14 @@ nbText: """
 
 Every main island has a Mediterranean climate: hot dry summers, mild wet winters. The highest
 temperature of an average day, month by month, from the weather box of each island's main town
-on Wikipedia; and the sea, where a page has it.
+on Wikipedia; and the sea, where a page has it. These are averages of the past, and the past is
+moving, as Giacomo Di Girolamo writes in *The Passenger*'s Sicily:
+
+> Una volta, dire Sicilia significava dire Mediterraneo. […] Adesso, dire Sicilia significa
+> quasi dire Tropici.
+
+*Once, to say Sicily was to say the Mediterranean. […] Now, to say Sicily is almost to say the
+Tropics.*
 """
 
 const monthNames = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
@@ -593,8 +628,8 @@ water.*
 
 To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
 by hand, each with its page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
-(1987) is a tour of the sea's shores, ports and islands, wrote later a book on bread, *Pane
-nostro* (2010): the islands, he found, keep some of its oldest ways. A taste is a good way in.
+(1987) is a tour of the sea's shores, ports and islands, wrote later a whole book on bread,
+*Pane nostro* (2010). A taste is a good way in.
 """
 
 nbShowCode:
@@ -642,7 +677,11 @@ Three books on the whole sea, which this story borrows from:
   islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
 - *Mediterraneo*, The Passenger (Iperborea, 2023): today's sea in essays and photographs, with
   essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
-  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others.
+  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its
+  books on Sicily (2024) and Sardinia (2026).
+
+Quoted along the way: Fabrizia Ramondino, Gilles Deleuze, D. H. Lawrence's *Sea and Sardinia*,
+Antonella Anedda's *Isolatria*, Giacomo Di Girolamo.
 
 ## How this story is built
 
