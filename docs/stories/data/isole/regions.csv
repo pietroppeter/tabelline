@@ -1,0 +1,24 @@
+# The main islands' country and NUTS 2 region (the region's name in Wikipedia's lists of Eurostat figures; Djerba is in Tunisia, outside them), the country's ISO code and a locale for its numbers. Written by hand.
+title,code,locale,region
+Sicily,IT,it,Sicily
+Sardinia,IT,it,Sardinia
+Geography of Cyprus,CY,el_CY,Cyprus
+Corsica,FR,fr,Corsica
+Crete,GR,el,Crete
+Euboea,GR,el,Central Greece
+Mallorca,ES,ca,Balearic Islands
+Lesbos,GR,el,North Aegean
+Rhodes,GR,el,South Aegean
+Chios,GR,el,North Aegean
+Cephalonia,GR,el,Ionian Islands
+Menorca,ES,ca,Balearic Islands
+Corfu,GR,el,Ionian Islands
+Ibiza,ES,ca,Balearic Islands
+Djerba,TN,ar_TN,
+Lemnos,GR,el,North Aegean
+Samos,GR,el,North Aegean
+Naxos (island),GR,el,South Aegean
+Zakynthos,GR,el,Ionian Islands
+Cres (island),HR,hr,Adriatic Croatia
+Krk (island),HR,hr,Adriatic Croatia
+Malta (island),MT,mt,Malta

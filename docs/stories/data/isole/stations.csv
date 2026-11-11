@@ -1,0 +1,31 @@
+# Where each main island's climate comes from: the Wikipedia page and the weather box's own description of its station.
+title,page,location
+Sicily,Palermo,"Palermo-Boccadifalco Airport on the outskirts of the city (altitude: 117 m, ) , 1991–2020 normals, Extremes 1923–present"
+Sardinia,Cagliari,"Cagliari (Elmas Airport), elevation: , 1991–2020 normals, extremes 1981–present"
+Geography of Cyprus,Nicosia,"Athalassa, Nicosia, elevation: 162 m (1991–2020)"
+Corsica,Ajaccio,"Ajaccio (AJA), elevation: , 1991–2020 normals, extremes 1949–present"
+Crete,Heraklion,Heraklion Port 10 m a.s.l. (2007-2024)
+Crete,Heraklion,sea temperature
+Euboea,Chalcis,Chalcis
+Mallorca,Palma de Mallorca,"Palma de Mallorca (Puerto de Palma) WMO ID: 08301; Climate ID: B228; coordinates ; elevation: ; 1991–2020 provisional normals, extremes 1978–present"
+Mallorca,Palma de Mallorca,sea temperature
+Lesbos,Mytilene,Mytilene (1955-2010)
+Rhodes,"Rhodes, Greece",Rhodes Port 4 m a.s.l.
+Rhodes,"Rhodes, Greece",sea temperature
+Chios,Chios,Chios town (23m)
+Cephalonia,Argostoli,Argostoli (1970–2010)
+Menorca,Mahón,Menorca Airport 91m (1981–2010)
+Menorca,Menorca,sea temperature
+Corfu,Corfu (city),Corfu (1955-2010) HNMS 1 m asl
+Ibiza,Ibiza Town,"Aeropuerto de Ibiza (1981–2010), extremes (1953–2021)"
+Ibiza,Ibiza Town,sea temperature
+Djerba,Djerba,"Djerba (1981–2010, extremes 1898–present)"
+Djerba,Djerba,sea temperature
+Lemnos,"Myrina, Greece",Myrina
+Samos,Samos,"Samos Airport, Greece (1978-2010)"
+Naxos (island),Naxos (island),Naxos town (0m)
+Zakynthos,Zakynthos,Zakynthos 1961–1990 (extremes 1961–present)
+Cres (island),Mali Lošinj,"Mali Lošinj (1971–2000, extremes 1961–2014)"
+Krk (island),Rijeka,
+Krk (island),Rijeka,sea temperature
+Malta (island),Valletta,"Malta (Luqa Airport in the suburbs of Valletta, 1991–2020)"

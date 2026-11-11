@@ -1,0 +1,24 @@
+# The 22 main islands (400 km² or more, and Malta), one row each: islands.csv with their region (regions.csv), its GDP per person in PPS and as % of the EU (2024) and unemployment (2025), the last year of passengers (passengers.csv), and the January and August highs and the August sea (climate.csv).
+rank,island,title,country,code,locale,km2,population,per_km2,coast_km,elevation,archipelago,town,heritage,airports,region,pps_per_person,pps_index,jobless_2025,pax_year,pax,high_jan,high_aug,sea_aug
+1,Sicily,Sicily,Italy,IT,it,25834.0,5010001,194.0,941.8,3340.0,,Palermo,6,5,Sicily,24500.0,61.0,12.2,2022,18108933,15.1,31.4,
+2,Sardinia,Sardinia,Italy,IT,it,24100.0,1656000,69.0,1022.3,384.0,,Cagliari,2,6,Sardinia,29000.0,73.0,9.3,2022,9097389,14.7,32.1,
+3,Cyprus,Geography of Cyprus,Cyprus,CY,el_CY,9251.0,,,621.7,,,Nicosia,3,7,Cyprus,39500.0,99.0,4.4,2022,12265224,15.8,37.4,
+4,Corsica,Corsica,France,FR,fr,8681.0,322000,37.0,647.6,,,Ajaccio,1,6,Corsica,34500.0,86.0,7.3,2022,3151969,14.0,29.2,
+5,Crete,Crete,Greece,GR,el,8312.0,622871,75.0,785.5,2456.0,,Heraklion,1,3,Crete,23800.0,60.0,5.1,2022,11377948,15.7,28.3,26.1
+6,Euboea,Euboea,Greece,GR,el,3655.0,191206,52.0,536.1,1743.0,,Chalcis,0,0,Central Greece,23900.0,60.0,8.5,,,12.9,32.3,
+7,Mallorca,Mallorca,Spain,ES,ca,3640.0,846000,232.0,335.5,,Gymnesian Islands,Palma de Mallorca,1,1,Balearic Islands,40300.0,101.0,8.8,2025,33806427,15.7,30.2,26.0
+8,Lesbos,Lesbos,Greece,GR,el,1630.0,86436,53.0,280.6,968.0,,Mytilene,0,1,North Aegean,16800.0,42.0,6.4,2022,439185,12.2,30.8,
+9,Rhodes,Rhodes,Greece,GR,el,1398.0,115490,83.0,191.8,1215.0,,"Rhodes, Greece",1,1,South Aegean,27900.0,70.0,7.3,2022,5857036,16.1,30.7,27.2
+10,Chios,Chios,Greece,GR,el,842.0,51390,61.0,163.6,1297.0,,Chios (town),1,1,North Aegean,16800.0,42.0,6.4,2022,244694,12.8,32.4,
+11,Cephalonia,Cephalonia,Greece,GR,el,781.0,35801,46.0,203.8,1620.0,,Argostoli,0,1,Ionian Islands,25300.0,63.0,9.0,2022,817216,14.5,29.9,
+12,Menorca,Menorca,Spain,ES,ca,694.0,87000,125.0,140.0,,Gymnesian Islands,Mahón,1,1,Balearic Islands,40300.0,101.0,8.8,2022,3900935,14.1,29.2,25.8
+13,Corfu,Corfu,Greece,GR,el,592.0,100853,170.0,179.5,,,Corfu (city),1,1,Ionian Islands,25300.0,63.0,9.0,2022,3749106,13.9,31.5,
+14,Ibiza,Ibiza,Spain,ES,ca,577.0,111000,192.0,117.8,,,Ibiza Town,1,1,Balearic Islands,40300.0,101.0,8.8,2025,9138224,15.7,30.3,26.2
+15,Djerba,Djerba,Tunisia,TN,ar_TN,523.0,139544,267.0,110.5,,,Houmt Souk,1,1,,,,,2012,1969043,16.5,33.5,28.0
+16,Lemnos,Lemnos,Greece,GR,el,476.0,16992,36.0,176.2,470.0,,"Myrina, Greece",0,1,North Aegean,16800.0,42.0,6.4,2022,124089,12.7,29.2,
+17,Samos,Samos,Greece,GR,el,476.0,32973,69.0,126.7,,,"Vathy, Samos",1,1,North Aegean,16800.0,42.0,6.4,2022,452792,13.5,32.8,
+18,Naxos,Naxos (island),Greece,GR,el,428.0,17970,42.0,84.9,1003.0,Cyclades,Naxos (city),0,1,South Aegean,27900.0,70.0,7.3,2022,123220,14.4,27.0,
+19,Zakynthos,Zakynthos,Greece,GR,el,406.0,40758,100.0,106.2,758.0,,Zakynthos (city),0,1,Ionian Islands,25300.0,63.0,9.0,2022,1903404,14.4,30.6,
+20,Cres,Cres (island),Croatia,HR,hr,405.78,3079,8.0,164.9,,Dalmatian Archipelago,Cres (town),0,0,Adriatic Croatia,29200.0,73.0,5.5,,,10.2,28.4,
+21,Krk,Krk (island),Croatia,HR,hr,405.78,19383,48.0,124.0,568.0,Dalmatian Archipelago,Krk (town),0,1,Adriatic Croatia,29200.0,73.0,5.5,2022,164086,9.4,30.0,24.9
+34,Malta,Malta (island),Malta,MT,mt,246.0,409259,1664.0,74.9,239.0,Maltese Islands,Valletta,3,1,Malta,43900.0,110.0,3.1,2022,5851079,15.7,32.0,

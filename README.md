@@ -81,6 +81,12 @@ the home page shows them as a gallery:
 - [FOSDEM, twenty-six times](https://pietroppeter.github.io/tabelline/stories/fosdem/)
   (tabelline 0.2, first written in R with gt and ported to Nim): the editions, the devrooms
   and the people of FOSDEM from 2001 to 2027, on FOSDEM's own schedules, read with nanuq.
+- [Islands of the Mediterranean](https://pietroppeter.github.io/tabelline/stories/isole/)
+  (tabelline 0.2): the 195 islands of Wikipedia's list, with their shapes as nanoplots, who ruled
+  them, what UNESCO keeps on them, how they live now, how many fly there and when to go.
+- [The islands' data, made with nanuq](https://pietroppeter.github.io/tabelline/stories/isole-data/)
+  (tabelline 0.2): how the islands' tables were made from Wikipedia, Wikidata and Natural Earth,
+  in three Nim programs (fetch, extract, and process with nanuq), and the checks behind them.
 
 ## The site
 
