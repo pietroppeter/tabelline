@@ -26,6 +26,7 @@ type
     name*, path*: string        ## path: relative to the repository root
     doc*: string                ## the module's doc comment, Markdown
     imports*: seq[string]       ## what it imports: `std/strutils`, `pkg/nimib`, `tabelline/core`
+    reexports*: seq[string]     ## the modules it exports again (`export core`), written the same way
     symbols*: seq[ApiSymbol]
 
 let root* = currentSourcePath().parentDir.parentDir
@@ -76,6 +77,18 @@ func importsOf(lines: seq[string], module: string): seq[string] =
         elif "/" notin it: dir & "/" & it
         else: it
       if full notin result: result.add full
+
+func reexportsOf(lines: seq[string], module: string, imports: seq[string]): seq[string] =
+  ## The modules of the `export` lines at the top level, written as in `imports`.
+  for l in lines:
+    if l.startsWith("export "):
+      for x in l[7 .. ^1].split(","):
+        let x = x.strip
+        if x.len == 0: continue
+        var full = x
+        for imp in imports:
+          if imp.lastPathPart == x: full = imp
+        if full notin result: result.add full
 
 proc kindName(k: string): string = k.replace("sk", "").toLowerAscii
 
@@ -154,7 +167,9 @@ proc apiModule*(module: string): ApiModule =
   let j = jsondoc(module)
   let path = "src" / module & ".nim"
   let lines = readFile(root / path).splitLines
-  result = ApiModule(name: module, path: path, doc: moduleDoc(lines), imports: importsOf(lines, module))
+  let imports = importsOf(lines, module)
+  result = ApiModule(name: module, path: path, doc: moduleDoc(lines), imports: imports,
+                     reexports: reexportsOf(lines, module, imports))
   var byName = initOrderedTable[string, int]()
   for e in j["entries"]:
     # an operator comes quoted and HTML-escaped: `&lt;`

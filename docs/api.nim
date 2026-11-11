@@ -259,6 +259,17 @@ func kindsOf(m: ApiModule): string =
     if not found: counts.add (s.kind, 1)
   counts.mapIt(&"{it[1]} {it[0]}" & (if it[1] > 1: "s" else: "")).join(", ")
 
+proc linkedGroups(t: sink Tabella, rowGroup: seq[string], labels, anchors: seq[string]): Tabella =
+  ## Row groups whose labels link to a heading of the page: rows whose `rowGroup` is `labels[k]`
+  ## go in a group labelled with a link to `#anchors[k]`.
+  result = t
+  for k, label in labels:
+    var rows: seq[int]
+    for i, g in rowGroup:
+      if g == label: rows.add i
+    if rows.len > 0:
+      result = result.tabRowGroup(md(&"[{label}](#{anchors[k]})"), rows = rows, id = label)
+
 block:
   # one group per module, the facts as rows: a table a phone reads down
   type ModuleFact = object
@@ -273,19 +284,24 @@ block:
     facts.add ModuleFact(module: g, fact: "what it is", value: firstSentence(m.doc))
     facts.add ModuleFact(module: g, fact: "exports",
                          value: &"[{m.symbols.len} names](#{slugify(title)}): {kindsOf(m)}")
+    facts.add ModuleFact(module: g, fact: "exports again",
+                         value: m.reexports.mapIt(if it.startsWith("std/"): it else: moduleLink(it)).join(", "))
     facts.add ModuleFact(module: g, fact: "imports",
                          value: own.mapIt(if it.lastPathPart in dataOnly: short(it) & " (data)" else: moduleLink(it)).join(", "))
     facts.add ModuleFact(module: g, fact: "imported by", value: users.join(", "))
     facts.add ModuleFact(module: g, fact: "from Nim", value: other.join(", "))
   for f in facts.mitems:
     if f.value.len == 0: f.value = "—"
-  let t = tabella(facts, rownameCol = "fact", groupnameCol = "module"):
+  var t = tabella(facts, rownameCol = "fact"):
+    colsHide "module"
     tabHeader "The modules", "each after the modules it imports, as on this page"
     colsLabel:
       value: ""
     fmtMarkdown "value"
     tabSourceNote "From Nim: modules of the standard library, and pkg/nimib, the one package from outside. (data): a module of CLDR tables, not documented here."
     optCssTheme()
+  t = t.linkedGroups(facts.mapIt(it.module), order.mapIt("tabelline" & (if it[0] == "tabelline": "" else: "/" & short(it[0]))),
+                     order.mapIt(slugify(it[1])))
   nbTable t
 
 nbPart 2, "", prSecondary
@@ -308,13 +324,16 @@ for (module, title, intro) in order:
       for s in m.symbols.filterIt(it.section == sec):
         let n = if s.signatures.len > 1: &" ×{s.signatures.len}" else: ""
         names.add NameRow(section: sectionTitle(sec), name: &"[`{s.name}`](#{anchorOf(m, s)})", kind: s.kind & n)
-    let t = tabella(names, groupnameCol = (if grouped: "section" else: "")):
+    var t = tabella(names):
       colsHide "section"
       fmtMarkdown "name"
       tabSourceNote "×3: three overloads. A name opens its entry below."
       optVerticalPadding(scale = 0.4)
       tabOptions(tableFontSize = "15px", tableWidth = "100%")
       optCssTheme()
+    if grouped:
+      t = t.linkedGroups(names.mapIt(it.section), sectionsSeen.mapIt(sectionTitle(it)),
+                         sectionsSeen.mapIt(slugify(sectionTitle(it))))
     nbTable t
   let documented = m.symbols.countIt(it.doc.len > 0)
   nbFold(&"{m.symbols.len} names, {documented} with a doc comment"):
