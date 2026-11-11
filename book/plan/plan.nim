@@ -37,7 +37,9 @@ import std/[algorithm, sets]
 import common
 
 const
-  releases = ["0.1", "0.2", "0.3", "0.4", "0.5"]
+  now = "now"          ## in tabelline on main: 0.1 and 0.2, which took in the first plan's 0.3 and 0.4
+  shipped = ["0.1", "0.2"]
+  releases = [now, "0.3"]  ## the next release is the last one the coverage map plans
   later = "later"      ## not planned for a release yet
   newGap = "new"       ## a gap the coverage map does not have yet
   otherTool = "other"  ## a contest entry made with another table package than gt: not measured
@@ -47,7 +49,7 @@ const
   extras = r"\bgte\.\w+|\b(?:gte\.)?(gt_plt_\w+|gt_theme_\w+|gt_color_\w+|gt_fa_\w+|gt_highlight_\w+|" &
            r"gt_hulk_\w+|gt_merge_stack|gt_add_divider|gt_img_\w+|gt_sparkline|gt_\w+_rating|" &
            r"fa_icon_repeat|fmt_pct_extra|fmt_pill|add_text_img|img_header)\s*\("
-  extrasFeature = ("Plots, icons and themes from gt-extras", "0.4")
+  extrasFeature = ("Plots, icons and themes from gt-extras", later)
   # Tables made with another package than gt: interactive ones (reactable, DT) wait for tabellone.
   other = r"\b(reactable|reactablefmtr|datatable|DT::datatable|flextable|kable)\s*\("
   otherFeature = "Interactive tables"
@@ -80,13 +82,14 @@ proc coverage(): Coverage =
 proc planOf(row: JsonNode): string =
   ## The release a coverage row is ready in.
   let status = row["status"].getStr
-  if status == "done": return "0.1"
+  if status == "done": return now
   if status == "partial" and row{"plan"}.getStr == "":
-    return "0.1"  # what is there is all that is planned (fonts: no remote Google fonts)
+    return now  # what is there is all that is planned (fonts: no remote Google fonts)
   if status == "no":
     # "no" with a Nim way (sizes are strings) is not a gap; without one it waits
-    return (if row["feature"].getStr == "Sizes": "0.1" else: later)
-  if row{"plan"}.getStr != "": row["plan"].getStr else: later
+    return (if row["feature"].getStr == "Sizes": now else: later)
+  let plan = row{"plan"}.getStr
+  if plan in shipped: now elif plan in releases: plan else: later
 
 const alias = {"fill": "cell_fill", "text": "cell_text", "borders": "cell_borders"}.toTable
 
@@ -636,7 +639,7 @@ proc main(offline: bool) =
         uses.incl i
       if not hand.isNil:
         for f in hand{"found"}.getElems: need(newGap, f.getStr)  # gaps the map does not have, found by reading the page
-      var ready = "0.1"
+      var ready = now
       for r in needs.keys:
         if order.find(r) > order.find(ready): ready = r
       if not hand.isNil and kind == "repos":
@@ -668,7 +671,7 @@ proc main(offline: bool) =
       page["calls"] = %total
       var ns = newJObject()
       for r in order:
-        if r in needs and r != "0.1": ns[r] = %needs[r].toSeq.sorted
+        if r in needs and r != now: ns[r] = %needs[r].toSeq.sorted
       page["needs"] = ns
       page["uses"] = %(uses.toSeq.mapIt(cov.rows[it]["feature"].getStr).sorted)
       pages.add page

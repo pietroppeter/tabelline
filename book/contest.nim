@@ -5,8 +5,8 @@ bookInit()
 const id = "table-contest"
 let
   all = pagesOf(id)
-  soon = contestEntries(id, upTo = "0.3")
-  later = contestEntries(id, since = "0.4")
+  soon = contestEntries(id, upTo = "now")
+  later = contestEntries(id, since = "0.3")
   other = contestEntries(id, other = true)
   licensed = soon.countIt(it{"licence"}.getStr != "")
 
@@ -21,7 +21,7 @@ forum posts of 2020 to 2024 and the winners post of 2025, with the prize each wo
 For every entry made with gt or Great Tables, the book reads all its code and finds the gt
 functions it calls, as for the pages of [What the book will port](next.html): an entry *can be
 done* in the first release of tabelline that has every feature it calls. """ & $soon.len &
-""" can be done with tabelline 0.1 to 0.3, """ & $later.len & """ wait for a later release, and
+""" can be done with tabelline now, """ & $later.len & """ wait for a later release, and
 """ & $other.len & """ are made with another package (reactable, DT, kableExtra, flextable, …),
 which this does not measure.
 
@@ -31,7 +31,7 @@ $soon.len & """ that can be done now have a licence.
 """
 
 nbText: """
-## Can be done with 0.1 to 0.3
+## Can be done now
 
 The first ones to redo, from the ones that need the fewest new features; the awarded ones first.
 *Done* marks the ones already redone in this book, in the chapters that follow this page.
@@ -41,8 +41,8 @@ nbTable contestTable(soon)
 nbText: """
 ## Made with gt, for a later release
 
-What they wait for is what tabelline needs to redo them: images in cells and gt-extras
-(0.4) come first.
+What they wait for is what tabelline needs to redo them: gt-extras' plots, icons and themes
+come first.
 """
 nbTable contestTable(later)
 

@@ -10,7 +10,7 @@ const
   sourcesJson = staticRead("plan/sources.json")
   pagesJson = staticRead("plan/pages.json")
   coverageJson = staticRead("../docs/coverage/gt.json")
-  releases = ["0.1", "0.2", "0.3", "0.4", "0.5", "new", "later", "other"]
+  releases = ["now", "0.3", "new", "later", "other"]  ## as in book/plan/plan.nim
 
 let
   sources* = parseJson(sourcesJson)
@@ -25,7 +25,7 @@ proc isContest*(s: JsonNode): bool = s["kind"].getStr == "contest"
 
 proc whenLabel(r: string): string =
   case r
-  of "0.1": "now"
+  of "now": "now"
   of "new": "a new gap"
   of "later": "later"
   of "other": "not with gt"
@@ -166,11 +166,13 @@ proc countReady*(entries: seq[JsonNode], r: string): int = entries.countIt(it["r
 
 proc planOf(row: JsonNode): string =
   ## The release a row of the coverage map is ready in (as `planOf` in book/plan/plan.nim).
+  let plan = row{"plan"}.getStr
+  let planned = if plan in ["0.1", "0.2"]: "now" elif plan in releases: plan else: "later"
   case row["status"].getStr
-  of "done": "0.1"
-  of "partial": (if row.hasKey("plan"): row["plan"].getStr else: "0.1")
-  of "no": (if row["feature"].getStr == "Sizes": "0.1" else: "later")
-  else: (if row.hasKey("plan"): row["plan"].getStr else: "later")
+  of "done": "now"
+  of "partial": (if plan != "": planned else: "now")
+  of "no": (if row["feature"].getStr == "Sizes": "now" else: "later")
+  else: planned
 
 proc gtNames(gt: string): HashSet[string] =
   ## The functions a row of the coverage map names, without namespaces: fmt_number, cells_body.
@@ -234,7 +236,7 @@ proc featureButtons*(): Tabella =
   for a in coverage["areas"]:
     var now, coming: seq[string]
     for r in a["rows"]:
-      if planOf(r) == "0.1": now.add button(r["feature"].getStr)
+      if planOf(r) == "now": now.add button(r["feature"].getStr)
       else: coming.add button(r["feature"].getStr)
     if now.len > 0: rows.add FinderRow(area: a["title"].getStr, release: "Now", features: now.join(" "))
     if coming.len > 0: rows.add FinderRow(area: a["title"].getStr, release: "Coming", features: coming.join(" "))
