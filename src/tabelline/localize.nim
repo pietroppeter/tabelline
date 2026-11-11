@@ -43,21 +43,15 @@ func findRecord(tag: string): int =
 
 var valueStarts: seq[int]
 
-when defined(js):
-  # The JS backend writes a const string out again wherever it is used (117 KB, inside the loop below).
-  let localeText = localeValues
-else:
-  template localeText: string = localeValues
-
 func localeValue(k: int): string =
   ## The `k`th value of `localeValues`, found through the starts of the values, computed once.
   {.cast(noSideEffect), cast(gcsafe).}:
     if valueStarts.len == 0:
       valueStarts.add 0
-      for i, c in localeText:
+      for i, c in localeValues:
         if c == '\x1F': valueStarts.add i + 1
-      valueStarts.add localeText.len + 1
-    localeText[valueStarts[k] ..< valueStarts[k + 1] - 1]
+      valueStarts.add localeValues.len + 1
+    localeValues[valueStarts[k] ..< valueStarts[k + 1] - 1]
 
 func hasLocale*(tag: string): bool =
   ## Whether CLDR has data for this tag (after `normalizeTag`).

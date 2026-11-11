@@ -253,7 +253,7 @@ small:
 
 Five steps, for the thread that builds it:
 
-1. **tabelline**: the two fixes of this post (in this PR), and a CI job that compiles the
+1. **tabelline**: the two fixes of this post, and a CI job that compiles the
    tests with `nim js` and runs them in Node, so the JavaScript backend stays working.
 2. **tabelline**: the icons and the datasets as choices of the JavaScript build (`-d:` defines),
    off in the browser build unless asked for.
