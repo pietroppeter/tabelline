@@ -22,7 +22,6 @@ to the backlog.
 | Columns | Columns by any function of the name; the columns two rules share (`&`: `a + b` and `a - b` are there); gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Rows | Negative row indices (`[0, -1]`; in Nim, `^1`) | [Row Selection](get-started/row_selection.html) | **new** |
 | Formats | The format functions with every argument of their verb: `pattern`, `locale` (`formatDate` has it, `formatNumber` not), `expStyle` | [Formatting Values](get-started/basic_formatting.html), [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
-| Formats | Nanoplots with dates as the *x* values | [Nanoplots](get-started/nanoplots.html) | **new** |
 | Text | Full Markdown in `md()`, HTML entities included | [Header and Footer](get-started/basic_header.html) | **new** |
 | Options | White text on a dark stub background set by options (tabelline picks the text colour for the heading and the column labels only) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
@@ -69,7 +68,7 @@ Gaps the port found that tabelline 0.2 closed; the chapters now use what it gain
 | Parts | `tabSpanner` gathers its columns next to the first, in the order given (`gather = false` leaves them) | [Column Labels](get-started/basic_column_labels.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
 | Parts | Summary rows of the same label from two calls make one row, as in gt | [Creating Summary Lines](vignettes/summary_lines.html) |
 | Columns | Columns by position, from 0, and from the end (`positions(0, -1)`, `positions(2 .. 4)`); rules joined (`a + b`, `a - b`, `startsWith(["pop_", "pct_"])`) | [Column Selection](get-started/column_selection.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
-| Formats | Nanoplots with an option for each point (a colour, a size) | [Nanoplots](get-started/nanoplots.html) |
+| Formats | Nanoplots with an option for each point (a colour, a size), and dates as the *x* values | [Nanoplots](get-started/nanoplots.html) |
 | Text | Line breaks in `md()`: two spaces, or a backslash, before a newline | [Case Study: Clinical Tables](vignettes/case_study_clinical.html) |
 | Options | `systemFonts`, Great Tables' font stacks by name (`"industrial"`) | [v0.3.0](blog/v0_3.html) |
 | Export | `extractSummary(values = true)`: the summary cells as values, as gt's `extract_summary()` | [Creating Summary Lines](vignettes/summary_lines.html) |

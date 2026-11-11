@@ -126,6 +126,10 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
+  (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
+  found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):
+  thirteen built in 0.2, lists and records and data frames among them, and two differences kept.
 - [One stylesheet for every table](https://pietroppeter.github.io/tabelline/devlog/sharing-styles/)
   (11 Nov 2026 B): what a table's HTML holds, three ways to share its 6 KB of CSS, the one chosen
   (fixed rules, options as CSS variables) and the `:not(#_)` trick that keeps a theme's rules
