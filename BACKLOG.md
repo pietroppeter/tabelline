@@ -39,8 +39,6 @@ Rough size: S (hours), M (a day or two), L (more).
 
 - **More nanoplots** (M). Nanoplots are in 0.2 (#63). Left: x values as dates, per-point
   options (a list of colours), `alt` from a column.
-- **A list of values in a cell** (M, *in progress*: `add-lists-records`). Lists and records in
-  a cell, the dot (`v.x`, `it.mass`), nanoplots of x and y.
 
 ## Options and building
 
