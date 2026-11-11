@@ -76,7 +76,7 @@ the home page shows them as a gallery:
   tidy tables with nanuq (Polars for Nim): the nanuq code, what nanuq did well and where it
   pinched, the schema of every table, and checks that run when the page is built.
 - [FOSDEM, twenty-six times](https://pietroppeter.github.io/tabelline/stories/fosdem/)
-  (tabelline 0.2, written in R with gt until 0.2 and 0.3 are built): the editions, the devrooms
+  (tabelline 0.2, first written in R with gt and ported to Nim): the editions, the devrooms
   and the people of FOSDEM from 2001 to 2027, on FOSDEM's own schedules, read with nanuq.
 
 ## The site
