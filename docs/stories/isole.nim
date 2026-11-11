@@ -82,8 +82,9 @@ who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape
 countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
-tables below follow him: first the islands' shapes, then who ruled them and how they live, then
-the events that show up as a dip in a line.
+tables below follow him in three parts, each with the colour of its circles: first the islands'
+shapes, then who ruled them and how they live, then getting there and when to go, where events
+show up as a dip in a line.
 
 ## One island to start
 
@@ -173,8 +174,43 @@ own scale, as large as the cell allows.
 nbText: """
 Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
 Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
-Cres 3,079, one for every 13 hectares.
+Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
+how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
+it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one:
+"""
 
+nbShowCode:
+  let peopled = islands.keep(proc (i: int): bool = not islands["population", i].isNull and
+    islands["population", i].toFloat > 0 and islands["km2", i].toFloat > 0)
+  var d = peopled.withColumn("density", proc (i: int): Value =
+    toValue(peopled["population", i].toFloat / peopled["km2", i].toFloat))
+  d = d.withColumn("shape", proc (i: int): Value = d.outline(i))
+  let order = toSeq(0 ..< d.nrows).sortedByIt(-d["density", it].toFloat)
+  var sorted = TableData()
+  for c in d.columns: sorted.addColumn(c.name, order.mapIt(c.values[it]))
+  let t = tabellaPreview(sorted, topN = 3, bottomN = 3):
+    optCssTheme()
+    colsHide everything()
+    colsUnhide ["island", "shape", "population", "density"]
+    colsMove ["shape"], after = "island"
+    fmtNanoplot "shape", plotType = "shape", plotHeight = "1.8em", options = sea
+    fmtInteger ["population", "density"]
+    fmtNumber "density", rows = where(it["density"].toFloat < 1), decimals = 2
+    subMissing "shape", missingText = ""
+    dataColor "density", palette = palette("reds"), domain = (0.0, 1700.0)
+    colsLabel:
+      shape: ""
+      density: "per {{km^2}}"
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean: the islands where people live."
+  nbTable t
+
+nbNote("""
+The density is computed before the table, and the rows are put in its order: `tabellaPreview`
+shows the first and the last rows of the data as it is. `dataColor` colours each density on a
+scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
+""", nkCode)
+
+nbText: """
 ## At the same scale
 
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
@@ -259,6 +295,59 @@ smaller than that, or are drawn joined to a neighbour.
 """, nkCode)
 
 nbText: """
+And here they all are, each at its own scale, in the order of the list and in three tiers: the
+22 main islands, the 28 more of 100 km² or more, and the 145 smaller ones.
+"""
+
+nbShowCode:
+  const across = 6
+  proc tier(i: int): string =
+    if $islands["main", i] == "true": "The 22 main islands"
+    elif islands["km2", i].toFloat >= 100: "100 km² or more"
+    else: "Smaller"
+  var tierCol: seq[Value]
+  var shapeCols, nameCols: array[across, seq[Value]]
+  for name in ["The 22 main islands", "100 km² or more", "Smaller"]:
+    let members = toSeq(0 ..< islands.nrows).filterIt(tier(it) == name)
+    for start in countup(0, members.high, across):
+      tierCol.add toValue(name)
+      for k in 0 ..< across:
+        let j = start + k
+        shapeCols[k].add(if j < members.len: islands.outline(members[j]) else: toValue(nil))
+        nameCols[k].add(if j < members.len: islands["island", members[j]] else: toValue(""))
+  var grid = TableData()
+  grid.addColumn("tier", tierCol)
+  for k in 0 ..< across:
+    grid.addColumn("s" & $k, shapeCols[k])
+    grid.addColumn("n" & $k, nameCols[k])
+  let shapes = toSeq(0 ..< across).mapIt("s" & $it)
+  var t = tabella(grid, groupnameCol = "tier"):
+    optCssTheme()
+    fmtNanoplot shapes, rows = where(it["tier"] == "The 22 main islands"), plotType = "shape",
+      plotHeight = "2.2em", options = sea
+    fmtNanoplot shapes, rows = where(it["tier"] != "The 22 main islands"), plotType = "shape",
+      plotHeight = "2.2em", options = nanoplotOptions(dataBarFillColor = tint("--secondary-soft"),
+        dataBarStrokeColor = tint("--secondary-text"))
+    subMissing shapes, missingText = ""
+    colsLabel:
+      s0: ""
+    tabOptions(columnLabelsHidden = true, tableFontSize = "10px", dataRowPadding = "4px",
+               dataRowPaddingHorizontal = "2px")
+    tabSourceNote "Outlines: Natural Earth. An island without one is too small for it, or drawn joined to a neighbour."
+  for k in 0 ..< across:
+    t = t.colsMerge(["s" & $k, "n" & $k], pattern = "{1}<br>{2}")
+  t = t.colsAlign(alCenter, shapes)
+  nbTable t
+
+nbNote("""
+A grid is a table too: 195 islands in rows of six, each cell a shape over a name. The data is
+built for it, a column of shapes and one of names for each place in the row; `colsMerge` puts
+the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`, so the main
+islands are drawn in the sea's blue and the others paler, and the row groups are the tiers.
+`columnLabelsHidden` leaves out the labels a grid does not need.
+""", nkCode)
+
+nbText: """
 By country, the islands' sizes make a box plot each, for the countries with three or more: the
 box holds the middle half of a country's islands, the whiskers the rest, and dots the islands
 far larger than the others. Each box has its own scale, up to the country's largest island:
@@ -305,6 +394,7 @@ its own axis. Hover over a box to read its quartiles.
 
 # ------------------------------------------------------------------------------------ history
 
+nbPart 2, "", prSuccess   # Braudel's long time: rulers, heritage, how they live
 nbText: """
 ## Who ruled them
 
@@ -499,7 +589,10 @@ nbText: &"""
 The crisis of the 2010s is a hill on every line: in 2014 Sicily had {sicily14}% of its people
 out of work, the South Aegean more than one in five in 2013. Every region is back down now, and
 Malta, at 3.1%, has fewer out of work than almost anywhere in Europe.
+"""
 
+nbPart 3, "", prSecondary   # the quick time: getting there, when to go, what to see
+nbText: """
 ## Getting there
 
 > La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
@@ -663,7 +756,7 @@ labels are Font Awesome's, as SVG, from `iconSvg`, inside `html()` so the label 
 
 # ------------------------------------------------------------------------------------ how
 
-nbPart 2, "", prSecondary   # the closing sections: how it is built
+nbPart 4, "", prPrimary   # the closing sections: readings, how it is built
 nbText: """
 ## To read more
 
