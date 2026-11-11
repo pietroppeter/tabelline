@@ -39,6 +39,9 @@ Rough size: S (hours), M (a day or two), L (more).
 
 - **More nanoplots** (M). Nanoplots are in 0.2 (#63). Left: x values (gt's `columns_x_vals`, a
   cell with x and y), per-point options (a list of colours), `alt` from a column.
+- **A list of values in a cell** (M, from the book's port of the Great Tables blog). Great
+  Tables takes a Polars list column for nanoplots; tabelline reads numbers from text ("1 2 3").
+  A list (or record) kind of `Value` would carry them as they are, and would serve data frames.
 
 ## Options and building
 
@@ -48,6 +51,9 @@ Rough size: S (hours), M (a day or two), L (more).
   `tabOptions` fields per table. A user-defined preset (`let sea = tabOptions(...)`, then
   `tabOptions sea` or `optPreset sea`), like `optCssTheme` but your own; a docs theme would ship
   one.
+- **Named font stacks** (S, from the book's port of the Great Tables blog). Great Tables'
+  `system_fonts()` ("industrial", "humanist", ...) as `systemFonts(name)`, for `optTableFont`
+  and `tableFontNames`: no fonts to load.
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.
 
@@ -115,8 +121,8 @@ Rough size: S (hours), M (a day or two), L (more).
   label; `loc.rowGroups` by row index or condition.
 - **Stub and spanners** (S). A `tabStub` verb; `tabSpanner` gathering its columns in the given
   order; the spanner's fill covering the whole cell.
-- **Colours** (S). All CSS colour names (only 17 today: `rebeccapurple`, `bisque` raise
-  ValueError); `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
+- **Colours** (S). All CSS colour names (only 17 today: `rebeccapurple`, `bisque`,
+  `darkgreen` raise ValueError); `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
   `dataColor` defaults (palette, NA grey); white text on dark option backgrounds (stub, heading by
   colour name).
 - **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
