@@ -16,19 +16,19 @@ suite "rotated labels":
 
 suite "styles from the data":
   test "fromColumn, with a value for missing ones":
-    let html = tabella(d).tabStyle(style.fill(fromColumn("colour")), loc.body("name")).toHtml
+    let html = tabella(d).tabStyle(style.fill(fromColumn("colour")), loc.body("name")).toHtml(withStyle = false)
     check html.count("style=\"background-color: #") == 2
     expect KeyError: discard tabella(d).tabStyle(style.fill(fromColumn("nope")), loc.body("name"))
     expect ValueError: discard tabella(d).tabStyle(style.fill(fromColumn("colour")), loc.title())
   test "a proc of the row":
     let html = tabella(d).tabStyle((r: Row) => (if r["moons"] > 0: style.text(weight = "bold") else: CellStyle()),
-                                   loc.body("name")).toHtml
+                                   loc.body("name")).toHtml(withStyle = false)
     check html.count("font-weight: bold") == 2
   test "tabStyleBody: values, pattern, fn, targets":
-    check tabella(d).tabStyleBody(style.text(weight = "bold"), values = ["2"]).toHtml.count("font-weight: bold") == 1
-    check tabella(d).tabStyleBody(style.text(weight = "bold"), pattern = "rs").toHtml.count("font-weight: bold") == 1
+    check tabella(d).tabStyleBody(style.text(weight = "bold"), values = ["2"]).toHtml(withStyle = false).count("font-weight: bold") == 1
+    check tabella(d).tabStyleBody(style.text(weight = "bold"), pattern = "rs").toHtml(withStyle = false).count("font-weight: bold") == 1
     check tabella(d).tabStyleBody(style.text(weight = "bold"), columns = "moons",
-                                  fn = (v: Value) => v > 0, targets = "column").toHtml.count("font-weight: bold") == 3
+                                  fn = (v: Value) => v > 0, targets = "column").toHtml(withStyle = false).count("font-weight: bold") == 3
     expect ValueError: discard tabella(d).tabStyleBody(style.text(weight = "bold"))
     expect ValueError: discard tabella(d).tabStyleBody(style.text(weight = "bold"), values = ["x"], targets = "table")
 

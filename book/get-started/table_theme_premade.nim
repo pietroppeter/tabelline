@@ -142,7 +142,7 @@ htmltools::HTML(paste0("<div class='tb-styles'>", paste(cells, collapse = ""), "
     var cells = ""
     for ii in 1 .. 3:
       cells.add "<div><div style='text-align:center;'>" & $ii & "</div>" &
-                gtEx.optStylize(style = ii).toHtml & "</div>"
+                nb.tableHtml(gtEx.optStylize(style = ii)) & "</div>"
     nbRawHtml "<div class='tb-styles'>" & cells & "</div>"
 
 nbText: """

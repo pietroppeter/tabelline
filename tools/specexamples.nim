@@ -78,7 +78,7 @@ proc echo(args: varargs[string, `$`]) {.used.} =
   captured.add args.join("") & "\n"
 proc echo(t: Tabella) {.used.} =
   captured.add t.toText & "\n"
-  shown.add t.toHtml
+  shown.add t.toHtml(withStyle = false)   # the page writes tabellaStyle once
 var results = newJArray()
 """
   for k, ex in examples:

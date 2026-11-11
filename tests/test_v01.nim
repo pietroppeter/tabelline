@@ -108,7 +108,7 @@ suite "0.1 fixes from the book":
   test "optStylize: white text on a dark heading":
     for c in ["red", "blue", "pink", "green", "cyan", "gray"]:
       let h = tabella(tavolaPitagorica(2)).tabHeader("T").optStylize(2, c).toHtml
-      check "color: #FFFFFF; }" in h
+      check "--tb-heading-color: #FFFFFF" in h
   test "optCssTheme: the page's names, with fallbacks":
     let o = tabella(tavolaPitagorica(2)).optCssTheme().options
     check o.tableFontColor == "var(--ink, #1C1C1C)"

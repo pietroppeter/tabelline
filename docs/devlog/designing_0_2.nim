@@ -913,6 +913,9 @@ compiler calls it only when a name is neither a field nor a proc, and it turns `
 step 1: `formatCell` gives each item (or field) to the format and joins the results, unless the
 format takes the list whole (`wholeValue`, set by the pictures). A nanoplot reads `y` and `x` from
 the record, sorts the pairs by `x`, and places each point at its share of the x axis.
+
+How the HTML of every table shares one stylesheet, also in 0.2, has a post of its own:
+[One stylesheet for every table](../sharing-styles/).
 """
 
 nbSave
