@@ -53,7 +53,7 @@ const storico* = [
   Versione(date: "9 Nov 2026", time: "16:04", what: "Every heading of the site has an arrow back to the contents; " &
              "the problem says who makes the pages (coding agents, Claude Code from a phone); the table of " &
              "versions gives the day and time of the first of each day, then how long after the one before.",
-           review: "[Round 6](https://github.com/pietroppeter/tabelline/blob/claude/project-thread-0a0us6/docs/devlog/data/review-mode/round-6.md): " &
+           review: "[Round 6](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-6.md): " &
              "no kinds, a replacement is said in the note; rethink the post from scratch, with a diagram " &
              "of the modes and the stories the review mode serves; a Review button that opens and " &
              "closes the mode, and no review UI without it; a sheet with no buttons that saves by " &
@@ -67,7 +67,7 @@ const storico* = [
              "**History** lists the versions and clears their comments; no **Share**, since it opens " &
              "a new session; the post rethought from scratch, with a diagram of the modes and the " &
              "stories they serve; *How it is built* starts from nimib.",
-           review: "[Round 7](https://github.com/pietroppeter/tabelline/blob/claude/project-thread-0a0us6/docs/devlog/data/review-mode/round-7.md): " &
+           review: "[Round 7](https://github.com/pietroppeter/tabelline/blob/main/docs/devlog/data/review-mode/round-7.md): " &
              "the date above the title reads badly; the pieces of the screen should come before the modes, " &
              "one card per screen, History too; *Close review* in the export; *sheet* is not a clear name; " &
              "the table of versions is unreadable; the folded code looks like headings; the review mode " &
