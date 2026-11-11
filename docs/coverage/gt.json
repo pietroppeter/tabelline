@@ -637,8 +637,8 @@
     {
      "feature": "Images and PDF",
      "gt": "gtsave()",
-     "status": "missing",
-     "note": "Needs a browser to draw; maybe through Playwright, outside the core.",
+     "status": "done",
+     "note": "save(t, \"t.svg\") by the extension: SVG from tabelline's own layout (std lib, Inter inside or letters as paths); PNG with tabelline/pixie; PNG, JPEG, WebP and PDF through Chrome with tabelline/chrome.",
      "plan": "0.3",
      "size": "M"
     },

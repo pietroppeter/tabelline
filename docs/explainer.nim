@@ -136,7 +136,7 @@ nbCode:
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
     Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (164), 14 opt*"),
-    Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, save, extractBody, extractCells, extractSummary"),
+    Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, toSvg, save (html, svg; png with tabelline/pixie; png, jpg, webp, pdf with tabelline/chrome), extractBody, extractCells, extractSummary"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
     tabHeader "The gt menu", "verb families of gt and Great Tables, and what tabelline has so far"
@@ -480,6 +480,42 @@ id, so a rule of the page's own stylesheet wins or loses against the table's as 
 `#id`. Rules of one table only (`optCss`, the vertical lines) stay in a `<style>` of that table,
 scoped to its id. Why, and the other ways we considered:
 [One stylesheet for every table](../devlog/sharing-styles/).
+
+### A table as a picture
+
+`save` writes the format its file's extension names, as gt's `gtsave`. With `.svg`, tabelline draws
+the table itself: it lays it out as a browser lays out the HTML (within a pixel or two), with the
+widths of the letters of Inter, the font it ships, and writes rectangles, rules and letters. It
+needs nothing installed, and the picture is the same on every machine:
+"""
+
+createDir root / "explainer"   # the page's folder, where the picture goes
+nbCode:
+  small3.save(root / "explainer" / "tavola.svg")
+
+nbText: """
+![The table as an SVG picture, drawn by tabelline](tavola.svg)
+
+The SVG holds the letters it uses of the font, so its text can be selected.
+`small3.toSvg(text = stPaths)` writes each letter as its outline instead: no font at all, for
+programs that ignore fonts inside an SVG (PowerPoint, Inkscape, LibreOffice). Two optional modules
+add more extensions to `save` when imported:
+
+- `import tabelline/pixie`: `.png`, painted with [pixie](https://github.com/treeform/pixie) on
+  the same layout (`scale = 2` by default: two pixels for each CSS pixel). Its picture is the SVG's.
+- `import tabelline/chrome`: `.pdf`, `.jpg`, `.webp` (and `.png` without pixie), drawn by a
+  headless Chrome from the HTML, as Great Tables' `gtsave()` does. Chrome must be installed.
+
+```nim
+import tabelline, tabelline/pixie
+small3.save("tavola.png")
+```
+
+A table that takes the page's colours (`optCssTheme()`) has no page in a picture: pass the
+values of the variables, `toSvg(vars = {"--ink": "#222"}.toTable)`, or it takes the fallbacks.
+Scripts that need shaping (Arabic, Devanagari) are drawn right only by Chrome. Why three ways,
+and how they compare: [A table as a picture](../devlog/image-output/) and
+[Three pictures of a table](../devlog/image-findings/).
 
 ### In nimib
 

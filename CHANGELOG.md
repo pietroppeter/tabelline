@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Image output: `save(t, "t.svg")` by the extension, from a layout of tabelline's own (`drawing`, within 2 px of Chrome) and `toSvg` (the font inside, or letters as paths), standard library only; `tabelline/pixie` for `.png`; `tabelline/chrome` for `.pdf`, `.jpg`, `.webp`; nanoplots write `none` instead of `transparent` (#PR).
 - Book findings: every CSS colour name (148) for `dataColor` and the other colour helpers, and white text on a dark heading or column labels background given by name; `nbTable data: body`, a table in one step in a notebook; `tabelline/nanuq`, `tabella(df)` for a nanuq (Polars for Nim) DataFrame, an optional module (nanuq is in the `docs` feature); the clinical case study shapes its data with nanuq, and the chapters use what 0.2 gained (#86).
 ## 0.2.0 (11 Nov 2026)
 

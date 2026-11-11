@@ -1,5 +1,11 @@
 {
   "items": {
+    "pixie": {
+      "dir": "$deps/pixie",
+      "url": "https://github.com/treeform/pixie",
+      "commit": "de230f6d061d0b6d6288fc7988de753f22cdd366",
+      "version": ""
+    },
     "nimib": {
       "dir": "$deps/nimib",
       "url": "https://github.com/pietroppeter/nimib",
@@ -15,7 +21,49 @@
     "nanuq": {
       "dir": "$deps/nanuq",
       "url": "https://github.com/pietroppeter/nanuq",
-      "commit": "f8d84e8f71613719c1befb633e8e5dac4a08ea5d",
+      "commit": "60f21f8ea700b9cb7d809a9b15f4187f85630581",
+      "version": ""
+    },
+    "vmath": {
+      "dir": "$deps/vmath",
+      "url": "https://github.com/treeform/vmath",
+      "commit": "7bd9f6e6b23ca3b751be42f20c8025d320881a00",
+      "version": ""
+    },
+    "chroma": {
+      "dir": "$deps/chroma",
+      "url": "https://github.com/treeform/chroma",
+      "commit": "8bf4a0933ff405f83dc3a176199f528601e5b796",
+      "version": ""
+    },
+    "zippy": {
+      "dir": "$deps/zippy",
+      "url": "https://github.com/guzba/zippy",
+      "commit": "cd562ba43ae8904a4d1ba55611b8a521ef4a179e",
+      "version": ""
+    },
+    "flatty": {
+      "dir": "$deps/flatty",
+      "url": "https://github.com/treeform/flatty",
+      "commit": "c7091b096bcf275f47b666ef74bce73eda187ee3",
+      "version": ""
+    },
+    "nimsimd": {
+      "dir": "$deps/nimsimd",
+      "url": "https://github.com/guzba/nimsimd",
+      "commit": "3f6b2668ffb0867d0bf786a658b817763e611350",
+      "version": ""
+    },
+    "bumpy": {
+      "dir": "$deps/bumpy",
+      "url": "https://github.com/treeform/bumpy",
+      "commit": "edc6e19ddbe6b9e46c3384e9a4131d7063a3f610",
+      "version": ""
+    },
+    "crunchy": {
+      "dir": "$deps/crunchy",
+      "url": "https://github.com/guzba/crunchy",
+      "commit": "98eb6526982bb8aae8eec6e8781f4539fa19e049",
       "version": ""
     },
     "fusion": {
@@ -46,13 +94,23 @@
   "nimcfg": [
     "############# begin Atlas config section ##########",
     "--noNimblePath",
+    "--path:\"deps/bumpy/src\"",
+    "--path:\"deps/chroma/src\"",
+    "--path:\"deps/crunchy/src\"",
+    "--path:\"deps/flatty/src\"",
     "--path:\"deps/fusion/src\"",
     "--path:\"deps/jsony/src\"",
     "--path:\"deps/markdown/src\"",
     "--path:\"deps/nanuq/src\"",
     "--path:\"deps/nimib/src\"",
     "--path:\"deps/nimibook/src\"",
+    "--path:\"deps/nimsimd/src\"",
     "--path:\"deps/parsetoml/src\"",
+    "--path:\"deps/pixie/src\"",
+    "--path:\"deps/vmath/src\"",
+    "--path:\"deps/zippy/src\"",
+    "--define:\"features.tabelline.pixie\"",
+    "--define:\"feature.tabelline.pixie\"",
     "--define:\"features.tabelline.docs\"",
     "--define:\"feature.tabelline.docs\"",
     "############# end Atlas config section   ##########",
@@ -81,6 +139,11 @@
       "  # `import tabelline/nanuq` (tabella(df) for a Polars DataFrame) and the book's case studies;",
       "  # nanuq downloads its prebuilt Polars library (about 50 MB) the first time it is compiled",
       "  requires \"https://github.com/pietroppeter/nanuq >= 0.6.1\"",
+      "",
+      "feature \"pixie\":",
+      "  # `import tabelline/pixie` (toPng, save(t, \"t.png\"): the table painted as a PNG): pixie and its",
+      "  # pure-Nim dependencies (vmath, chroma, bumpy, zippy, flatty, nimsimd, crunchy)",
+      "  requires \"pixie >= 6.1.0\"",
       ""
     ]
   },

@@ -241,7 +241,7 @@ func pointSpacing(count: int): float =
 func yPos(p: float): float = safeY + (1 - p) * dataH
 
 func hiddenText(x, y: float, label: string, anchor = ""): string =
-  "<text x=\"" & n(x) & "\" y=\"" & n(y) & "\" fill=\"transparent\" stroke=\"transparent\" font-size=\"30px\"" &
+  "<text x=\"" & n(x) & "\" y=\"" & n(y) & "\" fill=\"none\" stroke=\"none\" font-size=\"30px\"" &
     (if anchor.len > 0: " text-anchor=\"" & anchor & "\"" else: "") & ">" & escapeHtml(label) & "</text>"
 
 func missingMarker(x, radius, strokeWidth: float, fill: string): string =
@@ -260,7 +260,7 @@ func patternId(color: string): string =
 func refLineTag(x0, y, width: float, color, label: string): string =
   ## A horizontal reference line, its value shown on hover.
   "<g class=\"ref-line\"><rect x=\"" & n(x0 - 10) & "\" y=\"" & n(y - 10) & "\" width=\"" & n(width + 20) &
-    "\" height=\"20\" stroke=\"transparent\" stroke-width=\"1\" fill=\"transparent\"></rect>" &
+    "\" height=\"20\" stroke=\"none\" stroke-width=\"1\" fill=\"none\"></rect>" &
     "<line class=\"ref-line\" x1=\"" & n(x0) & "\" y1=\"" & n(y) & "\" x2=\"" & n(width + safeX) & "\" y2=\"" & n(y) &
     "\" stroke=\"" & color & "\" stroke-width=\"1\" stroke-dasharray=\"4 3\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"></line>" &
     hiddenText(width + safeX + 10, y + 10, label) & "</g>"
@@ -268,7 +268,7 @@ func refLineTag(x0, y, width: float, color, label: string): string =
 func verticalRefLineTag(x, y1, y2: float, color, label: string, onLeft: bool): string =
   ## A vertical reference line (in a single-value plot or a box plot).
   "<g class=\"ref-line\"><rect x=\"" & n(x - 10) & "\" y=\"" & n(y1) & "\" width=\"20\" height=\"" & n(y2 - y1) &
-    "\" stroke=\"transparent\" stroke-width=\"1\" fill=\"transparent\"></rect>" &
+    "\" stroke=\"none\" stroke-width=\"1\" fill=\"none\"></rect>" &
     "<line class=\"ref-line\" x1=\"" & n(x) & "\" y1=\"" & n(y1) & "\" x2=\"" & n(x) & "\" y2=\"" & n(y2) &
     "\" stroke=\"" & color & "\" stroke-width=\"1\" stroke-dasharray=\"4 3\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"></line>" &
     hiddenText(if onLeft: x - 10 else: x + 10, y1 - 10, label, if onLeft: "end" else: "") & "</g>"
@@ -324,7 +324,7 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   if showRefArea:
     let (yl, yu) = (yPos(prop(areaL)), yPos(prop(areaU)))
     layers.add "<path d=\"M" & n(xs[0]) & "," & n(yu) & "," & n(xs[^1]) & "," & n(yu) & "," & n(xs[^1]) & "," &
-      n(yl) & "," & n(xs[0]) & "," & n(yl) & "Z\" stroke=\"transparent\" stroke-width=\"2\" fill=\"" &
+      n(yl) & "," & n(xs[0]) & "," & n(yl) & "Z\" stroke=\"none\" stroke-width=\"2\" fill=\"" &
       o.referenceAreaFillColor & "\" fill-opacity=\"0.8\"></path>"
   # the data area and the data line
   if not bar:
@@ -334,7 +334,7 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
         var pts: seq[string]
         for i in a ..< b: pts.add n(xs[i]) & "," & n(ys[i])
         layers.add "<path class=\"area-closed\" d=\"M " & pts.join(" ") & " " & n(xs[b - 1]) & "," & n(bottom) & " " &
-          n(xs[a]) & "," & n(bottom) & " Z\" stroke=\"transparent\" stroke-width=\"2\" fill=\"url(#" &
+          n(xs[a]) & "," & n(bottom) & " Z\" stroke=\"none\" stroke-width=\"2\" fill=\"url(#" &
           patternId(o.dataAreaFillColor) & ")\" fill-opacity=\"0.7\"></path>"
     if o.showDataLine:
       let stroke = " stroke=\"" & o.dataLineStrokeColor & "\" stroke-width=\"" & n(o.dataLineStrokeWidth) & "\" fill=\"none\""
@@ -356,7 +356,7 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
       n(zeroY) & "\" stroke=\"" & zeroLineColor & "\" stroke-width=\"4\"></line>"
     for i in 0 ..< count:
       if y[i].isNaN:
-        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius.at(i), o.dataBarStrokeWidth.at(i), "transparent")
+        if missingVals == "marker": layers.add missingMarker(xs[i], o.dataPointRadius.at(i), o.dataBarStrokeWidth.at(i), "none")
         continue
       let (ry, h) =
         if y[i] < 0: (zeroY, ys[i] - zeroY)
@@ -381,10 +381,10 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   if o.showYAxisGuide:
     let asInt = lo.isWhole and hi.isWhole
     layers.add "<g class=\"y-axis-line\"><rect x=\"0\" y=\"0\" width=\"" & n(safeX + 15) & "\" height=\"" & n(bottomY) &
-      "\" stroke=\"transparent\" stroke-width=\"0\" fill=\"transparent\"></rect>" &
-      "<text x=\"0\" y=\"" & n(safeY + dataH / 25) & "\" fill=\"transparent\" stroke=\"transparent\" font-size=\"25\">" &
+      "\" stroke=\"none\" stroke-width=\"0\" fill=\"none\"></rect>" &
+      "<text x=\"0\" y=\"" & n(safeY + dataH / 25) & "\" fill=\"none\" stroke=\"none\" font-size=\"25\">" &
       escapeHtml(nanoplotLabel(hi, asInt, o.currency, o.yAxisFmtFn)) & "</text>" &
-      "<text x=\"0\" y=\"" & n(bottomY - dataH / 25) & "\" fill=\"transparent\" stroke=\"transparent\" font-size=\"25\">" &
+      "<text x=\"0\" y=\"" & n(bottomY - dataH / 25) & "\" fill=\"none\" stroke=\"none\" font-size=\"25\">" &
       escapeHtml(nanoplotLabel(lo, asInt, o.currency, o.yAxisFmtFn)) & "</text></g>"
   # the vertical guides: each value, on hover
   if o.showVerticalGuides:
@@ -392,7 +392,7 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
       let guide =
         if o.interactiveDataValues:
           "<rect x=\"" & n(xs[i] - 10) & "\" y=\"0\" width=\"20\" height=\"" & n(bottomY) &
-            "\" stroke=\"transparent\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) & "\" fill=\"transparent\"></rect>"
+            "\" stroke=\"none\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) & "\" fill=\"none\"></rect>"
         else:
           "<line x1=\"" & n(xs[i]) & "\" y1=\"0\" x2=\"" & n(xs[i]) & "\" y2=\"" & n(bottomY) & "\" stroke=\"" &
             o.verticalGuideStrokeColor & "\" stroke-opacity=\"0.25\" stroke-width=\"1\" vector-effect=\"non-scaling-stroke\"></line>"
@@ -422,8 +422,8 @@ proc singleValue(y: float, all: seq[float], plotType, refLine: string, o: Nanopl
     elif others.allIt(it < 0): hiddenText(zeroX - 10, mid + 10, label, "end")
     else: hiddenText(zeroX + (if plotType == "bar": 10.0 else: 15.0), mid + 10, label, "start")
   let guide = "<g class=\"horizontal-line\"><rect x=\"0\" y=\"" & n(mid - thick / 2) & "\" width=\"" & n(fixedW) &
-    "\" height=\"" & n(thick) & "\" stroke=\"transparent\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) &
-    "\" fill=\"transparent\"></rect>" & labelTag & "</g>"
+    "\" height=\"" & n(thick) & "\" stroke=\"none\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) &
+    "\" fill=\"none\"></rect>" & labelTag & "</g>"
   let zeroLine = "<line x1=\"" & n(zeroX) & "\" y1=\"" & n(y1) & "\" x2=\"" & n(zeroX) & "\" y2=\"" & n(y2) &
     "\" stroke=\"" & zeroLineColor & "\" stroke-width=\"4\"></line>"
   let refTag =
@@ -496,7 +496,7 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
   var layers = ""
   if not areaL.isNaN:
     layers.add "<rect x=\"" & n(x(areaL)) & "\" y=\"" & n(mid - thick) & "\" width=\"" & n(x(areaU) - x(areaL)) &
-      "\" height=\"" & n(2 * thick) & "\" stroke=\"transparent\" fill=\"" & o.referenceAreaFillColor & "\" fill-opacity=\"0.8\"></rect>"
+      "\" height=\"" & n(2 * thick) & "\" stroke=\"none\" fill=\"" & o.referenceAreaFillColor & "\" fill-opacity=\"0.8\"></rect>"
   layers.add "<line x1=\"" & n(x(s.low)) & "\" y1=\"" & n(mid) & "\" x2=\"" & n(x(s.high)) & "\" y2=\"" & n(mid) & "\"" & stroke & "></line>"
   layers.add "<rect x=\"" & n(x(s.q1)) & "\" y=\"" & n(top) & "\" width=\"" & n(x(s.q3) - x(s.q1)) & "\" height=\"" &
     n(thick) & "\"" & stroke & " fill=\"white\"></rect>"
@@ -511,7 +511,7 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
       for i, v in vals:
         let off = if vals.len == 1: 0.0 else: thick / 5 * (2 * ((float(i + 1) * goldenConjugate) mod 1.0) - 1)
         layers.add "<circle cx=\"" & n(x(v)) & "\" cy=\"" & n(mid + off) & "\" r=\"" & (if vals.len < 10: "6" else: "4") &
-          "\" stroke=\"#000000\" stroke-opacity=\"" & n(round(1 - vals.len / 25, 2)) & "\" stroke-width=\"2\" fill=\"transparent\"></circle>"
+          "\" stroke=\"#000000\" stroke-opacity=\"" & n(round(1 - vals.len / 25, 2)) & "\" stroke-width=\"2\" fill=\"none\"></circle>"
   let labels =
     if s.low == s.high: boxLabel(x(s.median), safeY + 15, label(s.median, o.yValFmtFn), "middle")
     else:
@@ -521,7 +521,7 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
         boxLabel(x(s.q3) + 6, bottomY - 10, label(s.q3, o.yValFmtFn), "start") &
         boxLabel(x(s.high) + 10, mid + 10, label(s.high, o.yValFmtFn), "start")
   layers.add "<g class=\"boxplot-line\"><rect x=\"0\" y=\"" & n(top) & "\" width=\"" & n(fixedW) & "\" height=\"" & n(thick) &
-    "\" stroke=\"transparent\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) & "\" fill=\"transparent\"></rect>" & labels & "</g>"
+    "\" stroke=\"none\" stroke-width=\"" & n(o.verticalGuideStrokeWidth) & "\" fill=\"none\"></rect>" & labels & "</g>"
   if not refL.isNaN:
     layers.add verticalRefLineTag(x(refL), mid - thick, mid + thick, o.referenceLineColor, label(refL, o.yRefLineFmtFn), x(refL) > fixedW / 2)
   layers

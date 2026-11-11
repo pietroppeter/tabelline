@@ -405,7 +405,3 @@ proc toHtml*(t: Tabella, makePage = false, withStyle = true): string =
 {html}
 </body></html>
 """
-
-proc save*(t: Tabella, path: string) =
-  ## Writes the table as a standalone HTML page, as gt's `gtsave("x.html")`.
-  writeFile(path, t.toHtml(makePage = true))
