@@ -75,6 +75,16 @@ of the text is about the islands.
 nbToc()
 
 nbText: """
+> Qu'est-ce que la Méditerranée ? Mille choses à la fois.
+
+*What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
+who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape, he went on, but
+countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
+islands. Braudel looked at it in three times: the slow time of the land, the sea and the
+climate, the long time of states, economies and peoples, and the quick time of events. The
+tables below follow him: first the islands' shapes, then who ruled them and how they live, then
+the events that show up as a dip in a line.
+
 ## One island to start
 
 The largest island of the Mediterranean, in one row: its outline, how big it is, how many live
@@ -232,6 +242,11 @@ By country, the islands' sizes make a box plot each, for the countries with thre
 box holds the middle half of a country's islands, the whiskers the rest, and dots the islands
 far larger than the others. Each box has its own scale, up to the country's largest island:
 everywhere most islands are small and a few are very large.
+
+Braudel called the islands *isolated worlds* and *lands of hunger*, and then qualified it:
+isolation is relative, and Sicily, a granary of the whole sea, was no such world. The
+small islands still are: only 45 of the 195 have an airport or a World Heritage site, and past
+the hundredth in size only Lampedusa and Kastellorizo have an airport.
 """
 
 nbShowCode:
@@ -273,7 +288,8 @@ nbText: """
 ## Who ruled them
 
 Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
-turn. The rulers of each main island, in order, broadly, from the first Greeks or Phoenicians to
+turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
+and pirates, places people left and places people came to. The rulers of each main island, in order, broadly, from the first Greeks or Phoenicians to
 the state they joined last:
 """
 
@@ -561,12 +577,24 @@ spanner it is written inside the label, `{{degC}}`.
 
 nbText: """
 Nicosia, inland, reaches 37 °C in August; Cres and Krk, in the north of the Adriatic, are the
-coolest in winter. The sea is warmest in August, 26 to 28 °C in the south.
+coolest in winter, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind)) comes down from
+the mountains. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
+[meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
+own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
+in Tommaso Stella's Italian):
+
+> Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
+> anziché liquido.
+
+*Above the Mediterranean there is another sea: a turbulent, throbbing ocean of air instead of
+water.*
 
 ## Something to see, a beach, a taste
 
 To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
-by hand, each with its page on Wikipedia.
+by hand, each with its page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
+(1987) is a tour of the sea's shores, ports and islands, wrote later a book on bread, *Pane
+nostro* (2010): the islands, he found, keep some of its oldest ways. A taste is a good way in.
 """
 
 nbShowCode:
@@ -602,6 +630,20 @@ labels are Font Awesome's, as SVG, from `iconSvg`, inside `html()` so the label 
 
 nbPart 2, "", prSecondary   # the closing sections: how it is built
 nbText: """
+## To read more
+
+Three books on the whole sea, which this story borrows from:
+
+- Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II*
+  (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel).
+- Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*;
+  in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography
+  told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of
+  islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
+- *Mediterraneo*, The Passenger (Iperborea, 2023): today's sea in essays and photographs, with
+  essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
+  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others.
+
 ## How this story is built
 
 From zero, in four layers. How the data was gathered, cleaned and checked is a story of its
