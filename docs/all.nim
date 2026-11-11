@@ -3,5 +3,5 @@
 ## initialised, in import order.
 {.warning[UnusedImport]: off.}
 import index, explainer, design, agents, specs, coverage, roadmap, api
-import devlog/[review_mode, datasets, blocks_review, design_review, day_one, tabellone, two_looks, palettes, three_threads, designing_0_1, designing_0_2, book_found, book_found_0_2, reference, sharing_styles, index as devlogIndex]
+import devlog/[review_mode, datasets, blocks_review, design_review, day_one, tabellone, two_looks, palettes, three_threads, designing_0_1, designing_0_2, book_found, book_found_0_2, reference, sharing_styles, polyglot_survey, polyglot, index as devlogIndex]
 import stories/[milano_cortina, fosdem_data, fosdem, index as storiesIndex]
