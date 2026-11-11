@@ -271,6 +271,8 @@ A commented text is marked in the secondary's soft colour with a line under it, 
 apart; the one open is in the secondary itself. In the quaderno, marks are the highlighter,
 underlined in red pen. `nbInReview` holds blocks shown only while reviewing; `nbVersion()` moves the version line
 where it is called. `nbDrawing` puts a drawing made with diagrammari in the page's colours,
+`nbPicture` a wide picture (a comparison, a table drawn as an image) as wide as the text with
+a caption under it, framed by a line, as `nbScreenshot` does for a phone screenshot,
 and `nbFoldCode` folds long code (see *Source files*). The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
 when the page has them.
 """

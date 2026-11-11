@@ -63,7 +63,7 @@ working rules that are easy to miss.
 - **Blocks, not HTML.** A page is Markdown in `nbText`, nimib's blocks, `nbTable`, and the blocks
   of `docs/blocks.nim` (`nbTitle`, `nbToc`, `nbNote(text, kind)`, `nbCards`/`nbCard`,
   `nbGallery`/`nbGalleryCard`, `nbTabs`, `nbShowCode`, `nbFoldCode`, `nbParts`, `nbBeside`, `nbSwatches`,
-  `nbPart`, `nbDrawing`). In a page that tells a story with tables (an explainer, a use-it post), what is
+  `nbPart`, `nbDrawing`, `nbPicture`). In a page that tells a story with tables (an explainer, a use-it post), what is
   about the code goes in `nbNote(text, nkCode)`, the green card, under the table it explains,
   with a first card that says so; the text tells the story. No HTML in `nbText`, no CSS and no colours in a page. What is needed a second time
   becomes a block in `docs/blocks.nim`; its CSS goes in `docs/theme.nim`, from the tokens.
