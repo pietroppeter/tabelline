@@ -249,7 +249,7 @@ nbCode:
     colsLabel {"winner": "grand prize", "entry": "the table", "tools": "made with", "note": "also"}
     tabStyle style.text(weight = "bold"), loc.body(cols = "winner")
     tabStyle style.text(size = "85%", color = "var(--muted)"), loc.body(cols = "note")
-    tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it["year"] == 2025))
+    tabFootnote "The 2025 winners were announced on 10 November 2025.", loc.body(cols = "winner", rows = where(it.year == 2025))
     tabSourceNote md("Posit blog, [2020](https://www.r-bloggers.com/2020/12/winners-of-the-2020-rstudio-table-contest/), [2021](https://www.r-bloggers.com/2021/12/winners-of-the-2021-table-contest/), [2022](https://posit.co/blog/winners-of-the-2022-table-contest/), [2024](https://posit.co/blog/2024-table-contest-winners/), [2025](https://posit.co/blog/2025-table-contest-winners/)")
     optStylize(style = 1, color = "blue")
 nbTable contestTable
@@ -360,7 +360,10 @@ nbText: """
   `startsWith("pop")`, ...). It is resolved when the verb is called, so a typo fails at once,
   with the list of the columns there are.
 - `RowSel` selects rows: indices (`[0, 2]`, `0..3`) or a predicate,
-  `where(it["type"] == "Gas giant")`, which reads like Nim's `filterIt`.
+  `where(it["type"] == "Gas giant")`. `it` is a Nim idiom: in `filterIt`, `mapIt` and the
+  other `...It` templates of `std/sequtils`, the template names the current element `it` for
+  the code you write. `where` does the same: it turns the condition into a proc of one row,
+  named `it`.
 - `loc` and `style` are empty objects used as namespaces, so `loc.body(cols = "mass")` and
   `style.fill("var(--warning-soft)") & style.text(weight = "bold")` read exactly like Great Tables.
 - `TabOptions` uses Nim 2's default field values for its options.
@@ -432,8 +435,36 @@ let small3 = tabella(tavolaPitagorica(3), rownameCol = "×"):
 small3.save("tavola.html")
 ```
 
-Each table carries its own CSS, scoped to its id, so it looks the same on any page, unless you ask
-it to take the page's colours ([tables that follow the page](#tables-that-follow-the-page)).
+### A table's HTML and its style
+
+`small3.toHtml` is a `<div class="tabella">` holding the `<table>`, and in front of it a `<style>`
+with `tabellaCss`: the rules of every table, the same for all of them. Each value in those rules
+is a CSS variable named after its option, with the default as fallback, so a table sets on its
+`<div>` only the options it changes:
+
+```html
+<div id="tabella-1f2e" class="tabella" style="--tb-table-font-size: 14px">
+<style> :where(.tabella):not(#_) .tb_table { font-size: var(--tb-table-font-size, 16px); ... } </style>
+<table class="tb_table"> ... </table>
+</div>
+```
+
+So a table looks the same on any page, unless you ask it to take the page's colours
+([tables that follow the page](#tables-that-follow-the-page)). A page can also set an option for
+all its tables at once: `.tabella { --tb-table-font-size: 14px }`. A table that takes the page's
+theme (`optCssTheme()`) gets the class `tb_css_theme` instead of the theme's variables: one rule in
+`tabellaCss` sets them for every such table.
+
+A page with many tables needs the rules once. `small3.toHtml(withStyle = false)` leaves the
+`<style>` out: write `tabellaStyle` (the `<style>` element) once, or save `tabellaCss` to a file
+and link it from every page of a site, and then each table without it. `nbTable` does this by
+itself: the first table of a page carries the rules, the others do not.
+
+Every rule starts with `:where(.tabella):not(#_)`: it picks every table and weighs as much as an
+id, so a rule of the page's own stylesheet wins or loses against the table's as it would against
+`#id`. Rules of one table only (`optCss`, the vertical lines) stay in a `<style>` of that table,
+scoped to its id. Why, and the other ways we considered:
+[One stylesheet for every table](../devlog/sharing-styles/).
 
 ### In nimib
 
@@ -517,10 +548,10 @@ nbCode:
   t = tabella(t):
     dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
     tabStyle style.fill("var(--warning-soft)") & style.text(weight = "bold"),
-             loc.stub(rows = where(it["planet"] == "Earth"))
+             loc.stub(rows = where(it.planet == "Earth"))
     tabFootnote "Known moons as of 2024; the counts keep growing.", loc.columnLabels("moons")
     tabFootnote "Venus is hotter than Mercury: its thick atmosphere traps the heat.",
-                loc.body(cols = "mean_temp", rows = where(it["planet"] == "Venus"))
+                loc.body(cols = "mean_temp", rows = where(it.planet == "Venus"))
     tabSourceNote md("Source: NASA, [Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/).")
 nbTable t
 
@@ -681,8 +712,8 @@ nbCode:
     euro: [1100.0, 950, 150, 520, 400.25, 119.75, 30]
   let month = tabella(budget, rownameCol = "item"):
     tabHeader "A month's budget"
-    tabStubIndent where($it["item"] in ["rent", "bills", "groceries", "eating out"]), 1
-    rowsHide where($it["item"] == "old phone plan")
+    tabStubIndent where($it.item in ["rent", "bills", "groceries", "eating out"]), 1
+    rowsHide where($it.item == "old phone plan")
     rowsAdd [(item: "Total", euro: 1620.0)]
     fmtNumber "euro", decimals = 2, dropTrailingZeros = true
     colsAlignDecimal "euro"
@@ -902,6 +933,29 @@ nbCode:
 nbTable squares
 
 nbText: """
+### Columns and fields by name
+
+In a row predicate, `it` is the row (the Nim idiom of `filterIt`, seen in
+[Small types for small ideas](#small-types-for-small-ideas)), and `it.mass` is its column
+`mass`, the same as `it["mass"]`. A cell can also hold more than one value: a list (from a `seq`) or a
+record (from an object or a named tuple), and `v.name` is a field of a record:
+"""
+nbCode:
+  let sistema = tableData:
+    planet: ["Earth", "Mars", "Jupiter"]
+    moons: [@["Moon"], @["Phobos", "Deimos"], @["Io", "Europa", "Ganymede", "Callisto"]]
+    biggest: [(name: "Moon", km: 3474.8), (name: "Phobos", km: 22.5), (name: "Ganymede", km: 5268.2)]
+  let lune = tabella(sistema, rownameCol = "planet"):
+    rowsHide where(it.moons.len < 2)
+    fmtNumber "biggest", decimals = 0
+  echo lune
+  echo sistema["biggest", 2].name
+
+nbNote("""
+The dot is a Nim *dot operator*: when a name is not a field or a proc of the value, `it.mass` becomes `it["mass"]`. So a name the value already has (`kind`, `len`, `index`) is that, and a Nim keyword (`type`) cannot follow a dot: write `it["type"]`. A misspelled name is found when the code runs, not when it compiles. A format works on each item of a list and each field of a record; icons, images, flags and nanoplots take a list whole.
+""", nkCode)
+
+nbText: """
 ### Pairs as blocks
 
 Some verbs take a list of pairs: a label and its value, as `colsLabel`, `colsWidth`,
@@ -1068,17 +1122,14 @@ block:
   nbText "```nim\n" & verbs[a ..< b].strip & "\n```"
 
 nbText: """
-**The table's CSS.** Every table carries its own CSS, scoped to its id, and writes the value
-of each option as it is. So the variables reach the browser untouched; these are the declarations
-that name them, in the CSS of the table on the right above:
+**The table's CSS.** Every table shares one stylesheet, `tabellaCss`, where each value is a
+variable named after its option, and a table sets on its `<div>` the options it changes. So the
+page's variables reach the browser untouched; these are the ones the table on the right above
+sets:
 """
 nbCode:
-  var seen: seq[string]
-  for declaration in small.optCssTheme().toHtml.split({'{', '}', ';'}):
-    let d = declaration.strip
-    if "var(--" in d and d notin seen:
-      seen.add d
-      echo d
+  for v in styleVars(small.optCssTheme().options).split("; "):
+    echo v
 
 nbText: """
 **The page's variables.** On these pages they are not written one by one. `docs/theme.nim` gives

@@ -335,7 +335,7 @@
      "feature": "Plots in cells",
      "gt": "fmt_nanoplot(), cols_nanoplot()",
      "status": "partial",
-     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text. Not yet: x values, per-point options.",
+     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text; a list of numbers or a record of x and y in a cell. Not yet: x values as dates, per-point options.",
      "plan": "0.2",
      "size": "L"
     },

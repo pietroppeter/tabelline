@@ -337,16 +337,29 @@ sugar, and it changes how a signature reads:
 - **Converters fill in the types.** An argument of type [`Text`](#Text) takes a plain string
   ([`toText`](#toText)); a [`ColSel`](#ColSel), a column's name or a list of names
   ([`toColSel`](#toColSel)); a [`RowSel`](#RowSel), a row, a list or a range of rows
-  ([`toRowSel`](#toRowSel)), or [`where`](#where) with a condition on `it`.
+  ([`toRowSel`](#toRowSel)), or [`where`](#where) with a condition on `it`. A cell's
+  [`Value`](#Value) comes from a number, a text or a date, a list from a `seq`, and a record
+  from an object or a named tuple ([`toValue`](#toValue)); [`list`](#list) and
+  [`record`](#record) make them by hand.
+- **The dot reads by name.** `it.mass` is `it["mass"]` on a [`Row`](#Row), and `v.x` is
+  `v["x"]` on a record: a template `` `.` `` under Nim's experimental `dotOperators`, which the
+  compiler calls only when the name is not a field or a proc. So a name the type already has
+  (`kind`, `len`) is that, and a keyword (`type`) needs brackets.
 
 Beside types, a signature uses a few words of Nim. The one you meet most is `sink`, on the table
 every verb takes. It tells Nim that the proc takes ownership of the value: when the caller does
 not use it again, as in a chain or a `tabella` body, Nim moves it instead of copying it; when the
 caller does, Nim copies it. The code means the same either way, and you never write `sink`
-yourself. Nim has no one name for these words. Its manual speaks of *sink parameters* and *var
-parameters*, and of `lent` as a borrowed result, all part of its move semantics; `openArray`,
-`varargs` and `static` are types made for parameters. The [guide](../explainer/#the-spec) has a
-note on `sink` too.
+yourself.
+
+`sink` and `lent` are Nim's *move semantics* annotations (the manual speaks of sink parameters,
+and of `lent` as a borrowed result). They come from the same idea as Rust's ownership and
+borrowing, but as an opt-in: Rust's borrow checker rejects code that uses a value after giving it
+away, while Nim, which manages memory for you, takes these words as permission to move a value
+instead of copying it. Where it cannot move, it copies, so the code compiles either way: the
+compiler gets to optimise, and you never fight it. `var` marks a parameter the proc may change;
+`openArray`, `varargs` and `static` are something else, types made for parameters. The
+[guide](../explainer/#the-spec) has a note on `sink` too.
 """
 
 block:

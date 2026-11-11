@@ -14,20 +14,25 @@
 import std/[strutils, math, options, sequtils, tables]
 export options
 
+{.experimental: "dotOperators".}
+
 # ------------------------------------------------------------------------------------------ values
 
 type
   ValueKind* = enum
-    vkNull, vkBool, vkInt, vkFloat, vkString
+    vkNull, vkBool, vkInt, vkFloat, vkString, vkList, vkRecord
 
   Value* = object
-    ## One cell of the table data. `vkNull` is a missing value.
+    ## One cell of the table data. `vkNull` is a missing value. A cell can hold more than one
+    ## value: a list (`@[1, 4, 2]`) or a record (`(x: 1, y: 2)`), with fields in order.
     case kind*: ValueKind
     of vkNull: discard
     of vkBool: b*: bool
     of vkInt: i*: int
     of vkFloat: f*: float
     of vkString: s*: string
+    of vkList: items*: seq[Value]
+    of vkRecord: fields*: seq[(string, Value)]
 
 func null*(): Value = Value(kind: vkNull)
 func toValue*(v: Value): Value = v
@@ -41,26 +46,92 @@ func toValue*(x: enum): Value = Value(kind: vkString, s: $x)
 func toValue*[T](x: Option[T]): Value =
   if x.isSome: toValue(x.get) else: Value(kind: vkNull)
 func toValue*(x: typeof(nil)): Value = Value(kind: vkNull)
+func list*(items: varargs[Value, toValue]): Value =
+  ## A list of values in one cell: `list(1, 4, 2)`.
+  Value(kind: vkList, items: @items)
+func record*(fields: openArray[(string, Value)]): Value =
+  ## A record in one cell, its fields in order: `record({"x": toValue(1), "y": toValue(2)})`.
+  Value(kind: vkRecord, fields: @fields)
+func toValue*[T](x: seq[T]): Value =
+  ## A seq is a list: `toValue(@[1, 4, 2])`.
+  result = Value(kind: vkList)
+  for e in x: result.items.add toValue(e)
+func toValue*[I, T](x: array[I, T]): Value =
+  result = Value(kind: vkList)
+  for e in x: result.items.add toValue(e)
+func toValue*[T: object | tuple](x: T): Value =
+  ## An object or a named tuple is a record, its fields in order, as `toTableData` reads them:
+  ## `toValue((x: 1.5, y: 2.0))`.
+  result = Value(kind: vkRecord)
+  for name, field in fieldPairs(x): result.fields.add (name, toValue(field))
 
 func isNull*(v: Value): bool = v.kind == vkNull
 func isNumber*(v: Value): bool = v.kind in {vkInt, vkFloat}
+func isList*(v: Value): bool = v.kind == vkList
+func isRecord*(v: Value): bool = v.kind == vkRecord
 
 func toFloat*(v: Value): float =
-  ## The value as a float; NaN for anything that is not a number.
+  ## The value as a float; NaN for anything else that is not a number. Raises `ValueError` for a
+  ## list or a record: they hold several values.
   case v.kind
   of vkInt: float(v.i)
   of vkFloat: v.f
   of vkBool: (if v.b: 1.0 else: 0.0)
+  of vkList, vkRecord: raise newException(ValueError, "a list or a record is not a number")
   else: NaN
 
+func len*(v: Value): int =
+  ## The number of items of a list or fields of a record; 0 for any other value.
+  case v.kind
+  of vkList: v.items.len
+  of vkRecord: v.fields.len
+  else: 0
+
+func `[]`*(v: Value, i: int): Value =
+  ## An item of a list: `v[0]`. Raises `IndexDefect` beyond its end, `ValueError` for a value
+  ## that is not a list.
+  if v.kind != vkList: raise newException(ValueError, "not a list: " & $v.kind)
+  v.items[i]
+
+func contains*(v: Value, name: string): bool =
+  ## Whether a record has a field `name`: `"x" in v`.
+  if v.kind == vkRecord:
+    for (k, _) in v.fields:
+      if k == name: return true
+
+func `[]`*(v: Value, name: string): Value =
+  ## A field of a record: `v["x"]` (or `v.x`). Raises `KeyError` for a field it does not have.
+  if v.kind != vkRecord: raise newException(KeyError, "not a record, so no field " & name.escape)
+  for (k, x) in v.fields:
+    if k == name: return x
+  var names: seq[string]
+  for (k, _) in v.fields: names.add k
+  raise newException(KeyError, "no field " & name.escape & " (fields: " & names.join(", ") & ")")
+
+template `.`*(v: Value, field: untyped): Value =
+  ## A field of a record by its name: `v.x` is `v["x"]`. A name that Value already has (`kind`,
+  ## `i`, `f`, `s`, `b`, `items`, `fields`, `len`, ...) is that, not the field: write `v["kind"]`.
+  v[astToStr(field)]
+
+func `$`*(v: Value): string
+
+func nested(v: Value): string =
+  case v.kind
+  of vkList: "[" & $v & "]"
+  of vkRecord: "{" & $v & "}"
+  else: $v
+
 func `$`*(v: Value): string =
-  ## The value as plain text, unformatted ("" for a missing value).
+  ## The value as plain text, unformatted ("" for a missing value): a list is "1, 4, 2", a record
+  ## "x: 1, y: 2" (a list or record inside one in brackets, "[1, 2]", "{x: 1}").
   case v.kind
   of vkNull: ""
   of vkBool: $v.b
   of vkInt: $v.i
   of vkFloat: $v.f
   of vkString: v.s
+  of vkList: v.items.mapIt(nested(it)).join(", ")
+  of vkRecord: v.fields.mapIt(it[0] & ": " & nested(it[1])).join(", ")
 
 func `==`*(a, b: Value): bool =
   if a.kind != b.kind:
@@ -72,6 +143,8 @@ func `==`*(a, b: Value): bool =
   of vkInt: a.i == b.i
   of vkFloat: a.f == b.f
   of vkString: a.s == b.s
+  of vkList: a.items == b.items
+  of vkRecord: a.fields == b.fields
 
 # comparisons with plain Nim values, for row predicates: `where(it["mass"] > 1.0)`
 func `==`*(a: Value, b: SomeNumber): bool = a.isNumber and a.toFloat == float(b)
@@ -83,9 +156,26 @@ func `<=`*(a: Value, b: SomeNumber): bool = a.isNumber and a.toFloat <= float(b)
 func `<=`*(a: SomeNumber, b: Value): bool = b.isNumber and float(a) <= b.toFloat
 func `<`*(a: Value, b: string): bool = a.kind == vkString and a.s < b
 func `<`*(a, b: Value): bool =
+  ## Numbers and texts in order; lists item by item, as words are; anything else is not ordered.
   if a.isNumber and b.isNumber: a.toFloat < b.toFloat
   elif a.kind == vkString and b.kind == vkString: a.s < b.s
+  elif a.kind == vkList and b.kind == vkList:
+    for k in 0 ..< min(a.items.len, b.items.len):
+      if a.items[k] < b.items[k]: return true
+      if b.items[k] < a.items[k]: return false
+    a.items.len < b.items.len
   else: false
+
+func cellNames*(v: Value): seq[string] =
+  ## The names in a cell, for verbs that take several (icons, images, flags): the items of a
+  ## list, or the parts of a text separated by commas.
+  if v.kind == vkList:
+    for x in v.items:
+      if not x.isNull: result.add ($x).strip
+  else:
+    for part in ($v).split(','):
+      let p = part.strip
+      if p.len > 0: result.add p
 
 # -------------------------------------------------------------------------------------------- data
 
@@ -221,11 +311,16 @@ proc readCsv*(path: string, sep = ',', comment = ""): TableData =
   parseCsv(readFile(path), sep, comment)
 
 type Row* = object
-  ## One row of the data, as seen by a row predicate (`where`): `it["mass"]`, `it.index`.
+  ## One row of the data, as seen by a row predicate (`where`): `it.mass`, `it.index`.
   data*: TableData
   index*: int
 
 func `[]`*(r: Row, name: string): Value = r.data[name, r.index]
+
+template `.`*(r: Row, field: untyped): Value =
+  ## A column of the row by its name: `where(it.mass > 1)` is `where(it["mass"] > 1)`. A name
+  ## that Row already has (`data`, `index`) is that, not the column: write `it["index"]`.
+  r[astToStr(field)]
 
 # -------------------------------------------------------------------------------------------- text
 
@@ -288,7 +383,7 @@ type
     rsAll, rsIndices, rsWhere
   RowSel* = object
     ## Which rows a verb applies to: all of them (the default), indices (`[0, 2]`, `0..3`, 0-based)
-    ## or a predicate (`where(it["mass"] > 1)`).
+    ## or a predicate (`where(it.mass > 1)`).
     case kind*: RowSelKind
     of rsIndices: indices*: seq[int]
     of rsWhere: pred*: proc (r: Row): bool
@@ -393,6 +488,7 @@ type
     fn*: FormatFn
     nullsToo*: bool         ## also called on missing values (substitutions are)
     applies*: proc (v: Value): bool  ## a substitution: the values it replaces, even with ""
+    wholeValue*: bool       ## takes a list or record whole (pictures); else item by item
 
   LocKind* = enum
     lkTitle, lkSubtitle, lkStubhead, lkSpanners, lkColumnLabels, lkStub, lkRowGroups, lkBody,
@@ -651,3 +747,32 @@ func hasStub*(t: Tabella): bool = t.rownameCol.len > 0 or t.hasSummaries
   ## with summary rows and no row names gets an empty stub).
 func hasRowNames*(t: Tabella): bool = t.rownameCol.len > 0
 func hasGroups*(t: Tabella): bool = t.groupLabels.len > 0
+
+type PatternRef* = object
+  ## One `{...}` of a merge pattern: `{2}` is column 2, `{2.lo}` the field `lo` of the record in
+  ## column 2, and `{lo}` the field `lo` of column 1.
+  column*: int      ## from 0
+  field*: string    ## "" for the whole value
+
+func patternRefs*(pattern: string): seq[(string, PatternRef)] =
+  ## The `{...}` of `pattern`, with the text inside the braces; a `{` with no `}` is text.
+  var i = 0
+  while i < pattern.len:
+    if pattern[i] == '{':
+      let j = pattern.find('}', i + 1)
+      if j < 0: break
+      let tok = pattern[i + 1 ..< j]
+      let dot = tok.find('.')
+      let head = if dot < 0: tok else: tok[0 ..< dot]
+      var r: PatternRef
+      var ok = true
+      try:
+        r.column = parseInt(head) - 1
+        if dot >= 0: r.field = tok[dot + 1 .. ^1]
+      except ValueError:
+        r.column = 0
+        r.field = tok
+        ok = tok.len > 0 and tok.allIt(it.isAlphaNumeric or it == '_')
+      if ok: result.add (tok, r)
+      i = j
+    inc i

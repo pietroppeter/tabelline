@@ -389,8 +389,8 @@ gt(airquality_mini) |>
   nbCode:
     # a style for the rows where Temp > 70, another for the others
     let byTemp = tabella(airMini):
-      tabStyle style.fill("lightyellow"), loc.body("Temp", where(it["Temp"] > 70))
-      tabStyle style.fill("lightblue"), loc.body("Temp", where(not (it["Temp"] > 70)))
+      tabStyle style.fill("lightyellow"), loc.body("Temp", where(it.Temp > 70))
+      tabStyle style.fill("lightblue"), loc.body("Temp", where(not (it.Temp > 70)))
     nbTable byTemp
 
 tabelline """
@@ -429,7 +429,7 @@ gt(airquality_mini) |>
   nbCode:
     let mixed = tabella(airMini):
       tabStyle style = style.fill(color = "yellow"),
-               locations = loc.body(cols = startsWith("Te"), rows = where(it["Temp"] > 70))
+               locations = loc.body(cols = startsWith("Te"), rows = where(it.Temp > 70))
     nbTable mixed
 
 nbText: """

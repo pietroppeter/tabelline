@@ -112,13 +112,13 @@ nbShowCode:
     fmtInteger "athletes"
     textReplace "Milan Cortina d'Ampezzo", "Milano Cortina", loc.body(cols("host"))
     textReplace "Garmisch-Partenkirchen", "Garmisch", loc.body(cols("host"))
-    tabStyle style.fill(gilt), loc.body(rows = where(it["country"] == "Italy"))
-    tabStyle style.fill(gilt), loc.stub(rows = where(it["country"] == "Italy"))
-    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
-    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.fill(gilt), loc.body(rows = where(it.country == "Italy"))
+    tabStyle style.fill(gilt), loc.stub(rows = where(it.country == "Italy"))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it.year.toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it.year.toFloat == 2026))
     tabStyle style.text(size = "11px"), loc.body(cols("n"))
     tabFootnote "2,884 in the article on these Games, the first table's source.",
-      loc.body(cols("athletes"), rows = where(it["year"].toFloat == 2026))
+      loc.body(cols("athletes"), rows = where(it.year.toFloat == 2026))
     tabSourceNote md("Wikipedia, [Winter Olympic Games § List](https://en.wikipedia.org/wiki/Winter_Olympic_Games).")
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
   nbTable t
@@ -256,11 +256,11 @@ nbShowCode:
       locations = loc.body(cols("status"))
     textReplace "Milano ", "", loc.stub()
     textCaseMatch sportMarks(), replace = "partial", locations = loc.body(cols("events"))
-    tabStyle style.fill(fresh), loc.body(rows = where(it["status"] == "New"))
-    tabStyle style.fill(fresh), loc.stub(rows = where(it["status"] == "New"))
+    tabStyle style.fill(fresh), loc.body(rows = where(it.status == "New"))
+    tabStyle style.fill(fresh), loc.stub(rows = where(it.status == "New"))
     rowGroupOrder ["Milan", "Valtellina", "Val di Fiemme", "Cortina d'Ampezzo", "Verona"]
     tabFootnote "Anterselva is in South Tyrol, but belongs to Cortina's cluster.",
-      loc.stub(rows = where(it["venue"] == "Anterselva Biathlon Arena"))
+      loc.stub(rows = where(it.venue == "Anterselva Biathlon Arena"))
     tabSourceNote md("Wikipedia, [2026 Winter Olympics § Venues](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Venues).")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -319,9 +319,9 @@ nbShowCode:
     tabHeader "116 events, 16 sports", "in green, what is new in 2026"
     colsLabel {"events": "events", "new": "new"}
     textCaseMatch kindLabels, locations = loc.rowGroups()
-    tabStyle style.fill(fresh), loc.body(rows = where($it["new"] != ""))
-    tabStyle style.fill(fresh), loc.stub(rows = where($it["new"] != ""))
-    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["sport"] == "Ski mountaineering"))
+    tabStyle style.fill(fresh), loc.body(rows = where($it.new != ""))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it.new != ""))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it.sport == "Ski mountaineering"))
     tabStyle style.text(size = "12px"), loc.body(cols("new"))
     tabSourceNote md("Wikipedia, [2026 Winter Olympics § Sports](https://en.wikipedia.org/wiki/2026_Winter_Olympics#Sports).")
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
@@ -431,7 +431,7 @@ nbShowCode:
       colsLabel {"gold": "🥇", "silver": "🥈", "bronze": "🥉", "total": "all"}
       rowOrder order, reverse = true
       tabStyle style.text(weight = "bold"), loc.body(cols(if byTotal: "total" else: "gold"))
-      tabStyle style.fill(gilt), loc.body(rows = where(it["team"] == "Italy"))
+      tabStyle style.fill(gilt), loc.body(rows = where(it.team == "Italy"))
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
   nbBeside:
@@ -472,7 +472,7 @@ nbShowCode:
     colsLabel {"code": "", "team": "first", "gold": "🥇", "italy": "🇮🇹 🏅"}
     textCaseMatch kindLabels, locations = loc.rowGroups()
     subZero "italy", zeroText = "—"
-    tabStyle style.fill(gilt), loc.body(cols("italy"), rows = where(it["italy"].toFloat >= 4))
+    tabStyle style.fill(gilt), loc.body(cols("italy"), rows = where(it.italy.toFloat >= 4))
     tabStyle style.text(size = "12px"), loc.body(cols("team"))
     tabSourceNote md("Wikipedia, the 16 articles *<sport> at the 2026 Winter Olympics*, each with its medal table.")
     tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
@@ -506,10 +506,10 @@ nbShowCode:
     colsHide ["gold", "silver", "bronze"]
     colsLabel {"host": "", "athletes": "athletes", "total": "🏅", "rank": "rank"}
     dataColor "total", palette = soft
-    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
-    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it.year.toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.stub(rows = where(it.year.toFloat == 2026))
     tabFootnote "At home, and fewer medals than four years before.",
-      loc.stub(rows = where(it["year"].toFloat == 2006))
+      loc.stub(rows = where(it.year.toFloat == 2006))
     tabSourceNote md("Wikipedia, [Italy at the Winter Olympics](https://en.wikipedia.org/wiki/Italy_at_the_Winter_Olympics); rank by golds.")
     tabOptions(tableFontSize = "13px", dataRowPadding = "4px")
   nbTable t
@@ -564,7 +564,7 @@ nbShowCode:
       fmtFlag "code"
       colsLabel {"code": "", "gold": "🥇", "total": "all"}
       colsMoveToEnd "code"
-      tabStyle style.fill(gilt), loc.body(rows = where(it["team"] == "Italy"))
+      tabStyle style.fill(gilt), loc.body(rows = where(it.team == "Italy"))
       tabOptions(tableFontSize = "13px", dataRowPadding = "3px")
 
   nbBeside:
@@ -655,14 +655,14 @@ nbShowCode:
     colsLabel {"code": "", "gold": "🥇", "silver": "🥈", "bronze": "🥉"}
     colsMoveToEnd "code"
     fmtCurrency ["gold", "silver", "bronze"], currency = "EUR", decimals = 0,
-      rows = where(it["currency"] == "EUR")
+      rows = where(it.currency == "EUR")
     fmtCurrency ["gold", "silver", "bronze"], currency = "USD", decimals = 0,
-      rows = where(it["currency"] == "USD")
+      rows = where(it.currency == "USD")
     subZero ["gold", "silver", "bronze"], zeroText = "nothing"
     dataColor "gold", palette = soft
-    tabFootnote "Poland's figures are approximate.", loc.stub(rows = where(it["country"] == "Poland"))
-    tabFootnote "Paid in dollars.", loc.stub(rows = where(it["currency"] == "USD"))
-    tabFootnote "No prize: private sponsors fund the athletes.", loc.stub(rows = where(it["gold"].toFloat == 0))
+    tabFootnote "Poland's figures are approximate.", loc.stub(rows = where(it.country == "Poland"))
+    tabFootnote "Paid in dollars.", loc.stub(rows = where(it.currency == "USD"))
+    tabFootnote "No prize: private sponsors fund the athletes.", loc.stub(rows = where(it.gold.toFloat == 0))
     tabSourceNote md(&"Il Post, {link(prizesSource, \"23 February 2026\")}.")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -721,7 +721,7 @@ nbShowCode:
     textCaseMatch {"dropped": "<i>dropped</i>"}, locations = loc.body(cols("fate"))
     dataColor "times", palette = soft, domain = (1.0, 5.0)
     tabFootnote "Il Post, after the TV programme Report: from refurbishing to demolishing, five times the cost.",
-      loc.body(cols("times"), rows = where(it["place"] == "Predazzo"))
+      loc.body(cols("times"), rows = where(it.place == "Predazzo"))
     tabSourceNote md(&"Il Post: {link(estimatesSources[0], \"7 Mar 2025\")}, {link(estimatesSources[1], \"2 Feb 2026\")}, {link(estimatesSources[2], \"8 Oct 2026\")}.")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -830,7 +830,7 @@ nbShowCode:
     fmtPercent "more", decimals = 0
     subZero "more", zeroText = "—"
     tabStyle style.css("white-space: nowrap"), loc.body(cols("co2"))
-    tabStyle style.text(weight = "bold"), loc.body(rows = where(it["year"].toFloat == 2026))
+    tabStyle style.text(weight = "bold"), loc.body(rows = where(it.year.toFloat == 2026))
     tabSourceNote md("NOAA GML and Scripps, [monthly means at Mauna Loa](https://gml.noaa.gov/ccgg/trends/data.html), public data.")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -859,8 +859,8 @@ nbShowCode:
     fmtNumber "tonnes", compact = true, pattern = "{x} t"
     fmtNumber "snowKm2", decimals = 1, pattern = "{x} km²"
     fmtNumber "iceMt", decimals = 0, pattern = "{x} Mt"
-    tabStyle style.text(style = "italic"), loc.body(rows = where($it["what"] in ["spectators' travel", "Eni alone"]))
-    tabStyle style.text(style = "italic"), loc.stub(rows = where($it["what"] in ["spectators' travel", "Eni alone"]))
+    tabStyle style.text(style = "italic"), loc.body(rows = where($it.what in ["spectators' travel", "Eni alone"]))
+    tabStyle style.text(style = "italic"), loc.stub(rows = where($it.what in ["spectators' travel", "Eni alone"]))
     tabStyle style.css("white-space: nowrap"), loc.body()
     tabFootnote "Over 14 Mt and over 20 Mt: the report gives lower bounds.", loc.columnLabels(cols("iceMt"))
     tabSourceNote md(&"SGR and New Weather Institute, [Olympics Torched]({footprintReport}), January 2026; figures from [its summary]({footprintSource}).")
@@ -896,7 +896,7 @@ nbShowCode:
     fmtInteger "venues"
     dataColor "venues", palette = soft
     tabFootnote "Two of them from Turin 2006: the ski jumps of Pragelato and the sliding track of Cesana.",
-      loc.stub(rows = where(it["fate"] == "Permanent, abandoned"))
+      loc.stub(rows = where(it.fate == "Permanent, abandoned"))
     tabSourceNote md(&"The IOC, via Il Post, {link(iocSource, \"30 October 2025\")}.")
   nbTable t
 
@@ -920,8 +920,8 @@ nbShowCode:
     colsLabel {"built": "", "becomes": "becomes"}
     textTransform(proc (s: string): string = s.toUpperAscii, loc.body(cols("built")))
     tabStyle style.text(size = "11px", weight = "bold"), loc.body(cols("built"))
-    tabStyle style.fill(fresh), loc.body(rows = where($it["built"] in ["new", "rebuilt"]))
-    tabStyle style.fill(fresh), loc.stub(rows = where($it["built"] in ["new", "rebuilt"]))
+    tabStyle style.fill(fresh), loc.body(rows = where($it.built in ["new", "rebuilt"]))
+    tabStyle style.fill(fresh), loc.stub(rows = where($it.built in ["new", "rebuilt"]))
     tabSourceNote md(&"Il Post, {link(afterwardsSources[0], \"25 Feb 2026\")}, {link(afterwardsSources[1], \"22 Jan 2026\")}, {link(afterwardsSources[2], \"8 Oct 2026\")}.")
     tabOptions(tableFontSize = "14px")
   nbTable t
@@ -945,8 +945,8 @@ nbShowCode:
     fmtUrl "path", label = "Il Post ↗"
     tabStyle style.css("white-space: nowrap"), loc.body(cols("path"))
     tabStyle style.css("white-space: nowrap"), loc.stub()
-    tabStyle style.text(style = "italic"), loc.body(rows = where(it["date"] == "2026-12-08"))
-    tabFootnote "Not yet: planned.", loc.stub(rows = where(it["date"] == "2026-12-08"))
+    tabStyle style.text(style = "italic"), loc.body(rows = where(it.date == "2026-12-08"))
+    tabFootnote "Not yet: planned.", loc.stub(rows = where(it.date == "2026-12-08"))
     tabOptions(tableFontSize = "14px")
   nbTable t
 

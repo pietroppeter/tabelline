@@ -273,8 +273,8 @@ gt_air |>
   nbCode:
     # a style for the rows where Temp > 70, another for the others
     let byTemp = tabella(gtAir):
-      tabStyle style.fill("lightyellow"), loc.body("Temp", where(it["Temp"] > 70))
-      tabStyle style.fill("lightblue"), loc.body("Temp", where(not (it["Temp"] > 70)))
+      tabStyle style.fill("lightyellow"), loc.body("Temp", where(it.Temp > 70))
+      tabStyle style.fill("lightblue"), loc.body("Temp", where(not (it.Temp > 70)))
     nbTable byTemp
 
 tabelline """
@@ -353,7 +353,7 @@ gt_air |>
   nbCode:
     nbTable gtAir.tabStyle(
       style = style.fill(color = "yellow"),
-      locations = loc.body(cols = startsWith("Te"), rows = where(it["Temp"] > 70)))
+      locations = loc.body(cols = startsWith("Te"), rows = where(it.Temp > 70)))
 
 nbText: """
 See [Column Selection](column_selection.html) for details on selecting columns.
@@ -385,7 +385,7 @@ gt_air |>
   nbCode:
     nbTable gtAir.tabStyle(
       style = style.fill(color = "yellow"),
-      locations = loc.body(cols = startsWith("Te"), rows = where(it["Temp"] > 70)))
+      locations = loc.body(cols = startsWith("Te"), rows = where(it.Temp > 70)))
 
 nbText: """
 ## Multiple styles and locations
@@ -472,7 +472,7 @@ gt_air |>
     nbTable gtAir.tabStyle(
       style = style.fill(color = "yellow"),
       locations = loc.body(cols = ["Ozone", "Solar_R", "Wind", "Temp"],
-                           rows = where(it["Temp"] == maxTemp)))
+                           rows = where(it.Temp == maxTemp)))
 
 tabelline """
 tabelline has no `exclude` selector, nor a way to combine selectors (gaps): the columns are

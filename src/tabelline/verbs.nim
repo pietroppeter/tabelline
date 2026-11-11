@@ -592,11 +592,12 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
         let x = v.toFloat
         if lo.isNaN or x < lo: lo = x
         if hi.isNaN or x > hi: hi = x
-      elif not v.isNull and $v notin levels: levels.add $v
+      elif not v.isNull and v.kind notin {vkList, vkRecord} and $v notin levels: levels.add $v
     if not domain[0].isNaN: lo = domain[0]
     if not domain[1].isNaN: hi = domain[1]
     for i in ix:
       let v = result.data[n, i]
+      if v.kind in {vkList, vkRecord}: continue   # several values: no one colour
       let c =
         if v.isNull: naColor
         elif numericCol and v.isNumber:
@@ -842,6 +843,20 @@ proc addMerge(t: var Tabella, kind: MergeKind, columns: seq[string], rows: RowSe
               autohide: bool) =
   for c in columns: discard t.data[c]       # raises on a column that does not exist
   let ix = if rows.kind == rsAll: @[] else: rows.resolve(t.data)
+  for (tok, r) in patternRefs(pattern):     # a field the pattern reads is in every record
+    if r.column notin 0 ..< columns.len:
+      raise newException(ValueError, "the pattern names {" & tok & "}, but there are " &
+        $columns.len & " columns")
+    if r.field.len > 0:
+      for row in (if ix.len > 0: ix else: toSeq(0 ..< t.data.nrows)):
+        let v = t.data[columns[r.column], row]
+        if v.isNull: continue
+        if v.kind != vkRecord:
+          raise newException(ValueError, "{" & tok & "} reads a field, but column " &
+            columns[r.column] & " holds " & $v.kind & " values, not records")
+        if r.field notin v:
+          raise newException(ValueError, "{" & tok & "}: the record in column " & columns[r.column] &
+            " has no field " & r.field & " (it has " & v.fields.mapIt(it[0]).join(", ") & ")")
   t.merges.add MergeRule(kind: kind, columns: columns, rows: ix, pattern: pattern)
   if autohide:
     for c in t.boxhead.mitems:
@@ -853,7 +868,9 @@ proc colsMerge*(t: sink Tabella, columns: openArray[string], rows = allRows(), p
   ## `{1}`, `{2}`, ... are the columns, and a part between `<<` and `>>` is left out when a value
   ## it names is missing: `colsMerge(["city", "country"], pattern = "{1}<< ({2})>>")`. Without a
   ## pattern the values are joined by spaces. The other columns are hidden (unless `autohide =
-  ## false`).
+  ## false`). A pattern reads the fields of a record too: `{2.lo}` is the field `lo` of column
+  ## 2, and `{lo}` of column 1, formatted as its column is, so a single column of records can be
+  ## shown in a pattern: `colsMerge(["span"], pattern = "{lo}–{hi}")`.
   result = t
   var p = pattern
   if p.len == 0:
@@ -909,7 +926,7 @@ proc colsAdd*[T](t: sink Tabella, name: string, values: openArray[T], before = "
 
 proc colsAdd*(t: sink Tabella, name: string, fn: proc (r: Row): Value, before = "", after = ""): Tabella =
   ## A column computed from each row: `colsAdd("density", proc (r: Row): Value =
-  ## toValue(r["mass"].toFloat / r["volume"].toFloat))`.
+  ## toValue(r.mass.toFloat / r.volume.toFloat))`.
   var vs: seq[Value]
   for i in 0 ..< t.data.nrows: vs.add fn(Row(data: t.data, index: i))
   colsAdd(t, name, vs, before, after)
@@ -1097,7 +1114,7 @@ proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target) =
 
 proc tabStyle*(t: sink Tabella, fn: proc (r: Row): CellStyle, locations: varargs[Loc]): Tabella =
   ## Styles each body or stub cell at `locations` with a style computed from its row:
-  ## `tabStyle((r: Row) => (if r["moons"] > 10: style.fill("var(--x-soft)") else: CellStyle()), loc.body())`.
+  ## `tabStyle((r: Row) => (if r.moons > 10: style.fill("var(--x-soft)") else: CellStyle()), loc.body())`.
   result = t
   for l in locations:
     let target = l.resolve(result)

@@ -57,7 +57,7 @@ block:
     fmtMarkdown ["thread", "output"]
     colsWidth {"output": "24%", "status": "5em"}
     optCssTheme()
-  t = t.tabStyle(style.text(color = "var(--muted)"), loc.body(cols = "status", rows = where(it["status"] == "planned")))
+  t = t.tabStyle(style.text(color = "var(--muted)"), loc.body(cols = "status", rows = where(it.status == "planned")))
   nbTable t
 
 nbText: """

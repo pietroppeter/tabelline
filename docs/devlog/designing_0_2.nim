@@ -1,4 +1,4 @@
-## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
+## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells with more than one value. Each group from zero, simplest first, with the choices behind it and how it is built.
 ## A dated post, written while 0.2 is built: each group is added when its PR is ready for review.
 import std/[os, sugar, strutils, sequtils, tables, algorithm]
 import nimib
@@ -11,26 +11,27 @@ nb.doc.filename = docs / "devlog" / "designing-0-2" / "index.html"
 nb.useTabelline(title = "Designing tabelline 0.2", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "10 November 2026", "Designing tabelline 0.2", """
-tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells. Each group from zero, simplest first, with the choices behind it and how it is built.
+tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells with more than one value. Each group from zero, simplest first, with the choices behind it and how it is built.
 """
 
 nbText: """
 0.1 had the parts of a table, from the title to the footer, and the formats for single values.
 0.2 was going to add rows and merges; on the day 0.1 shipped, it grew to hold every format,
-every locale and pictures in cells too. That is five groups of features, built in five pull
-requests, each one explained here when it is ready, from the simplest idea up. Every name they
-add is in the [Reference](../../api/), and [A reference in our own style](../reference/) tells
-how that page was made.
+every locale and pictures in cells too, and then cells that hold more than one value. That is
+six groups of features, each built in its own pull request and explained here when it is ready,
+from the simplest idea up. Every name they add is in the [Reference](../../api/), and
+[A reference in our own style](../reference/) tells how that page was made.
 """
 
 nbToc()
 
 nbText: """
-## Five groups
+## Six groups
 
 Each group needs the ones before it: summing up comes first because summary columns, in the
 second group, reuse its aggregates; pictures come last because nanoplots need the formats and
-the options of the groups before them.
+the options of the groups before them, and lists and records come after them because they feed
+the pictures.
 """
 
 block:
@@ -40,16 +41,17 @@ block:
     G(group: "1 · Summing up", what: "summary rows for each group and for the whole table; aggregates", status: "built"),
     G(group: "2 · Rows and columns", what: "merged columns, added columns and rows, summary columns, hidden rows, stub indent, decimal alignment", status: "built"),
     G(group: "3 · More formats", what: "units, fractions, chemistry, bins, automatic formats, country names", status: "built"),
-    G(group: "4 · Every locale", what: "numbers, currencies and dates from CLDR; rotated labels, more options, extract, preview, body styles, datasets", status: "planned"),
-    G(group: "5 · Pictures in cells", what: "icons, images and nanoplots, all inlined", status: "planned"),
+    G(group: "4 · Every locale", what: "numbers, currencies and dates from CLDR; rotated labels, more options, extract, preview, body styles, datasets", status: "built"),
+    G(group: "5 · Pictures in cells", what: "icons, images and nanoplots, all inlined", status: "built"),
+    G(group: "6 · More than one value", what: "lists and records in a cell, the dot (v.x, it.mass), nanoplots of x and y", status: "built"),
   ]
   let t = tabella(rows, rownameCol = "group"):
-    tabHeader "0.2 in five groups"
+    tabHeader "0.2 in six groups"
     colsLabel:
       what: "what it adds"
       status: "now"
     tabStyle style.css("white-space: nowrap"), loc.stub()
-    tabStyle style.text(weight = "bold"), loc.body("status", where(it["status"] == "built"))
+    tabStyle style.text(weight = "bold"), loc.body("status", where(it.status == "built"))
     optCssTheme()
   nbTable t
 
@@ -197,7 +199,7 @@ row, and `rowsAdd` adds rows, into a group when they name one. `rowsHide` takes 
 nbCode:
   let grown = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
     colsHide everything()
-    colsAdd "moons per Earth mass", (r: Row) => toValue(r["moons"].toFloat / r["mass"].toFloat * 5.97)
+    colsAdd "moons per Earth mass", (r: Row) => toValue(r.moons.toFloat / r.mass.toFloat * 5.97)
     fmtNumber "moons per Earth mass", decimals = 1
     rowsHide where(it["type"] == "Terrestrial")
     rowsAdd [(planet: "Pluto", `type`: "Dwarf planet", moons: 5, mass: 0.0130)]
@@ -544,8 +546,8 @@ needs one character, its label a word or two.
 nbCode:
   let traits = tabella(planets(), rownameCol = "planet"):
     colsAdd "rocky", proc (r: Row): Value = toValue(r["type"].s == "Terrestrial")
-    colsAdd "has moons", proc (r: Row): Value = toValue(r["moons"].i > 0)
-    colsAdd "has rings", proc (r: Row): Value = r["rings"]
+    colsAdd "has moons", proc (r: Row): Value = toValue(r.moons.i > 0)
+    colsAdd "has rings", proc (r: Row): Value = r.rings
     colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "moons", "rings"]
     fmtTf ["rocky", "has moons", "has rings"]
     colsAlign alCenter, ["rocky", "has moons", "has rings"]
@@ -652,7 +654,7 @@ cities of the EU, by people:
 nbCode:
   let big = tabellaPreview(citta(), topN = 5, bottomN = 0, inclRownums = false):
     colsHide "counted"
-    colsAdd "bar", proc (r: Row): Value = r["population"]
+    colsAdd "bar", proc (r: Row): Value = r.population
     fmtInteger "population"
     fmtNanoplot "bar", plotType = "bar",
       options = nanoplotOptions(dataBarFillColor = "var(--primary)", dataBarStrokeColor = "var(--primary)")
@@ -697,7 +699,7 @@ nbCode:
   echo boxes
 
 nbNote("""
-A cell of nanoplot values is a text of numbers separated by spaces, commas or semicolons, with `NA` for a missing one. The box plots of a column share their scale. `echo` prints the table as text, where a box plot is its five numbers: whisker, quartile, median, quartile, whisker.
+A cell of nanoplot values is a text of numbers separated by spaces, commas or semicolons, with `NA` for a missing one (or, since group 6, a list of numbers). The box plots of a column share their scale. `echo` prints the table as text, where a box plot is its five numbers: whisker, quartile, median, quartile, whisker.
 """, nkCode)
 
 nbText: """
@@ -729,8 +731,121 @@ draws the times table that way.
   number or a keyword. *Great Tables:* the same.
 - **Sparklines in text.** A text table draws a nanoplot with blocks (`▁▃▅█`), so it still says
   something in a terminal or a test. *gt:* nothing in text. *Great Tables:* nothing.
-- **Not yet:** x values (gt's `columns_x_vals`), a colour per point, `alt` from a column, SVG
+- **Not yet:** a colour per point, `alt` from a column, SVG
   flags, gt's `local_image()` and `web_image()`.
+
+## 6 · More than one value
+
+### A list in a cell
+
+Until now a cell held one value: a number, a text, a date. Nanoplots needed several, and read
+them from a text, "1 4 2 8". Now a cell can hold a list, made from any `seq`:
+"""
+
+nbCode:
+  let sistema = tableData:
+    planet: ["Earth", "Mars", "Jupiter"]
+    moons: [@["Moon"], @["Phobos", "Deimos"], @["Io", "Europa", "Ganymede", "Callisto"]]
+  echo tabella(sistema, rownameCol = "planet")
+  echo sistema["moons", 2][0], " ", sistema["moons", 2].len
+
+nbNote("""
+A list is shown as its items, separated by commas. `v[0]` is its first item and `v.len` how many it has. A list is not a number: `numeric()` leaves a list column out, and `toFloat` refuses a list.
+""", nkCode)
+
+nbText: """
+A format applied to a list works on each item, and the verbs that take several names (icons,
+images, flags) take a list as they take names separated by commas.
+
+### A record, and the dot
+
+A record is a cell with named fields, made from an object or a named tuple, as a row of
+`toTableData` is. Its fields are read by name, with brackets or with a dot:
+"""
+
+nbCode:
+  let sensors = tableData:
+    sensor: ["north", "south"]
+    span: [(lo: 0.82, hi: 1.56), (lo: 9.13, hi: 12.71)]
+  let ranges = tabella(sensors, rownameCol = "sensor"):
+    fmtNumber "span", decimals = 1
+  echo ranges
+  echo sensors["span", 0].hi, " ", sensors["span", 0]["lo"]
+
+nbNote("""
+`fmtNumber` formats each field of the record. `.hi` reads a field by name; on a row, the same dot reads a column, so `where(it.mass > 1)` is the way to write a row predicate from now on.
+""", nkCode)
+
+nbText: """
+"lo: 0.8, hi: 1.6" says what each number is, but a range reads better as "0.8–1.6". A merge
+pattern reads the fields of a record by name, so one column of records is enough:
+"""
+
+nbCode:
+  let spans = tabella(sensors, rownameCol = "sensor"):
+    fmtNumber "span", decimals = 1
+    colsMerge ["span"], pattern = "{lo}–{hi}"
+  echo spans
+
+nbNote("""
+In a `colsMerge` pattern, `{lo}` is the field `lo` of the first column and `{2.lo}` of the second; each is formatted as its column is, and a missing field drops its `<<...>>` part. A field that is not in every record fails when the verb is called.
+""", nkCode)
+
+nbText: """
+### A plot of x and y
+
+A record of two lists, `x` and `y`, is what Great Tables takes for a nanoplot whose points are
+not evenly spaced: each value is drawn at its place on the x axis. Two runners and their lap
+times, measured at different laps:
+"""
+
+nbCode:
+  let laps = tableData:
+    runner: ["Anna", "Bruno"]
+    times: [(x: @[0.0, 1, 2, 5], y: @[62.0, 60, 61, 58]), (x: @[0.0, 3, 4, 5], y: @[65.0, 63, 66, 59])]
+  let race = tabella(laps, rownameCol = "runner"):
+    fmtNanoplot "times", autoscale = true,
+      options = nanoplotOptions(dataLineStrokeColor = "var(--primary)", dataPointFillColor = "var(--primary)")
+    colsLabel:
+      times: "lap times, seconds"
+    optCssTheme()
+  nbTable race
+  echo race
+
+nbNote("""
+`autoscale` gives both plots the same axes, x and y. In text, the sparkline follows the order of `x` and leaves out its spacing.
+""", nkCode)
+
+nbText: """
+### Choices
+
+- **A list and a record, nothing more.** Two kinds of value, `vkList` and `vkRecord`, made by
+  `toValue` from a seq, an array, an object or a tuple. *gt:* one value per cell; gtExtras
+  draws from tibble list-columns. *Great Tables:* Polars list columns, for nanoplots.
+- **Records are not from gt.** A record shows as "lo: 0.8, hi: 1.6", formatted field by
+  field. The closest thing is a merge (group 2): `colsMerge` shows several columns in one cell
+  with a pattern, and `colsMergeRange` writes "0.8–1.6". The two do different jobs. A merge
+  keeps the values in their own columns, which sort, style and add up on their own, and joins
+  them only when the table is shown; a record is one value, which is how the data came (a
+  range, a point, a pair of lists for a nanoplot). A merge takes a record column as it takes
+  any other: it joins the record's text, and its pattern reads the record's fields: `{lo}` is
+  the field `lo` of the first column, `{2.lo}` of the second, each formatted as its column is.
+  So `colsMerge ["span"], pattern = "{lo}–{hi}"` shows a record as "0.8–1.6". *gt:* `cols_merge`
+  and its three variants, with patterns of columns only (`{1}`, `{2}`). *Great Tables:* the same.
+- **x and y as Great Tables has them.** A record with fields `x` and `y`. *gt:* x values come
+  from another column (`columns_x_vals` in `cols_nanoplot`). *Great Tables:* a dict
+  `{"x": [...], "y": [...]}`; its x values can be dates too, tabelline's are numbers for now.
+- **The dot is Nim sugar.** In a row predicate `it` is the row: the Nim idiom of `filterIt`
+  and `mapIt` (`std/sequtils`), where a template names the current element `it`, and
+  `where(cond)` turns `cond` into a proc of a row named `it`. `it.mass` and `v.hi` are a Nim
+  *dot operator*: when a name is not
+  a field or a proc of the value, the dot reads it by name. A name the value already has
+  (`kind`, `len`, `index`) is that, a keyword (`type`) needs brackets, and a misspelled name is
+  found when the code runs. *gt:* names are strings (`"mass"`) or bare names in the tidyverse.
+  *Great Tables:* strings, or Polars' `pl.col("mass")`.
+- **Formats item by item.** A format on a list formats each item; the verbs that need the whole
+  list (icons, images, flags, nanoplots) say so. *gt:* no lists to format. *Great Tables:* the
+  same.
 
 ## How it is built
 
@@ -788,6 +903,19 @@ under the line, the line, as Bézier curves, the bars, the reference line, the p
 the guides that show a value on hover). A box plot computes its quartiles by linear
 interpolation and its whiskers by Tukey's rule (the farthest values within 1.5 boxes). The verb
 reads every cell of the column first, so the plots of a column share their scale.
+
+Lists and records of group 6 are two more branches of `Value`, the object every cell is
+(`core.nim`): `items`, a seq of values, and `fields`, a seq of names and values in order.
+`toValue` makes a record by walking an object's fields with `fieldPairs`, as `toTableData` does
+for a row. The dot is a template, `` `.` ``, under Nim's experimental `dotOperators`: the
+compiler calls it only when a name is neither a field nor a proc, and it turns `v.hi` into
+`v["hi"]`; the same template on `Row` turns `it.mass` into `it["mass"]`. A format meets a list in
+step 1: `formatCell` gives each item (or field) to the format and joins the results, unless the
+format takes the list whole (`wholeValue`, set by the pictures). A nanoplot reads `y` and `x` from
+the record, sorts the pairs by `x`, and places each point at its share of the x axis.
+
+How the HTML of every table shares one stylesheet, also in 0.2, has a post of its own:
+[One stylesheet for every table](../sharing-styles/).
 """
 
 nbSave

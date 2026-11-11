@@ -141,7 +141,7 @@ block:
     optCssTheme()
   for s, label in labels:
     let c = colours[s]
-    t = t.tabStyle(style.text(color = c, weight = "bold"), loc.body(cols = "now", rows = where(it["now"] == label)))
+    t = t.tabStyle(style.text(color = c, weight = "bold"), loc.body(cols = "now", rows = where(it.now == label)))
   nbTable t
 
 nbText: """
@@ -162,9 +162,12 @@ block:
     N(what: "`rowOrder`", why: "sorts the rows shown and leaves the data as it is; Nim has no dplyr", closest: "`dplyr::arrange()` or `df.sort()` before the table"),
     N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
     N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
+    N(what: "`tabellaCss`: one stylesheet for every table, options as CSS variables; `toHtml(withStyle = false)`", why: "a page with many tables writes the rules once (the Reference has 152 tables); a page can set an option for all its tables", closest: "a style element per table, scoped to its id; `as_raw_html(inline_css = TRUE)` writes styles on every element"),
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),
     N(what: "the datasets `planets` and `tavolaPitagorica`", why: "small examples for the docs (`exibble` is gt's)", closest: "gt's and Great Tables' datasets"),
     N(what: "blocks for lists of pairs (`summaryRows:` then `total: agg.sum`)", why: "inside `tabella(data): body`, a verb's pairs and named arguments one per line, as Nim writes a body", closest: "named lists (`fns = list(total = \"sum\")`) and dicts (`fns={\"total\": ...}`)"),
+    N(what: "lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`), formatted item by item, and the dot (`v.hi`, `it.mass`)", why: "a cell that holds several values feeds nanoplots, icons and flags as it is, and the dot reads like Nim", closest: "Great Tables reads Polars list columns for nanoplots; `cols_merge` puts several columns in one cell"),
+    N(what: "record fields in a merge pattern (`colsMerge([\"span\"], pattern = \"{lo}–{hi}\")`)", why: "a record shows as a range, a value with its unit, without splitting it into columns", closest: "`cols_merge` patterns name columns only (`{1}`, `{2}`)"),
     N(what: "nanoplots in text: sparklines (`▁▃▅█`), bars beside a zero line, the five numbers of a box plot", why: "a nanoplot says something in the terminal and the specs too", closest: "nothing: gt and Great Tables draw nanoplots only in HTML"),
     N(what: "`toSuperscript`, `toSubscript`, and units, formulas and fractions in Unicode", why: "the text and Markdown outputs show `kg/m³` and `H₂O` too", closest: "gt's plain-text output, which keeps the notation as written"),
   ]
