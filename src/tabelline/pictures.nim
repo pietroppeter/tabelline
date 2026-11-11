@@ -25,7 +25,8 @@ var iconAliases: Table[string, string]
 
 proc loadIcons() =
   if iconTable.len > 0: return
-  for line in fontawesomeTsv.splitLines:
+  let tsv = fontawesomeTsv  # once: the JS backend writes a const string out at every use
+  for line in tsv.splitLines:
     if line.len == 0 or line[0] == '#': continue
     let f = line.split('\t')
     if f.len == 3 and f[1] == "=": iconAliases[f[0]] = f[2]
@@ -153,8 +154,11 @@ proc imageDataUrl*(file: string): string =
   ## "data:image/png;base64,...". Raises `ValueError` for a file that is not there.
   let ext = file.splitFile.ext.toLowerAscii
   if ext notin imageTypes: raise newException(ValueError, "not an image file (png, jpg, gif, svg, webp, avif, bmp, ico): " & file.escape)
-  if not fileExists(file): raise newException(ValueError, "no image file " & file.escape)
-  "data:" & imageTypes[ext] & ";base64," & encode(readFile(file))
+  when defined(js):
+    raise newException(ValueError, "no files in JavaScript: give an address, not " & file.escape)
+  else:
+    if not fileExists(file): raise newException(ValueError, "no image file " & file.escape)
+    "data:" & imageTypes[ext] & ";base64," & encode(readFile(file))
 
 proc fmtImage*(t: sink Tabella, columns: ColSel, rows = allRows(), height = "", width = "",
                sep = " ", path = "", filePattern = "{x}", encode = true, alt = ""): Tabella =
