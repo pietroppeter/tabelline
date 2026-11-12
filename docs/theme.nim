@@ -623,8 +623,8 @@ const quadernoCss = scoped(quadernoRules, "html[data-tema=\"quaderno\"]")
 # After the frescoes of Knossos and Thera and the vases of Athens (devlog "Designing a Mediterranean
 # look"): lime plaster for paper, the black glaze for ink, terracotta and dolphin blue; one serif
 # made for Greek and Latin scholarship, Gentium Book Plus, which has every letter of the islands'
-# names (ć č š ž ğ ş ı ħ ġ, and Sicilian ḍ); the meander as the rule over every table and under
-# the masthead, the running wave over the footer. Drawn as masks, so their colour is a token.
+# names (ć č š ž ğ ş ı ħ ġ, and Sicilian ḍ); the running wave as the rule over every table and
+# under the masthead, the meander over the footer (swapped in Pietro's review of version 8). Drawn as masks, so their colour is a token.
 
 func svgUrl(svg: string): string =
   "url(\"data:image/svg+xml," & svg.multiReplace(("<", "%3C"), (">", "%3E"), ("\"", "'"), ("#", "%23")) & "\")"
@@ -644,11 +644,11 @@ html {
 }
 body { font: 19px/1.6 var(--font); font-variant-numeric: oldstyle-nums proportional-nums; }
 
-/* the masthead: the wordmark in spaced capitals, then a meander instead of Munari's shapes */
+/* the masthead: the wordmark in spaced capitals, then a running wave in dolphin blue instead of Munari's shapes */
 .forme { display: none; }
 .etichetta { padding-right: 0; min-height: 0; margin: 2rem 0 1.6rem; padding-bottom: 1.6rem; }
-.etichetta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--ink);
-  -webkit-mask: var(--meander) repeat-x left center / auto 14px; mask: var(--meander) repeat-x left center / auto 14px; }
+.etichetta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--secondary);
+  -webkit-mask: var(--wave) repeat-x left center / auto 14px; mask: var(--wave) repeat-x left center / auto 14px; }
 .etichetta .nome span:last-child { font: 700 2.7rem/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .etichetta .riga:last-child:not(.nome) span:last-child { font-variant: small-caps; text-transform: lowercase; letter-spacing: .12em; color: var(--primary-text); }
 .kicker { font: 400 .95rem/1.2 var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .14em; color: var(--primary-text); }
@@ -663,10 +663,10 @@ h3 { font-style: italic; font-weight: 400; font-size: 1.35rem; color: var(--prim
 a { text-decoration-color: var(--primary); text-decoration-thickness: 1.5px; text-underline-offset: .15em; }
 blockquote { border-left: 3px solid var(--primary); font-style: italic; }
 
-/* tables: a meander as the rule above, lining figures that line up */
-.tabella { padding-top: 26px; }
-.tabella::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 12px; background: var(--ink);
-  -webkit-mask: var(--meander) repeat-x left center / auto 12px; mask: var(--meander) repeat-x left center / auto 12px; }
+/* tables: a running wave in dolphin blue as the rule above, lining figures that line up */
+.tabella:not(#_) { padding-top: 26px; }  /* :not(#_) to win over the table's own stylesheet */
+.tabella::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 12px; background: var(--secondary);
+  -webkit-mask: var(--wave) repeat-x left center / auto 12px; mask: var(--wave) repeat-x left center / auto 12px; }
 .tabella table { font-variant-numeric: lining-nums tabular-nums; }
 .tabella .tb_title { font-family: var(--font); font-size: 135%; letter-spacing: .01em; }
 .tabella .tb_subtitle { font-style: italic; }
@@ -686,10 +686,10 @@ pre > code, pre.nb-output { font-variant-numeric: normal; }
 /* the look switch, in small capitals */
 .tema button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
 
-/* the footer: a running wave above it, in dolphin blue */
+/* the footer: a meander above it, in black glaze */
 body > footer { padding-top: 2.4rem; }
-body > footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 14px; background: var(--secondary);
-  -webkit-mask: var(--wave) repeat-x left center / auto 14px; mask: var(--wave) repeat-x left center / auto 14px; }
+body > footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 14px; background: var(--ink);
+  -webkit-mask: var(--meander) repeat-x left center / auto 14px; mask: var(--meander) repeat-x left center / auto 14px; }
 .motto { font-style: italic; }
 """
 

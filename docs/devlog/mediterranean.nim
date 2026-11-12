@@ -850,12 +850,12 @@ block:  # the choices of the Minoan look
     c("success", "olive", "from the place, as the rules allow: what works, notes on code"),
     c("typeface", "Gentium Book Plus", "a serif made for Greek and Latin scholarship (SIL, open licence); it has every letter of the islands' names, ḍ too"),
     c("figures", "old-style in text, lining in tables", "numbers sit in a sentence like letters, and line up in a column"),
-    c("masthead", "spaced capitals over a meander", "an inscription; Munari's three shapes stay Munari's"),
+    c("masthead", "spaced capitals over a running wave", "an inscription by the sea; Munari's three shapes stay Munari's"),
     c("sections", "a terracotta disc ringed in black", "the circle is still a place, drawn as a red-figure disc"),
-    c("tables", "a meander as the rule above", "the band of a vase, around a table instead of a scene"),
+    c("tables", "a running wave in dolphin blue as the rule above", "the band of a vase, around a table instead of a scene; the wave is lighter than the key, so many tables on a page stay calm"),
     c("third headings", "italic", "the serif's italic is its second voice"),
     c("labels", "small capitals", "the kicker, the indice, the switch: quiet, like the names painted on vases"),
-    c("footer", "a running wave in dolphin blue", "the sea under the page, the motif of the Thera frescoes"),
+    c("footer", "a meander in black glaze", "the Greek key closes the page once, where its weight is welcome"),
   ]
   let t = tabella(choices, rownameCol = "part"):
     tabHeader "The Minoan look", "every part, and why"
@@ -913,10 +913,8 @@ nbText: """
   with the same letters, could make the masthead more of an inscription.
 - **Dolphins and octopus.** The card proposed them "sparingly"; none is drawn yet. One could mark
   the end of a story, or the empty state of a table.
-- **The meander's weight.** It is drawn at 12 to 14 pixels; on a page with many small tables it
-  may be too much, and a thinner rule could take its place there.
-- **The islands story.** It gets the switch next: Munari and the Minoan look, in place of the
-  quaderno.
+- **The wave's weight.** It is drawn at 12 to 14 pixels over every table; on a page with many
+  small tables it may still be too much, and a thinner rule could take its place there.
 
 ## Rounds
 
@@ -939,9 +937,12 @@ nbText: """
 6. **Round 6**: the tournament's winner, the Minoan frescoes and Attic vases, built as a look of
    the site and worn by this page: Gentium Book Plus, the meander and the running wave, and a
    table that says why for each part.
+7. **Round 7**: the two motifs swapped: the running wave, in dolphin blue, over the tables and
+   under the masthead; the meander, in black glaze, once, over the footer. The islands story
+   wears the look.
 
-Next, the Minoan look may still change with Pietro's review (the list above), and then it moves to
-the islands story, in place of the quaderno.
+Next, the Minoan look may still change with Pietro's review (the list above), now on the islands
+story too, where it takes the place of the quaderno.
 """
 
 nbSave

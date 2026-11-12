@@ -43,8 +43,8 @@ elsewhere.
 - **Quaderno**, an Italian school exercise book: squared paper, a red margin, headings in blue
   pen with a highlighter stroke, code on index cards, outputs on sticky notes, tables taped in.
 - **Minoan**, after the frescoes of Crete and Thera and the vases of Athens, for the islands of
-  the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a meander
-  over every table. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
+  the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a running wave
+  over every table and a meander over the footer. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
   was designed in the devlog post [Designing a Mediterranean look](../devlog/mediterranean/).
 
 Munari is the page itself: its rules need no script, so a page without JavaScript (or before

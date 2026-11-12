@@ -13,7 +13,8 @@ let docs = currentSourcePath().parentDir.parentDir
 let data = docs / "stories" / "data" / "isole"
 nbInit
 nb.doc.filename = docs / "stories" / "isole" / "index.html"
-nb.useTabelline(title = "Islands of the Mediterranean", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
+nb.useTabelline(title = "Islands of the Mediterranean", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../",
+  looks = ["munari", "minoan"], firstLook = "minoan")
 
 # ------------------------------------------------------------------- this story's own helpers
 
