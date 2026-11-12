@@ -108,6 +108,14 @@ SELECT ?title ?item ?coord ?elevation ?archipelagoLabel ?native WHERE {""" & isl
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }"""
 
+# The waters each island is in or next to (P206): the Aegean, the Tyrrhenian, a gulf, a strait.
+sparql "wd_waters", """
+SELECT ?title ?item ?water ?waterLabel ?parent ?parentLabel WHERE {""" & island & """
+  ?item wdt:P206 ?water .
+  OPTIONAL { ?water wdt:P361 ?parent }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}"""
+
 # Each island's population, every time it was counted.
 sparql "wd_population", """
 SELECT ?title ?item ?population ?date ?precision WHERE {""" & island & """

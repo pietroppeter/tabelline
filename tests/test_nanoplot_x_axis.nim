@@ -37,3 +37,16 @@ suite "nanoplots on a shared x axis":
     check t.toHtml.count("stroke-dasharray") == 0
     expect ValueError:
       discard tabella(d, rownameCol = "island").fmtNanoplot("years", referenceX = @["soon"])
+
+  test "colsNanoplot with xVals: records of x and y, so referenceX draws its line":
+    let jobs = tableData:
+      region: ["north", "south"]
+      y2012: [8.1, 18.4]
+      y2013: [9.0, 21.0]
+      y2014: [8.6, 20.2]
+    let t = tabella(jobs, rownameCol = "region"):
+      colsNanoplot ["y2012", "y2013", "y2014"], autoscale = true,
+        xVals = @[2012.0, 2013.0, 2014.0], referenceX = @["2013"]
+    check t.toHtml.count("stroke-dasharray") == 2
+    expect ValueError:
+      discard tabella(jobs).colsNanoplot(["y2012", "y2013"], xVals = @[2012.0])

@@ -111,7 +111,7 @@ nbShowCode:
       shape: ""
       km2: "area, {{km^2}}"
       elevation: "highest, {{m}}"
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean; Wikidata; the outline © OpenStreetMap contributors (ODbL)."
+    tabSourceNote md("Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); [Wikidata](https://www.wikidata.org/); the outline © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).")
   nbTable t
 
 nbNote("""
@@ -146,8 +146,13 @@ nbShowCode:
     optCssTheme()
     colsHide everything()
     colsUnhide ["shape", "code", "km2", "population"]
-    colsMove ["shape", "code"], after = "island"
+    colsMove ["shape"], after = "island"
+    colsMove ["code"], after = "population"
     fmtNanoplot "shape", plotType = "shape", plotHeight = "2.4em", options = sea
+    # the stub's rule moves after the shape, so the name and its outline read as one
+    tabOptions(stubBorderStyle = "none")
+    tabStyle style.borders({sRight}, color = tint("--line"), weight = "2px"),
+      [loc.body(cols("shape")), loc.columnLabels(cols("shape")), loc.grandSummary(cols("shape"))]
     fmtCountry "code"
     fmtInteger ["km2", "population"]
     subMissing ["population"], missingText = "—"
@@ -161,12 +166,13 @@ nbShowCode:
       missingText = ""
       fmtInteger()
     tabFootnote "Wikipedia's list gives no population for Cyprus, divided since 1974.", loc.body(cols("population"), 2)
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean (area, population); outlines © OpenStreetMap contributors (ODbL)."
+    tabSourceNote md("Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).")
   nbTable t
 
 nbNote("""
 `fmtCountry` writes a country's name from its code (`IT` is Italy), from CLDR, so the data keeps
-the code. The total row is
+the code. The rule after the stub moves past the shape: `tabOptions(stubBorderStyle = "none")`
+takes it away, and `style.borders` on the shape's cells draws it again. The total row is
 `grandSummaryRows`, formatted with `fmtInteger()` in its block. Each shape here is drawn at its
 own scale, as large as the cell allows.
 """, nkCode)
@@ -176,7 +182,8 @@ Malta is the most crowded of them by far: 1,664 people on each km², more than e
 Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
 Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
 how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
-it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one:
+it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one (the census of 2001
+counted a single man):
 """
 
 nbShowCode:
@@ -201,7 +208,7 @@ nbShowCode:
     colsLabel:
       shape: ""
       density: "per {{km^2}}"
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean: the islands where people live."
+    tabSourceNote md("Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean): the islands where people live.")
   nbTable t
 
 nbNote("""
@@ -251,7 +258,7 @@ nbShowCode:
       all: agg.sum
       columns = ["km2", "share"]
       missingText = ""
-    tabSourceNote "Areas: Wikipedia; the countries' areas too (France: metropolitan)."
+    tabSourceNote md("Areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); the countries' areas from their articles (France: metropolitan).")
   nbTable t
 
 nbNote("""
@@ -295,7 +302,7 @@ outline: Wikidata has no place for them, so there is no point to find their coas
 
 nbText: """
 And here they all are, in the order of the list, each at its own scale and with its place: the
-22 main islands in pink, the others in blue. Malta, the island of a country, is 34th.
+22 main islands in blue, the others in pink. Malta, the island of a country, is 34th.
 """
 
 nbShowCode:
@@ -319,13 +326,13 @@ nbShowCode:
   let pink = nanoplotOptions(dataBarFillColor = tint("--primary-soft"), dataBarStrokeColor = tint("--primary-text"))
   var t = tabella(grid):
     optCssTheme()
-    fmtNanoplot shapes, plotType = "shape", plotHeight = "2.2em", options = sea
+    fmtNanoplot shapes, plotType = "shape", plotHeight = "2.2em", options = pink
     subMissing shapes, missingText = ""
     tabOptions(columnLabelsHidden = true, tableFontSize = "9px", dataRowPadding = "4px",
                dataRowPaddingHorizontal = "1px")
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean, by area. Outlines © OpenStreetMap contributors (ODbL); the three without one have no place on Wikidata."
+    tabSourceNote md("Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)); the three without one have no place on Wikidata.")
   for (row, k) in mainCells:
-    t = t.fmtNanoplot("s" & $k, rows = row, plotType = "shape", plotHeight = "2.2em", options = pink)
+    t = t.fmtNanoplot("s" & $k, rows = row, plotType = "shape", plotHeight = "2.2em", options = sea)
   for k in 0 ..< across:
     t = t.colsMerge(["s" & $k, "n" & $k], pattern = "{1}<br>{2}")
   t = t.colsAlign(alCenter, shapes)
@@ -336,7 +343,7 @@ A grid is a table too: 195 islands in rows of five, each cell a shape over its p
 The data is built for it, a column of shapes and one of names for each place in the row;
 `colsMerge` puts the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`,
 and a later format of a cell replaces an earlier one, so the main islands are drawn again in
-pink, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
+blue, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
 """, nkCode)
 
 nbText: """
@@ -375,7 +382,7 @@ nbShowCode:
       columns = ["islands"]
       missingText = ""
       fmtInteger()
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean, by area."
+    tabSourceNote md("Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area.")
   nbTable t
 
 nbNote("""
@@ -419,7 +426,7 @@ nbShowCode:
     colsWidth:
       rulers: "58%"
     tabStyle style.text(color = tint("--primary-text")), loc.body(cols("venice_from"))
-    tabSourceNote "Each island's history on Wikipedia, read by hand: a line, not the whole story."
+    tabSourceNote "Each island's history on Wikipedia, read and summed up by Claude, the AI that wrote this story: a line, not the whole story."
   nbTable t
 
 nbNote("""
@@ -473,7 +480,7 @@ nbShowCode:
       icon: ""
       listed: "listed"
       parts: "places"
-    tabSourceNote "UNESCO's list as Wikidata has it; a property is placed on an island by the outline that holds its places. A mountain marks a natural property."
+    tabSourceNote md("[UNESCO's list](https://whc.unesco.org/en/list/) as Wikidata has it; a property is placed on an island by the outline that holds its places. A mountain marks a natural property.")
   nbTable t
 
 nbNote("""
@@ -517,9 +524,9 @@ nbShowCode:
       pps_index: "EU = 100"
       jobless_2025: "jobless"
     tabSpanner "GDP in PPS, 2024", ["pps_per_person", "pps_index"]
-    tabStyle proc (r: Row): CellStyle = (if r.pps_index.toFloat < 75: style.text(color = tint("--primary-text")) else: CellStyle()),
-      loc.stub()
-    tabSourceNote "Eurostat, as Wikipedia lists it: GDP of the NUTS 2 regions in 2024, unemployment in 2025."
+    tabStyle proc (r: Row): CellStyle = (if r.pps_index.toFloat < 75: style.fill(tint("--primary-soft")) else: CellStyle()),
+      [loc.stub(), loc.body()]
+    tabSourceNote md("Eurostat, as Wikipedia lists it: [GDP of the NUTS 2 regions](https://en.wikipedia.org/wiki/List_of_European_Union_regions_by_GDP) in 2024, [unemployment](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) in 2025.")
   # each region's money in its own language: one locale for the rows of each
   for l in ["it", "el_CY", "fr", "el", "ca", "hr", "mt"]:
     let rowsOf = toSeq(0 ..< d.nrows).filterIt(d["locale", it] == l)
@@ -531,8 +538,8 @@ The amounts are formatted in each region's locale: "24.500 €" in Italian, "34 
 "€43,900" in Maltese English. tabelline 0.2 has every locale of CLDR (657 of them), and
 `fmtCurrency` takes `locale` and `rows`, so one column can speak several languages. The
 index is a nanoplot of single values: one bar per row from a shared zero, with a dashed line at
-the EU's 100. The bars below 75, where the EU's cohesion funds go first, are red: `tabStyle`
-with a proc of the row.
+the EU's 100. The rows below 75, where the EU's cohesion funds go first, are highlighted:
+`tabStyle` with a proc of the row, on the stub and the body.
 """, nkCode)
 
 nbText: """
@@ -556,7 +563,8 @@ nbShowCode:
       sd: agg.std
       columns = years
     colsNanoplot years, autoscale = true, plotHeight = "1em", newColName = "trend",
-      newColLabel = "2006–2025", options = nanoplotOptions(dataLineStrokeColor = tint("--secondary"),
+      newColLabel = "2006–2025", xVals = toSeq(2006 .. 2025).mapIt(it.float), referenceX = @["2013"],
+      options = nanoplotOptions(dataLineStrokeColor = tint("--secondary"),
         dataPointRadius = 0, dataAreaFillColor = tint("--secondary-soft"))
     colsUnhide ["y2025"]
     colsMove ["trend"], after = "region"
@@ -567,32 +575,37 @@ nbShowCode:
     colsLabel:
       mean: "mean ± sd"
       y2025: "2025"
-    tabStyleBody style.text(style = "italic"), values = ["All regions (median)"], targets = "row"
-    tabSourceNote "Eurostat, as Wikipedia lists it: List of European regions by unemployment rate (%)."
+    tabStyleBody style.fill(tint("--shade")) & style.text(weight = "bold"), values = ["All regions (median)"], targets = "row"
+    tabSourceNote md("Eurostat, as Wikipedia lists it: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).")
   nbTable t
-
-let jobs = story("unemployment.csv")
-let sicily14 = extractCells(tabella(jobs, rownameCol = "region"), "y2014",
-                            rows = toSeq(0 ..< jobs.nrows).filterIt(jobs["region", it] == "Sicily"))[0]
 
 nbNote("""
 `summaryColumns` adds a column for each aggregate, computed across the columns of each row:
 here the mean and the standard deviation of the twenty years. `colsMergeUncert` writes them as
 one value, "14.2 ± 4.1". `colsNanoplot` draws the twenty columns as a line in a new column and
-hides them; `colsUnhide` shows 2025 again. The row of the median is in italics, chosen by its
-value with `tabStyleBody`.
+hides them; `colsUnhide` shows 2025 again. `xVals` gives each column its year, so `referenceX`
+can draw the dashed line at 2013 (both not from gt). The median of Europe's regions, a yardstick
+and not a region, is the shaded row in bold: `tabStyleBody` finds it by its value.
+""", nkCode)
+
+var sicily14 = ""
+nbShowCode:
+  let jobs = story("unemployment.csv")
+  let sicilyRow = toSeq(0 ..< jobs.nrows).filterIt(jobs["region", it] == "Sicily")
+  sicily14 = extractCells(tabella(jobs, rownameCol = "region"), "y2014", rows = sicilyRow)[0]
+  nbText &"Sicily in 2014, as the table writes it: **{sicily14}**"
+
+nbNote("""
+Sicily's rate in 2014, in the next paragraph, is not typed: `extractCells` takes it from the
+table's cell, formatted as the table writes it, and the paragraph puts it in its text.
 """, nkCode)
 
 nbText: &"""
-The crisis of the 2010s is a hill on every line: in 2014 Sicily had {sicily14}% of its people
+The crisis of the 2010s is a hill on every line, and the dashed line is 2013, the year the
+European Union had the most people out of work: in 2014 Sicily had {sicily14}% of its people
 out of work, the South Aegean more than one in five in 2013. Every region is back down now, and
 Malta, at 3.1%, has fewer out of work than almost anywhere in Europe.
 """
-
-nbNote(&"""
-Sicily's {sicily14}% in 2014, in the paragraph just above, is not typed: `extractCells` takes it
-from the table's cell, formatted as the table writes it.
-""", nkCode)
 
 nbPart 3, "", prSecondary   # the quick time: getting there, when to go, what to see
 nbText: """
@@ -638,14 +651,14 @@ nbShowCode:
       years: "passengers a year, 2000 on"
       latest: "last count"
       dip: "2020"
-    tabSourceNote "Wikidata (P3872), the yearly counts of each airport, added up for each island; the last count is of 2022, of 2025 for Mallorca and Ibiza."
+    tabSourceNote md("Wikidata ([P3872](https://www.wikidata.org/wiki/Property:P3872)), the yearly counts of each airport, added up for each island; the last count is of 2022, of 2025 for Mallorca and Ibiza.")
   nbTable t
 
 nbNote("""
 The points of each line are placed by date (`x` is a list of ISO dates, "2019-07-01"), so a year
 without a count leaves a gap of the right width, and `expandX` makes every axis run from 2000
 to 2025: on an axis shared by the rows every plot has the same width, so the years line up.
-`referenceX` (new with this story) draws the dashed line at a date, with the date on hover. Each line has its own y axis, from its lowest year to its highest, so the dip of 2020
+`referenceX` (new in tabelline 0.2, and not in gt or Great Tables) draws the dashed line at a date, with the date on hover. Each line has its own y axis, from its lowest year to its highest, so the dip of 2020
 shows on the small islands too.
 `fmtNumberSi` writes "33.8 M"; the last count is of 2022 for most islands.
 """, nkCode)
@@ -657,7 +670,11 @@ nbText: """
 
 Every main island has a Mediterranean climate: hot dry summers, mild wet winters. The highest
 temperature of an average day, month by month, from the weather box of each island's main town
-on Wikipedia; and the sea, where a page has it. These are averages of the past, and the past is
+on Wikipedia; and the sea, where a page has it. The Mediterranean is a sea of seas, and the
+islands are grouped by theirs: Wikidata puts each island in or beside a sea, a gulf or a strait,
+and the gulfs and straits are taken to the sea they are part of. Ten seas and the Strait of
+Sicily hold all but four of the 195 (the Îles d'Hyères and La Galite are in the open sea), the
+Aegean alone 90 of them; Sicily is on three, and here goes with the first. These are averages of the past, and the past is
 moving, as Giacomo Di Girolamo writes in *The Passenger*'s Sicily:
 
 > Una volta, dire Sicilia significava dire Mediterraneo. […] Adesso, dire Sicilia significa
@@ -677,10 +694,14 @@ nbShowCode:
     let s = toSeq(0 ..< clim.nrows).filterIt(clim["title", it] == highs["title", i] and clim["measure", it] == "sea_c")
     if s.len == 0: toValue(nil) else: clim["m08", s[0]])
   d = d.withColumn("rank", proc (i: int): Value = main["rank", mainRow($highs["title", i])])
-  let t = tabella(d, rownameCol = "island"):
+  d = d.withColumn("waters", proc (i: int): Value =   # the first of an island's seas
+    toValue(($main["seas", mainRow($highs["title", i])]).split("; ")[0].replace(" Sea", "").replace("Sea of ", "")))
+  let t = tabella(d, rownameCol = "island", groupnameCol = "waters"):
     optCssTheme()
     colsHide ["title", "measure", "rank"]
     rowOrder "rank"
+    rowGroupOrder ["Balearic", "Ligurian", "Tyrrhenian", "Strait of Sicily", "Adriatic", "Ionian",
+                   "Aegean", "Levantine"]
     fmtNumber ms, decimals = 0
     fmtNumber "sea", decimals = 0
     dataColor ms, palette = palette("rdbu"),
@@ -699,7 +720,8 @@ nbShowCode:
   nbTable t
 
 nbNote("""
-Twelve narrow columns: `colsLabelRotate(dir = "slanted")` (new with this story) turns their
+The islands are grouped by their sea (`groupnameCol`), from west to east with `rowGroupOrder`,
+and in each sea by size. Twelve narrow columns: `colsLabelRotate(dir = "slanted")` (new in tabelline 0.2, and not in gt or Great Tables) turns their
 labels at 45 degrees, so the months keep their names and the columns stay as narrow as their
 numbers. `dataColor` colours each cell on a scale from cool blue to hot red
 over 5–38 °C, with the palette `rdbu`. `colsUnits` puts the unit after the sea's label; in the
@@ -723,7 +745,8 @@ water.*
 ## Something to see, a beach, a taste
 
 To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
-by hand, each with its page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
+by Claude, the AI that wrote this story, from what Wikipedia says of each island, each with its
+page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
 (1987) is a tour of the sea's shores, ports and islands, wrote later a whole book on bread,
 *Pane nostro* (2010). A taste is a good way in.
 """
@@ -749,7 +772,7 @@ nbShowCode:
       beach: html(iconSvg("umbrella-beach", height = "1em") & " swim")
       taste: html(iconSvg("utensils", height = "1em") & " taste")
     tabStyle style.text(size = "13px"), loc.body()
-    tabSourceNote "Chosen by hand; links to Wikipedia."
+    tabSourceNote "Chosen by Claude, the AI that wrote this story; links to Wikipedia."
   nbTable t
 
 nbNote("""
@@ -811,7 +834,7 @@ the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's r
 `fetch.nim` downloads, `extract.nim` (standard library) finds each island's outline and what is
 on it and reads the wikitext, and `process.nim`, written with
 [nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim), joins, cleans and counts
-them into the CSV files this page reads. Three small tables are written by hand: the regions,
+them into the CSV files this page reads. Three small tables are written by Claude, not gathered: the regions,
 the history and the highlights.
 
 **3. The shapes** are OpenStreetMap's land polygons, which follow the coast to a few metres: for each island, the polygon
@@ -819,8 +842,10 @@ that holds its point on Wikidata, in kilometres from its middle, simplified to a
 points with the [Douglas–Peucker algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm):
 it joins the two ends of a coastline with a straight line, keeps the point farthest from it, and
 does the same again on each side, until no point left out is farther than a set distance, so
-the capes and bays that give an island its shape stay and the small wiggles go. They are numbers in two columns, `x` and `y`, and a record of the two
-is a cell of a shape nanoplot.
+the capes and bays that give an island its shape stay and the small wiggles go. It was written
+for this story, with the standard library, in `extract.nim` (`douglasPeucker` and `simplify`;
+[the data story](../isole-data/#outlines) shows the whole file). The outlines are numbers in two columns, `x`
+and `y`, and a record of the two is a cell of a shape nanoplot.
 
 **4. The tables on this page** are tabelline 0.2, with `nbShowCode` running a cell of Nim and
 showing the table it makes, its code folded under it. What 0.2 brought that they use:

@@ -11,7 +11,7 @@ nim r -d:release extract.nim <raw dir> <stage dir>  # staging CSVs: outlines, li
 cd .. && nim r -d:release --path:<nanuq>/src src/process.nim <stage dir> .   # the tables, with nanuq
 ```
 
-`regions.csv`, `history.csv` and `highlights.csv` are written by hand; the rest is generated.
+`regions.csv`, `history.csv` and `highlights.csv` are written by Claude (from Wikipedia); the rest is generated.
 
 ## Sources and licences
 
