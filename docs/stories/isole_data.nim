@@ -13,7 +13,8 @@ let isole = docs / "stories" / "data" / "isole"
 let process = readFile(isole / "src" / "process.nim")
 nbInit
 nb.doc.filename = docs / "stories" / "isole-data" / "index.html"
-nb.useTabelline(title = "The islands' data, made with nanuq", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../")
+nb.useTabelline(title = "The islands' data, made with nanuq", homeHref = "../", backLabel = "Stories", wordmarkHref = "../../",
+  looks = ["munari", "minoan"], firstLook = "minoan")
 
 proc story(name: string): TableData = readCsv(isole / name, comment = "#")
 

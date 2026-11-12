@@ -1,0 +1,143 @@
+{
+  "method": "affinity propagation (naffprop), OKLab, 6 colours per palette, preference = median similarity",
+  "preference": -0.09942526935781645,
+  "iterations": 129,
+  "converged": true,
+  "exemplars": [
+    "lionni",
+    "mediterraneo",
+    "ghirri"
+  ],
+  "explained": [
+    0.5255816694624292,
+    0.27585933820473374
+  ],
+  "points": [
+    {
+      "key": "minoan",
+      "x": -0.12188456795625238,
+      "y": 0.12592740331415037,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "isolari",
+      "x": -0.15119170588745542,
+      "y": 0.05664868930846123,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "matisse",
+      "x": 0.21760065863931255,
+      "y": -0.04507690755376767,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "miro",
+      "x": -0.2357407142772553,
+      "y": 0.003445891911566477,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "list",
+      "x": 0.1293460069737344,
+      "y": -0.10756989509458259,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "maiolica",
+      "x": 0.17208352109805042,
+      "y": -0.09932886959601576,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "scianna",
+      "x": -0.1872783595644383,
+      "y": -0.06367665319701132,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "vitali",
+      "x": 0.2213306248874953,
+      "y": 0.04706159088543768,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "luzzu",
+      "x": 0.11930078453756796,
+      "y": -0.1597015876003642,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "lionni",
+      "x": -0.17405236703612462,
+      "y": 0.05274688031663037,
+      "cluster": 0,
+      "exemplar": true
+    },
+    {
+      "key": "luzzati",
+      "x": -0.15971079166309052,
+      "y": -0.021491890796707033,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "lai",
+      "x": 0.15175657361606948,
+      "y": -0.010373491617713258,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "casale",
+      "x": -0.13506445990504196,
+      "y": -0.02033132953036772,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "bauer",
+      "x": -0.1312971628230388,
+      "y": -0.022244572856499358,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "procida",
+      "x": -0.12965700753223822,
+      "y": 0.03142944436201674,
+      "cluster": 0,
+      "exemplar": false
+    },
+    {
+      "key": "mediterraneo",
+      "x": 0.1533010356316156,
+      "y": -0.08053682594041353,
+      "cluster": 1,
+      "exemplar": true
+    },
+    {
+      "key": "djerba",
+      "x": 0.05022234928539668,
+      "y": -0.08892471091087317,
+      "cluster": 1,
+      "exemplar": false
+    },
+    {
+      "key": "ghirri",
+      "x": 0.2109355819756923,
+      "y": 0.40199683459605207,
+      "cluster": 2,
+      "exemplar": true
+    }
+  ]
+}

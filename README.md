@@ -87,6 +87,9 @@ the home page shows them as a gallery:
 - [The islands' data, made with nanuq](https://pietroppeter.github.io/tabelline/stories/isole-data/)
   (tabelline 0.2): how the islands' tables were made from Wikipedia, Wikidata and OpenStreetMap,
   in three Nim programs (fetch, extract, and process with nanuq), and the checks behind them.
+- [Photos of the Mediterranean, by the story](https://pietroppeter.github.io/tabelline/stories/isole-photos/):
+  the openly licensed photos gathered for the islands story, by section, with the one it shows
+  over each heading, and who made each, its licence and its source.
 
 ## The site
 
@@ -132,6 +135,10 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [Designing a Mediterranean look](https://pietroppeter.github.io/tabelline/devlog/mediterranean/)
+  (11 Nov 2026 D): a look of its own for the islands story, in place of the quaderno, designed in
+  rounds; round 1 has nine sources (who they are, what they made, why they fit, what a page could
+  take, references) and three directions.
 - [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
   (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
   found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):

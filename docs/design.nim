@@ -42,6 +42,10 @@ elsewhere.
   triangle: flat paper, one geometric sans, black rules, and colour only where it means something.
 - **Quaderno**, an Italian school exercise book: squared paper, a red margin, headings in blue
   pen with a highlighter stroke, code on index cards, outputs on sticky notes, tables taped in.
+- **Minoan**, after the frescoes of Crete and Thera and the vases of Athens, for the islands of
+  the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a running wave
+  over every table and a meander over the footer. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
+  was designed in the devlog post [Designing a Mediterranean look](../devlog/mediterranean/).
 
 Munari is the page itself: its rules need no script, so a page without JavaScript (or before
 its script runs) is Munari. The quaderno is the other look, kept because it shows that a page and
@@ -128,6 +132,9 @@ and goes in `docs/theme.nim`.
   geometric types of the 1920s, for headings and text alike; big and plain.
 - **Quaderno**: Patrick Hand for what is handwritten (headings, labels, the indice), Atkinson
   Hyperlegible for the text.
+- **Minoan**: [Gentium Book Plus](https://software.sil.org/gentium/) (OFL), a serif made for
+  Greek and Latin scholarship, with every letter of the islands' names (ć, ħ, ğ, ḍ, Greek); old-style
+  figures in text, lining ones in tables.
 - **Code**: the system monospace at 13px, smaller than the text; 12.5px under a table.
 """
 
@@ -243,6 +250,22 @@ nbShowCode:
       nbText "The first card is the simplest; each adds one thing."
     nbGalleryCard "Side by side":
       nbText "On a phone, one card and the edge of the next are in view."
+
+nbText: """
+## A heading over a photo
+
+A section's heading can stand over a photo, with `nbPhotoHeading`: the photo as wide as the text
+and low, the heading in the paper's colour over its lower edge on a shade of ink, the circle
+still marking the place, and under it, small, who made the photo, its licence and a link to its
+source. It is a heading like the others (the indice lists it, ↑ goes back), so a page uses it only
+where the photo says something the section is about. The photo is a file in the repository, a
+smaller copy of an openly licensed one. Used in [Islands of the Mediterranean](../stories/isole/)
+and [Photos of the Mediterranean, by the story](../stories/isole-photos/).
+"""
+nbShowCode:
+  nbPhotoHeading "Etna, from orbit", docs / "stories" / "data" / "isole" / "photos" / "story" / "etna-plume.jpg",
+    "NASA, STS-62 crew, March 1994 · Public domain · [source](https://images.nasa.gov/details/STS062-85-195)",
+    "Etna's plume, photographed from the Space Shuttle"
 
 nbText: """
 ## Source files
