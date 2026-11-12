@@ -86,6 +86,22 @@ tables below follow him in three parts, each with the colour of its circles: fir
 shapes, then who ruled them and how they live, then getting there and when to go, where events
 show up as a dip in a line.
 
+Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
+names, and the other 173 a pink dot.
+"""
+
+nbDrawing data / "map-west.svg", "The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
+nbDrawing data / "map-east.svg", "The eastern Mediterranean, from the Ionian Sea to Cyprus"
+
+nbNote("""
+The maps are not tables: they are two drawings made with the data, by
+[map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
+from OpenStreetMap's coast and the islands' places on Wikidata. Where each name goes was
+written by Claude, the AI that wrote this story. Their colours are the page's, so they change
+with its look.
+""", nkCode)
+
+nbText: """
 ## One island to start
 
 Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
