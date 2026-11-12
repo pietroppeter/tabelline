@@ -50,7 +50,7 @@ well, for thirty years.
 Both hand the work to a browser.
 """
 
-block:
+nbShowCode:
   type Way = object
     library, call, how: string
   let rows = @[
@@ -91,7 +91,7 @@ something draws it; tabelline writes the table in another language that can make
 graphics library draws what tabelline lays out.
 """
 
-block:
+nbShowCode:
   type Option = object
     way, family, what, needs: string
   let rows = @[
@@ -149,7 +149,7 @@ problems come back in each of them.
 line wraps, how tall a row is. To measure it you need the font, the very file, and its table of
 letter widths. tabelline's default font is a list, `system-ui, -apple-system, 'Segoe UI', Roboto,
 Helvetica, Arial, sans-serif`, which the browser resolves to whatever the reader's machine has.
-A picture cannot: it needs one font that we ship. diagrammari met the same problem with Pele,
+A picture cannot: it needs one font that we ship. [diagrammari](https://pietroppeter.github.io/diagrammari/) met the same problem with Pele,
 which measures with Arial's widths, and draws its diagrams in Arimo, a free font with Arial's
 widths.
 
@@ -187,19 +187,19 @@ installed in CI and in every sandbox too), does it look like the HTML table, whi
 make (an SVG can be edited in Inkscape, Figma or PowerPoint), and how much work is it.
 """
 
-block:
+nbShowCode:
   type Score = object
     way, install, looks, formats, work: string
   let rows = @[
-    Score(way: "Browser (2)", install: "Chrome", looks: "exactly", formats: "PNG, PDF", work: "small: nokap in Nim"),
-    Score(way: "SVG around HTML (3)", install: "nothing", looks: "only in a browser", formats: "SVG", work: "tiny"),
-    Score(way: "Native SVG (5)", install: "nothing", looks: "close", formats: "SVG, editable", work: "a layout and a CSS reader"),
-    Score(way: "pixie (6)", install: "nothing outside Nim", looks: "close", formats: "PNG", work: "the same layout, a painter"),
-    Score(way: "Typst (8)", install: "typst", looks: "its own", formats: "PNG, PDF; SVG, editable", work: "a Typst writer"),
-    Score(way: "Cairo (10)", install: "libcairo", looks: "close", formats: "PNG, PDF; SVG, editable", work: "the same layout, a painter"),
+    Score(way: "2. Browser, remote control", install: "Chrome", looks: "exactly", formats: "PNG, PDF", work: "small: nokap in Nim"),
+    Score(way: "3. SVG around the HTML", install: "nothing", looks: "only in a browser", formats: "SVG", work: "tiny"),
+    Score(way: "5. Native SVG", install: "nothing", looks: "close", formats: "SVG, editable", work: "a layout and a CSS reader"),
+    Score(way: "6. PNG with pixie", install: "nothing outside Nim", looks: "close", formats: "PNG", work: "the same layout, a painter"),
+    Score(way: "8. Typst", install: "typst", looks: "its own", formats: "PNG, PDF; SVG, editable", work: "a Typst writer"),
+    Score(way: "10. Cairo or Skia", install: "libcairo", looks: "close", formats: "PNG, PDF; SVG, editable", work: "the same layout, a painter"),
   ]
   let t = tabella(rows, rownameCol = "way"):
-    tabHeader "What each way gets", "the six ways worth comparing"
+    tabHeader "What each way gets", "six of the ten ways above, with their numbers"
     colsLabel {"install": "installs", "looks": "like the HTML", "formats": "makes", "work": "work"}
     optCssTheme()
   nbTable t
@@ -207,7 +207,8 @@ block:
 nbNote """
 **About the code.** The three tables of this post are records turned into tabelline tables, one
 verb per line. The first two group their rows by a field (`groupnameCol`), in the order they first
-appear, and read the long column as Markdown (`fmtMarkdown`), so that code shows as code.
+appear, and read the long column as Markdown (`fmtMarkdown`), so that code shows as code. Each
+table's code is folded under it: *show code* opens it.
 """, nkCode
 
 nbText: """
