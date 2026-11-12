@@ -21,7 +21,7 @@
     "nanuq": {
       "dir": "$deps/nanuq",
       "url": "https://github.com/pietroppeter/nanuq",
-      "commit": "60f21f8ea700b9cb7d809a9b15f4187f85630581",
+      "commit": "f8d84e8f71613719c1befb633e8e5dac4a08ea5d",
       "version": ""
     },
     "vmath": {
