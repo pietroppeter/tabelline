@@ -1,9 +1,10 @@
 ## devlog: 11 Nov 2026 D | Designing a Mediterranean look | The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. Designed in rounds, in this post. Fourteen sources to learn from, from Minoan frescoes to the houses of Djerba, each with who they are, what they made, why they fit and what a page could take; rules for turning a source into six colours, checked on every palette; a gallery of the discarded; three directions, and a tournament.
 ## A dated post: it tells how the Mediterranean look was designed, round by round, and is not rewritten afterwards.
-import std/[os, strutils]
+import std/[json, os, strutils]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks
+import data/mediterranean/drafts
 
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
@@ -644,33 +645,126 @@ The fourteen side by side: what each would bring to the parts of a page.
 
 block:
   type Idea = object
-    source, colours, tables, shapes: string
-  func i(source, colours, tables, shapes: string): Idea =
-    Idea(source: source, colours: colours, tables: tables, shapes: shapes)
+    source, colours, tables: string
+  func i(source, colours, tables: string): Idea = Idea(source: source, colours: colours, tables: tables)
   let ideas = @[
-    i("Minoan and Attic", "terracotta and black, dolphin blue", "a meander as the top rule", "dolphins and octopus, sparingly"),
-    i("Isolari, portolans", "vellum, brown ink, cinnabar", "thin rhumb lines", "the compass rose as the circle"),
-    i("Matisse, Dufy", "ultramarine, pink, lemon", "colour that misses its line", "cut-out paper shapes"),
-    i("Ponti, maiolica", "cobalt, terracotta, yellow, green", "a row group as a band of tiles", "a card as a tile"),
-    i("Lionni", "red fish, sea blue, black", "many small marks, one shape", "collage edges"),
-    i("Luzzati", "magenta, gold, blue, black outlines", "the title as a stage's name", "painted backdrops"),
-    i("Luzzu", "hull blue, maroon, lemon, green", "a coloured band on the top rule", "a band whose colour says what"),
-    i("Lai", "linen, black thread, ribbon blue, bread", "stitched rules", "a ribbon that ties rows together"),
-    i("Vitali", "bleached, turquoise, red, yellow", "dense and small", "small marks"),
-    i("Casale", "limestone, red and yellow ochre, glass blue", "cells parted by mortar", "a border of small squares"),
-    i("Bauer", "white, iron-gall ink, plant colours", "a legend as a table of colours", "hairlines, italic Latin"),
-    i("Mediterraneo", "whitewash, harbour water, plaster", "titles as a film's", "few words, widely spaced"),
-    i("Procida", "pastels, pink, shutter green", "row groups as houses", "a harbour front"),
-    i("Djerba", "plaster, murex purple, clay", "plain outside, colour inside", "domes for circles"),
+    i("Minoan and Attic", "terracotta and black, dolphin blue", "a meander as the top rule"),
+    i("Isolari, portolans", "vellum, brown ink, cinnabar", "thin rhumb lines"),
+    i("Matisse, Dufy", "ultramarine, pink, lemon", "colour that misses its line"),
+    i("Ponti, maiolica", "cobalt, terracotta, yellow, green", "a row group as a band of tiles"),
+    i("Lionni", "red fish, sea blue, black", "many small marks, one shape"),
+    i("Luzzati", "magenta, gold, blue, black outlines", "the title as a stage's name"),
+    i("Luzzu", "hull blue, maroon, lemon, green", "a coloured band on the top rule"),
+    i("Lai", "linen, black thread, ribbon blue, bread", "stitched rules"),
+    i("Vitali", "bleached, turquoise, red, yellow", "dense and small"),
+    i("Casale", "limestone, red and yellow ochre, glass blue", "cells parted by mortar"),
+    i("Bauer", "white, iron-gall ink, plant colours", "a legend as a table of colours"),
+    i("Mediterraneo", "whitewash, harbour water, plaster", "titles as a film's"),
+    i("Procida", "pastels, pink, shutter green", "row groups as houses"),
+    i("Djerba", "plaster, murex purple, clay", "plain outside, colour inside"),
   ]
   let t = tabella(ideas, rownameCol = "source"):
-    tabHeader "Fourteen sources, part by part", "what a Mediterranean look could take from each"
+    tabHeader "Fourteen sources, part by part", "colours and tables; shapes and motifs are drafted below"
     colsLabel:
       colours: "colours"
       tables: "tables"
-      shapes: "shapes and motifs"
     optCssTheme()
   nbTable t
+
+nbText: """
+## Shapes and motifs, drafted
+
+A shape or a motif from each source, drawn as a first draft in its six colours: what a section
+circle, a rule, a card or a corner of a page could become. Drafts, not finished drawings: they show
+what each source would bring, side by side.
+"""
+
+block:  # every draft is drawn by drafts.nim, in the source's colours, and shown as an image
+  let dir = getTempDir() / "tabelline-mediterranean-drafts"
+  writeMotifs(dir)
+  type Motif = object
+    source, draft: string
+  let names = [("minoan", "Minoan and Attic", "the meander; dolphins and octopus, sparingly"),
+    ("casale", "Casale", "a border of small squares"), ("isolari", "Isolari, portolans", "the compass rose as the circle"),
+    ("maiolica", "Ponti, maiolica", "a card as a tile"), ("bauer", "Bauer", "hairlines, numbers for colours, italic Latin"),
+    ("luzzu", "Luzzu", "a band whose colour says what; the eye"), ("matisse", "Matisse, Dufy", "cut-out paper shapes"),
+    ("lionni", "Lionni", "many small marks, one shape"), ("luzzati", "Luzzati", "painted backdrops, a stage"),
+    ("lai", "Lai", "a ribbon that ties rows together, stitched rules"), ("vitali", "Vitali", "a crowd of small marks"),
+    ("mediterraneo", "Mediterraneo", "few words, widely spaced"), ("procida", "Procida", "a harbour front of pastel houses"),
+    ("djerba", "Djerba", "domes for circles, a door of colour")]
+  var rows: seq[Motif]
+  for (key, name, shapes) in names:
+    rows.add Motif(source: "**" & name & "**: " & shapes, draft: key)
+  let t = tabella(rows):
+    tabHeader "Shapes and motifs", "a first draft for each source, in its colours"
+    colsLabel:
+      source: "what a page could take"
+      draft: "draft"
+    fmtMarkdown "source"
+    fmtImage "draft", path = dir, filePattern = "{x}.svg", width = "11em", alt = "a draft for {x}"
+    optCssTheme()
+  nbTable t
+
+nbText: """
+## Palettes that look alike
+
+Many palettes look alike, so they are put in groups by a clustering:
+[affinity propagation](https://pietroppeter.github.io/naffprop/), with
+[naffprop](https://github.com/pietroppeter/naffprop), which is written in Nim.
+
+- **Points.** Each palette is a point with 18 coordinates: its six colours, in role order, each in
+  [OKLab](https://bottosson.github.io/posts/oklab/) (lightness and two axes of colour), where a
+  distance is close to the difference the eye sees.
+- **Similarity.** The similarity of two palettes is minus their squared distance. Every palette's
+  preference is the median similarity, as R's apcluster does by default, so the method picks the
+  number of groups itself, and the **exemplar** of each group: the palette the others are most like.
+- **The plane.** The map below projects the 18 dimensions on the two that spread the palettes the
+  most (principal components, computed by hand in the script, by power iteration on the covariance).
+
+All 18 palettes are in it, the discarded too (in italic). The clustering runs outside the build,
+since naffprop is not a dependency of tabelline: a script, `cluster.nim`, in the post's data
+folder, writes `clusters.json`, and the page draws it.
+"""
+
+block:  # the map of the palettes, drawn by drafts.nim from clusters.json
+  let data = parseFile(docs / "devlog" / "data" / "mediterranean" / "clusters.json")
+  let svgFile = getTempDir() / "tabelline-mediterranean-map.svg"
+  writeFile(svgFile, palettesMap(data, ["miro", "list", "scianna", "ghirri"]))
+  nbDrawing svgFile, "The 18 palettes on a plane: each a wheel of its six colours, joined to the exemplar of its group (ringed, in bold); the discarded in italic. Ghirri lies far above the others."
+
+  type Member = object
+    group, source, status: string
+  let discarded = ["miro", "list", "scianna", "ghirri"]
+  var members: seq[Member]
+  for e in data["exemplars"]:
+    var count = 0
+    for pt in data["points"]:
+      if data["exemplars"][pt["cluster"].getInt].getStr == e.getStr: inc count
+    for pt in data["points"]:
+      if data["exemplars"][pt["cluster"].getInt].getStr == e.getStr:
+        let k = pt["key"].getStr
+        members.add Member(group: "like " & shortName(e.getStr) & " (" & $count & ")", source: shortName(k) & (if pt["exemplar"].getBool: " ★" else: ""),
+                           status: (if k in discarded: "discarded" else: "candidate"))
+  let t = tabella(members, groupnameCol = "group"):
+    tabHeader "Three groups", "from " & $data["iterations"].getInt & " iterations of affinity propagation"
+    colsLabel:
+      source: "source"
+      status: ""
+    tabSourceNote "★ the exemplar of the group."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+Two families, and one painter alone. On the left, the palettes whose primary is a **red**:
+terracotta, cinnabar, the red fish, magenta, Corricella pink, Bauer's cyclamen and the
+mosaics' ochre, around Lionni. On the right, those whose primary is a **blue** (and Djerba's purple),
+around Mediterraneo. Ghirri is alone, far above: the only pale palette. The papers are all
+cream and the inks all near black, so what tells two palettes apart is the primary, then the
+secondary.
+
+What this means for the look: the families are a choice to make first, red or blue, before any
+source; inside a family, the sources differ less in colour than in shapes and motifs (above).
+"""
 
 nbText: """
 ## Three directions
@@ -746,6 +840,9 @@ nbText: """
    source by kind and status, and how sources are chosen.
 4. **Round 4**: discarding is hard, so only one: Miró, too well known and too sharp; Maria Lai in
    his place; five more sources to reach eighteen; and a tournament of the fourteen.
+5. **Round 5**: a table of contents; in the tournament a tap opens the card, **keep** and
+   **↺ undo** for each match; shapes and motifs drafted in a table of their own; the palettes
+   grouped by affinity propagation and drawn on a plane: two families, red and blue.
 
 Next, Pietro plays the tournament (or picks a direction, or a mix), and a round builds the winner on this page: the six colours,
 typefaces that pass the line of names above, and the motifs, on a real table of the islands, in
