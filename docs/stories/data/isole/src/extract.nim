@@ -50,7 +50,7 @@ for r in rows:
 
 type Island = object
   row: ListRow
-  item, archipelago: string
+  item, archipelago, italian: string
   native: seq[string]
   lon, lat, elevation: float
 var islands: seq[Island]
@@ -96,6 +96,19 @@ proc major(name: string): string =
 
 var seaNames = newSeq[seq[string]](islands.len)
 var seaHow = newSeq[string](islands.len)
+# The Italian name: Wikidata's Italian label, without "isola di" in front (Isola Lunga is a
+# name), else the English one. Cyprus's page is its geography's, labelled in Italian by Claude.
+for w in readRows(raw / "wd_italian.csv"):
+  if w["title"] notin byPage or w["italian"].len == 0: continue
+  var name = w["italian"]
+  for prefix in ["isola di ", "isola d'", "isola del ", "isola "]:
+    if name.toLowerAscii.startsWith(prefix) and name != "Isola Lunga": name = name[prefix.len .. ^1]
+  if name[0].isLowerAscii: name[0] = name[0].toUpperAscii
+  islands[byPage[w["title"]]].italian = name
+for isl in islands.mitems:
+  if isl.row.title == "Geography of Cyprus": isl.italian = "Cipro"
+  if isl.italian.len == 0: isl.italian = isl.row.label
+
 for w in readRows(raw / "wd_waters.csv"):
   if w["title"] notin byPage: continue
   let i = byPage[w["title"]]
@@ -280,10 +293,10 @@ for i, isl in islands:
   islandRows.add @[$(i + 1), isl.row.title, isl.row.label, page[isl.row.title], isl.item,
                    (if isl.lon.isNaN: "" else: $isl.lon), (if isl.lat.isNaN: "" else: $isl.lat),
                    (if isl.elevation.isNaN: "" else: $isl.elevation), isl.archipelago,
-                   isl.native.join(" / "), $isl.row.km2, isl.row.town, $isl.row.isMain,
+                   isl.native.join(" / "), isl.italian, $isl.row.km2, isl.row.town, $isl.row.isMain,
                    seaNames[i].join("; "), seaHow[i]]
-writeCsv(stage / "islands.csv", "The islands of Wikipedia's List of islands in the Mediterranean (table By area, in its order), with their Wikidata item, coordinates, highest point, archipelago, native name and sea (Wikidata P206, or the closest island's, or Wikipedia's article).",
-  ["rank", "title", "label", "page", "wikidata", "lon", "lat", "elevation", "archipelago", "native", "list_km2", "town", "main", "sea", "sea_how"], islandRows)
+writeCsv(stage / "islands.csv", "The islands of Wikipedia's List of islands in the Mediterranean (table By area, in its order), with their Wikidata item, coordinates, highest point, archipelago, native name, Italian name and sea (Wikidata P206, or the closest island's, or Wikipedia's article).",
+  ["rank", "title", "label", "page", "wikidata", "lon", "lat", "elevation", "archipelago", "native", "italian", "list_km2", "town", "main", "sea", "sea_how"], islandRows)
 
 # ------------------------------------------------------------------------- what is on them
 

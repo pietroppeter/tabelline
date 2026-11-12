@@ -60,11 +60,11 @@ let islands = rd(stage / "islands.csv")
   .join(airports.groupBy(col.title).agg(len().alias("airports")), on = ["title"], how = JoinType.Left)
   .select(col.rank.int64, col.label.alias("island"), col.title, col.country, col.list_km2.num.alias("km2"),
           col.population, col.town, col.wikidata, col.lat.num, col.lon.num, col.elevation.num,
-          col.archipelago, col.native, (col.main == "true").alias("main"), col.sea, col.sea_how,
+          col.archipelago, col.native, col.italian, (col.main == "true").alias("main"), col.sea, col.sea_how,
           col.outline_km2, col.coast_km, col.points, col.matched,
           col.heritage.fillNull(0), col.airports.fillNull(0), col.x, col.y)
   .sort("rank").collect
-islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, sea), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
+islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, Italian name, sea), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
 
 # ---------------------------------------------------------------- 2. what is on them
 
@@ -146,7 +146,7 @@ islands.lazy.filter(col.main)
   .join(lastPax, on = ["title"], how = JoinType.Left)
   .join(sea, on = ["title"], how = JoinType.Left)
   .join(high, on = ["title"], how = JoinType.Left)
-  .select(col.rank, col.island, col.title, col.country, col.code, col.locale, col.km2, col.population,
+  .select(col.rank, col.island, col.italian, col.title, col.country, col.code, col.locale, col.km2, col.population,
           (col.population / col.km2).round(0).alias("per_km2"), col.coast_km, col.elevation, col.archipelago,
           col.town, col.sea.alias("seas"), col.heritage, col.airports, col.region, col.pps_per_person, col.pps_index,
           col.jobless_2025, col.pax_year, col.pax, col.high_jan, col.high_aug, col.sea_aug)

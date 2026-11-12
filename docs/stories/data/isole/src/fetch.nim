@@ -116,6 +116,12 @@ SELECT ?title ?item ?water ?waterLabel ?parent ?parentLabel WHERE {""" & island 
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }"""
 
+# Each island's name in Italian, for the Italian page.
+sparql "wd_italian", """
+SELECT ?title ?item ?italian WHERE {""" & island & """
+  OPTIONAL { ?item rdfs:label ?italian . FILTER(LANG(?italian) = "it") }
+}"""
+
 # Each island's population, every time it was counted.
 sparql "wd_population", """
 SELECT ?title ?item ?population ?date ?precision WHERE {""" & island & """
