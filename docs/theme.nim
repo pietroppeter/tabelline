@@ -394,10 +394,25 @@ body details.foldcode pre > code { font-size: 12.5px; }
 
 /* parts of a long page (nbPart): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
-.parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
+.parte-secondary ~ :is(h2, .titolo-foto) { --part: var(--secondary); } .parte-success ~ :is(h2, .titolo-foto) { --part: var(--success); }
 /* a later part wins over an earlier one, whatever its colour: one more class for the second part on */
-.parte ~ .parte-primary ~ h2 { --part: var(--primary); } .parte ~ .parte-secondary ~ h2 { --part: var(--secondary); }
-.parte ~ .parte-success ~ h2 { --part: var(--success); }
+.parte ~ .parte-primary ~ :is(h2, .titolo-foto) { --part: var(--primary); }
+.parte ~ .parte-secondary ~ :is(h2, .titolo-foto) { --part: var(--secondary); }
+.parte ~ .parte-success ~ :is(h2, .titolo-foto) { --part: var(--success); }
+
+/* a section's heading over a photo (nbPhotoHeading): the photo as wide as the text, the heading
+   over its lower edge on a shade of ink, in the paper's colour; the credit small, under it */
+.titolo-foto { margin: 3rem 0 1rem; }
+.titolo-foto-img { position: relative; }
+.titolo-foto img { display: block; width: 100%; height: 11rem; object-fit: cover; }
+.titolo-foto-3 img { height: 8rem; }
+.titolo-foto :is(h2, h3) { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; color: var(--paper);
+  padding: 2.4rem .8rem .7rem 3.2rem; background: linear-gradient(transparent, color-mix(in oklab, var(--ink) 82%, transparent)); }
+.titolo-foto h2::before { left: .8rem; top: auto; bottom: .85rem; box-shadow: 0 0 0 2px var(--paper); }
+.titolo-foto h3 { padding-left: .8rem; color: var(--paper); }
+.titolo-foto .su { color: var(--paper); border-color: color-mix(in oklab, var(--paper) 60%, transparent); }
+.titolo-foto figcaption { margin-top: .35rem; font-size: .78rem; line-height: 1.35; color: var(--muted); }
+.titolo-foto figcaption a { color: var(--muted); }
 
 /* the specs page (nbSpecs): each capability folds open; examples carry a pass stamp */
 details.spec { background: var(--shade); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }

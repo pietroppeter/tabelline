@@ -1,0 +1,389 @@
+{
+ "intro": "<p>Pictures for the story <i>Islands of the Mediterranean</i>, grouped by the section of the story they could go in. Claude gathered them; Pietro picked one for each section, and the story shows it under the section's heading, as each group here does. Every picture is in the public domain or under an open licence. Its card says what it is, who made it and when, the licence, and why it could fit there; the link goes to its page. Swipe the cards of a group sideways.</p>",
+ "groups": [
+  {
+   "title": "A thousand things at once",
+   "where": "The opening: Braudel's question, What is the Mediterranean?",
+   "note": "The whole sea before any island: one picture that holds all of it, or none, and the quote alone.",
+   "photos": [
+    {
+     "file": "nasa-iss072e000922.jpg",
+     "name": "The sea at night, from orbit",
+     "pick": false,
+     "about": "The lights of the coasts from Spain to Italy and from Algeria to Libya, photographed from the International Space Station on 23 September 2024.",
+     "why": "The sea is drawn only by the people around it: Braudel's thousand things, as a thousand lights. It is the one picture here that shows the whole sea at once."
+    },
+    {
+     "file": "nasa-iss024e016042.jpg",
+     "name": "The Aegean by moonlight, from orbit",
+     "pick": false,
+     "about": "Looking south from over Romania across the Aegean to Greece, on a night with a moon: Thessaloniki near the centre, the larger glow of Athens on the left, Skopje below.",
+     "why": "The same idea as the lights from orbit, but the moon lights the water, so the coasts and the islands of the Aegean read clearly: the sea is a shape, not only a dark gap."
+    },
+    {
+     "file": "nasa-iss037e018864.jpg",
+     "name": "Italy and all of Sicily, at night",
+     "pick": false,
+     "about": "Most of Italy and the whole of Sicily, outlined by their lights; Rome and Naples near the centre, the Adriatic on the right.",
+     "why": "The clearest coastline of the night pictures, and the story's first island, Sicily, whole, already in the opening picture."
+    },
+    {
+     "file": "nasa-iss040e090718.jpg",
+     "name": "Southern Italy and Sicily, south at the top",
+     "pick": true,
+     "about": "The boot and Sicily at night, photographed with south at the top of the picture.",
+     "why": "Upside down, as al-Idrisi drew the world for Roger II in Palermo (in To read more): an opening that asks the reader to look at the sea from the other shore."
+    },
+    {
+     "file": "nasa-GSFC_20171208_Archive_e001591.jpg",
+     "name": "The whole sea, from the night lights of 2012",
+     "pick": false,
+     "about": "A composite of the night lights of Europe, Africa and the Middle East, from the Suomi NPP satellite's day-night band, laid over the Blue Marble.",
+     "why": "The only picture where the whole Mediterranean is one dark shape ringed by lights; small on a phone, so best large, at the very top."
+    }
+   ]
+  },
+  {
+   "title": "One island to start: Sicily",
+   "where": "Matvejević's starting point, and Sicily in one row: a triangle, five million people, Etna.",
+   "note": "Sicily, the island the story starts from.",
+   "photos": [
+    {
+     "file": "nasa-STS100-713-064.jpg",
+     "name": "Sicily and Malta, from the Shuttle",
+     "pick": false,
+     "about": "A view to the south from Space Shuttle Endeavour, April 2001: the whole triangle of Sicily, with Malta below it.",
+     "why": "The text says Sicily is a triangle: here it is, with its outline as clear as the shape in the table, and Malta, the next table's most crowded island, at its foot."
+    },
+    {
+     "file": "nasa-STS062-85-195.jpg",
+     "name": "Etna's plume",
+     "about": "Steam blowing south from Etna's snowy summit, seen from Space Shuttle Endeavour in March 1994.",
+     "why": "The row ends with Etna, 3,340 m: the picture is its highest point, alive.",
+     "pick": true
+    },
+    {
+     "file": "p-04.jpg",
+     "name": "Palermo cathedral, about 1900",
+     "about": "A photochrom of about 1890 to 1900: a black and white negative printed in colour by the Photoglob company of Zürich.",
+     "why": "Sicily from the ground, a century ago; better kept for “What the world keeps”, since Arab-Norman Palermo is a World Heritage site.",
+     "pick": false
+    }
+   ]
+  },
+  {
+   "title": "Twenty-two islands, each with its shape",
+   "where": "Ramondino: islands shaped like fish, a dolphin, a torpedo ray.",
+   "note": "The shapes, and the creatures they look like.",
+   "photos": [
+    {
+     "file": "c-14.jpg",
+     "name": "The dolphins of Knossos",
+     "pick": true,
+     "about": "The dolphin fresco of the palace of Knossos, in Crete, as shown at the palace today (photograph of 2010). The Minoans painted it about three and a half thousand years ago.",
+     "why": "Ramondino sees islands shaped like dolphins; the oldest dolphins of the Mediterranean were painted on an island. It is also the Minoan source of the design post."
+    },
+    {
+     "file": "nasa-sl2-05-364.jpg",
+     "name": "The whole of Crete, from Skylab",
+     "about": "Crete in one cloudless frame, photographed by the crew of Skylab on 22 June 1973.",
+     "why": "An island seen as a shape and nothing else: what the shape nanoplots draw."
+    }
+   ]
+  },
+  {
+   "title": "At the same scale",
+   "where": "The Passenger: an island on a map gives the illusion of a small world of its own.",
+   "note": "The look the story warns against: an island alone on its page.",
+   "photos": [
+    {
+     "file": "c-13.jpg",
+     "name": "Lemnos, in Piri Reis's Book of the Sea",
+     "pick": true,
+     "about": "A page of the Kitab-ı Bahriye, the book of the sea of the Ottoman admiral Piri Reis, in a later copy at the Walters Art Museum: Lemnos, with rhumb lines and compass roses.",
+     "why": "One island, alone, filling its page: the illusion the quote names, drawn five centuries ago, and the ancestor of the shape nanoplot. It is also the isolario direction of the design."
+    },
+    {
+     "file": "c-09.jpg",
+     "name": "Buondelmonti's book of islands",
+     "about": "Pages of Cristoforo Buondelmonti's Liber insularum Archipelagi, the book of the Aegean islands he wrote in 1420, one island per page.",
+     "why": "The first of the island books: the same idea as the Piri Reis page, older; one of the two, not both."
+    }
+   ]
+  },
+  {
+   "title": "All 195: rocks that only just have a name",
+   "where": "Deleuze: no unity in the set of islands. Braudel: isolated worlds, lands of hunger.",
+   "note": "The small ones, which make most of the list.",
+   "photos": [
+    {
+     "file": "p-07.jpg",
+     "name": "Strombolicchio",
+     "pick": true,
+     "about": "The rock of Strombolicchio, with its lighthouse, off Stromboli, in the Aeolian Islands. A photograph shared on Flickr.",
+     "why": "The story's lede promises “rocks that only just have a name”: this is one, an island that is a rock, a lighthouse and nothing else."
+    },
+    {
+     "file": "p-08.jpg",
+     "name": "The Rabbit Island, Lampedusa",
+     "about": "The Isola dei Conigli, a small island off Lampedusa, and its bay. A photograph shared on Flickr.",
+     "why": "Lampedusa is one of the two small islands with an airport; but a beach picture fits the last section better."
+    }
+   ]
+  },
+  {
+   "title": "Who ruled them",
+   "where": "Braudel: lairs of fishermen and pirates. Lawrence on Sardinia; Rome, Byzantium, Venice, the Ottomans.",
+   "note": "The powers that came: their charts, their harbours.",
+   "photos": [
+    {
+     "file": "c-12.jpg",
+     "name": "Kalymnos, in Piri Reis's Book of the Sea",
+     "pick": false,
+     "about": "Another page of Piri Reis's Kitab-ı Bahriye (Walters Art Museum copy): the island of Kalymnos, in the Dodecanese, as an Ottoman sailor needed to know it.",
+     "why": "A Greek island seen by an Ottoman admiral: the crossroads in one page. If Lemnos goes in “At the same scale”, this is the same book, so one of the two."
+    },
+    {
+     "file": "c-11.jpg",
+     "name": "Venice, in Bordone's book of islands",
+     "about": "The map of Venice in Benedetto Bordone's book of islands, printed in Venice in 1528.",
+     "why": "Venice ruled Crete, Corfu and Cyprus for centuries; its own book of islands opens with Venice itself, a city on islands.",
+     "pick": true
+    },
+    {
+     "file": "c-04.jpg",
+     "name": "The Grand Harbour of Valletta, about 1900",
+     "about": "A print of about 1900 in the Rijksmuseum: the Grand Harbour of Valletta, Malta.",
+     "why": "The harbour of the Knights, then of the British: Malta changed rulers more often than most.",
+     "pick": false
+    },
+    {
+     "file": "p-00.jpg",
+     "name": "Valletta's Royal Opera House, about 1900",
+     "about": "A photochrom of the Teatro Reale of Valletta, built under British rule.",
+     "why": "The rulers' buildings; but the harbour tells it better.",
+     "pick": false
+    }
+   ]
+  },
+  {
+   "title": "What the world keeps",
+   "where": "UNESCO's 28 World Heritage properties on the islands: the Val di Noto, Malta's temples.",
+   "note": "One of the properties the table lists.",
+   "photos": [
+    {
+     "file": "c-16.jpg",
+     "name": "The stair of Santa Maria del Monte, Caltagirone",
+     "pick": false,
+     "about": "The 142 steps of the stair of Santa Maria del Monte, faced with maiolica, photographed in December 2024 and given to the public domain.",
+     "why": "Caltagirone is one of the eight late Baroque towns of the Val di Noto, the example in the text; and its maiolica is a source of the design."
+    },
+    {
+     "file": "p-03.jpg",
+     "name": "The Franciscans' pharmacy in Ragusa, about 1900",
+     "about": "A photochrom of a cloister courtyard in Ragusa, Sicily, with two friars.",
+     "why": "Ragusa is another town of the Val di Noto; a quieter, older view.",
+     "pick": false
+    },
+    {
+     "file": "p-04.jpg",
+     "name": "Palermo cathedral, about 1900",
+     "about": "The photochrom of the first group: the cathedral of Palermo.",
+     "why": "Part of Arab-Norman Palermo, a World Heritage property since 2015; the crossroads of rulers in stone.",
+     "pick": true
+    }
+   ]
+  },
+  {
+   "title": "How they live now",
+   "where": "The richness of the regions, and twenty years of work.",
+   "note": "Work: the oldest picture of it and one of today.",
+   "photos": [
+    {
+     "file": "m-08.jpg",
+     "name": "Luzzus in Marsaxlokk",
+     "pick": true,
+     "about": "The harbour of Marsaxlokk, in the south of Malta, full of luzzus, the painted fishing boats, with the village behind.",
+     "why": "Work at sea today, on the most crowded island, and wide enough for the section's title over the water; the luzzu is also a source of the design."
+    },
+    {
+     "file": "m-09.jpg",
+     "name": "A luzzu in Marsaxlokk, on blue water",
+     "pick": false,
+     "about": "A luzzu under a blue cover in the harbour of Marsaxlokk, a green boat in front, the houses behind.",
+     "why": "The same harbour on a clear day: the sea bluer, the boats fewer."
+    },
+    {
+     "file": "p-06.jpg",
+     "name": "A luzzu in Malta",
+     "pick": false,
+     "about": "The bright hull of a luzzu, a Maltese fishing boat, and its reflection in the harbour water. A photograph shared on Flickr.",
+     "why": "Work at sea today, on the most crowded island; and the luzzu is a source of the design, whose colours told where a boat was from."
+    },
+    {
+     "file": "c-15.jpg",
+     "name": "The fisherman of Akrotiri",
+     "about": "A young fisherman holding two strings of fish: a fresco of Akrotiri, on Thera (Santorini), of about 1600 to 1500 BC.",
+     "why": "The same work, three and a half thousand years earlier: a strong pair with the luzzu, if the section takes two.",
+     "pick": false
+    },
+    {
+     "file": "c-05.jpg",
+     "name": "Malta's custom house and landing place, about 1900",
+     "about": "A print of about 1900 in the Rijksmuseum: the custom house and the landing stage on the coast of Malta.",
+     "why": "Trade and customs, the old work of a harbour; better for “Getting there”.",
+     "pick": false
+    }
+   ]
+  },
+  {
+   "title": "Getting there",
+   "where": "Anedda: you can't leave an island on foot; a ship or a plane.",
+   "note": "Arriving by sea, before the airports of the table.",
+   "photos": [
+    {
+     "file": "c-07.jpg",
+     "name": "Capri's harbour, about 1880",
+     "pick": true,
+     "about": "Giorgio Sommer's photograph of the Marina of Capri, about 1880, with a steamship at anchor.",
+     "why": "Anedda's first lesson in one picture: the only way off is the ship. The table then shows how the plane took over."
+    },
+    {
+     "file": "p-05.jpg",
+     "name": "Capri's harbour town, about 1900",
+     "about": "A photochrom of the town and harbour of Capri, with boats drawn up on the water.",
+     "why": "The same harbour twenty years later, in colour: one Capri, not both."
+    },
+    {
+     "file": "c-05.jpg",
+     "name": "Malta's landing place, about 1900",
+     "about": "The Rijksmuseum print of the custom house and landing stage of Malta.",
+     "why": "Where travellers came ashore, before the planes of the table."
+    }
+   ]
+  },
+  {
+   "title": "When to go",
+   "where": "Mild wet winters, hot dry summers; the bora in the north Adriatic, the meltemi in the Aegean.",
+   "note": "The weather of the islands, and the past that is moving.",
+   "photos": [
+    {
+     "file": "p-02.jpg",
+     "name": "Lussinpiccolo, about 1900",
+     "pick": true,
+     "about": "A photochrom of Lussinpiccolo, today Mali Lošinj, on the island of Lošinj, next to Cres, when it was part of Austria-Hungary.",
+     "why": "The text names Cres and Krk as the coolest in winter, when the bora blows: this is their neighbour, a century ago. Mali Lošinj is in the story's data too."
+    },
+    {
+     "file": "c-03.jpg",
+     "name": "Pontikonisi, Corfu, about 1900",
+     "about": "A photochrom of Pontikonisi, the islet off Corfu, in a calm sea.",
+     "why": "The Ionian in summer stillness: the other face of the winds."
+    },
+    {
+     "file": "p-09.jpg",
+     "name": "The water of Favignana",
+     "about": "Clear shallow water and wild fennel on the coast of Favignana, in the Egadi Islands, west of Sicily. A photograph shared on Flickr.",
+     "why": "The sea at its warmest, 26 to 28 °C in the south in August; today's colour against the old prints."
+    }
+   ]
+  },
+  {
+   "title": "Something to see, a beach, a taste",
+   "where": "The end: one thing to see, a beach and a taste for each main island.",
+   "note": "A beach, and a thing to see.",
+   "photos": [
+    {
+     "file": "c-18.jpg",
+     "name": "Rabbit Beach, Lampedusa",
+     "pick": true,
+     "about": "The beach of the Isola dei Conigli, Lampedusa, photographed in August (Panoramio, on Wikimedia Commons).",
+     "why": "A beach for the section that ends with one, on one of the small islands that have an airport."
+    },
+    {
+     "file": "c-17.jpg",
+     "name": "Stromboli erupting",
+     "about": "An eruption of Stromboli at night, photographed in 1980.",
+     "why": "Something to see at night: a volcano that is almost always erupting."
+    },
+    {
+     "file": "c-00.jpg",
+     "name": "The Blue Grotto, Capri, about 1900",
+     "about": "A photochrom of the Blue Grotto of Capri, with a boatman.",
+     "why": "The most famous thing to see on an island, already a postcard in 1900."
+    },
+    {
+     "file": "m-00.jpg",
+     "name": "Cala Goloritzé, Sardinia",
+     "pick": false,
+     "about": "The view down to Cala Goloritzé, on the east coast of Sardinia, with its spire of rock in the sea.",
+     "why": "Sardinia's beach, seen from the path down: a beach you reach on foot, through the macchia."
+    },
+    {
+     "file": "m-01.jpg",
+     "name": "Elafonissi, Crete",
+     "pick": false,
+     "about": "The beach of Elafonissi, in the far south-west of Crete, with shallow water and umbrellas of reed.",
+     "why": "Crete's beach, crowded, as a beach is in the summer of the story's climate table."
+    },
+    {
+     "file": "m-02.jpg",
+     "name": "Cala Macarella, Menorca",
+     "pick": false,
+     "about": "A small cove of Menorca between pines and white rock, with turquoise water.",
+     "why": "The Balearics' beach, and the colour of the shallow sea that Vitali's palette took."
+    },
+    {
+     "file": "m-03.jpg",
+     "name": "Pastizzi and Kinnie, Malta",
+     "pick": false,
+     "about": "A cheese pastizz in its paper and a bottle of Kinnie, Malta's bitter orange soda.",
+     "why": "A taste, not a view: the one picture here that is food, for the taste of each island."
+    },
+    {
+     "file": "m-04.jpg",
+     "name": "Ħaġar Qim, Malta",
+     "pick": false,
+     "about": "A passage between the stones of the megalithic temple of Ħaġar Qim, under its protective tent.",
+     "why": "A thing to see, and one of Malta's temples in the story's world heritage table."
+    }
+   ]
+  },
+  {
+   "title": "To read more",
+   "where": "Braudel, Matvejević (who also wrote an Isolario Mediterraneo), The Passenger.",
+   "note": "The old books of islands that Matvejević's Isolario follows.",
+   "photos": [
+    {
+     "file": "c-08.jpg",
+     "name": "A page of Buondelmonti's book of islands",
+     "pick": false,
+     "about": "An illuminated manuscript of Buondelmonti's Liber insularum Archipelagi, as photographed for a Christie's sale in 2012.",
+     "why": "Matvejević's Isolario follows these books; but the section is a list of books, and may need no picture."
+    },
+    {
+     "file": "m-05.jpg",
+     "name": "Al-Idrisi's map, south at the top",
+     "pick": true,
+     "about": "The world map of al-Idrisi's atlas, made in Palermo for Roger II of Sicily, in a copy with the names in Latin script, turned so north is up.",
+     "why": "The book of a geographer at the court of Sicily: to read more begins on the story's first island, eight centuries ago."
+    },
+    {
+     "file": "m-06.jpg",
+     "name": "The Carta Pisana",
+     "pick": false,
+     "about": "The oldest known portolan chart, found in Pisa: the whole Mediterranean and the Black Sea, on a single skin; now at the Bibliothèque nationale de France.",
+     "why": "The sea before the isolari: the chart that every book of islands came after."
+    },
+    {
+     "file": "m-07.jpg",
+     "name": "Fernand Braudel",
+     "pick": false,
+     "about": "A portrait of the historian; the file's page dates it to 1945, when he was a prisoner of war at Oflag X-C, near Lübeck.",
+     "why": "The author of the story's first quote, who wrote much of The Mediterranean as a prisoner of war: a face for To read more."
+    }
+   ]
+  }
+ ],
+ "outro": "<h2>How these were chosen</h2><p>For each section of the story that could take a picture, we looked for pictures of the same thing the text talks about, best of the same island or the same words (a triangle, a dolphin, a rock, a ship), and then for ones that also belong to a source of the design post (the isolari, the Minoans, the maiolica, the luzzu), so that the story, the readings and the look hold together. Pietro then picked one for each section, in two rounds of review: the first asked for clearer night pictures and more beaches, tastes and books, the second chose the heading over the photo and a wider luzzu.</p><p>Where they come from: Wikimedia Commons (copies of the Library of Congress, the Rijksmuseum and the Walters Art Museum, and today's photographers), the Library of Congress's Photochrom Print Collection, NASA, and photographs shared on Flickr under Creative Commons licences, found through Openverse. Only links and details are kept, with small previews for this page and, for the picks, the smaller copies the story shows, each with its credit.</p>"
+}

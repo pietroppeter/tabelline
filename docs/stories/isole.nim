@@ -4,7 +4,7 @@
 ## docs/stories/data/isole/, made by its src/ (fetch.nim, extract.nim, process.nim with nanuq);
 ## how, in the story *The islands' data, made with nanuq* (isole_data.nim). This page reads the
 ## CSV files with tabelline's `readCsv` and shapes them with Nim's standard library.
-import std/[os, strutils, strformat, sequtils, algorithm, tables, sets, math]
+import std/[os, strutils, strformat, sequtils, algorithm, tables, sets, math, json]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks, ../theme
@@ -25,6 +25,19 @@ proc story(name: string): TableData =
 proc nums(v: Value): seq[float] =
   ## A cell of numbers separated by spaces ("1.5 -2 3") as floats.
   ($v).splitWhitespace.mapIt(it.parseFloat)
+
+let photos = parseFile(data / "photos" / "photos.json")
+
+proc photoHeading(title, file, name: string, level = 2) =
+  ## A section's heading over the photo picked for it (`data/isole/photos/story/<file>.jpg`),
+  ## credited from `photos.json`: who, when, the licence and a link to the source.
+  var credit = ""
+  for p in photos:
+    if p["name"].getStr == name:
+      credit = name & ": " & p["who"].getStr & (if p["when"].getStr.len > 0: ", " & p["when"].getStr else: "") &
+        " · " & p["license"].getStr & " · [source](" & p["link"].getStr & ")"
+  doAssert credit.len > 0, "no credit for " & name
+  nbPhotoHeading title, data / "photos" / "story" / (file & ".jpg"), credit, name, level
 
 proc outline(d: TableData, i: int): Value =
   ## Row `i`'s outline as a record of x and y (km), for a shape nanoplot; nothing without one.
@@ -75,6 +88,7 @@ of the text is about the islands.
 
 nbToc()
 
+photoHeading "A thousand things at once", "night-south-up", "Southern Italy and Sicily, south at the top"
 nbText: """
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
@@ -87,7 +101,18 @@ tables below follow him in three parts, each with the colour of its circles: fir
 shapes, then who ruled them and how they live, then getting there and when to go, where events
 show up as a dip in a line.
 
-## One island to start
+Braudel is the first of the voices that guide this story: along the way it quotes passages from
+books about the Mediterranean and its islands (Matvejević, *The Passenger*, Ramondino, Deleuze,
+Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
+the others, and each passage was checked against its source. They are all listed under
+[To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
+Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
+credited under it; all of them, with the ones left out, are in
+[Photos of the Mediterranean, by the story](../isole-photos/).
+
+"""
+photoHeading "One island to start", "etna-plume", "Etna's plume"
+nbText: """
 
 Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
 
@@ -127,7 +152,9 @@ nbText: """
 Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
 3,340 m, the highest active volcano in Europe outside the Caucasus.
 
-## Twenty-two islands
+"""
+photoHeading "Twenty-two islands", "dolphins-knossos", "The dolphins of Knossos"
+nbText: """
 
 Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
 is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
@@ -211,8 +238,8 @@ shows the first and the last rows of the data as it is. `dataColor` colours each
 scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
 """, nkCode)
 
+photoHeading "At the same scale", "lemnos-piri-reis", "Lemnos, in Piri Reis's Book of the Sea"
 nbText: """
-## At the same scale
 
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
 the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
@@ -266,7 +293,9 @@ nbText: """
 Greece has twelve of the 22, and together they are a seventh of its land. Cyprus and
 Malta are the islands of their countries: Cyprus all of it, Malta the larger of its three.
 
-## All 195
+"""
+photoHeading "All 195", "strombolicchio", "Strombolicchio"
+nbText: """
 
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
 set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
@@ -388,8 +417,8 @@ its own axis. Hover over a box to read its quartiles.
 # ------------------------------------------------------------------------------------ history
 
 nbPart 2, "", prSuccess   # Braudel's long time: rulers, heritage, how they live
+photoHeading "Who ruled them", "venice-bordone", "Venice, in Bordone's book of islands"
 nbText: """
-## Who ruled them
 
 Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
 turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
@@ -438,7 +467,9 @@ Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome,
 Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
 islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
 
-### What the world keeps
+"""
+photoHeading "What the world keeps", "palermo-cathedral", "Palermo cathedral, about 1900", level = 3
+nbText: """
 
 UNESCO lists 28 World Heritage properties on the islands. Sicily has six, Malta three, Cyprus
 three. Some are one place; others are several, a serial property in UNESCO's words: the late
@@ -486,8 +517,8 @@ among the 22 main islands, but have a property too.
 
 # ------------------------------------------------------------------------------------ economy
 
+photoHeading "How they live now", "luzzus-marsaxlokk", "Luzzus in Marsaxlokk"
 nbText: """
-## How they live now
 
 Eurostat measures the European Union by regions, and most of the main islands are a region of
 their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands.
@@ -596,8 +627,8 @@ from the table's cell, formatted as the table writes it.
 """, nkCode)
 
 nbPart 3, "", prSecondary   # the quick time: getting there, when to go, what to see
+photoHeading "Getting there", "capri-harbour", "Capri's harbour, about 1880"
 nbText: """
-## Getting there
 
 > La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
 > bitte, sartie. Devi prendere una nave o un aereo.
@@ -653,8 +684,8 @@ shows on the small islands too.
 
 # ------------------------------------------------------------------------------------ climate
 
+photoHeading "When to go", "lussinpiccolo", "Lussinpiccolo, about 1900"
 nbText: """
-## When to go
 
 Every main island has a Mediterranean climate: hot dry summers, mild wet winters. The highest
 temperature of an average day, month by month, from the weather box of each island's main town
@@ -721,7 +752,9 @@ in Tommaso Stella's Italian):
 *Above the Mediterranean there is another sea: a turbulent, throbbing ocean of air instead of
 water.*
 
-## Something to see, a beach, a taste
+"""
+photoHeading "Something to see, a beach, a taste", "rabbit-beach", "Rabbit Beach, Lampedusa"
+nbText: """
 
 To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
 by hand, each with its page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
@@ -761,8 +794,8 @@ labels are Font Awesome's, as SVG, from `iconSvg`, inside `html()` so the label 
 # ------------------------------------------------------------------------------------ how
 
 nbPart 4, "", prPrimary   # the closing sections: readings, how it is built
+photoHeading "To read more", "al-idrisi", "Al-Idrisi's map, south at the top"
 nbText: """
-## To read more
 
 Three books on the whole sea, which this story borrows from:
 
@@ -850,5 +883,15 @@ nbShowCode:
       where: "where"
     tabStyle style.text(size = "12.5px"), loc.body()
   nbTable t
+
+nbText: """
+**5. The look and the photos.** The page opens in its own look, the Minoan one, after the frescoes
+of Crete and Thera and the vases of Athens (the switch at the top goes back to Munari). It was
+chosen in rounds, from eighteen sources, in the devlog post
+[Designing a Mediterranean look](../../devlog/mediterranean/). The photos over the headings were
+picked from the gallery [Photos of the Mediterranean, by the story](../isole-photos/), which
+says for each where it is from, who made it, its licence and why it could go there; the page
+holds a copy of each pick, made smaller, with its credit under it.
+"""
 
 nbSave

@@ -16,6 +16,7 @@
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
+##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
@@ -215,6 +216,44 @@ template nbPart*(tnum: int, ttitle: string, trole: PartRole) =
   ## their entries in the indice) take the colour of `trole`. With an empty title there is no
   ## label, only the colour: for a page whose headings already name its parts.
   nb.addPart(tnum, ttitle, trole)
+
+# ------------------------------------------------------------------------- a heading over a photo
+
+proc pictureSrc*(file, pageFile: string): string =
+  ## A picture for a page: with `-d:singleFile`, the file itself as a data URL; otherwise a copy
+  ## beside the page, in `pictures/` (built, like the page, not committed), and the link to it.
+  when singleFile:
+    let mime = if file.toLowerAscii.endsWith(".png"): "image/png" else: "image/jpeg"
+    "data:" & mime & ";base64," & encode(readFile(file))
+  else:
+    let dir = absolutePath(pageFile).parentDir / "pictures"
+    createDir(dir)
+    let dest = dir / file.extractFilename
+    if not fileExists(dest) or readFile(dest) != readFile(file): copyFile(file, dest)
+    "pictures/" & file.extractFilename
+
+newNbBlock(NbPhotoHeading of NbText):
+  src: string
+  alt: string
+  credit: string
+  level: int
+  toHtml:
+    # the heading is Markdown like any other (`text`), so the indice lists it and it gets its id
+    # and its way back; the photo is under it, the title over the photo's lower edge
+    let heading = addHeadingIds(markdownToHtml(blk.text), nb.doc.context{"indice"}.getBool).strip
+    &"""<figure class="titolo-foto titolo-foto-{blk.level}"><div class="titolo-foto-img"><img src="{blk.src}" alt="{esc(blk.alt)}" loading="lazy">""" &
+      heading & "</div>" &
+      (if blk.credit.len > 0: &"""<figcaption>{inline(blk.credit)}</figcaption>""" else: "") & "</figure>"
+
+proc addPhotoHeading*(nb: var Nb, title, file, credit, alt: string, level: int) =
+  nb.add newNbPhotoHeading(text = repeat('#', level) & " " & title, src = pictureSrc(file, nb.doc.filename),
+                           alt = alt, credit = credit, level = level)
+
+template nbPhotoHeading*(ttitle, tfile: string, tcredit = "", talt = "", tlevel = 2) =
+  ## A section's heading over a photo: `tfile` (a JPEG or PNG in the repository), the heading
+  ## `ttitle` over its lower edge, and under it `tcredit`, in Markdown (who, licence, a link to
+  ## the source: every photo that is not ours says where it is from). `tlevel` 3 for a `###`.
+  nb.addPhotoHeading(ttitle, tfile, tcredit, talt, tlevel)
 
 # ------------------------------------------------------------------------------------ the indice
 

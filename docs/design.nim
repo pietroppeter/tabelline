@@ -252,6 +252,22 @@ nbShowCode:
       nbText "On a phone, one card and the edge of the next are in view."
 
 nbText: """
+## A heading over a photo
+
+A section's heading can stand over a photo, with `nbPhotoHeading`: the photo as wide as the text
+and low, the heading in the paper's colour over its lower edge on a shade of ink, the circle
+still marking the place, and under it, small, who made the photo, its licence and a link to its
+source. It is a heading like the others (the indice lists it, ↑ goes back), so a page uses it only
+where the photo says something the section is about. The photo is a file in the repository, a
+smaller copy of an openly licensed one. Used in [Islands of the Mediterranean](../stories/isole/)
+and [Photos of the Mediterranean, by the story](../stories/isole-photos/).
+"""
+nbShowCode:
+  nbPhotoHeading "Etna, from orbit", docs / "stories" / "data" / "isole" / "photos" / "story" / "etna-plume.jpg",
+    "NASA, STS-62 crew, March 1994 · Public domain · [source](https://images.nasa.gov/details/STS062-85-195)",
+    "Etna's plume, photographed from the Space Shuttle"
+
+nbText: """
 ## Source files
 
 Code folded under its name and its length, with `nbFoldCode`: a whole file, or a part of it from

@@ -87,6 +87,9 @@ the home page shows them as a gallery:
 - [The islands' data, made with nanuq](https://pietroppeter.github.io/tabelline/stories/isole-data/)
   (tabelline 0.2): how the islands' tables were made from Wikipedia, Wikidata and OpenStreetMap,
   in three Nim programs (fetch, extract, and process with nanuq), and the checks behind them.
+- [Photos of the Mediterranean, by the story](https://pietroppeter.github.io/tabelline/stories/isole-photos/):
+  the openly licensed photos gathered for the islands story, by section, with the one it shows
+  over each heading, and who made each, its licence and its source.
 
 ## The site
 
