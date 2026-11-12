@@ -407,6 +407,10 @@ details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: i
   display: flex; align-items: center; justify-content: center; font: 700 .72rem/1 var(--font);
   background: var(--primary); color: var(--paper); box-shadow: 0 0 0 2px var(--paper); }
 .schermata figcaption { font-size: .8rem; line-height: 1.35; color: var(--muted); margin-top: .3rem; }
+/* a picture as wide as the text (nbPicture) */
+.quadro { margin: 1rem 0; }
+.quadro img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.quadro figcaption { font-size: .8rem; line-height: 1.35; color: var(--muted); margin-top: .3rem; }
 """
 
 # ------------------------------------------------------------------------------------ the quaderno

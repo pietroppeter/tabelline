@@ -126,6 +126,16 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [Three pictures of a table](https://pietroppeter.github.io/tabelline/devlog/image-findings/)
+  (11 Nov 2026 E): the findings of the three proofs of concept for image output (Chrome from
+  Nim, native SVG, PNG with pixie): how close each came to the HTML, sizes and times, scripts,
+  and the plan they point to: one layout of our own with an SVG and a pixie painter, and Chrome
+  for the exact look.
+- [A table as a picture](https://pietroppeter.github.io/tabelline/devlog/image-output/)
+  (11 Nov 2026 D): research for 0.3's image output: what gt and Great Tables do (a browser
+  screenshot, and gt's `as_gtable`), ten ways to make a picture of a table, the six hard parts of
+  laying one out without a browser, and the three proofs of concept chosen: Chrome driven from Nim as
+  Great Tables' new `gtsave()` does (nokap), a native SVG, and a PNG painted with pixie.
 - [What the book found for 0.2](https://pietroppeter.github.io/tabelline/devlog/book-found-0-2/)
   (11 Nov 2026 C): what porting nanoplots, four Great Tables release posts and three gt articles
   found, fifteen findings each told (what gt and Great Tables do, what tabelline does now):

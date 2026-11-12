@@ -615,6 +615,21 @@ template nbScreenshot*(timage, tpoints, talt: string) =
   ## width and height) and a caption in Markdown. Put two side by side with `nbBeside`.
   nb.addScreenshot(timage, tpoints, talt)
 
+newNbBlock(NbPicture):
+  src: string
+  alt: string
+  toHtml:
+    &"""<figure class="quadro"><img src="{blk.src}" alt="{esc(blk.alt)}"><figcaption>{inline(blk.alt)}</figcaption></figure>"""
+
+proc addPicture*(nb: var Nb, image, alt: string) =
+  let mime = if image.endsWith(".png"): "image/png" else: "image/jpeg"
+  nb.add newNbPicture(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt)
+
+template nbPicture*(timage, talt: string) =
+  ## A picture as wide as the text (a wide screenshot, a picture made by tabelline), inlined,
+  ## with a caption in Markdown. For a phone screenshot with numbered circles, `nbScreenshot`.
+  nb.addPicture(timage, talt)
+
 newNbBlock(NbDrawing):
   svg: string
   alt: string
