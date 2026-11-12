@@ -64,7 +64,7 @@ let islands = rd(stage / "islands.csv")
           col.outline_km2, col.coast_km, col.points, col.matched,
           col.heritage.fillNull(0), col.airports.fillNull(0), col.x, col.y)
   .sort("rank").collect
-islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name), the Natural Earth outline that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
+islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
 
 # ---------------------------------------------------------------- 2. what is on them
 

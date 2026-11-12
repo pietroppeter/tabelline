@@ -3,7 +3,7 @@
 ##   nim r -d:ssl fetch.nim <raw dir>
 ##
 ## Hosts: en.wikipedia.org (wikitext, `action=raw`), query.wikidata.org (SPARQL, CSV) and
-## raw.githubusercontent.com (Natural Earth). A file already in the folder is not downloaded
+## osmdata.openstreetmap.de (OpenStreetMap's land polygons). A file already in the folder is not downloaded
 ## again, so a run that stops can be started again. Standard library only.
 import std/[httpclient, uri, net, sequtils]
 import common
@@ -154,9 +154,22 @@ for r in rows:
   if r.town != r.title: discard page(r.town)
 for (isl, other) in climateAlso: discard page(other)
 
-# ------------------------------------------------------------------ 4. Natural Earth
+# ------------------------------------------------------------- 4. OpenStreetMap's land
 
-const ne = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/"
-for f in ["ne_10m_land", "ne_10m_minor_islands"]:
-  save(raw / f & ".geojson", ne & f & ".geojson")
+# The land polygons of OpenStreetMap (ODbL), as osmdata.openstreetmap.de builds them every day:
+# one shapefile of the world in longitude and latitude, 900 MB zipped, 1.3 GB unzipped. Only the
+# .shp and its index .shx are kept; `unzip` is the one tool outside Nim this needs.
+const land = "https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip"
+createDir(raw / "osm")
+if not fileExists(raw / "osm" / "land_polygons.shp"):
+  let zip = raw / "osm" / "land.zip"
+  if not fileExists(zip):
+    let c = client()
+    c.downloadFile(land, zip)
+    c.close()
+  if execShellCmd("unzip -o -j -q " & zip.quoteShell & " '*/land_polygons.shp' '*/land_polygons.shx' -d " &
+                  (raw / "osm").quoteShell) != 0:
+    quit "unzip failed on " & zip
+  removeFile(zip)
+  echo "  land_polygons.shp ", getFileSize(raw / "osm" / "land_polygons.shp"), " bytes"
 echo "done"

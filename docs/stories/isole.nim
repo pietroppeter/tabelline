@@ -1,4 +1,4 @@
-## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily to rocks that only just have a name: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and Natural Earth, gathered with nanuq; every table made with tabelline 0.2.
+## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily to rocks that only just have a name: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and OpenStreetMap, gathered with nanuq; every table made with tabelline 0.2.
 ## A story, kept up to date (first written on 11 November 2026, with tabelline 0.2). It shows
 ## what 0.2 added that the FOSDEM story does not use, and the new shape nanoplot. The data is in
 ## docs/stories/data/isole/, made by its src/ (fetch.nim, extract.nim, process.nim with nanuq);
@@ -82,12 +82,18 @@ who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape
 countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
-tables below follow him: first the islands' shapes, then who ruled them and how they live, then
-the events that show up as a dip in a line.
+tables below follow him in three parts, each with the colour of its circles: first the islands'
+shapes, then who ruled them and how they live, then getting there and when to go, where events
+show up as a dip in a line.
 
 ## One island to start
 
-The largest island of the Mediterranean, in one row: its outline, how big it is, how many live
+Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
+
+> Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
+
+*First of all, let us choose a starting point: a shore or a scene, a port or an event, a voyage
+or a tale.* This story starts from an island: the largest of the Mediterranean, in one row: its outline, how big it is, how many live
 there, and how high it goes.
 """
 
@@ -105,14 +111,14 @@ nbShowCode:
       shape: ""
       km2: "area, {{km^2}}"
       elevation: "highest, {{m}}"
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean; Wikidata; the outline from Natural Earth."
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean; Wikidata; the outline © OpenStreetMap contributors (ODbL)."
   nbTable t
 
 nbNote("""
 The outline is a nanoplot of a new kind, `plotType = "shape"`: the cell holds a record of `x` and
 `y` (here kilometres east and north of the island's middle), and the shape joins the points in
-their order, closes them and fills them, at the same scale across and up. Natural Earth's
-coastline has 356 points around Sicily; nanuq's step kept 120. The units in the labels,
+their order, closes them and fills them, at the same scale across and up. OpenStreetMap's
+coastline has 56,300 points around Sicily; the data's extract step kept 120. The units in the labels,
 `{{km^2}}` and `{{m}}`, are gt's units syntax, new in 0.2: "km²" in HTML and in text.
 """, nkCode)
 
@@ -123,7 +129,14 @@ Sicily is a triangle of 25,834 km² with five million people, and its highest po
 ## Twenty-two islands
 
 Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
-is the 34th. These 22 are the *main islands* of this story.
+is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
+
+> Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
+> forma di coralli, altre di sirena.
+
+*There are islands shaped like fish, a dolphin, say, or a torpedo ray, others shaped like
+corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
+di Spagna* (2001).
 """
 
 nbShowCode:
@@ -148,7 +161,7 @@ nbShowCode:
       missingText = ""
       fmtInteger()
     tabFootnote "Wikipedia's list gives no population for Cyprus, divided since 1974.", loc.body(cols("population"), 2)
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean (area, population); outlines: Natural Earth."
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean (area, population); outlines © OpenStreetMap contributors (ODbL)."
   nbTable t
 
 nbNote("""
@@ -161,13 +174,56 @@ own scale, as large as the cell allows.
 nbText: """
 Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
 Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
-Cres 3,079, one for every 13 hectares.
+Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
+how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
+it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one:
+"""
 
+nbShowCode:
+  let peopled = islands.keep(proc (i: int): bool = not islands["population", i].isNull and
+    islands["population", i].toFloat > 0 and islands["km2", i].toFloat > 0)
+  var d = peopled.withColumn("density", proc (i: int): Value =
+    toValue(peopled["population", i].toFloat / peopled["km2", i].toFloat))
+  d = d.withColumn("shape", proc (i: int): Value = d.outline(i))
+  let order = toSeq(0 ..< d.nrows).sortedByIt(-d["density", it].toFloat)
+  var sorted = TableData()
+  for c in d.columns: sorted.addColumn(c.name, order.mapIt(c.values[it]))
+  let t = tabellaPreview(sorted, topN = 3, bottomN = 3):
+    optCssTheme()
+    colsHide everything()
+    colsUnhide ["island", "shape", "population", "density"]
+    colsMove ["shape"], after = "island"
+    fmtNanoplot "shape", plotType = "shape", plotHeight = "1.8em", options = sea
+    fmtInteger ["population", "density"]
+    fmtNumber "density", rows = where(it["density"].toFloat < 1), decimals = 2
+    subMissing "shape", missingText = ""
+    dataColor "density", palette = palette("reds"), domain = (0.0, 1700.0)
+    colsLabel:
+      shape: ""
+      density: "per {{km^2}}"
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean: the islands where people live."
+  nbTable t
+
+nbNote("""
+The density is computed before the table, and the rows are put in its order: `tabellaPreview`
+shows the first and the last rows of the data as it is. `dataColor` colours each density on a
+scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
+""", nkCode)
+
+nbText: """
 ## At the same scale
 
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
 the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
-times Malta. Grouped by country, each with the share of its country's land it is.
+times Malta. Grouped by country, each with the share of its country's land it is. Alone, an
+outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)
+warns against that look:
+
+> Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
+> tratta di una mistificazione.
+
+*Looking at a map, an island gives us the illusion of being a small world of its own. […] But
+it is a mystification.*
 """
 
 const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0,
@@ -211,7 +267,8 @@ Malta are the islands of their countries: Cyprus all of it, Malta the larger of 
 
 ## All 195
 
-The whole list is long. A preview shows its two ends, the largest and the smallest islands,
+*Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
+set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
 with the place of each in the list:
 """
 
@@ -232,9 +289,54 @@ nbShowCode:
 
 nbNote("""
 `tabellaPreview(data, topN, bottomN)` makes a table of the first and last rows of a big one,
-with the place of each row and a line for the rows left out between them. The smallest islands
-have no outline: Natural Earth draws islands down to a few hectares, and 23 of the 195 are
-smaller than that, or are drawn joined to a neighbour.
+with the place of each row and a line for the rows left out between them. Three islands have no
+outline: Wikidata has no place for them, so there is no point to find their coast from.
+""", nkCode)
+
+nbText: """
+And here they all are, in the order of the list, each at its own scale and with its place: the
+22 main islands in pink, the others in blue. Malta, the island of a country, is 34th.
+"""
+
+nbShowCode:
+  const across = 5
+  var shapeCols, nameCols: array[across, seq[Value]]
+  var mainCells: seq[(int, int)]   # (row, place in the row) of each main island
+  for i in 0 ..< islands.nrows:
+    let (row, k) = (i div across, i mod across)
+    shapeCols[k].add islands.outline(i)
+    nameCols[k].add toValue($islands["rank", i] & ".\u00A0" & $islands["island", i])   # no break after the number
+    if $islands["main", i] == "true": mainCells.add (row, k)
+  for k in islands.nrows mod across ..< across:   # the last row's empty places
+    if islands.nrows mod across == 0: break
+    shapeCols[k].add toValue(nil)
+    nameCols[k].add toValue("")
+  var grid = TableData()
+  for k in 0 ..< across:
+    grid.addColumn("s" & $k, shapeCols[k])
+    grid.addColumn("n" & $k, nameCols[k])
+  let shapes = toSeq(0 ..< across).mapIt("s" & $it)
+  let pink = nanoplotOptions(dataBarFillColor = tint("--primary-soft"), dataBarStrokeColor = tint("--primary-text"))
+  var t = tabella(grid):
+    optCssTheme()
+    fmtNanoplot shapes, plotType = "shape", plotHeight = "2.2em", options = sea
+    subMissing shapes, missingText = ""
+    tabOptions(columnLabelsHidden = true, tableFontSize = "9px", dataRowPadding = "4px",
+               dataRowPaddingHorizontal = "1px")
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean, by area. Outlines © OpenStreetMap contributors (ODbL); the three without one have no place on Wikidata."
+  for (row, k) in mainCells:
+    t = t.fmtNanoplot("s" & $k, rows = row, plotType = "shape", plotHeight = "2.2em", options = pink)
+  for k in 0 ..< across:
+    t = t.colsMerge(["s" & $k, "n" & $k], pattern = "{1}<br>{2}")
+  t = t.colsAlign(alCenter, shapes)
+  nbTable t
+
+nbNote("""
+A grid is a table too: 195 islands in rows of five, each cell a shape over its place and name.
+The data is built for it, a column of shapes and one of names for each place in the row;
+`colsMerge` puts the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`,
+and a later format of a cell replaces an earlier one, so the main islands are drawn again in
+pink, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
 """, nkCode)
 
 nbText: """
@@ -284,46 +386,55 @@ its own axis. Hover over a box to read its quartiles.
 
 # ------------------------------------------------------------------------------------ history
 
+nbPart 2, "", prSuccess   # Braudel's long time: rulers, heritage, how they live
 nbText: """
 ## Who ruled them
 
 Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
 turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
 and pirates, places people left and places people came to. The rulers of each main island, in order, broadly, from the first Greeks or Phoenicians to
-the state they joined last:
+the state they joined last, the islands grouped by the rulers they share, from west to east:
 """
 
 nbShowCode:
   let h = story("history.csv")
-  let d = h.withColumn("island", proc (i: int): Value = main["island", mainRow($h["title", i])])
+  let d = h.withColumn("island", proc (i: int): Value =
+              let lang = if h["language", i].isNull: "" else: "  \n*" & $h["language", i] & "*"
+              toValue($main["island", mainRow($h["title", i])] & lang))
            .withColumn("rulers", proc (i: int): Value = toValue(($h["rulers", i]).split(';')))
-  let t = tabella(d, rownameCol = "island"):
+  let t = tabella(d, rownameCol = "island", groupnameCol = "rule"):
     optCssTheme()
-    colsHide ["title", "page", "joined_how"]
-    colsMove ["joined"], after = "island"
+    rowGroupOrder ["Arabs and Normans", "Aragon and Spain", "Genoa, then France", "Venice and Austria",
+                   "Venice, then France and Britain", "Venice, then the Ottomans",
+                   "Genoa or the Knights, then the Ottomans"]
+    colsHide ["title", "page", "joined_how", "language"]
+    fmtMarkdown "island"
     colsMergeRange "venice_from", "venice_to", sep = "–"
-    subMissing ["venice_from", "language"], missingText = ""
+    subMissing ["venice_from"], missingText = ""
     colsLabel:
       joined: "since"
       rulers: "who ruled it"
       venice_from: "Venice"
-      language: "spoken too"
-    tabStyle style.text(size = "12px"), loc.body(cols("rulers"))
+    tabStyle style.text(size = "12px"), loc.body(cols(["rulers", "venice_from"]))
     colsWidth:
-      rulers: "48%"
+      rulers: "58%"
     tabStyle style.text(color = tint("--primary-text")), loc.body(cols("venice_from"))
     tabSourceNote "Each island's history on Wikipedia, read by hand: a line, not the whole story."
   nbTable t
 
 nbNote("""
 The rulers are a list in one cell (`@["Greeks", "Rome", ...]`, a list value, new in 0.2),
-written with commas. `colsMergeRange` puts the first and last year under Venice in one column:
+written with commas. The islands are grouped by whose rule they share, a column of the data
+(`groupnameCol = "rule"`), in an order from west to east (`rowGroupOrder`). `colsMergeRange` puts the first and last year under Venice in one column:
 nine of the 22 were Venetian for a while, Corfu, Cephalonia and Zakynthos until Venice itself
-fell, in 1797. The language column is the island's own, beside the state's.
+fell, in 1797. Under each island's name, in italics, its own language, beside the state's: the
+stub is Markdown (`fmtMarkdown`), a line break and an emphasis.
 """, nkCode)
 
 nbText: """
-Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
+*They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
+Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
+Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
 islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
 
 ### What the world keeps
@@ -476,18 +587,28 @@ nbText: &"""
 The crisis of the 2010s is a hill on every line: in 2014 Sicily had {sicily14}% of its people
 out of work, the South Aegean more than one in five in 2013. Every region is back down now, and
 Malta, at 3.1%, has fewer out of work than almost anywhere in Europe.
-
-## Getting there
-
-Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
-some since the 1960s; for each island, the sum of its airports (an island that has a large
-airport leaves its airstrips out). The dip in the middle of every line is 2020.
 """
 
-nbNote("""
-The number in the text above, Sicily's unemployment in 2014, is not typed: `extractCells`
-takes it from a table, formatted as the table writes it.
+nbNote(&"""
+Sicily's {sicily14}% in 2014, in the paragraph just above, is not typed: `extractCells` takes it
+from the table's cell, formatted as the table writes it.
 """, nkCode)
+
+nbPart 3, "", prSecondary   # the quick time: getting there, when to go, what to see
+nbText: """
+## Getting there
+
+> La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
+> bitte, sartie. Devi prendere una nave o un aereo.
+
+*The first lesson of islands is that you can't leave on foot. Water, air, wind, waves, ropes,
+bollards, shrouds. You have to take a ship or a plane*: the first lines of Antonella Anedda's
+*Isolatria* (2013), on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
+some since the 1960s; for each island, the sum of its airports (an island that has a large
+airport leaves its airstrips out). Every line starts in 2000 and ends in 2025, and the dashed
+line is 11 March 2020, when the World Health Organization called COVID-19 a pandemic: the dip
+right after it is the year without travel.
+"""
 
 nbShowCode:
   let pax = story("passengers.csv")
@@ -504,7 +625,8 @@ nbShowCode:
   rows.sort(proc (a, b: auto): int = cmp(b.latest, a.latest))
   let t = tabella(rows[0 ..< 14], rownameCol = "island"):
     optCssTheme()
-    fmtNanoplot "years", plotHeight = "1.1em", expandX = @[946_684_800.0, 1_751_328_000.0],
+    fmtNanoplot "years", plotHeight = "1.2em", expandX = @[946_684_800.0, 1_751_328_000.0],
+      referenceX = @["2020-03-11"],
       options = nanoplotOptions(dataLineStrokeColor = tint("--secondary"), dataPointRadius = 0,
         dataAreaFillColor = tint("--secondary-soft"))
     fmtNumberSi "latest", decimals = 1
@@ -522,7 +644,8 @@ nbShowCode:
 nbNote("""
 The points of each line are placed by date (`x` is a list of ISO dates, "2019-07-01"), so a year
 without a count leaves a gap of the right width, and `expandX` makes every axis run from 2000
-to 2025. Each line has its own y axis, from its lowest year to its highest, so the dip of 2020
+to 2025: on an axis shared by the rows every plot has the same width, so the years line up.
+`referenceX` (new with this story) draws the dashed line at a date, with the date on hover. Each line has its own y axis, from its lowest year to its highest, so the dip of 2020
 shows on the small islands too.
 `fmtNumberSi` writes "33.8 M"; the last count is of 2022 for most islands.
 """, nkCode)
@@ -534,10 +657,17 @@ nbText: """
 
 Every main island has a Mediterranean climate: hot dry summers, mild wet winters. The highest
 temperature of an average day, month by month, from the weather box of each island's main town
-on Wikipedia; and the sea, where a page has it.
+on Wikipedia; and the sea, where a page has it. These are averages of the past, and the past is
+moving, as Giacomo Di Girolamo writes in *The Passenger*'s Sicily:
+
+> Una volta, dire Sicilia significava dire Mediterraneo. […] Adesso, dire Sicilia significa
+> quasi dire Tropici.
+
+*Once, to say Sicily was to say the Mediterranean. […] Now, to say Sicily is almost to say the
+Tropics.*
 """
 
-const monthNames = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 nbShowCode:
   let clim = story("climate.csv")
@@ -556,7 +686,7 @@ nbShowCode:
     dataColor ms, palette = palette("rdbu"),
       domain = (5.0, 38.0)
     colsLabel toSeq(0 ..< 12).mapIt((ms[it], monthNames[it]))
-    colsLabelRotate ms
+    colsLabelRotate ms, dir = "slanted"
     subMissing "sea", missingText = ""
     colsLabel:
       sea: "sea in Aug"
@@ -569,8 +699,9 @@ nbShowCode:
   nbTable t
 
 nbNote("""
-Twelve narrow columns: `colsLabelRotate` turns their labels on their side so the columns can be
-as narrow as their numbers. `dataColor` colours each cell on a scale from cool blue to hot red
+Twelve narrow columns: `colsLabelRotate(dir = "slanted")` (new with this story) turns their
+labels at 45 degrees, so the months keep their names and the columns stay as narrow as their
+numbers. `dataColor` colours each cell on a scale from cool blue to hot red
 over 5–38 °C, with the palette `rdbu`. `colsUnits` puts the unit after the sea's label; in the
 spanner it is written inside the label, `{{degC}}`.
 """, nkCode)
@@ -593,8 +724,8 @@ water.*
 
 To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
 by hand, each with its page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
-(1987) is a tour of the sea's shores, ports and islands, wrote later a book on bread, *Pane
-nostro* (2010): the islands, he found, keep some of its oldest ways. A taste is a good way in.
+(1987) is a tour of the sea's shores, ports and islands, wrote later a whole book on bread,
+*Pane nostro* (2010). A taste is a good way in.
 """
 
 nbShowCode:
@@ -628,7 +759,7 @@ labels are Font Awesome's, as SVG, from `iconSvg`, inside `html()` so the label 
 
 # ------------------------------------------------------------------------------------ how
 
-nbPart 2, "", prSecondary   # the closing sections: how it is built
+nbPart 4, "", prPrimary   # the closing sections: readings, how it is built
 nbText: """
 ## To read more
 
@@ -640,9 +771,30 @@ Three books on the whole sea, which this story borrows from:
   in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography
   told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of
   islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
-- *Mediterraneo*, The Passenger (Iperborea, 2023): today's sea in essays and photographs, with
-  essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
-  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others.
+- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
+  (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
+  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its
+  books on Sicily (2024) and Sardinia (2026).
+
+And the others quoted along the way, in the order the story meets them:
+
+- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca,
+  where the islands have the shapes of fish and mermaids.
+  [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
+- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
+  2024): its introduction, on the island that looks like a world of its own on a map; and
+  Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical
+  ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
+- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert
+  islands, where the island is what the sea surrounds.
+  [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze).
+- D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921):
+  a week's journey from Sicily to Sardinia and back, in the winter of 1921.
+- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the
+  islands off Sardinia where her family comes from.
+  [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
+- Nick Hunt, on the winds, in *Mediterraneo* (above):
+  [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
 
 ## How this story is built
 
@@ -651,19 +803,23 @@ own: [The islands' data, made with nanuq](../isole-data/).
 
 **1. The sources** are open: Wikipedia's *List of islands in the Mediterranean* (the 195 islands,
 their area, population and main town), Wikidata (each island's place and highest point, World
-Heritage sites, airports and their passengers), the outlines of Natural Earth (public domain),
+Heritage sites, airports and their passengers), the outlines of OpenStreetMap (© OpenStreetMap contributors, ODbL),
 the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's regional figures
 (Eurostat's own site could not be read where this was made).
 
 **2. The tables of the data** are made in three steps, in `docs/stories/data/isole/src/`:
 `fetch.nim` downloads, `extract.nim` (standard library) finds each island's outline and what is
-on it and reads the wikitext, and `process.nim`, written with nanuq, joins, cleans and counts
+on it and reads the wikitext, and `process.nim`, written with
+[nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim), joins, cleans and counts
 them into the CSV files this page reads. Three small tables are written by hand: the regions,
 the history and the highlights.
 
-**3. The shapes** are Natural Earth's coastlines at 1:10 million: for each island, the polygon
+**3. The shapes** are OpenStreetMap's land polygons, which follow the coast to a few metres: for each island, the polygon
 that holds its point on Wikidata, in kilometres from its middle, simplified to at most 120
-points (Douglas–Peucker). They are numbers in two columns, `x` and `y`, and a record of the two
+points with the [Douglas–Peucker algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm):
+it joins the two ends of a coastline with a straight line, keeps the point farthest from it, and
+does the same again on each side, until no point left out is farther than a set distance, so
+the capes and bays that give an island its shape stay and the small wiggles go. They are numbers in two columns, `x` and `y`, and a record of the two
 is a cell of a shape nanoplot.
 
 **4. The tables on this page** are tabelline 0.2, with `nbShowCode` running a cell of Nim and
@@ -672,18 +828,18 @@ showing the table it makes, its code folded under it. What 0.2 brought that they
 
 nbShowCode:
   let used = tableData:
-    feature: ["shape nanoplots (new)", "box, line and bar nanoplots, `colsNanoplot`",
+    feature: ["shape nanoplots, `referenceX`, slanted labels (new)", "box, line and bar nanoplots, `colsNanoplot`",
               "units in labels, `colsUnits`", "`fmtCountry`, `fmtFraction`, `fmtNumberSi`",
-              "every locale of CLDR", "`colsAlignDecimal`, `colsLabelRotate`",
+              "every locale of CLDR", "`colsLabelRotate`",
               "`summaryRows`, `grandSummaryRows`, `summaryColumns`",
               "`colsMergeRange`, `colsMergeUncert`, `colsMerge`", "`rowGroupAsColumn`, `tabStubIndent`",
               "`tabellaPreview`, `extractCells`", "`tabStyle` with a proc, `tabStyleBody`",
               "lists and records in a cell", "`fmtIcon`, `iconSvg`"]
-    where: ["every outline", "sizes by country, unemployment, passengers, GDP",
+    where: ["every outline, getting there, when to go", "sizes by country, unemployment, passengers, GDP",
             "most tables", "twenty-two islands, the same scale, getting there",
-            "how they live now", "twenty-two islands, when to go",
+            "how they live now", "when to go",
             "twenty-two islands, the same scale, all 195, twenty years of work",
-            "who ruled them, twenty years of work, getting there", "the same scale, what the world keeps",
+            "who ruled them, twenty years of work, all 195", "the same scale, what the world keeps",
             "all 195, twenty years of work", "how they live now, twenty years of work",
             "the outlines, who ruled them", "what the world keeps, something to see"]
   let t = tabella(used, rownameCol = "feature"):

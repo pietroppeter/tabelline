@@ -4,10 +4,10 @@
 ##   nim r -d:release extract.nim <raw dir> <stage dir>
 ##
 ## What needs geometry is done here, with the standard library: each island's outline from
-## Natural Earth (the polygon that holds its point on Wikidata), simplified to at most 120
+## OpenStreetMap (the land polygon that holds its point on Wikidata), simplified to at most 120
 ## points, in kilometres; which island each World Heritage Site and each airport is on; and
 ## what needs reading wikitext: the weather boxes, the regions' unemployment and GDP.
-import std/[json, math, algorithm, sequtils, tables, sets, parsecsv, streams]
+import std/[json, math, algorithm, sequtils, tables, sets, parsecsv, streams, memfiles]
 import common
 
 let raw = paramStr(1)
@@ -72,7 +72,7 @@ for w in readRows(raw / "wd_islands.csv"):
 
 type Ring = object
   pts: seq[(float, float)]        # longitude, latitude
-  source: string                  # land or minor islands
+  source: string                  # osm: one of OpenStreetMap's land polygons
   lo, hi: (float, float)          # the bounding box
   km2, coastKm: float
   island: int                     # the island it belongs to, -1 for none
@@ -116,37 +116,57 @@ proc distanceKm(r: Ring, lon, lat: float): float =
   for (x, y) in r.pts:
     result = min(result, hypot((x - lon) * kmLon(lat), (y - lat) * kmLat))
 
+# OpenStreetMap's land polygons are a shapefile: `.shx` holds where each record starts (big
+# endian, in 16-bit words), and each record of `.shp` its box, its parts and its points (little
+# endian doubles). A polygon is kept when its box is around the Mediterranean and not wider than
+# 6 degrees (Sicily is 3.4); its outline is its largest ring (the others are holes).
+proc be32(p: pointer): int =
+  let b = cast[ptr array[4, uint8]](p)
+  int((b[0].uint32 shl 24) or (b[1].uint32 shl 16) or (b[2].uint32 shl 8) or b[3].uint32)
+template at(base: pointer, off: int): pointer = cast[pointer](cast[int](base) + off)
+template i32(p: pointer): int = cast[ptr int32](p)[].int
+
 var rings: seq[Ring]
-for (file, source) in [("ne_10m_land", "land"), ("ne_10m_minor_islands", "minor")]:
-  let g = parseFile(raw / file & ".geojson")
-  for f in g["features"]:
-    let geom = f["geometry"]
-    let polys = if geom["type"].getStr == "Polygon": @[geom["coordinates"]] else: toSeq(geom["coordinates"].items)
-    for poly in polys:
-      var r = Ring(source: source, island: -1)
-      for c in poly[0]: r.pts.add (c[0].getFloat, c[1].getFloat)
-      if r.pts.len > 1 and r.pts[0] == r.pts[^1]: r.pts.setLen(r.pts.len - 1)
-      r.measure
-      # the Mediterranean, and no continent (Sicily, the largest island, is 25,700 km²)
-      if r.hi[0] < -6 or r.lo[0] > 37 or r.hi[1] < 30 or r.lo[1] > 46.5 or r.km2 > 50_000: continue
-      rings.add r
+var shx = memfiles.open(raw / "osm" / "land_polygons.shx")
+var shp = memfiles.open(raw / "osm" / "land_polygons.shp")
+for k in 0 ..< (shx.size - 100) div 8:
+  let rec = at(shp.mem, be32(at(shx.mem, 100 + 8 * k)) * 2 + 8)
+  let box = cast[ptr array[4, float64]](at(rec, 4))
+  if box[2] < -6 or box[0] > 37 or box[3] < 30 or box[1] > 46.5 or box[2] - box[0] > 6: continue
+  let (nParts, nPts) = (i32(at(rec, 36)), i32(at(rec, 40)))
+  let pts = at(rec, 44 + 4 * nParts)
+  var best = Ring(island: -1)
+  for q in 0 ..< nParts:
+    let last = if q + 1 < nParts: i32(at(rec, 44 + 4 * (q + 1))) else: nPts
+    var r = Ring(source: "osm", island: -1)
+    for i in i32(at(rec, 44 + 4 * q)) ..< last:
+      let c = cast[ptr array[2, float64]](at(pts, 16 * i))
+      r.pts.add (c[0], c[1])
+    if r.pts.len > 1 and r.pts[0] == r.pts[^1]: r.pts.setLen(r.pts.len - 1)
+    if r.pts.len < 3: continue
+    r.measure
+    if r.km2 > best.km2: best = r
+  if best.pts.len > 0: rings.add best
+shx.close; shp.close
 echo rings.len, " outlines around the Mediterranean"
 
-# Each island gets the ring that holds its point; else the closest ring within 5 km whose area
-# is not far from the list's (a point on Wikidata can fall in a bay, or the sea).
+# Each island gets the ring that holds its point, if its area is not far from the list's; else
+# the closest such ring within 5 km (a point on Wikidata can fall in a bay, the sea, or on an
+# islet beside the island, as Ilovik's does).
 var how = newSeq[string](islands.len)
 for i, isl in islands:
   if isl.lon.isNaN: continue
   var best = -1
   for k, r in rings:
     if r.island < 0 and r.contains(isl.lon, isl.lat) and (best < 0 or r.km2 < rings[best].km2): best = k
+  if best >= 0 and isl.row.km2 > 0 and rings[best].km2 / isl.row.km2 notin 0.33 .. 3.0: best = -1
   if best >= 0: how[i] = "inside"
   else:
     var d = 5.0
     for k, r in rings:
       if r.island >= 0: continue
       let ratio = r.km2 / max(isl.row.km2, 0.01)
-      if ratio < 0.33 or ratio > 3: continue
+      if isl.row.km2 > 0 and (ratio < 0.33 or ratio > 3): continue   # the list may have no area
       let dk = r.distanceKm(isl.lon, isl.lat)
       if dk < d: (d, best) = (dk, k)
     if best >= 0: how[i] = "closest, " & formatFloat(d, ffDecimal, 1) & " km"
@@ -202,7 +222,7 @@ for k, r in rings:
                   formatFloat(r.hi[0] - r.lo[0], ffDecimal, 3), formatFloat(r.hi[1] - r.lo[1], ffDecimal, 3),
                   s.mapIt(it[0]).nums(d), s.mapIt(it[1]).nums(d)]
 shapeRows.sort(proc (a, b: seq[string]): int = cmp(a[0], b[0]))
-writeCsv(stage / "shapes.csv", "Island outlines: Natural Earth 10m land and minor islands (public domain), the ring holding each island's point on Wikidata, simplified to at most 120 points, in km from the middle of the ring's box (x east, y north).",
+writeCsv(stage / "shapes.csv", "Island outlines: OpenStreetMap's land polygons (© OpenStreetMap contributors, ODbL), the ring holding each island's point on Wikidata, simplified to at most 120 points, in km from the middle of the ring's box (x east, y north).",
   ["title", "source", "matched", "outline_km2", "coast_km", "points_full", "points", "width_deg", "height_deg", "x", "y"], shapeRows)
 
 for i, isl in islands:
@@ -217,7 +237,8 @@ writeCsv(stage / "islands.csv", "The islands of Wikipedia's List of islands in t
 
 proc islandAt(lon, lat: float, near = 0.0): string =
   ## The island whose outline holds the point; or, within `near` km, the closest island of
-  ## 100 km² or more (a coarse coastline can leave a port or a runway out); or "".
+  ## 100 km² or more (a coastline can leave a pier or a runway out); or "". (Natural Earth needed
+  ## 2 km here; OpenStreetMap's coastline needs much less.)
   for r in rings:
     if r.island >= 0 and r.contains(lon, lat): return islands[r.island].row.title
   var d = near
@@ -233,7 +254,7 @@ for s in readRows(raw / "wd_heritage.csv"):
     seen.incl s["whsId"]
     propertyRows.add @[s["whsId"], s["siteLabel"], s["listed"].split('-')[0]]
   let (lon, lat) = point(s["coord"])
-  let isl = islandAt(lon, lat, near = 2.0)   # a site on the shore can fall past a coarse coastline
+  let isl = islandAt(lon, lat, near = 0.5)   # a site on the shore can sit just past the coastline
   let key = s["site"] & isl
   if isl.len == 0 or key in seen: continue
   seen.incl key
@@ -247,7 +268,7 @@ var airportRows: seq[seq[string]]
 var onIsland = initHashSet[string]()
 for a in readRows(raw / "wd_airports.csv"):
   let (lon, lat) = point(a["coord"])
-  let isl = islandAt(lon, lat, near = 2.0)   # a runway can run past a coarse coastline
+  let isl = islandAt(lon, lat, near = 0.5)   # a runway can run just past the coastline
   if isl.len == 0 or a["iata"] in onIsland: continue
   onIsland.incl a["iata"]
   airportRows.add @[isl, a["iata"], a["airportLabel"], a["airport"].qid]
