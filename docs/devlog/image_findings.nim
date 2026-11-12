@@ -29,7 +29,7 @@ proof drew a fifth one, the shapes of the islands of the Mediterranean.
 ## The three, in one table
 """
 
-block:
+nbShowCode:
   type Poc = object
     poc, pr, how, code, needs: string
   let rows = @[
@@ -81,7 +81,7 @@ nbText: """
 Sizes and times for the cars, the biggest table, at scale 2 (pictures twice the CSS size):
 """
 
-block:
+nbShowCode:
   type Cost = object
     way, file, first, next: string
   let rows = @[
@@ -99,8 +99,9 @@ block:
   nbTable t
 
 nbNote """
-**About the code.** The PoCs' numbers are typed in as records here; the tables are plain
-tabelline, one verb per line, with a source note for what does not fit in a row.
+**About the code.** *Show code* under each table opens it. The PoCs' numbers are typed in as
+records; the tables are plain tabelline, one verb per line, with a source note for what does not
+fit in a row.
 """, nkCode
 
 nbText: """
