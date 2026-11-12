@@ -696,12 +696,13 @@ template nbApi*(tname, tanchor, talias, tkind: string, tsignatures: seq[string],
 # --------------------------------------------------------------------------------- a tournament
 
 type TournamentEntry* = object
-  ## A player of a tournament: a name, a short line under it, and colours shown as a strip.
-  name*, what*: string
+  ## A player of a tournament: a name, a short line under it, colours shown as a strip, and the
+  ## title of its card in a gallery of the page (`nbGalleryCard`), opened when it is tapped.
+  name*, what*, card*: string
   colours*: seq[string]
 
-func entry*(name, what: string, colours: openArray[string] = []): TournamentEntry =
-  TournamentEntry(name: name, what: what, colours: @colours)
+func entry*(name, what: string, colours: openArray[string] = [], card = ""): TournamentEntry =
+  TournamentEntry(name: name, what: what, card: (if card.len > 0: card else: name), colours: @colours)
 
 func bye*(): TournamentEntry = TournamentEntry()
   ## An empty place in the draw: the player it meets goes through.
@@ -718,6 +719,12 @@ const torneoScript = """<script>
     var out = box.querySelector('.torneo-turni'), fine = box.querySelector('.torneo-fine');
     var esito = box.querySelector('.torneo-esito'), area = fine.querySelector('textarea');
     fine.hidden = false;
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text) e.textContent = text;
+      return e;
+    }
     function roundName(r) {
       var left = rounds - r;
       return left === 1 ? 'Final' : left === 2 ? 'Semi-finals' : left === 3 ? 'Quarter-finals' : r === 0 ? 'First round' : 'Round ' + (r + 1);
@@ -736,31 +743,85 @@ const torneoScript = """<script>
       return k === 0 || k === 1 ? p[k] : null;
     }
     function save() { try { localStorage.setItem(store, JSON.stringify(picks)); } catch (e) {} }
-    function pick(r, m, k) {
-      if (picks[r + '-' + m] === k) return;
-      picks[r + '-' + m] = k;
-      // a later match loses its pick only if it picked the player who changed
+    // a later match loses its pick only if it picked the player who changed
+    function clearAfter(r, m) {
       for (var rr = r, mm = m; rr + 1 < rounds; ) {
         var side = mm & 1; rr++; mm >>= 1;
         if (picks[rr + '-' + mm] === side) delete picks[rr + '-' + mm]; else break;
       }
-      save(); render();
     }
-    function button(r, m, k, idx, ready, w) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'torneo-player';
-      if (idx === null) { b.disabled = true; b.textContent = 'the winner of an earlier match'; return b; }
-      var e = slots[idx], strip = document.createElement('span');
-      strip.className = 'torneo-tinte'; strip.setAttribute('aria-hidden', 'true');
-      (e.colours || []).forEach(function (c) { var i = document.createElement('i'); i.style.background = c; strip.appendChild(i); });
-      var name = document.createElement('strong'); name.textContent = e.name;
-      b.appendChild(strip); b.appendChild(name);
-      if (e.what) { var s = document.createElement('span'); s.className = 'torneo-what'; s.textContent = e.what; b.appendChild(s); }
-      b.setAttribute('aria-pressed', w === idx ? 'true' : 'false');
-      if (w !== null && w !== idx) b.classList.add('torneo-out');
-      if (!ready) b.disabled = true;
-      else b.addEventListener('click', function () { pick(r, m, k); });
-      return b;
+    function pick(r, m, k) {
+      if (picks[r + '-' + m] === k) return;
+      picks[r + '-' + m] = k; clearAfter(r, m); save(); render();
+    }
+    function undo(r, m) {
+      if (!(r + '-' + m in picks)) return;
+      clearAfter(r, m); delete picks[r + '-' + m]; save(); render();
+    }
+    // the card: the source's own card of the gallery, in a dialog, with Keep at the bottom
+    var dlg = el('dialog', 'torneo-dialog'), dlgBody = el('div', 'torneo-dialog-card');
+    var dlgBar = el('div', 'torneo-dialog-bar');
+    var dlgKeep = el('button', 'torneo-dialog-keep', 'Keep this one'), dlgClose = el('button', '', 'Close');
+    dlgKeep.type = dlgClose.type = 'button';
+    dlgBar.appendChild(dlgKeep); dlgBar.appendChild(dlgClose);
+    dlg.appendChild(dlgBody); dlg.appendChild(dlgBar); document.body.appendChild(dlg);
+    var current = null;
+    dlgClose.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (ev) { if (ev.target === dlg) dlg.close(); });
+    dlgKeep.addEventListener('click', function () { if (current) pick(current.r, current.m, current.k); dlg.close(); });
+    function findCard(heading) {
+      var found = null;
+      document.querySelectorAll('.nb-galleria > .nb-scheda').forEach(function (c) {
+        var h = c.querySelector('h3');
+        if (!found && h && h.textContent.trim() === heading) found = c;
+      });
+      return found;
+    }
+    function openCard(idx, r, m, k, ready) {
+      var e = slots[idx], card = findCard(e.card || e.name);
+      dlgBody.textContent = '';
+      if (card) {
+        var wrap = el('div', 'nb-galleria');
+        wrap.appendChild(card.cloneNode(true));
+        dlgBody.appendChild(wrap);
+      } else {
+        dlgBody.appendChild(el('h3', '', e.name));
+        if (e.what) dlgBody.appendChild(el('p', '', e.what));
+      }
+      current = ready ? { r: r, m: m, k: k } : null;
+      dlgKeep.hidden = !ready;
+      dlgKeep.textContent = picks[r + '-' + m] === k ? 'Kept ✓' : 'Keep this one';
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      dlgBody.scrollTop = 0;
+    }
+    function player(r, m, k, idx, ready, w) {
+      var box = el('div', 'torneo-player');
+      if (idx === null) {
+        box.classList.add('torneo-unknown');
+        box.appendChild(el('span', 'torneo-what', 'the winner of an earlier match'));
+        return box;
+      }
+      var e = slots[idx], open = el('button', 'torneo-open');
+      open.type = 'button';
+      open.setAttribute('aria-label', e.name + ': open its card');
+      var strip = el('span', 'torneo-tinte');
+      strip.setAttribute('aria-hidden', 'true');
+      (e.colours || []).forEach(function (c) { var i = el('i'); i.style.background = c; strip.appendChild(i); });
+      open.appendChild(strip); open.appendChild(el('strong', '', e.name));
+      if (e.what) open.appendChild(el('span', 'torneo-what', e.what));
+      open.addEventListener('click', function () { openCard(idx, r, m, k, ready); });
+      box.appendChild(open);
+      if (ready) {
+        var keep = el('button', 'torneo-keep', w === idx ? '✓ kept' : 'keep');
+        keep.type = 'button';
+        keep.setAttribute('aria-pressed', w === idx ? 'true' : 'false');
+        keep.setAttribute('aria-label', 'keep ' + e.name);
+        keep.addEventListener('click', function () { pick(r, m, k); });
+        box.appendChild(keep);
+      }
+      if (w === idx) box.classList.add('torneo-in');
+      else if (w !== null) box.classList.add('torneo-out');
+      return box;
     }
     function walk(visit) {   // every match, in order, with its number (byes have none)
       var num = 0;
@@ -778,28 +839,33 @@ const torneoScript = """<script>
       var list;
       walk(function (r, m, p, num) {
         if (m === null) {
-          var h = document.createElement('p'); h.className = 'torneo-turno'; h.textContent = roundName(r);
-          list = document.createElement('div'); list.className = 'torneo-partite';
-          out.appendChild(h); out.appendChild(list); return;
+          out.appendChild(el('p', 'torneo-turno', roundName(r)));
+          list = el('div', 'torneo-partite'); out.appendChild(list); return;
         }
         if (!num) {
           var who = p[0] === -1 ? p[1] : p[0];
-          if (who === null || who === -1) return;
-          var y = document.createElement('p'); y.className = 'torneo-bye';
-          y.textContent = slots[who].name + ' goes through: a bye.'; list.appendChild(y); return;
+          if (who !== null && who !== -1) list.appendChild(el('p', 'torneo-bye', slots[who].name + ' goes through: a bye.'));
+          return;
         }
         var w = winner(r, m), ready = p[0] !== null && p[1] !== null;
-        var match = document.createElement('div'); match.className = 'torneo-partita';
-        var label = document.createElement('span'); label.className = 'torneo-num'; label.textContent = 'match ' + num;
-        match.appendChild(label);
-        match.appendChild(button(r, m, 0, p[0], ready, w));
-        match.appendChild(button(r, m, 1, p[1], ready, w));
+        var match = el('div', 'torneo-partita'), head = el('div', 'torneo-num');
+        head.appendChild(el('span', '', 'match ' + num));
+        if (w !== null) {
+          var u = el('button', 'torneo-undo', '↺ undo');
+          u.type = 'button';
+          u.setAttribute('aria-label', 'undo match ' + num);
+          u.addEventListener('click', function () { undo(r, m); });
+          head.appendChild(u);
+        }
+        match.appendChild(head);
+        match.appendChild(player(r, m, 0, p[0], ready, w));
+        match.appendChild(player(r, m, 1, p[1], ready, w));
         list.appendChild(match);
       });
       var champ = winner(rounds - 1, 0);
       esito.textContent = champ !== null && champ >= 0 ? 'The winner: ' + slots[champ].name + '.' :
-        Object.keys(picks).length ? 'Keep going: the one you tap goes on to the next round.' :
-        'Tap the one you would keep, in each match.';
+        Object.keys(picks).length ? 'Keep going: the one you keep goes on to the next round.' :
+        'Tap a source to read its card; keep one in each match.';
     }
     function result() {
       var lines = ['## ' + data.label, ''];
@@ -836,7 +902,7 @@ newNbBlock(NbTournament):
   slots: seq[TournamentEntry]
   toHtml:
     var j = newJArray()
-    for e in blk.slots: j.add %*{"name": e.name, "what": e.what, "colours": e.colours}
+    for e in blk.slots: j.add %*{"name": e.name, "what": e.what, "card": e.card, "colours": e.colours}
     let data = ($ %*{"key": blk.key, "label": blk.label, "slots": j}).replace("</", "<\\/")
     var plain = ""
     for i in countup(0, blk.slots.high - 1, 2):
@@ -851,9 +917,11 @@ newNbBlock(NbTournament):
 
 template nbTournament*(tkey, tlabel: string, tslots: openArray[TournamentEntry]) =
   ## A tournament to play on the page: a draw of players (a power of two, `bye()` for an empty
-  ## place), matches of two, round by round, until one is left. A reader taps the one to keep in
-  ## each match; the picks are remembered (by `tkey`), and **Copy the result** gives them as
-  ## Markdown, to paste in a chat. Without JavaScript, the first round as a list.
+  ## place), matches of two, round by round, until one is left. Tapping a player opens its card
+  ## (the gallery card named by `card`) in a dialog, with **Keep this one**; **keep** under each
+  ## player picks it without opening it, and **↺ undo** takes back one match (and the later ones
+  ## that depended on it). The picks are remembered (by `tkey`), and **Copy the result** gives them
+  ## as Markdown, to paste in a chat. Without JavaScript, the first round as a list.
   nb.add newNbTournament(key = tkey, label = tlabel, slots = @tslots)
 
 # ------------------------------------------------------------------------------------- the page

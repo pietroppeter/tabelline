@@ -342,15 +342,33 @@ body details.foldcode pre > code { font-size: 12.5px; }
 .torneo-turno { margin: 1.2rem 0 .45rem; font: 700 .76rem/1.2 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .torneo-partite { display: grid; gap: .8rem; }
 .torneo-partita { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
-.torneo-num { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); }
-.torneo-player { display: flex; flex-direction: column; align-items: stretch; gap: .3rem; text-align: left; font: inherit;
-  color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .45rem .55rem .55rem;
-  cursor: pointer; min-height: 3.4rem; -webkit-tap-highlight-color: transparent; }
-.torneo-player strong { font-size: .88rem; line-height: 1.25; }
+.torneo-num { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); display: flex; justify-content: space-between; align-items: baseline; }
+.torneo-undo { font: inherit; font-size: .74rem; color: var(--ink); background: none; border: 0; padding: .1rem 0 .1rem .6rem;
+  text-decoration: underline; text-decoration-color: var(--primary); cursor: pointer; }
+.torneo-player { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--paper); min-height: 3.4rem; }
+.torneo-open { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: .3rem; text-align: left; font: inherit;
+  color: var(--ink); background: none; border: 0; border-radius: 0; padding: .45rem .55rem .45rem; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; }
+.torneo-open strong { font-size: .88rem; line-height: 1.25; }
 .torneo-what { font-size: .74rem; color: var(--muted); }
-.torneo-player[aria-pressed="true"] { border-color: var(--primary); box-shadow: inset 0 0 0 2px var(--primary); }
-.torneo-player.torneo-out { opacity: .45; }
-.torneo-player:disabled { cursor: default; color: var(--muted); border-style: dashed; font-size: .8rem; }
+.torneo-keep { font: inherit; font-size: .78rem; color: var(--ink); background: var(--shade); border: 0; border-top: 1px solid var(--line);
+  border-radius: 0; padding: .35rem .55rem; text-align: left; cursor: pointer; }
+.torneo-player.torneo-in { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.torneo-player.torneo-in .torneo-keep { background: var(--primary-soft); font-weight: 700; }
+.torneo-player.torneo-out .torneo-open { opacity: .45; }
+.torneo-player.torneo-unknown { border-style: dashed; padding: .45rem .55rem; justify-content: center; }
+.torneo-dialog { width: min(34rem, calc(100% - 1.4rem)); max-height: 86vh; padding: 0; border: 1px solid var(--line);
+  background: var(--paper); color: var(--ink); display: none; flex-direction: column; }
+.torneo-dialog[open] { display: flex; }
+.torneo-dialog::backdrop { background: color-mix(in oklab, var(--ink) 45%, transparent); }
+.torneo-dialog-card { overflow-y: auto; padding: .4rem .4rem 0; }
+.torneo-dialog .nb-galleria { display: block; overflow: visible; padding: 0; margin: 0; }
+.torneo-dialog .nb-galleria > .nb-scheda { flex: none; overflow: visible; }
+.torneo-dialog .nb-galleria > .nb-scheda::before { display: none; }
+.torneo-dialog-bar { display: flex; gap: .5rem; padding: .6rem; border-top: 1px solid var(--line); background: var(--paper); }
+.torneo-dialog-bar button { font: inherit; font-size: .92rem; padding: .45rem .9rem; border: 1px solid var(--line); background: var(--shade);
+  color: var(--ink); border-radius: 0; cursor: pointer; }
+.torneo-dialog-bar .torneo-dialog-keep { flex: 1; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); font-weight: 700; }
 .torneo-tinte { display: flex; height: .5rem; }
 .torneo-tinte i { flex: 1; }
 .torneo-bye { margin: 0; font-size: .85rem; color: var(--muted); }

@@ -71,6 +71,8 @@ working rules that are easy to miss.
   `optCssTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
+- Every explainer, story and devlog post has a table of contents: `nbToc` right after `nbTitle`,
+  which also gives every heading its ↑ back to it (Pietro's review of the Mediterranean post).
 - Every link leads somewhere. After building the pages and the book, `nim r tools/links.nim` checks
   the links inside the site (files and `#anchors`, and links to this repository's files on main,
   the PR's branch or a commit, in the checkout), and `nim r -d:ssl tools/links.nim --external` the

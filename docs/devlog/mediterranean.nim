@@ -17,6 +17,8 @@ each, and three directions to choose from. Round 4: eighteen sources looked at, 
 a tournament to choose among them.
 """
 
+nbToc
+
 nbText: """
 Every page of tabelline has two looks: Munari, the default, and the quaderno, an Italian school
 exercise book, one switch away in the header. The story
@@ -697,7 +699,8 @@ nbText: """
 ## A tournament
 
 Eighteen are in, and discarding gets harder: so the fourteen candidates play a tournament. In each
-match tap the source you would keep; the one you tap goes on to the next round, until one is left.
+match tap a source to read its card again, then keep one, there or with **keep** under it; the one
+you keep goes on to the next round, until one is left. **↺ undo** takes back a match.
 The two sources of our pick, the isolari and the maiolica, start a round later (a bye), at the two
 ends of the draw; every first-round match is between two of a kind: two ancient floors and walls,
 the houses of two shores, two harbours, two children's books, two hands at work (a brush, a needle),
@@ -706,10 +709,10 @@ the chat.
 """
 
 block:  # the draw: the places of a 16 bracket, two of them byes
-  func player(name, what, key: string): TournamentEntry =
+  func player(name, what, key: string, card = ""): TournamentEntry =
     var colours: seq[string]
     for c in sourceColours(key): colours.add c.hex
-    entry(name, what, colours)
+    entry(name, what, colours, card)
   nbTournament "mediterranean-sources", "Tournament of the Mediterranean sources", [
     player("The isolari and the portolan charts", "map makers, 1200s–1528", "isolari"), bye(),
     player("Minoan frescoes and Attic vases", "painters, potters, 1600–300 BC", "minoan"),
@@ -724,7 +727,8 @@ block:  # the draw: the places of a 16 bracket, two of them byes
     player("Maria Lai", "weaving, sewn books, 1943–2013", "lai"),
     player("Henri Matisse and Raoul Dufy", "painters, 1905–1953", "matisse"),
     player("Massimo Vitali", "photographer, 1995–", "vitali"),
-    player("Gio Ponti and the maiolica", "designer, potters, 1400s–1960", "maiolica"), bye()]
+    player("Gio Ponti and the maiolica", "designer, potters, 1400s–1960", "maiolica",
+           "Gio Ponti and the maiolica of Vietri and Caltagirone"), bye()]
 
 nbText: """
 ## Rounds
