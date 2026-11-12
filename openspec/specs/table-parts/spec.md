@@ -718,8 +718,9 @@ echo t.toMarkdown
 
 ### Requirement: Rotated labels
 `colsLabelRotate(columns, dir)` SHALL turn the column labels of `columns` on their side in HTML,
-read from the bottom up (`"sideways-lr"`, the default) or from the top down (`"sideways-rl"`);
-the text and Markdown outputs SHALL keep them as they are. Another `dir` SHALL raise a
+read from the bottom up (`"sideways-lr"`, the default), from the top down (`"sideways-rl"`), or
+slanted at 45 degrees, read upwards to the right (`"slanted"`, not from gt); the text and
+Markdown outputs SHALL keep them as they are. Another `dir` SHALL raise a
 `ValueError`.
 
 ```nim

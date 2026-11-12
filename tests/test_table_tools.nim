@@ -13,6 +13,10 @@ suite "rotated labels":
     check t.toHtml.count("writing-mode: vertical-rl; text-align") == 1
     check t.toText == tabella(d).toText
     expect ValueError: discard tabella(d).colsLabelRotate("moons", dir = "up")
+  test "slanted labels":
+    let t = tabella(d).colsLabelRotate(["moons", "colour"], dir = "slanted")
+    check t.toHtml.count("rotate(225deg)") == 2
+    check t.toText == tabella(d).toText
 
 suite "styles from the data":
   test "fromColumn, with a value for missing ones":

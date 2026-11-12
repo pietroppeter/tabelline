@@ -1147,12 +1147,14 @@ proc colsAlignDecimal*(t: sink Tabella, columns: ColSel = numeric(), decMark = "
 
 proc colsLabelRotate*(t: sink Tabella, columns: ColSel = everything(), dir = "sideways-lr"): Tabella =
   ## Turns the labels of `columns` on their side, for narrow columns: read from the bottom up
-  ## (`"sideways-lr"`) or from the top down (`"sideways-rl"`). HTML only: text and Markdown keep
+  ## (`"sideways-lr"`) or from the top down (`"sideways-rl"`), or slanted at 45 degrees
+  ## (`"slanted"`, not from gt: a longer label, such as a month's name, in a narrow column). HTML only: text and Markdown keep
   ## the labels as they are.
   let css = case dir
             of "sideways-lr": "writing-mode: vertical-rl; transform: rotate(180deg); text-align: left; vertical-align: middle"
             of "sideways-rl": "writing-mode: vertical-rl; text-align: left; vertical-align: middle"
-            else: raise newException(ValueError, "dir is \"sideways-lr\" or \"sideways-rl\", not " & dir.escape)
+            of "slanted": "writing-mode: vertical-rl; transform: translateX(25%) rotate(225deg); transform-origin: 50% 50%; text-align: left; vertical-align: bottom; white-space: nowrap"
+            else: raise newException(ValueError, "dir is \"sideways-lr\", \"sideways-rl\" or \"slanted\", not " & dir.escape)
   result = t
   let names = columns.resolve(result.data).filterIt(it notin result.stubColumns and it != result.groupnameCol)
   result.styles.add StyleRule(target: Target(kind: lkColumnLabels, names: names), style: style.css(css))
