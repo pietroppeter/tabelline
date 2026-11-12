@@ -468,7 +468,7 @@ Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last
 islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
 
 """
-photoHeading "What the world keeps", "palermo-cathedral", "Palermo cathedral, about 1900", level = 3
+photoHeading "World Heritage", "palermo-cathedral", "Palermo cathedral, about 1900", level = 3
 nbText: """
 
 UNESCO lists 28 World Heritage properties on the islands. Sicily has six, Malta three, Cyprus
@@ -873,9 +873,9 @@ nbShowCode:
             "most tables", "twenty-two islands, the same scale, getting there",
             "how they live now", "when to go",
             "twenty-two islands, the same scale, all 195, twenty years of work",
-            "who ruled them, twenty years of work, all 195", "the same scale, what the world keeps",
+            "who ruled them, twenty years of work, all 195", "the same scale, World Heritage",
             "all 195, twenty years of work", "how they live now, twenty years of work",
-            "the outlines, who ruled them", "what the world keeps, something to see"]
+            "the outlines, who ruled them", "World Heritage, something to see"]
   let t = tabella(used, rownameCol = "feature"):
     optCssTheme()
     fmtMarkdown everything()

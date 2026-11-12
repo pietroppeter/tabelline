@@ -241,7 +241,7 @@ newNbBlock(NbPhotoHeading of NbText):
     # the heading is Markdown like any other (`text`), so the indice lists it and it gets its id
     # and its way back; the photo is under it, the title over the photo's lower edge
     let heading = addHeadingIds(markdownToHtml(blk.text), nb.doc.context{"indice"}.getBool).strip
-    &"""<figure class="titolo-foto titolo-foto-{blk.level}"><div class="titolo-foto-img"><img src="{blk.src}" alt="{esc(blk.alt)}" loading="lazy">""" &
+    &"""<figure class="titolo-foto titolo-foto-{blk.level}"><div class="titolo-foto-img"><img src="{blk.src}" alt="{esc(blk.alt)}" width="720" height="360" loading="lazy" decoding="async">""" &
       heading & "</div>" &
       (if blk.credit.len > 0: &"""<figcaption>{inline(blk.credit)}</figcaption>""" else: "") & "</figure>"
 

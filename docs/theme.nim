@@ -400,17 +400,20 @@ body details.foldcode pre > code { font-size: 12.5px; }
 .parte ~ .parte-secondary ~ :is(h2, .titolo-foto) { --part: var(--secondary); }
 .parte ~ .parte-success ~ :is(h2, .titolo-foto) { --part: var(--success); }
 
-/* a section's heading over a photo (nbPhotoHeading): the photo as wide as the text, the heading
-   over its lower edge on a shade of ink, in the paper's colour; the credit small, under it */
+/* a section's heading over a photo (nbPhotoHeading): the photo as wide as the text and low, the
+   heading over its lower edge in the paper's colour, on a band of ink dark enough for any photo
+   (a pale sky too), and in every look (one more class than a look's own heading colour); while
+   the photo loads, the band is the shade; the credit small, under it */
 .titolo-foto { margin: 3rem 0 1rem; }
-.titolo-foto-img { position: relative; }
-.titolo-foto img { display: block; width: 100%; height: 11rem; object-fit: cover; }
-.titolo-foto-3 img { height: 8rem; }
-.titolo-foto :is(h2, h3) { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; color: var(--paper);
-  padding: 2.4rem .8rem .7rem 3.2rem; background: linear-gradient(transparent, color-mix(in oklab, var(--ink) 82%, transparent)); }
+.titolo-foto-img { position: relative; background: var(--shade); aspect-ratio: 2 / 1; max-height: 11rem; width: 100%; }
+.titolo-foto-3 .titolo-foto-img { max-height: 8.5rem; }
+.titolo-foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.titolo-foto .titolo-foto-img :is(h2, h3) { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; color: var(--paper);
+  padding: 2.6rem .8rem .7rem 3.2rem; text-shadow: 0 1px 3px color-mix(in oklab, var(--ink) 70%, transparent);
+  background: linear-gradient(transparent, color-mix(in oklab, var(--ink) 70%, transparent) 45%, color-mix(in oklab, var(--ink) 88%, transparent)); }
 .titolo-foto h2::before { left: .8rem; top: auto; bottom: .85rem; box-shadow: 0 0 0 2px var(--paper); }
-.titolo-foto h3 { padding-left: .8rem; color: var(--paper); }
-.titolo-foto .su { color: var(--paper); border-color: color-mix(in oklab, var(--paper) 60%, transparent); }
+.titolo-foto .titolo-foto-img h3 { padding-left: .8rem; font-style: normal; font-weight: 700; }
+.titolo-foto .su { color: var(--paper); border-color: color-mix(in oklab, var(--paper) 60%, transparent); text-shadow: none; }
 .titolo-foto figcaption { margin-top: .35rem; font-size: .78rem; line-height: 1.35; color: var(--muted); }
 .titolo-foto figcaption a { color: var(--muted); }
 
