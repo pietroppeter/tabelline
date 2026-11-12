@@ -185,6 +185,7 @@ header { padding-top: .4rem; }
 .crumbs { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem;
   font: 700 .74rem/1 var(--font); letter-spacing: .16em; text-transform: uppercase; }
 .crumbs a { color: var(--ink); text-decoration: none; }
+.crumbs .lingua b { border-bottom: 2px solid currentColor; }   /* the page's language, the others links */
 .lede { font-size: 1.3rem; line-height: 1.45; color: var(--ink); margin: 0 0 1.2rem; }
 .kicker { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); margin: 0; }
 

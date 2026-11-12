@@ -1069,6 +1069,37 @@ const bodyScript = """<script>
 })();
 </script>"""
 
+func langHeadScript(lang: string, languages: openArray[(string, string)]): string =
+  ## Before the page is drawn, for a page in more than one language: its `lang`, and a move to the
+  ## version in the reader's language, the one chosen last (`?lang=`, remembered) or else the
+  ## browser's, when there is one.
+  var others = ""
+  for (code, href) in languages:
+    if code != lang: others.add (if others.len > 0: ", " else: "") & "'" & code & "': '" & href & "'"
+  """<script>
+(function () {
+  var here = '""" & lang & """', others = {""" & others & """}, key = 'tabelline-lang';
+  document.documentElement.lang = here;
+  try {
+    var q = new URLSearchParams(location.search).get('lang');
+    if (q) localStorage.setItem(key, q);
+    var want = localStorage.getItem(key) || (navigator.language || 'en').slice(0, 2).toLowerCase();
+    if (want !== here && others[want]) location.replace(others[want] + location.hash);
+  } catch (e) {}
+})();
+</script>"""
+
+func langSwitch(c: JsonNode): string =
+  ## The page's languages, in the crumbs: the current one in bold, the others a link that also
+  ## remembers the choice (`?lang=`).
+  let here = c{"lang"}.getStr("en")
+  var items: seq[string]
+  for l in c{"languages"}.getElems:
+    let (code, href) = (l[0].getStr, l[1].getStr)
+    items.add(if code == here: &"""<b aria-current="page">{code.toUpperAscii}</b>"""
+              else: &"""<a href="{href}?lang={code}" hreflang="{code}" lang="{code}">{code.toUpperAscii}</a>""")
+  if items.len == 0: "" else: """<span class="lingua" role="group" aria-label="Language">""" & items.join(" · ") & "</span>"
+
 func temaSwitch(offered: seq[string]): string =
   result = """<div class="tema" role="group" aria-label="Look of the page">"""
   for (key, label, title) in looks:
@@ -1098,7 +1129,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
-<nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
+<nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
 {temaSwitch(offered)}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
@@ -1120,7 +1151,8 @@ proc sharedReviewScript*(nb: Nb): string =
 
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
-                   reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari") =
+                   reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari",
+                   lang = "en", languages: openArray[(string, string)] = []) =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -1130,12 +1162,20 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## out, `reviewPage` keeps the key its comments are stored under when the file is renamed.
   ## `looks` are the looks its switch offers (keys of `looks`): Munari and the quaderno, or for the
   ## islands of the Mediterranean, Munari and the Minoan look; `firstLook` is the one shown before a
-  ## reader chooses (with JavaScript off, always Munari).
+  ## reader chooses (with JavaScript off, always Munari). A page in more than one language gives
+  ## its `lang` and every version as `languages` (code and link, its own included, as for the
+  ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
+  ## and a first visit goes to the one in the browser's language.
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript(looks, firstLook) & "\n" & siteCss(nb.doc.filename, extra = reviewCss))
+    "\n" & temaHeadScript(looks, firstLook) & "\n" &
+    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
+  nb.doc.context["lang"] = %lang
+  var versions = newJArray()
+  for (code, href) in languages: versions.add %[code, href]
+  nb.doc.context["languages"] = versions
   nb.doc.context["looks"] = %(@looks)
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""

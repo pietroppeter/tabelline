@@ -147,7 +147,8 @@ A page is a nimib notebook that calls `nb.useTabelline(...)` right after `nbInit
 the header with the switch and the masthead, the footer. The masthead is the wordmark, the
 `section` the page belongs to (Guide, Devlog, Stories) and its `cadence`, how it lives (kept up to
 date, one for every release, dated posts); the quaderno writes the same three lines as the label
-of an exercise book (nome, materia, classe). Then `nbTitle` opens it with a
+of an exercise book (nome, materia, classe). A page in two languages (the islands story) adds
+EN · IT to the crumbs, the current one underlined, with `useTabelline(lang, languages)`. Then `nbTitle` opens it with a
 kicker (what it is and when; in a post, the date), the title, and a lede that says what the page
 gives the reader. Everything below is a block: each section shows one live, with its code folded
 under it.
