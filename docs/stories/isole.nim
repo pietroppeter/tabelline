@@ -87,7 +87,7 @@ shapes, then who ruled them and how they live, then getting there and when to go
 show up as a dip in a line.
 
 Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
-names, and the other 173 a pink dot.
+names, and the other 173 a dot in the colour of the circles.
 """
 
 nbDrawing data / "map-west.svg", "The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
@@ -318,7 +318,7 @@ outline: Wikidata has no place for them, so there is no point to find their coas
 
 nbText: """
 And here they all are, in the order of the list, each at its own scale and with its place: the
-22 main islands in blue, the others in pink. Malta, the island of a country, is 34th.
+22 main islands in blue, the others in the colour of the circles. Malta, the island of a country, is 34th.
 """
 
 nbShowCode:
