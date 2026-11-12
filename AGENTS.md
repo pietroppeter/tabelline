@@ -57,6 +57,8 @@ working rules that are easy to miss.
   work alone, such as a one-page artifact. It has two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
+  The pages of the islands of the Mediterranean offer the Minoan look instead of the quaderno
+  (`useTabelline(looks = ["munari", "minoan"], firstLook = "minoan")`).
   Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
   broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.

@@ -42,6 +42,10 @@ elsewhere.
   triangle: flat paper, one geometric sans, black rules, and colour only where it means something.
 - **Quaderno**, an Italian school exercise book: squared paper, a red margin, headings in blue
   pen with a highlighter stroke, code on index cards, outputs on sticky notes, tables taped in.
+- **Minoan**, after the frescoes of Crete and Thera and the vases of Athens, for the islands of
+  the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a meander
+  over every table. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
+  was designed in the devlog post [Designing a Mediterranean look](devlog/mediterranean/).
 
 Munari is the page itself: its rules need no script, so a page without JavaScript (or before
 its script runs) is Munari. The quaderno is the other look, kept because it shows that a page and
@@ -128,6 +132,9 @@ and goes in `docs/theme.nim`.
   geometric types of the 1920s, for headings and text alike; big and plain.
 - **Quaderno**: Patrick Hand for what is handwritten (headings, labels, the indice), Atkinson
   Hyperlegible for the text.
+- **Minoan**: [Gentium Book Plus](https://software.sil.org/gentium/) (OFL), a serif made for
+  Greek and Latin scholarship, with every letter of the islands' names (ć, ħ, ğ, ḍ, Greek); old-style
+  figures in text, lining ones in tables.
 - **Code**: the system monospace at 13px, smaller than the text; 12.5px under a table.
 """
 

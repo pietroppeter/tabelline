@@ -45,7 +45,10 @@ const fonts = face("Patrick Hand", "patrick-hand.woff2", "400", "normal") &
               face("Atkinson Hyperlegible", "atkinson-italic.woff2", "400", "italic") &
               face("Jost", "jost-400-normal.woff2", "400", "normal") &
               face("Jost", "jost-400-italic.woff2", "400", "italic") &
-              face("Jost", "jost-700-normal.woff2", "700", "normal")
+              face("Jost", "jost-700-normal.woff2", "700", "normal") &
+              face("Gentium Book Plus", "gentium-regular.woff2", "400", "normal") &
+              face("Gentium Book Plus", "gentium-italic.woff2", "400", "italic") &
+              face("Gentium Book Plus", "gentium-bold.woff2", "700", "normal")
 
 # ------------------------------------------------------------------------------------ the palette
 
@@ -66,6 +69,15 @@ const
                warning: "#F7D94C",     # 菜の花 nanohana, rapeseed flower: the triangle
                success: "#86C166")     # 苗 nae, seedling: the fourth
     ## Munari's default palette, Haru (spring): Japanese traditional colours (nipponcolors.com).
+
+  minoanLook* = Look(paper: "#EFE6D2",     # lime plaster, the ground of the frescoes
+                     ink: "#1E1A17",       # black glaze, the black of the vases
+                     primary: "#C3693C",   # terracotta: the clay of red-figure, the circle, links
+                     secondary: "#3F7FA6", # dolphin blue, from the Knossos fresco: the square, bars
+                     warning: "#D9A441",   # yellow ochre: the triangle
+                     success: "#6E8B5A")   # olive, from the place: what works, code notes
+    ## The Minoan look's values (devlog "Designing a Mediterranean look", the tournament's winner),
+    ## the same six as `mediterraneanSources`' "minoan", checked there by the colour rules.
 
   edo* = Look(paper: "#FCFAF2",        # 白練 shironeri, white silk
               ink: "#1C1C1C",          # 墨 sumi, ink
@@ -112,7 +124,8 @@ const tokens =
   --paper: var(--m-carta); --ink: var(--m-inchiostro); --primary: var(--m-cerchio);
   --secondary: var(--m-quadrato); --warning: var(--m-triangolo); --success: var(--m-quarto);
 """ & tokensCss() & "}\n" &
-  "html[data-tema=\"quaderno\"] {\n" & lookCss(quadernoLook) & "\n}\n"
+  "html[data-tema=\"quaderno\"] {\n" & lookCss(quadernoLook) & "\n}\n" &
+  "html[data-tema=\"minoan\"] {\n" & lookCss(minoanLook) & "\n}\n"
 
 # ---------------------------------------------------------------------------------------- Munari
 # After Bruno Munari: flat paper, one geometric sans (Jost), and the three shapes of his books,
@@ -605,8 +618,85 @@ func scoped*(rules, scope: string): string =
 
 const quadernoCss = scoped(quadernoRules, "html[data-tema=\"quaderno\"]")
 
-const css* = fonts & tokens & munariCss & quadernoCss
-  ## All the CSS of a page: Munari, the default, then the quaderno, scoped.
+
+# ---------------------------------------------------------------------------------------- Minoan
+# After the frescoes of Knossos and Thera and the vases of Athens (devlog "Designing a Mediterranean
+# look"): lime plaster for paper, the black glaze for ink, terracotta and dolphin blue; one serif
+# made for Greek and Latin scholarship, Gentium Book Plus, which has every letter of the islands'
+# names (ć č š ž ğ ş ı ħ ġ, and Sicilian ḍ); the meander as the rule over every table and under
+# the masthead, the running wave over the footer. Drawn as masks, so their colour is a token.
+
+func svgUrl(svg: string): string =
+  "url(\"data:image/svg+xml," & svg.multiReplace(("<", "%3C"), (">", "%3E"), ("\"", "'"), ("#", "%23")) & "\")"
+
+const
+  meander* = svgUrl("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M0 1.5H24M0 22.5H24M2 19V5H18V15H8V10H13" fill="none" stroke="black" stroke-width="2.4"/></svg>""")
+    ## The Greek key between two rules, one unit, to repeat sideways.
+  runningWave* = svgUrl("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" width="20" height="14"><path d="M0 12C4 12 3 2 10 2C16 2 16 9 12 9C9 9 9 6 11 6M10 12H20" fill="none" stroke="black" stroke-width="1.8"/></svg>""")
+    ## The running wave (the "running dog" of Greek borders), one unit, to repeat sideways.
+
+const minoanRules = """
+html {
+  --font: "Gentium Book Plus", "Gentium Plus", Georgia, "Times New Roman", serif;
+  --hand: var(--font);
+  --meander: """ & meander & """;
+  --wave: """ & runningWave & """;
+}
+body { font: 19px/1.6 var(--font); font-variant-numeric: oldstyle-nums proportional-nums; }
+
+/* the masthead: the wordmark in spaced capitals, then a meander instead of Munari's shapes */
+.forme { display: none; }
+.etichetta { padding-right: 0; min-height: 0; margin: 2rem 0 1.6rem; padding-bottom: 1.6rem; }
+.etichetta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--ink);
+  -webkit-mask: var(--meander) repeat-x left center / auto 14px; mask: var(--meander) repeat-x left center / auto 14px; }
+.etichetta .nome span:last-child { font: 700 2.7rem/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.etichetta .riga:last-child:not(.nome) span:last-child { font-variant: small-caps; text-transform: lowercase; letter-spacing: .12em; color: var(--primary-text); }
+.kicker { font: 400 .95rem/1.2 var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .14em; color: var(--primary-text); }
+.lede { font-style: italic; font-size: 1.25rem; }
+
+/* headings: the serif, bold, a little open; the section circle is a terracotta disc ringed in black glaze */
+h1, h2, h3, h4 { font-family: var(--font); letter-spacing: .005em; }
+h1 { font-size: 2.6rem; line-height: 1.08; }
+h2 { font-size: 1.75rem; }
+h2::before { box-shadow: inset 0 0 0 2.5px var(--ink); }
+h3 { font-style: italic; font-weight: 400; font-size: 1.35rem; color: var(--primary-text); }
+a { text-decoration-color: var(--primary); text-decoration-thickness: 1.5px; text-underline-offset: .15em; }
+blockquote { border-left: 3px solid var(--primary); font-style: italic; }
+
+/* tables: a meander as the rule above, lining figures that line up */
+.tabella { padding-top: 26px; }
+.tabella::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 12px; background: var(--ink);
+  -webkit-mask: var(--meander) repeat-x left center / auto 12px; mask: var(--meander) repeat-x left center / auto 12px; }
+.tabella table { font-variant-numeric: lining-nums tabular-nums; }
+.tabella .tb_title { font-family: var(--font); font-size: 135%; letter-spacing: .01em; }
+.tabella .tb_subtitle { font-style: italic; }
+
+/* the indice: numbers in terracotta discs, the headings in the serif */
+.indice h2.indice-title { font: 400 1rem/1 var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .16em; }
+.indice > ol > li::before { box-shadow: inset 0 0 0 2px var(--ink); font-variant-numeric: lining-nums; }
+
+/* notes and cards: plaster panels, their straight top edge in the role's colour */
+.nota { background: color-mix(in oklab, var(--surface) 60%, var(--paper)); }
+.nota .titolo { font-variant: small-caps; text-transform: lowercase; letter-spacing: .08em; }
+.nb-galleria > .nb-scheda { background: color-mix(in oklab, var(--surface) 60%, var(--paper)); }
+
+/* code stays in the monospace, smaller; outputs on plaster */
+pre > code, pre.nb-output { font-variant-numeric: normal; }
+
+/* the look switch, in small capitals */
+.tema button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
+
+/* the footer: a running wave above it, in dolphin blue */
+body > footer { padding-top: 2.4rem; }
+body > footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 14px; background: var(--secondary);
+  -webkit-mask: var(--wave) repeat-x left center / auto 14px; mask: var(--wave) repeat-x left center / auto 14px; }
+.motto { font-style: italic; }
+"""
+
+const minoanCss = scoped(minoanRules, "html[data-tema=\"minoan\"]")
+
+const css* = fonts & tokens & munariCss & quadernoCss & minoanCss
+  ## All the CSS of a page: Munari, the default, then the quaderno and the Minoan look, scoped.
 
 proc assetHref*(name, pageFile: string): string =
   ## The link from a page (its HTML file) to a file the pages share, `docs/assets/<name>`.

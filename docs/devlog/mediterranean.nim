@@ -1,6 +1,6 @@
 ## devlog: 11 Nov 2026 D | Designing a Mediterranean look | The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. Designed in rounds, in this post. Fourteen sources to learn from, from Minoan frescoes to the houses of Djerba, each with who they are, what they made, why they fit and what a page could take; rules for turning a source into six colours, checked on every palette; a gallery of the discarded; three directions, and a tournament.
 ## A dated post: it tells how the Mediterranean look was designed, round by round, and is not rewritten afterwards.
-import std/[json, os, strutils]
+import std/[json, os, sequtils, strutils]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks
@@ -9,7 +9,8 @@ import data/mediterranean/drafts
 let docs = currentSourcePath().parentDir.parentDir
 nbInit
 nb.doc.filename = docs / "devlog" / "mediterranean" / "index.html"
-nb.useTabelline(title = "Designing a Mediterranean look", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
+nb.useTabelline(title = "Designing a Mediterranean look", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../",
+                looks = ["munari", "minoan"], firstLook = "minoan")
 
 nbTitle "11 November 2026", "Designing a Mediterranean look", """
 The islands story gets a look of its own, in place of the quaderno: a Mediterranean one. It is
@@ -825,6 +826,98 @@ block:  # the draw: the places of a 16 bracket, two of them byes
            "Gio Ponti and the maiolica of Vietri and Caltagirone"), bye()]
 
 nbText: """
+## The winner: the Minoan look
+
+Pietro played the tournament, and the winner is the Minoan frescoes and the Attic vases. So this
+page now wears the Minoan look: the switch at the top offers it beside Munari, and the page opens
+in it (with JavaScript off, it stays Munari, as every page of the site). The islands story is next.
+
+Each part of the look, and why:
+"""
+
+nbSwatches sourceSwatches("minoan")
+
+block:  # the choices of the Minoan look
+  type Choice = object
+    part, choice, why: string
+  func c(part, choice, why: string): Choice = Choice(part: part, choice: choice, why: why)
+  let choices = @[
+    c("paper", "lime plaster", "the ground the frescoes were painted on: warm, never white"),
+    c("ink", "black glaze", "the black of the vases, 14:1 on the plaster"),
+    c("primary", "terracotta", "the clay of red-figure: section circles, links, the indice's numbers"),
+    c("secondary", "dolphin blue", "the sea of the Knossos dolphins: cards, notes to go to, bars"),
+    c("warning", "yellow ochre", "a pigment of the frescoes, for the triangle"),
+    c("success", "olive", "from the place, as the rules allow: what works, notes on code"),
+    c("typeface", "Gentium Book Plus", "a serif made for Greek and Latin scholarship (SIL, open licence); it has every letter of the islands' names, ḍ too"),
+    c("figures", "old-style in text, lining in tables", "numbers sit in a sentence like letters, and line up in a column"),
+    c("masthead", "spaced capitals over a meander", "an inscription; Munari's three shapes stay Munari's"),
+    c("sections", "a terracotta disc ringed in black", "the circle is still a place, drawn as a red-figure disc"),
+    c("tables", "a meander as the rule above", "the band of a vase, around a table instead of a scene"),
+    c("third headings", "italic", "the serif's italic is its second voice"),
+    c("labels", "small capitals", "the kicker, the indice, the switch: quiet, like the names painted on vases"),
+    c("footer", "a running wave in dolphin blue", "the sea under the page, the motif of the Thera frescoes"),
+  ]
+  let t = tabella(choices, rownameCol = "part"):
+    tabHeader "The Minoan look", "every part, and why"
+    colsLabel:
+      choice: "choice"
+      why: "why"
+    tabSourceNote "The six colours are those of the Minoan card above, checked by the rules. The motifs are masks, so their colour is a token."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+The line of names that Jost could not write, now in Gentium:
+
+> Matvejević · Korčula · Brač · Šipan · Iž · Gökçeada · İmralı · Paşalimanı · Għawdex · Ħal Saflieni · Pantiḍḍirìa
+
+The font is cut down to the letters a page uses (Latin, Latin Extended-A, the dotted letters, and
+Greek with its accents, for the islands' own names, such as Κρήτη), about 50 KB for each of
+regular, italic and bold.
+
+### On a table of the islands
+
+The ten largest islands, from the story's data, in the Minoan look (switch to Munari above to
+compare):
+"""
+
+block:  # a real table of the islands: the ten largest, with their shapes
+  let data = docs / "stories" / "data" / "isole"
+  let all = readCsv(data / "islands.csv", comment = "#")
+  proc nums(v: Value): seq[float] = ($v).splitWhitespace.mapIt(it.parseFloat)
+  var top = TableData()
+  for col in all.columns:
+    if col.name in ["island", "native", "country", "km2", "population"]: top.addColumn(col.name, col.values[0 ..< 10])
+  var shapes: seq[Value]
+  for i in 0 ..< 10:
+    shapes.add(if all["x", i].isNull: toValue(nil) else: toValue((x: nums(all["x", i]), y: nums(all["y", i]))))
+  top.addColumn("shape", shapes)
+  let sea = nanoplotOptions(dataBarFillColor = tint("--secondary"), dataBarStrokeColor = tint("--secondary-text"))
+  let t = tabella(top, rownameCol = "island"):
+    tabHeader "The ten largest islands", "of the Mediterranean, by area"
+    colsMove ["shape"], after = "island"
+    fmtNanoplot "shape", plotType = "shape", plotHeight = "2.6em", autoscale = true, options = sea
+    fmtInteger ["km2", "population"]
+    colsLabel:
+      shape: ""
+      native: "in its language"
+      km2: "km²"
+    tabSourceNote "Data: the islands story (Wikipedia, Wikidata, OpenStreetMap)."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+### What may still change
+
+- **A face for the titles.** Gentium is a reading face; a display face for the largest titles,
+  with the same letters, could make the masthead more of an inscription.
+- **Dolphins and octopus.** The card proposed them "sparingly"; none is drawn yet. One could mark
+  the end of a story, or the empty state of a table.
+- **The meander's weight.** It is drawn at 12 to 14 pixels; on a page with many small tables it
+  may be too much, and a thinner rule could take its place there.
+- **The islands story.** It gets the switch next: Munari and the Minoan look, in place of the
+  quaderno.
+
 ## Rounds
 
 1. **Round 1**: nine sources, each with who, what, why it fits, ideas for a page and references;
@@ -843,10 +936,12 @@ nbText: """
 5. **Round 5**: a table of contents; in the tournament a tap opens the card, **keep** and
    **↺ undo** for each match; shapes and motifs drafted in a table of their own; the palettes
    grouped by affinity propagation and drawn on a plane: two families, red and blue.
+6. **Round 6**: the tournament's winner, the Minoan frescoes and Attic vases, built as a look of
+   the site and worn by this page: Gentium Book Plus, the meander and the running wave, and a
+   table that says why for each part.
 
-Next, Pietro plays the tournament (or picks a direction, or a mix), and a round builds the winner on this page: the six colours,
-typefaces that pass the line of names above, and the motifs, on a real table of the islands, in
-Munari and in the new look side by side.
+Next, the Minoan look may still change with Pietro's review (the list above), and then it moves to
+the islands story, in place of the quaderno.
 """
 
 nbSave

@@ -926,14 +926,29 @@ template nbTournament*(tkey, tlabel: string, tslots: openArray[TournamentEntry])
 
 # ------------------------------------------------------------------------------------- the page
 
-const temaHeadScript = """<script>
+const looks* = [("munari", "Munari", "after Bruno Munari"), ("quaderno", "quaderno", "an Italian school exercise book"),
+                ("minoan", "Minoan", "after the frescoes of Crete and Thera, and the vases of Athens")]
+  ## Every look a page can offer: its key (`html[data-tema="..."]`), the label of its button, and
+  ## where it comes from. Munari is always first: a page without JavaScript is Munari.
+
+func temaHeadScript(offered: openArray[string], first: string): string =
+  ## Before the page is drawn: the look in the address (`?tema=`), or the one chosen last, if this
+  ## page offers it, else `first`. A page whose first look is not Munari (the Minoan look of the
+  ## islands) remembers its choice apart, so a choice made elsewhere does not hide it.
+  var list = ""
+  for k in offered: list.add (if list.len > 0: ", " else: "") & "'" & k & "'"
+  let key = if first == "munari": "tabelline-tema" else: "tabelline-tema-" & first
+  """<script>
 (function () {
+  var offered = [""" & list & """], first = '""" & first & """', key = '""" & key & """';
+  var root = document.documentElement;
+  root.dataset.temaKey = key;
   try {
     var q = new URLSearchParams(location.search).get('tema');
-    if (q === 'munari' || q === 'quaderno') localStorage.setItem('tabelline-tema', q);
-    var t = q || localStorage.getItem('tabelline-tema');
-    document.documentElement.dataset.tema = (t === 'quaderno') ? 'quaderno' : 'munari';
-  } catch (e) { document.documentElement.dataset.tema = 'munari'; }
+    if (offered.indexOf(q) >= 0) localStorage.setItem(key, q);
+    var t = q || localStorage.getItem(key);
+    root.dataset.tema = offered.indexOf(t) >= 0 ? t : first;
+  } catch (e) { root.dataset.tema = first; }
 })();
 </script>"""
 
@@ -943,7 +958,7 @@ const bodyScript = """<script>
 (function () {
   var root = document.documentElement;
   function show() {
-    var t = root.dataset.tema === 'quaderno' ? 'quaderno' : 'munari';
+    var t = root.dataset.tema || 'munari';
     document.querySelectorAll('.tema button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
@@ -951,7 +966,7 @@ const bodyScript = """<script>
   document.querySelectorAll('.tema button').forEach(function (b) {
     b.addEventListener('click', function () {
       root.dataset.tema = b.dataset.tema;
-      try { localStorage.setItem('tabelline-tema', b.dataset.tema); } catch (e) {}
+      try { localStorage.setItem(root.dataset.temaKey || 'tabelline-tema', b.dataset.tema); } catch (e) {}
       show();
     });
   });
@@ -1014,9 +1029,12 @@ const bodyScript = """<script>
 })();
 </script>"""
 
-const temaSwitch = """<div class="tema" role="group" aria-label="Look of the page">
-<button type="button" data-tema="munari" title="after Bruno Munari" aria-pressed="true">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
-</div>"""
+func temaSwitch(offered: seq[string]): string =
+  result = """<div class="tema" role="group" aria-label="Look of the page">"""
+  for (key, label, title) in looks:
+    if key in offered:
+      result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
+  result.add "</div>"
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
@@ -1025,6 +1043,8 @@ func pageText(blk: JsonNode, nb: Nb): string =
 
 func pageHeader(blk: JsonNode, nb: Nb): string =
   let c = nb.doc.context
+  var offered: seq[string]
+  for k in c{"looks"}.getElems: offered.add k.getStr
   let home = c{"home_href"}.getStr
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
@@ -1039,7 +1059,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-{temaSwitch}{forme}
+{temaSwitch(offered)}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
@@ -1060,7 +1080,7 @@ proc sharedReviewScript*(nb: Nb): string =
 
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
-                   reviewPage = "") =
+                   reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari") =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -1068,11 +1088,15 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## wordmark a link (a post's wordmark links to the home page). Every page has the review mode
   ## (`review.nim`), its version line under the lede and **✎ Review**: `review = false` leaves it
   ## out, `reviewPage` keeps the key its comments are stored under when the file is renamed.
+  ## `looks` are the looks its switch offers (keys of `looks`): Munari and the quaderno, or for the
+  ## islands of the Mediterranean, Munari and the Minoan look; `firstLook` is the one shown before a
+  ## reader chooses (with JavaScript off, always Munari).
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename, extra = reviewCss))
+    "\n" & temaHeadScript(looks, firstLook) & "\n" & siteCss(nb.doc.filename, extra = reviewCss))
+  nb.doc.context["looks"] = %(@looks)
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true
