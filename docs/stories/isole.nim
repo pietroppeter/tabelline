@@ -576,7 +576,7 @@ nbShowCode:
       mean: "mean ± sd"
       y2025: "2025"
     let median = where(it["region"] == "All regions (median)")
-    tabStyle style.fill(tint("--neutral-1")) & style.text(weight = "bold"), loc.stub(rows = median), loc.body(rows = median)
+    tabStyle style.fill(tintMix("--ink", 10)) & style.text(weight = "bold"), loc.stub(rows = median), loc.body(rows = median)
     tabSourceNote md("Eurostat, as Wikipedia lists it: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).")
   nbTable t
 
