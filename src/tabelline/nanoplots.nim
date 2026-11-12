@@ -803,22 +803,34 @@ proc colsNanoplot*(t: sink Tabella, columns: ColSel, rows = allRows(), plotType 
                    plotHeight = "2em", missingVals = "gap", autoscale = false,
                    referenceLine = "", referenceArea = ("", ""), expandY: seq[float] = @[],
                    newColName = "nanoplots", newColLabel = "", before = "", after = "",
-                   autohide = true, options = nanoplotOptions(), alt = ""): Tabella =
+                   autohide = true, options = nanoplotOptions(), alt = "",
+                   xVals: seq[float] = @[], referenceX: seq[string] = @[]): Tabella =
   ## A new column of nanoplots, one per row, of the values of several `columns` (in their order):
   ## after gt's `cols_nanoplot()`. The columns are hidden (`autohide`); the new one is
   ## `newColName`, labelled `newColLabel` (its name by default), at the end or `before` or
-  ## `after` a column. The other arguments are those of `fmtNanoplot`.
+  ## `after` a column. `xVals` (not from gt) places the columns on the x axis, one value each, the
+  ## same in every row (the years of `y2006` ... `y2025`): then `referenceX` draws a dashed
+  ## vertical line at a place of that axis. The other arguments are those of `fmtNanoplot`.
   let names = columns.resolve(t.data)
   if names.len == 0: raise newException(ValueError, "colsNanoplot needs columns of numbers")
+  if xVals.len > 0 and xVals.len != names.len:
+    raise newException(ValueError, "xVals has " & $xVals.len & " values for " & $names.len & " columns")
   var cells: seq[Value]
   for i in 0 ..< t.data.nrows:
-    var parts: seq[string]
-    for name in names:
-      let v = t.data[name, i]
-      parts.add(if v.isNumber: $v.toFloat else: "NA")
-    cells.add toValue(parts.join(" "))
+    if xVals.len > 0:
+      var ys: seq[float]
+      for name in names:
+        let v = t.data[name, i]
+        ys.add(if v.isNumber: v.toFloat else: NaN)
+      cells.add toValue((x: xVals, y: ys))
+    else:
+      var parts: seq[string]
+      for name in names:
+        let v = t.data[name, i]
+        parts.add(if v.isNumber: $v.toFloat else: "NA")
+      cells.add toValue(parts.join(" "))
   result = colsAdd(t, newColName, cells, before, after)
   if autohide: result = colsHide(result, names)
   result = colsLabel(result, newColName, toText(if newColLabel.len > 0: newColLabel else: newColName))
   result = fmtNanoplot(result, newColName, rows, plotType, plotHeight, missingVals, autoscale,
-                       referenceLine, referenceArea, expandY, options, alt)
+                       referenceLine, referenceArea, expandY, options, alt, referenceX = referenceX)

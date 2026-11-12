@@ -1,4 +1,4 @@
-# The main islands' country and NUTS 2 region (the region's name in Wikipedia's lists of Eurostat figures; Djerba is in Tunisia, outside them), the country's ISO code and a locale for its numbers. Written by hand.
+# The main islands' country and NUTS 2 region (the region's name in Wikipedia's lists of Eurostat figures; Djerba is in Tunisia, outside them), the country's ISO code and a locale for its numbers. Written by Claude.
 title,code,locale,region
 Sicily,IT,it,Sicily
 Sardinia,IT,it,Sardinia

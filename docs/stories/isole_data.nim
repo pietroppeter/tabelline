@@ -180,6 +180,38 @@ units syntax, `{{km^2}}`.
 """, nkCode)
 
 nbText: """
+## Seas
+
+Each island's sea comes from Wikidata, which puts an island in or beside a body of water
+(property P206): often a gulf or a strait, taken to the sea it is part of (the Saronic Gulf to
+the Aegean). When Wikidata says only "the Mediterranean", or nothing, `extract.nim` uses the seas
+that Wikipedia's article on the island names, written into it by Claude for 20 islands, and else
+the sea of the closest island that has one, within 30 km. An island on several seas keeps them
+all: Sicily is on three.
+"""
+
+nbShowCode:
+  var counts = initOrderedTable[string, int]()
+  for i in 0 ..< islands.nrows:
+    let how = if islands["sea_how", i].isNull: "none: the open Mediterranean"
+              elif ($islands["sea_how", i]).startsWith("as "): "the closest island's"
+              else: $islands["sea_how", i]
+    counts.mgetOrPut(how, 0).inc
+  var rows: seq[tuple[sea: string, islands: int]]
+  for k, v in counts: rows.add (k, v)
+  rows.sort(proc (a, b: auto): int = cmp(b.islands, a.islands))
+  let t = tabella(rows, rownameCol = "sea"):
+    optCssTheme()
+    colsLabel:
+      sea: "the sea from"
+    grandSummaryRows:
+      all: agg.sum
+      columns = ["islands"]
+      missingText = ""
+      fmtInteger()
+  nbTable t
+
+nbText: """
 ## Counting passengers
 
 Wikidata has 15,637 counts of passengers for the airports around the Mediterranean: by year, by
@@ -210,7 +242,7 @@ nbText: """
 ## The tables
 
 Eight files, in `docs/stories/data/isole/`, each with a first line that says what it is made
-from; and three written by hand.
+from; and three written by Claude, the AI that made these pages.
 """
 
 nbShowCode:
@@ -227,8 +259,8 @@ nbShowCode:
       about: ""
     tabStyle style.text(size = "12px") & style.css("overflow-wrap: anywhere"), loc.body(cols("about"))
     tabRowGroup "made by process.nim", toSeq(0 .. 7)
-    tabRowGroup "written by hand", [8, 9, 10]
-    rowGroupOrder ["made by process.nim", "written by hand"]
+    tabRowGroup "written by Claude", [8, 9, 10]
+    rowGroupOrder ["made by process.nim", "written by Claude"]
   nbTable t
 
 nbText: """

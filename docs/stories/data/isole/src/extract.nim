@@ -68,6 +68,57 @@ for w in readRows(raw / "wd_islands.csv"):
   if w["archipelagoLabel"].len > 0 and isl.archipelago.len == 0: isl.archipelago = w["archipelagoLabel"]
   if w["native"].len > 0 and w["native"] notin isl.native: isl.native.add w["native"]
 
+# ------------------------------------------------------------------------- the seas
+
+# The sea each island is in. Wikidata says, for most (P206, "located in or next to body of
+# water"), often a gulf or a strait: each is taken to the sea it is part of. Islands it puts only
+# in "the Mediterranean", or nowhere, take the seas Wikipedia's article on them names, written
+# below by Claude (seaOf), or else the sea of the closest island that has one, within 30 km. An
+# island on more than one sea lists them all. The Îles d'Hyères and La Galite are left in the
+# open Mediterranean, as their articles leave them.
+const seas = ["Alboran Sea", "Balearic Sea", "Sea of Sardinia", "Ligurian Sea", "Tyrrhenian Sea",
+              "Strait of Sicily", "Ionian Sea", "Adriatic Sea", "Aegean Sea", "Libyan Sea",
+              "Levantine Sea", "Sea of Marmara"]
+const partOf = {"Sea of Sicily": "Strait of Sicily", "Sea of Crete": "Aegean Sea",
+                "Carpathian Sea": "Aegean Sea", "Icarian Sea": "Aegean Sea", "Thracian Sea": "Aegean Sea",
+                "Myrtoan Sea": "Aegean Sea", "Lycian Sea": "Levantine Sea"}.toTable
+const seaOf = {"Sicily": "Tyrrhenian Sea; Strait of Sicily; Ionian Sea",
+               "Sardinia": "Tyrrhenian Sea; Sea of Sardinia", "Corsica": "Ligurian Sea; Tyrrhenian Sea",
+               "Geography of Cyprus": "Levantine Sea", "Mallorca": "Balearic Sea", "Menorca": "Balearic Sea",
+               "Ibiza": "Balearic Sea", "Formentera": "Balearic Sea", "Cabrera, Balearic Islands": "Balearic Sea",
+               "Malta (island)": "Strait of Sicily", "Gozo": "Strait of Sicily", "Pantelleria": "Strait of Sicily",
+               "Lampedusa": "Strait of Sicily", "Marettimo": "Strait of Sicily", "Levanzo": "Strait of Sicily",
+               "Favignana": "Strait of Sicily", "Gavdos": "Libyan Sea", "Avsa": "Sea of Marmara",
+               "La Maddalena (island)": "Tyrrhenian Sea", "Megalonisos Petalion": "Aegean Sea"}.toTable
+
+proc major(name: string): string =
+  if name in seas: name elif name in partOf: partOf[name] else: ""
+
+var seaNames = newSeq[seq[string]](islands.len)
+var seaHow = newSeq[string](islands.len)
+for w in readRows(raw / "wd_waters.csv"):
+  if w["title"] notin byPage: continue
+  let i = byPage[w["title"]]
+  var s = major(w["waterLabel"])
+  if s.len == 0: s = major(w["parentLabel"])
+  if s.len > 0 and s notin seaNames[i]:
+    seaNames[i].add s
+    seaHow[i] = "Wikidata"
+for i, isl in islands:
+  if seaNames[i].len == 0 and isl.row.title in seaOf:
+    seaNames[i] = seaOf[isl.row.title].split("; ")
+    seaHow[i] = "Wikipedia's article"
+let known = toSeq(0 ..< islands.len).filterIt(seaHow[it] == "Wikidata")
+for i, isl in islands:
+  if seaNames[i].len > 0 or isl.lon.isNaN: continue
+  var (best, d) = (-1, 30.0)
+  for k in known:
+    let dk = hypot((islands[k].lon - isl.lon) * 111.32 * cos(isl.lat.degToRad), (islands[k].lat - isl.lat) * 110.574)
+    if dk < d: (best, d) = (k, dk)
+  if best >= 0:
+    seaNames[i] = seaNames[best]
+    seaHow[i] = "as " & islands[best].row.title & ", " & formatFloat(d, ffDecimal, 0) & " km away"
+
 # ------------------------------------------------------------------------- the outlines
 
 type Ring = object
@@ -229,9 +280,10 @@ for i, isl in islands:
   islandRows.add @[$(i + 1), isl.row.title, isl.row.label, page[isl.row.title], isl.item,
                    (if isl.lon.isNaN: "" else: $isl.lon), (if isl.lat.isNaN: "" else: $isl.lat),
                    (if isl.elevation.isNaN: "" else: $isl.elevation), isl.archipelago,
-                   isl.native.join(" / "), $isl.row.km2, isl.row.town, $isl.row.isMain]
-writeCsv(stage / "islands.csv", "The islands of Wikipedia's List of islands in the Mediterranean (table By area, in its order), with their Wikidata item, coordinates, highest point, archipelago and native name.",
-  ["rank", "title", "label", "page", "wikidata", "lon", "lat", "elevation", "archipelago", "native", "list_km2", "town", "main"], islandRows)
+                   isl.native.join(" / "), $isl.row.km2, isl.row.town, $isl.row.isMain,
+                   seaNames[i].join("; "), seaHow[i]]
+writeCsv(stage / "islands.csv", "The islands of Wikipedia's List of islands in the Mediterranean (table By area, in its order), with their Wikidata item, coordinates, highest point, archipelago, native name and sea (Wikidata P206, or the closest island's, or Wikipedia's article).",
+  ["rank", "title", "label", "page", "wikidata", "lon", "lat", "elevation", "archipelago", "native", "list_km2", "town", "main", "sea", "sea_how"], islandRows)
 
 # ------------------------------------------------------------------------- what is on them
 
