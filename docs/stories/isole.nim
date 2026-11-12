@@ -562,7 +562,7 @@ nbShowCode:
       mean: agg.mean
       sd: agg.std
       columns = years
-    colsNanoplot years, autoscale = true, plotHeight = "1.6em", newColName = "trend",
+    colsNanoplot years, autoscale = true, plotHeight = "1.2em", newColName = "trend",
       newColLabel = "2006–2025", xVals = toSeq(2006 .. 2025).mapIt(it.float), referenceX = @["2013"],
       options = nanoplotOptions(dataLineStrokeColor = tint("--secondary"),
         dataPointRadius = 0, dataAreaFillColor = tint("--secondary-soft"))
