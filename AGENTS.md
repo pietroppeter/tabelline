@@ -33,8 +33,9 @@ working rules that are easy to miss.
   `colsUnits`, `textCaseMatch`, `summaryRows`, `grandSummaryRows`, `summaryColumns`) as an
   indented block, one pair per line (`summaryRows:` then `total: agg.sum`). A new verb whose first
   argument is a list of pairs goes in `pairVerbs` (`src/tabelline.nim`).
-- `nim r tests/all.nim` runs the tests. Dependencies are managed with atlas: nimib is the `docs`
-  feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/` (not committed) and
+- `nim r tests/all.nim` runs the tests; `nim js -d:nodejs -r tests/js.nim` runs them under
+  JavaScript (tabelline also runs in a web page, from tabelline-polyglot: keep it working).
+  Dependencies are managed with atlas: nimib is the `docs` feature of `tabelline.nimble`, pinned in `atlas.lock`, cloned into `deps/` (not committed) and
   put on the path by `nim.cfg` (committed, written by atlas).
 
 ## Setup

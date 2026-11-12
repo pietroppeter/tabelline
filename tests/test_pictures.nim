@@ -36,25 +36,33 @@ suite "icons":
     expect ValueError: discard tabella(d).fmtIcon("icon")
 
 suite "images":
-  let dir = getTempDir() / "tabelline-images"
-  createDir(dir)
-  writeFile(dir / "dot.svg", """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><circle cx="1" cy="1" r="1"/></svg>""")
-  test "a file is inlined as a data URL":
-    check imageDataUrl(dir / "dot.svg").startsWith("data:image/svg+xml;base64,PHN2Zy")
-    expect ValueError: discard imageDataUrl(dir / "none.png")
-    expect ValueError: discard imageDataUrl(dir / "dot.txt")
-  test "fmtImage: path, pattern, size, alt; addresses left as they are":
-    let d = tableData:
-      pic: ["dot", "dot, dot"]
-    let t = tabella(d):
-      fmtImage "pic", path = dir, filePattern = "{x}.svg", height = "3em", alt = "a {x}"
-    let html = t.toHtml
-    check html.count("<img src=\"data:image/svg+xml;base64,") == 3
-    check "alt=\"a dot\"" in html and "height:3em" in html
-    check "dot, dot" in t.toText
-    let u = tabella(d).fmtImage("pic", path = "https://example.org/img", filePattern = "{x}.png").toHtml
-    check "src=\"https://example.org/img/dot.png\"" in u and "height:2em" in u
-    expect ValueError: discard tabella(d).fmtImage("pic", path = dir)
+  when defined(js):
+    test "under JavaScript a file name fails, an address works":
+      expect ValueError: discard imageDataUrl("dot.svg")
+      let d = tableData:
+        pic: ["dot"]
+      let u = tabella(d).fmtImage("pic", path = "https://example.org/img", filePattern = "{x}.png").toHtml
+      check "src=\"https://example.org/img/dot.png\"" in u
+  else:
+    let dir = getTempDir() / "tabelline-images"
+    createDir(dir)
+    writeFile(dir / "dot.svg", """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2"><circle cx="1" cy="1" r="1"/></svg>""")
+    test "a file is inlined as a data URL":
+      check imageDataUrl(dir / "dot.svg").startsWith("data:image/svg+xml;base64,PHN2Zy")
+      expect ValueError: discard imageDataUrl(dir / "none.png")
+      expect ValueError: discard imageDataUrl(dir / "dot.txt")
+    test "fmtImage: path, pattern, size, alt; addresses left as they are":
+      let d = tableData:
+        pic: ["dot", "dot, dot"]
+      let t = tabella(d):
+        fmtImage "pic", path = dir, filePattern = "{x}.svg", height = "3em", alt = "a {x}"
+      let html = t.toHtml
+      check html.count("<img src=\"data:image/svg+xml;base64,") == 3
+      check "alt=\"a dot\"" in html and "height:3em" in html
+      check "dot, dot" in t.toText
+      let u = tabella(d).fmtImage("pic", path = "https://example.org/img", filePattern = "{x}.png").toHtml
+      check "src=\"https://example.org/img/dot.png\"" in u and "height:2em" in u
+      expect ValueError: discard tabella(d).fmtImage("pic", path = dir)
 
 suite "nanoplots":
   test "values from a cell":

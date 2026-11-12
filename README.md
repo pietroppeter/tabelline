@@ -191,7 +191,7 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - `src/tabelline/build.nim`: the build step all renderers share. `src/tabelline/extract.nim`: the built table as data (`extractCells`, `extractBody`, `extractSummary`).
 - `src/tabelline/render_html.nim`, `render_text.nim`: HTML (scoped CSS), text and Markdown.
 - `src/tabelline/nimib.nim`: the `nbTable` block. `src/tabelline/nanuq.nim`: `tabella(df)` for a nanuq DataFrame (`tests/test_nanuq.nim`, not in `tests/all.nim`). `src/tabelline/datasets.nim`: `planets`, `exibble`, `tavolaPitagorica`, `isole`, `citta` (the last two from `src/tabelline/data/`).
-- `tests/`: `nim r tests/all.nim`. `tools/specexamples.nim`: runs the examples of the specs.
+- `tests/`: `nim r tests/all.nim`; `nim js -d:nodejs -r tests/js.nim`, the same under JavaScript; `tests/lean.nim`, a build with `-d:tabellineIcons=false -d:tabellineDatasets=false`. `tools/specexamples.nim`: runs the examples of the specs.
 - `docs/`: the pages, as nimib notebooks (`docs/all.nim` builds them all; `docs/theme.nim` is the style of both looks, from the tokens, and `docs/blocks.nim` the blocks every page is made of; `docs/review.nim` is the review mode, blocks and styles in one module that can move to nimib).
 - `book/`: the tabelline book, a [nimibook](https://github.com/pietroppeter/nimibook) (see below).
 - `openspec/`: specs and open changes; `openspec/config.yaml` has the rules. `BACKLOG.md`, `CHANGELOG.md`, `AGENTS.md`.
@@ -201,6 +201,7 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 ```sh
 sh tools/setup.sh                # once: what is missing (Nim, atlas, libpcre3) + deps from atlas.lock
 nim r tests/all.nim              # tests
+nim js -d:nodejs -r tests/js.nim # the tests under JavaScript, in Node
 nim r tools/specexamples.nim     # the examples of the specs
 nim r -d:release docs/all.nim    # every page, into docs/
 nim r book/bookbuild.nim         # the book, into docs/book/ (only the chapters that changed)

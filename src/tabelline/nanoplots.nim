@@ -229,7 +229,7 @@ const
 func n(x: float): string =
   ## A number in SVG, with at most two decimals.
   if x.isNaN: return "0"
-  result = formatFloat(round(x, 2), ffDecimal, 2)
+  result = fixed(round(x, 2), 2)
   result = result.strip(leading = false, chars = {'0'}).strip(leading = false, chars = {'.'})
   if result == "-0": result = "0"
 

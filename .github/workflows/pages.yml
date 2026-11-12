@@ -60,6 +60,16 @@ jobs:
       - name: Tests
         run: nim r tests/all.nim
 
+      # tabelline also runs as JavaScript (tabelline-polyglot's Gleam package, in a web page): the
+      # same tests, compiled by nim js and run in Node, and a build without icons and big datasets
+      - name: Tests under JavaScript
+        run: nim js -d:nodejs -r tests/js.nim
+
+      - name: A lean build, in C and in JavaScript
+        run: |
+          nim r -d:tabellineIcons=false -d:tabellineDatasets=false tests/lean.nim
+          nim js -d:nodejs -r -d:tabellineIcons=false -d:tabellineDatasets=false tests/lean.nim
+
       - name: Tests of tabelline/nanuq
         run: nim r -d:nanuqLib=prebuilt tests/test_nanuq.nim
 

@@ -24,6 +24,27 @@ func escapeHtml*(s: string): string =
 
 # ---------------------------------------------------------------------------- value formatting
 
+when defined(js):
+  func toFixedJs(x: float, digits: int): cstring {.importjs: "#.toFixed(#)".}
+
+func fixed*(x: float, decimals: int): string =
+  ## `x` with `decimals` digits after the point, as `formatFloat(x, ffDecimal, decimals)` writes it
+  ## in C. Under JavaScript, `toFixed` rounds a tie (2.25 to one decimal) up, where C rounds it to
+  ## the even digit: the exact digits of the number find the ties, so both backends write "2.2".
+  when defined(js):
+    let d = max(decimals, 0)
+    result = $toFixedJs(x, d)
+    if d + 30 > 100: return
+    let exact = $toFixedJs(x, d + 30)       # the double's exact digits (or enough of them)
+    let cut = exact.len - 30
+    if exact[cut] != '5' or exact[cut + 1 .. ^1].anyIt(it != '0'): return
+    var last = cut - 1
+    if exact[last] == '.': dec last
+    if (ord(exact[last]) - ord('0')) mod 2 == 0:  # a tie after an even digit: keep it
+      result = exact[0 ..< (if d == 0: cut - 1 else: cut)]
+  else:
+    formatFloat(x, ffDecimal, decimals)
+
 func groupDigits(intPart, sep: string): string =
   if sep.len == 0 or intPart.len <= 3: return intPart
   let first = intPart.len mod 3
@@ -41,7 +62,7 @@ func formatNumber*(x: float, decimals = 2, useSeps = true, dropTrailingZeros = f
   if x.isNaN: return "NaN"
   if x.classify == fcInf: return "∞"
   if x.classify == fcNegInf: return "−∞"
-  let s = formatFloat(abs(x), ffDecimal, decimals)
+  let s = fixed(abs(x), decimals)
   var (ip, fp) = (s, "")
   let dot = s.find('.')
   if dot >= 0: (ip, fp) = (s[0 ..< dot], s[dot + 1 .. ^1])
