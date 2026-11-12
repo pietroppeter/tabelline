@@ -186,8 +186,7 @@ notes of the week go under the table.
 
 nbCode:
   var t = step4
-    .tabHeader(md("Plan and progress at " & today.format("d MMMM")),
-               "Weeks " & $firstWeek & " to " & $lastWeek & " of " & $year & ", by stream")
+    .tabHeader(md("Plan and progress at " & today.format("d MMMM")))
   for m, ws in months:
     t = t.tabStyle(style.borders({sLeft}, color = "#9A9A9A", weight = "1px"),
                    loc.body(cols(ws[0])))
@@ -240,7 +239,7 @@ nbCode:
     let i = rowOf(m.activity)
     let fill = colorOf(plan[i].stream, m.week)
     t.fmt(cols(wk(m.week)), (v: Value) => text, rows = i)
-     .tabStyle(style.text(color = idealTextColor(fill), weight = "bold", size = "10px"),
+     .tabStyle(style.text(color = idealTextColor(fill), weight = "bold", size = "80%"),
                loc.body(cols(wk(m.week)), rows = i))
 
   var key = "**Milestones** ◆ "
@@ -268,11 +267,26 @@ nbText: """
 The same table goes to PowerPoint as a native table, which can be edited there: one call writes
 a .pptx file with one slide. The fills, the borders (the dashed one too), the spanners, the
 groups and the notes come through.
+
+A slide is read from across a room, so its table needs bigger text than a page: the body at
+18px (13.5 points on the slide, against 13px on the page), the notes as big as the body, the
+weeks' numbers a little smaller, wider week columns so their numbers do not wrap, and each row
+taller to hold them. A slide is 540 points high, and these sizes are about
+as big as the chart can be and still fit: the PowerPoint writer makes a wide table smaller to fit
+the slide, but not a tall one.
 """
 
 nbCode:
+  let slide = t
+    .tabOptions(tableFontSize = "18px", columnLabelsFontSize = "70%",
+                sourceNotesFontSize = "100%", headingTitleFontSize = "130%")
+    .tabStyle(style.css("height: 24px; line-height: 24px"),
+              loc.stub(), loc.body(), loc.rowGroups())
+    .colsWidth(weekCols.mapIt((it, "26px")))
   createDir here / "out"
-  t.savePptx(here / "out" / "gantt.pptx")
+  slide.savePptx(here / "out" / "gantt.pptx")
+
+nbTable slide
 
 nbText: """
 ## After Clark, 1922
