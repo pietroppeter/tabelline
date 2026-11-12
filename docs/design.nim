@@ -45,7 +45,7 @@ elsewhere.
 - **Minoan**, after the frescoes of Crete and Thera and the vases of Athens, for the islands of
   the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a meander
   over every table. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
-  was designed in the devlog post [Designing a Mediterranean look](devlog/mediterranean/).
+  was designed in the devlog post [Designing a Mediterranean look](../devlog/mediterranean/).
 
 Munari is the page itself: its rules need no script, so a page without JavaScript (or before
 its script runs) is Munari. The quaderno is the other look, kept because it shows that a page and
