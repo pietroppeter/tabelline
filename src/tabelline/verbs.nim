@@ -1153,7 +1153,7 @@ proc colsLabelRotate*(t: sink Tabella, columns: ColSel = everything(), dir = "si
   let css = case dir
             of "sideways-lr": "writing-mode: vertical-rl; transform: rotate(180deg); text-align: left; vertical-align: middle"
             of "sideways-rl": "writing-mode: vertical-rl; text-align: left; vertical-align: middle"
-            of "slanted": "writing-mode: vertical-rl; transform: translateX(25%) rotate(225deg); transform-origin: 50% 50%; text-align: left; vertical-align: bottom; white-space: nowrap"
+            of "slanted": "writing-mode: vertical-rl; transform: translate(30%, -0.4em) rotate(225deg); transform-origin: 50% 50%; text-align: left; vertical-align: bottom; white-space: nowrap; background: transparent"
             else: raise newException(ValueError, "dir is \"sideways-lr\", \"sideways-rl\" or \"slanted\", not " & dir.escape)
   result = t
   let names = columns.resolve(result.data).filterIt(it notin result.stubColumns and it != result.groupnameCol)
