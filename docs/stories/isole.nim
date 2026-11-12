@@ -1,4 +1,4 @@
-## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily to rocks that only just have a name: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and Natural Earth, gathered with nanuq; every table made with tabelline 0.2.
+## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily to rocks that only just have a name: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and OpenStreetMap, gathered with nanuq; every table made with tabelline 0.2.
 ## A story, kept up to date (first written on 11 November 2026, with tabelline 0.2). It shows
 ## what 0.2 added that the FOSDEM story does not use, and the new shape nanoplot. The data is in
 ## docs/stories/data/isole/, made by its src/ (fetch.nim, extract.nim, process.nim with nanuq);
@@ -111,14 +111,14 @@ nbShowCode:
       shape: ""
       km2: "area, {{km^2}}"
       elevation: "highest, {{m}}"
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean; Wikidata; the outline from Natural Earth."
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean; Wikidata; the outline © OpenStreetMap contributors (ODbL)."
   nbTable t
 
 nbNote("""
 The outline is a nanoplot of a new kind, `plotType = "shape"`: the cell holds a record of `x` and
 `y` (here kilometres east and north of the island's middle), and the shape joins the points in
-their order, closes them and fills them, at the same scale across and up. Natural Earth's
-coastline has 356 points around Sicily; nanuq's step kept 120. The units in the labels,
+their order, closes them and fills them, at the same scale across and up. OpenStreetMap's
+coastline has 56,300 points around Sicily; the data's extract step kept 120. The units in the labels,
 `{{km^2}}` and `{{m}}`, are gt's units syntax, new in 0.2: "km²" in HTML and in text.
 """, nkCode)
 
@@ -161,7 +161,7 @@ nbShowCode:
       missingText = ""
       fmtInteger()
     tabFootnote "Wikipedia's list gives no population for Cyprus, divided since 1974.", loc.body(cols("population"), 2)
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean (area, population); outlines: Natural Earth."
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean (area, population); outlines © OpenStreetMap contributors (ODbL)."
   nbTable t
 
 nbNote("""
@@ -289,9 +289,8 @@ nbShowCode:
 
 nbNote("""
 `tabellaPreview(data, topN, bottomN)` makes a table of the first and last rows of a big one,
-with the place of each row and a line for the rows left out between them. The smallest islands
-have no outline: Natural Earth draws islands down to a few hectares, and 23 of the 195 are
-smaller than that, or are drawn joined to a neighbour.
+with the place of each row and a line for the rows left out between them. Three islands have no
+outline: Wikidata has no place for them, so there is no point to find their coast from.
 """, nkCode)
 
 nbText: """
@@ -324,7 +323,7 @@ nbShowCode:
     subMissing shapes, missingText = ""
     tabOptions(columnLabelsHidden = true, tableFontSize = "9px", dataRowPadding = "4px",
                dataRowPaddingHorizontal = "1px")
-    tabSourceNote "Wikipedia, List of islands in the Mediterranean, by area. Outlines: Natural Earth; an island without one is too small for it, or drawn joined to a neighbour."
+    tabSourceNote "Wikipedia, List of islands in the Mediterranean, by area. Outlines © OpenStreetMap contributors (ODbL); the three without one have no place on Wikidata."
   for (row, k) in mainCells:
     t = t.fmtNanoplot("s" & $k, rows = row, plotType = "shape", plotHeight = "2.2em", options = pink)
   for k in 0 ..< across:
@@ -804,7 +803,7 @@ own: [The islands' data, made with nanuq](../isole-data/).
 
 **1. The sources** are open: Wikipedia's *List of islands in the Mediterranean* (the 195 islands,
 their area, population and main town), Wikidata (each island's place and highest point, World
-Heritage sites, airports and their passengers), the outlines of Natural Earth (public domain),
+Heritage sites, airports and their passengers), the outlines of OpenStreetMap (© OpenStreetMap contributors, ODbL),
 the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's regional figures
 (Eurostat's own site could not be read where this was made).
 
@@ -815,7 +814,7 @@ on it and reads the wikitext, and `process.nim`, written with
 them into the CSV files this page reads. Three small tables are written by hand: the regions,
 the history and the highlights.
 
-**3. The shapes** are Natural Earth's coastlines at 1:10 million: for each island, the polygon
+**3. The shapes** are OpenStreetMap's land polygons, which follow the coast to a few metres: for each island, the polygon
 that holds its point on Wikidata, in kilometres from its middle, simplified to at most 120
 points with the [Douglas–Peucker algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm):
 it joins the two ends of a coastline with a straight line, keeps the point farthest from it, and

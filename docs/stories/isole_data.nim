@@ -1,4 +1,4 @@
-## story: 0.2 | The islands' data, made with nanuq | 195 islands from a Wikipedia list, their outlines from Natural Earth, and what Wikidata and Wikipedia know about them, joined into tidy tables with nanuq, Polars for Nim. The three steps, the nanuq code, the checks the tables pass, and what nanuq did well.
+## story: 0.2 | The islands' data, made with nanuq | 195 islands from a Wikipedia list, their outlines from OpenStreetMap, and what Wikidata and Wikipedia know about them, joined into tidy tables with nanuq, Polars for Nim. The three steps, the nanuq code, the checks the tables pass, and what nanuq did well.
 ## A story, kept up to date (first written on 11 November 2026): how the data of the islands
 ## story (docs/stories/data/isole/) was made, told in tables made with tabelline 0.2. It reads the
 ## committed CSVs with tabelline's readCsv and quotes the nanuq code of src/process.nim as text;
@@ -39,7 +39,7 @@ proc islandRow(title: Value): int =
     if islands["title", i] == title: return i
 
 nbTitle "A story · tabelline 0.2", "The islands' data, made with nanuq", """
-195 islands from a Wikipedia list, their outlines from Natural Earth, and what Wikidata and
+195 islands from a Wikipedia list, their outlines from OpenStreetMap, and what Wikidata and
 Wikipedia know about them, joined into a few tidy tables with nanuq, Polars for Nim.
 """
 
@@ -65,7 +65,7 @@ nbShowCode:
   let rows = @[
     (source: "Wikipedia, the list", says: "area " & insertSep($main["km2", m].toFloat.int) & " km², population " & insertSep($islands["population", i].toFloat.int) & ", main town " & $islands["town", i]),
     (source: "Wikidata", says: "item " & $islands["wikidata", i] & ", at " & formatFloat(islands["lat", i].toFloat, ffDecimal, 2) & " N " & formatFloat(islands["lon", i].toFloat, ffDecimal, 2) & " E, up to " & insertSep($islands["elevation", i].toFloat.int) & " m"),
-    (source: "Natural Earth", says: "an outline of " & $islands["points", i] & " points (simplified), " & insertSep($islands["outline_km2", i].toFloat.int) & " km², " & $islands["coast_km", i].toFloat.int & " km of coast"),
+    (source: "OpenStreetMap", says: "an outline of " & $islands["points", i] & " points (simplified), " & insertSep($islands["outline_km2", i].toFloat.int) & " km², " & $islands["coast_km", i].toFloat.int & " km of coast"),
     (source: "Wikipedia, the rest", says: "Palermo's weather box, the region's GDP and unemployment")]
   let t = tabella(rows, rownameCol = "source"):
     optCssTheme()
@@ -76,8 +76,8 @@ nbShowCode:
 
 nbText: """
 They meet on names. The list names each island by a link to its page; Wikidata knows the page
-(and not its redirects, so 24 links are followed first to the page they lead to); Natural Earth
-has no names, only polygons, and an island gets the polygon that holds its point on Wikidata.
+(and not its redirects, so 24 links are followed first to the page they lead to); OpenStreetMap's
+land polygons have no names, only polygons, and an island gets the polygon that holds its point on Wikidata.
 
 ## Three steps, one of them nanuq
 
@@ -86,7 +86,7 @@ The data goes from the web to the story's tables in three steps, as the FOSDEM d
 
 nbShowCode:
   let steps = @[
-    (step: "1. fetch", tool: "Nim, standard library", does: "downloads the list and about 70 other Wikipedia pages, 6 Wikidata queries and Natural Earth's coastlines, about 15 MB"),
+    (step: "1. fetch", tool: "Nim, standard library", does: "downloads the list and about 70 other Wikipedia pages, 6 Wikidata queries and OpenStreetMap's land polygons, about 900 MB (unzipped to 1.3 GB, not committed)"),
     (step: "2. extract", tool: "Nim, standard library", does: "finds each island's outline and what is on it, reads the weather boxes and the regions' tables"),
     (step: "3. process", tool: "Nim with nanuq", does: "joins, cleans and counts: the eight tables the story reads")]
   let t = tabella(steps, rownameCol = "step"):
@@ -110,11 +110,18 @@ for f in ["fetch.nim", "extract.nim", "process.nim", "common.nim"]:
 nbText: """
 ## Outlines
 
-Natural Earth's coastlines at 1:10 million are public domain, and draw islands down to a few
-hectares. Around the Mediterranean they have 357 polygons. An island takes the one that holds
-its point on Wikidata; when the point is in a bay or just off the coast, the closest polygon
-within 5 km whose area is not far from the list's. Then each outline is simplified to at most
-120 points and written in kilometres from its middle, so a shape keeps its proportions.
+OpenStreetMap's land polygons (© OpenStreetMap contributors, under the
+[ODbL](https://opendatacommons.org/licenses/odbl/)) follow the coast to a few metres, and are
+rebuilt every day by [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/data/land-polygons.html)
+as one shapefile of the world. `extract.nim` reads it with the standard library (`memfiles`, the
+file's boxes first, so only the polygons around the Mediterranean are read) and finds about 25,000
+of them. An island takes the one that holds its point on Wikidata, when its area is not far from
+the list's; else the closest such polygon within 5 km (a point can fall in a bay, just off the
+coast, or on an islet beside the island, as Ilovik's does). Then each outline is simplified to at
+most 120 points and written in kilometres from its middle, so a shape keeps its proportions.
+The outlines first came from Natural Earth at 1:10 million, which draws a small island with a
+couple of dozen points and left 23 islands without one: compared side by side, OpenStreetMap
+was much better for every island under about 50 km².
 """
 
 nbShowCode:
