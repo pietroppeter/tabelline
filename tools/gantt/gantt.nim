@@ -14,7 +14,7 @@ nb.useTabelline(nome = "tabelline", title = "A Gantt chart in a table")
 
 nbTitolo "A prototype · tabelline", "A Gantt chart in a table", """
 A project plan, in weeks, made with tabelline: row groups for the streams, a spanner for each
-month, a filled cell for each week of an activity, a dashed line for today, milestones and
+month, a filled cell for each week of an activity, a dotted box around today's week, milestones and
 deliverables, and the notes of the week under it. The project is fictional: a garden on the Moon. The page goes from the data to
 the chart in six steps, with the code of each and the table it makes.
 """
@@ -180,7 +180,7 @@ the bar. `loc.rowGroups(s)` is the label of a group: the stream's name, in its c
 nbText: """
 ## Today and the notes
 
-Two last touches: a solid line starts each month and a dashed line marks today's week. Then the
+Two last touches: a solid line starts each month and a dotted box marks today's week. Then the
 notes of the week go under the table.
 """
 
@@ -192,8 +192,12 @@ nbCode:
                    loc.body(cols(ws[0])))
   let now = cols(wk(todayWeek))
   t = t
-    .tabStyle(style.borders({sLeft}, color = "#1A1A1A", style = "dashed", weight = "2px"),
+    .tabStyle(style.borders({sLeft, sRight}, color = "#1A1A1A", style = "dotted", weight = "2px"),
               loc.body(now), loc.columnLabels(now))
+    .tabStyle(style.borders({sTop}, color = "#1A1A1A", style = "dotted", weight = "2px"),
+              loc.columnLabels(now))
+    .tabStyle(style.borders({sBottom}, color = "#1A1A1A", style = "dotted", weight = "2px"),
+              loc.body(now, rows = plan.high))
     .tabStyle(style.text(color = "#1A1A1A", weight = "bold"), loc.columnLabels(now))
 
   t = t
@@ -206,8 +210,10 @@ nbCode:
 nbTable t
 
 nbNota("""
-The lines are borders on the left of a column: `style.borders({sLeft}, ...)`, solid for a
-month, dashed for today, on the body and on today's label. `tabSourceNote` adds a note under the
+The lines are borders of cells: `style.borders({sLeft}, ...)` on the first week of a month
+draws its solid line. Today's box is four dotted borders: left and right on every cell of the
+week, top on its label, bottom on the last row. A group label is one cell across the whole row,
+so the box has a gap at each group. `tabSourceNote` adds a note under the
 table; `md` lets it use Markdown.
 """, nkCode)
 
@@ -265,7 +271,7 @@ nbText: """
 ## On a slide
 
 The same table goes to PowerPoint as a native table, which can be edited there: one call writes
-a .pptx file with one slide. The fills, the borders (the dashed one too), the spanners, the
+a .pptx file with one slide. The fills, the borders (the dotted ones too), the spanners, the
 groups and the notes come through.
 
 A slide is read from across a room, so its table needs bigger text than a page: the body at
@@ -408,7 +414,7 @@ each:
   ([on archive.org](https://archive.org/search?query=%22gantt+chart%22+wallace+clark)). Clark
   draws the work planned and the work done in the same row, and marks today at the top of the
   chart: here, a full colour for the weeks done, a lighter one for the weeks to come, and the
-  dashed line.
+  box around today's week.
 - **Edward Tufte's forum thread *Project Management Graphics (or Gantt Charts)*.** Many
   redesigns of real plans, all asking for less grid and more data: here, no rule between weeks,
   a thin one between months, and no numbers in the cells.
