@@ -270,7 +270,9 @@ comment that is open sits in a comment box at the top, where the phone's keyboar
 A commented text is marked in the secondary's soft colour with a line under it, a note set
 apart; the one open is in the secondary itself. In the quaderno, marks are the highlighter,
 underlined in red pen. `nbInReview` holds blocks shown only while reviewing; `nbVersion()` moves the version line
-where it is called. `nbDrawing` puts a drawing made with diagrammari in the page's colours,
+where it is called. `nbDrawing` puts a drawing made with diagrammari in the page's colours, and so a map
+made from a story's data (an SVG with class `map`: the sea in the surface, the land a neutral, the
+main places in the secondary, the others a dot of the primary, names in ink and seas in muted italics),
 and `nbFoldCode` folds long code (see *Source files*). The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
 when the page has them.
 """

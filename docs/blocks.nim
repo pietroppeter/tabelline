@@ -625,8 +625,9 @@ proc addDrawing*(nb: var Nb, svgFile, alt: string) =
   nb.add newNbDrawing(svg = readFile(svgFile).strip, alt = alt)
 
 template nbDrawing*(tsvg, talt: string) =
-  ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
-  ## in the page's colours, with a caption in Markdown.
+  ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari, or a map made from a
+  ## story's data, an SVG with class `map`), as an SVG file: inlined, in the page's colours, with
+  ## a caption in Markdown.
   nb.addDrawing(tsvg, talt)
 
 # ------------------------------------------------------------------------------------ a fold

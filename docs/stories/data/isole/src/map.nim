@@ -6,8 +6,9 @@
 ## The land is OpenStreetMap's (the land polygons fetch.nim downloads, © OpenStreetMap
 ## contributors, ODbL), cut to the box of each map and simplified; the islands are islands.csv's
 ## points, the main ones filled and named, the others a dot. Where each name of a sea or an
-## island goes was written by Claude, the AI that wrote the story. Colours are the page's
-## tokens, so the drawings change with the look.
+## island goes was written by Claude, the AI that wrote the story. The drawing names its parts
+## (sea, land, main, dot, sea-name, name) and the page's theme colours them (`.map` in
+## docs/theme.nim), so the maps change with the look.
 import std/[math, strutils, strformat, sequtils, parsecsv, memfiles, os]
 
 let raw = paramStr(1)
@@ -141,16 +142,16 @@ proc draw(file: string, w, e, s, n: float) =
   for r in rings:
     if r.pts.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
     if r.main: mainLand.add r.pts.path else: land.add r.pts.path
-  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="27" style="font-family:inherit">
-<rect width="100%" height="100%" style="fill:var(--surface)"/>
-<path style="fill:var(--neutral-2);stroke:var(--neutral-4);stroke-width:1" d="{land}"/>
-<path style="fill:var(--secondary)" d="{mainLand}"/>
+  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="27">
+<rect class="sea" width="100%" height="100%"/>
+<path class="land" d="{land}"/>
+<path class="main" d="{mainLand}"/>
 """
   let inside = proc (i: Island): bool = i.lon in w .. e and i.lat in s .. n
   for i in islands:
     if i.main or not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
-    svg.add &"""<circle cx="{f x}" cy="{f y}" r="5" style="fill:var(--primary);stroke:var(--surface);stroke-width:1.5"/>""" & "\n"
+    svg.add &"""<circle cx="{f x}" cy="{f y}" r="5" class="dot"/>""" & "\n"
   for (name, lon, lat) in seas:
     if lon notin w .. e or lat notin s .. n: continue
     let (x, y) = xy((lon, lat))
@@ -158,12 +159,12 @@ proc draw(file: string, w, e, s, n: float) =
     let size = if name == "Sea of Marmara": 22 else: 27   # a small sea between islands
     for i, line in lines:
       let dy = (i.float - (lines.len - 1) / 2) * 32 + 9
-      svg.add &"""<text x="{f x}" y="{f y + dy}" text-anchor="middle" font-size="{size}" font-style="italic" letter-spacing="1.5" style="fill:var(--muted)">{line}</text>""" & "\n"
+      svg.add &"""<text x="{f x}" y="{f y + dy}" text-anchor="middle" font-size="{size}" class="sea-name">{line}</text>""" & "\n"
   for (name, dx, dy, anchor) in names:
     let i = islands.filterIt(it.name == name)[0]
     if not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
-    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" font-weight="600" style="fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round">{name}</text>""" & "\n"
+    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" class="name">{name}</text>""" & "\n"
   svg.add "</svg>\n"
   writeFile(output / file, svg)
   echo file, ": ", svg.len div 1024, " kB"

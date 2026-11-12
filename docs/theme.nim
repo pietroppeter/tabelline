@@ -301,6 +301,15 @@ body /* a drawing (nbDrawing): a Pele diagram in the page's colours */
 .disegno svg { display: block; max-width: 100%; height: auto; margin: 0 auto; --pele-bg: var(--paper); --pele-fg: var(--ink);
   --pele-muted: var(--muted); --pele-line: var(--ink); --pele-border: var(--ink); --pele-surface: var(--surface);
   --pele-surface-alt: var(--neutral-1); --pele-accent: var(--secondary); }
+/* a map (an SVG with class map, from a story's data): its parts in the page's colours */
+.disegno svg.map .sea { fill: var(--surface); }
+.disegno svg.map .land { fill: var(--neutral-2); stroke: var(--neutral-4); stroke-width: 1; }
+.disegno svg.map .main { fill: var(--secondary); }
+.disegno svg.map .dot { fill: var(--primary); stroke: var(--surface); stroke-width: 1.5; }
+.disegno svg.map text { font-family: inherit; }
+.disegno svg.map .sea-name { fill: var(--muted); font-style: italic; letter-spacing: 1.5px; }
+.disegno svg.map .name { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--surface);
+  stroke-width: 5px; stroke-linejoin: round; }
 .disegno figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
 body details.codice pre > code { font-size: 12.5px; }
 
