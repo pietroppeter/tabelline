@@ -416,8 +416,7 @@ nbText: """
 Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
 turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
 and pirates, places people left and places people came to. The powers that ruled each main island, a dot each, in the order they came, from the first
-peoples to the last empires, and the state each island is in today; the islands grouped by the
-rulers they share, from west to east:
+peoples to the last empires, and the state each island is in today; the islands from the largest:
 """
 
 const powers = [   # each column: the rulers of history.csv it stands for, and its age
@@ -448,12 +447,10 @@ nbShowCode:
     d = d.withColumn(label(power), proc (i: int): Value =
       toValue(if ($h["rulers", i]).split(';').anyIt(it in names): "●" else: ""))
   let byAge = proc (age: string): seq[string] = powers.filterIt(it[2] == age).mapIt(label(it[0]))
-  let t = tabella(d, rownameCol = "island", groupnameCol = "rule"):
+  let stripes = toSeq(0 ..< powers.len).filterIt(it mod 2 == 0).mapIt(label(powers[it][0]))
+  let t = tabella(d, rownameCol = "island"):
     optCssTheme()
-    rowGroupOrder ["Arabs and Normans", "Aragon and Spain", "Genoa, then France", "Venice and Austria",
-                   "Venice, then France and Britain", "Venice, then the Ottomans",
-                   "Genoa or the Knights, then the Ottomans"]
-    colsHide ["title", "page", "joined_how", "language", "rulers", "venice_from", "venice_to"]
+    colsHide ["title", "page", "joined_how", "language", "rulers", "venice_from", "venice_to", "rule"]
     colsMove ["today", "joined"], after = label(powers[^1][0])
     fmtMarkdown "island"
     colsMerge ["today", "joined"], pattern = "{1}<br>since&nbsp;{2}"
@@ -465,6 +462,7 @@ nbShowCode:
     tabStyle style.text(color = tint("--success-text")), loc.body(cols(byAge("ancient")))
     tabStyle style.text(color = tint("--secondary-text")), loc.body(cols(byAge("medieval")))
     tabStyle style.text(color = tint("--primary-text")), loc.body(cols(byAge("modern")))
+    tabStyle style.fill(tint("--shade")), loc.columnLabels(cols(stripes)), loc.body(cols(stripes))
     tabStyle style.text(size = "11px"), loc.body(cols("today"))
     tabOptions(tableFontSize = "13px", columnLabelsFontSize = "75%",
                dataRowPaddingHorizontal = "1px", columnLabelsPaddingHorizontal = "1px")
@@ -474,10 +472,9 @@ nbShowCode:
 nbNote("""
 One column for each power, a dot where it ruled: the dots are made before the table, a "●" or
 nothing, and `colsLabelRotate` turns the fifteen labels on their side so the columns stay as
-narrow as a dot (`label` keeps each one on a single line, with no-break spaces). The three `tabSpanner`s name the ages over them, and `tabStyle` colours each
-age's dots. `colsMerge` writes the state and the year in one cell, with the pattern
-`{1}<br>since&nbsp;{2}`, and the table is set a size smaller (`tabOptions`) to fit a phone. The islands are grouped by whose rule they share, a column of the data
-(`groupnameCol = "rule"`), from west to east (`rowGroupOrder`). Under each island's name, in
+narrow as a dot (`label` keeps each one on a single line, with no-break spaces). The three `tabSpanner`s name the ages over them, `tabStyle` colours each
+age's dots, and shades every other column, label and dots, so each label stays with its dots. `colsMerge` writes the state and the year in one cell, with the pattern
+`{1}<br>since&nbsp;{2}`, and the table is set a size smaller (`tabOptions`) to fit a phone. Under each island's name, in
 italics, its own language, beside the state's: the stub is Markdown (`fmtMarkdown`).
 """, nkCode)
 
