@@ -110,7 +110,21 @@ Claude gathered openly licensed pictures for each section, Pietro picked one, an
 credited under it; all of them, with the ones left out, are in
 [Photos of the Mediterranean, by the story](../isole-photos/).
 
+Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
+names, and the other 173 a dot in the colour of the circles.
 """
+
+nbDrawing data / "map-west.svg", "The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
+nbDrawing data / "map-east.svg", "The eastern Mediterranean, from the Ionian Sea to Cyprus"
+
+nbNote("""
+The maps are not tables: they are two drawings made with the data, by
+[map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
+from OpenStreetMap's coast and the islands' places on Wikidata. Where each name goes was
+written by Claude, the AI that wrote this story. Their colours are the page's, so they change
+with its look.
+""", nkCode)
+
 photoHeading "One island to start", "etna-plume", "Etna's plume"
 nbText: """
 
@@ -332,7 +346,7 @@ outline: Wikidata has no place for them, so there is no point to find their coas
 
 nbText: """
 And here they all are, in the order of the list, each at its own scale and with its place: the
-22 main islands in blue, the others in pink. Malta, the island of a country, is 34th.
+22 main islands in blue, the others in the colour of the circles. Malta, the island of a country, is 34th.
 """
 
 nbShowCode:
@@ -429,43 +443,70 @@ nbText: """
 
 Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
 turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
-and pirates, places people left and places people came to. The rulers of each main island, in order, broadly, from the first Greeks or Phoenicians to
-the state they joined last, the islands grouped by the rulers they share, from west to east:
+and pirates, places people left and places people came to. The powers that ruled each main island, a dot each, in the order they came, from the first
+peoples to the last empires, and the state each island is in today; the islands grouped by the
+rulers they share, from west to east:
 """
+
+const powers = [   # each column: the rulers of history.csv it stands for, and its age
+  ("first peoples", @["Nuragic", "Talaiotic", "Minoans", "Mycenaeans", "Cycladic", "Illyrians", "Temple builders"], "ancient"),
+  ("Greeks", @["Greeks", "Greeks and Phoenicians", "Greeks and Etruscans", "Athens", "Ptolemies"], "ancient"),
+  ("Phoenicians, Carthage", @["Phoenicians", "Carthage", "Greeks and Phoenicians"], "ancient"),
+  ("Rome", @["Rome"], "ancient"),
+  ("Byzantium", @["Byzantium"], "medieval"),
+  ("Arabs", @["Arabs", "Moors", "Hafsids"], "medieval"),
+  ("Normans, Franks", @["Normans", "Angevins", "Lusignans"], "medieval"),
+  ("Venice", @["Venice", "Duchy of the Archipelago"], "medieval"),
+  ("Genoa, Pisa", @["Genoa", "Pisa"], "medieval"),
+  ("Aragon, Spain", @["Aragon", "Aragon and Spain", "Bourbons"], "modern"),
+  ("Knights", @["Knights Hospitaller"], "modern"),
+  ("Ottomans", @["Ottomans"], "modern"),
+  ("France", @["France"], "modern"),
+  ("Britain", @["Britain"], "modern"),
+  ("Hungary, Austria", @["Croatia and Hungary", "Frankopans", "Austria"], "modern")]
 
 nbShowCode:
   let h = story("history.csv")
-  let d = h.withColumn("island", proc (i: int): Value =
-              let lang = if h["language", i].isNull: "" else: "  \n*" & $h["language", i] & "*"
-              toValue($main["island", mainRow($h["title", i])] & lang))
-           .withColumn("rulers", proc (i: int): Value = toValue(($h["rulers", i]).split(';')))
+  let label = proc (s: string): string = s.replace(" ", "\u00A0")   # one line, turned on its side
+  var d = h.withColumn("island", proc (i: int): Value =
+    let lang = if h["language", i].isNull: "" else: "  \n*" & $h["language", i] & "*"
+    toValue($main["island", mainRow($h["title", i])] & lang))
+  d = d.withColumn("today", proc (i: int): Value = toValue(($h["rulers", i]).split(';')[^1]))
+  for (power, names, age) in powers:
+    d = d.withColumn(label(power), proc (i: int): Value =
+      toValue(if ($h["rulers", i]).split(';').anyIt(it in names): "●" else: ""))
+  let byAge = proc (age: string): seq[string] = powers.filterIt(it[2] == age).mapIt(label(it[0]))
   let t = tabella(d, rownameCol = "island", groupnameCol = "rule"):
     optCssTheme()
     rowGroupOrder ["Arabs and Normans", "Aragon and Spain", "Genoa, then France", "Venice and Austria",
                    "Venice, then France and Britain", "Venice, then the Ottomans",
                    "Genoa or the Knights, then the Ottomans"]
-    colsHide ["title", "page", "joined_how", "language"]
+    colsHide ["title", "page", "joined_how", "language", "rulers", "venice_from", "venice_to"]
+    colsMove ["today", "joined"], after = label(powers[^1][0])
     fmtMarkdown "island"
-    colsMergeRange "venice_from", "venice_to", sep = "–"
-    subMissing ["venice_from"], missingText = ""
-    colsLabel:
-      joined: "since"
-      rulers: "who ruled it"
-      venice_from: "Venice"
-    tabStyle style.text(size = "12px"), loc.body(cols(["rulers", "venice_from"]))
-    colsWidth:
-      rulers: "58%"
-    tabStyle style.text(color = tint("--primary-text")), loc.body(cols("venice_from"))
-    tabSourceNote "Each island's history on Wikipedia, read and summed up by Claude, the AI that wrote this story: a line, not the whole story."
+    colsMerge ["today", "joined"], pattern = "{1}<br>since&nbsp;{2}"
+    colsLabelRotate powers.mapIt(label(it[0]))
+    colsAlign alCenter, powers.mapIt(label(it[0]))
+    tabSpanner "ancient", byAge("ancient")
+    tabSpanner "middle ages", byAge("medieval")
+    tabSpanner "modern", byAge("modern")
+    tabStyle style.text(color = tint("--success-text")), loc.body(cols(byAge("ancient")))
+    tabStyle style.text(color = tint("--secondary-text")), loc.body(cols(byAge("medieval")))
+    tabStyle style.text(color = tint("--primary-text")), loc.body(cols(byAge("modern")))
+    tabStyle style.text(size = "11px"), loc.body(cols("today"))
+    tabOptions(tableFontSize = "13px", columnLabelsFontSize = "75%",
+               dataRowPaddingHorizontal = "1px", columnLabelsPaddingHorizontal = "1px")
+    tabSourceNote "Each island's history on Wikipedia, read and summed up by Claude, the AI that wrote this story: a dot, not the whole story."
   nbTable t
 
 nbNote("""
-The rulers are a list in one cell (`@["Greeks", "Rome", ...]`, a list value, new in 0.2),
-written with commas. The islands are grouped by whose rule they share, a column of the data
-(`groupnameCol = "rule"`), in an order from west to east (`rowGroupOrder`). `colsMergeRange` puts the first and last year under Venice in one column:
-nine of the 22 were Venetian for a while, Corfu, Cephalonia and Zakynthos until Venice itself
-fell, in 1797. Under each island's name, in italics, its own language, beside the state's: the
-stub is Markdown (`fmtMarkdown`), a line break and an emphasis.
+One column for each power, a dot where it ruled: the dots are made before the table, a "●" or
+nothing, and `colsLabelRotate` turns the fifteen labels on their side so the columns stay as
+narrow as a dot (`label` keeps each one on a single line, with no-break spaces). The three `tabSpanner`s name the ages over them, and `tabStyle` colours each
+age's dots. `colsMerge` writes the state and the year in one cell, with the pattern
+`{1}<br>since&nbsp;{2}`, and the table is set a size smaller (`tabOptions`) to fit a phone. The islands are grouped by whose rule they share, a column of the data
+(`groupnameCol = "rule"`), from west to east (`rowGroupOrder`). Under each island's name, in
+italics, its own language, beside the state's: the stub is Markdown (`fmtMarkdown`).
 """, nkCode)
 
 nbText: """
