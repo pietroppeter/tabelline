@@ -562,7 +562,7 @@ nbShowCode:
       mean: agg.mean
       sd: agg.std
       columns = years
-    colsNanoplot years, autoscale = true, plotHeight = "1em", newColName = "trend",
+    colsNanoplot years, autoscale = true, plotHeight = "1.6em", newColName = "trend",
       newColLabel = "2006–2025", xVals = toSeq(2006 .. 2025).mapIt(it.float), referenceX = @["2013"],
       options = nanoplotOptions(dataLineStrokeColor = tint("--secondary"),
         dataPointRadius = 0, dataAreaFillColor = tint("--secondary-soft"))
@@ -575,7 +575,8 @@ nbShowCode:
     colsLabel:
       mean: "mean ± sd"
       y2025: "2025"
-    tabStyleBody style.fill(tint("--shade")) & style.text(weight = "bold"), values = ["All regions (median)"], targets = "row"
+    let median = where(it["region"] == "All regions (median)")
+    tabStyle style.fill(tint("--neutral-1")) & style.text(weight = "bold"), loc.stub(rows = median), loc.body(rows = median)
     tabSourceNote md("Eurostat, as Wikipedia lists it: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).")
   nbTable t
 
@@ -585,7 +586,8 @@ here the mean and the standard deviation of the twenty years. `colsMergeUncert` 
 one value, "14.2 ± 4.1". `colsNanoplot` draws the twenty columns as a line in a new column and
 hides them; `colsUnhide` shows 2025 again. `xVals` gives each column its year, so `referenceX`
 can draw the dashed line at 2013 (both not from gt). The median of Europe's regions, a yardstick
-and not a region, is the shaded row in bold: `tabStyleBody` finds it by its value.
+and not a region, is the shaded row in bold: `tabStyle` on the stub and the body of the rows
+`where` the region is the median's.
 """, nkCode)
 
 var sicily14 = ""
