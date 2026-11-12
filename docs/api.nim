@@ -38,10 +38,16 @@ const knownOrder = [
   ("tabelline/extract", "Reading a table back", ""),
   ("tabelline/pictures", "Pictures", ""),
   ("tabelline/nanoplots", "Nanoplots", ""),
+  ("tabelline/ttf", "Fonts", ""),
+  ("tabelline/layout", "A table as a picture", ""),
+  ("tabelline/render_svg", "SVG", ""),
+  ("tabelline/save", "Saving to a file", ""),
   ("tabelline", "Everything at once", "`import tabelline` brings every module above."),
   ("tabelline/datasets", "Datasets", "`import tabelline/datasets`: small tables for examples."),
   ("tabelline/nimib", "In nimib", "`import tabelline/nimib`: tables in a nimib notebook."),
   ("tabelline/nanuq", "From nanuq", "`import tabelline/nanuq`: a table from a nanuq (Polars) DataFrame."),
+  ("tabelline/pixie", "PNG with pixie", "`import tabelline/pixie`: a table painted as a PNG."),
+  ("tabelline/chrome", "Pictures through Chrome", "`import tabelline/chrome`: PNG, JPEG, WebP and PDF drawn by Chrome."),
 ]
 
 # a module not listed yet goes at the end of the list, under its own name
@@ -235,8 +241,9 @@ nbText: """
 ## Modules
 
 What each module is for, what it exports, and what it imports: from tabelline, and from Nim's
-standard library. Only two need a package from outside: `tabelline/nimib` needs nimib, and
-`tabelline/nanuq` needs nanuq.
+standard library. Only three need a package from outside: `tabelline/nimib` needs nimib,
+`tabelline/nanuq` needs nanuq and `tabelline/pixie` needs pixie (`tabelline/chrome` needs Chrome
+installed, and only the standard library).
 """
 
 func firstSentence(doc: string): string =

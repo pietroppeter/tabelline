@@ -21,8 +21,8 @@
 ## reads columns as `name: [values]`, with `nil` for a missing value.
 
 import std/[macros, strutils]
-import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text, extract, pictures, nanoplots]
-export core, formats, units, colors, verbs, build, render_html, render_text, extract, pictures, nanoplots
+import tabelline/[core, formats, units, colors, verbs, build, render_html, render_text, layout, render_svg, save, extract, pictures, nanoplots]
+export core, formats, units, colors, verbs, build, render_html, render_text, layout, render_svg, save, extract, pictures, nanoplots
 
 const pairVerbs = ["colsLabel", "colsWidth", "colsUnits", "textCaseMatch", "summaryRows",
                    "grandSummaryRows", "summaryColumns"]

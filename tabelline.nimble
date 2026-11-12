@@ -18,3 +18,8 @@ feature "docs":
   # `import tabelline/nanuq` (tabella(df) for a Polars DataFrame) and the book's case studies;
   # nanuq downloads its prebuilt Polars library (about 50 MB) the first time it is compiled
   requires "https://github.com/pietroppeter/nanuq >= 0.6.1"
+
+feature "pixie":
+  # `import tabelline/pixie` (toPng, save(t, "t.png"): the table painted as a PNG): pixie and its
+  # pure-Nim dependencies (vmath, chroma, bumpy, zippy, flatty, nimsimd, crunchy)
+  requires "pixie >= 6.1.0"

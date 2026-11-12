@@ -63,6 +63,13 @@ jobs:
       - name: Tests of tabelline/nanuq
         run: nim r -d:nanuqLib=prebuilt tests/test_nanuq.nim
 
+      - name: Tests of tabelline/pixie
+        run: nim r tests/test_pixie.nim
+
+      # Chrome is on GitHub's Ubuntu runners: the layout's boxes within 4 px of Chrome's
+      - name: Pictures checked against Chrome
+        run: nim r -d:release tools/image/compare.nim build/image
+
       - name: Spec examples
         run: nim r tools/specexamples.nim
 
