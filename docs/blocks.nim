@@ -1085,6 +1085,7 @@ const bodyScript = """<script>
     root.dataset.tema = (root.dataset.ora === 'notte' && nights[t]) || t;
     document.querySelectorAll('.tema button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
+      if (b.dataset.day) b.textContent = (root.dataset.ora === 'notte' && b.dataset.night) || b.dataset.day;
     });
     document.querySelectorAll('.ora button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.ora === root.dataset.ora ? 'true' : 'false');
@@ -1200,11 +1201,20 @@ func oraSwitch(): string =
     """<button type="button" data-ora="giorno" title="the day look" aria-pressed="true">☀ giorno</button>""" &
     """<button type="button" data-ora="notte" title="the night look" aria-pressed="false">☾ notte</button></div>"""
 
-func temaSwitch(offered: seq[string]): string =
+const nightLabels* = [("terminale", "Terminal")]
+  ## The name a look's button takes at night, when its night look has a name of its own (the
+  ## quaderno at night is the Terminal); Munari notte keeps Munari's.
+
+func temaSwitch(offered: seq[string], nights: JsonNode): string =
   result = """<div class="tema" role="group" aria-label="Look of the page">"""
   for (key, label, title) in looks:
     if key in offered:
-      result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
+      var night = ""
+      for n in nights.getElems:
+        if n[0].getStr == key:
+          for (k, l) in nightLabels:
+            if k == n[1].getStr: night = &""" data-night="{l}""""
+      result.add &"""<button type="button" data-tema="{key}" data-day="{label}"{night} title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
   result.add "</div>"
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
@@ -1229,9 +1239,10 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   let ora = if c{"nights"}.len > 0: oraSwitch() else: ""
+  let switch = temaSwitch(offered, c{"nights"})
   &"""<header>
 <nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-<div class="switches">{ora}{temaSwitch(offered)}</div>{forme}
+<div class="switches">{ora}{switch}</div>{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 

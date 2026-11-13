@@ -465,7 +465,7 @@ The questions of round 1, and Pietro's answers (13 November, round 2):
    every look). *Answer:* C, a *giorno* / *notte* switch.
 2. **The source**, for the first dark palette. *Answer:* at night Munari becomes Munari notte, and
    the quaderno, the playful look of the day, becomes a retro terminal, after the Matrix and Blade
-   Runner.
+   Runner, called Terminal.
 3. **The switch**: a third button beside Munari and quaderno, or a light and dark switch of its
    own. *Answer:* a switch of its own.
 4. **The library**: nothing, defaults with `light-dark()`, and a `dataColor` palette named by
@@ -484,7 +484,7 @@ you press it, it follows your system (`prefers-color-scheme`); then it remembers
 - **Munari notte** is Munari with six night values, Yoru's: Haru's four colours on 濃藍 koai,
   deep indigo, under white silk. Every rule is Munari's; the only token that changes how it is
   made is `--surface`, lighter than the paper instead of whiter.
-- **The terminal** is the quaderno's night: a monitor's dark glass, green phosphor for the text,
+- **Terminal** is the quaderno's night, and the switch calls it so at night: a monitor's dark glass, green phosphor for the text,
   Blade Runner's sodium orange for the circle and links, neon cyan for the square, the Matrix's
   code-rain green for what works. One monospace for everything, headings in capitals with a
   faint glow, scan lines over the page, a cursor after the wordmark. And **every table is shown
@@ -651,7 +651,7 @@ And plain Markdown: a list, a quote and a small table.
 | look | at night |
 |---|---|
 | Munari | Munari notte |
-| quaderno | the terminal |
+| quaderno | Terminal |
 
 ## How this post is built
 
