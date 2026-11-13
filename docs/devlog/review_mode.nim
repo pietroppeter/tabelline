@@ -121,9 +121,10 @@ nbGallery "The screens of the review mode":
     nbText """
 1. **The text** of every comment, Markdown after a block of YAML, to edit before it goes.
 2. **Each screenshot**, named as the text names it, with **Copy image**, to paste after the text.
-3. **History** opens the versions of the page.
+3. **History** opens the versions of the page; **Delete**, beside it, deletes the
+   comments of the export (a second tap confirms).
 4. **Close review** ends the review, back to reading.
-5. **Copy** copies the text only.
+5. **Copy** copies the text only, and sends its comments: the next export holds only new ones.
 """
   nbGalleryCard "History":
     nbScreenshot shots / "history-v9.jpg", shots / "history-v9.json", "The versions of the page, and the comments kept on each"
@@ -133,7 +134,7 @@ nbGallery "The screens of the review mode":
    version still has; **Export** exports them, with the commit they were written on.
 3. **Clear** deletes the comments of that version (a second tap confirms).
 4. **Export everything** exports the comments of every version, each saying where it is from;
-   **Export** goes back to the export.
+   **Export** exports every comment of this version, sent or not.
 """
 
 nbText: """
@@ -187,8 +188,10 @@ block:
            how: "the comments stay in the browser"),
     Storia(who: "The reviewer", want: "send the whole review at once", why: "one trip to the chat",
            how: "**Export**, **Copy**, then each screenshot"),
+    Storia(who: "The reviewer", want: "send a review in rounds", why: "some comments can't wait for the end",
+           how: "**Copy** sends the comments of the export; the next **Export** holds only new ones"),
     Storia(who: "The reviewer", want: "start again from nothing", why: "a version reviewed is done",
-           how: "**History**: clear one version, or everything"),
+           how: "**Delete** in the export, or **History**: clear a version"),
     Storia(who: "The agent", want: "know which file and version to change", why: "the page's address is not its source",
            how: "the YAML block: `source` and `version`"),
     Storia(who: "The agent", want: "find each comment's words in the source", why: "the same words may be in many places",
@@ -305,6 +308,13 @@ the Markdown marks) and uses the words around it when it appears more than once.
 screenshots adds a line that names them (`Screenshots: review-v9-2-1.jpg`). **Copy** copies the
 text alone, and each screenshot is copied by its own button, under the text.
 
+A review can go in rounds. **Copy** sends the comments it copies: each gets its number then, and
+keeps it; on the page they stay, with a dashed line under their words. The next **Export** holds
+only the comments not sent yet, numbered after the last one sent (*round 2*, comments 5, 6, 7), and
+those changed since, under their old number. So the numbers never repeat on a version, even when
+the comments sent are deleted with **Delete**, beside **History** in the export. History's
+**Export** gives every comment of the version, sent or not (`nimib-review/6`).
+
 ## Where a comment points
 
 A page is rebuilt from its source every time it changes, so a path in the HTML (the third
@@ -323,7 +333,7 @@ The comments of a page are kept in the browser, under one key per page and versi
 (`nimib-review:devlog/review-mode@v9` for this one). Reload the page, close the browser, come
 back tomorrow: they are still there, marked on the text. Nothing leaves the phone until the
 export. To start from nothing, open **History** from the export: it clears the comments of one
-version, or every comment of the review mode in this browser.
+version.
 
 ## Processing an export: a skill
 

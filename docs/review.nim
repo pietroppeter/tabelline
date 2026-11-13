@@ -29,6 +29,10 @@ body.rv-on .rv-only { display: block; }
 body.rv-on { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)); }
 mark.rv-mark { background: var(--secondary-soft); color: inherit; box-shadow: 0 2px 0 var(--secondary); cursor: pointer; }
 mark.rv-mark.rv-current { background: var(--secondary); }
+/* a comment already sent: still there, quieter, a dashed line under its words */
+mark.rv-mark.rv-sent { background: transparent; box-shadow: none; text-decoration: underline dashed var(--secondary); text-underline-offset: 3px; }
+mark.rv-mark.rv-sent.rv-current { background: var(--secondary-soft); }
+.rv-panel .rv-state { margin: 0 0 .3rem; color: var(--muted); font-size: .85rem; }
 .rv-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: .3rem;
   justify-content: center; padding: .45rem max(.5rem, env(safe-area-inset-right, 0px)) calc(.45rem + env(safe-area-inset-bottom, 0px)) max(.5rem, env(safe-area-inset-left, 0px));
   background: var(--surface); border-top: 3px solid var(--ink); font: 400 15px/1.2 var(--font); }
@@ -50,7 +54,8 @@ dialog.rv-sheet::backdrop { background: color-mix(in oklab, var(--ink) 30%, tran
   background: var(--paper); border: 1px solid var(--line); border-radius: 0; padding: .5rem; }
 .rv-export textarea { font: 16px/1.45 var(--mono); white-space: pre-wrap; }   /* 16px: a phone zooms on smaller fields */
 .rv-sheet .rv-actions { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-end; }
-.rv-sheet .rv-left { margin-right: auto; }
+.rv-sheet .rv-left { margin-right: auto; display: flex; gap: .4rem; }
+.rv-sheet .rv-break { flex-basis: 100%; height: 0; }   /* the export: History, Delete, Copy; then the two Close */
 .rv-sheet .rv-danger { color: var(--primary-text); }
 /* the comment's sheet: at the top, small, not modal: the bar and the page stay in reach */
 .rv-panel { position: fixed; top: 0; left: 0; right: 0; z-index: 60; max-width: 40rem; margin: 0 auto;
@@ -98,6 +103,8 @@ dialog.rv-sheet[open] { animation: rv-down .2s ease-out; }
 const reviewQuaderno = """
 mark.rv-mark { background: var(--highlight); box-shadow: 0 2px 0 var(--red-pen); }
 mark.rv-mark.rv-current { background: var(--postit); box-shadow: 0 2px 0 var(--red-pen), 0 0 0 2px var(--red-pen); }
+mark.rv-mark.rv-sent { background: transparent; box-shadow: none; text-decoration-color: var(--red-pen); }
+mark.rv-mark.rv-sent.rv-current { background: var(--highlight); }
 .rv-bar { font-family: var(--font); }
 """
 

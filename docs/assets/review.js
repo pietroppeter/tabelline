@@ -1,5 +1,6 @@
 // Review mode for a nimib page: open it with the Review button, select text, comment on it, keep
-// the comments in this browser, export them as Markdown with a YAML block for a coding agent.
+// the comments in this browser, export them as Markdown with a YAML block for a coding agent,
+// in rounds: a comment copied once is sent, keeps its number, and the next export holds only new ones.
 // No dependencies. The page gives its settings on
 // <div id="review" data-page data-title data-source data-version data-commit data-updated>
 // (the version, its commit and its date come from git, when the page is built).
@@ -97,7 +98,7 @@
       if (b < t.data.length) t.splitText(b);
       if (a > 0) t = t.splitText(a);
       var m = document.createElement('mark');
-      m.className = 'rv-mark';
+      m.className = 'rv-mark' + (note.sent && !note.changed ? ' rv-sent' : '');
       m.dataset.id = note.id;
       t.parentNode.replaceChild(m, t);
       m.appendChild(t);
@@ -126,9 +127,12 @@
   // part: store
   // The comments of a page live in this browser's localStorage, one key per page and version,
   // so a new version starts with no comments and the old ones stay with the version they are on.
-  // Whether the review mode is open is kept too, so a page opens the way it was left.
+  // Whether the review mode is open is kept too, so a page opens the way it was left. So is how
+  // far the rounds of this version have gone (the last round sent and the last number given), apart
+  // from the comments, so a number is never given twice, even after the comments sent are deleted.
   var PREFIX = 'nimib-review:', KEY = PREFIX + page.page + '@v' + page.version;
   var MODE = 'nimib-review-mode:' + page.page;
+  var ROUNDS = 'nimib-review-rounds:' + page.page + '@v' + page.version;
   function read(key) {
     try { return JSON.parse(localStorage.getItem(key)) || []; } catch (e) { return []; }
   }
@@ -137,10 +141,16 @@
       localStorage.setItem(KEY, JSON.stringify(notes.map(function (n) {
         return { id: n.id, kind: n.kind, quote: n.quote, prefix: n.prefix, suffix: n.suffix,
                  section: n.section, text: n.text, replacement: n.replacement, at: n.at, images: n.images,
-                 commit: n.commit || page.commit || '' };
+                 commit: n.commit || page.commit || '', num: n.num, sent: n.sent, changed: n.changed };
       })));
       full = false;
     } catch (e) { full = true; }   // the browser's storage is full: screenshots take the most
+  }
+  function rounds() {   // { round: the last round sent, last: the last number given }
+    var r = { round: 0, last: 0 };
+    try { r = Object.assign(r, JSON.parse(localStorage.getItem(ROUNDS)) || {}); } catch (e) {}
+    notes.forEach(function (n) { r.last = Math.max(r.last, n.num || 0); r.round = Math.max(r.round, n.sent || 0); });
+    return r;
   }
   function remember(on) {
     try { if (on) localStorage.setItem(MODE, '1'); else localStorage.removeItem(MODE); } catch (e) {}
@@ -249,7 +259,8 @@
   // dropped. The sheet is small, so the words it is about stay in view under it, marked. There
   // are no kinds: to replace the words, the note says so ("Replace with: ..."), or "Remove". A
   // screenshot is pasted in the note, like text: the note is an editable box, so a phone offers
-  // to paste an image there. While the sheet is open the page may not zoom.
+  // to paste an image there. While the sheet is open the page may not zoom. A comment already sent
+  // says so, with its number; changed afterwards, it goes in the next export again, as changed.
   var viewport = document.querySelector('meta[name="viewport"]');
   var looseViewport = viewport ? viewport.content : '';
   function noZoom(yes) {
@@ -259,7 +270,7 @@
   sheet.className = 'rv-panel';
   sheet.hidden = true;
   sheet.innerHTML =
-    '<p class="rv-whole">On the whole page</p>' +
+    '<p class="rv-whole">On the whole page</p><p class="rv-state"></p>' +
     '<div class="rv-note" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Comment"' +
     ' data-placeholder="What should change, and why. To replace the words: Replace with: and the new text; ' +
     'to drop them: Remove. Paste a screenshot here too."></div>' +
@@ -285,12 +296,22 @@
     var ms = root.querySelectorAll('mark.rv-mark[data-id="' + n.id + '"]');
     ms.forEach(function (m) { m.classList.add('rv-current'); });
     sheet.querySelector('.rv-whole').hidden = !!n.quote;
+    state(n);
     noteBox.textContent = n.text || '';
     thumbs();
     sheet.hidden = false;
     noZoom(true);
     keepInView();
     show();
+  }
+  function state(n) {   // sent or not, with its number
+    var p = sheet.querySelector('.rv-state');
+    p.hidden = !n.sent;
+    if (n.sent) p.textContent = 'Comment ' + n.num + ', sent in round ' + n.sent +
+      (n.changed ? ': changed since, it goes in the next export' : '');
+  }
+  function touched(n) {   // a comment sent and then changed is sent again, with its number
+    if (n.sent && !n.changed) { n.changed = true; state(n); }
   }
   function step(d) {
     if (!notes.length) return;
@@ -327,6 +348,7 @@
     var n = notes[current];
     if (!n) return;
     n.text = noteBox.innerText.trim();
+    touched(n);
     save();
     show();
   });
@@ -344,7 +366,7 @@
       t.querySelector('button').addEventListener('click', function () {
         shots.splice(i, 1);
         n.images = shots.length ? shots : undefined;
-        save(); thumbs();
+        touched(n); save(); thumbs();
       });
       box.appendChild(t);
     });
@@ -370,7 +392,7 @@
     Promise.all(files.map(function (b) { return shrink(b, 900, 0.72); })).then(function (srcs) {
       if (!srcs.length || !n) return;
       n.images = (n.images || []).concat(srcs);
-      save(); thumbs(); keepInView(); show();
+      touched(n); save(); thumbs(); keepInView(); show();
     });
     var text = e.clipboardData.getData('text/plain');
     if (text) document.execCommand('insertText', false, text);
@@ -400,30 +422,53 @@
     while (s.indexOf(f) >= 0) f += '~';
     return f + 'text\n' + s.trim() + '\n' + f;
   }
-  var exportVersion = '';   // the version being exported, when it is not this one
-  function shotName(i, k) { return 'review-v' + (exportVersion || page.version) + '-' + (i + 1) + '-' + (k + 1) + '.jpg'; }
-  function exportText(list, version, commit) {
+  // Reviews come in rounds: Copy sends the comments of this version that the export holds. Each
+  // gets its number then, the next after the last one given on this version, and keeps it; the
+  // next Export holds only the comments not sent yet, and those changed since they were sent,
+  // under their old numbers. Delete, beside History, deletes the comments of the export.
+  var ex = { list: [], version: '', commit: '', plan: null };
+  function here(n) { return notes.indexOf(n) >= 0; }
+  function fresh(n) { return !n.sent || n.changed; }
+  function numbering(list) {
+    // the numbers the comments of this version get if this export is copied: the old ones keep
+    // theirs, the new ones take the next ones, in the order of the page
+    var r = rounds(), nums = {}, last = r.last, todo = list.filter(function (n) { return here(n) && fresh(n); });
+    todo.forEach(function (n) { nums[n.id] = n.num || ++last; });
+    return { round: todo.length ? r.round + 1 : 0, before: r.round, sent: list.some(here) ? r.last : 0, last: last, nums: nums, todo: todo, done: false };
+  }
+  function labels(list, version, plan) {   // 5, or 11.3 for the third comment of version 11
+    var per = {};
+    return list.map(function (n) {
+      var v = n.from && n.from !== version ? n.from : '';
+      if (!v && here(n)) return String(n.num || plan.nums[n.id] || '?');
+      per[v] = (per[v] || 0) + 1;
+      return (v ? v + '.' : '') + (n.num || per[v]);
+    });
+  }
+  function shotName(label, k) { return 'review-v' + ex.version + '-' + label + '-' + (k + 1) + '.jpg'; }
+  function exportText(list, version, commit, plan) {
     // a chat shows a pasted text as Markdown: a yaml fence is a tidy box under the title.
-    // By default the comments of this version; History exports those of an older one, with the
-    // commit they were written on, and says which of them this version no longer has.
-    list = list || notes; version = version || page.version;
-    commit = commit === undefined ? page.commit || '' : commit;
-    var out = ['# Review of “' + page.title + '”, version ' + version, '',
+    // By default the comments of this version not sent yet; History exports all of them, or
+    // those of an older one, with the commit they were written on, and says which of them this
+    // version no longer has.
+    var names = labels(list, version, plan);
+    var out = ['# Review of “' + page.title + '”, version ' + version + (plan.round ? ', round ' + plan.round : ''), '',
       '```yaml',
-      'format: nimib-review/5',
+      'format: nimib-review/6',
       'title: ' + yaml(page.title),
       'page: ' + yaml(location.origin + location.pathname),
       'source: ' + yaml(page.source),
       'version: ' + yaml(version),
-      'commit: ' + yaml(commit),
-      'exported: ' + yaml(new Date().toISOString()),
-      'comments: ' + list.length,
-      '```', ''];
+      'commit: ' + yaml(commit)];
+    if (plan.round) out.push('round: ' + plan.round);
+    if (plan.sent) out.push('sent: ' + plan.sent + '   # ' + upTo(plan.sent, 'comment') + ' went in ' + upTo(plan.before, 'round'));
+    out.push('exported: ' + yaml(new Date().toISOString()), 'comments: ' + list.length, '```', '');
     list.forEach(function (n, i) {
       var where = !n.quote ? 'On the whole page'
                 : n.section && n.section.title ? 'In “' + n.section.title + '”' + (n.section.id ? ' (#' + n.section.id + ')' : '')
                 : 'At the top';
-      out.push('## ' + (i + 1) + '. ' + where, '');
+      var was = !here(n) || !n.sent ? '' : n.changed ? ' · changed since round ' + n.sent : ' · sent in round ' + n.sent;
+      out.push('## ' + names[i] + '. ' + where + was, '');
       if (n.from && n.from !== version) out.push('From version ' + n.from + (n.commit ? ' (commit ' + n.commit + ')' : '') + '.', '');
       if (n.quote) {
         out.push('> ' + quoted(n.quote), '');
@@ -434,33 +479,89 @@
       if (n.kind === 'cut' || (n.kind === 'replace' && !(n.replacement || '').trim())) out.push('Remove these words.', '');
       else if (n.kind === 'replace') out.push('Replace with:', '', fence(n.replacement), '');
       if (n.text) out.push(n.text, '');
-      if (n.images) out.push('Screenshots: ' + n.images.map(function (src, k) { return shotName(i, k); }).join(', '), '');
+      if (n.images) out.push('Screenshots: ' + n.images.map(function (src, k) { return shotName(names[i], k); }).join(', '), '');
     });
     return out.join('\n');
+  }
+  function upTo(n, word) {   // "comment 1", "comments 1 and 2", "rounds 1 to 3"
+    return n === 1 ? word + ' 1' : word + 's 1 ' + (n === 2 ? 'and' : 'to') + ' ' + n;
+  }
+  function span(nums) {   // 5, 6, 7 and 9 -> "5 to 7, 9"
+    nums = nums.slice().sort(function (a, b) { return a - b; });
+    var out = [];
+    nums.forEach(function (x, i) {
+      if (i && x === nums[i - 1] + 1) { out[out.length - 1][1] = x; } else out.push([x, x]);
+    });
+    return out.map(function (r) { return r[0] === r[1] ? r[0] : r[0] + (r[1] === r[0] + 1 ? ' and ' : ' to ') + r[1]; }).join(', ');
   }
   var box = document.createElement('dialog');
   box.className = 'rv-sheet rv-export';
   box.innerHTML =
-    '<form method="dialog"><p class="rv-where">Export: edit it if you like, then copy it</p>' +
+    '<form method="dialog"><p class="rv-where"></p>' +
     '<textarea rows="12" spellcheck="false"></textarea><div class="rv-shotlist"></div>' +
-    '<div class="rv-actions"><button value="history" class="rv-left">History</button>' +
-    '<button value="leave">Close review</button><button value="close">Close</button>' +
-    '<button value="copy" class="rv-save" autofocus>Copy</button></div></form>';
+    '<div class="rv-actions"><span class="rv-left"><button value="history">History</button>' +
+    '<button value="delete" class="rv-danger">Delete</button></span>' +
+    '<button value="copy" class="rv-save" autofocus>Copy</button><span class="rv-break"></span>' +
+    '<button value="leave">Close review</button><button value="close">Close</button></div></form>';
   document.body.appendChild(box);
   var area = box.querySelector('textarea');
-  var exportList = null;
+  var del = box.querySelector('[value="delete"]');
   function openExport(list, version, commit) {
+    // no list: the comments of this version not sent yet (Export in the bar)
     if (current >= 0) leave();
-    exportList = list || null; exportVersion = list ? version : '';
-    area.value = exportText(list, version, commit);
+    ex.list = list || notes.filter(fresh);
+    ex.version = list ? version : page.version;
+    ex.commit = list ? commit : page.commit || '';
+    ex.plan = numbering(ex.list);
+    area.value = exportText(ex.list, ex.version, ex.commit, ex.plan);
+    var say = 'Export: edit it if you like, then copy it';
+    if (!list && !ex.list.length && ex.plan.before) say = 'Nothing new since round ' + ex.plan.before + ': History exports every comment';
+    else if (ex.plan.round > 1) say = 'Round ' + ex.plan.round + ': ' + ex.plan.todo.length + (ex.plan.todo.length === 1 ? ' comment' : ' comments') +
+      ' to send. Copy sends ' + (ex.plan.todo.length === 1 ? 'it' : 'them');
+    box.querySelector('.rv-where').textContent = say;
+    del.hidden = !ex.list.length;
+    del.dataset.sure = '';
+    del.textContent = 'Delete';
     shotList();
     noZoom(true);
-    box.showModal();
+    if (!box.open) box.showModal();
+  }
+  function sent() {   // Copy: the comments of this version in the export are sent, with their numbers
+    var plan = ex.plan;
+    if (!plan || plan.done || !plan.round) return '';
+    plan.todo.forEach(function (n) { n.num = plan.nums[n.id]; n.sent = plan.round; n.changed = false; });
+    plan.done = true;
+    save();
+    try { localStorage.setItem(ROUNDS, JSON.stringify({ round: plan.round, last: plan.last })); } catch (e) {}
+    drawAll(); show();
+    return 'Copied. Round ' + plan.round + ' sent: ' + (plan.todo.length === 1 ? 'comment ' : 'comments ') +
+      span(plan.todo.map(function (n) { return n.num; })) + '. The next export holds only what is new';
+  }
+  function deleteExported() {
+    // the comments of the export go, from this version and from older ones; their numbers are not
+    // given again
+    var gone = ex.list.length, ids = ex.list.map(function (n) { return n.id; });
+    notes = notes.filter(function (n) { return ids.indexOf(n.id) < 0; });
+    save();
+    var olds = {};
+    ex.list.forEach(function (n) { if (n.from && n.from !== page.version) olds[n.from] = true; });
+    Object.keys(olds).forEach(function (v) {
+      var key = PREFIX + page.page + '@v' + v;
+      var left = read(key).filter(function (n) { return ids.indexOf(n.id) < 0; });
+      try { if (left.length) localStorage.setItem(key, JSON.stringify(left)); else localStorage.removeItem(key); } catch (e) {}
+    });
+    drawAll(); show();
+    ex.list = []; ex.plan = numbering([]);
+    area.value = exportText(ex.list, ex.version, ex.commit, ex.plan);
+    shotList();
+    del.hidden = true;
+    box.querySelector('.rv-where').textContent = gone + (gone === 1 ? ' comment' : ' comments') + ' deleted';
   }
   box.addEventListener('close', function () { noZoom(false); });
   function allShots() {
     var all = [];
-    (exportList || notes).forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(i, k), src: src }); }); });
+    var names = labels(ex.list, ex.version, ex.plan);
+    ex.list.forEach(function (n, i) { (n.images || []).forEach(function (src, k) { all.push({ name: shotName(names[i], k), src: src }); }); });
     return all;
   }
   function shotList() {   // each screenshot, with its own Copy: paste it in the chat after the text
@@ -502,7 +603,8 @@
     return promise.then(function () {
       button.textContent = 'Copied ✓';
       setTimeout(function () { button.textContent = label; }, 1500);
-    }, function () { button.textContent = 'Blocked'; });
+      return true;
+    }, function () { button.textContent = 'Blocked'; return false; });
   }
   box.querySelector('form').addEventListener('submit', function (e) {
     var act = e.submitter && e.submitter.value;
@@ -511,7 +613,13 @@
       var button = e.submitter;
       var fallback = function () { area.select(); document.execCommand('copy'); };
       copied(button, navigator.clipboard ? navigator.clipboard.writeText(area.value).catch(fallback)
-                                         : Promise.resolve().then(fallback));
+                                         : Promise.resolve().then(fallback)).then(function (ok) {
+        var said = ok ? sent() : '';
+        if (said) box.querySelector('.rv-where').textContent = said;
+      });
+    } else if (act === 'delete') {
+      e.preventDefault();
+      twice(del, 'Delete ' + ex.list.length + '?', deleteExported);
     } else if (act === 'history') {
       e.preventDefault();
       box.close();
@@ -524,8 +632,8 @@
   // part: history
   // The versions of the page that have comments in this browser, this one first. The comments
   // of an older version can be brought here (those whose words this version still has) or
-  // exported, with the commit they were written on; Export everything exports the comments of
-  // every version. Old versions are not pages: git keeps them. Clearing the comments of a
+  // exported, with the commit they were written on; Export exports every comment of this version,
+  // sent or not, and Export everything those of every version. Old versions are not pages: git keeps them. Clearing the comments of a
   // version asks twice, with a second tap (confirm() is blocked inside an artifact).
   var hist = document.createElement('dialog');
   hist.className = 'rv-sheet rv-history';
@@ -560,6 +668,7 @@
       if (n.quote && !locate(n, idx)) { stay.push(n); return; }
       while (ids.indexOf(n.id) >= 0) n.id = n.id + 'x';   // two ids made in the same millisecond
       ids.push(n.id);
+      delete n.num; delete n.sent; delete n.changed; delete n.from;   // new on this version: not sent here
       notes.push(n); moved++;
     });
     save();
@@ -622,7 +731,8 @@
       old.querySelector('[value="export"]').addEventListener('click', function () { exportOld(v.n); });
       li.querySelector('b').textContent = 'v' + v.n;
       li.querySelector('.rv-date').textContent = here ? (page.updated || '') + ' · this one' : '';
-      li.querySelector('.rv-n').textContent = n ? n + (n === 1 ? ' comment' : ' comments') : '';
+      var gone = here ? notes.filter(function (x) { return x.sent && !x.changed; }).length : 0;
+      li.querySelector('.rv-n').textContent = n ? n + (n === 1 ? ' comment' : ' comments') + (gone ? ', ' + gone + ' sent' : '') : '';
       var b = li.querySelector('.rv-danger');
       b.hidden = !n;
       b.addEventListener('click', function () {
@@ -645,7 +755,7 @@
     } else if (act === 'export') {
       e.preventDefault();
       hist.close();
-      openExport();
+      openExport(notes.slice(), page.version, page.commit || '');   // every comment of this version, sent or not
     }
   });
 

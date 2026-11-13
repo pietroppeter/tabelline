@@ -1,6 +1,6 @@
 ---
 name: nimib-review
-description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/5`), to apply each comment to the page's source and close the review round.
+description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/6`), to apply each comment to the page's source and close the review round, including a second or later round on the same version.
 metadata:
   status: draft
 ---
@@ -21,7 +21,11 @@ text into changes.
   built from uncommitted changes; 7 hex characters: built outside git). Check that the
   count matches the `## n.` sections: a long paste can arrive cut short, and the count is how you
   notice. If it does not match, say so.
-- Each section is `## n. Where` in `nimib-review/3` to `/5`: `In “Heading” (#id)`, `At the top`, or
+- `round` and `sent` (`/6`): the reviewer sends a version's comments in rounds. **Copy** sends
+  the comments of the export, which get their numbers then and keep them; the next export holds
+  only what is new. `round: 2` and `sent: 4` mean comments 1 to 4 went in earlier rounds of this
+  same version, and this one starts at 5. See step 2 for what that changes.
+- Each section is `## n. Where` in `nimib-review/3` to `/6`: `In “Heading” (#id)`, `At the top`, or
   `On the whole page` (no quote: the note is about the page as a whole). Every comment is a note;
   a replacement is said in it, as `Replace with: ...`, or `Remove`. Do what the note asks.
 - In `/1` and `/2` the section is `## n. Kind, where`:
@@ -31,6 +35,11 @@ text into changes.
   - `Remove` (`Cut` in exports of version 3 and before): remove the quoted text and mend the
     sentence around it.
   A `/3` to `/5` export may still hold one of these, from a comment written on an older version.
+- `· changed since round 1` after a heading (`/6`): a comment already sent, changed afterwards.
+  It replaces what that number said before: do what it says now, and undo what the old text asked
+  for if the new one asks for something else. `· sent in round 1` (an export of every comment,
+  from History): already sent; check it was done, don't do it twice.
+- `## 11.3.`: the third comment of version 11, in an export of every version.
 - `From version 7 (commit a1b2c3d).` under a heading (`/5`): the comment was written on an older
   version than the export's, and kept in the browser (History's **Export** or **Export
   everything**). Check it before you apply it: see step 2.
@@ -48,6 +57,21 @@ text into changes.
   where it still makes sense, or ask.
 
 ## 2. Find each quote in the source
+
+When the export is a round after the first on the same version (`round: 2` or more, the same
+`version` and `commit` as an earlier export in the chat), the earlier rounds are already applied
+or being applied, and the page has not been rebuilt for the reviewer since: the quotes are from
+the page as it was before your changes. So:
+
+- Work on the same branch as the earlier rounds, and keep their changes. Read them first
+  (`git diff <commit> -- <source>`, and what you said about them in the chat).
+- A quote may be gone because an earlier round changed it: find the new text, and apply the
+  comment to it if it still makes sense; say so in the reply.
+- Numbers go on from the earlier rounds and never repeat on a version, so refer to comments by
+  their numbers as given. A round that repeats a number already seen is a changed comment (its
+  heading says so) or an export by hand: ask.
+- A missing number between rounds is a comment the reviewer deleted before sending: nothing to do.
+- In the reply, say which round it is and refer only to this round's comments.
 
 When the export has a `commit`, first see what changed in the source since it was read:
 `git log --oneline <commit>..HEAD -- <source>` and `git diff <commit> -- <source>`. A comment
@@ -80,7 +104,9 @@ The quote is rendered text, not source. Search the notebook for it, and expect:
 ## 3. Make the changes
 
 Change the notebook named in `source`. There are no versions to keep: git keeps them, and the
-commit that holds the changes is the page's next version (its comments start empty).
+commit that holds the changes is the page's next version (its comments start empty, and its
+rounds start from 1 again). Commit each round on its own, so a later round can be read against
+it.
 
 The devlog post `review_mode` also keeps each round, as its own record, not a step for other
 pages: the export, as pasted, in `docs/devlog/data/review-mode/round-<n>.md`, and a line in
