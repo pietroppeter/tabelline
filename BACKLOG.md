@@ -64,6 +64,32 @@ Rough size: S (hours), M (a day or two), L (more).
   so it shows as kg or m s⁻¹ in every output); `toUnit` converts a column before it is shown.
   From the 0.2 review (Pietro, 10 Nov 2026).
 
+## Data
+
+- **datarelli, a data package** (M-L, Pietro, 13 Nov 2026). The data gathered for the stories
+  and explainers (the islands of the Mediterranean, FOSDEM 2001-2027, Milano Cortina, ...) is
+  starting to be worth something on its own: cleaned with nanuq, read as `TableData`. Ship it as
+  a package of its own, *datarelli* (working name), that lives in this repository: a Nim package
+  first, then the same data for Python and R, so one data package is born here and used
+  everywhere, as gt's datasets are. Maybe its own site later. Open questions:
+  - **Layout**: one repository holding a Nim package (tabelline) and a data package for Nim,
+    Python and R (a `datarelli/` folder with its own `.nimble`, `pyproject.toml` and
+    `DESCRIPTION`?), how each is built and released, and which CI runs which.
+  - **Licences**: each dataset keeps its source's (Wikipedia CC BY-SA, FOSDEM's archive, ISTAT
+    CC BY, NASA public domain, gt's MIT), written beside it; check every one before shipping.
+  - **What moves**: whether `tabelline/datasets` (`isole`, `citta`, `planets`, ...) moves there
+    or stays as tabelline's small built-ins, and how the stories read the data (files or
+    package).
+  - **Naming**: datarelli or another name; the datasets' names (Italian or English).
+
+## Out of scope, noted
+
+- **TableData as a small data frame** (Pietro, 13 Nov 2026). `TableData` (named columns of
+  `Value`s) could grow into the lightest possible analytical data frame, with a Polars-like API,
+  and maybe a Narwhals backend so Python code written for Narwhals runs on it. Not tabelline's
+  job (tabelline shows processed data, it does not process it, and nanuq is the data frame): noted here
+  in case it becomes a package of its own.
+
 ## Outputs
 
 - **LaTeX** (M). `toLatex`, booktabs style, as gt's `as_latex`.
