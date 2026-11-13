@@ -217,27 +217,32 @@
     {
      "path": "docs/blog/introduction-0.12.0/index.qmd",
      "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_12.html"
     },
     {
      "path": "docs/blog/introduction-0.13.0/index.qmd",
      "title": "Great Tables v0.13.0: Applying styles to all table locations",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_13.html"
     },
     {
      "path": "docs/blog/introduction-0.15.0/index.qmd",
      "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_15.html"
     },
     {
      "path": "docs/blog/introduction-0.18.0/index.qmd",
      "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
-     "port": "port"
+     "port": "port",
+     "book": "blog/v0_18.html"
     },
     {
      "path": "docs/blog/design-philosophy/index.qmd",
      "title": "The Design Philosophy of Great Tables",
-     "port": "port"
+     "port": "port",
+     "book": "blog/design.html"
     },
     {
      "path": "docs/blog/bring-your-own-df/index.qmd",
@@ -260,7 +265,8 @@
     {
      "path": "docs/blog/superbowl-squares/index.qmd",
      "title": "Using Polars to Win at Super Bowl Squares",
-     "port": "port"
+     "port": "port",
+     "book": "blog/superbowl.html"
     },
     {
      "path": "docs/blog/pycon-2024-great-tables-are-possible/index.qmd",
@@ -278,7 +284,8 @@
     {
      "path": "docs/blog/septa-timetables/index.qmd",
      "title": "Recreating Septa Transit Timetables in Python",
-     "port": "port"
+     "port": "port",
+     "book": "blog/septa.html"
     },
     {
      "path": "docs/blog/open-transit-tools/index.qmd",
@@ -299,7 +306,8 @@
     {
      "path": "docs/blog/tables-for-scientific-publishing/index.qmd",
      "title": "Great Tables for Scientific Publishing",
-     "port": "port"
+     "port": "port",
+     "book": "blog/scientific.html"
     },
     {
      "path": "docs/blog/latex-output-tables/index.qmd",

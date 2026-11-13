@@ -1,0 +1,340 @@
+import tabbook
+bookInit()
+
+nbText: "# Using Polars to Win at Super Bowl Squares"
+
+attribution gtBlog("Using Polars to Win at Super Bowl Squares", "superbowl-squares/",
+  "Michael Chow", "8 Feb 2024",
+  "The code of the appendix is shown once, with the table it makes; the games are read from " &
+  "a copy of the post's `games.csv` cut to the columns it uses (`book/data/great-tables/games.csv`).")
+
+nbText: """
+The Super Bowl is upon us, and with it the glittering squares of chance.
+Maybe you've seen Super Bowl Squares at your work.
+Maybe you've played it with your pals.
+Or maybe you have no idea what it is.
+
+Whether you're a Squares-head or not, this post will help you win with data.
+
+## What is Super Bowl Squares?
+
+Super Bowl Squares is a betting game, where you bet on the final digits of each team in a game.
+
+For example, here are some scores with the final digit bolded:
+
+* Home team score: 1**4**
+* Away team score: **7**
+
+So the final digits would be:
+
+* Home team digit: 4
+* Away team digit: 7
+
+Let's say you choose the digits above, and write this as 4/7---meaning a final digit of 4 for home and 7 for away.
+You would mark yourself on this square:
+"""
+
+tabs """
+import polars as pl
+import polars.selectors as cs
+from great_tables import GT, style, loc
+
+df = (
+    pl.DataFrame({"x": list(range(10))})
+    .join(pl.DataFrame({"y": list(range(10)), "z": "_._"}), how="cross")
+    .with_columns(
+        z=pl.when((pl.col("x") == 7) & (pl.col("y") == 4)).then(pl.lit("4/7")).otherwise("z")
+    )
+    .pivot(index="x", values="z", on="y")
+    .with_row_index()
+)
+
+(
+    GT(df, rowname_col="x")
+    .tab_header("Example Superbowl Square")
+    .tab_spanner("Home", cs.all())
+    .tab_style(style.fill("green"), loc.body(columns="4", rows=pl.col("index") == 7))
+    .tab_style(style.text(color="#FFFFFF", weight="bold"), loc.body())
+    .cols_hide("index")
+    .tab_stubhead("Away")
+)
+""", """
+library(gt)
+library(dplyr)
+library(tidyr)
+
+df <-
+  tidyr::crossing(x = 0:9, y = 0:9) |>
+  mutate(z = ifelse(x == 7 & y == 4, "4/7", "_._")) |>
+  pivot_wider(names_from = y, values_from = z)
+
+df |>
+  gt(rowname_col = "x") |>
+  tab_header("Example Superbowl Square") |>
+  tab_spanner("Home", everything()) |>
+  tab_style(cell_fill("green"), cells_body(columns = "4", rows = x == 7)) |>
+  tab_style(cell_text(color = "#FFFFFF", weight = "bold"), cells_body()) |>
+  tab_stubhead("Away")
+""":
+  nbCode:
+    import std/[sequtils, streams]
+    import nanuq
+    import tabelline, tabelline/nanuq, gtdata
+
+    let df = newDataFrame(series("x", toSeq(0 .. 9)))
+      .join(newDataFrame(series("y", toSeq(0 .. 9))).withColumns(lit("_._").alias("z")),
+            how = JoinType.Cross)
+      .withColumns(`when`((col("x") == 7) and (col("y") == 4)).then(lit("4/7"))
+                     .otherwise(col("z")).alias("z"))
+      .pivot(index = "x", values = "z", on = "y")
+      .withRowIndex()
+
+    let square = tabella(df, rownameCol = "x"):
+      tabHeader "Example Superbowl Square"
+      tabSpanner "Home", everything()
+      tabStyle style.fill("green"), loc.body(cols = "4", rows = where(it["index"] == 7))
+      tabStyle style.text(color = "#FFFFFF", weight = "bold"), loc.body()
+      colsHide "index"
+      tabStubhead "Away"
+    nbTable square
+
+tabelline """
+The data steps are written with [nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim,
+as the post writes them with Polars; `import tabelline/nanuq` makes `tabella(df)` take its data
+frames. `` `when` `` takes backticks: `when` is a word of Nim. The white text is there on every
+square: it shows only on the green one.
+"""
+
+nbText: """
+If the final score ends up being Home 4, Away 7---ding ding ding, big winner---you win the pool,
+and hopefully take home some combination of money and glory. For more details on playing, see [this WikiHow article](https://www.wikihow.com/Play-Football-Squares).
+
+## Why analyze squares?
+
+Not all options in a Super Bowl Squares are created equal.
+This is because there are specific point values you can add to your score.
+For example, touchdowns often to result in 7 points, and its common to score 3 points via a field goal.
+This means that ending up with a final digit of 5 is uncommon.
+
+Analyzing the chance of each square winning let's you pick the best ones.
+(In some versions of Super Bowl Squares, the squares get randomly assigned to people.
+In that case, knowing the chance of winning tells you whether you got a bum deal or not ;).
+
+## What squares are most likely to win?
+
+We looked back at games for the KC Chiefs (away), and games for the San Francisco 49ers (home), and calculated the proportion of the time each team ended with a specific digit. Putting this together for the two teams, here is the chance of winning on a given square:
+"""
+
+tabs """
+import polars as pl
+import polars.selectors as cs
+from great_tables import GT, md
+
+
+# Utilities -----
+
+
+def calc_n(df: pl.DataFrame, colname: str):
+    '''Count the number of final digits observed across games.'''
+
+    return df.select(final_digit=pl.col(colname).mod(10)).group_by("final_digit").agg(n=pl.len())
+
+
+def team_final_digits(game: pl.DataFrame, team_code: str) -> pl.DataFrame:
+    '''Calculate a team's proportion of digits across games (both home and away).'''
+
+    home_n = calc_n(game.filter(pl.col("home_team") == team_code), "home_score")
+    away_n = calc_n(game.filter(pl.col("away_team") == team_code), "away_score")
+
+    joined = (
+        home_n.join(away_n, "final_digit")
+        .select("final_digit", n=pl.col("n") + pl.col("n_right"))
+        .with_columns(prop=pl.col("n") / pl.col("n").sum())
+    )
+
+    return joined
+
+
+# Analysis -----
+
+games = pl.read_csv("../data/great-tables/games.csv").filter(
+    pl.col("game_id") != "2023_22_SF_KC",
+    pl.col("season") >= 2015,
+)
+
+# Individual probabilities of final digits per team
+home = team_final_digits(games, "KC")
+away = team_final_digits(games, "SF")
+
+# Cross and multiply p(digit | team=KC)p(digit | team=SF) to get
+# the joint probability p(digit_KC, digit_SF | KC, SF)
+joint = (
+    home.join(away, how="cross")
+    .with_columns(joint=pl.col("prop") * pl.col("prop_right"))
+    .sort("final_digit", "final_digit_right")
+    .pivot(values="joint", on="final_digit_right", index="final_digit")
+    .with_columns((cs.exclude("final_digit") * 100).round(1))
+)
+
+# Display -----
+
+(
+    GT(joint, rowname_col="final_digit")
+    .data_color(domain=[0, 4], palette=["red", "grey", "blue"])
+    .tab_header(
+        "Super Bowl Squares | Final Score Probabilities",
+        "Based on all NFL regular season and playoff games (2015-2023)",
+    )
+    .tab_stubhead("")
+    .tab_spanner("San Francisco 49ers", cs.all())
+    .tab_stubhead("KC Chiefs")
+    .tab_source_note(
+        md(
+            '<span style="float: right;">Source data: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>'
+        )
+    )
+)
+""", """
+# Utilities -----
+
+# Count the number of final digits observed across games
+calc_n <- function(df, colname) {
+  df |>
+    mutate(final_digit = .data[[colname]] %% 10) |>
+    count(final_digit)
+}
+
+# Calculate a team's proportion of digits across games (both home and away)
+team_final_digits <- function(games, team_code) {
+  home_n <- calc_n(filter(games, home_team == team_code), "home_score")
+  away_n <- calc_n(filter(games, away_team == team_code), "away_score")
+
+  inner_join(home_n, away_n, by = "final_digit") |>
+    transmute(final_digit, n = n.x + n.y) |>
+    mutate(prop = n / sum(n))
+}
+
+# Analysis -----
+
+games <-
+  read.csv("../data/great-tables/games.csv") |>
+  filter(game_id != "2023_22_SF_KC", season >= 2015)
+
+home <- team_final_digits(games, "KC")
+away <- team_final_digits(games, "SF")
+
+joint <-
+  cross_join(home, away) |>
+  mutate(joint = prop.x * prop.y) |>
+  arrange(final_digit.x, final_digit.y) |>
+  select(final_digit = final_digit.x, final_digit.y, joint) |>
+  pivot_wider(names_from = final_digit.y, values_from = joint) |>
+  mutate(across(-final_digit, ~ round(.x * 100, 1)))
+
+# Display -----
+
+joint |>
+  gt(rowname_col = "final_digit") |>
+  data_color(domain = c(0, 4), palette = c("red", "grey", "blue")) |>
+  tab_header(
+    "Super Bowl Squares | Final Score Probabilities",
+    "Based on all NFL regular season and playoff games (2015-2023)"
+  ) |>
+  tab_spanner("San Francisco 49ers", everything()) |>
+  tab_stubhead("KC Chiefs") |>
+  tab_source_note(
+    md('<span style="float: right;">Source data: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)</span>')
+  )
+""":
+  nbCode:
+    # Utilities -----
+
+    proc calcN(df: DataFrame, colname: string): DataFrame =
+      ## Count the number of final digits observed across games.
+      df.select((col(colname) mod 10).alias("final_digit"))
+        .groupBy("final_digit").agg(len().alias("n"))
+
+    proc teamFinalDigits(game: DataFrame, teamCode: string): DataFrame =
+      ## Calculate a team's proportion of digits across games (both home and away).
+      let homeN = calcN(game.filter(col("home_team") == teamCode), "home_score")
+      let awayN = calcN(game.filter(col("away_team") == teamCode), "away_score")
+      homeN.join(awayN, ["final_digit"])
+        .select(col("final_digit"), (col("n") + col("n_right")).alias("n"))
+        .withColumns((col("n") / col("n").sum).alias("prop"))
+
+    # Analysis -----
+
+    let games = readCsv(newStringStream(gamesCsv), inferSchemaLength = 10_000)
+      .filter((col("game_id") != "2023_22_SF_KC") and (col("season") >= 2015))
+
+    # Individual probabilities of final digits per team
+    let home = teamFinalDigits(games, "KC")
+    let away = teamFinalDigits(games, "SF")
+
+    # Cross and multiply p(digit | team=KC)p(digit | team=SF) to get
+    # the joint probability p(digit_KC, digit_SF | KC, SF)
+    let joint = home.join(away, how = JoinType.Cross)
+      .withColumns((col("prop") * col("prop_right")).alias("joint"))
+      .sort(["final_digit", "final_digit_right"])
+      .pivot(values = "joint", on = "final_digit_right", index = "final_digit")
+      .withColumns((all().exclude("final_digit") * 100).round(1))
+
+    # Display -----
+
+    let squares = tabella(joint, rownameCol = "final_digit"):
+      dataColor numeric() - "final_digit", domain = (0.0, 4.0), palette = @["red", "grey", "blue"]
+      tabHeader "Super Bowl Squares | Final Score Probabilities",
+        "Based on all NFL regular season and playoff games (2015-2023)"
+      tabStubhead ""
+      tabSpanner "San Francisco 49ers", everything()
+      tabStubhead "KC Chiefs"
+      tabSourceNote md"Source data: [Lee Sharpe, nflverse](https://github.com/nflverse/nfldata)"
+    nbTable squares
+
+tabelline """
+The source note leaves out the `<span>` that floats it to the right: a page of tabelline has no
+CSS in its Markdown (a style on `loc.sourceNotes()` would do it, with `text-align: right`).
+`dataColor` colours every numeric column, the stub's too, so the table leaves `final_digit`
+out (`numeric() - "final_digit"`); Great Tables never colours the stub. It takes the domain as a pair and the palette as a list of colours.
+"""
+
+nbText: """
+Notice how much higher the chance of winning on any score involving 7 is. This shows up in two places on the table:
+
+* Across the 7 row (i.e. KC Chiefs end with a 7)
+* Down the 7 column (i.e. S.F. 49ers ends with a 7)
+
+Moreover, the 7/7 square has the highest chance (3.4%).
+Some other good squares are 7/0 (or 0/7), and 0/0.
+
+## Go forth and win the respect of your coworkers
+
+We hope this square will make you the envy of your coworkers.
+Here at Great Tables, we're not just interested in the beautiful display of tables, but your success
+in defeating the person in the cubicle next to you.
+
+As a final shout out, we used the python data analysis tool Polars for all the data analysis.
+Using Polars with Great Tables was a total delight. To learn more about how we analyzed the data, along with the code, see the appendix below!
+
+## Appendix: analysis and code
+
+### Method
+
+In order to calculate the probability of a given square winning, we focused on the joint probability
+of observing a final digit for the home team AND a final digit for the away team.
+
+This can be expressed as `p(home_digit, away_digit | home="SF", away="KC")`.
+Note that the probability is conditioned on the teams playing in the Super Bowl. In order to estimate this,
+we `p(digit | team="SF")*p(digit | team="KC")`.
+
+This essentially makes two assumptions:
+
+1. That the final digit does not depend on whether a team is home or away (though it may depend on the team playing).
+2. That the final digit for a given team is independent of the team they are playing.
+
+Another way to think about this is that digit is being modeled as if each team is drawing a ball numbered 0-9 from their own urn. We are modelling the chance of observing a pair of numbers, corresponding to a draw from each team's urns.
+
+The code for this analysis is in [this python script on github](https://github.com/posit-dev/great-tables/blob/main/docs/blog/superbowl-squares/_code.py); it is the code of the table above, in its three languages.
+"""
+
+bookSave()

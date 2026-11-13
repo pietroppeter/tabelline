@@ -23,8 +23,16 @@ var book = initBookWithToc:
   section("Great Tables: the blog", "blog/index.md"):
     entry("Introducing Great Tables", "introducing")
     entry("v0.2.0: Easy Data Coloring", "v0_2")
+    entry("Using Polars to Win at Super Bowl Squares", "superbowl")
     entry("v0.3.0: So Many Style Options!", "v0_3")
     entry("v0.4.0: Nanoplots and More", "v0_4")
+    entry("The Design Philosophy of Great Tables", "design")
+    entry("Great Tables for Scientific Publishing", "scientific")
+    entry("v0.12.0: Google Fonts and zebra stripes", "v0_12")
+    entry("v0.13.0: Applying styles to all table locations", "v0_13")
+    entry("v0.15.0: Flags, Icons, and Other Formatting Goodies", "v0_15")
+    entry("v0.18.0: Easy Column Spanners and More!", "v0_18")
+    entry("Recreating Septa Transit Timetables in Python", "septa")
   section("gt: articles", "vignettes/index.md"):
     entry("Creating Summary Lines", "summary_lines")
     entry("Case Study: gtcars", "case_study_gtcars")

@@ -1,0 +1,195 @@
+import tabbook
+bookInit()
+
+nbText: "# Great Tables `v0.12.0`: Google Fonts and zebra stripes"
+
+attribution gtBlog("Great Tables v0.12.0: Google Fonts and zebra stripes", "introduction-0.12.0/",
+  "Rich Iannone", "30 Sep 2024",
+  "The first table shows its code, which the post folds away.")
+
+nbText: """
+In Great Tables `0.12.0` we focused on adding options for customizing the appearance of a table. In this post, we'll present two new features:
+
+- using typefaces from Google Fonts via `tab_style()` and `opt_table_font()`
+- adding table striping via `tab_options()` and `opt_row_striping()`
+
+Let's have a look at how these new features can be used!
+
+### Using fonts from Google Fonts
+
+Google Fonts is a free service that allows use of hosted typefaces in your own websites. In Great Tables, we added the `google_font()` helper function to easily incorporate such fonts in your tables. There are two ways to go about this:
+
+1. use `google_font()` with `opt_table_font()` to set a Google Font for the entire table
+2. invoke `google_font()` within `tab_style(styles=style.text(font=...))` to set the font within a location
+
+Let's start with this small table that uses the default set of fonts for the entire table.
+"""
+
+tabs """
+from great_tables import GT, exibble, style, loc
+
+gt_tbl = (
+    GT(exibble.head(), rowname_col="row", groupname_col="group")
+    .cols_hide(columns=["char", "fctr", "date", "time"])
+    .tab_header(
+        title="A small piece of the exibble dataset",
+        subtitle="Displaying the first five rows (of eight)",
+    )
+    .tab_source_note(
+        source_note="This dataset is included in Great Tables."
+    )
+)
+
+gt_tbl
+""", """
+library(gt)
+library(dplyr)
+
+gt_tbl <-
+  exibble |>
+  head(5) |>
+  gt(rowname_col = "row", groupname_col = "group") |>
+  cols_hide(columns = c(char, fctr, date, time)) |>
+  tab_header(
+    title = "A small piece of the exibble dataset",
+    subtitle = "Displaying the first five rows (of eight)"
+  ) |>
+  tab_source_note(
+    source_note = "This dataset is included in gt."
+  )
+
+gt_tbl
+""":
+  nbCode:
+    import tabelline, gtdata
+
+    let gtTbl = tabella(exibble().head(), rownameCol = "row", groupnameCol = "group"):
+      colsHide ["char", "fctr", "date", "time"]
+      tabHeader title = "A small piece of the exibble dataset",
+        subtitle = "Displaying the first five rows (of eight)"
+      tabSourceNote "This dataset is included in Great Tables."
+    nbTable gtTbl
+
+nbText: """
+Now, with `opt_table_font()` + `google_font()`, we'll change the table's font to one from Google Fonts. I like [`Noto Serif`](https://fonts.google.com/noto/specimen/Noto+Serif) so let's use that here!
+"""
+
+tabs """
+from great_tables import GT, exibble, style, loc, google_font
+
+(
+    gt_tbl
+    .opt_table_font(font=google_font(name="Noto Serif"))
+)
+""", """
+gt_tbl |>
+  opt_table_font(font = google_font(name = "Noto Serif"))
+""":
+  nbCode:
+    nbTable gtTbl.optTableFont("\"Noto Serif\", " & systemFonts("old-style"))
+
+tabelline """
+tabelline has no `google_font()`: a page of the book loads nothing from other sites. The table asks
+for Noto Serif by name, which many systems have, and falls back to a serif stack of the reader's
+own fonts (`systemFonts("old-style")`). The Python and R tabs fall back the same way here, as the
+book takes their `@import` of Google Fonts out. A page that must have the font ships it, as
+tabelline's own pages ship theirs.
+"""
+
+nbText: """
+Looking good! And we don't have to apply the font to the entire table. We might just wanted to use a Google Font in the table body. For that use case, `tab_style()` is the preferred method. Here's an example that uses the [`IBM Plex Mono`](https://fonts.google.com/specimen/IBM+Plex+Mono) typeface.
+"""
+
+tabs """
+(
+    gt_tbl
+    .tab_style(
+        style=style.text(font=google_font(name="IBM Plex Mono")),
+        locations=loc.body()
+    )
+)
+""", """
+gt_tbl |>
+  tab_style(
+    style = cell_text(font = google_font(name = "IBM Plex Mono")),
+    locations = cells_body()
+  )
+""":
+  nbCode:
+    let plexBody = gtTbl.tabStyle(style.text(font = "\"IBM Plex Mono\", " & systemFonts("monospace-code")),
+                                  loc.body())
+    nbTable plexBody
+
+nbText: """
+Nice! And it's refreshing to see tables with fonts different from default set, as good as it might be. We kept the `google_font()` helper function as simple as possible, requiring only the font name in its `name=` argument. There are hundreds of fonts hosted on [Google Fonts](https://fonts.google.com) so look through the site, experiment, and find the fonts that you think look best in your tables!
+
+### Striping rows in your table
+
+Some people like having row striping (a.k.a. zebra stripes) in their display tables. We also know that some [advise against the practice](https://www.darkhorseanalytics.com/blog/clear-off-the-table/). We understand it's a controversial table issue, however, we also want to give you the creative freedom to just include the stripes. To that end, we now have that option in the package. There are two ways to enable this look:
+
+1. invoking `opt_row_striping()` to quickly set row stripes in the table body
+2. using some combination of three `row_striping_*` arguments in `tab_options()`
+
+Let's use that example table with `opt_row_striping()`.
+"""
+
+tabs """
+gt_tbl.opt_row_striping()
+""", """
+gt_tbl |> opt_row_striping()
+""":
+  nbCode:
+    nbTable gtTbl.optRowStriping()
+
+nbText: """
+It's somewhat subtle but there is an alternating, slightly gray background (starting on the `"row_2"` row). The color is `#808080` but with an alpha (transparency) value of `0.05`.
+
+If this is not exactly what you want, there is an alternative to this. The `tab_options()` method has three new arguments:
+
+- `row_striping_background_color`: color to use for row striping
+- `row_striping_include_stub`: should striping include cells in the stub?
+- `row_striping_include_table_body`: should striping include cells in the body?
+
+With these new options, we can choose to stripe the *entire* row (stub cells + body cells) and use a darker color like `"lightblue"`.
+"""
+
+tabs """
+(
+    gt_tbl
+    .tab_options(
+        row_striping_background_color="lightblue",
+        row_striping_include_stub=True,
+        row_striping_include_table_body=True,
+    )
+)
+""", """
+gt_tbl |>
+  tab_options(
+    row.striping.background_color = "lightblue",
+    row.striping.include_stub = TRUE,
+    row.striping.include_table_body = TRUE
+  )
+""":
+  nbCode:
+    let blueStripes = gtTbl.tabOptions(
+      rowStriping = true,
+      rowStripingBackgroundColor = "lightblue",
+      rowStripingIncludeStub = true,
+      rowStripingIncludeTableBody = true)
+    nbTable blueStripes
+
+tabelline """
+In tabelline the three options draw stripes only when striping is on: `rowStriping = true` turns
+it on, as `optRowStriping()` does. In Great Tables, setting `row_striping_include_table_body`
+turns it on too.
+"""
+
+nbText: """
+These alternating fills can be a good idea in some table display circumstances. Now, you can make that call and the functionality is there to support your decision.
+
+### Wrapping up
+
+We are excited that this new functionality is now available in Great Tables. As ever, please let us know through [GitHub Issues](https://github.com/posit-dev/great-tables/issues) whether you ran into problems with any feature (new or old), or, if you have suggestions for further improvement!
+"""
+
+bookSave()

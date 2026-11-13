@@ -1,6 +1,7 @@
 ## The datasets of Great Tables that the book's pages use and tabelline does not ship
 ## (`tabelline/datasets` has `exibble`, `gtcars`, `countrypops`, `illness` and `metro`, exported
-## here): `islands`, `airquality` and `sza`, and the images of the metro lines, as files in
+## here): `islands`, `airquality` and `sza`, and `peeps`, `films`, `towny`, `nuclides`,
+## `gibraltar` and `reactions` (as CSV text, for nanuq's `readCsv`), and the images of the metro lines, as files in
 ## book/data/great-tables/, copied from the `great_tables` package (MIT), and gt's `rx_adsl` and
 ## `rx_addv` in book/data/gt/, written from the `gt` R package (MIT) with their labels. They are read when the
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
@@ -16,12 +17,41 @@ const
   islandsCsv = staticRead(dataDir & "islands.csv")
   airqualityCsv = staticRead(dataDir & "airquality.csv")
   szaCsv = staticRead(dataDir & "sza.csv")
+const
+  peepsCsv* = staticRead(dataDir & "peeps.csv")
+    ## Great Tables' `peeps`: 100 made-up people with an address in North America.
+  filmsCsv* = staticRead(dataDir & "films.csv")
+    ## Great Tables' `films`: the feature films in competition at the Cannes festival, 1946-2024.
+  townyCsv* = staticRead(dataDir & "towny.csv")
+    ## Great Tables' `towny`: the municipalities of Ontario and their census populations.
+  nuclidesCsv* = staticRead(dataDir & "nuclides.csv")
+    ## Great Tables' `nuclides`: every known nuclide, its mass, half-life and decay modes.
+  gibraltarCsv* = staticRead(dataDir & "gibraltar.csv")
+    ## Great Tables' `gibraltar`: the weather at Gibraltar's airport, May 2023, every half hour.
+  gamesCsv* = staticRead(dataDir & "games.csv")
+    ## The NFL games of 1999-2023 (nflverse, by Lee Sharpe), as the Super Bowl Squares post
+    ## reads them, cut to the columns it uses.
+  septaStopsCsv* = staticRead(dataDir & "septa/chw-stops.csv")
+    ## The stations of SEPTA's Chestnut Hill West line, as the SEPTA timetables post has them.
+  septaTimesCsv* = staticRead(dataDir & "septa/times.csv")
+    ## The weekend trains of the same line: a row for each station, a column for each train.
+  reactionsCsv* = staticRead(dataDir & "reactions.csv")
+    ## Great Tables' `reactions`: rate constants of gas-phase reactions of 1,683 organic compounds.
 
 const
   gtDir = currentSourcePath().parentDir & "/data/gt/"
   rxAdslCsv* = staticRead(gtDir & "rx_adsl.csv")
   rxAddvCsv* = staticRead(gtDir & "rx_addv.csv")
   rxMetaJson = staticRead(gtDir & "rx_meta.json")
+
+const
+  tabDataDir = currentSourcePath().parentDir.parentDir & "/src/tabelline/data/"
+  metroCsv* = staticRead(tabDataDir & "metro.csv")
+    ## `metro` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
+  illnessCsv* = staticRead(tabDataDir & "illness.csv")
+    ## `illness` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
+  gtcarsCsv* = staticRead(tabDataDir & "gtcars.csv")
+    ## `gtcars` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
 
 const metroImages* = dataDir & "metro_images"
   ## The folder of the metro lines' images (`metro_1.svg`, ...), for `fmtImage(path = ...)`.
