@@ -1027,6 +1027,62 @@ in nimib, `nbTable data: body` makes the table and shows it, without naming it.
 """
 
 nbText: """
+## What it took
+
+How much work is in a release made by agents? We measured it the way we did for
+[nanuq 0.6](https://forum.nim-lang.org/t/14258), with the same sources, so the numbers compare.
+The cut between the two releases is the tag v0.1.0; 0.2 ends when its release PR merged, on
+11 November at 06:10 UTC.
+"""
+
+block:
+  type E = object
+    measure, nanuq, v01, v02: string
+  let rows = @[
+    E(measure: "elapsed", nanuq: "7 days", v01: "3.3 days", v02: "22 hours"),
+    E(measure: "merged pull requests", nanuq: "—", v01: "41", v02: "34"),
+    E(measure: "agent threads", nanuq: "33", v01: "19", v02: "12"),
+    E(measure: "token-equivalent cost", nanuq: "$636", v01: "$453", v02: "$268"),
+    E(measure: "tokens", nanuq: "1.72 B", v01: "1.19 B", v02: "0.80 B"),
+    E(measure: "output tokens", nanuq: "5.1 M", v01: "3.6 M", v02: "2.1 M"),
+    E(measure: "agent hours", nanuq: "25–35", v01: "21–28", v02: "12–25"),
+    E(measure: "CI hours", nanuq: "85", v01: "3.5", v02: "5"),
+    E(measure: "lines (wc -l)", nanuq: "62 k", v01: "27 k", v02: "+20 k"),
+    E(measure: "developer months", nanuq: "4–8", v01: "2–3.5", v02: "1.5–2.5"),
+  ]
+  let t = tabella(rows, rownameCol = "measure"):
+    tabHeader "What each release took", "tabelline 0.1 and 0.2, next to nanuq 0.6"
+    colsLabel:
+      nanuq: "nanuq 0.6"
+      v01: "0.1"
+      v02: "0.2"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    optCssTheme()
+  nbTable t
+
+nbText: """
+Where the numbers come from:
+
+- **Cost and tokens** are measured: the usage of each agent thread that committed to tabelline,
+  from the Claude Code session API, at API list prices. A thread that worked on both releases is
+  split by its commits. Left out: the coordinator, threads about other repositories, and the
+  PowerPoint and Gantt experiments ($12), which are not in 0.2.
+- **Agent hours** are a range: the low end scales nanuq's hours by output tokens, the high end
+  sums the time between each thread's commits.
+- **CI hours** are the wall time of the Pages workflow runs, from the GitHub Actions API. nanuq
+  builds a Rust library for six platforms; tabelline only builds its pages.
+- **Lines** are counted with `wc -l` by kind of file, without generated files (CLDR tables,
+  datasets, fonts, lock files): about 36 k lines of Nim (library 6 k, tests 1.3 k, tools 1.1 k,
+  the rest pages and the book) and 10 k of Markdown (mostly specs), against nanuq's 62 k with its book.
+- **Developer months** are a judgement, as for nanuq: the time one experienced
+  developer who knows Nim, gt and Great Tables would need. tabelline has no FFI or release pipeline, nanuq's biggest piece, but it
+  has more design (reimplementing gt's rendering, formats and CLDR locales) and much more
+  prose. That puts all of tabelline at about three quarters of nanuq: 3.5 to 6 months.
+
+0.2 added nearly as much as 0.1, in a quarter of the time.
+"""
+
+nbText: """
 ## How it is built
 
 Everything above runs in one place, `build.nim`, the step every renderer shares. For each cell
