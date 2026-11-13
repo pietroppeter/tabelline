@@ -239,20 +239,6 @@ en: Malta
 it: Malta
 
 en:
-This is the long list behind the story [Islands of the Mediterranean](../isole/index.html): its 195
-islands, each in the sea around most of its coast, as the International Hydrographic Organization
-drew the seas in 1953. It is one big table, made for a large screen: the seas from west to east,
-each with its map and where its name comes from, and its islands from the largest down, each with
-a small map of where it is in its sea and its outline at its own scale.
-it:
-È la lista lunga dietro la storia [Isole del Mediterraneo](../isole-it/index.html): le sue 195
-isole, ognuna nel mare intorno alla maggior parte della sua costa, come l'Organizzazione
-idrografica internazionale ha tracciato i mari nel 1953. È una sola grande tabella, fatta per uno
-schermo grande: i mari da ovest a est, ognuno con la sua carta e l'origine del suo nome, e le sue
-isole dalla più grande in giù, ognuna con una piccola carta di dove sta nel suo mare e il suo
-profilo alla sua scala.
-
-en:
 The green cards are about the code, as in the story: the table is one `tabella`, made from
 `islands.csv`.
 it:
@@ -269,9 +255,55 @@ The name in the island's own language, from Wikidata; · no one lives there, —
 it:
 Il nome nella lingua dell'isola, da Wikidata; · non ci vive nessuno, — un numero che nessuno ha dato.
 
+en: Pelagie Islands
+it: Isole Pelagie
+
+en: Egadi Islands
+it: Isole Egadi
+
+en: other islands
+it: altre isole
+
+en: one island
+it: un'isola
+
+en: Strait of Gibraltar
+it: Stretto di Gibilterra
+
+en: no island of the list
+it: nessuna isola della lista
+
+en: Alboran Sea
+it: Mare di Alboran
+
+en: islands of the list
+it: isole della lista
+
+en: Ligurian Sea
+it: Mar Ligure
+
+en:
+This is the long list behind the story [Islands of the Mediterranean](../isole/index.html): its 195
+islands, each in the sea around most of its coast, as the International Hydrographic Organization
+drew the seas in 1953. It is one big table, made for a large screen: the seas from west to east,
+each with its map and where its name comes from, and its islands from northwest to southeast, each
+with a small map of where it is in its sea and its outline at its own scale; then a row for the
+sea's other islands, the ones too small for the list.
+it:
+È la lista lunga dietro la storia [Isole del Mediterraneo](../isole-it/index.html): le sue 195
+isole, ognuna nel mare intorno alla maggior parte della sua costa, come l'Organizzazione
+idrografica internazionale ha tracciato i mari nel 1953. È una sola grande tabella, fatta per uno
+schermo grande: i mari da ovest a est, ognuno con la sua carta e l'origine del suo nome, e le sue
+isole da nord-ovest a sud-est, ognuna con una piccola carta di dove sta nel suo mare e il suo
+profilo alla sua scala; poi una riga per le altre isole del mare, quelle troppo piccole per la lista.
+
 en:
 One table, an island a row, grouped by sea with `tabRowGroup`, whose label can be any text: here
-`besidePicture`, a block of these pages, puts the sea's map before its name. `fmtFlag` writes the
+`besidePicture`, a block of these pages, puts the sea's map before its name. In each sea the
+islands go from northwest to southeast: sorted by the kilometres east of the centroid of the
+outline less the kilometres north, so islands at the same latitude go from west to east, and at
+the same longitude from north to south. The row of the other islands is added to the data, with
+its count where the outline goes: `fmtNanoplot` and `fmtImage` take `rows`, and skip it. `fmtFlag` writes the
 country's code as its flag, and `fmtCountry` the same code as the country's name. The map of each
 island is a small picture of its sea, drawn by `map.nim`, shown with `fmtImage`, which reads the
 file and puts it in the page; the outline is a shape nanoplot, as in the story. `summaryRows` adds
@@ -279,8 +311,27 @@ up each sea. The table sits in `nbWide`, wider than the text: it is made for a l
 it:
 Una tabella, un'isola per riga, raggruppata per mare con `tabRowGroup`, la cui etichetta può
 essere qualunque testo: qui `besidePicture`, un blocco di queste pagine, mette la carta del mare
-prima del suo nome. `fmtFlag` scrive il codice del paese come la sua bandiera, e `fmtCountry` lo
+prima del suo nome. In ogni mare le isole vanno da nord-ovest a sud-est: ordinate per i chilometri
+a est del baricentro del profilo meno i chilometri a nord, così le isole alla stessa latitudine
+vanno da ovest a est, e alla stessa longitudine da nord a sud. La riga delle altre isole è
+aggiunta ai dati, con il loro numero al posto del profilo: `fmtNanoplot` e `fmtImage` prendono
+`rows`, e la saltano. `fmtFlag` scrive il codice del paese come la sua bandiera, e `fmtCountry` lo
 stesso codice come il nome del paese. La carta di ogni isola è una piccola immagine del suo mare,
 disegnata da `map.nim`, mostrata con `fmtImage`, che legge il file e lo mette nella pagina; il
 profilo è un nanoplot shape, come nella storia. `summaryRows` somma ogni mare. La tabella sta in
 `nbWide`, più larga del testo: è fatta per uno schermo grande.
+
+en:
+Named after Gibraltar, *Jabal Ṭāriq* in Arabic, the mountain of Tariq, who landed under it in 711; the ancients called its two sides the Pillars of Hercules.
+it:
+Prende il nome da Gibilterra, *Jabal Ṭāriq* in arabo, il monte di Tariq, che sbarcò ai suoi piedi nel 711; gli antichi chiamavano le sue due sponde le Colonne d'Ercole.
+
+en:
+Named after Alborán, its one island far from the coasts, seven hectares of rock between Spain and Morocco; the name comes from Arabic.
+it:
+Prende il nome da Alborán, la sua sola isola lontana dalle coste, sette ettari di roccia fra la Spagna e il Marocco; il nome viene dall'arabo.
+
+en:
+The sea of the Ligurians, the people of the coast from the Rhône to the Arno before the Romans.
+it:
+Il mare dei Liguri, il popolo della costa dal Rodano all'Arno prima dei Romani.

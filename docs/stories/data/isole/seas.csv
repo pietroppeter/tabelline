@@ -1,0 +1,14 @@
+# The other islands of each sea, as the IHO draws them (Marine Regions, CC BY 4.0): OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL) that are not one of the list's 195, of 0.01 km² or more; how many (others) and their km² (others_km2).
+iho_sea,others,others_km2
+,8,0.7
+Adriatic Sea,597,195.2
+Aegean Sea,798,272.6
+Alboran Sea,16,4.7
+Balearic Sea,60,11.3
+Ionian Sea,139,49.8
+Ligurian Sea,7,0.7
+Mediterranean Sea - Eastern Basin,209,97.6
+Mediterranean Sea - Western Basin,152,29.2
+Sea of Marmara,28,17.4
+Strait of Gibraltar,1,0.1
+Tyrrhenian Sea,136,54.9

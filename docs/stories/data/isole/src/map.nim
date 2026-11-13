@@ -28,6 +28,7 @@ type Island = object
   lon, lat: float
   main: bool
   sea: string   # the IHO's sea it is in
+  middle: (float, float)   # the centroid of its outline, or its point
 var islands: seq[Island]
 var csv: CsvParser
 csv.open(here / "islands.csv")
@@ -38,6 +39,8 @@ while csv.readRow():
   islands.add Island(rank: csv.rowEntry("rank").parseInt, name: csv.rowEntry("island"), italian: csv.rowEntry("italian"), lon: csv.rowEntry("lon").parseFloat,
                      lat: csv.rowEntry("lat").parseFloat, main: csv.rowEntry("main") == "true",
                      sea: csv.rowEntry("iho_sea"))
+  islands[^1].middle = if csv.rowEntry("clon") == "": (islands[^1].lon, islands[^1].lat)
+                       else: (csv.rowEntry("clon").parseFloat, csv.rowEntry("clat").parseFloat)
 csv.close
 
 # ------------------------------------------------------------------------------ the land
@@ -184,7 +187,11 @@ const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
 
 # ------------------------------------------------------------------------------ the drawings
 # Equirectangular, east-west shrunk by the cosine of the map's middle latitude, 1000 wide.
-proc draw(file: string, w, e, s, n: float, italian = false) =
+proc draw(file: string, w, e, s, n: float, italian = false, seaNames = @seas, islandNames = @names,
+          groups: seq[(string, string, float, float)] = @[], highlight: seq[string] = @[], fontSize = 27) =
+  ## The land in the box, the main islands filled (or, with `highlight`, the islands named there),
+  ## the other islands of the list a dot, the names of the seas and islands given, and `groups`,
+  ## the names of groups of islands (English, Italian, longitude, latitude of their middle).
   let c = cos(((s + n) / 2).degToRad)
   let k = 1000 / ((e - w) * c)
   let height = round((n - s) * k).int
@@ -199,10 +206,12 @@ proc draw(file: string, w, e, s, n: float, italian = false) =
       last = q
     result.add "Z"
   var land, mainLand: string
+  let lit = islands.filterIt(it.name in highlight)
   for r in rings:
     if r.pts.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
-    if r.main: mainLand.add r.pts.path else: land.add r.pts.path
-  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="27">
+    let mine = if highlight.len == 0: r.main else: lit.anyIt(r.pts.contains(it.middle) or r.pts.contains((it.lon, it.lat)))
+    if mine: mainLand.add r.pts.path else: land.add r.pts.path
+  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="{fontSize}">
 <rect class="sea" width="100%" height="100%"/>
 <path class="land" d="{land}"/>
 <path class="main" d="{mainLand}"/>
@@ -215,22 +224,25 @@ proc draw(file: string, w, e, s, n: float, italian = false) =
   svg.add &"""<path class="limit" d="{lines}"/>""" & "\n"
   let inside = proc (i: Island): bool = i.lon in w .. e and i.lat in s .. n
   for i in islands:
-    if i.main or not inside(i): continue
+    if (i.main and highlight.len == 0) or i.name in highlight or not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
     svg.add &"""<circle cx="{f x}" cy="{f y}" r="5" class="dot"/>""" & "\n"
-  for (english, italiano, lon, lat) in seas:
+  for (english, italiano, lon, lat) in seaNames:
     if lon notin w .. e or lat notin s .. n: continue
     let (x, y) = xy((lon, lat))
     let lines = (if italian: italiano else: english).split('|')
-    let size = if english == "Sea of Marmara": 22 else: 27   # a small sea between islands
+    let size = if english == "Sea of Marmara": 22 else: fontSize   # a small sea between islands
     for i, line in lines:
-      let dy = (i.float - (lines.len - 1) / 2) * 32 + 9
+      let dy = (i.float - (lines.len - 1) / 2) * (size.float * 1.2) + size / 3
       svg.add &"""<text x="{f x}" y="{f y + dy}" text-anchor="middle" font-size="{size}" class="sea-name">{line}</text>""" & "\n"
-  for (name, dx, dy, anchor) in names:
+  for (english, italiano, lon, lat) in groups:
+    let (x, y) = xy((lon, lat))
+    svg.add &"""<text x="{f x}" y="{f y + fontSize / 3}" text-anchor="middle" class="name">{(if italian: italiano else: english)}</text>""" & "\n"
+  for (name, dx, dy, anchor) in islandNames:
     let i = islands.filterIt(it.name == name)[0]
     if not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
-    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" class="name">{(if italian: i.italian else: i.name)}</text>""" & "\n"
+    svg.add &"""<text x="{f x + dx}" y="{f y + dy + fontSize / 3}" text-anchor="{anchor}" class="name">{(if italian: i.italian else: i.name)}</text>""" & "\n"
   svg.add "</svg>\n"
   writeFile(output / file, svg)
   echo file, ": ", svg.len div 1024, " kB"
@@ -239,6 +251,17 @@ draw("map-west.svg", -6.0, 18.9, 32.6, 46.0)
 draw("map-east.svg", 17.2, 36.3, 31.3, 41.5)
 draw("map-west-it.svg", -6.0, 18.9, 32.6, 46.0, italian = true)
 draw("map-east-it.svg", 17.2, 36.3, 31.3, 41.5, italian = true)
+
+# Sicily and its islands, the ones of the list filled, and Malta nearby (map-sicily.svg).
+const sicilyIslands = @["Sicily", "Pantelleria", "Lipari", "Salina", "Vulcano", "Lampedusa", "Favignana", "Stromboli",
+                        "Marettimo", "Filicudi", "Ustica", "Levanzo"]
+const sicilySeas = @[("Tyrrhenian|Sea", "Mar|Tirreno", 12.45, 38.65), ("Strait of|Sicily", "Canale di|Sicilia", 13.0, 36.5),
+                     ("Ionian|Sea", "Mar|Ionio", 15.3, 36.3)]
+const sicilyNames = @[("Sicily", 0.0, 0.0, "middle"), ("Ustica", 20.0, 0.0, "start"), ("Pantelleria", 22.0, 0.0, "start"),
+                      ("Lampedusa", 22.0, 0.0, "start"), ("Malta", 0.0, 46.0, "middle"), ("Gozo", -20.0, 0.0, "end")]
+const sicilyGroups = @[("Aeolian Islands", "Isole Eolie", 14.8, 39.0), ("Egadi Islands", "Isole Egadi", 12.32, 38.36)]
+for (file, italian) in [("map-sicily.svg", false), ("map-sicily-it.svg", true)]:
+  draw(file, 11.7, 15.8, 35.3, 39.1, italian, sicilySeas, sicilyNames, sicilyGroups, sicilyIslands, fontSize = 40)
 
 # ------------------------------------------------------------------------------ the locators
 # For the table of every island, by sea (stories/isole-tutte/): a small map of each of the IHO's

@@ -238,13 +238,6 @@ OpenStreetMap ha 56.300 punti attorno alla Sicilia; il passo di estrazione dei d
 nella 0.2: "km²" in HTML e nel testo. I numeri sono scritti all'italiana perché la tabella ha
 `locale = lang`.
 
-en:
-Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
-3,357 m, the highest active volcano in Europe outside the Caucasus.
-it:
-La Sicilia è un triangolo di 25.834 km² con cinque milioni di abitanti, e il suo punto più alto
-è l'Etna, 3.357 m, il vulcano attivo più alto d'Europa fuori dal Caucaso.
-
 en: The dolphins of Knossos
 it: I delfini di Cnosso
 
@@ -1754,11 +1747,8 @@ it: Le isole principali per paese
 en: with all the others
 it: con tutte le altre
 
-
 en: Western Basin
 it: Bacino occidentale
-
-
 
 
 
@@ -1823,3 +1813,61 @@ en:
 Each island is in the sea around most of its coast, as the IHO draws them (*Limits of Oceans and Seas*, 1953, from [Marine Regions](https://www.marineregions.org/), CC BY 4.0); the islands and their areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).
 it:
 Ogni isola sta nel mare intorno alla maggior parte della sua costa, come li traccia l'IHO (*Limits of Oceans and Seas*, 1953, da [Marine Regions](https://www.marineregions.org/), CC BY 4.0); le isole e le loro superfici: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).
+
+en:
+Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
+3,357 m, the highest active volcano in Europe outside the Caucasus.
+
+It is also an island of islands. Eleven of the 195 are around it, all part of Sicily's region:
+the seven volcanoes of the Aeolian Islands to the north, five of them in the list (Alicudi and
+Panarea are too small for it); Ustica, alone in the Tyrrhenian; the Egadi, off the western tip;
+Pantelleria, closer to Tunisia than to Sicily; and Lampedusa, of the Pelagie, the southernmost
+land of Italy, with Linosa, too small for the list. Malta, 80 km south of Sicily, is not one of
+them: with Gozo and Comino it is a country of its own.
+it:
+La Sicilia è un triangolo di 25.834 km² con cinque milioni di abitanti, e il suo punto più alto
+è l'Etna, 3.357 m, il vulcano attivo più alto d'Europa fuori dal Caucaso.
+
+È anche un'isola di isole. Undici delle 195 le stanno intorno, tutte della regione Sicilia: i sette
+vulcani delle Eolie a nord, cinque nella lista (Alicudi e Panarea sono troppo piccole); Ustica,
+sola nel Tirreno; le Egadi, davanti alla punta occidentale; Pantelleria, più vicina alla Tunisia
+che alla Sicilia; e Lampedusa, delle Pelagie, la terra più a sud d'Italia, con Linosa, troppo
+piccola per la lista. Malta, 80 km a sud della Sicilia, non è fra loro: con Gozo e Comino è un
+paese a sé.
+
+en: on their own
+it: per conto loro
+
+en: Aeolian Islands
+it: Isole Eolie
+
+en: Pelagie Islands
+it: Isole Pelagie
+
+en: Egadi Islands
+it: Isole Egadi
+
+en: Sicily's islands
+it: Le isole della Sicilia
+
+en: the eleven of the list
+it: le undici della lista
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); the highest points from Wikidata and, where it gives the height of the town, from the islands' articles; outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (superficie, abitanti); i punti più alti da Wikidata e, dove dà l'altitudine del paese, dalle voci delle isole; profili © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+
+en:
+The islands are grouped by a column made before the table, `group`: the archipelago, or "on
+their own". With `autoscale = true` every shape is at the scale of the largest, Pantelleria, so
+Lampedusa and Lipari can be compared. The table's area keeps a decimal, `fmtNumber` with
+`decimals = 1`, as the small islands' areas are given to a tenth.
+it:
+Le isole sono raggruppate da una colonna fatta prima della tabella, `group`: l'arcipelago, o "per
+conto loro". Con `autoscale = true` ogni profilo è alla scala del più grande, Pantelleria, così
+Lampedusa e Lipari si possono confrontare. La superficie tiene un decimale, `fmtNumber` con
+`decimals = 1`, perché le superfici delle isole piccole sono date al decimo.
+
+en: Sicily and its islands; Malta, to the south, is a country of its own
+it: La Sicilia e le sue isole; Malta, a sud, è un paese a sé

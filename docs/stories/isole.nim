@@ -303,7 +303,55 @@ nbText: tr"""
 Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
 3,357 m, the highest active volcano in Europe outside the Caucasus.
 
+It is also an island of islands. Eleven of the 195 are around it, all part of Sicily's region:
+the seven volcanoes of the Aeolian Islands to the north, five of them in the list (Alicudi and
+Panarea are too small for it); Ustica, alone in the Tyrrhenian; the Egadi, off the western tip;
+Pantelleria, closer to Tunisia than to Sicily; and Lampedusa, of the Pelagie, the southernmost
+land of Italy, with Linosa, too small for the list. Malta, 80 km south of Sicily, is not one of
+them: with Gozo and Comino it is a country of its own.
 """
+
+nbShowCode:
+  let around = ["Lipari", "Salina Island", "Vulcano", "Stromboli", "Filicudi", "Ustica", "Favignana",
+                "Marettimo", "Levanzo", "Pantelleria", "Lampedusa"]
+  let some = islands.keep(proc (i: int): bool = $islands["title", i] in around)
+  let d = some
+    .withColumn("shape", proc (i: int): Value = some.outline(i))
+    .withColumn("group", proc (i: int): Value =
+      toValue(if some["archipelago", i].isNull: tr"on their own" else: tr($some["archipelago", i])))
+  let t = tabella(d, rownameCol = "island", groupnameCol = "group", locale = lang):
+    tabHeader tr"Sicily's islands", tr"the eleven of the list"
+    optCssTheme()
+    colsHide everything()
+    colsUnhide ["shape", "km2", "population", "elevation"]
+    colsMove ["shape"], after = "island"
+    rowGroupOrder ["Aeolian Islands", "Egadi Islands", "Pelagie Islands", "on their own"].mapIt(tr(it))
+    fmtNanoplot "shape", plotType = "shape", plotHeight = "3em", autoscale = true, options = sea
+    fmtNumber ["km2"], decimals = 1
+    fmtInteger ["population", "elevation"]
+    colsLabel:
+      population: tr"population"
+      shape: ""
+      km2: tr"area, {{km^2}}"
+      elevation: tr"highest, {{m}}"
+    grandSummaryRows:
+      total: agg.sum
+      columns = ["km2", "population"]
+      missingText = ""
+      fmtInteger(sepMark = localeMarks(lang).sep)
+    textTransform tr, loc.grandSummaryStub()
+    tabSourceNote md(tr"Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); the highest points from Wikidata and, where it gives the height of the town, from the islands' articles; outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).")
+  nbTable t
+
+nbNote(tr"""
+The islands are grouped by a column made before the table, `group`: the archipelago, or "on
+their own". With `autoscale = true` every shape is at the scale of the largest, Pantelleria, so
+Lampedusa and Lipari can be compared. The table's area keeps a decimal, `fmtNumber` with
+`decimals = 1`, as the small islands' areas are given to a tenth.
+""", nkCode)
+
+nbDrawing data / (if lang == "it": "map-sicily-it.svg" else: "map-sicily.svg"), tr"Sicily and its islands; Malta, to the south, is a country of its own"
+
 photoHeading "Thirty-five islands", "dolphins-knossos", "The dolphins of Knossos"
 nbText: tr"""
 

@@ -2,7 +2,7 @@
 ## west to east: every island of the list with what the story knows of it. A page beside the
 ## story (isole.nim), in English and, through isole_tutte_it.nim, in Italian (its texts in
 ## data/isole/tutte-italiano.txt). Written to stories/isole-tutte/ and stories/isole-tutte-it/.
-import std/[os, strutils, sequtils, tables, sets, math]
+import std/[os, strutils, sequtils, tables, sets, math, algorithm]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks, ../theme
@@ -29,8 +29,9 @@ nbText: tr"""
 This is the long list behind the story [Islands of the Mediterranean](../isole/index.html): its 195
 islands, each in the sea around most of its coast, as the International Hydrographic Organization
 drew the seas in 1953. It is one big table, made for a large screen: the seas from west to east,
-each with its map and where its name comes from, and its islands from the largest down, each with
-a small map of where it is in its sea and its outline at its own scale.
+each with its map and where its name comes from, and its islands from northwest to southeast, each
+with a small map of where it is in its sea and its outline at its own scale; then a row for the
+sea's other islands, the ones too small for the list.
 """
 
 nbNote(tr"""
@@ -62,29 +63,43 @@ proc name(i: int): string =
 proc text(v: Value): string = (if v.isNull: "" else: $v)
 
 type Row = object
-  rank: int
-  sea, code, island, native, country, archipelago, map: string
+  rank, sea, code, island, native, country, archipelago, map: string
   shape: Value
-  km2, length, coast, people, density, highest: float
-  heritage, airports: int
+  km2, length, coast, people, density, highest, heritage, airports: float
+  diagonal: float   # km east less km north of its centroid: the order from northwest to southeast
 
 var rows: seq[Row]
 for i in 0 ..< islands.nrows:
-  let km2 = islands["km2", i].toFloat
+  # Île du Levant has no area in the list: the area of its outline
+  let km2 = if islands["km2", i].toFloat > 0: islands["km2", i].toFloat else: islands["outline_km2", i].toFloat
   let people = if islands["population", i].isNull: NaN else: islands["population", i].toFloat
   let num = proc (c: string): float = (if islands[c, i].isNull: NaN else: islands[c, i].toFloat)
-  rows.add Row(rank: ($islands["rank", i]).parseInt, sea: $islands["iho_sea", i], island: name(i),
+  let (lon, lat) = if islands["clon", i].isNull: (num("lon"), num("lat")) else: (num("clon"), num("clat"))
+  rows.add Row(rank: $islands["rank", i], sea: $islands["iho_sea", i], island: name(i),
                native: (let n = text(islands["native", i]); if n == name(i) or n == $islands["island", i]: "" else: n), code: $islands["code", i], country: $islands["code", i],
                archipelago: (let a = text(islands["archipelago", i]); if a.len > 0: tr(a) else: ""), map: $islands["rank", i], shape: outline(i),
                km2: km2, length: length(i), coast: num("coast_km"), people: people,
                density: (if people.isNaN: NaN else: people / km2), highest: num("elevation"),
-               heritage: islands["heritage", i].toFloat.int, airports: islands["airports", i].toFloat.int)
+               heritage: islands["heritage", i].toFloat, airports: islands["airports", i].toFloat,
+               diagonal: lon * 111.32 * cos(degToRad(lat)) - lat * 110.57)
+
+# each sea's other islands, in one row: how many in place of the outline, and their area
+let others = readCsv(data / "seas.csv", comment = "#")
+for j in 0 ..< others.nrows:
+  if others["iho_sea", j].isNull: continue
+  rows.add Row(sea: $others["iho_sea", j], island: tr"other islands", shape: toValue(if ($others["others", j]) == "1": tr"one island" else: $others["others", j] & "\u00A0" & tr"islands"),
+               km2: others["others_km2", j].toFloat, length: NaN, coast: NaN, people: NaN, density: NaN,
+               highest: NaN, heritage: NaN, airports: NaN, diagonal: Inf)
+rows.sort(proc (a, b: Row): int = cmp(a.diagonal, b.diagonal))   # a group keeps the order of the data
 
 let sea = nanoplotOptions(dataBarFillColor = tint("--secondary"), dataBarStrokeColor = tint("--secondary-text"))
 
 # ------------------------------------------------------------------------------ the seas
 const seas = [
+  ("Strait of Gibraltar", """Named after Gibraltar, *Jabal Ṭāriq* in Arabic, the mountain of Tariq, who landed under it in 711; the ancients called its two sides the Pillars of Hercules."""),
+  ("Alboran Sea", """Named after Alborán, its one island far from the coasts, seven hectares of rock between Spain and Morocco; the name comes from Arabic."""),
   ("Balearic Sea", """The sea of the Balearic Islands, between them and Spain's coast; the IHO also calls it the Iberian Sea."""),
+  ("Ligurian Sea", """The sea of the Ligurians, the people of the coast from the Rhône to the Arno before the Romans."""),
   ("Mediterranean Sea - Western Basin", """What the IHO leaves of the west once its seas are named: the open water from Spain and Africa to Corsica, Sardinia and the line from Sicily to Cape Bon. The Sea of Sardinia is in it, a name with no limits of its own."""),
   ("Tyrrhenian Sea", """The sea of the Tyrrhenians, the Greeks' name for the Etruscans."""),
   ("Adriatic Sea", """Named after Adria, an Etruscan town near the mouth of the Po; the Romans also called it the upper sea, *Mare Superum*."""),
@@ -104,16 +119,16 @@ nbWide:
   var t = tabella(rows, rownameCol = "rank", locale = lang):
     tabHeader tr"All 195 islands", tr"by the IHO's seas, from west to east"
     optCssTheme()
-    colsHide ["sea"]
+    colsHide ["sea", "diagonal"]
     colsMove ["map", "shape"], after = "archipelago"
     fmtFlag "code"
     fmtCountry "country"
-    textTransform tr, loc.body(cols("country"))   # the country's name in the page's language
-    fmtImage "map", path = data / "locators", filePattern = "{x}.svg", height = "2.5em", alt = ""
-    fmtNanoplot "shape", plotType = "shape", plotHeight = "2.5em", options = sea
+    textTransform (proc (s: string): string = (if s.len > 0: tr(s) else: "")), loc.body(cols("country"))   # the country's name in the page's language
+    fmtImage "map", rows = where(it["island"] != tr"other islands"), path = data / "locators", filePattern = "{x}.svg", height = "2.5em", alt = ""
+    fmtNanoplot "shape", rows = where(it["island"] != tr"other islands"), plotType = "shape", plotHeight = "2.5em", options = sea
     fmt ["km2", "density"], smallDecimals
     fmtInteger ["length", "coast", "people", "highest", "heritage", "airports"]
-    subMissing ["people", "density", "highest", "coast", "length"], missingText = "—"
+    subMissing ["people", "density", "highest", "coast", "length"], rows = where(it["island"] != tr"other islands"), missingText = "—"
     subZero ["people", "density", "heritage", "airports"], zeroText = "·"
     subZero ["highest"], zeroText = "—"   # Wikidata's 0 m for Antikythera is no height
     colsLabel:
@@ -139,14 +154,17 @@ nbWide:
     tabFootnote tr"The name in the island's own language, from Wikidata; · no one lives there, — a number nobody gave.", loc.columnLabels(cols("native"))
     tabOptions(footnotesMarks = fmStandard, rowGroupPadding = "10px")
   for (name, origin) in seas:
-    let picks = toSeq(0 ..< rows.len).filterIt(rows[it].sea == name)
+    let picks = toSeq(0 ..< rows.len).filterIt(rows[it].sea == name).sortedByIt(rows[it].diagonal)
+    let listed = picks.countIt(rows[it].rank.len > 0)
     let short = tr(name.replace("Mediterranean Sea - ", ""))
     t = t.tabRowGroup(besidePicture(data / "seas" / (name.replace(' ', '_') & ".svg"),
-                                    "**" & short & "**, " & $picks.len & " " & tr"islands" & ". " & tr(origin),
+                                    "**" & short & "**, " & (if listed == 0: tr"no island of the list" elif listed == 1: tr"one island of the list" else: $listed & " " & tr"islands of the list") & ". " & tr(origin),
                                     height = "4.5em", alt = short), picks, id = name)
   # each sea's total, once the seas are groups
   let sep = localeMarks(lang).sep
-  t = t.summaryRows({"total": agg.sum}, fmt = proc (x: float): string = formatNumber(x, 0, sepMark = sep),
+  let dec = localeMarks(lang).dec
+  t = t.summaryRows({"total": agg.sum}, fmt = proc (x: float): string =
+                      formatNumber(x, (if x == round(x) or x >= 10: 0 elif x < 1: 2 else: 1), sepMark = sep, decMark = dec),
                     columns = ["km2", "people", "heritage", "airports"], missingText = "")
   t = t.textTransform(tr, loc.summaryStub())
   nbTable t
@@ -161,7 +179,11 @@ measured on the simplified outline, so it can be a little short of the true one.
 
 nbNote(tr"""
 One table, an island a row, grouped by sea with `tabRowGroup`, whose label can be any text: here
-`besidePicture`, a block of these pages, puts the sea's map before its name. `fmtFlag` writes the
+`besidePicture`, a block of these pages, puts the sea's map before its name. In each sea the
+islands go from northwest to southeast: sorted by the kilometres east of the centroid of the
+outline less the kilometres north, so islands at the same latitude go from west to east, and at
+the same longitude from north to south. The row of the other islands is added to the data, with
+its count where the outline goes: `fmtNanoplot` and `fmtImage` take `rows`, and skip it. `fmtFlag` writes the
 country's code as its flag, and `fmtCountry` the same code as the country's name. The map of each
 island is a small picture of its sea, drawn by `map.nim`, shown with `fmtImage`, which reads the
 file and puts it in the page; the outline is a shape nanoplot, as in the story. `summaryRows` adds

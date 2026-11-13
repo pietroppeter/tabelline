@@ -19,7 +19,7 @@ rank,island,italian,title,country,code,locale,km2,population,per_km2,coast_km,el
 17,Samos,Samo,Samos,Greece,GR,el,476.0,32973,69.0,184.6,1434.0,,"Vathy, Samos",Aegean Sea,1,1,North Aegean,16800.0,42.0,6.4,2022,452792,13.5,32.8,
 18,Naxos,Nasso,Naxos (island),Greece,GR,el,428.0,17970,42.0,149.6,1003.0,Cyclades,Naxos (city),Aegean Sea,0,1,South Aegean,27900.0,70.0,7.3,2022,123220,14.4,27.0,
 19,Zakynthos,Zante,Zakynthos,Greece,GR,el,406.0,40758,100.0,182.7,758.0,,Zakynthos (city),Ionian Sea,0,1,Ionian Islands,25300.0,63.0,9.0,2022,1903404,14.4,30.6,
-20,Cres,Cherso,Cres (island),Croatia,HR,hr,405.78,3079,8.0,285.5,,Dalmatian Archipelago,Cres (town),Adriatic Sea,0,0,Adriatic Croatia,29200.0,73.0,5.5,,,10.2,28.4,
+20,Cres,Cherso,Cres (island),Croatia,HR,hr,405.78,3079,8.0,285.5,639.0,Dalmatian Archipelago,Cres (town),Adriatic Sea,0,0,Adriatic Croatia,29200.0,73.0,5.5,,,10.2,28.4,
 21,Krk,Veglia,Krk (island),Croatia,HR,hr,405.78,19383,48.0,246.1,568.1,Dalmatian Archipelago,Krk (town),Adriatic Sea,0,1,Adriatic Croatia,29200.0,73.0,5.5,2022,164086,9.4,30.0,24.9
 22,Brač,Brazza,Brač,Croatia,HR,hr,394.57,13956,35.0,188.8,780.0,Dalmatian Archipelago,Supetar,Adriatic Sea,0,1,Adriatic Croatia,29200.0,73.0,5.5,2022,15948,10.7,30.9,
 23,Andros,Andro,"Andros, Greece",Greece,GR,el,380.0,9221,24.0,206.7,995.0,,Andros (town),Aegean Sea,0,0,South Aegean,27900.0,70.0,7.3,,,12.8,30.0,

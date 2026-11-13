@@ -69,7 +69,7 @@ let islands = rd(stage / "islands.csv")
         on = ["title"], how = JoinType.Left)
   .join(properties.groupBy(col.title).agg(len().alias("heritage")), on = ["title"], how = JoinType.Left)
   .join(airports.groupBy(col.title).agg(len().alias("airports")), on = ["title"], how = JoinType.Left)
-  .join(rd(stage / "every_island.csv").filter(col.title.isNotNull).select(col.title, col.iho_sea),
+  .join(rd(stage / "every_island.csv").filter(col.title.isNotNull).select(col.title, col.iho_sea, col.clon.num, col.clat.num),
         on = ["title"], how = JoinType.Left)
   .select(col.rank.int64, col.label.alias("island"), col.title,
           # two islands tabelline's isole has no country for
@@ -82,9 +82,9 @@ let islands = rd(stage / "islands.csv")
           col.town, col.wikidata, col.lat.num, col.lon.num, col.elevation.num,
           col.archipelago, col.native, col.italian, (col.main == "true").alias("main"), col.sea, col.sea_how,
           col.outline_km2, col.coast_km, col.points, col.matched,
-          col.heritage.fillNull(0), col.airports.fillNull(0), col.iho_sea, col.x, col.y)
+          col.heritage.fillNull(0), col.airports.fillNull(0), col.iho_sea, col.clon, col.clat, col.x, col.y)
   .sort("rank").collect
-islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, Italian name, sea), the country's ISO code, the sea as the IHO draws them (Marine Regions, CC BY 4.0), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
+islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, Italian name, sea), the country's ISO code, the sea as the IHO draws them (Marine Regions, CC BY 4.0), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, its centroid clon and clat, x and y in km) and the counts of World Heritage properties and airports on it.")
 
 # ---------------------------------------------------------------- 2. what is on them
 
@@ -167,6 +167,16 @@ rd(stage / "every_island.csv")
        col.people.count.alias("peopled"))
   .sort("km2", descending = true).collect
   .save("countries.csv", "Every island of the Mediterranean, by country: OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals, nor islands in lakes), the country from Natural Earth (public domain), the area and people from Wikipedia's list for its 195 islands, and for the others the polygon's area and the people on Wikidata (P1082). islands: every polygon; hectare: those of 0.01 km² or more; listed and main: of the 195 and the 35; peopled: those with a count.")
+
+# Every island of the sea, by the IHO's sea: the other islands, not the list's, of a hectare or
+# more (smaller ones are mostly rocks, and some piers and breakwaters drawn as land).
+rd(stage / "every_island.csv")
+  .select(col.title, col.km2.num, col.iho_sea)
+  .filter(col.title.isNull and col.km2 >= 0.01)
+  .groupBy(col.iho_sea)
+  .agg(len().alias("others"), col.km2.sum.round(1).alias("others_km2"))
+  .sort("iho_sea").collect
+  .save("seas.csv", "The other islands of each sea, as the IHO draws them (Marine Regions, CC BY 4.0): OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL) that are not one of the list's 195, of 0.01 km² or more; how many (others) and their km² (others_km2).")
 
 let gdp = rd(stage / "gdp.csv")
   .select(col.region, col.pps_per_person.num, col.pps_index.num, col.population_m.num)

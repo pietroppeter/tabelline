@@ -67,17 +67,39 @@ for w in readRows(raw / "wd_islands.csv"):
   if w["elevation"].len > 0 and isl.elevation.isNaN: isl.elevation = w["elevation"].parseFloat
   if w["archipelagoLabel"].len > 0 and isl.archipelago.len == 0: isl.archipelago = w["archipelagoLabel"]
   if w["native"].len > 0 and w["native"] notin isl.native: isl.native.add w["native"]
-# The highest point, when Wikidata names one and it is higher than the island's own elevation;
-# Sardinia's and Cyprus's by hand, from Wikipedia (Punta La Marmora, Mount Olympus), as Wikidata
-# names no highest point for them and gives Sardinia an elevation of 384 m.
-const peaksByHand = {"Sardinia": 1834.0, "Geography of Cyprus": 1952.0}
+# The highest point, when Wikidata names one (P610) and it is higher than the island's own
+# elevation (P2044), which is sometimes another height: Sardinia's is 384 m, and for many small
+# islands it is the elevation of the town (Lipari's 5 m, Pantelleria's 5 m). The islands below are
+# by hand, from the infobox or the text of their Wikipedia article (English; Italian, French or
+# Greek where it says more), read on 13 Nov 2026: the ones whose Wikidata height was the town's
+# or was missing. The rest keep Wikidata's.
+const peaksByHand = {
+  "Sardinia": 1834.0, "Geography of Cyprus": 1952.0,             # Punta La Marmora, Mount Olympus
+  "Pantelleria": 836.0, "Lipari": 602.0, "Favignana": 314.0,     # Montagna Grande, Monte Chirica, Santa Caterina (it)
+  "Ustica": 244.0, "Sant'Antioco": 271.0, "Isola del Giglio": 496.0, "Capraia": 466.0, "Caprera": 212.0,
+  "Serifos": 585.0, "Gavdos": 345.0, "Kastos": 142.0, "Antikythera": 378.0, "Fourni Korseon": 470.0,
+  "Elafonisos": 277.0, "Agathonisi": 209.0, "Salamis Island": 404.0, "Amorgos": 823.0, "Kasos": 550.0,
+  "Tilos": 654.0, "Symi": 617.0, "Leros": 320.0, "Halki (Greece)": 601.0, "Kastellorizo": 273.0,
+  "Alimia": 274.0, "Dia (island)": 220.0,
+  "Cres (island)": 639.0, "Pašman": 272.0, "Premuda": 88.0, "Plavnik": 194.0, "Ilovik": 95.0,
+  "Sazan Island": 344.0, "Porquerolles": 142.0, "Port-Cros": 199.0}   # Sazan (en), Porquerolles and Port-Cros (fr)
 for w in readRows(raw / "wd_peaks.csv"):
   if w["title"] notin byPage: continue
   var isl = addr islands[byPage[w["title"]]]
   let e = w["elevation"].parseFloat
   if isl.elevation.isNaN or e > isl.elevation: isl.elevation = e
-for (title, e) in peaksByHand:
-  if title in byPage: islands[byPage[title]].elevation = e
+for isl in islands.mitems:
+  for (title, e) in peaksByHand:
+    if isl.row.title == title or page.getOrDefault(isl.row.title) == title: isl.elevation = e
+
+# The archipelagos of Sicily's islands that Wikidata does not give (P361): Lipari is the largest
+# of the Aeolian Islands, Favignana, Marettimo and Levanzo are the Egadi, Lampedusa is the
+# largest of the Pelagie (Wikipedia, read on 13 Nov 2026).
+const archipelagosByHand = {"Lipari": "Aeolian Islands", "Favignana": "Egadi Islands", "Marettimo": "Egadi Islands",
+                            "Levanzo": "Egadi Islands", "Lampedusa": "Pelagie Islands"}
+for isl in islands.mitems:
+  for (title, a) in archipelagosByHand:
+    if isl.row.title == title and isl.archipelago.len == 0: isl.archipelago = a
 
 # Three islands whose page has no Wikidata item (a redirect or a page that does not exist):
 # a point from the {{coord}} of the Wikipedia article that stands for them, read by hand on 13
@@ -195,6 +217,16 @@ proc contains(r: Ring, lon, lat: float): bool =
     if (yi > lat) != (yj > lat) and lon < (xj - xi) * (lat - yi) / (yj - yi) + xi:
       result = not result
     j = i
+
+proc centroid(r: Ring): (float, float) =
+  ## The ring's centroid (lon, lat), the middle of its area, in degrees: close enough at this size.
+  var (a, cx, cy) = (0.0, 0.0, 0.0)
+  for i in 0 .. r.pts.high:
+    let (x1, y1) = r.pts[i]
+    let (x2, y2) = r.pts[(i + 1) mod r.pts.len]
+    let f = x1 * y2 - x2 * y1
+    a += f; cx += (x1 + x2) * f; cy += (y1 + y2) * f
+  if a == 0: ((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2) else: (cx / (3 * a), cy / (3 * a))
 
 proc distanceKm(r: Ring, lon, lat: float): float =
   ## The distance from the point to the closest vertex of the ring.
@@ -356,17 +388,24 @@ proc ihoSeaOf(r: Ring): string =
     if votes.max > 0: return ihoSeas[votes.maxIndex]
   ""
 
+# An islet whose closest country in Natural Earth is not its own: Alborán, 7 ha, Spanish, is closer
+# to Morocco's coast than to Spain's (Wikipedia, Alborán Island: 35.9394 N, 3.0347 W).
+const countriesByHand = [(-3.0347, 35.9394, "ES")]
+proc countryOf(r: Ring): string =
+  for (lon, lat, code) in countriesByHand:
+    if r.contains(lon, lat): return code
+  countryOf((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2)
+
 var everyRows: seq[seq[string]]
 for k in inMed:
   let r = rings[k]
-  everyRows.add @[(if r.island >= 0: islands[r.island].row.title else: ""),
-                  countryOf((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2),
+  everyRows.add @[(if r.island >= 0: islands[r.island].row.title else: ""), r.countryOf,
                   formatFloat(r.km2, ffDecimal, 4), (if k in people: $people[k].int else: ""),
                   formatFloat((r.lo[0] + r.hi[0]) / 2, ffDecimal, 4), formatFloat((r.lo[1] + r.hi[1]) / 2, ffDecimal, 4),
-                  r.ihoSeaOf]
+                  r.ihoSeaOf, formatFloat(r.centroid[0], ffDecimal, 4), formatFloat(r.centroid[1], ffDecimal, 4)]
 echo everyRows.len, " islands in the sea"
-writeCsv(stage / "every_island.csv", "Every island of the Mediterranean: each of OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals; lakes are land there), the list's island it is (title), its country from Natural Earth's countries (public domain; the one that holds its middle, or the closest), its km², and the largest count of people on Wikidata (P1082) of an island whose point is on it; the middle of its box (lon, lat); its sea as the IHO draws them (Limits of Oceans and Seas, 1953; Marine Regions, CC BY 4.0), the one around most of its coast.",
-  ["title", "code", "km2", "wd_people", "lon", "lat", "iho_sea"], everyRows)
+writeCsv(stage / "every_island.csv", "Every island of the Mediterranean: each of OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals; lakes are land there), the list's island it is (title), its country from Natural Earth's countries (public domain; the one that holds its middle, or the closest; Alborán by hand), its km², and the largest count of people on Wikidata (P1082) of an island whose point is on it; the middle of its box (lon, lat); its sea as the IHO draws them (Limits of Oceans and Seas, 1953; Marine Regions, CC BY 4.0), the one around most of its coast; and the centroid of its outline (clon, clat).",
+  ["title", "code", "km2", "wd_people", "lon", "lat", "iho_sea", "clon", "clat"], everyRows)
 
 proc perpendicular(p, a, b: (float, float)): float =
   let (dx, dy) = (b[0] - a[0], b[1] - a[1])
