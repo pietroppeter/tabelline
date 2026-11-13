@@ -509,7 +509,9 @@ echo t
 ### Requirement: Text transforms
 `textTransform(fn, locations)` SHALL change the shown text at locations (by default the body) with a
 proc: for body and stub cells the proc SHALL get the formatted text when the table is rendered, for
-labels and notes their text when the verb is called. `textReplace(pattern, replacement, locations)`
+labels and notes their text when the verb is called; the labels of summary rows
+(`loc.summaryStub()`, `loc.grandSummaryStub()`) SHALL change as shown text only, so a location that
+names a summary row by its label still finds it. `textReplace(pattern, replacement, locations)`
 SHALL replace a plain text, and `textCaseMatch(cases, default, replace, locations)` SHALL change
 texts that match a case (or, with `replace = "partial"`, the matching parts).
 

@@ -1,4 +1,4 @@
-# The main islands' country and NUTS 2 region (the region's name in Wikipedia's lists of Eurostat figures; Djerba is in Tunisia, outside them), the country's ISO code and a locale for its numbers. Written by Claude.
+# The main islands' country and NUTS 2 region (the region's name in Wikipedia's lists of Eurostat figures; Djerba is in Tunisia, outside them; Gökçeada's, Balıkesir, is only in the list of unemployment), the country's ISO code and a locale for its numbers. Written by Claude.
 title,code,locale,region
 Sicily,IT,it,Sicily
 Sardinia,IT,it,Sardinia
@@ -21,4 +21,17 @@ Naxos (island),GR,el,South Aegean
 Zakynthos,GR,el,Ionian Islands
 Cres (island),HR,hr,Adriatic Croatia
 Krk (island),HR,hr,Adriatic Croatia
+Brač,HR,hr,Adriatic Croatia
+"Andros, Greece",GR,el,South Aegean
+Thasos,GR,el,Eastern Macedonia and Thrace
+Lefkada,GR,el,Ionian Islands
+Karpathos,GR,el,South Aegean
+Hvar,HR,hr,Adriatic Croatia
+Kos,GR,el,South Aegean
+Pag (island),HR,hr,Adriatic Croatia
+Gökçeada,TR,tr,Balıkesir
+Kythira,GR,el,Attica
+Korčula (island),HR,hr,Adriatic Croatia
+Icaria,GR,el,North Aegean
 Malta (island),MT,mt,Malta
+Elba,IT,it,Tuscany

@@ -109,7 +109,7 @@ shx.close; shp.close
 # The Italian names of the seas are Claude's too, as in italiano.txt.
 const seas = [("Alboran Sea", "Mare di Alborán", -2.8, 36.1), ("Balearic|Sea", "Mare delle|Baleari", 5.2, 41.25),
               ("Sea of|Sardinia", "Mare di|Sardegna", 6.5, 38.6), ("Ligurian Sea", "Mar Ligure", 8.3, 43.65),
-              ("Tyrrhenian|Sea", "Mar|Tirreno", 12.4, 39.9), ("Adriatic|Sea", "Mare|Adriatico", 17.15, 42.15),
+              ("Tyrrhenian|Sea", "Mar|Tirreno", 12.4, 39.9), ("Adriatic|Sea", "Mare|Adriatico", 17.3, 41.75),
               ("Strait of|Sicily", "Canale di|Sicilia", 12.2, 36.3), ("the Mediterranean", "Mediterraneo", 6.0, 37.3),
               ("Ionian Sea", "Mar Ionio", 19.2, 36.6), ("Aegean Sea", "Mar Egeo", 25.0, 35.95),
               ("Libyan Sea", "Mar Libico", 24.0, 33.9), ("Levantine Sea", "Mar di Levante", 30.6, 33.6),
@@ -124,7 +124,12 @@ const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
                ("Krk", 14.0, -6.0, "start"), ("Euboea", -14.0, -20.0, "end"),
                ("Lemnos", 0.0, -24.0, "middle"), ("Lesbos", 16.0, 0.0, "start"),
                ("Chios", 16.0, 4.0, "start"), ("Samos", 16.0, 12.0, "start"),
-               ("Naxos", 0.0, 32.0, "middle"), ("Rhodes", 16.0, 10.0, "start")]
+               ("Naxos", 0.0, 32.0, "middle"), ("Rhodes", 16.0, 10.0, "start"),
+               ("Brač", -12.0, -16.0, "end"), ("Hvar", -14.0, 10.0, "end"), ("Korčula", -14.0, 36.0, "end"),
+               ("Pag", -14.0, 6.0, "end"), ("Elba", -14.0, 0.0, "end"), ("Lefkada", -14.0, 0.0, "end"),
+               ("Kythira", -14.0, 10.0, "end"), ("Andros", 14.0, -10.0, "start"), ("Icaria", 0.0, 28.0, "middle"),
+               ("Kos", 14.0, 6.0, "start"), ("Karpathos", 14.0, 10.0, "start"), ("Thasos", 0.0, -24.0, "middle"),
+               ("Gökçeada", 14.0, 0.0, "start")]
 
 # ------------------------------------------------------------------------------ the drawings
 # Equirectangular, east-west shrunk by the cosine of the map's middle latitude, 1000 wide.

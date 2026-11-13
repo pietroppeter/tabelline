@@ -96,10 +96,13 @@ Le parole che si potevano tradurre in più modi. La prima opzione, **A**, è que
 3. **I mari nella tabella del clima.** **A.** Ionio, Egeo, Adriatico, Tirreno, ma Mar Ligure, Mar
    di Levante e Mar delle Baleari. **B.** Tutti con "Mar": Mar Ionio, Mar Egeo, … A perché in
    italiano "lo Ionio" si dice da solo, "il Ligure" no; B è più regolare, ma più largo.
-4. **Cres, Krk e gli altri nomi con un esonimo.** **A.** Cherso, Veglia, Zante, Gerba, Nasso, come
-   in Wikidata. **B.** I nomi di oggi: Cres, Krk, Zacinto, Djerba, Naxos. A perché sono i nomi
-   italiani dei dizionari. Per Cherso e Veglia, però, il nome veneziano può sembrare una presa di
-   posizione: si può tenere A solo per le isole greche e tunisine.
+4. **Cres, Krk e gli altri nomi con un esonimo.** **A.** Cherso, Veglia, Brazza, Lesina, Curzola,
+   Pago, Zante, Cerigo, Scarpanto, Coo, Imbro, Gerba, Nasso, come in Wikidata. **B.** I nomi di
+   oggi: Cres, Krk, Brač, Hvar, Korčula, Pag, Zacinto, Citera, Karpathos, Kos, Gökçeada, Djerba,
+   Naxos. A perché sono i nomi italiani dei dizionari. Per le isole croate, però, il nome veneziano
+   può sembrare una presa di posizione, e Imbro oggi è turca: si può tenere A solo per le isole
+   greche e tunisine. Lo stesso vale per i luoghi: Ragusa per Dubrovnik, Spalato, Zara e Fiume
+   nelle fonti del clima, le isole Spalmadori (Pakleni) e la piana di Cittavecchia (Stari Grad).
 5. **Britain**, fra chi ha governato Malta, Cipro e Corfù. **A.** Regno Unito. **B.** Gran Bretagna.
    **C.** gli Inglesi, come Arabi e Ottomani. A perché è lo stato; C sarebbe più vicino alle altre
    colonne, che sono popoli.
@@ -120,6 +123,9 @@ Le parole che si potevano tradurre in più modi. La prima opzione, **A**, è que
     dal 1861. A perché la colonna è stretta.
 14. **ancient, middle ages, modern** (le tre epoche dei governanti). **A.** antichità, medioevo, età
     moderna. **B.** antico, medievale, moderno. A perché in italiano le epoche hanno un nome.
+15. **Türkiye**, come la scrive `fmtCountry` (dai nomi di CLDR), e **Turkey** nel testo. **A.**
+    Turchia, tutte e due. **B.** Türkiye nella tabella, come il nome ufficiale. A perché in italiano
+    si dice Turchia.
 """
 
 nbText: """

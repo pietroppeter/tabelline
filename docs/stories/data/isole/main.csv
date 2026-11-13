@@ -1,4 +1,4 @@
-# The 22 main islands (400 km² or more, and Malta), one row each: islands.csv with their region (regions.csv), its GDP per person in PPS and as % of the EU (2024) and unemployment (2025), the last year of passengers (passengers.csv), and the January and August highs and the August sea (climate.csv).
+# The 35 main islands (the largest, down to Elba, 224 km²), one row each: islands.csv with their region (regions.csv), its GDP per person in PPS and as % of the EU (2024) and unemployment (2025), the last year of passengers (passengers.csv), and the January and August highs and the August sea (climate.csv).
 rank,island,italian,title,country,code,locale,km2,population,per_km2,coast_km,elevation,archipelago,town,seas,heritage,airports,region,pps_per_person,pps_index,jobless_2025,pax_year,pax,high_jan,high_aug,sea_aug
 1,Sicily,Sicilia,Sicily,Italy,IT,it,25834.0,5010001,194.0,1348.6,3340.0,,Palermo,Tyrrhenian Sea; Strait of Sicily; Ionian Sea,6,5,Sicily,24500.0,61.0,12.2,2022,18108933,15.1,31.4,
 2,Sardinia,Sardegna,Sardinia,Italy,IT,it,24100.0,1656000,69.0,1628.2,384.0,,Cagliari,Tyrrhenian Sea; Sea of Sardinia,2,6,Sardinia,29000.0,73.0,9.3,2022,9097389,14.7,32.1,
@@ -21,4 +21,17 @@ rank,island,italian,title,country,code,locale,km2,population,per_km2,coast_km,el
 19,Zakynthos,Zante,Zakynthos,Greece,GR,el,406.0,40758,100.0,182.7,758.0,,Zakynthos (city),Ionian Sea,0,1,Ionian Islands,25300.0,63.0,9.0,2022,1903404,14.4,30.6,
 20,Cres,Cherso,Cres (island),Croatia,HR,hr,405.78,3079,8.0,285.5,,Dalmatian Archipelago,Cres (town),Adriatic Sea,0,0,Adriatic Croatia,29200.0,73.0,5.5,,,10.2,28.4,
 21,Krk,Veglia,Krk (island),Croatia,HR,hr,405.78,19383,48.0,246.1,568.0,Dalmatian Archipelago,Krk (town),Adriatic Sea,0,1,Adriatic Croatia,29200.0,73.0,5.5,2022,164086,9.4,30.0,24.9
+22,Brač,Brazza,Brač,Croatia,HR,hr,394.57,13956,35.0,188.8,780.0,Dalmatian Archipelago,Supetar,Adriatic Sea,0,1,Adriatic Croatia,29200.0,73.0,5.5,2022,15948,10.7,30.9,
+23,Andros,Andro,"Andros, Greece",Greece,GR,el,380.0,9221,24.0,206.7,995.0,,Andros (town),Aegean Sea,0,0,South Aegean,27900.0,70.0,7.3,,,12.8,30.0,
+24,Thasos,Taso,Thasos,Greece,GR,el,379.0,13765,36.0,131.0,1205.0,,Thasos (town),Aegean Sea,0,0,Eastern Macedonia and Thrace,17800.0,45.0,10.6,,,10.5,32.1,
+25,Lefkada,Leucade,Lefkada,Greece,GR,el,303.0,22076,73.0,153.6,,,Lefkada (city),Ionian Sea,0,0,Ionian Islands,25300.0,63.0,9.0,,,13.9,31.1,
+26,Karpathos,Scarpanto,Karpathos,Greece,GR,el,301.0,6181,21.0,203.4,1215.0,,"Pigadia, Karpathos",Aegean Sea,0,1,South Aegean,27900.0,70.0,7.3,2022,275007,16.2,29.5,
+27,Hvar,Lesina,Hvar,Croatia,HR,hr,299.66,11077,37.0,284.3,,Dalmatian Archipelago,Hvar (city),Adriatic Sea,1,0,Adriatic Croatia,29200.0,73.0,5.5,,,12.6,29.5,
+28,Kos,Coo,Kos,Greece,GR,el,290.0,33388,115.0,129.0,846.0,,Kos (town),Aegean Sea,0,1,South Aegean,27900.0,70.0,7.3,2022,2791590,14.3,31.0,
+29,Pag,Pago,Pag (island),Croatia,HR,hr,284.56,9059,32.0,332.5,349.0,Dalmatian Archipelago,Pag (town),Adriatic Sea,0,0,Adriatic Croatia,29200.0,73.0,5.5,,,10.8,28.2,
+30,Gökçeada,Imbro,Gökçeada,Turkey,TR,tr,279.0,8894,32.0,99.5,672.0,,Gökçeada,Aegean Sea,0,1,Balıkesir,,,5.6,2021,0,9.8,30.7,
+31,Kythira,Cerigo,Kythira,Greece,GR,el,278.0,3973,14.0,130.7,506.0,,Kythira (town),Aegean Sea; Ionian Sea,0,1,Attica,38200.0,96.0,8.1,2022,35018,13.0,29.0,
+32,Korčula,Curzola,Korčula (island),Croatia,HR,hr,276.03,15522,56.0,203.0,569.0,Dalmatian Archipelago,Korčula (town),Adriatic Sea,0,0,Adriatic Croatia,29200.0,73.0,5.5,,,12.3,28.5,25.4
+33,Icaria,Icaria,Icaria,Greece,GR,el,255.0,8423,33.0,127.6,,,Agios Kirykos,Aegean Sea,0,1,North Aegean,16800.0,42.0,6.4,2022,57240,13.5,32.8,
 34,Malta,Malta,Malta (island),Malta,MT,mt,246.0,409259,1664.0,179.5,239.0,Maltese Islands,Valletta,Strait of Sicily,3,1,Malta,43900.0,110.0,3.1,2022,5851079,15.7,32.0,
+35,Elba,Elba,Elba,Italy,IT,it,224.0,31572,141.0,177.0,1019.0,,Portoferraio,Ligurian Sea,0,1,Tuscany,41000.0,103.0,4.3,2024,1815,9.9,27.8,

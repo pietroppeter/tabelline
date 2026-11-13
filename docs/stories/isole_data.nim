@@ -148,7 +148,7 @@ nbShowCode:
   nbTable t
 
 nbText: """
-A check that the right polygon was found: its area against the area in the list. For the 22
+A check that the right polygon was found: its area against the area in the list. For the 35
 main islands they agree within a few percent; the polygon is a drawing at one scale, so it
 misses bays and rocks, and the list's areas are rounded or come from other surveys.
 """

@@ -23,6 +23,7 @@ let data = docs / "stories" / "data" / "isole"
 # without one is listed in data/isole/italiano-missing.txt, and the Italian page fails to build.
 var italian: Table[string, string]
 var missing: seq[string]
+var used: HashSet[string]   # the texts looked up, so the ones no longer on the page can be found
 proc key(s: string): string = s.splitWhitespace.join(" ")
 when lang == "it":
   var (english, translated, side) = ("", "", "")
@@ -41,7 +42,7 @@ proc tr(s: string): string =
   ## `s` in the page's language.
   when lang == "en": s
   else:
-    if key(s) in italian: italian[key(s)]
+    if key(s) in italian: (used.incl key(s); italian[key(s)])
     else:
       if s notin missing: missing.add s
       s
@@ -162,8 +163,8 @@ Claude gathered openly licensed pictures for each section, Pietro picked one, an
 credited under it; all of them, with the ones left out, are in
 [Photos of the Mediterranean, by the story](../isole-photos/).
 
-Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
-names, and the other 173 a dot in the colour of the circles.
+Braudel's complex of seas, west and east: the 35 main islands of this story in blue, with their
+names, and the other 160 a dot in the colour of the circles.
 """
 
 nbDrawing data / (if lang == "it": "map-west-it.svg" else: "map-west.svg"), tr"The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
@@ -220,11 +221,12 @@ Sicily is a triangle of 25,834 km² with five million people, and its highest po
 3,340 m, the highest active volcano in Europe outside the Caucasus.
 
 """
-photoHeading "Twenty-two islands", "dolphins-knossos", "The dolphins of Knossos"
+photoHeading "Thirty-five islands", "dolphins-knossos", "The dolphins of Knossos"
 nbText: tr"""
 
-Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
-is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
+Most of the 195 are small: half of them are under 27 km². The 35 largest, down to Elba, 224 km², the largest of the Tuscan
+islands, with Malta, the island of a country, just before it, are the *main islands* of this
+story, each drawn with its outline.
 
 > Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
 > forma di coralli, altre di sirena.
@@ -334,7 +336,7 @@ it is a mystification.*
 """
 
 const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0,
-                    "ES": 505_990.0, "TN": 163_610.0, "HR": 56_594.0, "MT": 316.0}.toTable
+                    "ES": 505_990.0, "TN": 163_610.0, "HR": 56_594.0, "MT": 316.0, "TR": 783_562.0}.toTable
   ## Each country's area (Wikipedia; France: metropolitan; Cyprus: the whole island).
 
 nbShowCode:
@@ -346,10 +348,11 @@ nbShowCode:
     colsHide everything()
     colsUnhide ["shape", "km2", "share"]
     colsMove ["shape"], after = "island"
-    rowGroupOrder ["Italy", "Cyprus", "France", "Greece", "Spain", "Tunisia", "Croatia", "Malta"].mapIt(tr(it))
+    rowGroupOrder ["Italy", "Cyprus", "France", "Greece", "Spain", "Tunisia", "Croatia", "Turkey", "Malta"].mapIt(tr(it))
     fmtNanoplot "shape", plotType = "shape", plotHeight = "3em", autoscale = true, options = sea
     fmtInteger ["km2"]
     fmtFraction "share", accuracy = "med"
+    subSmallVals "share", threshold = 0.01, smallPattern = "<1/100"
     colsLabel:
       shape: ""
       km2: tr"area, {{km^2}}"
@@ -357,6 +360,7 @@ nbShowCode:
     summaryRows:
       all: agg.sum
       columns = ["km2", "share"]
+      groups = ["Italy", "Greece", "Spain", "Croatia"].mapIt(tr(it))   # the countries with more than one
       missingText = ""
     textTransform tr, loc.summaryStub()
     tabSourceNote md(tr"Areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); the countries' areas from their articles (France: metropolitan).")
@@ -365,13 +369,15 @@ nbShowCode:
 nbNote(tr"""
 `rowGroupAsColumn = true` puts the country in a column of its own, left of the islands, instead
 of a row above them. `fmtFraction` writes the share as a fraction, with up to two digits
-below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece. `summaryRows` adds them up
-for each country, in the format of their column.
+below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece; `subSmallVals` writes
+"<1/100" for the small ones, which as fractions would be 0. `summaryRows` adds them up
+for each country with more than one (`groups`), in the format of their column.
 """, nkCode)
 
 nbText: tr"""
-Greece has twelve of the 22, and together they are a seventh of its land. Cyprus and
-Malta are the islands of their countries: Cyprus all of it, Malta the larger of its three.
+Greece has nineteen of the 35, and together they are a sixth of its land; Croatia has six.
+Cyprus and Malta are the islands of their countries: Cyprus all of it, Malta the larger of its
+three.
 
 """
 photoHeading "All 195", "strombolicchio", "Strombolicchio"
@@ -407,7 +413,8 @@ outline: Wikidata has no place for them, so there is no point to find their coas
 
 nbText: tr"""
 And here they all are, in the order of the list, each at its own scale and with its place: the
-22 main islands in blue, the others in the colour of the circles. Malta, the island of a country, is 34th.
+35 main islands in blue, the first seven rows, down to Elba; the others in the colour of the
+circles.
 """
 
 nbShowCode:
@@ -511,7 +518,8 @@ peoples to the last empires, and the state each island is in today; the islands 
 """
 
 const powers = [   # each column: the rulers of history.csv it stands for, and its age
-  ("first peoples", @["Nuragic", "Talaiotic", "Minoans", "Mycenaeans", "Cycladic", "Illyrians", "Temple builders"], "ancient"),
+  ("first peoples", @["Nuragic", "Talaiotic", "Minoans", "Mycenaeans", "Cycladic", "Illyrians", "Temple builders",
+                      "Etruscans", "Thracians"], "ancient"),
   ("Greeks", @["Greeks", "Greeks and Phoenicians", "Greeks and Etruscans", "Athens", "Ptolemies"], "ancient"),
   ("Phoenicians, Carthage", @["Phoenicians", "Carthage", "Greeks and Phoenicians"], "ancient"),
   ("Rome", @["Rome"], "ancient"),
@@ -520,7 +528,7 @@ const powers = [   # each column: the rulers of history.csv it stands for, and i
   ("Normans, Franks", @["Normans", "Angevins", "Lusignans"], "medieval"),
   ("Venice", @["Venice", "Duchy of the Archipelago"], "medieval"),
   ("Genoa, Pisa", @["Genoa", "Pisa"], "medieval"),
-  ("Aragon, Spain", @["Aragon", "Aragon and Spain", "Bourbons"], "modern"),
+  ("Aragon, Spain", @["Aragon", "Aragon and Spain", "Bourbons", "Medici and Spain"], "modern"),
   ("Knights", @["Knights Hospitaller"], "modern"),
   ("Ottomans", @["Ottomans"], "modern"),
   ("France", @["France"], "modern"),
@@ -557,7 +565,7 @@ nbShowCode:
     tabStyle style.text(color = tint("--primary-text")), loc.body(cols(byAge("modern")))
     tabStyle style.fill(tint("--shade")), loc.columnLabels(cols(stripes)), loc.body(cols(stripes))
     tabStyle style.text(size = "11px"), loc.body(cols("today"))
-    tabOptions(tableFontSize = "13px", columnLabelsFontSize = "75%",
+    tabOptions(tableFontSize = "12.5px", columnLabelsFontSize = "75%",
                dataRowPaddingHorizontal = "1px", columnLabelsPaddingHorizontal = "1px")
     tabSourceNote tr"Each island's history on Wikipedia, read and summed up by Claude, the AI that wrote this story: a dot, not the whole story."
   nbTable t
@@ -575,7 +583,9 @@ nbText: tr"""
 *They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
 Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
 Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
-islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
+islands that became states: Cyprus in 1960, Malta in 1964, and the six Croatian islands with
+Croatia in 1991. Before them, Rhodes, Kos and Karpathos joined Greece in 1947, after thirty-five
+years under Italy, and Gökçeada, the Greek Imbros, went to Turkey at Lausanne in 1923.
 
 """
 photoHeading "World Heritage", "palermo-cathedral", "Palermo cathedral, about 1900", level = 3
@@ -621,8 +631,8 @@ nbShowCode:
 nbNote(tr"""
 One table, two levels: each island is a row with its name in bold, and its properties follow,
 indented with `tabStubIndent` (new in 0.2), which moves a stub's text in by a step. The icons are
-Font Awesome's `landmark` and `mountain-sun`. Gozo, Hvar, Lipari, Patmos and the others are not
-among the 22 main islands, but have a property too.
+Font Awesome's `landmark` and `mountain-sun`. Gozo, Lipari, Patmos and Čiovo are not
+among the 35 main islands, but have a property too.
 """, nkCode)
 
 # ------------------------------------------------------------------------------------ economy
@@ -631,8 +641,9 @@ photoHeading "How they live now", "luzzus-marsaxlokk", "Luzzus in Marsaxlokk"
 nbText: tr"""
 
 Eurostat measures the European Union by regions, and most of the main islands are a region of
-their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands.
-Djerba, in Tunisia, is outside these numbers. The richness of a region is its gross domestic
+their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands,
+Adriatic Croatia. Djerba, in Tunisia, is outside these numbers, and Gökçeada, in Turkey, has only
+its unemployment. The richness of a region is its gross domestic
 product per person, in *purchasing power standards*, euros that buy the same everywhere; each
 region's amount is written here the way its own language writes money.
 """
@@ -663,7 +674,7 @@ nbShowCode:
       [loc.stub(), loc.body()]
     tabSourceNote md(tr"Eurostat, as Wikipedia lists it: [GDP of the NUTS 2 regions](https://en.wikipedia.org/wiki/List_of_European_Union_regions_by_GDP) in 2024, [unemployment](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) in 2025.")
   # each region's money in its own language: one locale for the rows of each
-  for l in ["it", "el_CY", "fr", "el", "ca", "hr", "mt"]:
+  for l in ["it", "el_CY", "fr", "el", "ca", "hr", "mt"]:   # Turkey's region has no GDP here
     let rowsOf = toSeq(0 ..< d.nrows).filterIt(d["locale", it] == l)
     t = t.fmtCurrency("pps_per_person", rows = rowsOf, currency = "EUR", decimals = 0, locale = l)
   nbTable t
@@ -679,8 +690,10 @@ the EU's 100. The rows below 75, where the EU's cohesion funds go first, are hig
 
 nbText: tr"""
 The Balearic Islands and Malta are as rich as the European average, or richer, from tourism and,
-in Malta, finance and gaming. The North Aegean, Lesbos, Chios, Lemnos and Samos, is among the
-poorest regions of the Union, at 42.
+in Malta, finance and gaming. Elba and Kythira look rich too, but their regions, Tuscany and
+Attica, are mostly Florence and Athens. The North Aegean, Lesbos, Chios, Lemnos, Samos and Icaria,
+is among the poorest regions of the Union, at 42, with Eastern Macedonia and Thrace, Thasos's
+region on the mainland, at 45.
 
 ### Twenty years of work
 
@@ -712,6 +725,7 @@ nbShowCode:
       y2025: tr"2025"
     let median = where(it["region"] == tr"All regions (median)")
     tabStyle style.fill(tintMix("--ink", 10)) & style.text(weight = "bold"), loc.stub(rows = median), loc.body(rows = median)
+    tabOptions(dataRowPaddingHorizontal = "4px", columnLabelsPaddingHorizontal = "4px")   # to fit a phone
     tabSourceNote md(tr"Eurostat, as Wikipedia lists it: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).")
   nbTable t
 
@@ -853,7 +867,7 @@ nbShowCode:
     tabSpanner tr"high of an average day, {{degC}}", ms
     tabOptions(tableFontSize = "11.5px", dataRowPadding = "3px", dataRowPaddingHorizontal = "2px",
                columnLabelsPaddingHorizontal = "2px")
-    tabSourceNote tr"Wikipedia, the weather box of each island's main town (Krk: Rijeka; Cres: Mali Lošinj; Cyprus: Nicosia, inland); the sea from tables beside them."
+    tabSourceNote tr"Wikipedia, the weather box of each island's main town (Krk: Rijeka; Cres: Mali Lošinj; Brač: Split; Pag: Zadar; Korčula: Dubrovnik; Andros: Ermoupoli, on Syros; Icaria: Samos; Cyprus: Nicosia, inland); the sea from tables beside them."
   nbTable t
 
 nbNote(tr"""
@@ -866,9 +880,9 @@ spanner it is written inside the label, `{{degC}}`.
 """, nkCode)
 
 nbText: tr"""
-Nicosia, inland, reaches 37 °C in August; Cres and Krk, in the north of the Adriatic, are the
-coolest in winter, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind)) comes down from
-the mountains. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
+Nicosia, inland, reaches 37 °C in August. The coolest in winter are the islands of the north:
+Krk and Cres at the top of the Adriatic, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind))
+comes down from the mountains, Gökçeada and Thasos at the top of the Aegean, and Elba. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
 [meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
 own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
 in Tommaso Stella's Italian):
@@ -1000,9 +1014,9 @@ nbShowCode:
               "`tabellaPreview`, `extractCells`", "`tabStyle` with a proc, `tabStyleBody`",
               "lists and records in a cell", "`fmtIcon`, `iconSvg`"]
     where: ["every outline, getting there, when to go", "sizes by country, unemployment, passengers, GDP",
-            "most tables", "twenty-two islands, the same scale, getting there",
+            "most tables", "thirty-five islands, the same scale, getting there",
             "how they live now", "when to go",
-            "twenty-two islands, the same scale, all 195, twenty years of work",
+            "thirty-five islands, the same scale, all 195, twenty years of work",
             "who ruled them, twenty years of work, all 195", "the same scale, World Heritage",
             "all 195, twenty years of work", "how they live now, twenty years of work",
             "the outlines, who ruled them", "World Heritage, something to see"]
@@ -1041,3 +1055,7 @@ when lang == "it":   # every text needs its Italian: the ones missing are listed
   doAssert missing.len == 0, $missing.len & " texts have no Italian: see data/isole/italiano-missing.txt"
 
 nbSave
+
+when lang == "it":   # after the page is written, when the tables have used their texts too
+  let unused = toSeq(italian.keys).filterIt(it notin used)
+  doAssert unused.len == 0, $unused.len & " texts of italiano.txt are no longer on the page: " & $unused

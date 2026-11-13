@@ -313,7 +313,15 @@ proc mapLabels(t: var Tabella, l: Loc, fn: proc (s: string): string) =
       for n in t.sourceNotes.mitems: change n
     if l.kind != lkSourceNotes:
       for f in t.footnotes.mitems: change f.note
-  of lkBody, lkStub, lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub: discard
+  of lkSummaryStub, lkGrandSummaryStub:   # the labels of summary rows; their keys stay
+    for rule in t.summaries.mitems:
+      if rule.grand != (l.kind == lkGrandSummaryStub): continue
+      if not rule.grand and l.names.len > 0 and rule.groups.len > 0 and
+         not rule.groups.anyIt(it in l.names): continue
+      for (label, _) in rule.fns:
+        if l.labels.len == 0 or label in l.labels:
+          rule.shown[label] = fn(rule.shown.getOrDefault(label, label))
+  of lkBody, lkStub, lkSummary, lkGrandSummary: discard
 
 proc textTransform*(t: sink Tabella, fn: proc (s: string): string, locations: varargs[Loc]): Tabella =
   ## Changes the shown text at `locations` (by default the body) with a proc: for cells the proc

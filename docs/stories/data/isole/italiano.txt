@@ -124,8 +124,8 @@ Claude gathered openly licensed pictures for each section, Pietro picked one, an
 credited under it; all of them, with the ones left out, are in
 [Photos of the Mediterranean, by the story](../isole-photos/).
 
-Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
-names, and the other 173 a dot in the colour of the circles.
+Braudel's complex of seas, west and east: the 35 main islands of this story in blue, with their
+names, and the other 160 a dot in the colour of the circles.
 it:
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
@@ -147,8 +147,8 @@ ha raccolto immagini con licenza libera per ogni sezione, Pietro ne ha scelta un
 i crediti sotto di sé; tutte, anche quelle scartate, sono in
 [Photos of the Mediterranean, by the story](../isole-photos/) (in inglese).
 
-Il complesso di mari di Braudel, a ovest e a est: le 22 isole principali di questa storia in
-blu, con il loro nome, e le altre 173 un punto del colore dei cerchi.
+Il complesso di mari di Braudel, a ovest e a est: le 35 isole principali di questa storia in
+blu, con il loro nome, e le altre 160 un punto del colore dei cerchi.
 
 en: The western Mediterranean, from the Alboran Sea to the Adriatic and Malta
 it: Il Mediterraneo occidentale, dal Mare di Alborán all'Adriatico e a Malta
@@ -227,12 +227,15 @@ La Sicilia è un triangolo di 25.834 km² con cinque milioni di abitanti, e il s
 en: The dolphins of Knossos
 it: I delfini di Cnosso
 
-en: Twenty-two islands
-it: Ventidue isole
+en:
+Thirty-five islands
+it:
+Trentacinque isole
 
 en:
-Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
-is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
+Most of the 195 are small: half of them are under 27 km². The 35 largest, down to Elba, 224 km², the largest of the Tuscan
+islands, with Malta, the island of a country, just before it, are the *main islands* of this
+story, each drawn with its outline.
 
 > Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
 > forma di coralli, altre di sirena.
@@ -241,8 +244,9 @@ is the 34th. These 22 are the *main islands* of this story, each drawn with its 
 corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
 di Spagna* (2001).
 it:
-Quasi tutte le 195 sono piccole: solo 21 superano i 400 km², e Malta, l'isola di uno stato, è la
-34ª. Queste 22 sono le *isole principali* di questa storia, ognuna disegnata con il suo profilo.
+Quasi tutte le 195 sono piccole: metà sono sotto i 27 km². Le 35 più grandi, fino all'Elba, 224
+km², la più grande delle isole toscane, con Malta, l'isola di uno stato, appena prima, sono le
+*isole principali* di questa storia, ognuna disegnata con il suo profilo.
 
 > Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
 > forma di coralli, altre di sirena.
@@ -346,20 +350,24 @@ Superfici: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedi
 en:
 `rowGroupAsColumn = true` puts the country in a column of its own, left of the islands, instead
 of a row above them. `fmtFraction` writes the share as a fraction, with up to two digits
-below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece. `summaryRows` adds them up
-for each country, in the format of their column.
+below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece; `subSmallVals` writes
+"<1/100" for the small ones, which as fractions would be 0. `summaryRows` adds them up
+for each country with more than one (`groups`), in the format of their column.
 it:
 `rowGroupAsColumn = true` mette il paese in una colonna sua, a sinistra delle isole, invece che
 in una riga sopra di esse. `fmtFraction` scrive la quota come frazione, con al più due cifre al
-denominatore (`accuracy = "med"`): la Sicilia è 1/12 dell'Italia, Creta 1/16 della Grecia.
-`summaryRows` le somma per ogni paese, nel formato della loro colonna.
+denominatore (`accuracy = "med"`): la Sicilia è 1/12 dell'Italia, Creta 1/16 della Grecia;
+`subSmallVals` scrive "<1/100" per le piccole, che come frazione sarebbero 0. `summaryRows` le
+somma per ogni paese che ne ha più di una (`groups`), nel formato della loro colonna.
 
 en:
-Greece has twelve of the 22, and together they are a seventh of its land. Cyprus and
-Malta are the islands of their countries: Cyprus all of it, Malta the larger of its three.
+Greece has nineteen of the 35, and together they are a sixth of its land; Croatia has six.
+Cyprus and Malta are the islands of their countries: Cyprus all of it, Malta the larger of its
+three.
 it:
-La Grecia ne ha dodici delle 22, e insieme sono un settimo del suo territorio. Cipro e Malta sono
-le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle sue tre.
+La Grecia ne ha diciannove delle 35, e insieme sono un sesto del suo territorio; la Croazia ne ha
+sei. Cipro e Malta sono le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle
+sue tre.
 
 en: Strombolicchio
 it:
@@ -390,10 +398,11 @@ hanno profilo: Wikidata non ha la loro posizione, e non c'è un punto da cui cer
 
 en:
 And here they all are, in the order of the list, each at its own scale and with its place: the
-22 main islands in blue, the others in the colour of the circles. Malta, the island of a country, is 34th.
+35 main islands in blue, the first seven rows, down to Elba; the others in the colour of the
+circles.
 it:
-Ed eccole tutte, nell'ordine della lista, ciascuna alla sua scala e con il suo posto: le 22 isole
-principali in blu, le altre nel colore dei cerchi. Malta, l'isola di uno stato, è la 34ª.
+Ed eccole tutte, nell'ordine della lista, ciascuna alla sua scala e con il suo posto: le 35 isole
+principali in blu, le prime sette righe, fino all'Elba; le altre nel colore dei cerchi.
 
 en:
 Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)); the three without one have no place on Wikidata.
@@ -582,13 +591,17 @@ en:
 *They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
 Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
 Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
-islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
+islands that became states: Cyprus in 1960, Malta in 1964, and the six Croatian islands with
+Croatia in 1991. Before them, Rhodes, Kos and Karpathos joined Greece in 1947, after thirty-five
+years under Italy, and Gökçeada, the Greek Imbros, went to Turkey at Lausanne in 1923.
 it:
 *Dicono che né Romani né Fenici, né Greci né Arabi abbiano mai sottomesso la Sardegna*, scriveva
 D. H. Lawrence in *Mare e Sardegna* (1921). La tabella dice altro: Cartagine, Roma, Bisanzio,
 l'Aragona e i Savoia sono arrivati tutti. Roma e Bisanzio le hanno governate quasi tutte. Le
 ultime a entrare nello stato in cui sono oggi sono le isole che sono diventate stati: Cipro nel
-1960, Malta nel 1964, e Cherso e Veglia con la Croazia nel 1991.
+1960, Malta nel 1964, e le sei isole croate con la Croazia nel 1991. Prima di loro, Rodi, Coo e
+Scarpanto sono passate alla Grecia nel 1947, dopo trentacinque anni sotto l'Italia, e Imbro, in
+turco Gökçeada, è andata alla Turchia a Losanna nel 1923.
 
 en: Palermo cathedral, about 1900
 it: La cattedrale di Palermo, intorno al 1900
@@ -620,13 +633,13 @@ it:
 en:
 One table, two levels: each island is a row with its name in bold, and its properties follow,
 indented with `tabStubIndent` (new in 0.2), which moves a stub's text in by a step. The icons are
-Font Awesome's `landmark` and `mountain-sun`. Gozo, Hvar, Lipari, Patmos and the others are not
-among the 22 main islands, but have a property too.
+Font Awesome's `landmark` and `mountain-sun`. Gozo, Lipari, Patmos and Čiovo are not
+among the 35 main islands, but have a property too.
 it:
 Una tabella, due livelli: ogni isola è una riga con il nome in grassetto, e i suoi siti seguono,
 rientrati con `tabStubIndent` (nuovo nella 0.2), che sposta il testo dello stub di un passo. Le
-icone sono `landmark` e `mountain-sun` di Font Awesome. Gozo, Lesina, Lipari, Patmo e le altre
-non sono tra le 22 isole principali, ma hanno anch'esse un sito.
+icone sono `landmark` e `mountain-sun` di Font Awesome. Gozo, Lipari, Patmo e Bua non sono tra
+le 35 isole principali, ma hanno anch'esse un sito.
 
 en: Luzzus in Marsaxlokk
 it: Luzzu a Marsaxlokk
@@ -636,16 +649,18 @@ it: Come si vive oggi
 
 en:
 Eurostat measures the European Union by regions, and most of the main islands are a region of
-their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands.
-Djerba, in Tunisia, is outside these numbers. The richness of a region is its gross domestic
+their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands,
+Adriatic Croatia. Djerba, in Tunisia, is outside these numbers, and Gökçeada, in Turkey, has only
+its unemployment. The richness of a region is its gross domestic
 product per person, in *purchasing power standards*, euros that buy the same everywhere; each
 region's amount is written here the way its own language writes money.
 it:
 Eurostat misura l'Unione europea per regioni, e quasi tutte le isole principali sono una regione
-a sé, o parte di una: le Isole Baleari, l'Egeo del Nord e del Sud, le Isole Ionie.
-Gerba, in Tunisia, è fuori da questi numeri. La ricchezza di una regione è il suo prodotto
-interno lordo per abitante, in *standard di potere d'acquisto*, euro che comprano ovunque la
-stessa cosa; la cifra di ogni regione è scritta qui come la sua lingua scrive il denaro.
+a sé, o parte di una: le Isole Baleari, l'Egeo del Nord e del Sud, le Isole Ionie, la Croazia
+adriatica. Gerba, in Tunisia, è fuori da questi numeri, e di Imbro, in Turchia, c'è solo la
+disoccupazione. La ricchezza di una regione è il suo prodotto interno lordo per abitante, in
+*standard di potere d'acquisto*, euro che comprano ovunque la stessa cosa; la cifra di ogni
+regione è scritta qui come la sua lingua scrive il denaro.
 
 en: per person
 it: per abitante
@@ -681,8 +696,10 @@ evidenziate: `tabStyle` con una proc della riga, sullo stub e sul corpo.
 
 en:
 The Balearic Islands and Malta are as rich as the European average, or richer, from tourism and,
-in Malta, finance and gaming. The North Aegean, Lesbos, Chios, Lemnos and Samos, is among the
-poorest regions of the Union, at 42.
+in Malta, finance and gaming. Elba and Kythira look rich too, but their regions, Tuscany and
+Attica, are mostly Florence and Athens. The North Aegean, Lesbos, Chios, Lemnos, Samos and Icaria,
+is among the poorest regions of the Union, at 42, with Eastern Macedonia and Thrace, Thasos's
+region on the mainland, at 45.
 
 ### Twenty years of work
 
@@ -690,8 +707,10 @@ Unemployment, every year from 2006 to 2025: the line of each region against the 
 300 or so regions of Europe, its mean over the twenty years, and how much it moved around it.
 it:
 Le Baleari e Malta sono ricche quanto la media europea, o di più, grazie al turismo e, a Malta,
-alla finanza e al gioco. L'Egeo del Nord, Lesbo, Chio, Lemno e Samo, è tra le regioni più
-povere dell'Unione, a 42.
+alla finanza e al gioco. Anche l'Elba e Cerigo sembrano ricche, ma le loro regioni, la Toscana e
+l'Attica, sono soprattutto Firenze e Atene. L'Egeo del Nord, Lesbo, Chio, Lemno, Samo e Icaria, è
+tra le regioni più povere dell'Unione, a 42, con la Macedonia Orientale e Tracia, la regione di
+Taso sulla terraferma, a 45.
 
 ### Vent'anni di lavoro
 
@@ -911,9 +930,9 @@ en: high of an average day, {{degC}}
 it: massima di un giorno medio, {{degC}}
 
 en:
-Wikipedia, the weather box of each island's main town (Krk: Rijeka; Cres: Mali Lošinj; Cyprus: Nicosia, inland); the sea from tables beside them.
+Wikipedia, the weather box of each island's main town (Krk: Rijeka; Cres: Mali Lošinj; Brač: Split; Pag: Zadar; Korčula: Dubrovnik; Andros: Ermoupoli, on Syros; Icaria: Samos; Cyprus: Nicosia, inland); the sea from tables beside them.
 it:
-Wikipedia, il riquadro del clima della città principale di ogni isola (Veglia: Fiume; Cherso: Lussinpiccolo; Cipro: Nicosia, nell'entroterra); il mare dalle tabelle accanto.
+Wikipedia, il riquadro del clima della città principale di ogni isola (Veglia: Fiume; Cherso: Lussinpiccolo; Brazza: Spalato; Pago: Zara; Curzola: Ragusa; Andro: Ermoupoli, a Siro; Icaria: Samo; Cipro: Nicosia, nell'entroterra); il mare dalle tabelle accanto.
 
 en:
 The islands are grouped by their sea (`groupnameCol`), from west to east with `rowGroupOrder`,
@@ -932,9 +951,9 @@ cella su una scala dal blu fresco al rosso caldo tra 5 e 38 °C, con la palette 
 `{{degC}}`.
 
 en:
-Nicosia, inland, reaches 37 °C in August; Cres and Krk, in the north of the Adriatic, are the
-coolest in winter, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind)) comes down from
-the mountains. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
+Nicosia, inland, reaches 37 °C in August. The coolest in winter are the islands of the north:
+Krk and Cres at the top of the Adriatic, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind))
+comes down from the mountains, Gökçeada and Thasos at the top of the Aegean, and Elba. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
 [meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
 own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
 in Tommaso Stella's Italian):
@@ -945,12 +964,12 @@ in Tommaso Stella's Italian):
 *Above the Mediterranean there is another sea: a turbulent, throbbing ocean of air instead of
 water.*
 it:
-Nicosia, nell'entroterra, arriva a 37 °C in agosto; Cherso e Veglia, nel nord dell'Adriatico,
-sono le più fresche d'inverno, quando la [bora](https://it.wikipedia.org/wiki/Bora_(vento))
-scende dai monti. Il mare è più caldo in agosto, da 26 a 28 °C al sud, e nell'Egeo il
-[meltemi](https://it.wikipedia.org/wiki/Meltemi) soffia tutta l'estate. I venti sono un mare a
-sé, come scrive Nick Hunt in *Mediterraneo*, il libro di The Passenger su questo mare (Iperborea,
-2023, nella traduzione di Tommaso Stella):
+Nicosia, nell'entroterra, arriva a 37 °C in agosto. Le più fresche d'inverno sono le isole del
+nord: Veglia e Cherso in cima all'Adriatico, quando la [bora](https://it.wikipedia.org/wiki/Bora_(vento))
+scende dai monti, Imbro e Taso in cima all'Egeo, e l'Elba. Il mare è più caldo in agosto, da 26 a
+28 °C al sud, e nell'Egeo il [meltemi](https://it.wikipedia.org/wiki/Meltemi) soffia tutta
+l'estate. I venti sono un mare a sé, come scrive Nick Hunt in *Mediterraneo*, il libro di The
+Passenger su questo mare (Iperborea, 2023, nella traduzione di Tommaso Stella):
 
 > Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
 > anziché liquido.
@@ -1361,8 +1380,10 @@ it: superfici per paese, disoccupazione, passeggeri, PIL
 en: most tables
 it: quasi tutte le tabelle
 
-en: twenty-two islands, the same scale, getting there
-it: ventidue isole, alla stessa scala, come arrivarci
+en:
+thirty-five islands, the same scale, getting there
+it:
+trentacinque isole, alla stessa scala, come arrivarci
 
 en: how they live now
 it: come si vive oggi
@@ -1370,8 +1391,10 @@ it: come si vive oggi
 en: when to go
 it: quando andarci
 
-en: twenty-two islands, the same scale, all 195, twenty years of work
-it: ventidue isole, alla stessa scala, tutte le 195, vent'anni di lavoro
+en:
+thirty-five islands, the same scale, all 195, twenty years of work
+it:
+trentacinque isole, alla stessa scala, tutte le 195, vent'anni di lavoro
 
 en: who ruled them, twenty years of work, all 195
 it: chi le ha governate, vent'anni di lavoro, tutte le 195
@@ -1443,3 +1466,107 @@ it: totale
 
 en: all
 it: in tutto
+en: Eastern Macedonia and Thrace
+it: Macedonia Orientale e Tracia
+
+en: Balıkesir
+it: 
+
+en: Attica
+it: Attica
+
+en: Tuscany
+it: Toscana
+
+en: Türkiye
+it: Turchia
+
+en: the Blaca hermitage
+it: l'eremo di Blaca
+
+en: Chora
+it: 
+
+en: the ancient agora
+it: l'agorà antica
+
+en: Cape Lefkada
+it: capo Leucade
+
+en: Olympos
+it: 
+
+en: the Stari Grad Plain
+it: la piana di Cittavecchia
+
+en: the Asclepieion
+it: l'Asclepieion
+
+en: Pag lace
+it: il merletto di Pago
+
+en: the old Greek villages
+it: i vecchi villaggi greci
+
+en: the castle of Chora
+it: il castello di Chora
+
+en: the old town
+it: la città vecchia
+
+en: the hot springs of Therma
+it: le terme di Therma
+
+en: Napoleon's houses
+it: le case di Napoleone
+
+en: Zlatni Rat
+it: 
+
+en: Batsi
+it: 
+
+en: Golden Beach
+it: 
+
+en: Porto Katsiki
+it: 
+
+en: Apella
+it: 
+
+en: the Pakleni Islands
+it: le isole Spalmadori
+
+en: Kefalos
+it: 
+
+en: Zrće
+it: 
+
+en: Aydıncık
+it: 
+
+en: Kaladi
+it: 
+
+en: Lumbarda
+it: 
+
+en: Nas
+it: 
+
+en: Fetovaia
+it: 
+
+en: gregada
+it: 
+
+en: Pag cheese
+it: il formaggio di Pago
+
+en: pošip
+it: 
+
+en: Aleatico
+it: l'Aleatico

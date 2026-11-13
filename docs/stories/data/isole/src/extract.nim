@@ -405,13 +405,20 @@ for r in rows:
     if box.len == 0 or found: continue
     found = true
     var fields: Table[string, string]
-    for line in box.split("\n|"):
+    for line in box.replace(re"\n[ \t]+\|", "\n|").split("\n|"):   # some boxes indent their fields
       let kv = line.split('=', 1)
       if kv.len == 2: fields[kv[0].strip.toLowerAscii] = kv[1].strip
     stationRows.add @[r.title, p, plain(fields.getOrDefault("location"))]
     for (key, name) in measures:
       for m, mon in months:
-        let v = number(fields.getOrDefault((mon & " " & key).toLowerAscii))
+        var v = number(fields.getOrDefault((mon & " " & key).toLowerAscii))
+        if v.len == 0:   # a box in Fahrenheit and inches (Ermoupoli, Lefkada): to °C and mm
+          if key.endsWith(" C"):
+            let f = number(fields.getOrDefault((mon & " " & key[0 .. ^2] & "F").toLowerAscii))
+            if f.len > 0: v = formatFloat((f.parseFloat - 32) * 5 / 9, ffDecimal, 1)
+          elif key.endsWith(" mm"):
+            let inch = number(fields.getOrDefault((mon & " " & key[0 .. ^3] & "inch").toLowerAscii))
+            if inch.len > 0: v = formatFloat(inch.parseFloat * 25.4, ffDecimal, 0)
         if v.len > 0: climateRows.add @[r.title, name, $(m + 1), v]
   if sea.len > 0:
     for m, v in sea: climateRows.add @[r.title, "sea_c", $(m + 1), v]
@@ -442,7 +449,8 @@ for line in gdp2024.splitLines:
   if c.len < 6: continue
   if c.len >= 7: country = regionName(c[1].replace(re"rowspan=""?\d+""?\s*\|", ""))
   let n = c[^5 .. ^1].mapIt(number(it))
-  gdpRows.add @[regionName(c[0]), country] & n
+  let name = regionName(c[0])
+  gdpRows.add @[(if name == "Toscana": "Tuscany" else: name), country] & n   # the other list's name
 writeCsv(stage / "gdp.csv", "GDP of the EU's NUTS 2 regions in 2024: Wikipedia, List of European Union regions by GDP (Eurostat). Nominal million EUR, PPS million EUR, PPS per person, PPS per person as % of the EU, population in millions (2025).",
   ["region", "country", "gdp_meur", "pps_meur", "pps_per_person", "pps_index", "population_m"], gdpRows)
 

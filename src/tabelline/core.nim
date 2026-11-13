@@ -579,6 +579,7 @@ type
     groups*: seq[string]       ## the groups summarised (empty: all of them)
     columns*: seq[string]      ## the columns summarised; the others show `missingText`
     fns*: seq[(string, Aggregate)]   ## (label, aggregate): one row each
+    shown*: Table[string, string]   ## label -> the text shown in the stub, when `textTransform` changed it
     top*: bool                 ## above the group (or the table) instead of below
     fmt*: FormatFn             ## nil: the column's format
     missingText*: string

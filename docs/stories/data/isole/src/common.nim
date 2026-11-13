@@ -24,11 +24,14 @@ proc listRows*(list: string): seq[ListRow] =
     result.add ListRow(title: links[0], label: labels[0], town: links[^1], km2: km2)
 
 proc isMain*(r: ListRow): bool =
-  ## The story's main islands: 400 km² or more, and Malta (246 km², the island of a country).
-  r.km2 >= 400 or r.title in ["Geography of Cyprus", "Malta (island)"]
+  ## The story's main islands: the 35 largest, down to Elba (224 km²), Pietro's pick, so the
+  ## story reaches the Tuscan islands. Cyprus has no area in the list.
+  r.km2 >= 224 or r.title == "Geography of Cyprus"
 
-const climateAlso* = [("Krk", "Rijeka"), ("Cres", "Mali Lošinj")]
-  ## Islands whose town and page have no weather box: the closest page with one.
+const climateAlso* = [("Krk", "Rijeka"), ("Cres", "Mali Lošinj"), ("Brač", "Split, Croatia"), ("Pag (island)", "Zadar"),
+                      ("Korčula", "Dubrovnik"), ("Andros, Greece", "Ermoupoli"), ("Ikaria", "Samos")]
+  ## Islands whose town and page have no weather box: the closest page with one (by the page
+  ## Wikidata knows: Pag (island), Ikaria).
 
 proc csvLine*(fields: openArray[string]): string =
   ## One CSV line: a field with a comma or a quote goes in quotes.

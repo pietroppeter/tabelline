@@ -151,4 +151,4 @@ islands.lazy.filter(col.main)
           col.town, col.sea.alias("seas"), col.heritage, col.airports, col.region, col.pps_per_person, col.pps_index,
           col.jobless_2025, col.pax_year, col.pax, col.high_jan, col.high_aug, col.sea_aug)
   .sort("rank").collect
-  .save("main.csv", "The 22 main islands (400 km² or more, and Malta), one row each: islands.csv with their region (regions.csv), its GDP per person in PPS and as % of the EU (2024) and unemployment (2025), the last year of passengers (passengers.csv), and the January and August highs and the August sea (climate.csv).")
+  .save("main.csv", "The 35 main islands (the largest, down to Elba, 224 km²), one row each: islands.csv with their region (regions.csv), its GDP per person in PPS and as % of the EU (2024) and unemployment (2025), the last year of passengers (passengers.csv), and the January and August highs and the August sea (climate.csv).")
