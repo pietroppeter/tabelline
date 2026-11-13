@@ -78,6 +78,8 @@ const
     ## The folder of the sports icons (`soccer.png`, ...), for `fmtImage(path = ...)`.
 
 const
+  euroncapCsv* = staticRead(currentSourcePath().parentDir & "/data/contest/euroncap_2023.csv")
+    ## The Euro NCAP ratings of 2023 that Jerry Wu's Table Contest entry reads (MIT), as CSV.
   nflStatsJson* = staticRead(currentSourcePath().parentDir & "/data/gt-extras/nfl_2011_stats.json")
     ## A season of the NFL by team, as gt-extras' "An NFL season" example computes it from
     ## nflverse's games (copied from gt-extras, MIT).

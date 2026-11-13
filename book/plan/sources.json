@@ -1723,7 +1723,8 @@
       "title": "Euro NCAP Safety Ratings - 2023",
       "by": "Jerry Wu",
       "post": "https://forum.posit.co/t/euro-ncap-safety-ratings-2023-table-contest/187584",
-      "prize": "Best Table that Uses Polars"
+      "prize": "Best Table that Uses Polars",
+      "book": "contest/euroncap.html"
      },
      {
       "repo": "freierson/coffee-table",
