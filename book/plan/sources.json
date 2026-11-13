@@ -1932,7 +1932,8 @@
       "title": "Titanic Challenge: Data Analysis to Predict Passenger Survival",
       "by": "Francisco Alfaro Medina",
       "post": "https://forum.posit.co/t/titanic-challenge-data-analysis-to-predict-passenger-survival-table-contest/187768",
-      "prize": "Honourable mention"
+      "prize": "Honourable mention",
+      "book": "contest/titanic.html"
      },
      {
       "repo": "melissavanbussel/spotify-dashboard",

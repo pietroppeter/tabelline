@@ -260,7 +260,7 @@ template tabs*(py, r: string, body: untyped) =
   ## The tabelline version (the blocks of `body`), the original Great Tables code `py` and the
   ## same example in gt, `r`, in tabs, Nim first. The Python cells of a chapter share one
   ## namespace, as in a notebook, and so do the R cells; a cell that ends with a value shows it
-  ## (a table, a data frame). An empty `r` says that gt has no version of the example.
+  ## (a table, a list of tables, a data frame). An empty `r` says that gt has no version of the example.
   let first = nb.blocks.len
   body
   var nimSide = ""

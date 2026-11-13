@@ -30,6 +30,10 @@ shown <- function(value) {
     h <- as.character(gt::as_raw_html(value, inline_css = FALSE))
     return(gsub("@import url\\([^)]*\\);?", "", h))  # nothing remote in the book's pages
   }
+  if (is.list(value) && !inherits(value, "gt_tbl") && length(value) > 0 &&
+      all(vapply(value, inherits, logical(1), "gt_tbl"))) {
+    return(paste(vapply(value, shown, character(1)), collapse = ""))  # tables one after the other
+  }
   if (inherits(value, "html")) {  # HTML made by the cell (htmltools::HTML)
     return(gsub("@import url\\([^)]*\\);?", "", as.character(value)))
   }
