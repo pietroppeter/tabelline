@@ -109,6 +109,14 @@ SELECT ?title ?item ?coord ?elevation ?archipelagoLabel ?native WHERE {""" & isl
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }"""
 
+# Each island's highest point (P610) and its elevation: an island's own elevation (P2044) is
+# sometimes another height (Sardinia's is 384 m, its highest point 1,834 m).
+sparql "wd_peaks", """
+SELECT ?title ?peak ?peakLabel ?elevation WHERE {""" & island & """
+  ?item wdt:P610 ?peak . ?peak wdt:P2044 ?elevation .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}"""
+
 # The waters each island is in or next to (P206): the Aegean, the Tyrrhenian, a gulf, a strait.
 sparql "wd_waters", """
 SELECT ?title ?item ?water ?waterLabel ?parent ?parentLabel WHERE {""" & island & """

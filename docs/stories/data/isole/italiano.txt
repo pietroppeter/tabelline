@@ -152,17 +152,43 @@ en: The eastern Mediterranean, from the Ionian Sea to Cyprus
 it: Il Mediterraneo orientale, dallo Ionio a Cipro
 
 en:
+The dashed lines are the limits of the seas, as the International Hydrographic Organization drew
+them in 1953; the table of [All 195](#all-195) counts the islands sea by sea. The names are much
+older than the lines. The [Tyrrhenian](https://en.wikipedia.org/wiki/Tyrrhenian_Sea) is the sea of
+the Tyrrhenians, the Greeks' name for the Etruscans, and the [Ligurian](https://en.wikipedia.org/wiki/Ligurian_Sea)
+the sea of the Ligures; the [Adriatic](https://en.wikipedia.org/wiki/Adriatic_Sea) is named after
+Adria, an Etruscan town near the mouth of the Po. The ancients explained the
+[Aegean](https://en.wikipedia.org/wiki/Aegean_Sea) in several ways, the best known Aegeus, the
+father of Theseus, who threw himself into it; where the [Ionian](https://en.wikipedia.org/wiki/Ionian_Sea)
+comes from is not known, though Aeschylus tied it to Io, who swam across it. The
+[Sea of Marmara](https://en.wikipedia.org/wiki/Sea_of_Marmara) is named after its largest island,
+rich in marble, *mármaron* in Greek.
+it:
+Le linee tratteggiate sono i confini dei mari, come li ha tracciati l'Organizzazione idrografica
+internazionale nel 1953; la tabella di [Tutte le 195](#tutte-le-195) conta le isole mare per mare.
+I nomi sono molto più antichi delle linee. Il [Tirreno](https://it.wikipedia.org/wiki/Mar_Tirreno)
+è il mare dei Tirreni, il nome che i Greci davano agli Etruschi, e il [Ligure](https://it.wikipedia.org/wiki/Mar_Ligure)
+il mare dei Liguri; l'[Adriatico](https://it.wikipedia.org/wiki/Mare_Adriatico) prende il nome da
+Adria, una città etrusca vicino alla foce del Po. Gli antichi spiegavano l'[Egeo](https://it.wikipedia.org/wiki/Mar_Egeo)
+in più modi, il più noto Egeo, il padre di Teseo, che vi si gettò; da dove venga lo
+[Ionio](https://it.wikipedia.org/wiki/Mar_Ionio) non si sa, ma Eschilo lo legava a Io, che lo
+attraversò a nuoto. Il [Mar di Marmara](https://it.wikipedia.org/wiki/Mar_di_Marmara) prende il
+nome dalla sua isola più grande, ricca di marmo, *mármaron* in greco.
+
+en:
 The maps are not tables: they are two drawings made with the data, by
 [map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
-from OpenStreetMap's coast and the islands' places on Wikidata. Where each name goes was
+from OpenStreetMap's coast and the islands' places on Wikidata, and the limits of the seas from
+[Marine Regions](https://www.marineregions.org/) (CC BY 4.0). Where each name goes was
 written by Claude, the AI that wrote this story. Their colours are the page's, so they change
 with its look.
 it:
 Le carte non sono tabelle: sono due disegni fatti con i dati, da
 [map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
-con la costa di OpenStreetMap e la posizione delle isole su Wikidata. Dove va ogni nome l'ha
-scritto Claude, l'IA che ha scritto questa storia. I colori sono quelli della pagina, e cambiano
-con il suo aspetto. Le carte, per ora, hanno i nomi in inglese.
+con la costa di OpenStreetMap, la posizione delle isole su Wikidata e i confini dei mari da
+[Marine Regions](https://www.marineregions.org/) (CC BY 4.0). Dove va ogni nome l'ha scritto
+Claude, l'IA che ha scritto questa storia. I colori sono quelli della pagina, e cambiano con il
+suo aspetto.
 
 en: Etna's plume
 it: Il pennacchio dell'Etna
@@ -214,10 +240,10 @@ nella 0.2: "km²" in HTML e nel testo. I numeri sono scritti all'italiana perch�
 
 en:
 Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
-3,340 m, the highest active volcano in Europe outside the Caucasus.
+3,357 m, the highest active volcano in Europe outside the Caucasus.
 it:
 La Sicilia è un triangolo di 25.834 km² con cinque milioni di abitanti, e il suo punto più alto
-è l'Etna, 3.340 m, il vulcano attivo più alto d'Europa fuori dal Caucaso.
+è l'Etna, 3.357 m, il vulcano attivo più alto d'Europa fuori dal Caucaso.
 
 en: The dolphins of Knossos
 it: I delfini di Cnosso
@@ -340,14 +366,14 @@ it: Tutte le 195
 
 en:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long.
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. [The whole list](../isole-tutte/index.html), every island with its data, is long.
 One way into it is the sea each island is in. The International Hydrographic Organization drew
 the limits of the seas in 1953, in *Limits of Oceans and Seas*: the Mediterranean is a western
 and an eastern basin, and inside them eight seas with names of their own. Sea by sea, from west
 to east, with the largest island of each:
 it:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, scriveva Gilles Deleuze in *L'isola
-deserta*[^deleuze]. La lista intera è lunga. Un modo per entrarci è il mare in cui sta ogni isola.
+deserta*[^deleuze]. [La lista intera](../isole-tutte-it/index.html), ogni isola con i suoi dati, è lunga. Un modo per entrarci è il mare in cui sta ogni isola.
 L'Organizzazione idrografica internazionale ha tracciato i confini dei mari nel 1953, in *Limits
 of Oceans and Seas*: il Mediterraneo è un bacino occidentale e uno orientale, e dentro di loro otto
 mari con un nome proprio. Mare per mare, da ovest a est, con l'isola più grande di ciascuno:

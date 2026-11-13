@@ -15,42 +15,8 @@ when not declared(lang):
 let docs = currentSourcePath().parentDir.parentDir
 let data = docs / "stories" / "data" / "isole"
 
-# ------------------------------------------------------------------------------ in two languages
-# The story is written in English, and every text a reader sees goes through `tr`: in the English
-# page it is the text itself, in the Italian one its translation, from data/isole/italiano.txt
-# (an English text, `en:`, then its Italian, `it:`, or nothing for the same; spaces and line
-# breaks do not count). A text
-# without one is listed in data/isole/italiano-missing.txt, and the Italian page fails to build.
-var italian: Table[string, string]
-var missing: seq[string]
-var used: HashSet[string]   # the texts looked up, so the ones no longer on the page can be found
-proc key(s: string): string = s.splitWhitespace.join(" ")
-when lang == "it":
-  var (english, translated, side) = ("", "", "")
-  proc flush() =
-    if english.strip.len > 0:   # an empty translation keeps the English: a name, a number
-      italian[key(english)] = if translated.strip.len == 0: english.strip else: translated.strip(chars = {'\n'})
-    (english, translated) = ("", "")
-  for line in lines(data / "italiano.txt"):
-    if line.startsWith("en:"): (flush(); side = "en"; english = line[3 .. ^1].strip & "\n")
-    elif line.startsWith("it:"): (side = "it"; translated = line[3 .. ^1].strip & "\n")
-    elif side == "en": english.add line & "\n"
-    elif side == "it": translated.add line & "\n"
-  flush()
-
-var readings: seq[Source]
-  ## The books the story quotes, numbered in this order: a text cites one with `[^key]` where it
-  ## first quotes it (`citing`), and "To read more" lists them (`nbSources`).
-
-proc tr(s: string): string =
-  ## `s` in the page's language, with its citations.
-  when lang == "en": result = s
-  else:
-    if key(s) in italian: (used.incl key(s); result = italian[key(s)])
-    else:
-      if s notin missing: missing.add s
-      result = s
-  if "[^" in result: result = citing(result, readings)
+const catalog = "italiano.txt"   # the Italian of every text of the page, in data/isole/
+include isole_tr
 
 nbInit
 nb.doc.filename = docs / "stories" / (if lang == "it": "isole-it" else: "isole") / "index.html"
@@ -189,10 +155,25 @@ names, and the other 160 a dot in the colour of the circles.
 nbDrawing data / (if lang == "it": "map-west-it.svg" else: "map-west.svg"), tr"The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
 nbDrawing data / (if lang == "it": "map-east-it.svg" else: "map-east.svg"), tr"The eastern Mediterranean, from the Ionian Sea to Cyprus"
 
+nbText: tr"""
+The dashed lines are the limits of the seas, as the International Hydrographic Organization drew
+them in 1953; the table of [All 195](#all-195) counts the islands sea by sea. The names are much
+older than the lines. The [Tyrrhenian](https://en.wikipedia.org/wiki/Tyrrhenian_Sea) is the sea of
+the Tyrrhenians, the Greeks' name for the Etruscans, and the [Ligurian](https://en.wikipedia.org/wiki/Ligurian_Sea)
+the sea of the Ligures; the [Adriatic](https://en.wikipedia.org/wiki/Adriatic_Sea) is named after
+Adria, an Etruscan town near the mouth of the Po. The ancients explained the
+[Aegean](https://en.wikipedia.org/wiki/Aegean_Sea) in several ways, the best known Aegeus, the
+father of Theseus, who threw himself into it; where the [Ionian](https://en.wikipedia.org/wiki/Ionian_Sea)
+comes from is not known, though Aeschylus tied it to Io, who swam across it. The
+[Sea of Marmara](https://en.wikipedia.org/wiki/Sea_of_Marmara) is named after its largest island,
+rich in marble, *mármaron* in Greek.
+"""
+
 nbNote(tr"""
 The maps are not tables: they are two drawings made with the data, by
 [map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
-from OpenStreetMap's coast and the islands' places on Wikidata. Where each name goes was
+from OpenStreetMap's coast and the islands' places on Wikidata, and the limits of the seas from
+[Marine Regions](https://www.marineregions.org/) (CC BY 4.0). Where each name goes was
 written by Claude, the AI that wrote this story. Their colours are the page's, so they change
 with its look.
 """, nkCode)
@@ -320,7 +301,7 @@ coastline has 56,300 points around Sicily; the data's extract step kept 120. The
 
 nbText: tr"""
 Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
-3,340 m, the highest active volcano in Europe outside the Caucasus.
+3,357 m, the highest active volcano in Europe outside the Caucasus.
 
 """
 photoHeading "Thirty-five islands", "dolphins-knossos", "The dolphins of Knossos"
@@ -515,7 +496,7 @@ photoHeading "All 195", "strombolicchio", "Strombolicchio"
 nbText: tr"""
 
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long.
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. [The whole list](../isole-tutte/index.html), every island with its data, is long.
 One way into it is the sea each island is in. The International Hydrographic Organization drew
 the limits of the seas in 1953, in *Limits of Oceans and Seas*: the Mediterranean is a western
 and an eastern basin, and inside them eight seas with names of their own. Sea by sea, from west

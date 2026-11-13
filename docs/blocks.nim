@@ -11,6 +11,7 @@
 ##   nbGallery "what it shows": (nbGalleryCard "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
+##   nbWide: (nbTable t)                       # a big table, wider than the text
 ##   nbFoldCode "docs/review.nim"              # a source file, or a part of it, folded
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
@@ -432,6 +433,23 @@ template nbBeside*(body: untyped) =
   nb.withContainer(accanto):
     body
   nb.add accanto
+
+proc besidePicture*(file, text: string, height = "3em", alt = ""): Text =
+  ## A label for a table (a row group's, a title) with a small picture before it, a local file
+  ## inlined as `localImage` does, and Markdown after it: each sea of the islands with its map.
+  html(localImage(file, height, alt).s & """<span class="beside-picture">""" & inline(text) & "</span>")
+
+newNbBlock(NbWide of NbContainer):
+  toHtml:
+    """<div class="wide">""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbWide*(body: untyped) =
+  ## The blocks of `body` wider than the text, up to the width of the window: a big table made
+  ## for a large screen (it scrolls sideways on a small one).
+  let wide = newNbWide()
+  nb.withContainer(wide):
+    body
+  nb.add wide
 
 proc placeBeside*(c: NbContainer) =
   ## Puts tables that follow each other in `c` side by side (in an `NbBeside`).
@@ -1069,9 +1087,6 @@ const bodyScript = """<script>
     document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
-    document.querySelectorAll('.tema button[data-code]').forEach(function (b) {
-      b.setAttribute('aria-pressed', b.dataset.code === (root.dataset.code || 'on') ? 'true' : 'false');
-    });
   }
   document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -1080,14 +1095,33 @@ const bodyScript = """<script>
       show();
     });
   });
-  // the code switch: the code blocks and the notes about the code, shown or not
-  document.querySelectorAll('.tema button[data-code]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      root.dataset.code = b.dataset.code;
-      try { localStorage.setItem('tabelline-code', b.dataset.code); } catch (e) {}
-      show();
+  // the code switch: the code blocks and the notes about the code, shown or not. It goes beside
+  // Review, under the lede, once the review script has put its line there.
+  var code = document.querySelector('button.code-toggle');
+  if (code) {
+    var label = function () {
+      var off = root.dataset.code === 'off';
+      code.textContent = off ? code.dataset.show : code.dataset.hide;
+      code.setAttribute('aria-pressed', off ? 'true' : 'false');
+    };
+    code.addEventListener('click', function () {
+      root.dataset.code = root.dataset.code === 'off' ? 'on' : 'off';
+      try { localStorage.setItem('tabelline-code', root.dataset.code); } catch (e) {}
+      label();
     });
-  });
+    document.addEventListener('DOMContentLoaded', function () {
+      var slot = document.querySelector('.rv-enter');
+      if (!slot) {
+        slot = document.createElement('p');
+        slot.className = 'rv-enter';
+        var after = document.querySelector('.lede') || document.querySelector('h1');
+        if (after) after.insertAdjacentElement('afterend', slot);
+      }
+      slot.appendChild(code);
+      code.hidden = false;
+      label();
+    });
+  }
   show();
   function choose(lang) {
     document.querySelectorAll('.lingue').forEach(function (box) {
@@ -1185,11 +1219,11 @@ func temaSwitch(offered: seq[string]): string =
       result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
   result.add "</div>"
 func codeSwitch(lang: string): string =
-  ## The code switch, for a page that a reader may want without its code: the code, or only the
-  ## text and the tables (`?code=off`).
-  let (on, off) = if lang == "it": ("codice", "senza codice") else: ("code", "no code")
-  &"""<div class="tema" role="group" aria-label="Code"><button type="button" data-code="on" aria-pressed="true">{on}</button>""" &
-    &"""<button type="button" data-code="off" aria-pressed="false">{off}</button></div>"""
+  ## The code switch, for a page that a reader may want without its code: one button, moved
+  ## beside **✎ Review** by the page's script (hidden without JavaScript), that hides the code and
+  ## the notes about it, or shows them again (`?code=off` in the address).
+  let (hide, show) = if lang == "it": ("Nascondi il codice", "Mostra il codice") else: ("Hide the code", "Show the code")
+  &"""<button type="button" class="code-toggle" data-hide="{hide}" data-show="{show}" aria-pressed="false" hidden>{hide}</button>"""
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
@@ -1203,9 +1237,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
   let home = c{"home_href"}.getStr
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
-  let switches = if c{"code_switch"}.getBool:
-      """<div class="switches">""" & temaSwitch(offered) & codeSwitch(c{"lang"}.getStr("en")) & "</div>"
-    else: temaSwitch(offered)
+  let switches = temaSwitch(offered) & (if c{"code_switch"}.getBool: codeSwitch(c{"lang"}.getStr("en")) else: "")
   var rows = ""
   # The masthead: the wordmark, the section and its cadence. The quaderno shows them as the label
   # of an exercise book, so each line keeps the label's word for it (Nome, Materia, Classe).

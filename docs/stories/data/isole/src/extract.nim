@@ -67,6 +67,17 @@ for w in readRows(raw / "wd_islands.csv"):
   if w["elevation"].len > 0 and isl.elevation.isNaN: isl.elevation = w["elevation"].parseFloat
   if w["archipelagoLabel"].len > 0 and isl.archipelago.len == 0: isl.archipelago = w["archipelagoLabel"]
   if w["native"].len > 0 and w["native"] notin isl.native: isl.native.add w["native"]
+# The highest point, when Wikidata names one and it is higher than the island's own elevation;
+# Sardinia's and Cyprus's by hand, from Wikipedia (Punta La Marmora, Mount Olympus), as Wikidata
+# names no highest point for them and gives Sardinia an elevation of 384 m.
+const peaksByHand = {"Sardinia": 1834.0, "Geography of Cyprus": 1952.0}
+for w in readRows(raw / "wd_peaks.csv"):
+  if w["title"] notin byPage: continue
+  var isl = addr islands[byPage[w["title"]]]
+  let e = w["elevation"].parseFloat
+  if isl.elevation.isNaN or e > isl.elevation: isl.elevation = e
+for (title, e) in peaksByHand:
+  if title in byPage: islands[byPage[title]].elevation = e
 
 # Three islands whose page has no Wikidata item (a redirect or a page that does not exist):
 # a point from the {{coord}} of the Wikipedia article that stands for them, read by hand on 13
@@ -329,41 +340,19 @@ for w in readRows(raw / "wd_all_islands.csv"):
       people[k] = max(people.getOrDefault(k), w["population"].parseFloat)
 # Each island's sea, as the IHO draws them (Marine Regions): the seas are drawn on a grid of
 # 0.02 degrees (about 2 km), and an island takes the sea of most of the cells around its coast.
-const step = 0.02
-const (gx0, gy0, gw, gh) = (-6.0, 30.0, 2150, 850)
-var seaGrid = newSeq[int8](gw * gh)
-for c in seaGrid.mitems: c = -1
-for s, sea in ihoSeas:
-  let doc = parseFile(raw / "iho" / sea.replace(' ', '_') & ".jsonld")
-  let seaRings = wktRings(doc["mr:hasGeometry"][0]["gsp:asWKT"].getStr)
-  var cross = newSeq[seq[float]](gh)
-  for ring in seaRings:
-    for i in 0 ..< ring.len:
-      let (x1, y1) = ring[i]
-      let (x2, y2) = ring[(i + 1) mod ring.len]
-      let lo = max(0, int(ceil((min(y1, y2) - gy0) / step - 0.5)))
-      let hi = min(gh - 1, int(floor((max(y1, y2) - gy0) / step - 0.5)))
-      for row in lo .. hi:
-        let y = gy0 + (row.float + 0.5) * step
-        if (y1 > y) != (y2 > y): cross[row].add x1 + (y - y1) * (x2 - x1) / (y2 - y1)
-  for row in 0 ..< gh:
-    cross[row].sort
-    for k in countup(0, cross[row].len - 2, 2):
-      let a = max(0, int(ceil((cross[row][k] - gx0) / step - 0.5)))
-      let b = min(gw - 1, int(floor((cross[row][k + 1] - gx0) / step - 0.5)))
-      for col in a .. b: seaGrid[row * gw + col] = s.int8
+let seaGrid = ihoGrid(raw)
 
 proc ihoSeaOf(r: Ring): string =
   var votes = newSeq[int](ihoSeas.len)
   let every = max(1, r.pts.len div 60)
   for reach in [1, 3, 8, 20]:
     for i in countup(0, r.pts.high, every):
-      let col = int((r.pts[i][0] - gx0) / step)
-      let row = int((r.pts[i][1] - gy0) / step)
+      let col = int((r.pts[i][0] - ihoX0) / ihoStep)
+      let row = int((r.pts[i][1] - ihoY0) / ihoStep)
       for dr in -reach .. reach:
         for dc in -reach .. reach:
-          let (rr, cc) = (row + dr, col + dc)
-          if rr in 0 ..< gh and cc in 0 ..< gw and seaGrid[rr * gw + cc] >= 0: inc votes[seaGrid[rr * gw + cc]]
+          let s = seaGrid.sea(row + dr, col + dc)
+          if s >= 0: inc votes[s]
     if votes.max > 0: return ihoSeas[votes.maxIndex]
   ""
 

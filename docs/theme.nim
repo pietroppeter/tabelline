@@ -179,7 +179,6 @@ header { padding-top: .4rem; }
 .etichetta .nome a { color: inherit; text-decoration: none; }
 @media (max-width: 560px) {
   .forme { transform: scale(.62); transform-origin: top right; top: 6rem; }
-  .switches ~ .forme { top: 8.2rem; }   /* the two switches take two lines */
   .etichetta { padding-right: 6.4rem; min-height: 6rem; }
   .etichetta .nome span:last-child { font-size: 2.5rem; }
 }
@@ -207,6 +206,11 @@ blockquote p { margin: .3rem 0; }
 hr { border: 0; border-top: 2px solid var(--ink); margin: 2rem 0; }
 mark { background: var(--warning-soft); padding: 0 .15em; }
 img { max-width: 100%; }
+table td img { max-width: none; }
+/* a label with a picture before it (besidePicture): the text beside the picture, not under it */
+.beside-picture { display: inline-block; vertical-align: middle; max-width: 48rem; margin-left: .8rem; white-space: normal; }
+/* a block wider than the text (nbWide), centred on the page, up to the window's width */
+.wide { width: min(96vw, 92rem); position: relative; left: 50%; transform: translateX(-50%); }   /* a picture in a table keeps its size (fmtImage), or a column with no width squeezes it */
 
 /* code: a white sheet with a black edge; outputs on grey paper */
 pre { margin: 1rem 0; }
@@ -327,6 +331,7 @@ body /* a drawing (nbDrawing): a Pele diagram in the page's colours */
 .disegno svg.map .sea { fill: var(--surface); }
 .disegno svg.map .land { fill: var(--neutral-2); stroke: var(--neutral-4); stroke-width: 1; }
 .disegno svg.map .main { fill: var(--secondary); }
+.disegno svg.map .limit { fill: none; stroke: var(--secondary-text); stroke-width: 1.5; stroke-dasharray: 6 4; }
 .disegno svg.map .dot { fill: var(--primary); stroke: var(--surface); stroke-width: 1.5; }
 .disegno svg.map text { font-family: inherit; }
 .disegno svg.map .sea-name { fill: var(--muted); font-style: italic; letter-spacing: 1.5px; }
@@ -484,9 +489,10 @@ details.fold[open] > summary { border-bottom: 1px solid var(--line); }
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .2rem .7rem; }
 .tema button:last-child { border-left: 0; }
 .tema button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-/* with the code switch beside it; with the code off, no code and no notes about it */
-.switches { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .4rem .9rem; margin: .6rem 0 0; }
-.switches .tema { margin: 0; }
+/* the code switch, beside Review and in its style; with the code off, no code and no notes about it */
+.code-toggle { font: inherit; color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 0;
+  min-height: 44px; padding: 0 .8rem; cursor: pointer; }
+.code-toggle[aria-pressed="true"] { border-color: var(--ink); }
 html[data-code="off"] details.codice, html[data-code="off"] .nota.code, html[data-code="off"] details.foldcode,
 html[data-code="off"] footer details.source { display: none; }
 
