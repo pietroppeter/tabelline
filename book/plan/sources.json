@@ -475,7 +475,8 @@
     {
      "path": "docs/examples/nfl-season/index.ipynb",
      "title": "An NFL season",
-     "port": "port"
+     "port": "port",
+     "book": "extras/nfl_season.html"
     },
     {
      "path": "docs/examples/index.qmd",

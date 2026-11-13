@@ -36,6 +36,8 @@ var book = initBookWithToc:
   section("Great Tables: examples", "examples/index.md"):
     entry("Examples", "examples")
     entry("Sports earnings", "sports_earnings")
+  section("gt-extras", "extras/index.md"):
+    entry("An NFL season", "nfl_season")
   section("gt: articles", "vignettes/index.md"):
     entry("gt Datasets", "gt_datasets")
     entry("Creating Summary Lines", "summary_lines")

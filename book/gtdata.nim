@@ -77,6 +77,11 @@ const
   sportsIcons* = examplesDir & "sports-icons"
     ## The folder of the sports icons (`soccer.png`, ...), for `fmtImage(path = ...)`.
 
+const
+  nflStatsJson* = staticRead(currentSourcePath().parentDir & "/data/gt-extras/nfl_2011_stats.json")
+    ## A season of the NFL by team, as gt-extras' "An NFL season" example computes it from
+    ## nflverse's games (copied from gt-extras, MIT).
+
 const metroImages* = dataDir & "metro_images"
   ## The folder of the metro lines' images (`metro_1.svg`, ...), for `fmtImage(path = ...)`.
 

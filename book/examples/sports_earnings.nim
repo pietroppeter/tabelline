@@ -143,7 +143,7 @@ res |>
         "Off-the-Field Earnings": "Off field $M"
         "Off-the-Field Earnings Perc": "Off field %"
       fmtNumber ["Total Earnings", "Off-the-Field Earnings"], scaleBy = 1 / 1_000_000, decimals = 1
-      fmt "Off-the-Field Earnings Perc", proc (v: Value): string =
+      fmt "Off-the-Field Earnings Perc", proc (v: Value, ctx: RenderContext): string =
         createBar(v.toFloat, maxWidth = 75, height = 20)
       fmtImage "icon", path = sportsIcons
       tabSourceNote md("Original table: [@LisaHornung_](https://twitter.com/LisaHornung_/status/1752981867769266231)" &
@@ -154,7 +154,9 @@ res |>
 
 tabelline """
 The bar is HTML written by a proc, as in the notebook, but in tabelline (and gt) it is a format
-of the share, so the data keep the number: `fmt` turns it into the bar when the table is drawn.
+of the share, so the data keep the number: `fmt` turns it into the bar when the table is drawn
+(a proc that takes the `RenderContext` too gives HTML; one that takes only the value gives text,
+which tabelline escapes).
 The source note is centred with a style, as gt does it, where the notebook writes a `div` in its
 Markdown.
 """
