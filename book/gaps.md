@@ -35,7 +35,8 @@ to the backlog.
 | Options | White text on a dark stub background set by options (tabelline picks the text colour for the heading and the column labels only) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
 | Options | `optAllCaps` on the stub and the row group labels too | [Premade Themes](get-started/table_theme_premade.html), [v0.3.0](blog/v0_3.html) | **new** |
-| Styles | `style.text(vAlign = ...)` (`style.css("vertical-align: middle")` does it) | [v0.13.0](blog/v0_13.html), [Lemurs](contest/lemurs.html) | **new** |
+| Styles | `style.text(vAlign = ...)` (`style.css("vertical-align: middle")` does it) | [v0.13.0](blog/v0_13.html), [Lemurs](contest/lemurs.html), [Basic gt Styling Reference](contest/gt_styling.html) | **new** |
+| Styles | `style.text(indent = ...)` and `style.fill(alpha = ...)`, as gt's `cell_text(indent)` and `cell_fill(alpha)` (`style.css("text-indent: 15px")` and a colour with an alpha do it) | [Basic gt Styling Reference](contest/gt_styling.html) | **new** |
 | Styles | `loc.stub` by row label (`"banana"`), and mixed with indices | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.rowGroups` by a row of the group, or by a condition | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.body(mask = ...)`: a condition for each cell | [Styling the Table Body](get-started/basic_styling.html), [Location selection](get-started/loc_selection.html) | **new** |

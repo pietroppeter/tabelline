@@ -365,7 +365,7 @@ df = tweak_df(json_file)
 
 The core concept of utilizing the pipeline is that each callable (typically a function) receives an instance of a `GT` object as the first input parameter and returns an instance of a `GT` object. This allows us to chain multiple callables together, forming a pipeline.
 
-In this section, we'll gradually build each callable and observe how the table is constructed. Instead of rendering the table in HTML directly, we'll use the `make_table()` function to generate multiple **PNG** tables, which internally calls [GT.save()](https://posit-dev.github.io/great-tables/reference/GT.save.html#great_tables.GT.save). These tables will be shown at the end of each subsection. This approach allows us to save each progress step in the `tables` folder. However, since the hyperlinks in the table won't be functional when saved in **PNG** format, this is a minor drawback I hope you can accept. You can find the final table in HTML at [3.15 Final Table in HTML](./#final-table-in-html).
+In this section, we'll gradually build each callable and observe how the table is constructed. Instead of rendering the table in HTML directly, we'll use the `make_table()` function to generate multiple **PNG** tables, which internally calls [GT.save()](https://posit-dev.github.io/great-tables/reference/GT.save.html#great_tables.GT.save). These tables will be shown at the end of each subsection. This approach allows us to save each progress step in the `tables` folder. However, since the hyperlinks in the table won't be functional when saved in **PNG** format, this is a minor drawback I hope you can accept. You can find the final table in HTML at 3.15 Final Table in HTML (below).
 
 ```python
 def make_table(
