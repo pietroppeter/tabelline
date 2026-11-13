@@ -301,7 +301,7 @@ for i, isl in islands:
 # their islands are not here.
 proc inSea(lon, lat: float): bool =
   if lon < -5.6: return false                                   # the Atlantic, past Gibraltar
-  if lon < 0 and lat > 43.4: return false                       # the Bay of Biscay
+  if lon < 0 and lat > 42.0: return false                       # the Bay of Biscay (the Mediterranean coast west of 0° ends at 40.5° N)
   if (lon > 27.4 and lat > 41.6) or (lon > 28.9 and lat > 41.15): return false   # the Black Sea
   if lon > 32.3 and lat < 31.2: return false                    # the Gulf of Suez and the Red Sea
   true

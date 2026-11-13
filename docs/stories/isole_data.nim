@@ -296,9 +296,12 @@ nbText: """
 ## Every island
 
 The list stops at 5.5 km². To say how many islands a country or a sea has, `extract.nim` keeps
-every polygon of OpenStreetMap's land in the sea: 24,470, from Sicily to rocks of a few square
+every polygon of OpenStreetMap's land in the sea: 24,358, from Sicily to rocks of a few square
 metres (not the Peloponnese and Kassandra, which only a canal cuts off, and not the islands in
-lakes, which OpenStreetMap's land polygons fill as land). Each gets the list's island it is, if
+lakes, which OpenStreetMap's land polygons fill as land). The sea is the box of the map, from Gibraltar to the
+Levant, less the Atlantic, the Bay of Biscay, the Black Sea and the Red Sea, which the box reaches
+too: eight islets on Spain's and France's coast of the Bay of Biscay were counted until a review
+of the story saw them on the map. Each gets the list's island it is, if
 any; a country, from Natural Earth's countries at 1:10 million (public domain), the one that
 holds its middle or else the closest; the people Wikidata counts on it; and its sea. The story
 counts those of a hectare or more, 0.01 km²: smaller ones are mostly rocks, and some are piers,
@@ -317,7 +320,7 @@ drawing names its parts (`sea`, `land`, `main`, `dot`, `limit`) and the page's t
 them, so the maps change with the look: the west and the east of the sea, in English and in
 Italian, and Sicily with its islands, where the islands of Sicily are filled instead of the main
 ones. A last one, of every island, has no names and nothing filled: a blue dot for
-each of the 195, and a smaller one for each of the 2,150 others of a hectare or more, from
+each of the 195, and a smaller one for each of the 2,142 others of a hectare or more, from
 `others.csv`.
 
 For the page of all 195 islands it draws two small maps more: each sea in the whole

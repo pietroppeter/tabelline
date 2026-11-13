@@ -196,7 +196,7 @@ nbText: tr"""
 
 No one knows how many islands the Mediterranean has: it depends on how small an island may be.
 The sea holds more than 10,000, by an estimate of 2022, and 2,217 of them are larger than a
-hectare. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
+hectare, a square of 100 m a side, about one and a half football pitches. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
 6,000, by the smallest size counted, and people live on 166 to 227 of them. Croatia's statistics
 office counts 1,185: 718 islands, 48 of them lived on, 389 rocks and 78 reefs. Italy has nearly
 450, with those of its lakes and rivers, and Turkey about 500, in four seas and its lakes.
@@ -213,8 +213,8 @@ residence from 1947 to 1979, where he received heads of state, and is now a nati
 Sazan, Albania's largest island, is a military zone. Petalas, the last, is the largest private
 island of Greece, with 4,000 olive trees and nobody living there.
 
-Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
-hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,150 a
+Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,337 islands of a
+hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,142 a
 dot in the colour of the circles.
 """
 

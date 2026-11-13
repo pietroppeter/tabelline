@@ -1593,7 +1593,7 @@ en:
 
 No one knows how many islands the Mediterranean has: it depends on how small an island may be.
 The sea holds more than 10,000, by an estimate of 2022, and 2,217 of them are larger than a
-hectare. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
+hectare, a square of 100 m a side, about one and a half football pitches. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
 6,000, by the smallest size counted, and people live on 166 to 227 of them. Croatia's statistics
 office counts 1,185: 718 islands, 48 of them lived on, 389 rocks and 78 reefs. Italy has nearly
 450, with those of its lakes and rivers, and Turkey about 500, in four seas and its lakes.
@@ -1610,15 +1610,15 @@ residence from 1947 to 1979, where he received heads of state, and is now a nati
 Sazan, Albania's largest island, is a military zone. Petalas, the last, is the largest private
 island of Greece, with 4,000 olive trees and nobody living there.
 
-Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
-hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,150 a
+Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,337 islands of a
+hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,142 a
 dot in the colour of the circles.
 it:
 ### Quante sono
 
 Nessuno sa quante isole abbia il Mediterraneo: dipende da quanto può essere piccola un'isola. Il
-mare ne ha più di 10.000, secondo una stima del 2022, e 2.217 sono più grandi di un ettaro. Ogni
-paese conta le sue, con le sue regole. La Grecia ne ha fra 1.200 e 6.000, a seconda della misura
+mare ne ha più di 10.000, secondo una stima del 2022, e 2.217 sono più grandi di un ettaro, un quadrato di 100 m di
+lato, circa un campo da calcio e mezzo. Ogni paese conta le sue, con le sue regole. La Grecia ne ha fra 1.200 e 6.000, a seconda della misura
 più piccola che conta, e da 166 a 227 sono abitate. L'istituto di statistica croato ne conta
 1.185: 718 isole, di cui 48 abitate, 389 scogli e 78 secche. L'Italia ne ha quasi 450, con quelle
 dei laghi e dei fiumi, e la Turchia circa 500, in quattro mari e nei suoi laghi.
@@ -1636,8 +1636,8 @@ residenza estiva di Tito dal 1947 al 1979, dove riceveva i capi di stato, e oggi
 nazionale. Saseno, la più grande isola dell'Albania, è una zona militare. Petalas, l'ultima, è la
 più grande isola privata della Grecia, con 4.000 ulivi e nessuno che ci vive.
 
-Contate sulla costa di OpenStreetMap, che disegna ogni isolotto, il mare ha 2.345 isole di un
-ettaro o più, vicino alla stima: sulla carta, le 195 della lista in blu e le altre 2.150 un punto
+Contate sulla costa di OpenStreetMap, che disegna ogni isolotto, il mare ha 2.337 isole di un
+ettaro o più, vicino alla stima: sulla carta, le 195 della lista in blu e le altre 2.142 un punto
 del colore dei cerchi.
 
 en: of its land
