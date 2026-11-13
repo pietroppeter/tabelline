@@ -57,6 +57,11 @@ let airports = rd(stage / "airports.csv")
 # page Northern Cyprus).
 const cyprusPeople = 918_100 + 382_836
 
+# The ISO code of each of the list's countries, for its flag and to add up every island by country.
+const codeOf = [("Italy", "IT"), ("Greece", "GR"), ("Cyprus", "CY"), ("France", "FR"), ("Spain", "ES"),
+                ("Croatia", "HR"), ("Tunisia", "TN"), ("Turkey", "TR"), ("Malta", "MT"), ("Albania", "AL")]
+var listCode = `when`(col.country == codeOf[0][0]).then(codeOf[0][1])
+for (name, code) in codeOf[1 .. ^1]: listCode = listCode.`when`(col.country == name).then(code)
 let islands = rd(stage / "islands.csv")
   .join(isole, on = ["label"], how = JoinType.Left)
   .join(rd(stage / "shapes.csv").select(col.title, col.outline_km2.num, col.coast_km.num,
@@ -64,18 +69,22 @@ let islands = rd(stage / "islands.csv")
         on = ["title"], how = JoinType.Left)
   .join(properties.groupBy(col.title).agg(len().alias("heritage")), on = ["title"], how = JoinType.Left)
   .join(airports.groupBy(col.title).agg(len().alias("airports")), on = ["title"], how = JoinType.Left)
+  .join(rd(stage / "every_island.csv").filter(col.title.isNotNull).select(col.title, col.iho_sea),
+        on = ["title"], how = JoinType.Left)
   .select(col.rank.int64, col.label.alias("island"), col.title,
           # two islands tabelline's isole has no country for
           `when`(col.label == "La Galite").then("Tunisia").`when`(col.label == "Île du Levant").then("France")
             .otherwise(col.country).alias("country"),
+          listCode.`when`(col.label == "La Galite").then("TN").`when`(col.label == "Île du Levant").then("FR")
+            .otherwise("").alias("code"),
           col.list_km2.num.alias("km2"),
           `when`(col.title == "Geography of Cyprus").then(cyprusPeople).otherwise(col.population).alias("population"),
           col.town, col.wikidata, col.lat.num, col.lon.num, col.elevation.num,
           col.archipelago, col.native, col.italian, (col.main == "true").alias("main"), col.sea, col.sea_how,
           col.outline_km2, col.coast_km, col.points, col.matched,
-          col.heritage.fillNull(0), col.airports.fillNull(0), col.x, col.y)
+          col.heritage.fillNull(0), col.airports.fillNull(0), col.iho_sea, col.x, col.y)
   .sort("rank").collect
-islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, Italian name, sea), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
+islands.save("islands.csv", "The 195 islands of Wikipedia's List of islands in the Mediterranean (by area, its rank), with tabelline's isole (country, population), Wikidata (item, place, highest point, archipelago, native name, Italian name, sea), the country's ISO code, the sea as the IHO draws them (Marine Regions, CC BY 4.0), the OpenStreetMap outline (© OpenStreetMap contributors, ODbL) that holds each (km², coast km, points, x and y in km) and the counts of World Heritage properties and airports on it.")
 
 # ---------------------------------------------------------------- 2. what is on them
 
@@ -144,13 +153,8 @@ concat([
 # Every island of the sea, by country: extract.nim's rings of OpenStreetMap, each with its country
 # from Natural Earth and its people on Wikidata; the list's islands take the list's country and
 # area and people (Natural Earth's closest country for Agathonisi and Kastellorizo is Turkey).
-const codeOf = [("Italy", "IT"), ("Greece", "GR"), ("Cyprus", "CY"), ("France", "FR"), ("Spain", "ES"),
-                ("Croatia", "HR"), ("Tunisia", "TN"), ("Turkey", "TR"), ("Malta", "MT"), ("Albania", "AL")]
-var listCode = `when`(col.country == codeOf[0][0]).then(codeOf[0][1])
-for (name, code) in codeOf[1 .. ^1]: listCode = listCode.`when`(col.country == name).then(code)
 let listed = islands.lazy
-  .withColumns(listCode.otherwise("").alias("list_code"))
-  .select(col.title, col.list_code, col.km2.alias("list_km2"), col.population.cast(Float64).alias("list_people"), col.main)
+  .select(col.title, col.code.alias("list_code"), col.km2.alias("list_km2"), col.population.cast(Float64).alias("list_people"), col.main)
 rd(stage / "every_island.csv")
   .select(col.title, col.code, col.km2.num, col.wd_people.num)
   .join(listed, on = ["title"], how = JoinType.Left)
@@ -174,7 +178,7 @@ let climate = rd(outDir / "climate.csv")
 let sea = climate.filter(col.measure == "sea_c").select(col.title, col.m08.num.alias("sea_aug"))
 let high = climate.filter(col.measure == "high_c").select(col.title, col.m08.num.alias("high_aug"), col.m01.num.alias("high_jan"))
 islands.lazy.filter(col.main)
-  .join(regions, on = ["title"], how = JoinType.Left)
+  .join(regions.select(col.title, col.locale, col.region), on = ["title"], how = JoinType.Left)
   .join(gdp, on = ["region"], how = JoinType.Left)
   .join(jobs.filter(col.year == 2025).select(col.region, col.rate.alias("jobless_2025")), on = ["region"], how = JoinType.Left)
   .join(lastPax, on = ["title"], how = JoinType.Left)

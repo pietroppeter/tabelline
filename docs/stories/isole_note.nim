@@ -134,6 +134,9 @@ Le parole che si potevano tradurre in più modi. La prima opzione, **A**, è que
 15. **Türkiye**, come la scrive `fmtCountry` (dai nomi di CLDR), e **Turkey** nel testo. **A.**
     Turchia, tutte e due. **B.** Türkiye nella tabella, come il nome ufficiale. A perché in italiano
     si dice Turchia.
+16. **listed** (colonna della tabella per paese, le isole della lista delle 195). **A.** nella
+    lista. **B.** iscritto, la prima stesura. A dalla revisione di Pietro: "iscritto" non si
+    capiva, perché in italiano si iscrive una persona, non un'isola.
 """
 
 nbText: """

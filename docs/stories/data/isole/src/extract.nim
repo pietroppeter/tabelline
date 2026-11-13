@@ -327,16 +327,57 @@ for w in readRows(raw / "wd_all_islands.csv"):
   for k in ringCells.getOrDefault(cell(lon, lat)):
     if rings[k].island < 0 and rings[k].contains(lon, lat):
       people[k] = max(people.getOrDefault(k), w["population"].parseFloat)
+# Each island's sea, as the IHO draws them (Marine Regions): the seas are drawn on a grid of
+# 0.02 degrees (about 2 km), and an island takes the sea of most of the cells around its coast.
+const step = 0.02
+const (gx0, gy0, gw, gh) = (-6.0, 30.0, 2150, 850)
+var seaGrid = newSeq[int8](gw * gh)
+for c in seaGrid.mitems: c = -1
+for s, sea in ihoSeas:
+  let doc = parseFile(raw / "iho" / sea.replace(' ', '_') & ".jsonld")
+  let seaRings = wktRings(doc["mr:hasGeometry"][0]["gsp:asWKT"].getStr)
+  var cross = newSeq[seq[float]](gh)
+  for ring in seaRings:
+    for i in 0 ..< ring.len:
+      let (x1, y1) = ring[i]
+      let (x2, y2) = ring[(i + 1) mod ring.len]
+      let lo = max(0, int(ceil((min(y1, y2) - gy0) / step - 0.5)))
+      let hi = min(gh - 1, int(floor((max(y1, y2) - gy0) / step - 0.5)))
+      for row in lo .. hi:
+        let y = gy0 + (row.float + 0.5) * step
+        if (y1 > y) != (y2 > y): cross[row].add x1 + (y - y1) * (x2 - x1) / (y2 - y1)
+  for row in 0 ..< gh:
+    cross[row].sort
+    for k in countup(0, cross[row].len - 2, 2):
+      let a = max(0, int(ceil((cross[row][k] - gx0) / step - 0.5)))
+      let b = min(gw - 1, int(floor((cross[row][k + 1] - gx0) / step - 0.5)))
+      for col in a .. b: seaGrid[row * gw + col] = s.int8
+
+proc ihoSeaOf(r: Ring): string =
+  var votes = newSeq[int](ihoSeas.len)
+  let every = max(1, r.pts.len div 60)
+  for reach in [1, 3, 8, 20]:
+    for i in countup(0, r.pts.high, every):
+      let col = int((r.pts[i][0] - gx0) / step)
+      let row = int((r.pts[i][1] - gy0) / step)
+      for dr in -reach .. reach:
+        for dc in -reach .. reach:
+          let (rr, cc) = (row + dr, col + dc)
+          if rr in 0 ..< gh and cc in 0 ..< gw and seaGrid[rr * gw + cc] >= 0: inc votes[seaGrid[rr * gw + cc]]
+    if votes.max > 0: return ihoSeas[votes.maxIndex]
+  ""
+
 var everyRows: seq[seq[string]]
 for k in inMed:
   let r = rings[k]
   everyRows.add @[(if r.island >= 0: islands[r.island].row.title else: ""),
                   countryOf((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2),
                   formatFloat(r.km2, ffDecimal, 4), (if k in people: $people[k].int else: ""),
-                  formatFloat((r.lo[0] + r.hi[0]) / 2, ffDecimal, 4), formatFloat((r.lo[1] + r.hi[1]) / 2, ffDecimal, 4)]
+                  formatFloat((r.lo[0] + r.hi[0]) / 2, ffDecimal, 4), formatFloat((r.lo[1] + r.hi[1]) / 2, ffDecimal, 4),
+                  r.ihoSeaOf]
 echo everyRows.len, " islands in the sea"
-writeCsv(stage / "every_island.csv", "Every island of the Mediterranean: each of OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals; lakes are land there), the list's island it is (title), its country from Natural Earth's countries (public domain; the one that holds its middle, or the closest), its km², and the largest count of people on Wikidata (P1082) of an island whose point is on it; the middle of its box (lon, lat).",
-  ["title", "code", "km2", "wd_people", "lon", "lat"], everyRows)
+writeCsv(stage / "every_island.csv", "Every island of the Mediterranean: each of OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals; lakes are land there), the list's island it is (title), its country from Natural Earth's countries (public domain; the one that holds its middle, or the closest), its km², and the largest count of people on Wikidata (P1082) of an island whose point is on it; the middle of its box (lon, lat); its sea as the IHO draws them (Limits of Oceans and Seas, 1953; Marine Regions, CC BY 4.0), the one around most of its coast.",
+  ["title", "code", "km2", "wd_people", "lon", "lat", "iho_sea"], everyRows)
 
 proc perpendicular(p, a, b: (float, float)): float =
   let (dx, dy) = (b[0] - a[0], b[1] - a[1])

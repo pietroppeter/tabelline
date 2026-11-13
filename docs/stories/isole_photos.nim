@@ -17,7 +17,7 @@ let groups = parseFile(data / "groups.json")
 let links = parseFile(data / "photos.json")
 
 # the file of each pick in the story, by its name (the story's heading uses the same copy)
-const storyFiles = [("Southern Italy and Sicily, south at the top", "night-south-up"),
+const storyFiles = [("Southern Italy and Sicily at night", "night-italy"),
   ("Etna's plume", "etna-plume"), ("The dolphins of Knossos", "dolphins-knossos"),
   ("Lemnos, in Piri Reis's Book of the Sea", "lemnos-piri-reis"), ("Strombolicchio", "strombolicchio"),
   ("Venice, in Bordone's book of islands", "venice-bordone"), ("Palermo cathedral, about 1900", "palermo-cathedral"),

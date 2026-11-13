@@ -179,6 +179,7 @@ header { padding-top: .4rem; }
 .etichetta .nome a { color: inherit; text-decoration: none; }
 @media (max-width: 560px) {
   .forme { transform: scale(.62); transform-origin: top right; top: 6rem; }
+  .switches ~ .forme { top: 8.2rem; }   /* the two switches take two lines */
   .etichetta { padding-right: 6.4rem; min-height: 6rem; }
   .etichetta .nome span:last-child { font-size: 2.5rem; }
 }
@@ -483,6 +484,11 @@ details.fold[open] > summary { border-bottom: 1px solid var(--line); }
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .2rem .7rem; }
 .tema button:last-child { border-left: 0; }
 .tema button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+/* with the code switch beside it; with the code off, no code and no notes about it */
+.switches { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .4rem .9rem; margin: .6rem 0 0; }
+.switches .tema { margin: 0; }
+html[data-code="off"] details.codice, html[data-code="off"] .nota.code, html[data-code="off"] details.foldcode,
+html[data-code="off"] footer details.source { display: none; }
 
 /* footer, with Munari's motto */
 footer { font: 400 .9rem/1.5 var(--font); color: var(--muted); padding: 1rem 0 3rem; text-align: center;

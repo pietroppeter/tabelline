@@ -33,6 +33,20 @@ const climateAlso* = [("Krk", "Rijeka"), ("Cres", "Mali Lošinj"), ("Brač", "Sp
   ## Islands whose town and page have no weather box: the closest page with one (by the page
   ## Wikidata knows: Pag (island), Ikaria).
 
+const ihoSeas* = ["Strait of Gibraltar", "Alboran Sea", "Balearic Sea", "Ligurian Sea", "Tyrrhenian Sea",
+                  "Mediterranean Sea - Western Basin", "Adriatic Sea", "Ionian Sea", "Aegean Sea",
+                  "Mediterranean Sea - Eastern Basin", "Sea of Marmara"]
+  ## The seas of the IHO's Limits of Oceans and Seas (1953) in the Mediterranean, west to east.
+
+proc wktRings*(wkt: string): seq[seq[(float, float)]] =
+  ## The rings of a WKT polygon or multipolygon (outer rings and holes alike), as (lon, lat).
+  for m in wkt.findAll(re"\([^()]+\)"):
+    var ring: seq[(float, float)]
+    for pair in m[1 .. ^2].split(','):
+      let xy = pair.splitWhitespace
+      if xy.len >= 2: ring.add (xy[0].parseFloat, xy[1].parseFloat)
+    if ring.len >= 3: result.add ring
+
 proc csvLine*(fields: openArray[string]): string =
   ## One CSV line: a field with a comma or a quote goes in quotes.
   var cells: seq[string]

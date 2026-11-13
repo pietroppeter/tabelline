@@ -1045,6 +1045,20 @@ func temaHeadScript(offered: openArray[string], first: string): string =
 })();
 </script>"""
 
+func codeHeadScript(): string =
+  ## Before the page is drawn, for a page with the code switch: the code shown or not, from the
+  ## address (`?code=off`, `?code=on`), else the choice made last, else shown.
+  """<script>
+(function () {
+  var root = document.documentElement, key = 'tabelline-code';
+  try {
+    var q = new URLSearchParams(location.search).get('code');
+    if (q === 'on' || q === 'off') localStorage.setItem(key, q);
+    root.dataset.code = q === 'on' || q === 'off' ? q : (localStorage.getItem(key) || 'on');
+  } catch (e) { root.dataset.code = 'on'; }
+})();
+</script>"""
+
 # What the blocks do in the browser: the look switch, the language tabs, the parts switch, and
 # the filter of the specs page.
 const bodyScript = """<script>
@@ -1052,14 +1066,25 @@ const bodyScript = """<script>
   var root = document.documentElement;
   function show() {
     var t = root.dataset.tema || 'munari';
-    document.querySelectorAll('.tema button').forEach(function (b) {
+    document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
+    document.querySelectorAll('.tema button[data-code]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.code === (root.dataset.code || 'on') ? 'true' : 'false');
+    });
   }
-  document.querySelectorAll('.tema button').forEach(function (b) {
+  document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
     b.addEventListener('click', function () {
       root.dataset.tema = b.dataset.tema;
       try { localStorage.setItem(root.dataset.temaKey || 'tabelline-tema', b.dataset.tema); } catch (e) {}
+      show();
+    });
+  });
+  // the code switch: the code blocks and the notes about the code, shown or not
+  document.querySelectorAll('.tema button[data-code]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.dataset.code = b.dataset.code;
+      try { localStorage.setItem('tabelline-code', b.dataset.code); } catch (e) {}
       show();
     });
   });
@@ -1159,6 +1184,12 @@ func temaSwitch(offered: seq[string]): string =
     if key in offered:
       result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
   result.add "</div>"
+func codeSwitch(lang: string): string =
+  ## The code switch, for a page that a reader may want without its code: the code, or only the
+  ## text and the tables (`?code=off`).
+  let (on, off) = if lang == "it": ("codice", "senza codice") else: ("code", "no code")
+  &"""<div class="tema" role="group" aria-label="Code"><button type="button" data-code="on" aria-pressed="true">{on}</button>""" &
+    &"""<button type="button" data-code="off" aria-pressed="false">{off}</button></div>"""
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
@@ -1172,6 +1203,9 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
   let home = c{"home_href"}.getStr
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
+  let switches = if c{"code_switch"}.getBool:
+      """<div class="switches">""" & temaSwitch(offered) & codeSwitch(c{"lang"}.getStr("en")) & "</div>"
+    else: temaSwitch(offered)
   var rows = ""
   # The masthead: the wordmark, the section and its cadence. The quaderno shows them as the label
   # of an exercise book, so each line keeps the label's word for it (Nome, Materia, Classe).
@@ -1183,7 +1217,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-{temaSwitch(offered)}{forme}
+{switches}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
@@ -1205,7 +1239,7 @@ proc sharedReviewScript*(nb: Nb): string =
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
                    reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari",
-                   lang = "en", languages: openArray[(string, string)] = []) =
+                   lang = "en", languages: openArray[(string, string)] = [], codeSwitch = false) =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -1218,19 +1252,23 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## reader chooses (with JavaScript off, always Munari). A page in more than one language gives
   ## its `lang` and every version as `languages` (code and link, its own included, as for the
   ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
-  ## and a first visit goes to the one in the browser's language.
+  ## and a first visit goes to the one in the browser's language. `codeSwitch` adds a switch that
+  ## hides the code and the notes about it (`?code=off` in the address), for a reader who wants
+  ## only the story.
   citedKeys.setLen 0   # a new page cites its sources afresh (docs/all.nim builds every page in one run)
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
     "\n" & temaHeadScript(looks, firstLook) & "\n" &
-    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
+    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") &
+    (if codeSwitch: codeHeadScript() & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
   nb.doc.context["lang"] = %lang
   var versions = newJArray()
   for (code, href) in languages: versions.add %[code, href]
   nb.doc.context["languages"] = versions
   nb.doc.context["looks"] = %(@looks)
+  nb.doc.context["code_switch"] = %codeSwitch
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true

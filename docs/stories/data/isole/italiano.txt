@@ -85,8 +85,8 @@ suoi file CSV. *Show code*, sotto una tabella, apre il codice Nim che l'ha fatta
 lo stesso della pagina inglese, e il testo passa per `tr`, che lo traduce. Le schede verdi si
 possono saltare: il resto del testo parla delle isole.
 
-en: Southern Italy and Sicily, south at the top
-it: Italia meridionale e Sicilia, con il sud in alto
+en: Southern Italy and Sicily at night
+it: Italia meridionale e Sicilia di notte
 
 en: source
 it: fonte
@@ -315,16 +315,22 @@ Superfici: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedi
 
 en:
 `rowGroupAsColumn = true` puts the country in a column of its own, left of the islands, instead
-of a row above them. `fmtFraction` writes the share as a fraction, with up to two digits
-below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece; `subSmallVals` writes
-"<1/100" for the small ones, which as fractions would be 0. `summaryRows` adds them up
-for each country with more than one (`groups`), in the format of their column.
+of a row above them. Each country's other islands are a row added to the data before the table,
+with their count where the shape goes: `fmtNanoplot` takes `rows`, and draws only the islands.
+The share is a fraction with up to two digits below (`formatFraction` with `accuracy = "med"`):
+Sicily is 7/82 of Italy, about a twelfth. Under a hundredth it is "<1/100", which as a fraction
+would be 0; written in one `fmt`, so that the rows of `summaryRows`, which take the last format
+of their column, write it too (`subSmallVals` would leave them out). `summaryRows` adds up each
+country, so its "all" row has every island.
 it:
 `rowGroupAsColumn = true` mette il paese in una colonna sua, a sinistra delle isole, invece che
-in una riga sopra di esse. `fmtFraction` scrive la quota come frazione, con al più due cifre al
-denominatore (`accuracy = "med"`): la Sicilia è 1/12 dell'Italia, Creta 1/16 della Grecia;
-`subSmallVals` scrive "<1/100" per le piccole, che come frazione sarebbero 0. `summaryRows` le
-somma per ogni paese che ne ha più di una (`groups`), nel formato della loro colonna.
+in una riga sopra di esse. Le altre isole di ogni paese sono una riga aggiunta ai dati prima della
+tabella, con il loro numero al posto della forma: `fmtNanoplot` accetta `rows`, e disegna solo le
+isole. La quota è una frazione con al più due cifre al denominatore (`formatFraction` con
+`accuracy = "med"`): la Sicilia è 7/82 dell'Italia, circa un dodicesimo. Sotto un centesimo è
+"<1/100", che come frazione sarebbe 0; scritto in un solo `fmt`, così anche le righe di
+`summaryRows`, che prendono l'ultimo formato della loro colonna, lo scrivono (`subSmallVals` le
+lascerebbe fuori). `summaryRows` somma ogni paese, così la sua riga "in tutto" ha tutte le isole.
 
 en: Strombolicchio
 it:
@@ -334,51 +340,66 @@ it: Tutte le 195
 
 en:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
-with the place of each in the list:
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long.
+One way into it is the sea each island is in. The International Hydrographic Organization drew
+the limits of the seas in 1953, in *Limits of Oceans and Seas*: the Mediterranean is a western
+and an eastern basin, and inside them eight seas with names of their own. Sea by sea, from west
+to east, with the largest island of each:
 it:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, scriveva Gilles Deleuze in *L'isola
-deserta*[^deleuze]. La lista intera è lunga. Un'anteprima ne mostra i due capi, le isole più grandi e le
-più piccole, con il posto di ciascuna nella lista:
+deserta*[^deleuze]. La lista intera è lunga. Un modo per entrarci è il mare in cui sta ogni isola.
+L'Organizzazione idrografica internazionale ha tracciato i confini dei mari nel 1953, in *Limits
+of Oceans and Seas*: il Mediterraneo è un bacino occidentale e uno orientale, e dentro di loro otto
+mari con un nome proprio. Mare per mare, da ovest a est, con l'isola più grande di ciascuno:
 
 en: {{km^2}}
 it:
 
 en:
-`tabellaPreview(data, topN, bottomN)` makes a table of the first and last rows of a big one,
-with the place of each row and a line for the rows left out between them. Three islands have no
-outline: Wikidata has no place for them, so there is no point to find their coast from.
+The data is one row per sea, made before the table from the list, which is in order of area, so
+the first island of each sea is its largest. `fmtFlag` writes a country's code as its flag
+(gt's `fmt_flag`), and `tabSpanner` puts the largest island's name, flag and outline under one
+label. [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+finds each island's sea: it paints the IHO's polygons on a grid of 0.02°, and each island takes
+the sea of most of the cells around its coast.
 it:
-`tabellaPreview(data, topN, bottomN)` fa una tabella delle prime e delle ultime righe di una
-grande, con il posto di ogni riga e una riga per quelle lasciate fuori in mezzo. Tre isole non
-hanno profilo: Wikidata non ha la loro posizione, e non c'è un punto da cui cercarne la costa.
+I dati sono una riga per mare, fatta prima della tabella dalla lista, che è in ordine di
+superficie, così la prima isola di ogni mare è la sua più grande. `fmtFlag` scrive il codice di un
+paese come la sua bandiera (il `fmt_flag` di gt), e `tabSpanner` mette sotto un'etichetta sola il
+nome, la bandiera e il profilo dell'isola più grande. [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+trova il mare di ogni isola: dipinge i poligoni dell'IHO su una griglia di 0,02°, e ogni isola
+prende il mare della maggior parte delle celle intorno alla sua costa.
 
 en:
-And here they all are, in the order of the list, each at its own scale and with its place: the
+And here they all are, in the order of the list, each at its own scale, with its place and its
+country's flag: the
 35 main islands in blue, the first seven rows, down to Elba; the others in the colour of the
 circles.
 it:
-Ed eccole tutte, nell'ordine della lista, ciascuna alla sua scala e con il suo posto: le 35 isole
-principali in blu, le prime sette righe, fino all'Elba; le altre nel colore dei cerchi.
+Ed eccole tutte, nell'ordine della lista, ciascuna alla sua scala, con il suo posto e la bandiera
+del suo paese: le 35 isole principali in blu, le prime sette righe, fino all'Elba; le altre nel
+colore dei cerchi.
 
 en:
-Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)); the three without one have no place on Wikidata.
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
 it:
-Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), per superficie. Profili © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)); le tre senza profilo non hanno una posizione su Wikidata.
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), per superficie. Profili © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)).
 
 en:
-A grid is a table too: 195 islands in rows of five, each cell a shape over its place and name.
-The data is built for it, a column of shapes and one of names for each place in the row;
-`colsMerge` puts the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`,
+A grid is a table too: 195 islands in rows of five, each cell a shape over its flag, place and
+name. The data is built for it, a column of shapes, one of names and one of country codes for
+each place in the row; `fmtFlag` turns the codes into flags, and `colsMerge` puts the three in one
+cell with the pattern `{1}<br>{3} {2}`. `fmtNanoplot` takes `rows`,
 and a later format of a cell replaces an earlier one, so the main islands are drawn again in
 blue, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
 it:
-Anche una griglia è una tabella: 195 isole in righe di cinque, ogni cella una forma sopra il suo
-posto e il suo nome. I dati sono costruiti apposta, una colonna di forme e una di nomi per ogni
-posto della riga; `colsMerge` mette le due in una cella con lo schema `{1}<br>{2}`. `fmtNanoplot`
-accetta `rows`, e un formato successivo di una cella sostituisce il precedente, così le isole
-principali sono ridisegnate in blu, una cella alla volta. `columnLabelsHidden` toglie le
-etichette che a una griglia non servono.
+Anche una griglia è una tabella: 195 isole in righe di cinque, ogni cella una forma sopra la sua
+bandiera, il suo posto e il suo nome. I dati sono costruiti apposta, una colonna di forme, una di
+nomi e una di codici dei paesi per ogni posto della riga; `fmtFlag` fa dei codici delle bandiere, e
+`colsMerge` mette le tre in una cella con lo schema `{1}<br>{3} {2}`. `fmtNanoplot` accetta `rows`,
+e un formato successivo di una cella sostituisce il precedente, così le isole principali sono
+ridisegnate in blu, una cella alla volta. `columnLabelsHidden` toglie le etichette che a una
+griglia non servono.
 
 en:
 By country, the islands' sizes make a box plot each, for the countries with three or more: the
@@ -577,7 +598,7 @@ dell'UNESCO: le città tardo barocche del Val di Noto sono otto, e i templi mega
 sono sette, tra Malta e Gozo. I nomi dei siti sono quelli inglesi di Wikidata.
 
 en: listed
-it: iscritto
+it: nella lista
 
 en: places
 it: luoghi
@@ -1680,3 +1701,99 @@ it:
 La Grecia ne ha diciotto delle 35, e insieme sono un sesto del suo territorio; la Croazia ne ha
 sei. Cipro e Malta sono le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle
 sue tre.
+
+# Table titles, the seas (review of version 23)
+
+en: Islands by country
+it: Le isole per paese
+
+en: every island of the Mediterranean
+it: tutte le isole del Mediterraneo
+
+en: The 35 main islands
+it: Le 35 isole principali
+
+en: People on each km²
+it: Abitanti per km²
+
+en: the islands where people live
+it: le isole abitate
+
+en: other islands
+it: altre isole
+
+en: The main islands by country
+it: Le isole principali per paese
+
+en: with all the others
+it: con tutte le altre
+
+
+en: Western Basin
+it: Bacino occidentale
+
+
+
+
+
+en: Eastern Basin
+it: Bacino orientale
+
+en: Marmara
+it: Mar di Marmara
+
+en: The 195, sea by sea
+it: Le 195, mare per mare
+
+en: people
+it: abitanti
+
+en: from west to east
+it: da ovest a est
+
+en: the largest
+it: la più grande
+
+en: The 195, each at its own scale
+it: Le 195, ciascuna alla sua scala
+
+en: The sizes of the islands, by country
+it: Le superfici delle isole, per paese
+
+en: the countries with three or more
+it: i paesi con tre isole o più
+
+en: Who ruled the main islands
+it: Chi ha governato le isole principali
+
+en: from antiquity to today
+it: dall'antichità a oggi
+
+en: World Heritage on the islands
+it: Il Patrimonio mondiale sulle isole
+
+en: Income and work
+it: Reddito e lavoro
+
+en: the regions of the main islands
+it: le regioni delle isole principali
+
+en: Unemployment, 2006–2025
+it: La disoccupazione, 2006–2025
+
+en: Air passengers
+it: I passeggeri degli aerei
+
+en: the fourteen busiest islands
+it: le quattordici isole più trafficate
+
+en: Air and sea, January and August
+it: Aria e mare, gennaio e agosto
+
+en: What this story uses
+it: Che cosa usa questa storia
+
+en:
+Each island is in the sea around most of its coast, as the IHO draws them (*Limits of Oceans and Seas*, 1953, from [Marine Regions](https://www.marineregions.org/), CC BY 4.0); the islands and their areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).
+it:
+Ogni isola sta nel mare intorno alla maggior parte della sua costa, come li traccia l'IHO (*Limits of Oceans and Seas*, 1953, da [Marine Regions](https://www.marineregions.org/), CC BY 4.0); le isole e le loro superfici: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).

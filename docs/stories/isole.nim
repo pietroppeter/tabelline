@@ -56,7 +56,7 @@ nbInit
 nb.doc.filename = docs / "stories" / (if lang == "it": "isole-it" else: "isole") / "index.html"
 nb.useTabelline(title = tr"Islands of the Mediterranean", homeHref = "../", backLabel = tr"Stories", wordmarkHref = "../../",
   looks = ["munari", "minoan"], firstLook = "minoan",
-  lang = lang, languages = [("en", "../isole/index.html"), ("it", "../isole-it/index.html")])
+  lang = lang, languages = [("en", "../isole/index.html"), ("it", "../isole-it/index.html")], codeSwitch = true)
 
 readings = @[
   source("braudel", tr"""Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II* (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel)."""),
@@ -158,7 +158,7 @@ of the text is about the islands.
 
 nbToc()
 
-photoHeading "A thousand things at once", "night-south-up", "Southern Italy and Sicily, south at the top"
+photoHeading "A thousand things at once", "night-italy", "Southern Italy and Sicily at night"
 nbText: tr"""
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
@@ -234,6 +234,7 @@ nbShowCode:
                .withColumn("share", proc (i: int): Value =
                  toValue(every["km2", i].toFloat / countryKm2[$every["code", i]]))
   let t = tabella(d, rownameCol = "code", locale = lang):
+    tabHeader tr"Islands by country", tr"every island of the Mediterranean"
     optCssTheme()
     colsHide ["islands", "peopled", "main"]
     fmtCountry "code"
@@ -294,6 +295,7 @@ nbShowCode:
   let sicily = islands.keep(proc (i: int): bool = islands["title", i] == "Sicily")
                       .withColumn("shape", proc (i: int): Value = islands.outline(0))
   let t = tabella(sicily, rownameCol = "island", locale = lang):
+    tabHeader tr"Sicily"
     optCssTheme()
     colsHide everything()
     colsUnhide ["shape", "km2", "population", "elevation"]
@@ -340,6 +342,7 @@ nbShowCode:
   let d = main.withColumn("shape", proc (i: int): Value =
     islands.outline(toSeq(0 ..< islands.nrows).filterIt(islands["title", it] == main["title", i])[0]))
   let t = tabella(d, rownameCol = "island", locale = lang):
+    tabHeader tr"The 35 main islands"
     optCssTheme()
     colsHide everything()
     colsUnhide ["shape", "code", "km2", "population"]
@@ -401,6 +404,7 @@ nbShowCode:
   for c in d.columns: sorted.addColumn(c.name, order.mapIt(c.values[it]))
   var t = tabellaPreview(sorted, topN = 3, bottomN = 3,
                          moreRows = where($it.title in ["Sicily", "Krk (island)", "Cres (island)"])):
+    tabHeader tr"People on each km²", tr"the islands where people live"
     optCssTheme()
     colsHide everything()
     colsUnhide ["island", "shape", "population", "density"]
@@ -446,16 +450,38 @@ nbShowCode:
   var d = main.withColumn("shape", proc (i: int): Value =
     islands.outline(toSeq(0 ..< islands.nrows).filterIt(islands["title", it] == main["title", i])[0]))
   d = d.withColumn("share", proc (i: int): Value = toValue(main["km2", i].toFloat / countryKm2[$main["code", i]]))
-  let t = tabella(d, rownameCol = "island", groupnameCol = "country", rowGroupAsColumn = true, locale = lang):
+  # each country's other islands, in one row: how many in place of the shape, and their area
+  let every = story("countries.csv")
+  var others = newSeq[seq[Value]](d.columns.len)
+  for j in 0 ..< every.nrows:
+    let code = $every["code", j]
+    let mine = toSeq(0 ..< d.nrows).filterIt($d["code", it] == code)
+    if mine.len == 0: continue
+    let km2 = every["km2", j].toFloat - mine.mapIt(d["km2", it].toFloat).sum
+    for c, col in d.columns:
+      others[c].add (case col.name
+        of "island": toValue(tr"other islands")
+        of "shape": toValue($(every["hectare", j].toFloat.int - mine.len) & "\u00A0" & tr"islands")
+        of "km2": toValue(km2)
+        of "share": toValue(km2 / countryKm2[code])
+        else: col.values[mine[0]])
+  var all = TableData()
+  for c, col in d.columns: all.addColumn(col.name, col.values & others[c])
+  let t = tabella(all, rownameCol = "island", groupnameCol = "country", rowGroupAsColumn = true, locale = lang):
+    tabHeader tr"The main islands by country", tr"with all the others"
     optCssTheme()
     colsHide everything()
     colsUnhide ["shape", "km2", "share"]
     colsMove ["shape"], after = "island"
     rowGroupOrder ["Italy", "Cyprus", "France", "Greece", "Spain", "Tunisia", "Croatia", "Turkey", "Malta"].mapIt(tr(it))
-    fmtNanoplot "shape", plotType = "shape", plotHeight = "3em", autoscale = true, options = sea
+    fmtNanoplot "shape", rows = where(it["island"] != tr"other islands"), plotType = "shape",
+      plotHeight = "3em", autoscale = true, options = sea
     fmtInteger ["km2"]
-    fmtFraction "share", accuracy = "med"
-    subSmallVals "share", threshold = 0.01, smallPattern = "<1/100"
+    # a fraction, or "<1/100" for the small ones, which as fractions would be 0: one format, so
+    # the summary rows, which take their column's format, write it too
+    fmt "share", proc (v: Value): string =
+      if v.toFloat < 0.01: "<1/100" else: formatFraction(v.toFloat, accuracy = "med")
+    subSmallVals "km2", threshold = 1, smallPattern = "<1"
     colsLabel:
       shape: ""
       km2: tr"area, {{km^2}}"
@@ -463,7 +489,6 @@ nbShowCode:
     summaryRows:
       all: agg.sum
       columns = ["km2", "share"]
-      groups = ["Italy", "Greece", "Spain", "Croatia"].mapIt(tr(it))   # the countries with more than one
       missingText = ""
     textTransform tr, loc.summaryStub()
     tabSourceNote md(tr"Areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); the countries' areas from their articles (France: metropolitan).")
@@ -471,10 +496,13 @@ nbShowCode:
 
 nbNote(tr"""
 `rowGroupAsColumn = true` puts the country in a column of its own, left of the islands, instead
-of a row above them. `fmtFraction` writes the share as a fraction, with up to two digits
-below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece; `subSmallVals` writes
-"<1/100" for the small ones, which as fractions would be 0. `summaryRows` adds them up
-for each country with more than one (`groups`), in the format of their column.
+of a row above them. Each country's other islands are a row added to the data before the table,
+with their count where the shape goes: `fmtNanoplot` takes `rows`, and draws only the islands.
+The share is a fraction with up to two digits below (`formatFraction` with `accuracy = "med"`):
+Sicily is 7/82 of Italy, about a twelfth. Under a hundredth it is "<1/100", which as a fraction
+would be 0; written in one `fmt`, so that the rows of `summaryRows`, which take the last format
+of their column, write it too (`subSmallVals` would leave them out). `summaryRows` adds up each
+country, so its "all" row has every island.
 """, nkCode)
 
 nbText: tr"""
@@ -487,76 +515,110 @@ photoHeading "All 195", "strombolicchio", "Strombolicchio"
 nbText: tr"""
 
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
-with the place of each in the list:
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long.
+One way into it is the sea each island is in. The International Hydrographic Organization drew
+the limits of the seas in 1953, in *Limits of Oceans and Seas*: the Mediterranean is a western
+and an eastern basin, and inside them eight seas with names of their own. Sea by sea, from west
+to east, with the largest island of each:
 """
 
 nbShowCode:
-  let d = islands.withColumn("shape", proc (i: int): Value = islands.outline(i))
-  var t = tabellaPreview(d, topN = 4, bottomN = 4):
+  const seas = ["Balearic Sea", "Mediterranean Sea - Western Basin", "Tyrrhenian Sea", "Adriatic Sea",
+                "Ionian Sea", "Aegean Sea", "Mediterranean Sea - Eastern Basin", "Sea of Marmara"]
+    ## the IHO's seas that hold one of the 195, from west to east
+  var rows: seq[tuple[sea: string, n: int, largest: string, shape: Value, code: string,
+                      km2: float, people: float]]
+  for name in seas:
+    let mine = toSeq(0 ..< islands.nrows).filterIt(islands["iho_sea", it] == name)
+    let big = mine[0]   # the list is by area
+    rows.add (tr(name.replace("Mediterranean Sea - ", "").replace(" Sea", "").replace("Sea of ", "")), mine.len, $islands["island", big], islands.outline(big), $islands["code", big],
+              mine.mapIt(islands["km2", it].toFloat).sum,
+              mine.mapIt(if islands["population", it].isNull: 0.0 else: islands["population", it].toFloat).sum)
+  let t = tabella(rows, rownameCol = "sea", locale = lang):
+    tabHeader tr"The 195, sea by sea", tr"from west to east"
     optCssTheme()
-    colsHide everything()
-    colsUnhide ["island", "shape", "country", "km2"]
-    colsMove ["shape"], after = "island"
+    colsMove ["code"], after = "largest"
+    fmtFlag "code"
     fmtNanoplot "shape", plotType = "shape", plotHeight = "1.8em", options = sea
-    fmtNumber "km2", decimals = 2, dropTrailingZeros = true
-    subMissing "shape", missingText = ""
+    fmtInteger ["km2", "people"]
+    subZero "people", zeroText = "—"
+    tabSpanner tr"the largest", ["largest", "code", "shape"]
+    tabOptions(tableFontSize = "13px", dataRowPaddingHorizontal = "3px", columnLabelsPaddingHorizontal = "3px")
     colsLabel:
-      country: tr"country"
+      n: tr"islands"
+      largest: ""
+      code: ""
       shape: ""
       km2: tr"{{km^2}}"
-  t.locale = lang   # tabellaPreview takes no locale
+      people: tr"people"
+    grandSummaryRows:
+      total: agg.sum
+      columns = ["n", "km2", "people"]
+      missingText = ""
+      fmtInteger(sepMark = localeMarks(lang).sep)
+    textTransform tr, loc.grandSummaryStub()
+    tabSourceNote md(tr"Each island is in the sea around most of its coast, as the IHO draws them (*Limits of Oceans and Seas*, 1953, from [Marine Regions](https://www.marineregions.org/), CC BY 4.0); the islands and their areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).")
   nbTable t
 
 nbNote(tr"""
-`tabellaPreview(data, topN, bottomN)` makes a table of the first and last rows of a big one,
-with the place of each row and a line for the rows left out between them. Three islands have no
-outline: Wikidata has no place for them, so there is no point to find their coast from.
+The data is one row per sea, made before the table from the list, which is in order of area, so
+the first island of each sea is its largest. `fmtFlag` writes a country's code as its flag
+(gt's `fmt_flag`), and `tabSpanner` puts the largest island's name, flag and outline under one
+label. [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+finds each island's sea: it paints the IHO's polygons on a grid of 0.02°, and each island takes
+the sea of most of the cells around its coast.
 """, nkCode)
 
 nbText: tr"""
-And here they all are, in the order of the list, each at its own scale and with its place: the
+And here they all are, in the order of the list, each at its own scale, with its place and its
+country's flag: the
 35 main islands in blue, the first seven rows, down to Elba; the others in the colour of the
 circles.
 """
 
 nbShowCode:
   const across = 5
-  var shapeCols, nameCols: array[across, seq[Value]]
+  var shapeCols, nameCols, flagCols: array[across, seq[Value]]
   var mainCells: seq[(int, int)]   # (row, place in the row) of each main island
   for i in 0 ..< islands.nrows:
     let (row, k) = (i div across, i mod across)
     shapeCols[k].add islands.outline(i)
     nameCols[k].add toValue($islands["rank", i] & ".\u00A0" & $islands["island", i])   # no break after the number
+    flagCols[k].add islands["code", i]
     if $islands["main", i] == "true": mainCells.add (row, k)
   for k in islands.nrows mod across ..< across:   # the last row's empty places
     if islands.nrows mod across == 0: break
     shapeCols[k].add toValue(nil)
     nameCols[k].add toValue("")
+    flagCols[k].add toValue(nil)
   var grid = TableData()
   for k in 0 ..< across:
     grid.addColumn("s" & $k, shapeCols[k])
     grid.addColumn("n" & $k, nameCols[k])
+    grid.addColumn("f" & $k, flagCols[k])
   let shapes = toSeq(0 ..< across).mapIt("s" & $it)
   let pink = nanoplotOptions(dataBarFillColor = tint("--primary-soft"), dataBarStrokeColor = tint("--primary-text"))
   var t = tabella(grid):
+    tabHeader tr"The 195, each at its own scale"
     optCssTheme()
     fmtNanoplot shapes, plotType = "shape", plotHeight = "2.2em", options = pink
+    fmtFlag toSeq(0 ..< across).mapIt("f" & $it)
     subMissing shapes, missingText = ""
     tabOptions(columnLabelsHidden = true, tableFontSize = "9px", dataRowPadding = "4px",
                dataRowPaddingHorizontal = "1px")
-    tabSourceNote md(tr"Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)); the three without one have no place on Wikidata.")
+    tabSourceNote md(tr"Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).")
   for (row, k) in mainCells:
     t = t.fmtNanoplot("s" & $k, rows = row, plotType = "shape", plotHeight = "2.2em", options = sea)
   for k in 0 ..< across:
-    t = t.colsMerge(["s" & $k, "n" & $k], pattern = "{1}<br>{2}")
+    t = t.colsMerge(["s" & $k, "n" & $k, "f" & $k], pattern = "{1}<br>{3} {2}")
   t = t.colsAlign(alCenter, shapes)
   nbTable t
 
 nbNote(tr"""
-A grid is a table too: 195 islands in rows of five, each cell a shape over its place and name.
-The data is built for it, a column of shapes and one of names for each place in the row;
-`colsMerge` puts the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`,
+A grid is a table too: 195 islands in rows of five, each cell a shape over its flag, place and
+name. The data is built for it, a column of shapes, one of names and one of country codes for
+each place in the row; `fmtFlag` turns the codes into flags, and `colsMerge` puts the three in one
+cell with the pattern `{1}<br>{3} {2}`. `fmtNanoplot` takes `rows`,
 and a later format of a cell replaces an earlier one, so the main islands are drawn again in
 blue, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
 """, nkCode)
@@ -583,6 +645,7 @@ nbShowCode:
     if ks.len >= 3: rows.add (c, ks.len, ks.mapIt($it).join(" "), ks.max, ks.sum)
   rows.sort(proc (a, b: auto): int = cmp(b.islands, a.islands))
   let t = tabella(rows, rownameCol = "country", locale = lang):
+    tabHeader tr"The sizes of the islands, by country", tr"the countries with three or more"
     optCssTheme()
     colsHide ["total"]
     fmtNanoplot "sizes", plotType = "boxplot", plotHeight = "2em",
@@ -651,6 +714,7 @@ nbShowCode:
   let byAge = proc (age: string): seq[string] = powers.filterIt(it[2] == age).mapIt(label(it[0]))
   let stripes = toSeq(0 ..< powers.len).filterIt(it mod 2 == 0).mapIt(label(powers[it][0]))
   let t = tabella(d, rownameCol = "island"):
+    tabHeader tr"Who ruled the main islands", tr"from antiquity to today"
     optCssTheme()
     colsHide ["title", "page", "joined_how", "language", "rulers", "venice_from", "venice_to", "rule"]
     colsMove ["today", "joined"], after = label(powers[^1][0])
@@ -663,9 +727,9 @@ nbShowCode:
     tabSpanner tr"ancient", byAge("ancient")
     tabSpanner tr"middle ages", byAge("medieval")
     tabSpanner tr"modern", byAge("modern")
-    tabStyle style.text(color = tint("--success")), loc.body(cols(byAge("ancient")))
-    tabStyle style.text(color = tint("--secondary")), loc.body(cols(byAge("medieval")))
-    tabStyle style.text(color = tint("--primary")), loc.body(cols(byAge("modern")))
+    tabStyle style.text(color = tint("--primary")), loc.body(cols(byAge("ancient")))
+    tabStyle style.text(color = tint("--success")), loc.body(cols(byAge("medieval")))
+    tabStyle style.text(color = tint("--secondary")), loc.body(cols(byAge("modern")))
     tabStyle style.fill(tint("--shade")), loc.columnLabels(cols(stripes)), loc.body(cols(stripes))
     # a rule where an age begins, and before today, through the labels and the dots
     let starts = @[byAge("medieval")[0], byAge("modern")[0], "today"]
@@ -674,9 +738,9 @@ nbShowCode:
     tabStyle style.borders({sLeft}, color = tint("--ink"), weight = "1.5px"),
       loc.spanners(tr"middle ages", tr"modern")
     # each age's name in its dots' colour, so the key is over the dots
-    tabStyle style.text(color = tint("--success-text"), weight = "bold"), loc.spanners(tr"ancient")
-    tabStyle style.text(color = tint("--secondary-text"), weight = "bold"), loc.spanners(tr"middle ages")
-    tabStyle style.text(color = tint("--primary-text"), weight = "bold"), loc.spanners(tr"modern")
+    tabStyle style.text(color = tint("--primary-text"), weight = "bold"), loc.spanners(tr"ancient")
+    tabStyle style.text(color = tint("--success-text"), weight = "bold"), loc.spanners(tr"middle ages")
+    tabStyle style.text(color = tint("--secondary-text"), weight = "bold"), loc.spanners(tr"modern")
     tabStyle style.text(size = "11px"), loc.body(cols("today"))
     tabOptions(tableFontSize = "12.5px", columnLabelsFontSize = "75%",
                dataRowPaddingHorizontal = "1px", columnLabelsPaddingHorizontal = "1px")
@@ -727,6 +791,7 @@ nbShowCode:
     lines.add Line(name: $sites["site", i], icon: if natural: "mountain-sun" else: "landmark",
                    listed: sites["listed", i], parts: sites["parts", i], level: 1)
   let t = tabella(lines, rownameCol = "name", locale = lang):
+    tabHeader tr"World Heritage on the islands"
     optCssTheme()
     colsHide ["level"]
     colsMove ["icon"], after = "name"
@@ -770,6 +835,7 @@ nbShowCode:
     let isl = toSeq(0 ..< main.nrows).filterIt(main["region", it] == d["region", i]).mapIt($main["island", it])
     toValue(if isl == @[$d["region", i]]: $d["region", i] else: $d["region", i] & "  \n*" & isl.join(", ") & "*"))
   var t = tabella(d, rownameCol = "label", locale = lang):
+    tabHeader tr"Income and work", tr"the regions of the main islands"
     optCssTheme()
     colsHide everything()
     colsUnhide ["pps_per_person", "pps_index", "jobless_2025"]
@@ -818,6 +884,7 @@ nbShowCode:
   let jobs = story("unemployment.csv")
   let years = toSeq(2006 .. 2025).mapIt("y" & $it)
   let t = tabella(jobs, rownameCol = "region", locale = lang):
+    tabHeader tr"Unemployment, 2006–2025"
     optCssTheme()
     summaryColumns:
       mean: agg.mean
@@ -901,6 +968,7 @@ nbShowCode:
     rows.add (name, toValue((x: s.mapIt(&"{it[0]}-07-01"), y: s.mapIt(it[1]))), s[^1][1], s[^1][0], dip)
   rows.sort(proc (a, b: auto): int = cmp(b.latest, a.latest))
   let t = tabella(rows[0 ..< 14], rownameCol = "island", locale = lang):
+    tabHeader tr"Air passengers", tr"the fourteen busiest islands"
     optCssTheme()
     fmtNanoplot "years", plotHeight = "1.2em", expandX = @[946_684_800.0, 1_751_328_000.0],
       referenceX = @["2020-03-11"],
@@ -961,6 +1029,7 @@ nbShowCode:
   d = d.withColumn("waters", proc (i: int): Value =   # the first of an island's seas
     toValue(tr(($main["seas", mainRow($highs["title", i])]).split("; ")[0].replace(" Sea", "").replace("Sea of ", ""))))
   let t = tabella(d, rownameCol = "island", groupnameCol = "waters", locale = lang):
+    tabHeader tr"Air and sea, January and August"
     optCssTheme()
     colsHide ["title", "measure", "rank"]
     rowOrder "rank"
@@ -1029,6 +1098,7 @@ nbShowCode:
   d = d.withColumn("beach", proc (i: int): Value = wiki(hl["beach", i], hl["beach_page", i]))
   d = d.withColumn("taste", proc (i: int): Value = wiki(hl["taste", i], hl["taste_page", i]))
   let t = tabella(d, rownameCol = "island"):
+    tabHeader tr"Something to see, a beach, a taste"
     optCssTheme()
     colsHide ["title", "see_page", "beach_page", "taste_page"]
     fmtMarkdown ["see", "beach", "taste"]
@@ -1109,6 +1179,7 @@ nbShowCode:
   for c in ["feature", "where"]:
     used = used.withColumn(c, proc (i: int): Value = toValue(tr($used[c, i])))
   let t = tabella(used, rownameCol = "feature"):
+    tabHeader tr"What this story uses"
     optCssTheme()
     fmtMarkdown everything()
     colsLabel:
