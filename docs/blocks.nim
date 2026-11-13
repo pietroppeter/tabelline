@@ -15,6 +15,8 @@
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
+##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
+##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
@@ -214,6 +216,44 @@ template nbPart*(tnum: int, ttitle: string, trole: PartRole) =
   ## their entries in the indice) take the colour of `trole`. With an empty title there is no
   ## label, only the colour: for a page whose headings already name its parts.
   nb.addPart(tnum, ttitle, trole)
+
+# ------------------------------------------------------------------------- a heading over a photo
+
+proc pictureSrc*(file, pageFile: string): string =
+  ## A picture for a page: with `-d:singleFile`, the file itself as a data URL; otherwise a copy
+  ## beside the page, in `pictures/` (built, like the page, not committed), and the link to it.
+  when singleFile:
+    let mime = if file.toLowerAscii.endsWith(".png"): "image/png" else: "image/jpeg"
+    "data:" & mime & ";base64," & encode(readFile(file))
+  else:
+    let dir = absolutePath(pageFile).parentDir / "pictures"
+    createDir(dir)
+    let dest = dir / file.extractFilename
+    if not fileExists(dest) or readFile(dest) != readFile(file): copyFile(file, dest)
+    "pictures/" & file.extractFilename
+
+newNbBlock(NbPhotoHeading of NbText):
+  src: string
+  alt: string
+  credit: string
+  level: int
+  toHtml:
+    # the heading is Markdown like any other (`text`), so the indice lists it and it gets its id
+    # and its way back; the photo is under it, the title over the photo's lower edge
+    let heading = addHeadingIds(markdownToHtml(blk.text), nb.doc.context{"indice"}.getBool).strip
+    &"""<figure class="titolo-foto titolo-foto-{blk.level}"><div class="titolo-foto-img"><img src="{blk.src}" alt="{esc(blk.alt)}" width="720" height="360" loading="lazy" decoding="async">""" &
+      heading & "</div>" &
+      (if blk.credit.len > 0: &"""<figcaption>{inline(blk.credit)}</figcaption>""" else: "") & "</figure>"
+
+proc addPhotoHeading*(nb: var Nb, title, file, credit, alt: string, level: int) =
+  nb.add newNbPhotoHeading(text = repeat('#', level) & " " & title, src = pictureSrc(file, nb.doc.filename),
+                           alt = alt, credit = credit, level = level)
+
+template nbPhotoHeading*(ttitle, tfile: string, tcredit = "", talt = "", tlevel = 2) =
+  ## A section's heading over a photo: `tfile` (a JPEG or PNG in the repository), the heading
+  ## `ttitle` over its lower edge, and under it `tcredit`, in Markdown (who, licence, a link to
+  ## the source: every photo that is not ours says where it is from). `tlevel` 3 for a `###`.
+  nb.addPhotoHeading(ttitle, tfile, tcredit, talt, tlevel)
 
 # ------------------------------------------------------------------------------------ the indice
 
@@ -625,8 +665,9 @@ proc addDrawing*(nb: var Nb, svgFile, alt: string) =
   nb.add newNbDrawing(svg = readFile(svgFile).strip, alt = alt)
 
 template nbDrawing*(tsvg, talt: string) =
-  ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari), as an SVG file: inlined,
-  ## in the page's colours, with a caption in Markdown.
+  ## A drawing made elsewhere (a diagram drawn by Pele, with diagrammari, or a map made from a
+  ## story's data, an SVG with class `map`), as an SVG file: inlined, in the page's colours, with
+  ## a caption in Markdown.
   nb.addDrawing(tsvg, talt)
 
 # ------------------------------------------------------------------------------------ a fold
@@ -692,16 +733,262 @@ template nbApi*(tname, tanchor, talias, tkind: string, tsignatures: seq[string],
   nb.add newNbApi(name = tname, anchor = tanchor, alias = talias, symKind = tkind, signatures = tsignatures, doc = tdoc,
                   links = tlinks, exampleCode = texampleCode, exampleHtml = texampleHtml)
 
+# --------------------------------------------------------------------------------- a tournament
+
+type TournamentEntry* = object
+  ## A player of a tournament: a name, a short line under it, colours shown as a strip, and the
+  ## title of its card in a gallery of the page (`nbGalleryCard`), opened when it is tapped.
+  name*, what*, card*: string
+  colours*: seq[string]
+
+func entry*(name, what: string, colours: openArray[string] = [], card = ""): TournamentEntry =
+  TournamentEntry(name: name, what: what, card: (if card.len > 0: card else: name), colours: @colours)
+
+func bye*(): TournamentEntry = TournamentEntry()
+  ## An empty place in the draw: the player it meets goes through.
+
+const torneoScript = """<script>
+(function () {
+  document.querySelectorAll('.torneo:not([data-ready])').forEach(function (box) {
+    box.dataset.ready = '1';
+    var data = JSON.parse(box.querySelector('script[type="application/json"]').textContent);
+    var slots = data.slots, n = slots.length, store = 'tabelline-torneo:' + data.key;
+    var rounds = Math.round(Math.log(n) / Math.LN2), picks = {};
+    try { picks = JSON.parse(localStorage.getItem(store) || '{}') || {}; } catch (e) {}
+    box.querySelector('.torneo-plain').hidden = true;
+    var out = box.querySelector('.torneo-turni'), fine = box.querySelector('.torneo-fine');
+    var esito = box.querySelector('.torneo-esito'), area = fine.querySelector('textarea');
+    fine.hidden = false;
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text) e.textContent = text;
+      return e;
+    }
+    function roundName(r) {
+      var left = rounds - r;
+      return left === 1 ? 'Final' : left === 2 ? 'Semi-finals' : left === 3 ? 'Quarter-finals' : r === 0 ? 'First round' : 'Round ' + (r + 1);
+    }
+    // the two players of match m of round r: a place in the draw, -1 for a bye, null if not known yet
+    function players(r, m) {
+      if (r === 0) return [slots[2 * m].name ? 2 * m : -1, slots[2 * m + 1].name ? 2 * m + 1 : -1];
+      return [winner(r - 1, 2 * m), winner(r - 1, 2 * m + 1)];
+    }
+    function winner(r, m) {
+      var p = players(r, m);
+      if (p[0] === null || p[1] === null) return null;
+      if (p[0] === -1) return p[1];
+      if (p[1] === -1) return p[0];
+      var k = picks[r + '-' + m];
+      return k === 0 || k === 1 ? p[k] : null;
+    }
+    function save() { try { localStorage.setItem(store, JSON.stringify(picks)); } catch (e) {} }
+    // a later match loses its pick only if it picked the player who changed
+    function clearAfter(r, m) {
+      for (var rr = r, mm = m; rr + 1 < rounds; ) {
+        var side = mm & 1; rr++; mm >>= 1;
+        if (picks[rr + '-' + mm] === side) delete picks[rr + '-' + mm]; else break;
+      }
+    }
+    function pick(r, m, k) {
+      if (picks[r + '-' + m] === k) return;
+      picks[r + '-' + m] = k; clearAfter(r, m); save(); render();
+    }
+    function undo(r, m) {
+      if (!(r + '-' + m in picks)) return;
+      clearAfter(r, m); delete picks[r + '-' + m]; save(); render();
+    }
+    // the card: the source's own card of the gallery, in a dialog, with Keep at the bottom
+    var dlg = el('dialog', 'torneo-dialog'), dlgBody = el('div', 'torneo-dialog-card');
+    var dlgBar = el('div', 'torneo-dialog-bar');
+    var dlgKeep = el('button', 'torneo-dialog-keep', 'Keep this one'), dlgClose = el('button', '', 'Close');
+    dlgKeep.type = dlgClose.type = 'button';
+    dlgBar.appendChild(dlgKeep); dlgBar.appendChild(dlgClose);
+    dlg.appendChild(dlgBody); dlg.appendChild(dlgBar); document.body.appendChild(dlg);
+    var current = null;
+    dlgClose.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (ev) { if (ev.target === dlg) dlg.close(); });
+    dlgKeep.addEventListener('click', function () { if (current) pick(current.r, current.m, current.k); dlg.close(); });
+    function findCard(heading) {
+      var found = null;
+      document.querySelectorAll('.nb-galleria > .nb-scheda').forEach(function (c) {
+        var h = c.querySelector('h3');
+        if (!found && h && h.textContent.trim() === heading) found = c;
+      });
+      return found;
+    }
+    function openCard(idx, r, m, k, ready) {
+      var e = slots[idx], card = findCard(e.card || e.name);
+      dlgBody.textContent = '';
+      if (card) {
+        var wrap = el('div', 'nb-galleria');
+        wrap.appendChild(card.cloneNode(true));
+        dlgBody.appendChild(wrap);
+      } else {
+        dlgBody.appendChild(el('h3', '', e.name));
+        if (e.what) dlgBody.appendChild(el('p', '', e.what));
+      }
+      current = ready ? { r: r, m: m, k: k } : null;
+      dlgKeep.hidden = !ready;
+      dlgKeep.textContent = picks[r + '-' + m] === k ? 'Kept ✓' : 'Keep this one';
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      dlgBody.scrollTop = 0;
+    }
+    function player(r, m, k, idx, ready, w) {
+      var box = el('div', 'torneo-player');
+      if (idx === null) {
+        box.classList.add('torneo-unknown');
+        box.appendChild(el('span', 'torneo-what', 'the winner of an earlier match'));
+        return box;
+      }
+      var e = slots[idx], open = el('button', 'torneo-open');
+      open.type = 'button';
+      open.setAttribute('aria-label', e.name + ': open its card');
+      var strip = el('span', 'torneo-tinte');
+      strip.setAttribute('aria-hidden', 'true');
+      (e.colours || []).forEach(function (c) { var i = el('i'); i.style.background = c; strip.appendChild(i); });
+      open.appendChild(strip); open.appendChild(el('strong', '', e.name));
+      if (e.what) open.appendChild(el('span', 'torneo-what', e.what));
+      open.addEventListener('click', function () { openCard(idx, r, m, k, ready); });
+      box.appendChild(open);
+      if (ready) {
+        var keep = el('button', 'torneo-keep', w === idx ? '✓ kept' : 'keep');
+        keep.type = 'button';
+        keep.setAttribute('aria-pressed', w === idx ? 'true' : 'false');
+        keep.setAttribute('aria-label', 'keep ' + e.name);
+        keep.addEventListener('click', function () { pick(r, m, k); });
+        box.appendChild(keep);
+      }
+      if (w === idx) box.classList.add('torneo-in');
+      else if (w !== null) box.classList.add('torneo-out');
+      return box;
+    }
+    function walk(visit) {   // every match, in order, with its number (byes have none)
+      var num = 0;
+      for (var r = 0; r < rounds; r++) {
+        visit(r, null);
+        for (var m = 0; m < n >> (r + 1); m++) {
+          var p = players(r, m), isBye = p[0] === -1 || p[1] === -1;
+          if (!isBye) num++;
+          visit(r, m, p, isBye ? 0 : num);
+        }
+      }
+    }
+    function render() {
+      out.textContent = '';
+      var list;
+      walk(function (r, m, p, num) {
+        if (m === null) {
+          out.appendChild(el('p', 'torneo-turno', roundName(r)));
+          list = el('div', 'torneo-partite'); out.appendChild(list); return;
+        }
+        if (!num) {
+          var who = p[0] === -1 ? p[1] : p[0];
+          if (who !== null && who !== -1) list.appendChild(el('p', 'torneo-bye', slots[who].name + ' goes through: a bye.'));
+          return;
+        }
+        var w = winner(r, m), ready = p[0] !== null && p[1] !== null;
+        var match = el('div', 'torneo-partita'), head = el('div', 'torneo-num');
+        head.appendChild(el('span', '', 'match ' + num));
+        if (w !== null) {
+          var u = el('button', 'torneo-undo', '↺ undo');
+          u.type = 'button';
+          u.setAttribute('aria-label', 'undo match ' + num);
+          u.addEventListener('click', function () { undo(r, m); });
+          head.appendChild(u);
+        }
+        match.appendChild(head);
+        match.appendChild(player(r, m, 0, p[0], ready, w));
+        match.appendChild(player(r, m, 1, p[1], ready, w));
+        list.appendChild(match);
+      });
+      var champ = winner(rounds - 1, 0);
+      esito.textContent = champ !== null && champ >= 0 ? 'The winner: ' + slots[champ].name + '.' :
+        Object.keys(picks).length ? 'Keep going: the one you keep goes on to the next round.' :
+        'Tap a source to read its card; keep one in each match.';
+    }
+    function result() {
+      var lines = ['## ' + data.label, ''];
+      walk(function (r, m, p, num) {
+        if (m === null) { if (r > 0) lines.push(''); lines.push(roundName(r) + ':'); return; }
+        if (!num) { var who = p[0] === -1 ? p[1] : p[0]; if (who !== null && who >= 0) lines.push('- ' + slots[who].name + ' (a bye)'); return; }
+        var w = winner(r, m);
+        if (p[0] === null || p[1] === null) lines.push('- match ' + num + ': not played yet');
+        else if (w === null) lines.push('- match ' + num + ': ' + slots[p[0]].name + ' or ' + slots[p[1]].name + ', not played yet');
+        else lines.push('- match ' + num + ': **' + slots[w].name + '** over ' + slots[w === p[0] ? p[1] : p[0]].name);
+      });
+      var champ = winner(rounds - 1, 0);
+      lines.push('', champ !== null && champ >= 0 ? 'Winner: **' + slots[champ].name + '**' : 'No winner yet.');
+      return lines.join('\n');
+    }
+    fine.querySelector('[data-act="copy"]').addEventListener('click', function (ev) {
+      var text = result(), b = ev.currentTarget;
+      area.value = text; area.hidden = false; area.select();
+      function done(ok) { b.textContent = ok ? 'Copied: paste it in the chat' : 'Select the text below and copy it'; }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      else { var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} done(ok); }
+    });
+    fine.querySelector('[data-act="reset"]').addEventListener('click', function () {
+      picks = {}; save(); area.hidden = true; render();
+    });
+    render();
+  });
+})();
+</script>"""
+
+newNbBlock(NbTournament):
+  key: string
+  label: string
+  slots: seq[TournamentEntry]
+  toHtml:
+    var j = newJArray()
+    for e in blk.slots: j.add %*{"name": e.name, "what": e.what, "card": e.card, "colours": e.colours}
+    let data = ($ %*{"key": blk.key, "label": blk.label, "slots": j}).replace("</", "<\\/")
+    var plain = ""
+    for i in countup(0, blk.slots.high - 1, 2):
+      let (a, b) = (blk.slots[i].name, blk.slots[i + 1].name)
+      plain.add "<li>" & (if a.len == 0: esc(b) & " (a bye)" elif b.len == 0: esc(a) & " (a bye)"
+                         else: esc(a) & " or " & esc(b)) & "</li>"
+    &"""<section class="torneo" aria-label="{esc(blk.label)}"><script type="application/json">{data}</script>""" &
+      &"""<ol class="torneo-plain">{plain}</ol><div class="torneo-turni"></div>""" &
+      """<div class="torneo-fine" hidden><p class="torneo-esito" aria-live="polite"></p>""" &
+      """<button type="button" data-act="copy">Copy the result</button><button type="button" data-act="reset">Start again</button>""" &
+      """<textarea readonly hidden aria-label="the result, in Markdown"></textarea></div></section>""" & torneoScript
+
+template nbTournament*(tkey, tlabel: string, tslots: openArray[TournamentEntry]) =
+  ## A tournament to play on the page: a draw of players (a power of two, `bye()` for an empty
+  ## place), matches of two, round by round, until one is left. Tapping a player opens its card
+  ## (the gallery card named by `card`) in a dialog, with **Keep this one**; **keep** under each
+  ## player picks it without opening it, and **↺ undo** takes back one match (and the later ones
+  ## that depended on it). The picks are remembered (by `tkey`), and **Copy the result** gives them
+  ## as Markdown, to paste in a chat. Without JavaScript, the first round as a list.
+  nb.add newNbTournament(key = tkey, label = tlabel, slots = @tslots)
+
 # ------------------------------------------------------------------------------------- the page
 
-const temaHeadScript = """<script>
+const looks* = [("munari", "Munari", "after Bruno Munari"), ("quaderno", "quaderno", "an Italian school exercise book"),
+                ("minoan", "Minoan", "after the frescoes of Crete and Thera, and the vases of Athens")]
+  ## Every look a page can offer: its key (`html[data-tema="..."]`), the label of its button, and
+  ## where it comes from. Munari is always first: a page without JavaScript is Munari.
+
+func temaHeadScript(offered: openArray[string], first: string): string =
+  ## Before the page is drawn: the look in the address (`?tema=`), or the one chosen last, if this
+  ## page offers it, else `first`. A page whose first look is not Munari (the Minoan look of the
+  ## islands) remembers its choice apart, so a choice made elsewhere does not hide it.
+  var list = ""
+  for k in offered: list.add (if list.len > 0: ", " else: "") & "'" & k & "'"
+  let key = if first == "munari": "tabelline-tema" else: "tabelline-tema-" & first
+  """<script>
 (function () {
+  var offered = [""" & list & """], first = '""" & first & """', key = '""" & key & """';
+  var root = document.documentElement;
+  root.dataset.temaKey = key;
   try {
     var q = new URLSearchParams(location.search).get('tema');
-    if (q === 'munari' || q === 'quaderno') localStorage.setItem('tabelline-tema', q);
-    var t = q || localStorage.getItem('tabelline-tema');
-    document.documentElement.dataset.tema = (t === 'quaderno') ? 'quaderno' : 'munari';
-  } catch (e) { document.documentElement.dataset.tema = 'munari'; }
+    if (offered.indexOf(q) >= 0) localStorage.setItem(key, q);
+    var t = q || localStorage.getItem(key);
+    root.dataset.tema = offered.indexOf(t) >= 0 ? t : first;
+  } catch (e) { root.dataset.tema = first; }
 })();
 </script>"""
 
@@ -711,7 +998,7 @@ const bodyScript = """<script>
 (function () {
   var root = document.documentElement;
   function show() {
-    var t = root.dataset.tema === 'quaderno' ? 'quaderno' : 'munari';
+    var t = root.dataset.tema || 'munari';
     document.querySelectorAll('.tema button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
@@ -719,7 +1006,7 @@ const bodyScript = """<script>
   document.querySelectorAll('.tema button').forEach(function (b) {
     b.addEventListener('click', function () {
       root.dataset.tema = b.dataset.tema;
-      try { localStorage.setItem('tabelline-tema', b.dataset.tema); } catch (e) {}
+      try { localStorage.setItem(root.dataset.temaKey || 'tabelline-tema', b.dataset.tema); } catch (e) {}
       show();
     });
   });
@@ -782,9 +1069,43 @@ const bodyScript = """<script>
 })();
 </script>"""
 
-const temaSwitch = """<div class="tema" role="group" aria-label="Look of the page">
-<button type="button" data-tema="munari" title="after Bruno Munari" aria-pressed="true">Munari</button><button type="button" data-tema="quaderno" title="an Italian school exercise book">quaderno</button>
-</div>"""
+func langHeadScript(lang: string, languages: openArray[(string, string)]): string =
+  ## Before the page is drawn, for a page in more than one language: its `lang`, and a move to the
+  ## version in the reader's language, the one chosen last (`?lang=`, remembered) or else the
+  ## browser's, when there is one.
+  var others = ""
+  for (code, href) in languages:
+    if code != lang: others.add (if others.len > 0: ", " else: "") & "'" & code & "': '" & href & "'"
+  """<script>
+(function () {
+  var here = '""" & lang & """', others = {""" & others & """}, key = 'tabelline-lang';
+  document.documentElement.lang = here;
+  try {
+    var q = new URLSearchParams(location.search).get('lang');
+    if (q) localStorage.setItem(key, q);
+    var want = localStorage.getItem(key) || (navigator.language || 'en').slice(0, 2).toLowerCase();
+    if (want !== here && others[want]) location.replace(others[want] + location.hash);
+  } catch (e) {}
+})();
+</script>"""
+
+func langSwitch(c: JsonNode): string =
+  ## The page's languages, in the crumbs: the current one in bold, the others a link that also
+  ## remembers the choice (`?lang=`).
+  let here = c{"lang"}.getStr("en")
+  var items: seq[string]
+  for l in c{"languages"}.getElems:
+    let (code, href) = (l[0].getStr, l[1].getStr)
+    items.add(if code == here: &"""<b aria-current="page">{code.toUpperAscii}</b>"""
+              else: &"""<a href="{href}?lang={code}" hreflang="{code}" lang="{code}">{code.toUpperAscii}</a>""")
+  if items.len == 0: "" else: """<span class="lingua" role="group" aria-label="Language">""" & items.join(" · ") & "</span>"
+
+func temaSwitch(offered: seq[string]): string =
+  result = """<div class="tema" role="group" aria-label="Look of the page">"""
+  for (key, label, title) in looks:
+    if key in offered:
+      result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
+  result.add "</div>"
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
@@ -793,6 +1114,8 @@ func pageText(blk: JsonNode, nb: Nb): string =
 
 func pageHeader(blk: JsonNode, nb: Nb): string =
   let c = nb.doc.context
+  var offered: seq[string]
+  for k in c{"looks"}.getElems: offered.add k.getStr
   let home = c{"home_href"}.getStr
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
@@ -806,8 +1129,8 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
-<nav class="crumbs">{back}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-{temaSwitch}{forme}
+<nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
+{temaSwitch(offered)}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
@@ -828,7 +1151,8 @@ proc sharedReviewScript*(nb: Nb): string =
 
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
-                   reviewPage = "") =
+                   reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari",
+                   lang = "en", languages: openArray[(string, string)] = []) =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -836,11 +1160,23 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## wordmark a link (a post's wordmark links to the home page). Every page has the review mode
   ## (`review.nim`), its version line under the lede and **✎ Review**: `review = false` leaves it
   ## out, `reviewPage` keeps the key its comments are stored under when the file is renamed.
+  ## `looks` are the looks its switch offers (keys of `looks`): Munari and the quaderno, or for the
+  ## islands of the Mediterranean, Munari and the Minoan look; `firstLook` is the one shown before a
+  ## reader chooses (with JavaScript off, always Munari). A page in more than one language gives
+  ## its `lang` and every version as `languages` (code and link, its own included, as for the
+  ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
+  ## and a first visit goes to the one in the browser's language.
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript & "\n" & siteCss(nb.doc.filename, extra = reviewCss))
+    "\n" & temaHeadScript(looks, firstLook) & "\n" &
+    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
+  nb.doc.context["lang"] = %lang
+  var versions = newJArray()
+  for (code, href) in languages: versions.add %[code, href]
+  nb.doc.context["languages"] = versions
+  nb.doc.context["looks"] = %(@looks)
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true

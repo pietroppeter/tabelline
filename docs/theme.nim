@@ -45,7 +45,10 @@ const fonts = face("Patrick Hand", "patrick-hand.woff2", "400", "normal") &
               face("Atkinson Hyperlegible", "atkinson-italic.woff2", "400", "italic") &
               face("Jost", "jost-400-normal.woff2", "400", "normal") &
               face("Jost", "jost-400-italic.woff2", "400", "italic") &
-              face("Jost", "jost-700-normal.woff2", "700", "normal")
+              face("Jost", "jost-700-normal.woff2", "700", "normal") &
+              face("Gentium Book Plus", "gentium-regular.woff2", "400", "normal") &
+              face("Gentium Book Plus", "gentium-italic.woff2", "400", "italic") &
+              face("Gentium Book Plus", "gentium-bold.woff2", "700", "normal")
 
 # ------------------------------------------------------------------------------------ the palette
 
@@ -66,6 +69,15 @@ const
                warning: "#F7D94C",     # 菜の花 nanohana, rapeseed flower: the triangle
                success: "#86C166")     # 苗 nae, seedling: the fourth
     ## Munari's default palette, Haru (spring): Japanese traditional colours (nipponcolors.com).
+
+  minoanLook* = Look(paper: "#EFE6D2",     # lime plaster, the ground of the frescoes
+                     ink: "#1E1A17",       # black glaze, the black of the vases
+                     primary: "#C3693C",   # terracotta: the clay of red-figure, the circle, links
+                     secondary: "#3F7FA6", # dolphin blue, from the Knossos fresco: the square, bars
+                     warning: "#D9A441",   # yellow ochre: the triangle
+                     success: "#6E8B5A")   # olive, from the place: what works, code notes
+    ## The Minoan look's values (devlog "Designing a Mediterranean look", the tournament's winner),
+    ## the same six as `mediterraneanSources`' "minoan", checked there by the colour rules.
 
   edo* = Look(paper: "#FCFAF2",        # 白練 shironeri, white silk
               ink: "#1C1C1C",          # 墨 sumi, ink
@@ -112,7 +124,8 @@ const tokens =
   --paper: var(--m-carta); --ink: var(--m-inchiostro); --primary: var(--m-cerchio);
   --secondary: var(--m-quadrato); --warning: var(--m-triangolo); --success: var(--m-quarto);
 """ & tokensCss() & "}\n" &
-  "html[data-tema=\"quaderno\"] {\n" & lookCss(quadernoLook) & "\n}\n"
+  "html[data-tema=\"quaderno\"] {\n" & lookCss(quadernoLook) & "\n}\n" &
+  "html[data-tema=\"minoan\"] {\n" & lookCss(minoanLook) & "\n}\n"
 
 # ---------------------------------------------------------------------------------------- Munari
 # After Bruno Munari: flat paper, one geometric sans (Jost), and the three shapes of his books,
@@ -172,6 +185,7 @@ header { padding-top: .4rem; }
 .crumbs { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem;
   font: 700 .74rem/1 var(--font); letter-spacing: .16em; text-transform: uppercase; }
 .crumbs a { color: var(--ink); text-decoration: none; }
+.crumbs .lingua b { border-bottom: 2px solid currentColor; }   /* the page's language, the others links */
 .lede { font-size: 1.3rem; line-height: 1.45; color: var(--ink); margin: 0 0 1.2rem; }
 .kicker { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--primary-text); margin: 0; }
 
@@ -301,6 +315,15 @@ body /* a drawing (nbDrawing): a Pele diagram in the page's colours */
 .disegno svg { display: block; max-width: 100%; height: auto; margin: 0 auto; --pele-bg: var(--paper); --pele-fg: var(--ink);
   --pele-muted: var(--muted); --pele-line: var(--ink); --pele-border: var(--ink); --pele-surface: var(--surface);
   --pele-surface-alt: var(--neutral-1); --pele-accent: var(--secondary); }
+/* a map (an SVG with class map, from a story's data): its parts in the page's colours */
+.disegno svg.map .sea { fill: var(--surface); }
+.disegno svg.map .land { fill: var(--neutral-2); stroke: var(--neutral-4); stroke-width: 1; }
+.disegno svg.map .main { fill: var(--secondary); }
+.disegno svg.map .dot { fill: var(--primary); stroke: var(--surface); stroke-width: 1.5; }
+.disegno svg.map text { font-family: inherit; }
+.disegno svg.map .sea-name { fill: var(--muted); font-style: italic; letter-spacing: 1.5px; }
+.disegno svg.map .name { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--surface);
+  stroke-width: 5px; stroke-linejoin: round; }
 .disegno figcaption { margin-top: .5rem; font-size: .9rem; color: var(--muted); }
 body details.codice pre > code { font-size: 12.5px; }
 
@@ -331,13 +354,78 @@ body details.foldcode pre > code { font-size: 12.5px; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }
 .tinte .tinta span { display: block; height: 2.4rem; margin-bottom: .3rem; outline: 1px solid var(--neutral-2); }
 .tinte .tinta strong { display: block; font-size: .95rem; }
+/* in a gallery card the swatches are small, three to a row */
+.nb-scheda .tinte { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.nb-scheda .tinte .tinta { font-size: .78rem; line-height: 1.25; }
+.nb-scheda .tinte .tinta span { height: 1.4rem; margin-bottom: .2rem; }
+.nb-scheda .tinte .tinta strong { font-size: .82rem; }
+
+/* a tournament (nbTournament): rounds of matches, two buttons each, and the result to copy */
+.torneo { margin: 1rem 0 1.4rem; }
+.torneo-turno { margin: 1.2rem 0 .45rem; font: 700 .76rem/1.2 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.torneo-partite { display: grid; gap: .8rem; }
+.torneo-partita { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; }
+.torneo-num { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); display: flex; justify-content: space-between; align-items: baseline; }
+.torneo-undo { font: inherit; font-size: .74rem; color: var(--ink); background: none; border: 0; padding: .1rem 0 .1rem .6rem;
+  text-decoration: underline; text-decoration-color: var(--primary); cursor: pointer; }
+.torneo-player { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--paper); min-height: 3.4rem; }
+.torneo-open { flex: 1; display: flex; flex-direction: column; align-items: stretch; gap: .3rem; text-align: left; font: inherit;
+  color: var(--ink); background: none; border: 0; border-radius: 0; padding: .45rem .55rem .45rem; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; }
+.torneo-open strong { font-size: .88rem; line-height: 1.25; }
+.torneo-what { font-size: .74rem; color: var(--muted); }
+.torneo-keep { font: inherit; font-size: .78rem; color: var(--ink); background: var(--shade); border: 0; border-top: 1px solid var(--line);
+  border-radius: 0; padding: .35rem .55rem; text-align: left; cursor: pointer; }
+.torneo-player.torneo-in { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.torneo-player.torneo-in .torneo-keep { background: var(--primary-soft); font-weight: 700; }
+.torneo-player.torneo-out .torneo-open { opacity: .45; }
+.torneo-player.torneo-unknown { border-style: dashed; padding: .45rem .55rem; justify-content: center; }
+.torneo-dialog { width: min(34rem, calc(100% - 1.4rem)); max-height: 86vh; padding: 0; border: 1px solid var(--line);
+  background: var(--paper); color: var(--ink); display: none; flex-direction: column; }
+.torneo-dialog[open] { display: flex; }
+.torneo-dialog::backdrop { background: color-mix(in oklab, var(--ink) 45%, transparent); }
+.torneo-dialog-card { overflow-y: auto; padding: .4rem .4rem 0; }
+.torneo-dialog .nb-galleria { display: block; overflow: visible; padding: 0; margin: 0; }
+.torneo-dialog .nb-galleria > .nb-scheda { flex: none; overflow: visible; }
+.torneo-dialog .nb-galleria > .nb-scheda::before { display: none; }
+.torneo-dialog-bar { display: flex; gap: .5rem; padding: .6rem; border-top: 1px solid var(--line); background: var(--paper); }
+.torneo-dialog-bar button { font: inherit; font-size: .92rem; padding: .45rem .9rem; border: 1px solid var(--line); background: var(--shade);
+  color: var(--ink); border-radius: 0; cursor: pointer; }
+.torneo-dialog-bar .torneo-dialog-keep { flex: 1; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); font-weight: 700; }
+.torneo-tinte { display: flex; height: .5rem; }
+.torneo-tinte i { flex: 1; }
+.torneo-bye { margin: 0; font-size: .85rem; color: var(--muted); }
+.torneo-fine { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.torneo-esito { flex: 1 1 100%; margin: 0; font-weight: 700; }
+.torneo-fine button { font: inherit; font-size: .9rem; padding: .4rem .8rem; background: var(--shade); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 0; cursor: pointer; }
+.torneo-fine textarea { flex: 1 1 100%; min-height: 10rem; font: 12.5px/1.4 ui-monospace, Menlo, monospace; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); }
 
 /* parts of a long page (nbPart): a label, then the sections' circles take the part's colour */
 .parte { font: 700 .74rem/1 var(--font); letter-spacing: .2em; text-transform: uppercase; margin: 3.4rem 0 -1.2rem; color: var(--muted); }
-.parte-secondary ~ h2 { --part: var(--secondary); } .parte-success ~ h2 { --part: var(--success); }
+.parte-secondary ~ :is(h2, .titolo-foto) { --part: var(--secondary); } .parte-success ~ :is(h2, .titolo-foto) { --part: var(--success); }
 /* a later part wins over an earlier one, whatever its colour: one more class for the second part on */
-.parte ~ .parte-primary ~ h2 { --part: var(--primary); } .parte ~ .parte-secondary ~ h2 { --part: var(--secondary); }
-.parte ~ .parte-success ~ h2 { --part: var(--success); }
+.parte ~ .parte-primary ~ :is(h2, .titolo-foto) { --part: var(--primary); }
+.parte ~ .parte-secondary ~ :is(h2, .titolo-foto) { --part: var(--secondary); }
+.parte ~ .parte-success ~ :is(h2, .titolo-foto) { --part: var(--success); }
+
+/* a section's heading over a photo (nbPhotoHeading): the photo as wide as the text and low, the
+   heading over its lower edge in the paper's colour, on a band of ink dark enough for any photo
+   (a pale sky too), and in every look (one more class than a look's own heading colour); while
+   the photo loads, the band is the shade; the credit small, under it */
+.titolo-foto { margin: 3rem 0 1rem; }
+.titolo-foto-img { position: relative; background: var(--shade); aspect-ratio: 2 / 1; max-height: 11rem; width: 100%; }
+.titolo-foto-3 .titolo-foto-img { max-height: 8.5rem; }
+.titolo-foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.titolo-foto .titolo-foto-img :is(h2, h3) { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; color: var(--paper);
+  padding: 2.6rem .8rem .7rem 3.2rem; text-shadow: 0 1px 3px color-mix(in oklab, var(--ink) 70%, transparent);
+  background: linear-gradient(transparent, color-mix(in oklab, var(--ink) 70%, transparent) 45%, color-mix(in oklab, var(--ink) 88%, transparent)); }
+.titolo-foto h2::before { left: .8rem; top: auto; bottom: .85rem; box-shadow: 0 0 0 2px var(--paper); }
+.titolo-foto .titolo-foto-img h3 { padding-left: .8rem; font-style: normal; font-weight: 700; }
+.titolo-foto .su { color: var(--paper); border-color: color-mix(in oklab, var(--paper) 60%, transparent); text-shadow: none; }
+.titolo-foto figcaption { margin-top: .35rem; font-size: .78rem; line-height: 1.35; color: var(--muted); }
+.titolo-foto figcaption a { color: var(--muted); }
 
 /* the specs page (nbSpecs): each capability folds open; examples carry a pass stamp */
 details.spec { background: var(--shade); border: 0; border-top: 5px solid var(--secondary); margin: .8rem 0; padding: .5rem 1rem; }
@@ -558,8 +646,85 @@ func scoped*(rules, scope: string): string =
 
 const quadernoCss = scoped(quadernoRules, "html[data-tema=\"quaderno\"]")
 
-const css* = fonts & tokens & munariCss & quadernoCss
-  ## All the CSS of a page: Munari, the default, then the quaderno, scoped.
+
+# ---------------------------------------------------------------------------------------- Minoan
+# After the frescoes of Knossos and Thera and the vases of Athens (devlog "Designing a Mediterranean
+# look"): lime plaster for paper, the black glaze for ink, terracotta and dolphin blue; one serif
+# made for Greek and Latin scholarship, Gentium Book Plus, which has every letter of the islands'
+# names (ć č š ž ğ ş ı ħ ġ, and Sicilian ḍ); the running wave as the rule over every table and
+# under the masthead, the meander over the footer (swapped in Pietro's review of version 8). Drawn as masks, so their colour is a token.
+
+func svgUrl(svg: string): string =
+  "url(\"data:image/svg+xml," & svg.multiReplace(("<", "%3C"), (">", "%3E"), ("\"", "'"), ("#", "%23")) & "\")"
+
+const
+  meander* = svgUrl("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M0 1.5H24M0 22.5H24M2 19V5H18V15H8V10H13" fill="none" stroke="black" stroke-width="2.4"/></svg>""")
+    ## The Greek key between two rules, one unit, to repeat sideways.
+  runningWave* = svgUrl("""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" width="20" height="14"><path d="M0 12C4 12 3 2 10 2C16 2 16 9 12 9C9 9 9 6 11 6M10 12H20" fill="none" stroke="black" stroke-width="1.8"/></svg>""")
+    ## The running wave (the "running dog" of Greek borders), one unit, to repeat sideways.
+
+const minoanRules = """
+html {
+  --font: "Gentium Book Plus", "Gentium Plus", Georgia, "Times New Roman", serif;
+  --hand: var(--font);
+  --meander: """ & meander & """;
+  --wave: """ & runningWave & """;
+}
+body { font: 19px/1.6 var(--font); font-variant-numeric: oldstyle-nums proportional-nums; }
+
+/* the masthead: the wordmark in spaced capitals, then a running wave in dolphin blue instead of Munari's shapes */
+.forme { display: none; }
+.etichetta { padding-right: 0; min-height: 0; margin: 2rem 0 1.6rem; padding-bottom: 1.6rem; }
+.etichetta::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--secondary);
+  -webkit-mask: var(--wave) repeat-x left center / auto 14px; mask: var(--wave) repeat-x left center / auto 14px; }
+.etichetta .nome span:last-child { font: 700 2.7rem/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.etichetta .riga:last-child:not(.nome) span:last-child { font-variant: small-caps; text-transform: lowercase; letter-spacing: .12em; color: var(--primary-text); }
+.kicker { font: 400 .95rem/1.2 var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .14em; color: var(--primary-text); }
+.lede { font-style: italic; font-size: 1.25rem; }
+
+/* headings: the serif, bold, a little open; the section circle is a terracotta disc ringed in black glaze */
+h1, h2, h3, h4 { font-family: var(--font); letter-spacing: .005em; }
+h1 { font-size: 2.6rem; line-height: 1.08; }
+h2 { font-size: 1.75rem; }
+h2::before { box-shadow: inset 0 0 0 2.5px var(--ink); }
+h3 { font-style: italic; font-weight: 400; font-size: 1.35rem; color: var(--primary-text); }
+a { text-decoration-color: var(--primary); text-decoration-thickness: 1.5px; text-underline-offset: .15em; }
+blockquote { border-left: 3px solid var(--primary); font-style: italic; }
+
+/* tables: a running wave in dolphin blue as the rule above, lining figures that line up */
+.tabella:not(#_) { padding-top: 26px; }  /* :not(#_) to win over the table's own stylesheet */
+.tabella::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 12px; background: var(--secondary);
+  -webkit-mask: var(--wave) repeat-x left center / auto 12px; mask: var(--wave) repeat-x left center / auto 12px; }
+.tabella table { font-variant-numeric: lining-nums tabular-nums; }
+.tabella .tb_title { font-family: var(--font); font-size: 135%; letter-spacing: .01em; }
+.tabella .tb_subtitle { font-style: italic; }
+
+/* the indice: numbers in terracotta discs, the headings in the serif */
+.indice h2.indice-title { font: 400 1rem/1 var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .16em; }
+.indice > ol > li::before { box-shadow: inset 0 0 0 2px var(--ink); font-variant-numeric: lining-nums; }
+
+/* notes and cards: plaster panels, their straight top edge in the role's colour */
+.nota { background: color-mix(in oklab, var(--surface) 60%, var(--paper)); }
+.nota .titolo { font-variant: small-caps; text-transform: lowercase; letter-spacing: .08em; }
+.nb-galleria > .nb-scheda { background: color-mix(in oklab, var(--surface) 60%, var(--paper)); }
+
+/* code stays in the monospace, smaller; outputs on plaster */
+pre > code, pre.nb-output { font-variant-numeric: normal; }
+
+/* the look switch, in small capitals */
+.tema button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
+
+/* the footer: a meander above it, in black glaze */
+body > footer { padding-top: 2.4rem; }
+body > footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 14px; background: var(--ink);
+  -webkit-mask: var(--meander) repeat-x left center / auto 14px; mask: var(--meander) repeat-x left center / auto 14px; }
+.motto { font-style: italic; }
+"""
+
+const minoanCss = scoped(minoanRules, "html[data-tema=\"minoan\"]")
+
+const css* = fonts & tokens & munariCss & quadernoCss & minoanCss
+  ## All the CSS of a page: Munari, the default, then the quaderno and the Minoan look, scoped.
 
 proc assetHref*(name, pageFile: string): string =
   ## The link from a page (its HTML file) to a file the pages share, `docs/assets/<name>`.
@@ -595,3 +760,80 @@ func tintMix*(token: string, share: int, other = "--paper"): string =
 
 # ----------------------------------------------------------------------------------- review mode
 
+
+# ------------------------------------------------------------------------- Mediterranean sources
+# The colours of the post "Designing a Mediterranean look": for each source of the look, six
+# colours in the roles of a look, picked by the rules of the post (devlog/mediterranean.nim, "From
+# a source to six colours"): each named after a material of the source, or of the place it shows
+# when the source has no such colour (`fromPlace`). Picked by eye, not sampled from a picture.
+# They are candidates; the look that wins becomes a `Look` above.
+
+type MediColour* = tuple[hex, name, role: string, fromPlace: bool]
+
+const mediterraneanSources*: seq[(string, array[6, MediColour])] = @[
+  ("minoan", [("#EFE6D2", "lime plaster", "paper", false), ("#1E1A17", "black glaze", "ink", false),
+              ("#C3693C", "terracotta", "primary", false), ("#3F7FA6", "dolphin blue", "secondary", false),
+              ("#D9A441", "yellow ochre", "warning", false), ("#6E8B5A", "olive", "success", true)]),
+  ("isolari", [("#F3E9D2", "vellum", "paper", false), ("#3A2E26", "iron-gall ink", "ink", false),
+               ("#B8382B", "cinnabar", "primary", false), ("#3D6A9E", "azurite", "secondary", false),
+               ("#C9A347", "gold leaf", "warning", false), ("#4F8A6E", "verdigris", "success", false)]),
+  ("matisse", [("#FBF8F1", "white paper", "paper", false), ("#1B2238", "night blue", "ink", false),
+               ("#2643A6", "ultramarine", "primary", false), ("#D9577A", "Dufy pink", "secondary", false),
+               ("#F2C230", "lemon", "warning", false), ("#3E9E6B", "palm green", "success", false)]),
+  ("miro", [("#F7F4EC", "whitewashed wall", "paper", false), ("#111111", "black sign", "ink", false),
+            ("#D7261E", "red", "primary", false), ("#1D4F9C", "blue", "secondary", false),
+            ("#F6C700", "yellow", "warning", false), ("#2E8B57", "green", "success", false)]),
+  ("list", [("#F7F6F2", "whitewash", "paper", false), ("#141414", "shadow", "ink", false),
+            ("#2C5D8F", "a blue door", "primary", true), ("#B23A73", "bougainvillea", "secondary", true),
+            ("#E3B83B", "broom flower", "warning", true), ("#55704A", "caper leaf", "success", true)]),
+  ("maiolica", [("#FAF8F2", "tin glaze", "paper", false), ("#1A2340", "manganese blue-black", "ink", false),
+                ("#1E4FA1", "cobalt", "primary", false), ("#A0522D", "terracotta", "secondary", false),
+                ("#F2B632", "antimony yellow", "warning", false), ("#3C8C5A", "copper green", "success", false)]),
+  ("scianna", [("#F2F0EB", "print white", "paper", false), ("#0E0E0E", "silver black", "ink", false),
+               ("#9E1B13", "feast red", "primary", false), ("#2F5D9E", "cart blue", "secondary", true),
+               ("#E9C33A", "lemon", "warning", true), ("#4E7A3A", "lemon leaf", "success", true)]),
+  ("vitali", [("#F8F6F0", "bleached sand", "paper", false), ("#2E3134", "shade", "ink", false),
+              ("#23898E", "shallow sea", "primary", false), ("#E04E39", "umbrella red", "secondary", false),
+              ("#F3C64B", "umbrella yellow", "warning", false), ("#4F7B4A", "stone pine", "success", true)]),
+  ("luzzu", [("#F1EADB", "limestone", "paper", true), ("#1C1F26", "tar", "ink", false),
+             ("#1F5AA6", "hull blue", "primary", false), ("#7A2630", "waterline maroon", "secondary", false),
+             ("#F2CF2E", "lemon mustaċċ", "warning", false), ("#2E8B4E", "green", "success", false)]),
+  ("lionni", [("#FAF7EF", "white page", "paper", false), ("#1C1C1E", "Swimmy black", "ink", false),
+              ("#C8352B", "red fish", "primary", false), ("#2F6F9F", "watercolour sea", "secondary", false),
+              ("#E8B63A", "sun yellow", "warning", false), ("#4B8B4F", "seaweed green", "success", false)]),
+  ("luzzati", [("#F6F0E2", "stage paper", "paper", false), ("#201A1A", "black outline", "ink", false),
+               ("#B5266F", "magenta", "primary", false), ("#2A5C9A", "Ligurian blue", "secondary", false),
+               ("#E0B030", "gold", "warning", false), ("#3E8E53", "green", "success", false)]),
+  ("lai", [("#EFE7D6", "unbleached linen", "paper", false), ("#2A2522", "black thread", "ink", false),
+           ("#3F6EA6", "ribbon blue", "primary", false), ("#A8653A", "bread crust", "secondary", false),
+           ("#D9A84A", "saffron", "warning", true), ("#5E7F4E", "lentisk", "success", true)]),
+  ("casale", [("#F2EBDD", "limestone tessera", "paper", false), ("#22201E", "black tessera", "ink", false),
+              ("#A4432C", "red ochre", "primary", false), ("#3E5F7A", "slate-blue glass", "secondary", false),
+              ("#D9A441", "yellow ochre", "warning", false), ("#4F7A55", "green serpentine", "success", false)]),
+  ("bauer", [("#F7F3E8", "rag paper", "paper", false), ("#2B2620", "iron-gall ink", "ink", false),
+             ("#A63A6E", "cyclamen", "primary", false), ("#3B5BA5", "borage blue", "secondary", false),
+             ("#E2B443", "rockrose yellow", "warning", false), ("#4E7D3A", "sage leaf", "success", false)]),
+  ("procida", [("#F6F2EA", "whitewash", "paper", false), ("#1E2228", "boat tar", "ink", false),
+               ("#B4475E", "Corricella pink", "primary", false), ("#2F6F9E", "fishermen's blue", "secondary", false),
+               ("#EBC23F", "lemon plaster", "warning", false), ("#3F7F5C", "shutter green", "success", false)]),
+  ("mediterraneo", [("#F5F1E8", "whitewashed lane", "paper", false), ("#1F1D1C", "priest's cassock", "ink", false),
+                    ("#1E6A9A", "harbour water", "primary", false), ("#A84B32", "red plaster", "secondary", false),
+                    ("#D6A23E", "ochre plaster", "warning", false), ("#4E7A3F", "caper bush", "success", true)]),
+  ("djerba", [("#F7F5EF", "plaster of a dome", "paper", false), ("#1F2230", "loom black", "ink", false),
+              ("#7A2E6A", "murex purple", "primary", false), ("#A65A35", "clay of the pots", "secondary", false),
+              ("#D4AE3E", "olive oil", "warning", false), ("#3F7A4A", "date palm", "success", false)]),
+  ("ghirri", [("#F6F3EA", "faded print", "paper", false), ("#3B3F45", "soft black", "ink", false),
+              ("#8FB3C7", "pale sky", "primary", false), ("#E8B4B0", "faded pink", "secondary", false),
+              ("#EAD9A0", "pale yellow", "warning", false), ("#9DBFB0", "sea green", "success", false)]),
+]
+
+func sourceColours*(key: string): array[6, MediColour] =
+  ## The six colours of a Mediterranean source, in the order of the roles.
+  for (k, colours) in mediterraneanSources:
+    if k == key: return colours
+  doAssert false, "no Mediterranean source: " & key
+
+func sourceSwatches*(key: string): seq[(string, string, string)] =
+  ## The six colours of a Mediterranean source, for `nbSwatches`: colour, name, role.
+  for c in sourceColours(key):
+    result.add (c.hex, c.name, c.role & (if c.fromPlace: ", from the place" else: ""))

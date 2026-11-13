@@ -42,6 +42,10 @@ elsewhere.
   triangle: flat paper, one geometric sans, black rules, and colour only where it means something.
 - **Quaderno**, an Italian school exercise book: squared paper, a red margin, headings in blue
   pen with a highlighter stroke, code on index cards, outputs on sticky notes, tables taped in.
+- **Minoan**, after the frescoes of Crete and Thera and the vases of Athens, for the islands of
+  the Mediterranean: lime plaster and black glaze, terracotta and dolphin blue, a serif, a running wave
+  over every table and a meander over the footer. A page offers it in place of the quaderno (`useTabelline(looks = ...)`); it
+  was designed in the devlog post [Designing a Mediterranean look](../devlog/mediterranean/).
 
 Munari is the page itself: its rules need no script, so a page without JavaScript (or before
 its script runs) is Munari. The quaderno is the other look, kept because it shows that a page and
@@ -128,6 +132,9 @@ and goes in `docs/theme.nim`.
   geometric types of the 1920s, for headings and text alike; big and plain.
 - **Quaderno**: Patrick Hand for what is handwritten (headings, labels, the indice), Atkinson
   Hyperlegible for the text.
+- **Minoan**: [Gentium Book Plus](https://software.sil.org/gentium/) (OFL), a serif made for
+  Greek and Latin scholarship, with every letter of the islands' names (ć, ħ, ğ, ḍ, Greek); old-style
+  figures in text, lining ones in tables.
 - **Code**: the system monospace at 13px, smaller than the text; 12.5px under a table.
 """
 
@@ -140,7 +147,8 @@ A page is a nimib notebook that calls `nb.useTabelline(...)` right after `nbInit
 the header with the switch and the masthead, the footer. The masthead is the wordmark, the
 `section` the page belongs to (Guide, Devlog, Stories) and its `cadence`, how it lives (kept up to
 date, one for every release, dated posts); the quaderno writes the same three lines as the label
-of an exercise book (nome, materia, classe). Then `nbTitle` opens it with a
+of an exercise book (nome, materia, classe). A page in two languages (the islands story) adds
+EN · IT to the crumbs, the current one underlined, with `useTabelline(lang, languages)`. Then `nbTitle` opens it with a
 kicker (what it is and when; in a post, the date), the title, and a lede that says what the page
 gives the reader. Everything below is a block: each section shows one live, with its code folded
 under it.
@@ -245,6 +253,22 @@ nbShowCode:
       nbText "On a phone, one card and the edge of the next are in view."
 
 nbText: """
+## A heading over a photo
+
+A section's heading can stand over a photo, with `nbPhotoHeading`: the photo as wide as the text
+and low, the heading in the paper's colour over its lower edge on a shade of ink, the circle
+still marking the place, and under it, small, who made the photo, its licence and a link to its
+source. It is a heading like the others (the indice lists it, ↑ goes back), so a page uses it only
+where the photo says something the section is about. The photo is a file in the repository, a
+smaller copy of an openly licensed one. Used in [Islands of the Mediterranean](../stories/isole/)
+and [Photos of the Mediterranean, by the story](../stories/isole-photos/).
+"""
+nbShowCode:
+  nbPhotoHeading "Etna, from orbit", docs / "stories" / "data" / "isole" / "photos" / "story" / "etna-plume.jpg",
+    "NASA, STS-62 crew, March 1994 · Public domain · [source](https://images.nasa.gov/details/STS062-85-195)",
+    "Etna's plume, photographed from the Space Shuttle"
+
+nbText: """
 ## Source files
 
 Code folded under its name and its length, with `nbFoldCode`: a whole file, or a part of it from
@@ -270,7 +294,9 @@ comment that is open sits in a comment box at the top, where the phone's keyboar
 A commented text is marked in the secondary's soft colour with a line under it, a note set
 apart; the one open is in the secondary itself. In the quaderno, marks are the highlighter,
 underlined in red pen. `nbInReview` holds blocks shown only while reviewing; `nbVersion()` moves the version line
-where it is called. `nbDrawing` puts a drawing made with diagrammari in the page's colours,
+where it is called. `nbDrawing` puts a drawing made with diagrammari in the page's colours, and so a map
+made from a story's data (an SVG with class `map`: the sea in the surface, the land a neutral, the
+main places in the secondary, the others a dot of the primary, names in ink and seas in muted italics),
 and `nbFoldCode` folds long code (see *Source files*). The review mode's styles are `reviewCss`, in `docs/review.nim`, from the tokens
 when the page has them.
 """

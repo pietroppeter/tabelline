@@ -155,6 +155,9 @@ func quantile(xs: openArray[float], q: float): float =
   let hi = min(lo + 1, s.high)
   s[lo] + (h - lo.float) * (s[hi] - s[lo])
 
+const plotTypes* = ["line", "bar", "boxplot", "shape"]
+  ## The kinds of nanoplot: "shape" is tabelline's, not Great Tables'.
+
 const refKeywords* = ["mean", "median", "min", "max", "q1", "q3", "first", "last"]
   ## The keywords of a reference line or area: a statistic of the values.
 
@@ -277,9 +280,13 @@ func verticalRefLineTag(x, y1, y2: float, color, label: string, onLeft: bool): s
 
 proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refArea: (string, string),
                    expandY: seq[float], o: NanoplotOptions, x: seq[float] = @[],
-                   expandX: seq[float] = @[]): (string, string) =
+                   expandX: seq[float] = @[], referenceX: seq[(float, string)] = @[],
+                   sharedCount = 0): (string, string) =
   ## The viewBox and the layers of a line or bar plot of the values `y` (NaN for a missing one),
-  ## evenly spaced, or a line plot at the places `x`, on an axis that includes `expandX`.
+  ## evenly spaced, or a line plot at the places `x`, on an axis that includes `expandX`. An axis
+  ## shared by the rows (`expandX` given) is as wide in every row as a plot of `sharedCount`
+  ## points (the most of any row), so the rows line up;
+  ## `referenceX` draws a dashed vertical line at each of its places, with its label on hover.
   let p = present(y)
   let integerlike = p.allIt(it.isWhole)
   var expand = expandY
@@ -303,9 +310,10 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   func prop(v: float): float = (if hi > lo: (v - lo) / (hi - lo) else: 0.5)
   let count = y.len
   let xd = pointSpacing(count)
-  let width = count.float * xd
-  var xs, ys: seq[float]
   let atX = x.len == count and plotType != "bar"
+  let width = if atX and expandX.len > 0 and sharedCount > count: sharedCount.float * pointSpacing(sharedCount)
+              else: count.float * xd
+  var xs, ys: seq[float]
   let xPool = if atX: x & expandX else: @[]
   let (xl, xh) = if atX: (xPool.min, xPool.max) else: (0.0, 0.0)
   for i in 0 ..< count:
@@ -342,7 +350,8 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
         if o.dataLineType == "curved":
           var d = "M " & n(xs[a]) & "," & n(ys[a])
           for j in a + 1 ..< b:
-            d.add " C " & n(xs[j - 1] + xd / 2) & "," & n(ys[j - 1]) & " " & n(xs[j] - xd / 2) & "," & n(ys[j]) &
+            let h = (xs[j] - xs[j - 1]) / 2   # half the step, so a curve never turns back
+            d.add " C " & n(xs[j - 1] + h) & "," & n(ys[j - 1]) & " " & n(xs[j] - h) & "," & n(ys[j]) &
               " " & n(xs[j]) & "," & n(ys[j])
           layers.add "<path d=\"" & d & "\"" & stroke & "></path>"
         else:
@@ -369,6 +378,12 @@ proc severalValues(y: seq[float], plotType, missingVals, refLine: string, refAre
   if showRefLine:
     let label = nanoplotLabel(refL, integerlike and refL.isWhole, o.currency, o.yRefLineFmtFn)
     layers.add refLineTag(xs[0], yPos(prop(refL)), width, o.referenceLineColor, label)
+  # the vertical reference lines, at places on the x axis
+  if atX and o.showReferenceLine:
+    for (rx, label) in referenceX:
+      if rx.isNaN or rx < xl or rx > xh or xh <= xl: continue
+      let px = width * (rx - xl) / (xh - xl) + safeX
+      layers.add verticalRefLineTag(px, safeY, bottomY - safeY, o.referenceLineColor, label, px > width / 2)
   # the data points
   if not bar and o.showDataPoints:
     for i in 0 ..< count:
@@ -528,6 +543,39 @@ proc boxplot(y, all: seq[float], refLine: string, refArea: (string, string), exp
 
 # ------------------------------------------------------------------------------------ the svg
 
+# ---------------------------------------------------------------------------------- shapes
+
+func span(xs: openArray[float]): float =
+  let p = present(xs)
+  if p.len == 0: 0.0 else: p.max - p.min
+
+func shapeSide*(y, x: seq[float]): float =
+  ## The side of the square a shape fills: its width or its height, the larger.
+  max(span(x), span(y))
+
+proc shapePlot(y, x: seq[float], side: float, o: NanoplotOptions): (string, string) =
+  ## The viewBox and the layers of a shape: the points (x, y) in their order, joined and closed,
+  ## at the same scale across and up, in the middle of a square of `side` (its own size when 0).
+  ## A missing value starts a new ring (an island and its islets).
+  let s = if side > 0: side else: shapeSide(y, x)
+  let k = if s > 0: 100.0 / s else: 1.0
+  let (px, py) = (present(x), present(y))
+  let (cx, cy) = ((px.min + px.max) / 2, (py.min + py.max) / 2)
+  var d = ""
+  var start = true
+  for i in 0 ..< min(x.len, y.len):
+    if x[i].isNaN or y[i].isNaN:
+      if not start: d.add "Z "
+      start = true
+      continue
+    d.add (if start: "M" else: "L") & n(50 + (x[i] - cx) * k) & "," & n(50 - (y[i] - cy) * k) & " "
+    start = false
+  if not start: d.add "Z"
+  let fill = if o.showDataArea: o.dataBarFillColor.at(0) else: "none"
+  let stroke = if o.showDataLine: o.dataBarStrokeColor.at(0) else: "none"
+  ("-2 -2 104 104", "<path class=\"tb_shape\" d=\"" & d.strip & "\" fill=\"" & fill & "\" fill-rule=\"evenodd\" stroke=\"" & stroke &
+    "\" stroke-width=\"1\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"></path>")
+
 func varsAsStyle(svg: string): string =
   ## Moves each `fill` or `stroke` that is a CSS variable (`fill="var(--primary)"`) into the
   ## element's `style`: SVG attributes take colours, not variables.
@@ -555,11 +603,12 @@ func varsAsStyle(svg: string): string =
 proc nanoplotSummary*(y: seq[float], plotType: string, single = false): string =
   ## The values in words, for a screen reader: "Line plot of 8 values from 12 to 47, ending at 30".
   proc sl(x: float): string = nanoplotLabel(x, x.isWhole)
-  let kind = if plotType == "line": "Line" elif plotType == "bar": "Bar" else: "Box"
+  let kind = if plotType == "line": "Line" elif plotType == "bar": "Bar" elif plotType == "shape": "Shape" else: "Box"
   if single: return kind & " of " & sl(y[0])
   let p = present(y)
   let missing = if y.len > p.len: ", with " & $(y.len - p.len) & " missing" else: ""
   if p.len == 0: return kind & " plot with no values"
+  if plotType == "shape": return "Shape of " & $p.len & " points"
   if p.len == 1: return kind & " plot of 1 value: " & sl(p[0]) & missing
   if plotType == "boxplot":
     let s = boxStats(p)
@@ -572,15 +621,27 @@ proc nanoplotSummary*(y: seq[float], plotType: string, single = false): string =
 proc nanoplotSvg*(y: seq[float], plotType = "line", height = "2em", missingVals = "gap",
                   referenceLine = "", referenceArea = ("", ""), expandY: seq[float] = @[],
                   all: seq[float] = @[], single = false, options = nanoplotOptions(),
-                  alt = "", x: seq[float] = @[], expandX: seq[float] = @[]): string =
+                  alt = "", x: seq[float] = @[], expandX: seq[float] = @[], side = 0.0,
+                  referenceX: seq[(float, string)] = @[], sharedCount = 0): string =
   ## One nanoplot as inline SVG: a line, bar or box plot of the values `y` (NaN for a missing
   ## one), or with `single` a horizontal bar or line for `y[0]`, on the scale of `all` (the
   ## values of every row: single values and box plots share their scale). "" when there is
   ## nothing to plot. `alt` is read by a screen reader ("{x}" is a summary of the values).
   ## With `x` (as many as `y`) a line plot puts each value at its place on an x axis that also
-  ## includes `expandX`; a bar plot and a box plot leave `x` out.
-  if plotType notin ["line", "bar", "boxplot"]:
-    raise newException(ValueError, "plotType is \"line\", \"bar\" or \"boxplot\", not " & plotType.escape)
+  ## includes `expandX`; a bar plot and a box plot leave `x` out. A "shape" joins the points
+  ## (`x`, `y`) in their order and closes them, at the same scale across and up, in a square
+  ## of `side` (the shape's own size when 0).
+  if plotType notin plotTypes:
+    raise newException(ValueError, "plotType is \"line\", \"bar\", \"boxplot\" or \"shape\", not " & plotType.escape)
+  if plotType == "shape":
+    if x.len != y.len or x.len == 0:
+      raise newException(ValueError, "a shape needs as many x as y values, not " & $x.len & " and " & $y.len)
+    if present(y).len == 0: return ""
+    let label = if alt.len > 0: alt.replace("{x}", nanoplotSummary(y, "shape")) else: nanoplotSummary(y, "shape")
+    let (viewBox, layers) = shapePlot(y, x, side, options)
+    return "<svg class=\"tb_nanoplot tb_nanoplot_static\" role=\"img\" aria-label=\"" & escapeHtml(label) & "\" viewBox=\"" & viewBox &
+      "\" style=\"height: " & height & "; margin-left: auto; margin-right: auto; font-size: inherit; overflow: visible; vertical-align: middle; position: relative;\">" &
+      varsAsStyle(layers) & "</svg>"
   if missingVals notin ["gap", "marker", "zero", "remove"]:
     raise newException(ValueError, "missingVals is \"gap\", \"marker\", \"zero\" or \"remove\", not " & missingVals.escape)
   var vals = y
@@ -605,7 +666,7 @@ proc nanoplotSvg*(y: seq[float], plotType = "line", height = "2em", missingVals 
   var layers: string
   if plotType == "boxplot": layers = boxplot(vals, all, referenceLine, referenceArea, expandY, options)
   elif single: layers = singleValue(vals[0], all, plotType, referenceLine, options)
-  else: (viewBox, layers) = severalValues(vals, plotType, missingVals, referenceLine, referenceArea, expandY, options, xv, expandX)
+  else: (viewBox, layers) = severalValues(vals, plotType, missingVals, referenceLine, referenceArea, expandY, options, xv, expandX, referenceX, sharedCount)
   let o = options
   let defs = "<defs><pattern id=\"" & patternId(o.dataAreaFillColor) & "\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\">" &
     "<path class=\"pattern-line\" d=\"M 0,8 l 8,-8 M -1,1 l 4,-4 M 6,10 l 4,-4\" stroke=\"" & o.dataAreaFillColor &
@@ -632,6 +693,7 @@ proc nanoplotText*(y: seq[float], plotType = "line", missingVals = "gap", all: s
   else: discard
   let p = present(vals)
   if p.len == 0: return ""
+  if plotType == "shape": return "◆ " & nanoplotSummary(y, "shape").toLowerAscii
   let integerlike = p.allIt(it.isWhole)
   proc lab(x: float): string = nanoplotLabel(x, integerlike and x.isWhole, options.currency, options.yValFmtFn)
   if plotType == "boxplot":
@@ -667,7 +729,8 @@ proc nanoplotText*(y: seq[float], plotType = "line", missingVals = "gap", all: s
 proc fmtNanoplot*(t: sink Tabella, columns: ColSel, rows = allRows(), plotType = "line",
                   plotHeight = "2em", missingVals = "gap", autoscale = false,
                   referenceLine = "", referenceArea = ("", ""), expandY: seq[float] = @[],
-                  options = nanoplotOptions(), alt = "", expandX: seq[float] = @[]): Tabella =
+                  options = nanoplotOptions(), alt = "", expandX: seq[float] = @[],
+                  referenceX: seq[string] = @[]): Tabella =
   ## Nanoplots of the values in each cell (see `nanoplotValues`: a list, a record of `x` and `y`,
   ## or a text of numbers): a line plot ("line"), a bar plot
   ## ("bar") or a box plot ("boxplot"). A numeric column gets one horizontal bar or line per row,
@@ -676,27 +739,49 @@ proc fmtNanoplot*(t: sink Tabella, columns: ColSel, rows = allRows(), plotType =
   ## `referenceArea` two of them. `missingVals` says what a missing value does: "gap" breaks the
   ## line, "marker" marks it, "zero" counts it as 0, "remove" leaves it out. With `autoscale`
   ## every plot of the column has the same y axis (and x axis, for records of `x` and `y`);
-  ## `expandY` and `expandX` widen them to include some values. In text output a nanoplot is a
+  ## `expandY` and `expandX` widen them to include some values; on a shared x axis the plots
+  ## have one width, so they line up. `referenceX` (not from Great Tables) draws a dashed vertical
+  ## line at each of its places on the x axis, a number or an ISO date ("2020-03-11"), in a line
+  ## plot of records of `x` and `y`. In text output a nanoplot is a
   ## sparkline, its values in the order of `x`.
-  if plotType notin ["line", "bar", "boxplot"]:
-    raise newException(ValueError, "plotType is \"line\", \"bar\" or \"boxplot\", not " & plotType.escape)
+  ##
+  ## A "shape" (not from Great Tables) draws an outline: a record of `x` and `y`, the points
+  ## joined in their order and closed, filled, at the same scale across and up (an island, a
+  ## country, a track), each in a square of the cell's height. With `autoscale` every shape of
+  ## the column has the scale of the largest, so their sizes compare. A missing value starts a
+  ## new ring. Its fill and line are `dataBarFillColor` and `dataBarStrokeColor`
+  ## (`showDataArea` and `showDataLine` turn them off); in text it is "◆ shape of N points".
+  if plotType notin plotTypes:
+    raise newException(ValueError, "plotType is \"line\", \"bar\", \"boxplot\" or \"shape\", not " & plotType.escape)
   if missingVals notin ["gap", "marker", "zero", "remove"]:
     raise newException(ValueError, "missingVals is \"gap\", \"marker\", \"zero\" or \"remove\", not " & missingVals.escape)
   for r in [referenceLine, referenceArea[0], referenceArea[1]]:
     if r.len > 0: discard refValue(r, [1.0])
+  var refX: seq[(float, string)]
+  for r in referenceX:
+    let v = try: r.parseFloat except ValueError: dateValue(r)
+    if v.isNaN: raise newException(ValueError, "referenceX is a number or an ISO date, not " & r.escape)
+    refX.add (v, r)
   let names = columns.resolve(t.data)
   let ix = rows.resolve(t.data)
   result = t
   for name in names:
     let single = result.data[name].isNumeric
     var all, allX: seq[float]
+    var side = 0.0   # a shape: the side of the largest, with autoscale
+    var most = 0     # the most points in a row: the width of a shared x axis
     for i in ix:
       let cell = result.data[name, i]
       let ys = nanoplotValues(cell)
       let xs = nanoplotXValues(cell)
       if xs.len > 0 and xs.len != ys.len:
         raise newException(ValueError, "row " & $i & " of " & name.escape & " has " & $ys.len & " values of y and " & $xs.len & " of x")
+      if plotType == "shape":
+        if ys.len > 0 and xs.len == 0:
+          raise newException(ValueError, "row " & $i & " of " & name.escape & ": a shape is a record of x and y, (x: @[...], y: @[...])")
+        if autoscale: side = max(side, shapeSide(ys, xs))
       allX.add present(xs)
+      if xs.len > 0: most = max(most, ys.len)
       for v in ys:
         if not v.isNaN: all.add v
         elif missingVals == "zero": all.add 0.0
@@ -709,31 +794,43 @@ proc fmtNanoplot*(t: sink Tabella, columns: ColSel, rows = allRows(), plotType =
       var y = nanoplotValues(v)
       let x = nanoplotXValues(v)
       if ctx == rcText:
-        if x.len > 0: y = byX(y, x)[0]
+        if x.len > 0 and pt != "shape": y = byX(y, x)[0]
         nanoplotText(y, pt, mv, all, single, ey, o)
-      else: nanoplotSvg(y, pt, ph, mv, rl, ra, ey, all, single, o, a, x, ex), rows)
+      else: nanoplotSvg(y, pt, ph, mv, rl, ra, ey, all, single and pt != "shape", o, a, x, ex, side, refX, most), rows)
     result.formats[^1].wholeValue = true
 
 proc colsNanoplot*(t: sink Tabella, columns: ColSel, rows = allRows(), plotType = "line",
                    plotHeight = "2em", missingVals = "gap", autoscale = false,
                    referenceLine = "", referenceArea = ("", ""), expandY: seq[float] = @[],
                    newColName = "nanoplots", newColLabel = "", before = "", after = "",
-                   autohide = true, options = nanoplotOptions(), alt = ""): Tabella =
+                   autohide = true, options = nanoplotOptions(), alt = "",
+                   xVals: seq[float] = @[], referenceX: seq[string] = @[]): Tabella =
   ## A new column of nanoplots, one per row, of the values of several `columns` (in their order):
   ## after gt's `cols_nanoplot()`. The columns are hidden (`autohide`); the new one is
   ## `newColName`, labelled `newColLabel` (its name by default), at the end or `before` or
-  ## `after` a column. The other arguments are those of `fmtNanoplot`.
+  ## `after` a column. `xVals` (not from gt) places the columns on the x axis, one value each, the
+  ## same in every row (the years of `y2006` ... `y2025`): then `referenceX` draws a dashed
+  ## vertical line at a place of that axis. The other arguments are those of `fmtNanoplot`.
   let names = columns.resolve(t.data)
   if names.len == 0: raise newException(ValueError, "colsNanoplot needs columns of numbers")
+  if xVals.len > 0 and xVals.len != names.len:
+    raise newException(ValueError, "xVals has " & $xVals.len & " values for " & $names.len & " columns")
   var cells: seq[Value]
   for i in 0 ..< t.data.nrows:
-    var parts: seq[string]
-    for name in names:
-      let v = t.data[name, i]
-      parts.add(if v.isNumber: $v.toFloat else: "NA")
-    cells.add toValue(parts.join(" "))
+    if xVals.len > 0:
+      var ys: seq[float]
+      for name in names:
+        let v = t.data[name, i]
+        ys.add(if v.isNumber: v.toFloat else: NaN)
+      cells.add toValue((x: xVals, y: ys))
+    else:
+      var parts: seq[string]
+      for name in names:
+        let v = t.data[name, i]
+        parts.add(if v.isNumber: $v.toFloat else: "NA")
+      cells.add toValue(parts.join(" "))
   result = colsAdd(t, newColName, cells, before, after)
   if autohide: result = colsHide(result, names)
   result = colsLabel(result, newColName, toText(if newColLabel.len > 0: newColLabel else: newColName))
   result = fmtNanoplot(result, newColName, rows, plotType, plotHeight, missingVals, autoscale,
-                       referenceLine, referenceArea, expandY, options, alt)
+                       referenceLine, referenceArea, expandY, options, alt, referenceX = referenceX)

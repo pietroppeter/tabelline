@@ -72,6 +72,28 @@ proc preview*(slug: string): Option[Tabella] =
       fmtInteger ["rows"]
       optCssTheme()
     some t
+  of "isole":
+    let path = currentSourcePath().parentDir / "data" / "isole" / "islands.csv"
+    let d = readCsv(path, comment = "#")
+    var names: seq[string]
+    var shapes: seq[Value]
+    for i in 0 ..< 3:
+      names.add $d["island", i]
+      shapes.add toValue((x: ($d["x", i]).splitWhitespace.mapIt(it.parseFloat),
+                          y: ($d["y", i]).splitWhitespace.mapIt(it.parseFloat)))
+    let shapesData = tableData:
+      island: names
+      outline: shapes
+      km2: toSeq(0 ..< 3).mapIt(d["km2", it])
+    let t = tabella(shapesData, rownameCol = "island"):
+      tabHeader "The three largest, at one scale"
+      fmtNanoplot "outline", plotType = "shape", autoscale = true, plotHeight = "3.5em"
+      fmtInteger "km2"
+      colsLabel:
+        outline: ""
+        km2: "km²"
+      optCssTheme()
+    some t
   else: none(Tabella)
 
 proc next*(): string =

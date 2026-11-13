@@ -1,7 +1,7 @@
 {
  "title": "gt coverage",
  "updated": "2026-11-11",
- "gt": "gt 1.4 (R) and Great Tables 0.17 (Python), by their reference indexes",
+ "gt": "gt 1.4 (R) and Great Tables 1.1 (Python), by their reference indexes and the methods of GT",
  "release": {
   "version": "0.2.0",
   "tag": "v0.2.0",
@@ -98,8 +98,7 @@
      "gt": "tab_stub_indent()",
      "status": "done",
      "note": "tabStubIndent (levels 0 to 5, increase, decrease, the length of a level in stubIndentLength); a stub of several columns, tabella(data, rownameCol = [\"mfr\", \"model\"]), a value spanning the rows below it that repeat it; groups as a column of the stub (rowGroupAsColumn).",
-     "size": "S",
-     "where": "R"
+     "size": "S"
     },
     {
      "feature": "Row groups",
@@ -132,10 +131,9 @@
      "feature": "Remove parts",
      "gt": "rm_header(), rm_spanners(), rm_footnotes(), rm_source_notes(), rm_stubhead(), rm_caption()",
      "status": "done",
-     "note": "rmHeader, rmSpanners(labels, levels), rmFootnotes(indices), rmSourceNotes(indices), rmStubhead, rmCaption.",
+     "note": "rmHeader, rmSpanners(labels, levels), rmFootnotes(indices), rmSourceNotes(indices), rmStubhead, rmCaption. Great Tables has all but rm_caption() (it has no caption).",
      "plan": "0.1",
-     "size": "S",
-     "where": "R"
+     "size": "S"
     },
     {
      "feature": "Summary rows",
@@ -208,8 +206,7 @@
      "status": "done",
      "note": "fmtFraction: 2 1/4 or 2¼, accuracy low, med, high or a fixed denominator.",
      "plan": "0.2",
-     "size": "M",
-     "where": "R"
+     "size": "M"
     },
     {
      "feature": "Bytes",
@@ -229,7 +226,7 @@
      "feature": "Index letters, spelled numbers",
      "gt": "fmt_index(), fmt_spelled_num()",
      "status": "done",
-     "note": "fmtIndex (repeat or excel), fmtSpelledNum (English, zero to one hundred).",
+     "note": "fmtIndex (repeat or excel), fmtSpelledNum (English, zero to one hundred). Great Tables has fmt_index(), not fmt_spelled_num().",
      "plan": "0.1",
      "size": "S",
      "where": "R"
@@ -285,8 +282,7 @@
      "status": "done",
      "note": "fmtChem: formulas, charges, isotopes and reaction arrows; %...% inside units.",
      "plan": "0.2",
-     "size": "S",
-     "where": "R"
+     "size": "S"
     },
     {
      "feature": "URLs and emails",
@@ -294,8 +290,7 @@
      "status": "done",
      "note": "fmtUrl, fmtEmail: links or buttons; Markdown links in cells are read.",
      "plan": "0.1",
-     "size": "S",
-     "where": "R"
+     "size": "S"
     },
     {
      "feature": "Country names",
@@ -333,14 +328,14 @@
      "feature": "Plots in cells",
      "gt": "fmt_nanoplot(), cols_nanoplot()",
      "status": "done",
-     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text; a list of numbers or a record of x and y in a cell, x as numbers or dates; options for each point.",
+     "note": "fmtNanoplot and colsNanoplot: line, bar and box plots, single values, reference lines and areas, autoscale, a port of Great Tables' SVG; a sparkline in text; a list of numbers or a record of x and y in a cell, x as numbers or dates (colsNanoplot: one place per column with xVals, where gt has columns_x_vals); options for each point.",
      "size": "L"
     },
     {
      "feature": "Bins, auto format, passthrough",
      "gt": "fmt_bins(), fmt_auto(), fmt_passthrough()",
      "status": "done",
-     "note": "fmtBins (with a fmt proc for the ends), fmtAuto (numbers and currencies), fmtPassthrough.",
+     "note": "fmtBins (with a fmt proc for the ends), fmtAuto (numbers and currencies), fmtPassthrough. Great Tables has fmt_passthrough(), not fmt_bins() or fmt_auto().",
      "plan": "0.2",
      "size": "S",
      "where": "R"
@@ -716,8 +711,8 @@
     {
      "feature": "Data frames",
      "gt": "(tibble, Pandas, Polars)",
-     "status": "missing",
-     "note": "Optional modules for nanuq (Polars) and datamancer.",
+     "status": "partial",
+     "note": "tabelline/nanuq: tabella(df) for a nanuq DataFrame (Polars for Nim), an optional module. Not yet datamancer.",
      "plan": "0.3",
      "size": "S"
     }

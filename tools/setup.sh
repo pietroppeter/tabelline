@@ -10,7 +10,8 @@
 #    because sandboxes often block nim-lang.org.
 # 2. atlas: when `atlas` is missing or older than $ATLAS_MIN, the release $ATLAS_VERSION goes
 #    into ~/.local/bin. (Nim ships atlas, but older Nim releases ship an atlas without features.)
-# 3. libpcre3, which nimib's markdown loads at run time (Debian/Ubuntu, with apt).
+# 3. libpcre3, which nimib's markdown loads at run time (Debian/Ubuntu: on x86_64 Ubuntu 24.04's
+#    .deb in tools/vendor/, with dpkg; apt otherwise).
 # 4. the dependencies at the commits in atlas.lock: `atlas rep --feature=docs`, into deps/.
 #    nim.cfg (committed, written by atlas) puts them on the path.
 #
@@ -64,10 +65,23 @@ fi
 log "atlas $(atlasVersion)"
 
 # 3. libpcre3
-if [ "$(uname -s)" = Linux ] && ! PATH="$PATH:/sbin:/usr/sbin" ldconfig -p 2>/dev/null | grep 'libpcre\.so\.[13]' >/dev/null; then
+# Ubuntu 24.04's libpcre3 .deb is kept in tools/vendor/ (checked by sha256) and installed with dpkg,
+# so the setup needs no apt mirror: on 11 Nov 2026 GitHub's runners could resolve no *.ubuntu.com
+# host. apt otherwise (other architectures, or a distribution without dpkg).
+pcreDeb="$here/tools/vendor/libpcre3_8.39-15build1_amd64.deb"
+pcreSha=62b2ea8d178a59495df00b777660377e0fb8d716be3fc552439796f77f515d43
+hasPcre() { PATH="$PATH:/sbin:/usr/sbin" ldconfig -p 2>/dev/null | grep 'libpcre\.so\.[13]' >/dev/null; }
+pcreFromDeb() {
+  [ "$(uname -m)" = x86_64 ] && command -v dpkg >/dev/null 2>&1 || return 1
+  echo "$pcreSha  $pcreDeb" | sha256sum -c - >/dev/null 2>&1 || { log "WARNING: $pcreDeb is missing or changed"; return 1; }
+  $sudo dpkg -i "$pcreDeb" >/dev/null && hasPcre
+}
+if [ "$(uname -s)" = Linux ] && ! hasPcre; then
   log "libpcre not found: installing libpcre3"
   sudo=""; [ "$(id -u)" -ne 0 ] && sudo="sudo"
-  if command -v apt-get >/dev/null 2>&1; then
+  if pcreFromDeb; then
+    log "libpcre3 installed from tools/vendor/"
+  elif command -v apt-get >/dev/null 2>&1; then
     $sudo apt-get install -y -qq libpcre3 >/dev/null 2>&1 ||
       { $sudo apt-get update -qq && $sudo apt-get install -y -qq libpcre3 >/dev/null; } ||
       log "WARNING: could not install libpcre3; the pages need it"
