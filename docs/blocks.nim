@@ -15,6 +15,7 @@
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
+##   nbInPalette "key", look: (nbTable t)            # blocks on another look's paper
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
 ##
@@ -669,6 +670,23 @@ template nbDrawing*(tsvg, talt: string) =
   ## story's data, an SVG with class `map`), as an SVG file: inlined, in the page's colours, with
   ## a caption in Markdown.
   nb.addDrawing(tsvg, talt)
+
+# ---------------------------------------------------------------------------- a palette sample
+
+newNbBlock(NbInPalette of NbContainer):
+  key: string
+  css: string
+  toHtml:
+    &"""<div class="in-palette palette-{blk.key}"><style>{blk.css}</style>""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbInPalette*(tkey: string, tlook: Look, body: untyped) =
+  ## Blocks drawn on another look's paper, with its six values and every token mixed from them
+  ## (a dark look gets `color-scheme: dark` too): a table in a candidate palette, on a page in
+  ## its own look. `tkey` names the sample, for its CSS class.
+  let sample = newNbInPalette(key = tkey, css = paletteCss(tlook, ".palette-" & tkey))
+  nb.withContainer(sample):
+    body
+  nb.add sample
 
 # ------------------------------------------------------------------------------------ a fold
 
