@@ -1,0 +1,2153 @@
+# The islands of the Mediterranean that are not one of the list's 195, of 0.01 km² or more: OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL), each with the centroid of its outline (lon, lat), its country from Natural Earth (public domain), its km² and its sea as the IHO draws them (Marine Regions, CC BY 4.0).
+lon,lat,code,km2,iho_sea
+-5.419,35.914,ES,0.141,Strait of Gibraltar
+-5.296,35.894,ES,3.46,Alboran Sea
+-5.274,36.29,ES,0.019,Alboran Sea
+-4.575,43.399,ES,0.031,
+-4.5,43.397,ES,0.018,
+-4.484,43.396,ES,0.014,
+-4.36,35.153,MA,0.023,Alboran Sea
+-3.902,35.215,ES,0.018,Alboran Sea
+-3.901,35.217,ES,0.015,Alboran Sea
+-3.889,35.213,MA,0.011,Alboran Sea
+-3.079,43.354,ES,0.011,
+-3.035,35.939,ES,0.076,Alboran Sea
+-2.962,43.272,ES,0.501,
+-2.903,35.156,MA,0.184,Alboran Sea
+-2.495,43.367,ES,0.051,
+-2.441,35.179,ES,0.234,Alboran Sea
+-2.43,35.182,ES,0.144,Alboran Sea
+-2.422,35.181,ES,0.119,Alboran Sea
+-1.999,43.322,ES,0.044,
+-1.886,36.993,ES,0.012,Mediterranean Sea - Western Basin
+-1.792,43.395,FR,0.025,
+-1.652,37.348,ES,0.011,Mediterranean Sea - Western Basin
+-1.637,35.212,DZ,0.014,Alboran Sea
+-1.632,35.219,DZ,0.026,Alboran Sea
+-1.546,37.409,ES,0.066,Mediterranean Sea - Western Basin
+-1.48,35.322,DZ,0.28,Alboran Sea
+-1.268,37.556,ES,0.08,Mediterranean Sea - Western Basin
+-1.208,37.571,ES,0.011,Mediterranean Sea - Western Basin
+-1.202,35.545,DZ,0.011,Alboran Sea
+-1.199,35.553,DZ,0.027,Alboran Sea
+-1.132,35.724,DZ,0.39,Mediterranean Sea - Western Basin
+-1.124,35.728,DZ,0.01,Mediterranean Sea - Western Basin
+-1.122,35.731,DZ,0.072,Mediterranean Sea - Western Basin
+-1.042,37.571,ES,0.012,Mediterranean Sea - Western Basin
+-0.969,37.559,ES,0.04,Mediterranean Sea - Western Basin
+-0.902,35.771,DZ,0.028,Mediterranean Sea - Western Basin
+-0.8,37.701,ES,0.253,Mediterranean Sea - Western Basin
+-0.796,35.775,DZ,0.013,Mediterranean Sea - Western Basin
+-0.783,37.652,ES,0.014,Mediterranean Sea - Western Basin
+-0.771,37.696,ES,0.924,Mediterranean Sea - Western Basin
+-0.761,37.79,ES,0.03,Mediterranean Sea - Western Basin
+-0.761,37.793,ES,0.029,Mediterranean Sea - Western Basin
+-0.759,37.784,ES,0.025,Mediterranean Sea - Western Basin
+-0.759,37.785,ES,0.012,Mediterranean Sea - Western Basin
+-0.758,37.782,ES,0.012,Mediterranean Sea - Western Basin
+-0.757,37.786,ES,0.128,Mediterranean Sea - Western Basin
+-0.755,37.782,ES,0.056,Mediterranean Sea - Western Basin
+-0.749,37.666,ES,0.023,Mediterranean Sea - Western Basin
+-0.744,37.766,ES,1.826,Mediterranean Sea - Western Basin
+-0.74,37.67,ES,0.024,Mediterranean Sea - Western Basin
+-0.737,37.66,ES,0.166,Mediterranean Sea - Western Basin
+-0.734,37.696,ES,3.883,Mediterranean Sea - Western Basin
+-0.722,37.651,ES,0.03,Mediterranean Sea - Western Basin
+-0.708,37.728,ES,0.166,Mediterranean Sea - Western Basin
+-0.487,38.167,ES,0.018,Mediterranean Sea - Western Basin
+-0.474,38.165,ES,0.404,Mediterranean Sea - Western Basin
+-0.248,35.824,DZ,0.064,Mediterranean Sea - Western Basin
+-0.131,38.502,ES,0.069,Mediterranean Sea - Western Basin
+0.217,38.727,ES,0.022,Mediterranean Sea - Western Basin
+0.23,38.755,ES,0.085,Mediterranean Sea - Western Basin
+0.668,39.891,ES,0.016,Balearic Sea
+0.67,39.875,ES,0.017,Balearic Sea
+0.685,39.897,ES,0.134,Balearic Sea
+0.731,40.788,ES,0.06,Balearic Sea
+0.853,40.73,ES,0.03,Balearic Sea
+0.861,40.728,ES,0.088,Balearic Sea
+1.16,38.98,ES,0.035,Balearic Sea
+1.166,38.968,ES,0.015,Balearic Sea
+1.166,38.972,ES,0.038,Balearic Sea
+1.189,38.957,ES,0.012,Balearic Sea
+1.196,38.958,ES,0.187,Balearic Sea
+1.197,38.867,ES,0.616,Balearic Sea
+1.212,38.868,ES,0.165,Balearic Sea
+1.212,38.985,ES,1.062,Balearic Sea
+1.217,38.969,ES,0.174,Balearic Sea
+1.316,36.528,DZ,0.013,Mediterranean Sea - Western Basin
+1.316,39.05,ES,0.012,Balearic Sea
+1.403,38.816,ES,0.021,Balearic Sea
+1.404,38.814,ES,0.012,Balearic Sea
+1.411,38.816,ES,0.082,Balearic Sea
+1.417,38.774,ES,0.014,Balearic Sea
+1.418,38.793,ES,0.064,Balearic Sea
+1.422,38.799,ES,0.015,Balearic Sea
+1.423,38.896,ES,0.01,Balearic Sea
+1.425,38.786,ES,1.443,Balearic Sea
+1.43,38.754,ES,0.012,Balearic Sea
+1.432,39.092,ES,0.014,Balearic Sea
+1.463,39.103,ES,0.024,Balearic Sea
+1.478,38.796,ES,0.49,Balearic Sea
+1.483,38.787,ES,0.011,Balearic Sea
+1.516,39.116,ES,0.041,Balearic Sea
+1.578,38.982,ES,0.011,Balearic Sea
+1.584,38.984,ES,0.044,Balearic Sea
+1.644,39.036,ES,0.594,Balearic Sea
+2.174,41.346,ES,0.682,Balearic Sea
+2.32,39.584,ES,2.706,Balearic Sea
+2.348,39.577,ES,0.023,Balearic Sea
+2.45,39.498,ES,0.084,Balearic Sea
+2.456,39.502,ES,0.011,Balearic Sea
+2.545,39.504,ES,0.049,Balearic Sea
+2.588,39.529,ES,0.042,Balearic Sea
+2.71,39.817,ES,0.036,Balearic Sea
+2.94,39.125,ES,0.01,Mediterranean Sea - Western Basin
+2.959,39.126,ES,0.026,Mediterranean Sea - Western Basin
+2.964,39.183,ES,1.356,Balearic Sea
+2.973,39.197,ES,0.053,Balearic Sea
+2.973,39.2,ES,0.028,Balearic Sea
+2.976,39.168,ES,0.1,Balearic Sea
+2.979,39.207,ES,0.014,Balearic Sea
+2.983,39.326,ES,0.011,Balearic Sea
+3.001,39.31,ES,0.027,Balearic Sea
+3.01,39.299,ES,0.013,Balearic Sea
+3.011,39.305,ES,0.058,Balearic Sea
+3.072,36.77,DZ,0.091,Mediterranean Sea - Western Basin
+3.131,39.945,ES,0.027,Balearic Sea
+3.147,39.921,ES,0.117,Balearic Sea
+3.17,39.835,ES,0.024,Balearic Sea
+3.219,41.922,ES,0.013,Mediterranean Sea - Western Basin
+3.223,42.048,ES,0.186,Mediterranean Sea - Western Basin
+3.225,42.044,ES,0.028,Mediterranean Sea - Western Basin
+3.293,42.282,ES,0.024,Mediterranean Sea - Western Basin
+3.295,42.292,ES,0.079,Mediterranean Sea - Western Basin
+3.305,42.328,ES,0.014,Mediterranean Sea - Western Basin
+3.321,42.323,ES,0.057,Mediterranean Sea - Western Basin
+3.352,36.794,DZ,0.014,Mediterranean Sea - Western Basin
+3.698,43.409,FR,0.213,Mediterranean Sea - Western Basin
+3.699,43.403,FR,0.254,Mediterranean Sea - Western Basin
+3.715,43.396,FR,0.08,Mediterranean Sea - Western Basin
+3.732,43.411,FR,0.079,Mediterranean Sea - Western Basin
+4.032,40.068,ES,0.041,Balearic Sea
+4.043,40.058,ES,0.01,Balearic Sea
+4.075,40.092,ES,0.084,Balearic Sea
+4.137,40.046,ES,0.027,Balearic Sea
+4.209,40.02,ES,0.045,Balearic Sea
+4.21,40.017,ES,0.077,Balearic Sea
+4.221,39.823,ES,0.022,Balearic Sea
+4.278,39.96,ES,0.584,Mediterranean Sea - Western Basin
+4.28,39.951,ES,0.01,Mediterranean Sea - Western Basin
+4.287,39.887,ES,0.044,Mediterranean Sea - Western Basin
+4.29,39.801,ES,0.311,Mediterranean Sea - Western Basin
+4.298,39.882,ES,0.011,Mediterranean Sea - Western Basin
+4.304,39.877,ES,0.297,Mediterranean Sea - Western Basin
+4.789,36.893,DZ,0.022,Mediterranean Sea - Western Basin
+4.998,36.826,DZ,0.023,Mediterranean Sea - Western Basin
+5.23,43.199,FR,0.019,Mediterranean Sea - Western Basin
+5.287,43.279,FR,0.011,Mediterranean Sea - Western Basin
+5.303,43.276,FR,1.87,Mediterranean Sea - Western Basin
+5.308,43.36,FR,0.015,Mediterranean Sea - Western Basin
+5.326,43.28,FR,0.032,Mediterranean Sea - Western Basin
+5.327,43.214,FR,0.022,Mediterranean Sea - Western Basin
+5.335,43.211,FR,0.281,Mediterranean Sea - Western Basin
+5.349,43.322,FR,0.276,Mediterranean Sea - Western Basin
+5.357,43.2,FR,0.028,Mediterranean Sea - Western Basin
+5.365,43.197,FR,0.188,Mediterranean Sea - Western Basin
+5.385,43.176,FR,0.892,Mediterranean Sea - Western Basin
+5.386,43.188,FR,0.148,Mediterranean Sea - Western Basin
+5.401,43.176,FR,0.02,Mediterranean Sea - Western Basin
+5.608,36.785,DZ,0.054,Mediterranean Sea - Western Basin
+5.618,43.16,FR,0.135,Mediterranean Sea - Western Basin
+5.651,36.801,DZ,0.039,Mediterranean Sea - Western Basin
+5.75,43.128,FR,0.066,Mediterranean Sea - Western Basin
+5.768,43.08,FR,0.056,Mediterranean Sea - Western Basin
+5.778,43.084,FR,0.01,Mediterranean Sea - Western Basin
+5.784,43.076,FR,0.849,Mediterranean Sea - Western Basin
+5.79,43.071,FR,0.097,Mediterranean Sea - Western Basin
+5.793,43.069,FR,0.014,Mediterranean Sea - Western Basin
+5.916,43.118,FR,0.128,Mediterranean Sea - Western Basin
+5.923,43.117,FR,0.036,Mediterranean Sea - Western Basin
+5.924,43.117,FR,0.026,Mediterranean Sea - Western Basin
+6.091,43.041,FR,0.01,Mediterranean Sea - Western Basin
+6.143,43.019,FR,0.163,Mediterranean Sea - Western Basin
+6.161,43.004,FR,0.022,Mediterranean Sea - Western Basin
+6.253,42.999,FR,0.024,Mediterranean Sea - Western Basin
+6.363,43.012,FR,0.584,Mediterranean Sea - Western Basin
+6.395,42.988,FR,0.036,Mediterranean Sea - Western Basin
+6.706,36.959,DZ,0.029,Mediterranean Sea - Western Basin
+6.782,43.408,FR,0.011,Mediterranean Sea - Western Basin
+6.846,43.411,FR,0.011,Mediterranean Sea - Western Basin
+6.849,36.957,DZ,0.011,Mediterranean Sea - Western Basin
+6.886,36.938,DZ,0.03,Mediterranean Sea - Western Basin
+6.894,43.427,FR,0.022,Mediterranean Sea - Western Basin
+7.046,43.508,FR,0.422,Mediterranean Sea - Western Basin
+7.05,43.519,FR,1.743,Mediterranean Sea - Western Basin
+7.073,43.516,FR,0.018,Mediterranean Sea - Western Basin
+7.162,37.081,DZ,0.015,Mediterranean Sea - Western Basin
+7.296,37.082,DZ,0.011,Mediterranean Sea - Western Basin
+7.331,37.085,DZ,0.031,Mediterranean Sea - Western Basin
+7.394,37.08,DZ,0.082,Mediterranean Sea - Western Basin
+7.681,36.973,DZ,0.022,Mediterranean Sea - Western Basin
+7.79,36.968,DZ,0.012,Mediterranean Sea - Western Basin
+7.792,36.969,DZ,0.017,Mediterranean Sea - Western Basin
+8.141,40.604,IT,0.119,Mediterranean Sea - Western Basin
+8.152,40.571,IT,0.052,Mediterranean Sea - Western Basin
+8.207,40.971,IT,0.022,Mediterranean Sea - Western Basin
+8.213,40.881,IT,0.036,Mediterranean Sea - Western Basin
+8.218,40.975,IT,1.182,Mediterranean Sea - Western Basin
+8.227,44.025,IT,0.104,Ligurian Sea
+8.252,41.028,IT,0.026,Mediterranean Sea - Western Basin
+8.305,39.99,IT,0.92,Mediterranean Sea - Western Basin
+8.319,39.186,IT,0.016,Mediterranean Sea - Western Basin
+8.32,39.192,IT,0.23,Mediterranean Sea - Western Basin
+8.4,39.334,IT,0.036,Mediterranean Sea - Western Basin
+8.404,40.054,IT,0.016,Mediterranean Sea - Western Basin
+8.41,38.861,IT,0.13,Mediterranean Sea - Western Basin
+8.421,40.335,IT,0.011,Mediterranean Sea - Western Basin
+8.445,44.234,IT,0.021,Ligurian Sea
+8.45,38.937,IT,0.104,Mediterranean Sea - Western Basin
+8.45,38.941,IT,0.01,Mediterranean Sea - Western Basin
+8.456,40.21,IT,0.013,Mediterranean Sea - Western Basin
+8.539,42.37,FR,0.203,Mediterranean Sea - Western Basin
+8.54,42.366,FR,0.014,Mediterranean Sea - Western Basin
+8.592,41.877,FR,0.349,Mediterranean Sea - Western Basin
+8.606,41.889,FR,0.012,Mediterranean Sea - Western Basin
+8.65,42.479,FR,0.011,Mediterranean Sea - Western Basin
+8.716,38.914,IT,0.109,Tyrrhenian Sea
+8.746,41.812,FR,0.022,Mediterranean Sea - Western Basin
+8.792,44.416,IT,0.091,Ligurian Sea
+8.8,42.601,FR,0.017,Mediterranean Sea - Western Basin
+8.813,38.892,IT,0.043,Tyrrhenian Sea
+8.849,44.407,IT,0.115,Ligurian Sea
+8.863,41.014,IT,0.05,Mediterranean Sea - Western Basin
+8.874,37.498,TN,0.29,Mediterranean Sea - Western Basin
+8.882,37.494,TN,0.12,Mediterranean Sea - Western Basin
+8.908,44.397,IT,0.182,Ligurian Sea
+8.932,42.646,FR,0.012,Mediterranean Sea - Western Basin
+8.935,42.643,FR,0.154,Mediterranean Sea - Western Basin
+8.949,37.552,TN,0.031,Mediterranean Sea - Western Basin
+8.956,37.558,TN,0.085,Mediterranean Sea - Western Basin
+9.021,41.46,FR,0.025,Mediterranean Sea - Western Basin
+9.032,39.004,IT,0.024,Tyrrhenian Sea
+9.074,41.473,FR,0.013,Mediterranean Sea - Western Basin
+9.097,39.199,IT,0.025,Tyrrhenian Sea
+9.102,41.427,FR,0.012,Mediterranean Sea - Western Basin
+9.134,41.393,FR,0.016,Tyrrhenian Sea
+9.184,41.251,IT,0.04,Tyrrhenian Sea
+9.228,41.372,FR,0.054,Tyrrhenian Sea
+9.238,41.254,IT,0.043,Tyrrhenian Sea
+9.24,41.256,IT,0.028,Tyrrhenian Sea
+9.246,41.376,FR,0.032,Tyrrhenian Sea
+9.248,41.337,FR,0.016,Tyrrhenian Sea
+9.248,41.339,FR,0.016,Tyrrhenian Sea
+9.25,41.349,FR,0.015,Tyrrhenian Sea
+9.255,41.348,FR,0.018,Tyrrhenian Sea
+9.256,41.341,FR,0.644,Tyrrhenian Sea
+9.256,41.35,FR,0.02,Tyrrhenian Sea
+9.261,41.361,FR,0.012,Tyrrhenian Sea
+9.263,41.368,FR,1.113,Tyrrhenian Sea
+9.263,41.392,FR,0.012,Tyrrhenian Sea
+9.324,41.25,IT,0.106,Tyrrhenian Sea
+9.333,41.19,IT,0.04,Tyrrhenian Sea
+9.342,42.964,FR,0.04,Ligurian Sea
+9.346,41.241,IT,4.222,Tyrrhenian Sea
+9.346,41.301,IT,1.646,Tyrrhenian Sea
+9.349,41.283,IT,1.707,Tyrrhenian Sea
+9.354,41.54,FR,0.042,Tyrrhenian Sea
+9.357,41.581,FR,0.013,Tyrrhenian Sea
+9.362,41.551,FR,0.177,Tyrrhenian Sea
+9.362,41.634,FR,0.028,Tyrrhenian Sea
+9.366,41.286,IT,0.015,Tyrrhenian Sea
+9.366,41.556,FR,0.024,Tyrrhenian Sea
+9.369,41.309,IT,0.014,Tyrrhenian Sea
+9.373,41.298,IT,1.859,Tyrrhenian Sea
+9.373,41.561,FR,0.145,Tyrrhenian Sea
+9.375,41.31,IT,0.289,Tyrrhenian Sea
+9.382,41.509,FR,0.016,Tyrrhenian Sea
+9.393,41.67,FR,0.176,Tyrrhenian Sea
+9.397,41.196,IT,0.016,Tyrrhenian Sea
+9.399,41.253,IT,0.015,Tyrrhenian Sea
+9.4,41.295,IT,0.121,Tyrrhenian Sea
+9.402,41.284,IT,0.098,Tyrrhenian Sea
+9.405,41.295,IT,0.044,Tyrrhenian Sea
+9.406,43.025,FR,0.1,Ligurian Sea
+9.409,37.305,TN,0.012,Mediterranean Sea - Western Basin
+9.412,41.197,IT,3.027,Tyrrhenian Sea
+9.418,41.213,IT,0.058,Tyrrhenian Sea
+9.441,41.232,IT,0.456,Tyrrhenian Sea
+9.449,41.222,IT,0.016,Tyrrhenian Sea
+9.461,41.174,IT,0.052,Tyrrhenian Sea
+9.471,42.984,FR,0.015,Tyrrhenian Sea
+9.486,41.182,IT,0.071,Tyrrhenian Sea
+9.502,41.153,IT,0.031,Tyrrhenian Sea
+9.506,40.914,IT,0.019,Tyrrhenian Sea
+9.51,40.917,IT,0.032,Tyrrhenian Sea
+9.512,40.921,IT,0.016,Tyrrhenian Sea
+9.523,41.164,IT,0.293,Tyrrhenian Sea
+9.526,40.917,IT,0.013,Tyrrhenian Sea
+9.527,40.931,IT,0.014,Tyrrhenian Sea
+9.532,39.086,IT,0.427,Tyrrhenian Sea
+9.565,41.123,IT,0.015,Tyrrhenian Sea
+9.566,41.126,IT,0.08,Tyrrhenian Sea
+9.566,41.129,IT,0.017,Tyrrhenian Sea
+9.567,41.131,IT,0.023,Tyrrhenian Sea
+9.57,41.117,IT,0.032,Tyrrhenian Sea
+9.571,41.127,IT,0.034,Tyrrhenian Sea
+9.575,41.065,IT,0.432,Tyrrhenian Sea
+9.582,41.068,IT,0.04,Tyrrhenian Sea
+9.583,40.905,IT,0.018,Tyrrhenian Sea
+9.586,41.07,IT,0.057,Tyrrhenian Sea
+9.589,40.959,IT,0.015,Tyrrhenian Sea
+9.604,39.148,IT,0.033,Tyrrhenian Sea
+9.604,39.151,IT,0.012,Tyrrhenian Sea
+9.604,41.076,IT,0.57,Tyrrhenian Sea
+9.606,39.14,IT,0.319,Tyrrhenian Sea
+9.606,39.149,IT,0.011,Tyrrhenian Sea
+9.64,40.886,IT,0.025,Tyrrhenian Sea
+9.643,40.98,IT,0.214,Tyrrhenian Sea
+9.647,40.918,IT,0.012,Tyrrhenian Sea
+9.651,40.888,IT,0.138,Tyrrhenian Sea
+9.672,40.878,IT,0.022,Tyrrhenian Sea
+9.704,39.974,IT,0.048,Tyrrhenian Sea
+9.708,40.828,IT,0.029,Tyrrhenian Sea
+9.723,40.846,IT,0.044,Tyrrhenian Sea
+9.728,40.869,IT,3.458,Tyrrhenian Sea
+9.776,37.205,TN,0.024,Mediterranean Sea - Western Basin
+9.777,37.208,TN,0.014,Mediterranean Sea - Western Basin
+9.778,40.874,IT,0.027,Tyrrhenian Sea
+9.797,43.032,IT,0.012,Tyrrhenian Sea
+9.819,40.539,IT,0.044,Tyrrhenian Sea
+9.845,44.044,IT,1.581,Tyrrhenian Sea
+9.851,44.027,IT,0.125,Tyrrhenian Sea
+9.869,44.075,IT,0.032,Tyrrhenian Sea
+9.896,37.279,TN,0.024,Mediterranean Sea - Western Basin
+9.899,43.429,IT,2.231,Tyrrhenian Sea
+10.031,34.173,TN,0.039,Mediterranean Sea - Eastern Basin
+10.106,42.584,IT,0.015,Tyrrhenian Sea
+10.12,37.354,TN,0.018,Mediterranean Sea - Western Basin
+10.125,37.356,TN,0.078,Mediterranean Sea - Western Basin
+10.198,37.087,TN,0.013,Mediterranean Sea - Western Basin
+10.239,37.202,TN,0.054,Mediterranean Sea - Western Basin
+10.288,43.55,IT,0.067,Tyrrhenian Sea
+10.312,34.369,TN,2.282,Mediterranean Sea - Eastern Basin
+10.326,36.844,TN,0.055,Mediterranean Sea - Western Basin
+10.328,37.182,TN,0.075,Mediterranean Sea - Western Basin
+10.329,34.395,TN,0.015,Mediterranean Sea - Eastern Basin
+10.333,34.397,TN,0.021,Mediterranean Sea - Eastern Basin
+10.333,34.414,TN,0.069,Mediterranean Sea - Eastern Basin
+10.338,34.409,TN,0.01,Mediterranean Sea - Eastern Basin
+10.373,42.717,IT,0.015,Tyrrhenian Sea
+10.374,42.718,IT,0.013,Tyrrhenian Sea
+10.424,42.871,IT,0.01,Tyrrhenian Sea
+10.474,42.866,IT,0.076,Tyrrhenian Sea
+10.544,36.376,TN,0.02,Mediterranean Sea - Eastern Basin
+10.548,42.858,IT,0.085,Tyrrhenian Sea
+10.712,42.797,IT,0.014,Tyrrhenian Sea
+10.716,33.732,TN,1.453,Mediterranean Sea - Eastern Basin
+10.74,33.875,TN,0.021,Mediterranean Sea - Eastern Basin
+10.774,33.691,TN,0.715,Mediterranean Sea - Eastern Basin
+10.789,33.902,TN,0.011,Mediterranean Sea - Eastern Basin
+10.789,37.119,TN,0.017,Mediterranean Sea - Western Basin
+10.804,37.126,TN,4.315,Mediterranean Sea - Western Basin
+10.829,35.721,TN,0.065,Mediterranean Sea - Eastern Basin
+10.83,35.732,TN,0.27,Mediterranean Sea - Eastern Basin
+10.867,33.596,TN,1.465,Mediterranean Sea - Eastern Basin
+10.868,34.786,TN,0.041,Mediterranean Sea - Eastern Basin
+10.869,33.58,TN,0.012,Mediterranean Sea - Eastern Basin
+10.874,37.107,TN,0.065,Mediterranean Sea - Western Basin
+10.882,42.577,IT,0.044,Tyrrhenian Sea
+10.973,33.667,TN,0.02,Mediterranean Sea - Eastern Basin
+10.973,33.672,TN,0.072,Mediterranean Sea - Eastern Basin
+10.974,33.67,TN,0.018,Mediterranean Sea - Eastern Basin
+10.975,33.671,TN,0.042,Mediterranean Sea - Eastern Basin
+10.976,33.67,TN,0.082,Mediterranean Sea - Eastern Basin
+10.979,33.659,TN,0.012,Mediterranean Sea - Eastern Basin
+10.98,33.656,TN,0.035,Mediterranean Sea - Eastern Basin
+10.981,33.657,TN,0.037,Mediterranean Sea - Eastern Basin
+10.983,33.653,TN,0.21,Mediterranean Sea - Eastern Basin
+10.984,35.673,TN,0.014,Mediterranean Sea - Eastern Basin
+10.986,33.643,TN,0.343,Mediterranean Sea - Eastern Basin
+10.989,33.653,TN,0.345,Mediterranean Sea - Eastern Basin
+10.99,33.668,TN,1.291,Mediterranean Sea - Eastern Basin
+11.004,35.761,TN,0.018,Mediterranean Sea - Eastern Basin
+11.008,35.768,TN,0.498,Mediterranean Sea - Eastern Basin
+11.013,33.754,TN,0.01,Mediterranean Sea - Eastern Basin
+11.033,35.797,TN,2.532,Mediterranean Sea - Eastern Basin
+11.096,35.156,TN,0.04,Mediterranean Sea - Eastern Basin
+11.104,42.251,IT,2.338,Tyrrhenian Sea
+11.114,33.467,TN,0.042,Mediterranean Sea - Eastern Basin
+11.13,42.378,IT,0.011,Tyrrhenian Sea
+11.158,35.223,TN,0.236,Mediterranean Sea - Eastern Basin
+11.166,35.208,TN,0.059,Mediterranean Sea - Eastern Basin
+11.207,34.768,TN,0.028,Mediterranean Sea - Eastern Basin
+11.211,42.381,IT,0.065,Tyrrhenian Sea
+11.224,34.797,TN,0.502,Mediterranean Sea - Eastern Basin
+11.282,34.824,TN,0.043,Mediterranean Sea - Eastern Basin
+11.295,33.278,TN,0.016,Mediterranean Sea - Eastern Basin
+11.297,33.276,TN,0.014,Mediterranean Sea - Eastern Basin
+11.298,34.77,TN,0.665,Mediterranean Sea - Eastern Basin
+11.302,33.275,TN,0.017,Mediterranean Sea - Eastern Basin
+11.303,34.757,TN,0.022,Mediterranean Sea - Eastern Basin
+11.308,33.272,TN,0.032,Mediterranean Sea - Eastern Basin
+11.312,33.269,TN,0.028,Mediterranean Sea - Eastern Basin
+11.316,34.822,TN,1.597,Mediterranean Sea - Eastern Basin
+11.32,33.267,TN,0.012,Mediterranean Sea - Eastern Basin
+11.32,34.754,TN,1.984,Mediterranean Sea - Eastern Basin
+11.35,34.758,TN,0.016,Mediterranean Sea - Eastern Basin
+11.362,34.757,TN,0.014,Mediterranean Sea - Eastern Basin
+11.418,33.179,TN,0.011,Mediterranean Sea - Eastern Basin
+11.423,33.199,TN,0.067,Mediterranean Sea - Eastern Basin
+11.49,33.186,TN,0.031,Mediterranean Sea - Eastern Basin
+11.725,33.11,LY,3.811,Mediterranean Sea - Eastern Basin
+12.043,37.959,IT,0.014,Tyrrhenian Sea
+12.302,37.915,IT,0.042,Tyrrhenian Sea
+12.321,35.552,IT,0.035,Mediterranean Sea - Eastern Basin
+12.321,45.228,IT,0.013,Adriatic Sea
+12.414,37.99,IT,0.035,Tyrrhenian Sea
+12.425,37.989,IT,0.033,Tyrrhenian Sea
+12.443,37.878,IT,5.832,Tyrrhenian Sea
+12.46,37.882,IT,0.118,Tyrrhenian Sea
+12.468,37.867,IT,0.412,Tyrrhenian Sea
+12.494,38.01,IT,0.062,Tyrrhenian Sea
+12.558,35.51,IT,0.034,Mediterranean Sea - Eastern Basin
+12.575,32.797,LY,0.014,Mediterranean Sea - Eastern Basin
+12.848,40.921,IT,0.036,Tyrrhenian Sea
+12.848,40.924,IT,0.041,Tyrrhenian Sea
+12.857,40.937,IT,1.26,Tyrrhenian Sea
+12.868,35.865,IT,5.376,Mediterranean Sea - Eastern Basin
+12.944,40.913,IT,0.015,Tyrrhenian Sea
+13.001,40.935,IT,0.166,Tyrrhenian Sea
+13.055,40.969,IT,1.058,Tyrrhenian Sea
+13.119,32.878,LY,0.032,Mediterranean Sea - Eastern Basin
+13.236,38.21,IT,0.137,Tyrrhenian Sea
+13.417,45.675,IT,0.021,Adriatic Sea
+13.423,45.664,IT,0.294,Adriatic Sea
+13.424,40.793,IT,1.386,Tyrrhenian Sea
+13.434,45.676,IT,0.012,Adriatic Sea
+13.454,40.79,IT,0.301,Tyrrhenian Sea
+13.575,45.191,HR,0.017,Adriatic Sea
+13.583,45.142,HR,0.033,Adriatic Sea
+13.585,45.164,HR,0.013,Adriatic Sea
+13.585,45.178,HR,0.058,Adriatic Sea
+13.585,45.224,HR,0.13,Adriatic Sea
+13.594,45.149,HR,0.11,Adriatic Sea
+13.598,45.134,HR,0.07,Adriatic Sea
+13.602,45.159,HR,0.04,Adriatic Sea
+13.602,45.161,HR,0.024,Adriatic Sea
+13.621,45.095,HR,0.029,Adriatic Sea
+13.623,45.047,HR,0.1,Adriatic Sea
+13.625,45.056,HR,0.091,Adriatic Sea
+13.625,45.059,HR,0.142,Adriatic Sea
+13.626,45.051,HR,0.023,Adriatic Sea
+13.629,45.078,HR,0.115,Adriatic Sea
+13.665,45.057,HR,0.013,Adriatic Sea
+13.669,45.036,HR,0.024,Adriatic Sea
+13.674,45.034,HR,0.07,Adriatic Sea
+13.678,45.047,HR,0.021,Adriatic Sea
+13.718,44.915,HR,0.031,Adriatic Sea
+13.718,44.938,HR,0.055,Adriatic Sea
+13.723,44.934,HR,0.012,Adriatic Sea
+13.724,44.938,HR,0.038,Adriatic Sea
+13.729,44.919,HR,0.048,Adriatic Sea
+13.73,44.91,HR,0.183,Adriatic Sea
+13.74,44.901,HR,0.052,Adriatic Sea
+13.74,44.935,HR,1.051,Adriatic Sea
+13.748,44.912,HR,0.046,Adriatic Sea
+13.788,44.899,HR,0.127,Adriatic Sea
+13.798,44.901,HR,0.072,Adriatic Sea
+13.823,44.875,HR,0.033,Adriatic Sea
+13.826,44.872,HR,0.057,Adriatic Sea
+13.837,44.873,HR,0.132,Adriatic Sea
+13.842,44.824,HR,0.02,Adriatic Sea
+13.842,44.829,HR,0.2,Adriatic Sea
+13.847,44.82,HR,0.107,Adriatic Sea
+13.901,44.768,HR,0.027,Adriatic Sea
+13.909,44.818,HR,0.019,Adriatic Sea
+13.913,44.825,HR,0.017,Adriatic Sea
+13.926,44.778,HR,0.018,Adriatic Sea
+13.926,44.793,HR,0.026,Adriatic Sea
+13.934,44.786,HR,0.185,Adriatic Sea
+13.947,44.772,HR,0.197,Adriatic Sea
+13.948,44.792,HR,0.128,Adriatic Sea
+13.965,40.731,IT,0.07,Tyrrhenian Sea
+13.984,44.799,HR,0.067,Adriatic Sea
+13.994,40.744,IT,0.342,Tyrrhenian Sea
+14.017,40.758,IT,3.838,Tyrrhenian Sea
+14.036,40.799,IT,0.019,Tyrrhenian Sea
+14.088,40.792,IT,0.028,Tyrrhenian Sea
+14.164,40.796,IT,0.308,Tyrrhenian Sea
+14.175,44.728,HR,0.021,Adriatic Sea
+14.251,37.031,IT,0.026,Mediterranean Sea - Eastern Basin
+14.255,44.676,HR,0.036,Adriatic Sea
+14.285,44.66,HR,0.018,Adriatic Sea
+14.302,44.778,HR,0.016,Adriatic Sea
+14.303,44.51,HR,3.792,Adriatic Sea
+14.31,44.582,HR,1.129,Adriatic Sea
+14.311,44.774,HR,2.498,Adriatic Sea
+14.32,36.014,MT,0.101,Mediterranean Sea - Eastern Basin
+14.332,44.564,HR,0.6,Adriatic Sea
+14.336,36.012,MT,2.768,Mediterranean Sea - Eastern Basin
+14.349,44.776,HR,0.048,Adriatic Sea
+14.353,38.543,IT,5.015,Tyrrhenian Sea
+14.377,40.588,IT,0.025,Tyrrhenian Sea
+14.397,40.583,IT,0.014,Tyrrhenian Sea
+14.403,35.966,MT,0.103,Mediterranean Sea - Eastern Basin
+14.403,44.552,HR,0.05,Adriatic Sea
+14.41,35.787,MT,0.038,Mediterranean Sea - Eastern Basin
+14.42,44.591,HR,0.072,Adriatic Sea
+14.424,44.551,HR,0.095,Adriatic Sea
+14.43,40.58,IT,0.017,Tyrrhenian Sea
+14.43,40.582,IT,0.01,Tyrrhenian Sea
+14.431,45.325,HR,0.038,Adriatic Sea
+14.432,44.55,HR,0.777,Adriatic Sea
+14.435,40.582,IT,0.042,Tyrrhenian Sea
+14.49,44.724,HR,0.08,Adriatic Sea
+14.496,44.51,HR,21.709,Adriatic Sea
+14.502,35.904,MT,0.306,Mediterranean Sea - Eastern Basin
+14.541,44.494,HR,0.044,Adriatic Sea
+14.544,44.477,HR,0.209,Adriatic Sea
+14.546,44.975,HR,0.056,Adriatic Sea
+14.554,44.465,HR,0.956,Adriatic Sea
+14.556,44.5,HR,1.042,Adriatic Sea
+14.562,45.252,HR,0.7,Adriatic Sea
+14.566,44.489,HR,0.336,Adriatic Sea
+14.569,44.411,HR,0.099,Adriatic Sea
+14.57,44.948,HR,0.041,Adriatic Sea
+14.574,44.364,HR,0.16,Adriatic Sea
+14.575,44.946,HR,0.038,Adriatic Sea
+14.579,44.668,HR,0.32,Adriatic Sea
+14.58,44.355,HR,0.05,Adriatic Sea
+14.582,44.55,HR,0.394,Adriatic Sea
+14.587,44.338,HR,0.011,Adriatic Sea
+14.593,44.334,HR,0.042,Adriatic Sea
+14.595,44.542,HR,0.042,Adriatic Sea
+14.619,45.026,HR,0.067,Adriatic Sea
+14.662,44.718,HR,0.097,Adriatic Sea
+14.667,44.714,HR,0.011,Adriatic Sea
+14.676,44.94,HR,0.065,Adriatic Sea
+14.686,44.692,HR,0.255,Adriatic Sea
+14.692,44.689,HR,0.012,Adriatic Sea
+14.695,44.329,HR,0.129,Adriatic Sea
+14.696,44.812,HR,0.128,Adriatic Sea
+14.701,44.812,HR,0.011,Adriatic Sea
+14.703,44.324,HR,0.076,Adriatic Sea
+14.705,44.81,HR,0.02,Adriatic Sea
+14.707,44.283,HR,3.773,Adriatic Sea
+14.711,44.319,HR,0.132,Adriatic Sea
+14.727,44.853,HR,0.027,Adriatic Sea
+14.731,44.257,HR,0.011,Adriatic Sea
+14.733,44.263,HR,0.12,Adriatic Sea
+14.735,44.431,HR,0.193,Adriatic Sea
+14.736,44.252,HR,0.014,Adriatic Sea
+14.754,44.247,HR,0.061,Adriatic Sea
+14.755,44.419,HR,0.032,Adriatic Sea
+14.756,44.404,HR,0.016,Adriatic Sea
+14.757,44.832,HR,0.01,Adriatic Sea
+14.758,44.254,HR,0.038,Adriatic Sea
+14.767,44.247,HR,0.011,Adriatic Sea
+14.775,44.223,HR,0.739,Adriatic Sea
+14.785,44.233,HR,0.058,Adriatic Sea
+14.789,44.248,HR,0.02,Adriatic Sea
+14.796,44.22,HR,0.156,Adriatic Sea
+14.808,44.165,HR,0.018,Adriatic Sea
+14.815,44.709,HR,4.588,Adriatic Sea
+14.821,44.842,HR,4.497,Adriatic Sea
+14.828,44.824,HR,0.015,Adriatic Sea
+14.834,44.224,HR,0.096,Adriatic Sea
+14.834,44.996,HR,0.057,Adriatic Sea
+14.846,44.188,HR,0.06,Adriatic Sea
+14.855,44.182,HR,0.181,Adriatic Sea
+14.858,44.379,HR,1.057,Adriatic Sea
+14.859,44.733,HR,0.047,Adriatic Sea
+14.86,44.478,HR,2.022,Adriatic Sea
+14.875,44.363,HR,0.065,Adriatic Sea
+14.88,44.238,HR,0.084,Adriatic Sea
+14.882,44.454,HR,0.031,Adriatic Sea
+14.893,44.395,HR,0.024,Adriatic Sea
+14.896,44.5,HR,0.012,Adriatic Sea
+14.899,44.194,HR,0.116,Adriatic Sea
+14.916,44.93,HR,0.018,Adriatic Sea
+14.917,44.162,HR,4.093,Adriatic Sea
+14.918,44.093,HR,0.091,Adriatic Sea
+14.923,44.182,HR,2.186,Adriatic Sea
+14.927,44.201,HR,0.01,Adriatic Sea
+14.928,44.128,HR,0.053,Adriatic Sea
+14.939,44.143,HR,0.051,Adriatic Sea
+14.95,44.114,HR,0.015,Adriatic Sea
+14.951,44.117,HR,0.069,Adriatic Sea
+14.952,44.137,HR,0.034,Adriatic Sea
+14.977,44.398,HR,0.042,Adriatic Sea
+14.99,44.09,HR,0.2,Adriatic Sea
+14.99,44.185,HR,0.189,Adriatic Sea
+14.995,44.397,HR,0.186,Adriatic Sea
+14.997,44.436,HR,0.048,Adriatic Sea
+15.001,44.177,HR,0.097,Adriatic Sea
+15.011,44.171,HR,0.033,Adriatic Sea
+15.038,44.13,HR,0.028,Adriatic Sea
+15.039,44.154,HR,3.605,Adriatic Sea
+15.04,44.039,HR,0.089,Adriatic Sea
+15.04,44.124,HR,0.034,Adriatic Sea
+15.056,44.08,HR,0.199,Adriatic Sea
+15.057,44.163,HR,0.144,Adriatic Sea
+15.064,44.072,HR,0.01,Adriatic Sea
+15.065,44.068,HR,0.137,Adriatic Sea
+15.066,38.636,IT,3.391,Tyrrhenian Sea
+15.068,44.023,HR,3.595,Adriatic Sea
+15.071,44.064,HR,0.068,Adriatic Sea
+15.078,36.645,IT,0.032,Mediterranean Sea - Eastern Basin
+15.089,43.994,HR,0.287,Adriatic Sea
+15.09,44.002,HR,0.025,Adriatic Sea
+15.098,38.639,IT,0.02,Tyrrhenian Sea
+15.104,44.031,HR,0.038,Adriatic Sea
+15.105,36.792,IT,0.05,Ionian Sea
+15.114,38.639,IT,0.03,Tyrrhenian Sea
+15.114,38.663,IT,0.272,Tyrrhenian Sea
+15.114,44.017,HR,0.09,Adriatic Sea
+15.122,44.053,HR,0.025,Adriatic Sea
+15.135,44.039,HR,0.351,Adriatic Sea
+15.136,43.92,HR,0.092,Adriatic Sea
+15.138,43.966,HR,0.398,Adriatic Sea
+15.138,44.285,HR,0.064,Adriatic Sea
+15.141,43.922,HR,0.086,Adriatic Sea
+15.147,43.963,HR,0.044,Adriatic Sea
+15.149,36.687,IT,0.339,Ionian Sea
+15.154,44.015,HR,0.019,Adriatic Sea
+15.161,44.01,HR,0.081,Adriatic Sea
+15.166,37.562,IT,0.018,Ionian Sea
+15.17,43.962,HR,0.041,Adriatic Sea
+15.175,44.011,HR,0.031,Adriatic Sea
+15.177,43.874,HR,0.036,Adriatic Sea
+15.178,43.954,HR,0.08,Adriatic Sea
+15.182,43.868,HR,0.098,Adriatic Sea
+15.185,43.892,HR,0.011,Adriatic Sea
+15.188,44.302,HR,0.079,Adriatic Sea
+15.189,44.085,HR,0.03,Adriatic Sea
+15.199,44.294,HR,0.534,Adriatic Sea
+15.207,43.852,HR,0.093,Adriatic Sea
+15.208,43.935,HR,2.248,Adriatic Sea
+15.21,44.076,HR,0.326,Adriatic Sea
+15.212,43.857,HR,0.032,Adriatic Sea
+15.212,43.867,HR,0.391,Adriatic Sea
+15.212,44.03,HR,0.159,Adriatic Sea
+15.213,43.85,HR,0.027,Adriatic Sea
+15.215,44.126,HR,0.01,Adriatic Sea
+15.22,43.882,HR,1.119,Adriatic Sea
+15.22,44.023,HR,0.044,Adriatic Sea
+15.221,43.861,HR,0.018,Adriatic Sea
+15.226,43.834,HR,0.1,Adriatic Sea
+15.228,43.854,HR,0.677,Adriatic Sea
+15.228,44.303,HR,0.142,Adriatic Sea
+15.23,43.826,HR,0.054,Adriatic Sea
+15.23,43.917,HR,0.056,Adriatic Sea
+15.233,43.89,HR,0.218,Adriatic Sea
+15.235,44.298,HR,0.131,Adriatic Sea
+15.236,43.846,HR,0.022,Adriatic Sea
+15.237,43.88,HR,0.104,Adriatic Sea
+15.238,43.849,HR,0.08,Adriatic Sea
+15.24,43.838,HR,0.025,Adriatic Sea
+15.24,44.008,HR,0.03,Adriatic Sea
+15.242,43.878,HR,0.029,Adriatic Sea
+15.248,43.823,HR,1.84,Adriatic Sea
+15.248,43.889,HR,0.054,Adriatic Sea
+15.252,43.828,HR,0.057,Adriatic Sea
+15.252,43.899,HR,0.409,Adriatic Sea
+15.252,43.906,HR,0.018,Adriatic Sea
+15.253,43.933,HR,0.01,Adriatic Sea
+15.254,43.806,HR,0.05,Adriatic Sea
+15.254,43.811,HR,0.264,Adriatic Sea
+15.258,43.888,HR,0.046,Adriatic Sea
+15.26,43.914,HR,0.116,Adriatic Sea
+15.264,36.979,IT,0.012,Ionian Sea
+15.264,43.924,HR,0.408,Adriatic Sea
+15.265,43.909,HR,0.034,Adriatic Sea
+15.265,44.027,HR,0.022,Adriatic Sea
+15.27,43.802,HR,0.408,Adriatic Sea
+15.27,43.808,HR,0.039,Adriatic Sea
+15.274,43.906,HR,0.014,Adriatic Sea
+15.274,43.939,HR,0.155,Adriatic Sea
+15.276,43.861,HR,0.273,Adriatic Sea
+15.281,43.819,HR,0.027,Adriatic Sea
+15.282,43.809,HR,0.091,Adriatic Sea
+15.282,43.924,HR,0.163,Adriatic Sea
+15.287,43.858,HR,0.015,Adriatic Sea
+15.288,43.927,HR,0.035,Adriatic Sea
+15.291,43.789,HR,0.158,Adriatic Sea
+15.294,43.906,HR,0.011,Adriatic Sea
+15.295,43.799,HR,0.065,Adriatic Sea
+15.3,43.784,HR,0.012,Adriatic Sea
+15.3,43.795,HR,0.01,Adriatic Sea
+15.3,43.927,HR,1.744,Adriatic Sea
+15.305,43.779,HR,0.251,Adriatic Sea
+15.31,43.886,HR,0.018,Adriatic Sea
+15.327,43.91,HR,0.316,Adriatic Sea
+15.333,43.871,HR,0.189,Adriatic Sea
+15.334,43.878,HR,0.072,Adriatic Sea
+15.335,44.317,HR,0.044,Adriatic Sea
+15.337,43.782,HR,0.117,Adriatic Sea
+15.34,43.767,HR,2.695,Adriatic Sea
+15.34,43.868,HR,0.035,Adriatic Sea
+15.342,43.902,HR,0.327,Adriatic Sea
+15.344,43.758,HR,0.155,Adriatic Sea
+15.349,43.776,HR,0.282,Adriatic Sea
+15.352,43.889,HR,0.023,Adriatic Sea
+15.352,44.316,HR,0.072,Adriatic Sea
+15.354,43.755,HR,0.034,Adriatic Sea
+15.362,43.81,HR,0.171,Adriatic Sea
+15.365,43.764,HR,0.018,Adriatic Sea
+15.365,43.971,HR,0.053,Adriatic Sea
+15.369,43.828,HR,0.236,Adriatic Sea
+15.37,43.752,HR,1.763,Adriatic Sea
+15.375,43.805,HR,0.024,Adriatic Sea
+15.375,43.818,HR,0.031,Adriatic Sea
+15.377,43.806,HR,0.013,Adriatic Sea
+15.381,43.982,HR,0.02,Adriatic Sea
+15.382,43.74,HR,0.111,Adriatic Sea
+15.383,43.747,HR,0.269,Adriatic Sea
+15.384,43.979,HR,0.139,Adriatic Sea
+15.389,43.977,HR,0.026,Adriatic Sea
+15.391,43.741,HR,0.31,Adriatic Sea
+15.394,43.95,HR,0.113,Adriatic Sea
+15.395,43.966,HR,0.158,Adriatic Sea
+15.398,43.729,HR,0.075,Adriatic Sea
+15.4,43.945,HR,0.031,Adriatic Sea
+15.402,43.738,HR,0.091,Adriatic Sea
+15.402,43.887,HR,0.578,Adriatic Sea
+15.403,43.956,HR,0.799,Adriatic Sea
+15.406,43.755,HR,0.013,Adriatic Sea
+15.406,43.941,HR,0.083,Adriatic Sea
+15.41,43.723,HR,0.245,Adriatic Sea
+15.411,43.89,HR,0.031,Adriatic Sea
+15.412,43.938,HR,0.014,Adriatic Sea
+15.418,43.729,HR,0.585,Adriatic Sea
+15.425,43.746,HR,0.04,Adriatic Sea
+15.425,43.882,HR,0.914,Adriatic Sea
+15.427,43.938,HR,0.063,Adriatic Sea
+15.43,43.933,HR,0.066,Adriatic Sea
+15.431,43.719,HR,0.05,Adriatic Sea
+15.434,43.727,HR,0.31,Adriatic Sea
+15.437,43.697,HR,0.027,Adriatic Sea
+15.437,43.866,HR,0.788,Adriatic Sea
+15.438,43.718,HR,0.298,Adriatic Sea
+15.439,43.876,HR,0.012,Adriatic Sea
+15.447,43.87,HR,0.013,Adriatic Sea
+15.452,43.714,HR,0.05,Adriatic Sea
+15.453,43.709,HR,0.028,Adriatic Sea
+15.453,43.868,HR,0.12,Adriatic Sea
+15.455,43.722,HR,0.867,Adriatic Sea
+15.458,43.869,HR,0.028,Adriatic Sea
+15.459,43.851,HR,0.161,Adriatic Sea
+15.46,43.092,HR,0.023,Adriatic Sea
+15.46,43.704,HR,0.123,Adriatic Sea
+15.464,43.708,HR,0.05,Adriatic Sea
+15.472,43.695,HR,0.365,Adriatic Sea
+15.476,43.728,HR,1.072,Adriatic Sea
+15.484,43.684,HR,0.092,Adriatic Sea
+15.485,43.846,HR,0.082,Adriatic Sea
+15.487,42.114,IT,2.036,Adriatic Sea
+15.487,43.868,HR,0.059,Adriatic Sea
+15.488,43.724,HR,0.013,Adriatic Sea
+15.494,43.697,HR,1.747,Adriatic Sea
+15.496,43.676,HR,0.014,Adriatic Sea
+15.498,43.71,HR,0.012,Adriatic Sea
+15.498,43.842,HR,0.042,Adriatic Sea
+15.499,42.123,IT,0.04,Adriatic Sea
+15.501,43.853,HR,2.307,Adriatic Sea
+15.502,43.828,HR,0.06,Adriatic Sea
+15.502,43.863,HR,0.03,Adriatic Sea
+15.503,43.902,HR,0.055,Adriatic Sea
+15.506,43.838,HR,0.078,Adriatic Sea
+15.508,43.904,HR,0.012,Adriatic Sea
+15.511,42.124,IT,0.457,Adriatic Sea
+15.512,43.842,HR,0.032,Adriatic Sea
+15.513,42.136,IT,0.471,Adriatic Sea
+15.516,43.831,HR,0.619,Adriatic Sea
+15.518,43.84,HR,0.014,Adriatic Sea
+15.519,43.677,HR,0.01,Adriatic Sea
+15.519,43.894,HR,0.013,Adriatic Sea
+15.52,43.701,HR,0.014,Adriatic Sea
+15.523,43.892,HR,0.031,Adriatic Sea
+15.524,43.7,HR,0.077,Adriatic Sea
+15.528,43.866,HR,0.029,Adriatic Sea
+15.532,43.867,HR,0.013,Adriatic Sea
+15.536,43.708,HR,0.093,Adriatic Sea
+15.539,43.829,HR,0.018,Adriatic Sea
+15.543,43.857,HR,1.277,Adriatic Sea
+15.546,43.693,HR,0.012,Adriatic Sea
+15.552,43.848,HR,0.028,Adriatic Sea
+15.556,43.837,HR,0.018,Adriatic Sea
+15.557,43.688,HR,0.042,Adriatic Sea
+15.558,43.658,HR,0.015,Adriatic Sea
+15.56,43.826,HR,0.063,Adriatic Sea
+15.56,43.847,HR,0.042,Adriatic Sea
+15.56,43.853,HR,0.385,Adriatic Sea
+15.567,43.844,HR,0.528,Adriatic Sea
+15.575,43.625,HR,0.014,Adriatic Sea
+15.578,43.84,HR,0.228,Adriatic Sea
+15.581,43.834,HR,0.185,Adriatic Sea
+15.582,43.735,HR,0.104,Adriatic Sea
+15.585,43.831,HR,0.059,Adriatic Sea
+15.586,43.682,HR,0.022,Adriatic Sea
+15.588,43.835,HR,0.091,Adriatic Sea
+15.594,43.723,HR,0.326,Adriatic Sea
+15.603,43.718,HR,0.061,Adriatic Sea
+15.604,43.634,HR,0.026,Adriatic Sea
+15.609,43.624,HR,0.012,Adriatic Sea
+15.61,43.789,HR,0.013,Adriatic Sea
+15.611,43.728,HR,0.016,Adriatic Sea
+15.617,43.723,HR,0.066,Adriatic Sea
+15.624,43.762,HR,0.041,Adriatic Sea
+15.63,43.76,HR,0.024,Adriatic Sea
+15.633,43.829,HR,0.012,Adriatic Sea
+15.653,43.784,HR,0.012,Adriatic Sea
+15.659,43.79,HR,0.084,Adriatic Sea
+15.663,43.702,HR,0.233,Adriatic Sea
+15.665,43.776,HR,0.049,Adriatic Sea
+15.665,43.786,HR,0.051,Adriatic Sea
+15.668,43.691,HR,3.356,Adriatic Sea
+15.67,43.699,HR,0.105,Adriatic Sea
+15.675,43.761,HR,0.028,Adriatic Sea
+15.676,43.757,HR,0.124,Adriatic Sea
+15.676,43.779,HR,0.082,Adriatic Sea
+15.68,43.627,HR,0.055,Adriatic Sea
+15.68,43.768,HR,0.043,Adriatic Sea
+15.682,43.778,HR,0.024,Adriatic Sea
+15.685,43.657,HR,0.011,Adriatic Sea
+15.69,43.723,HR,0.074,Adriatic Sea
+15.692,43.673,HR,0.064,Adriatic Sea
+15.701,43.672,HR,0.066,Adriatic Sea
+15.712,43.711,HR,0.011,Adriatic Sea
+15.714,43.646,HR,0.024,Adriatic Sea
+15.714,43.706,HR,0.015,Adriatic Sea
+15.715,43.696,HR,0.02,Adriatic Sea
+15.716,39.967,IT,0.011,Tyrrhenian Sea
+15.72,43.759,HR,0.017,Adriatic Sea
+15.724,43.752,HR,0.018,Adriatic Sea
+15.727,43.703,HR,0.14,Adriatic Sea
+15.735,43.683,HR,0.056,Adriatic Sea
+15.738,43.646,HR,0.02,Adriatic Sea
+15.739,43.671,HR,0.336,Adriatic Sea
+15.741,43.627,HR,0.272,Adriatic Sea
+15.741,43.66,HR,0.105,Adriatic Sea
+15.741,43.752,HR,0.052,Adriatic Sea
+15.745,43.753,HR,0.015,Adriatic Sea
+15.747,42.225,IT,0.112,Adriatic Sea
+15.748,43.026,HR,4.176,Adriatic Sea
+15.751,43.743,HR,0.359,Adriatic Sea
+15.756,43.693,HR,3.272,Adriatic Sea
+15.759,43.669,HR,0.312,Adriatic Sea
+15.765,43.721,HR,2.712,Adriatic Sea
+15.775,39.874,IT,0.329,Tyrrhenian Sea
+15.779,43.708,HR,0.012,Adriatic Sea
+15.786,43.68,HR,0.551,Adriatic Sea
+15.788,43.664,HR,0.018,Adriatic Sea
+15.793,43.73,HR,2.403,Adriatic Sea
+15.796,43.676,HR,0.216,Adriatic Sea
+15.801,43.006,HR,0.05,Adriatic Sea
+15.802,39.699,IT,0.063,Tyrrhenian Sea
+15.811,43.666,HR,0.163,Adriatic Sea
+15.812,43.718,HR,0.338,Adriatic Sea
+15.818,43.645,HR,0.11,Adriatic Sea
+15.84,43.649,HR,0.047,Adriatic Sea
+15.856,43.719,HR,0.022,Adriatic Sea
+15.871,43.577,HR,0.033,Adriatic Sea
+15.877,43.565,HR,0.072,Adriatic Sea
+15.88,43.654,HR,0.066,Adriatic Sea
+15.88,43.665,HR,0.309,Adriatic Sea
+15.887,43.652,HR,0.012,Adriatic Sea
+15.887,43.659,HR,0.112,Adriatic Sea
+15.889,43.539,HR,0.094,Adriatic Sea
+15.896,43.653,HR,0.246,Adriatic Sea
+15.898,43.571,HR,0.351,Adriatic Sea
+15.902,43.63,HR,0.203,Adriatic Sea
+15.904,43.66,HR,0.049,Adriatic Sea
+15.91,43.657,HR,0.154,Adriatic Sea
+15.912,43.593,HR,0.05,Adriatic Sea
+15.913,43.673,HR,0.372,Adriatic Sea
+15.933,43.542,HR,0.14,Adriatic Sea
+15.941,43.513,HR,0.174,Adriatic Sea
+15.943,43.519,HR,0.029,Adriatic Sea
+15.948,43.534,HR,0.016,Adriatic Sea
+15.95,41.618,IT,0.052,Adriatic Sea
+15.961,43.532,HR,0.015,Adriatic Sea
+16.011,43.474,HR,0.018,Adriatic Sea
+16.028,43.473,HR,0.481,Adriatic Sea
+16.034,43.48,HR,0.023,Adriatic Sea
+16.042,43.473,HR,0.048,Adriatic Sea
+16.045,43.054,HR,0.016,Adriatic Sea
+16.078,43.447,HR,3.434,Adriatic Sea
+16.111,41.928,IT,0.01,Adriatic Sea
+16.124,43.418,HR,0.378,Adriatic Sea
+16.135,43.413,HR,0.026,Adriatic Sea
+16.168,43.477,HR,0.08,Adriatic Sea
+16.175,43.403,HR,0.616,Adriatic Sea
+16.175,43.473,HR,0.028,Adriatic Sea
+16.177,43.437,HR,0.093,Adriatic Sea
+16.179,43.441,HR,0.034,Adriatic Sea
+16.182,43.392,HR,0.064,Adriatic Sea
+16.184,41.889,IT,0.032,Adriatic Sea
+16.185,43.396,HR,0.04,Adriatic Sea
+16.195,43.392,HR,0.23,Adriatic Sea
+16.195,43.401,HR,0.062,Adriatic Sea
+16.199,43.399,HR,0.016,Adriatic Sea
+16.2,41.815,IT,0.016,Adriatic Sea
+16.203,43.076,HR,0.039,Adriatic Sea
+16.219,43.478,HR,0.05,Adriatic Sea
+16.227,43.018,HR,0.272,Adriatic Sea
+16.233,43.478,HR,0.265,Adriatic Sea
+16.238,43.025,HR,0.025,Adriatic Sea
+16.243,43.026,HR,0.324,Adriatic Sea
+16.249,43.516,HR,0.112,Adriatic Sea
+16.251,43.038,HR,0.014,Adriatic Sea
+16.256,43.036,HR,0.071,Adriatic Sea
+16.259,42.393,IT,0.274,Adriatic Sea
+16.266,43.05,HR,0.049,Adriatic Sea
+16.272,42.388,IT,0.026,Adriatic Sea
+16.314,43.172,HR,0.25,Adriatic Sea
+16.318,43.176,HR,0.01,Adriatic Sea
+16.326,43.173,HR,0.041,Adriatic Sea
+16.333,43.173,HR,0.024,Adriatic Sea
+16.36,43.153,HR,0.29,Adriatic Sea
+16.365,43.169,HR,0.02,Adriatic Sea
+16.368,43.164,HR,5.187,Adriatic Sea
+16.38,43.145,HR,0.03,Adriatic Sea
+16.405,43.167,HR,0.019,Adriatic Sea
+16.406,43.196,HR,0.019,Adriatic Sea
+16.408,43.16,HR,0.163,Adriatic Sea
+16.41,43.338,HR,0.015,Adriatic Sea
+16.412,43.156,HR,0.012,Adriatic Sea
+16.416,43.162,HR,0.102,Adriatic Sea
+16.42,43.157,HR,0.685,Adriatic Sea
+16.434,43.159,HR,0.209,Adriatic Sea
+16.438,43.166,HR,0.016,Adriatic Sea
+16.453,43.157,HR,0.019,Adriatic Sea
+16.513,42.764,HR,4.024,Adriatic Sea
+16.574,43.087,HR,0.024,Adriatic Sea
+16.581,43.083,HR,0.024,Adriatic Sea
+16.616,42.984,HR,0.64,Adriatic Sea
+16.65,42.993,HR,0.01,Adriatic Sea
+16.658,42.97,HR,0.012,Adriatic Sea
+16.675,42.914,HR,0.277,Adriatic Sea
+16.675,42.97,HR,0.051,Adriatic Sea
+16.682,42.961,HR,0.204,Adriatic Sea
+16.688,42.907,HR,0.102,Adriatic Sea
+16.694,42.904,HR,0.21,Adriatic Sea
+16.694,43.19,HR,0.114,Adriatic Sea
+16.702,42.898,HR,0.038,Adriatic Sea
+16.721,42.753,HR,0.71,Adriatic Sea
+16.724,42.763,HR,0.034,Adriatic Sea
+16.732,42.91,HR,0.402,Adriatic Sea
+16.75,42.904,HR,0.032,Adriatic Sea
+16.762,42.901,HR,0.053,Adriatic Sea
+16.775,42.78,HR,0.014,Adriatic Sea
+16.788,42.894,HR,0.014,Adriatic Sea
+16.789,42.769,HR,1.43,Adriatic Sea
+16.796,42.772,HR,0.013,Adriatic Sea
+16.796,42.894,HR,0.101,Adriatic Sea
+16.798,42.747,HR,0.162,Adriatic Sea
+16.8,42.755,HR,0.117,Adriatic Sea
+16.804,42.895,HR,0.16,Adriatic Sea
+16.812,42.766,HR,2.792,Adriatic Sea
+16.816,42.896,HR,0.14,Adriatic Sea
+16.818,43.03,HR,0.043,Adriatic Sea
+16.82,42.76,HR,0.018,Adriatic Sea
+16.83,42.779,HR,0.027,Adriatic Sea
+16.831,42.902,HR,0.038,Adriatic Sea
+16.876,42.775,HR,0.017,Adriatic Sea
+16.949,42.775,HR,0.016,Adriatic Sea
+16.956,42.757,HR,0.084,Adriatic Sea
+16.965,42.773,HR,0.279,Adriatic Sea
+16.968,42.76,HR,0.456,Adriatic Sea
+16.98,42.769,HR,0.571,Adriatic Sea
+16.987,42.782,HR,0.029,Adriatic Sea
+16.988,42.778,HR,0.393,Adriatic Sea
+16.99,42.783,HR,0.039,Adriatic Sea
+16.992,42.816,HR,0.018,Adriatic Sea
+16.996,42.765,HR,0.023,Adriatic Sea
+17.048,42.978,HR,0.012,Adriatic Sea
+17.053,42.98,HR,0.035,Adriatic Sea
+17.074,42.758,HR,0.019,Adriatic Sea
+17.106,42.762,HR,0.06,Adriatic Sea
+17.113,42.763,HR,0.056,Adriatic Sea
+17.117,42.763,HR,0.05,Adriatic Sea
+17.146,42.766,HR,0.026,Adriatic Sea
+17.156,40.45,IT,1.156,Ionian Sea
+17.161,42.954,HR,0.972,Adriatic Sea
+17.164,42.941,HR,0.02,Adriatic Sea
+17.168,42.945,HR,0.227,Adriatic Sea
+17.17,42.936,HR,0.274,Adriatic Sea
+17.171,42.956,HR,0.016,Adriatic Sea
+17.171,42.961,HR,0.011,Adriatic Sea
+17.176,40.439,IT,0.06,Ionian Sea
+17.183,42.932,HR,0.037,Adriatic Sea
+17.187,42.963,HR,0.018,Adriatic Sea
+17.192,42.94,HR,0.093,Adriatic Sea
+17.192,42.959,HR,0.154,Adriatic Sea
+17.199,43.02,HR,0.016,Adriatic Sea
+17.202,42.957,HR,0.041,Adriatic Sea
+17.204,42.936,HR,0.046,Adriatic Sea
+17.208,42.962,HR,0.012,Adriatic Sea
+17.343,42.793,HR,0.228,Adriatic Sea
+17.359,42.806,HR,0.082,Adriatic Sea
+17.36,42.769,HR,0.016,Adriatic Sea
+17.376,42.804,HR,0.015,Adriatic Sea
+17.398,42.791,HR,0.094,Adriatic Sea
+17.4,42.796,HR,0.23,Adriatic Sea
+17.41,42.794,HR,0.032,Adriatic Sea
+17.416,42.789,HR,0.496,Adriatic Sea
+17.427,42.874,HR,0.028,Adriatic Sea
+17.448,42.947,HR,0.015,Adriatic Sea
+17.457,42.954,HR,0.033,Adriatic Sea
+17.467,43.005,HR,0.309,Adriatic Sea
+17.475,42.926,HR,0.119,Adriatic Sea
+17.475,42.936,HR,0.049,Adriatic Sea
+17.485,42.927,HR,0.059,Adriatic Sea
+17.492,42.92,HR,0.047,Adriatic Sea
+17.497,42.928,HR,0.03,Adriatic Sea
+17.504,42.922,HR,0.249,Adriatic Sea
+17.6,42.717,HR,0.017,Adriatic Sea
+17.638,42.741,HR,0.027,Adriatic Sea
+17.65,42.735,HR,0.056,Adriatic Sea
+17.651,42.739,HR,0.042,Adriatic Sea
+17.664,42.702,HR,0.016,Adriatic Sea
+17.69,42.697,HR,0.037,Adriatic Sea
+17.694,42.862,HR,0.01,Adriatic Sea
+17.723,42.842,HR,0.019,Adriatic Sea
+17.748,42.706,HR,0.046,Adriatic Sea
+17.774,42.763,HR,0.872,Adriatic Sea
+17.798,42.758,HR,0.108,Adriatic Sea
+17.805,40.714,IT,0.015,Adriatic Sea
+17.81,42.752,HR,0.092,Adriatic Sea
+17.817,42.741,HR,3.022,Adriatic Sea
+17.824,42.746,HR,0.024,Adriatic Sea
+17.831,42.759,HR,0.024,Adriatic Sea
+17.867,40.27,IT,0.059,Ionian Sea
+17.884,40.258,IT,0.135,Ionian Sea
+17.891,40.255,IT,0.018,Ionian Sea
+17.921,40.219,IT,0.011,Ionian Sea
+17.929,42.708,HR,0.301,Adriatic Sea
+17.949,42.685,HR,4.353,Adriatic Sea
+17.95,40.049,IT,0.495,Ionian Sea
+17.952,42.646,HR,0.047,Adriatic Sea
+17.994,40.656,IT,0.013,Adriatic Sea
+18.007,42.674,HR,2.431,Adriatic Sea
+18.05,42.652,HR,0.011,Adriatic Sea
+18.057,42.668,HR,0.066,Adriatic Sea
+18.12,42.627,HR,0.687,Adriatic Sea
+18.133,42.672,HR,0.038,Adriatic Sea
+18.176,42.586,HR,0.05,Adriatic Sea
+18.195,42.575,HR,0.202,Adriatic Sea
+18.202,42.595,HR,0.043,Adriatic Sea
+18.203,39.838,IT,0.011,Ionian Sea
+18.431,42.444,HR,0.147,Adriatic Sea
+18.558,42.395,ME,0.037,Adriatic Sea
+18.692,42.41,ME,0.322,Adriatic Sea
+18.704,42.406,ME,0.058,Adriatic Sea
+18.852,42.266,ME,0.436,Adriatic Sea
+19.14,41.992,ME,0.016,Adriatic Sea
+19.465,40.98,AL,0.581,Adriatic Sea
+19.469,40.985,AL,0.022,Adriatic Sea
+19.496,39.772,GR,0.024,Adriatic Sea
+19.522,39.77,GR,2.811,Adriatic Sea
+19.584,39.888,GR,3.617,Adriatic Sea
+19.589,39.764,GR,0.046,Adriatic Sea
+19.593,39.768,GR,0.309,Adriatic Sea
+19.611,41.779,AL,0.247,Adriatic Sea
+19.635,39.728,GR,0.067,Ionian Sea
+19.88,39.649,GR,0.069,Ionian Sea
+19.902,39.416,GR,0.019,Ionian Sea
+19.903,30.791,LY,0.024,Mediterranean Sea - Eastern Basin
+19.925,39.641,GR,0.522,Ionian Sea
+19.991,39.74,AL,0.024,Ionian Sea
+19.991,39.775,AL,0.01,Adriatic Sea
+19.992,39.773,AL,0.012,Adriatic Sea
+19.994,39.741,AL,0.026,Adriatic Sea
+19.996,39.775,AL,0.034,Adriatic Sea
+20.006,39.69,GR,0.026,Ionian Sea
+20.144,39.582,GR,0.022,Ionian Sea
+20.15,39.559,GR,0.234,Ionian Sea
+20.156,39.509,GR,0.109,Ionian Sea
+20.182,39.614,GR,0.016,Ionian Sea
+20.189,39.2,GR,0.176,Ionian Sea
+20.194,39.204,GR,0.058,Ionian Sea
+20.21,39.448,GR,0.081,Ionian Sea
+20.213,39.18,GR,0.108,Ionian Sea
+20.213,39.494,GR,0.026,Ionian Sea
+20.215,39.151,GR,0.016,Ionian Sea
+20.217,39.403,GR,0.743,Ionian Sea
+20.227,39.406,GR,0.532,Ionian Sea
+20.23,39.15,GR,3.595,Ionian Sea
+20.234,39.398,GR,0.173,Ionian Sea
+20.236,39.395,GR,0.017,Ionian Sea
+20.249,39.13,GR,0.028,Ionian Sea
+20.272,39.386,GR,0.023,Ionian Sea
+20.402,39.282,GR,0.013,Ionian Sea
+20.412,38.345,GR,0.012,Ionian Sea
+20.419,38.134,GR,0.013,Ionian Sea
+20.423,38.135,GR,0.208,Ionian Sea
+20.538,38.696,GR,0.018,Ionian Sea
+20.544,38.086,GR,0.011,Ionian Sea
+20.62,37.82,GR,0.096,Ionian Sea
+20.699,38.376,GR,0.011,Ionian Sea
+20.71,38.554,GR,4.211,Ionian Sea
+20.712,37.906,GR,0.031,Ionian Sea
+20.724,38.716,GR,0.016,Ionian Sea
+20.725,38.707,GR,0.109,Ionian Sea
+20.726,38.813,GR,0.021,Ionian Sea
+20.729,38.804,GR,0.023,Ionian Sea
+20.734,38.658,GR,0.138,Ionian Sea
+20.741,38.714,GR,0.538,Ionian Sea
+20.744,38.693,GR,0.869,Ionian Sea
+20.744,38.7,GR,0.116,Ionian Sea
+20.749,38.335,GR,0.12,Ionian Sea
+20.77,38.592,GR,0.011,Ionian Sea
+20.778,37.681,GR,0.029,Ionian Sea
+20.794,38.753,GR,0.019,Ionian Sea
+20.798,38.585,GR,0.744,Ionian Sea
+20.802,38.675,GR,0.014,Ionian Sea
+20.812,38.487,GR,4.442,Ionian Sea
+20.816,37.649,GR,0.011,Ionian Sea
+20.853,38.564,GR,0.072,Ionian Sea
+20.871,37.685,GR,0.236,Ionian Sea
+20.872,38.965,GR,0.036,Ionian Sea
+20.9,38.927,GR,0.041,Ionian Sea
+20.917,38.987,GR,0.126,Ionian Sea
+20.925,38.573,GR,0.036,Ionian Sea
+20.939,38.608,GR,0.106,Ionian Sea
+20.947,37.704,GR,0.171,Ionian Sea
+20.97,38.483,GR,0.014,Ionian Sea
+20.995,38.369,GR,0.982,Ionian Sea
+21.001,38.48,GR,0.157,Ionian Sea
+21.002,37.26,GR,0.183,Ionian Sea
+21.005,38.472,GR,0.342,Ionian Sea
+21.012,37.246,GR,1.225,Ionian Sea
+21.016,38.464,GR,0.109,Ionian Sea
+21.016,38.471,GR,0.038,Ionian Sea
+21.02,38.481,GR,2.422,Ionian Sea
+21.022,38.424,GR,0.256,Ionian Sea
+21.025,38.432,GR,0.022,Ionian Sea
+21.025,38.435,GR,0.035,Ionian Sea
+21.026,39.014,GR,0.01,Ionian Sea
+21.027,38.44,GR,0.012,Ionian Sea
+21.027,39.01,GR,0.049,Ionian Sea
+21.028,39.014,GR,0.015,Ionian Sea
+21.03,38.491,GR,0.227,Ionian Sea
+21.033,39.017,GR,0.053,Ionian Sea
+21.035,38.361,GR,0.949,Ionian Sea
+21.036,38.462,GR,0.098,Ionian Sea
+21.036,39.007,GR,0.039,Ionian Sea
+21.042,39.014,GR,0.027,Ionian Sea
+21.043,38.475,GR,0.691,Ionian Sea
+21.047,38.463,GR,1.159,Ionian Sea
+21.054,38.351,GR,0.094,Ionian Sea
+21.066,38.455,GR,0.716,Ionian Sea
+21.102,38.336,GR,0.031,Ionian Sea
+21.105,38.332,GR,0.098,Ionian Sea
+21.107,38.303,GR,4.154,Ionian Sea
+21.11,38.434,GR,0.015,Ionian Sea
+21.111,38.437,GR,0.037,Ionian Sea
+21.115,38.426,GR,0.011,Ionian Sea
+21.12,37.94,GR,0.016,Ionian Sea
+21.3,37.66,GR,0.026,Ionian Sea
+21.302,37.675,GR,0.015,Ionian Sea
+21.551,37.053,GR,3.03,Ionian Sea
+21.666,36.929,GR,3.056,Ionian Sea
+21.673,36.906,GR,0.026,Ionian Sea
+21.695,36.735,GR,0.04,Ionian Sea
+21.695,36.832,GR,0.05,Ionian Sea
+21.697,36.827,GR,0.02,Ionian Sea
+21.701,36.736,GR,0.014,Ionian Sea
+21.708,36.757,GR,0.046,Ionian Sea
+21.714,38.228,GR,0.012,Ionian Sea
+21.73,38.253,GR,0.019,Ionian Sea
+21.741,36.754,GR,0.504,Ionian Sea
+21.886,36.697,GR,0.927,Ionian Sea
+22.072,38.367,GR,2.298,Ionian Sea
+22.081,38.365,GR,0.01,Ionian Sea
+22.098,38.359,GR,0.096,Ionian Sea
+22.124,38.355,GR,0.031,Ionian Sea
+22.161,38.343,GR,0.011,Ionian Sea
+22.233,36.88,GR,0.035,Ionian Sea
+22.402,38.378,GR,0.013,Ionian Sea
+22.403,38.384,GR,0.096,Ionian Sea
+22.406,38.392,GR,0.011,Ionian Sea
+22.422,38.42,GR,0.011,Ionian Sea
+22.617,40.471,GR,0.038,Aegean Sea
+22.625,38.31,GR,0.26,Ionian Sea
+22.648,40.515,GR,0.336,Aegean Sea
+22.685,38.297,GR,0.015,Ionian Sea
+22.7,38.296,GR,0.096,Ionian Sea
+22.739,40.513,GR,0.032,Aegean Sea
+22.744,40.522,GR,0.081,Aegean Sea
+22.744,40.524,GR,0.066,Aegean Sea
+22.75,40.513,GR,0.015,Aegean Sea
+22.796,40.561,GR,0.016,Aegean Sea
+22.811,40.565,GR,0.022,Aegean Sea
+22.817,38.824,GR,0.359,Aegean Sea
+22.82,38.817,GR,0.016,Aegean Sea
+22.82,38.82,GR,0.05,Aegean Sea
+22.821,38.808,GR,0.047,Aegean Sea
+22.865,37.503,GR,0.049,Aegean Sea
+22.865,37.508,GR,1.11,Aegean Sea
+22.865,38.226,GR,0.042,Ionian Sea
+22.867,37.519,GR,0.01,Aegean Sea
+22.883,38.18,GR,0.096,Ionian Sea
+22.897,36.599,GR,0.032,Mediterranean Sea - Eastern Basin
+22.899,36.25,GR,0.011,Mediterranean Sea - Eastern Basin
+22.901,36.192,GR,0.042,Mediterranean Sea - Eastern Basin
+22.901,39.175,GR,0.09,Aegean Sea
+22.913,36.174,GR,0.022,Mediterranean Sea - Eastern Basin
+22.916,36.17,GR,0.013,Mediterranean Sea - Eastern Basin
+22.922,37.494,GR,1.751,Aegean Sea
+22.924,36.471,GR,0.049,Mediterranean Sea - Eastern Basin
+22.929,36.489,GR,0.075,Mediterranean Sea - Eastern Basin
+22.939,36.497,GR,0.041,Mediterranean Sea - Eastern Basin
+22.959,38.176,GR,0.568,Ionian Sea
+22.975,38.114,GR,0.015,Ionian Sea
+22.98,37.436,GR,2.048,Aegean Sea
+22.98,38.111,GR,0.096,Ionian Sea
+22.983,38.122,GR,0.202,Ionian Sea
+22.986,38.181,GR,0.315,Ionian Sea
+22.989,38.205,GR,0.143,Ionian Sea
+22.994,38.114,GR,0.667,Ionian Sea
+22.998,36.095,GR,0.264,Mediterranean Sea - Eastern Basin
+23.002,38.181,GR,0.904,Ionian Sea
+23.048,36.615,GR,0.014,Aegean Sea
+23.051,36.688,GR,0.579,Aegean Sea
+23.053,39.18,GR,0.159,Aegean Sea
+23.065,37.36,GR,0.099,Aegean Sea
+23.067,39.009,GR,0.319,Aegean Sea
+23.078,39.16,GR,2.407,Aegean Sea
+23.08,36.785,GR,0.014,Aegean Sea
+23.081,36.269,GR,0.383,Aegean Sea
+23.086,37.868,GR,0.065,Aegean Sea
+23.088,38.674,GR,0.012,Aegean Sea
+23.09,36.751,GR,0.024,Aegean Sea
+23.091,38.684,GR,0.014,Aegean Sea
+23.094,36.264,GR,0.026,Aegean Sea
+23.095,38.674,GR,1.6,Aegean Sea
+23.11,36.223,GR,0.396,Aegean Sea
+23.114,36.236,GR,0.168,Aegean Sea
+23.12,37.426,GR,0.237,Aegean Sea
+23.124,38.636,GR,0.036,Aegean Sea
+23.139,37.302,GR,0.081,Aegean Sea
+23.142,37.859,GR,0.15,Aegean Sea
+23.155,32.414,LY,0.012,Mediterranean Sea - Eastern Basin
+23.165,39.146,GR,0.019,Aegean Sea
+23.166,32.392,LY,0.062,Mediterranean Sea - Eastern Basin
+23.168,37.223,GR,1.902,Aegean Sea
+23.174,37.762,GR,0.105,Aegean Sea
+23.177,37.717,GR,0.023,Aegean Sea
+23.19,37.226,GR,0.031,Aegean Sea
+23.204,37.306,GR,0.03,Aegean Sea
+23.204,39.161,GR,0.554,Aegean Sea
+23.207,35.959,GR,0.012,Mediterranean Sea - Eastern Basin
+23.236,32.374,LY,0.081,Mediterranean Sea - Eastern Basin
+23.237,37.703,GR,0.032,Aegean Sea
+23.246,37.811,GR,1.015,Aegean Sea
+23.247,35.975,GR,0.314,Aegean Sea
+23.247,37.803,GR,0.213,Aegean Sea
+23.26,37.802,GR,0.082,Aegean Sea
+23.261,37.822,GR,1.111,Aegean Sea
+23.262,37.704,GR,1.104,Aegean Sea
+23.263,37.81,GR,0.016,Aegean Sea
+23.281,37.268,GR,0.984,Aegean Sea
+23.282,32.231,LY,1.24,Mediterranean Sea - Eastern Basin
+23.309,38.586,GR,0.023,Aegean Sea
+23.313,37.26,GR,0.018,Aegean Sea
+23.314,37.263,GR,0.011,Aegean Sea
+23.315,37.681,GR,0.306,Aegean Sea
+23.318,37.262,GR,0.019,Aegean Sea
+23.32,37.802,GR,0.031,Aegean Sea
+23.322,37.685,GR,0.017,Aegean Sea
+23.323,37.805,GR,0.012,Aegean Sea
+23.33,37.801,GR,0.51,Aegean Sea
+23.336,39.047,GR,0.348,Aegean Sea
+23.341,37.277,GR,0.031,Aegean Sea
+23.346,39.042,GR,0.011,Aegean Sea
+23.358,37.308,GR,0.022,Aegean Sea
+23.36,37.816,GR,0.09,Aegean Sea
+23.362,37.97,GR,0.031,Aegean Sea
+23.364,37.274,GR,0.04,Aegean Sea
+23.366,37.965,GR,0.092,Aegean Sea
+23.369,37.284,GR,0.332,Aegean Sea
+23.372,37.313,GR,0.324,Aegean Sea
+23.382,37.724,GR,0.338,Aegean Sea
+23.383,37.811,GR,0.126,Aegean Sea
+23.387,37.295,GR,0.042,Aegean Sea
+23.387,38.52,GR,0.065,Aegean Sea
+23.392,37.903,GR,0.014,Aegean Sea
+23.398,37.904,GR,0.145,Aegean Sea
+23.402,37.961,GR,0.21,Aegean Sea
+23.407,37.331,GR,0.03,Aegean Sea
+23.419,37.966,GR,0.245,Aegean Sea
+23.434,37.691,GR,1.061,Aegean Sea
+23.443,38.955,GR,0.018,Aegean Sea
+23.447,37.254,GR,0.334,Aegean Sea
+23.45,37.819,GR,0.01,Aegean Sea
+23.455,37.817,GR,0.044,Aegean Sea
+23.46,36.917,GR,1.577,Aegean Sea
+23.462,39.214,GR,0.011,Aegean Sea
+23.469,37.814,GR,0.177,Aegean Sea
+23.475,37.49,GR,0.018,Aegean Sea
+23.477,35.586,GR,0.263,Mediterranean Sea - Eastern Basin
+23.481,39.125,GR,0.084,Aegean Sea
+23.485,37.552,GR,0.035,Aegean Sea
+23.498,37.896,GR,0.021,Aegean Sea
+23.5,39.123,GR,1.18,Aegean Sea
+23.5,39.151,GR,0.083,Aegean Sea
+23.503,38.492,GR,0.246,Aegean Sea
+23.507,37.576,GR,0.021,Aegean Sea
+23.518,39.151,GR,0.405,Aegean Sea
+23.521,39.171,GR,0.181,Aegean Sea
+23.528,39.147,GR,0.05,Aegean Sea
+23.529,37.435,GR,0.338,Aegean Sea
+23.53,35.27,GR,0.414,Mediterranean Sea - Eastern Basin
+23.531,37.51,GR,0.128,Aegean Sea
+23.541,37.44,GR,0.374,Aegean Sea
+23.551,37.775,GR,0.018,Aegean Sea
+23.563,35.505,GR,0.015,Mediterranean Sea - Eastern Basin
+23.567,35.482,GR,0.012,Mediterranean Sea - Eastern Basin
+23.572,37.935,GR,0.014,Aegean Sea
+23.579,35.611,GR,0.718,Mediterranean Sea - Eastern Basin
+23.582,35.587,GR,0.72,Mediterranean Sea - Eastern Basin
+23.586,35.641,GR,0.834,Aegean Sea
+23.588,37.941,GR,0.563,Aegean Sea
+23.602,36.771,GR,0.01,Aegean Sea
+23.604,38.445,GR,0.059,Aegean Sea
+23.62,39.136,GR,0.018,Aegean Sea
+23.626,39.114,GR,0.03,Aegean Sea
+23.638,39.117,GR,0.334,Aegean Sea
+23.669,37.935,GR,0.012,Aegean Sea
+23.698,38.764,GR,0.019,Aegean Sea
+23.726,40.062,GR,0.706,Aegean Sea
+23.746,37.836,GR,0.06,Aegean Sea
+23.753,40.234,GR,0.044,Aegean Sea
+23.761,37.77,GR,1.302,Aegean Sea
+23.763,40.225,GR,0.01,Aegean Sea
+23.766,40.228,GR,0.029,Aegean Sea
+23.767,37.779,GR,0.022,Aegean Sea
+23.774,40.23,GR,0.096,Aegean Sea
+23.781,40.214,GR,3.143,Aegean Sea
+23.791,40.223,GR,0.087,Aegean Sea
+23.802,39.135,GR,0.366,Aegean Sea
+23.805,40.616,GR,0.085,Aegean Sea
+23.808,40.021,GR,0.107,Aegean Sea
+23.81,39.141,GR,0.07,Aegean Sea
+23.81,40.024,GR,0.012,Aegean Sea
+23.814,38.384,GR,0.049,Aegean Sea
+23.824,37.791,GR,0.02,Aegean Sea
+23.824,40.01,GR,0.448,Aegean Sea
+23.862,39.202,GR,0.084,Aegean Sea
+23.886,36.842,GR,1.123,Aegean Sea
+23.9,37.71,GR,0.768,Aegean Sea
+23.904,39.161,GR,0.013,Aegean Sea
+23.917,38.677,GR,0.019,Aegean Sea
+23.924,37.476,GR,4.226,Aegean Sea
+23.928,40.53,GR,0.083,Aegean Sea
+23.931,35.537,GR,0.784,Aegean Sea
+23.932,35.543,GR,0.013,Aegean Sea
+23.95,37.65,GR,2.764,Aegean Sea
+23.952,40.308,GR,0.018,Aegean Sea
+23.958,40.309,GR,0.151,Aegean Sea
+23.964,40.312,GR,0.109,Aegean Sea
+23.98,39.113,GR,1.016,Aegean Sea
+23.988,39.126,GR,0.366,Aegean Sea
+23.999,39.229,GR,0.486,Aegean Sea
+24.0,35.519,GR,0.018,Aegean Sea
+24.002,34.93,GR,1.724,Mediterranean Sea - Eastern Basin
+24.007,40.454,GR,0.011,Aegean Sea
+24.014,37.652,GR,0.014,Aegean Sea
+24.014,37.93,GR,0.017,Aegean Sea
+24.023,37.881,GR,0.041,Aegean Sea
+24.033,37.988,GR,0.016,Aegean Sea
+24.035,37.886,GR,0.011,Aegean Sea
+24.038,39.313,GR,0.169,Aegean Sea
+24.042,37.918,GR,0.063,Aegean Sea
+24.044,37.883,GR,0.094,Aegean Sea
+24.05,37.869,GR,0.05,Aegean Sea
+24.057,38.32,GR,0.033,Aegean Sea
+24.062,39.035,GR,0.116,Aegean Sea
+24.079,39.36,GR,0.05,Aegean Sea
+24.081,39.048,GR,0.195,Aegean Sea
+24.086,39.083,GR,0.017,Aegean Sea
+24.096,39.072,GR,0.24,Aegean Sea
+24.096,39.105,GR,0.04,Aegean Sea
+24.097,38.186,GR,0.102,Aegean Sea
+24.1,39.102,GR,0.11,Aegean Sea
+24.103,38.184,GR,0.045,Aegean Sea
+24.103,38.225,GR,1.945,Aegean Sea
+24.106,38.297,GR,0.038,Aegean Sea
+24.107,38.24,GR,0.011,Aegean Sea
+24.121,39.354,GR,0.083,Aegean Sea
+24.128,39.35,GR,0.021,Aegean Sea
+24.132,38.238,GR,0.05,Aegean Sea
+24.132,38.667,GR,0.148,Aegean Sea
+24.138,39.342,GR,0.844,Aegean Sea
+24.142,38.272,GR,0.016,Aegean Sea
+24.145,38.19,GR,0.046,Aegean Sea
+24.146,36.551,GR,0.085,Aegean Sea
+24.147,36.557,GR,0.011,Aegean Sea
+24.147,38.21,GR,0.036,Aegean Sea
+24.15,35.491,GR,0.018,Aegean Sea
+24.152,35.489,GR,0.079,Aegean Sea
+24.152,38.172,GR,0.069,Aegean Sea
+24.152,38.659,GR,0.047,Aegean Sea
+24.157,38.087,GR,0.213,Aegean Sea
+24.16,38.155,GR,0.148,Aegean Sea
+24.164,38.172,GR,3.002,Aegean Sea
+24.169,38.187,GR,0.031,Aegean Sea
+24.18,35.499,GR,0.081,Aegean Sea
+24.18,39.499,GR,0.814,Aegean Sea
+24.181,39.483,GR,0.025,Aegean Sea
+24.194,35.455,GR,0.027,Aegean Sea
+24.203,38.392,GR,0.016,Aegean Sea
+24.209,38.08,GR,0.012,Aegean Sea
+24.212,38.081,GR,0.108,Aegean Sea
+24.23,38.517,GR,0.034,Aegean Sea
+24.25,38.031,GR,0.12,Aegean Sea
+24.25,38.665,GR,0.066,Aegean Sea
+24.257,38.035,GR,0.031,Aegean Sea
+24.262,38.047,GR,0.043,Aegean Sea
+24.266,38.05,GR,0.013,Aegean Sea
+24.27,38.027,GR,0.286,Aegean Sea
+24.274,38.02,GR,0.015,Aegean Sea
+24.275,38.046,GR,0.356,Aegean Sea
+24.286,38.004,GR,0.032,Aegean Sea
+24.288,38.024,GR,3.863,Aegean Sea
+24.317,36.632,GR,0.07,Aegean Sea
+24.324,39.35,GR,4.056,Aegean Sea
+24.349,40.868,GR,0.138,Aegean Sea
+24.357,38.837,GR,3.73,Aegean Sea
+24.373,37.684,GR,0.013,Aegean Sea
+24.39,37.404,GR,0.017,Aegean Sea
+24.391,36.78,GR,0.091,Aegean Sea
+24.401,36.782,GR,0.178,Aegean Sea
+24.432,38.829,GR,0.56,Aegean Sea
+24.437,38.871,GR,0.285,Aegean Sea
+24.454,38.93,GR,0.085,Aegean Sea
+24.464,38.915,GR,0.042,Aegean Sea
+24.468,39.019,GR,0.086,Aegean Sea
+24.475,38.849,GR,0.017,Aegean Sea
+24.481,38.994,GR,0.012,Aegean Sea
+24.482,36.75,GR,0.013,Aegean Sea
+24.485,39.004,GR,0.113,Aegean Sea
+24.487,36.764,GR,0.025,Aegean Sea
+24.494,38.819,GR,4.354,Aegean Sea
+24.513,38.789,GR,0.023,Aegean Sea
+24.521,37.938,GR,0.449,Aegean Sea
+24.525,38.797,GR,0.043,Aegean Sea
+24.526,31.985,LY,0.014,Mediterranean Sea - Eastern Basin
+24.526,36.788,GR,0.015,Aegean Sea
+24.526,37.303,GR,0.431,Aegean Sea
+24.559,36.848,GR,0.011,Aegean Sea
+24.562,37.142,GR,0.161,Aegean Sea
+24.578,36.757,GR,0.109,Aegean Sea
+24.582,36.775,GR,0.094,Aegean Sea
+24.585,35.005,GR,0.658,Mediterranean Sea - Eastern Basin
+24.587,38.765,GR,0.616,Aegean Sea
+24.598,36.82,GR,0.046,Aegean Sea
+24.598,37.256,GR,1.353,Aegean Sea
+24.604,35.009,GR,0.541,Mediterranean Sea - Eastern Basin
+24.609,36.768,GR,0.029,Aegean Sea
+24.611,38.755,GR,3.322,Aegean Sea
+24.622,40.56,GR,0.18,Aegean Sea
+24.657,37.61,GR,0.022,Aegean Sea
+24.709,40.828,GR,0.7,Aegean Sea
+24.726,36.903,GR,0.836,Aegean Sea
+24.735,37.852,GR,0.038,Aegean Sea
+24.746,37.853,GR,0.012,Aegean Sea
+24.747,37.856,GR,0.026,Aegean Sea
+24.75,37.848,GR,0.207,Aegean Sea
+24.752,37.586,GR,0.179,Aegean Sea
+24.782,40.659,GR,0.352,Aegean Sea
+24.784,40.625,GR,0.013,Aegean Sea
+24.785,40.706,GR,0.018,Aegean Sea
+24.8,34.923,GR,0.062,Mediterranean Sea - Eastern Basin
+24.806,34.928,GR,0.028,Mediterranean Sea - Eastern Basin
+24.825,34.936,GR,0.014,Mediterranean Sea - Eastern Basin
+24.873,37.375,GR,0.025,Aegean Sea
+24.875,37.381,GR,0.049,Aegean Sea
+24.891,37.468,GR,0.026,Aegean Sea
+24.957,37.876,GR,0.012,Aegean Sea
+24.958,36.609,GR,0.035,Aegean Sea
+24.962,36.95,GR,1.637,Aegean Sea
+24.967,37.672,GR,0.02,Aegean Sea
+24.97,37.671,GR,0.05,Aegean Sea
+24.974,37.427,GR,0.479,Aegean Sea
+24.985,36.976,GR,0.011,Aegean Sea
+24.986,37.426,GR,0.054,Aegean Sea
+24.987,36.612,GR,0.042,Aegean Sea
+24.99,36.614,GR,0.03,Aegean Sea
+24.993,37.393,GR,0.109,Aegean Sea
+25.003,39.565,GR,0.017,Aegean Sea
+25.017,36.63,GR,1.276,Aegean Sea
+25.019,36.976,GR,0.081,Aegean Sea
+25.042,39.858,GR,0.014,Aegean Sea
+25.045,39.831,GR,0.031,Aegean Sea
+25.045,39.857,GR,0.028,Aegean Sea
+25.055,36.633,GR,0.071,Aegean Sea
+25.062,39.54,GR,0.03,Aegean Sea
+25.067,37.659,GR,0.124,Aegean Sea
+25.071,39.837,GR,0.011,Aegean Sea
+25.082,37.055,GR,0.459,Aegean Sea
+25.087,37.061,GR,0.277,Aegean Sea
+25.092,37.053,GR,0.017,Aegean Sea
+25.096,37.044,GR,0.045,Aegean Sea
+25.098,36.996,GR,0.034,Aegean Sea
+25.102,36.989,GR,0.016,Aegean Sea
+25.11,36.979,GR,0.208,Aegean Sea
+25.116,36.977,GR,0.075,Aegean Sea
+25.119,36.971,GR,0.485,Aegean Sea
+25.131,39.812,GR,0.012,Aegean Sea
+25.135,40.022,GR,0.934,Aegean Sea
+25.139,37.646,GR,0.016,Aegean Sea
+25.154,39.998,GR,0.019,Aegean Sea
+25.191,35.464,GR,0.013,Aegean Sea
+25.204,36.25,GR,1.126,Aegean Sea
+25.207,37.437,GR,0.02,Aegean Sea
+25.213,36.235,GR,0.236,Aegean Sea
+25.218,39.866,GR,0.277,Aegean Sea
+25.225,37.13,GR,0.012,Aegean Sea
+25.235,39.797,GR,0.067,Aegean Sea
+25.236,39.792,GR,0.034,Aegean Sea
+25.241,36.992,GR,0.379,Aegean Sea
+25.244,37.421,GR,0.136,Aegean Sea
+25.246,37.131,GR,0.015,Aegean Sea
+25.258,37.004,GR,0.038,Aegean Sea
+25.261,37.395,GR,0.097,Aegean Sea
+25.262,37.401,GR,0.017,Aegean Sea
+25.264,37.131,GR,0.213,Aegean Sea
+25.267,39.886,GR,0.153,Aegean Sea
+25.268,37.158,GR,0.135,Aegean Sea
+25.271,37.393,GR,3.597,Aegean Sea
+25.276,35.435,GR,0.03,Aegean Sea
+25.282,37.161,GR,0.012,Aegean Sea
+25.29,37.125,GR,0.168,Aegean Sea
+25.29,37.152,GR,0.016,Aegean Sea
+25.296,37.152,GR,0.122,Aegean Sea
+25.296,37.389,GR,0.015,Aegean Sea
+25.299,37.392,GR,0.05,Aegean Sea
+25.303,37.392,GR,0.024,Aegean Sea
+25.306,37.443,GR,0.082,Aegean Sea
+25.348,36.384,GR,0.127,Aegean Sea
+25.351,37.047,GR,0.01,Aegean Sea
+25.364,36.749,GR,0.059,Aegean Sea
+25.367,37.492,GR,0.028,Aegean Sea
+25.38,36.397,GR,0.522,Aegean Sea
+25.387,36.648,GR,0.029,Aegean Sea
+25.395,36.827,GR,0.017,Aegean Sea
+25.397,36.404,GR,3.34,Aegean Sea
+25.408,36.829,GR,0.052,Aegean Sea
+25.484,37.451,GR,1.38,Aegean Sea
+25.485,36.856,GR,0.122,Aegean Sea
+25.513,38.541,GR,4.24,Aegean Sea
+25.52,38.524,GR,0.149,Aegean Sea
+25.521,36.845,GR,0.636,Aegean Sea
+25.525,36.835,GR,0.086,Aegean Sea
+25.535,38.603,GR,0.026,Aegean Sea
+25.546,36.855,GR,0.043,Aegean Sea
+25.559,38.558,GR,0.01,Aegean Sea
+25.567,37.411,GR,0.408,Aegean Sea
+25.576,35.6,GR,0.02,Aegean Sea
+25.576,36.91,GR,3.853,Aegean Sea
+25.604,36.888,GR,0.018,Aegean Sea
+25.605,36.916,GR,0.149,Aegean Sea
+25.612,38.594,GR,0.014,Aegean Sea
+25.622,36.862,GR,0.048,Aegean Sea
+25.622,36.874,GR,0.011,Aegean Sea
+25.623,36.87,GR,0.016,Aegean Sea
+25.627,36.878,GR,0.04,Aegean Sea
+25.634,36.879,GR,0.018,Aegean Sea
+25.637,36.871,GR,0.11,Aegean Sea
+25.638,36.987,GR,0.134,Aegean Sea
+25.666,36.841,GR,1.068,Aegean Sea
+25.682,36.846,GR,1.068,Aegean Sea
+25.683,36.626,GR,1.052,Aegean Sea
+25.688,36.879,GR,0.117,Aegean Sea
+25.694,37.086,GR,0.843,Aegean Sea
+25.703,34.873,GR,5.023,Mediterranean Sea - Eastern Basin
+25.705,37.069,GR,0.355,Aegean Sea
+25.706,37.08,GR,0.253,Aegean Sea
+25.731,35.198,GR,0.34,Aegean Sea
+25.732,35.203,GR,0.036,Aegean Sea
+25.738,35.298,GR,0.084,Aegean Sea
+25.74,36.791,GR,0.018,Aegean Sea
+25.744,34.876,GR,0.13,Mediterranean Sea - Eastern Basin
+25.746,36.808,GR,0.804,Aegean Sea
+25.746,36.816,GR,0.03,Aegean Sea
+25.747,35.274,GR,6.222,Aegean Sea
+25.761,35.264,GR,0.11,Aegean Sea
+25.763,35.13,GR,0.015,Aegean Sea
+25.793,36.819,GR,0.063,Aegean Sea
+25.796,36.311,GR,0.037,Aegean Sea
+25.8,36.311,GR,0.065,Aegean Sea
+25.811,35.126,GR,0.03,Aegean Sea
+25.822,39.2,GR,0.031,Aegean Sea
+25.831,36.273,GR,1.399,Aegean Sea
+25.834,37.125,GR,0.237,Aegean Sea
+25.837,39.216,GR,0.783,Aegean Sea
+25.861,35.189,GR,1.523,Aegean Sea
+25.886,36.271,GR,0.518,Aegean Sea
+25.892,36.879,GR,0.143,Aegean Sea
+25.907,35.187,GR,0.059,Aegean Sea
+25.909,36.885,GR,2.652,Aegean Sea
+25.91,36.818,GR,0.025,Aegean Sea
+25.91,39.295,GR,0.024,Aegean Sea
+25.928,37.238,GR,0.04,Aegean Sea
+25.944,38.318,GR,0.14,Aegean Sea
+25.956,38.312,GR,0.033,Aegean Sea
+25.962,38.313,GR,0.176,Aegean Sea
+25.994,40.816,GR,0.016,Aegean Sea
+26.01,40.802,GR,0.108,Aegean Sea
+26.015,38.126,GR,0.025,Aegean Sea
+26.019,40.78,GR,0.445,Aegean Sea
+26.021,40.75,GR,0.012,Aegean Sea
+26.023,40.786,GR,0.37,Aegean Sea
+26.031,40.752,GR,0.028,Aegean Sea
+26.031,40.764,GR,0.038,Aegean Sea
+26.034,39.85,TR,0.011,Aegean Sea
+26.052,39.93,TR,0.029,Aegean Sea
+26.066,39.936,TR,0.917,Aegean Sea
+26.075,39.919,TR,0.027,Aegean Sea
+26.078,39.076,GR,0.027,Aegean Sea
+26.085,39.919,TR,0.078,Aegean Sea
+26.103,39.104,GR,0.043,Aegean Sea
+26.116,34.994,GR,0.016,Mediterranean Sea - Eastern Basin
+26.118,38.56,GR,0.173,Aegean Sea
+26.129,34.955,GR,0.071,Mediterranean Sea - Eastern Basin
+26.131,34.92,GR,0.137,Mediterranean Sea - Eastern Basin
+26.134,34.96,GR,0.168,Mediterranean Sea - Eastern Basin
+26.139,34.939,GR,4.21,Mediterranean Sea - Eastern Basin
+26.142,36.548,GR,1.775,Aegean Sea
+26.146,39.334,GR,0.152,Aegean Sea
+26.153,38.472,GR,0.056,Aegean Sea
+26.163,38.553,GR,0.049,Aegean Sea
+26.166,36.908,GR,0.322,Aegean Sea
+26.17,36.901,GR,0.064,Aegean Sea
+26.174,35.328,GR,2.065,Aegean Sea
+26.174,35.377,GR,0.291,Aegean Sea
+26.178,35.345,GR,2.855,Aegean Sea
+26.178,35.358,GR,0.031,Aegean Sea
+26.195,38.293,GR,0.018,Aegean Sea
+26.199,35.015,GR,0.03,Mediterranean Sea - Eastern Basin
+26.209,38.294,TR,0.151,Aegean Sea
+26.215,38.513,GR,0.01,Aegean Sea
+26.218,38.51,GR,0.053,Aegean Sea
+26.222,35.267,GR,0.011,Aegean Sea
+26.228,35.028,GR,0.018,Mediterranean Sea - Eastern Basin
+26.228,36.556,GR,0.974,Aegean Sea
+26.229,35.861,GR,0.438,Aegean Sea
+26.236,35.031,GR,0.015,Mediterranean Sea - Eastern Basin
+26.257,36.578,GR,0.077,Aegean Sea
+26.262,38.507,GR,0.026,Aegean Sea
+26.265,38.498,TR,0.295,Aegean Sea
+26.274,38.506,TR,0.094,Aegean Sea
+26.284,38.505,TR,2.384,Aegean Sea
+26.286,38.489,TR,0.365,Aegean Sea
+26.289,36.98,GR,4.499,Aegean Sea
+26.291,35.201,GR,0.022,Aegean Sea
+26.298,35.206,GR,0.287,Aegean Sea
+26.309,38.422,TR,0.042,Aegean Sea
+26.312,38.417,TR,0.16,Aegean Sea
+26.326,36.986,GR,0.187,Aegean Sea
+26.34,35.274,GR,1.709,Aegean Sea
+26.344,38.422,TR,0.029,Aegean Sea
+26.345,38.439,TR,6.815,Aegean Sea
+26.348,36.61,GR,0.61,Aegean Sea
+26.358,36.6,GR,0.052,Aegean Sea
+26.36,36.594,GR,0.103,Aegean Sea
+26.369,36.995,GR,0.092,Aegean Sea
+26.37,38.433,TR,0.339,Aegean Sea
+26.382,36.995,GR,0.098,Aegean Sea
+26.382,38.429,TR,1.128,Aegean Sea
+26.39,36.604,GR,0.015,Aegean Sea
+26.393,36.564,GR,0.238,Aegean Sea
+26.4,36.074,GR,1.259,Aegean Sea
+26.402,36.565,GR,0.377,Aegean Sea
+26.404,36.058,GR,0.028,Aegean Sea
+26.404,36.548,GR,0.281,Aegean Sea
+26.408,36.546,GR,0.027,Aegean Sea
+26.41,36.047,GR,0.094,Aegean Sea
+26.416,37.532,GR,0.274,Aegean Sea
+26.428,37.602,GR,0.419,Aegean Sea
+26.429,38.391,TR,0.011,Aegean Sea
+26.432,38.196,TR,0.152,Aegean Sea
+26.432,39.294,GR,0.028,Aegean Sea
+26.435,36.001,GR,0.021,Aegean Sea
+26.436,39.298,GR,0.128,Aegean Sea
+26.436,39.31,GR,0.547,Aegean Sea
+26.438,38.186,TR,0.111,Aegean Sea
+26.444,36.544,GR,0.011,Aegean Sea
+26.444,37.412,GR,0.022,Aegean Sea
+26.446,39.314,GR,0.126,Aegean Sea
+26.448,36.551,GR,0.479,Aegean Sea
+26.448,38.199,TR,0.254,Aegean Sea
+26.448,38.393,TR,0.036,Aegean Sea
+26.449,36.547,GR,0.077,Aegean Sea
+26.449,38.388,TR,0.069,Aegean Sea
+26.451,36.541,GR,0.028,Aegean Sea
+26.452,36.536,GR,0.013,Aegean Sea
+26.452,38.364,TR,0.587,Aegean Sea
+26.453,37.022,GR,0.013,Aegean Sea
+26.454,35.824,GR,0.205,Aegean Sea
+26.454,36.991,GR,0.012,Aegean Sea
+26.454,39.24,GR,0.014,Aegean Sea
+26.455,36.578,GR,0.029,Aegean Sea
+26.459,38.38,TR,0.014,Aegean Sea
+26.465,35.826,GR,0.26,Aegean Sea
+26.465,38.377,TR,0.16,Aegean Sea
+26.465,38.395,TR,0.484,Aegean Sea
+26.466,37.571,GR,0.628,Aegean Sea
+26.467,36.536,GR,1.372,Aegean Sea
+26.468,38.399,TR,0.041,Aegean Sea
+26.488,37.517,GR,0.05,Aegean Sea
+26.491,38.404,TR,0.028,Aegean Sea
+26.492,37.41,GR,0.312,Aegean Sea
+26.495,37.524,GR,0.058,Aegean Sea
+26.497,37.511,GR,0.614,Aegean Sea
+26.51,35.925,GR,0.012,Aegean Sea
+26.51,38.969,GR,0.026,Aegean Sea
+26.512,38.965,GR,0.024,Aegean Sea
+26.516,38.66,TR,0.308,Aegean Sea
+26.524,38.652,TR,0.031,Aegean Sea
+26.528,39.321,TR,0.045,Aegean Sea
+26.537,39.327,TR,0.64,Aegean Sea
+26.538,39.156,GR,0.064,Aegean Sea
+26.542,37.516,GR,0.535,Aegean Sea
+26.542,37.585,GR,0.017,Aegean Sea
+26.542,38.97,GR,0.011,Aegean Sea
+26.546,37.53,GR,0.057,Aegean Sea
+26.555,37.6,GR,2.196,Aegean Sea
+26.561,39.337,TR,0.014,Aegean Sea
+26.565,37.338,GR,0.063,Aegean Sea
+26.569,37.293,GR,0.355,Aegean Sea
+26.572,39.382,TR,0.217,Aegean Sea
+26.577,39.34,TR,0.251,Aegean Sea
+26.587,37.342,GR,0.08,Aegean Sea
+26.589,39.385,TR,3.011,Aegean Sea
+26.591,39.288,TR,2.313,Aegean Sea
+26.593,39.347,TR,0.632,Aegean Sea
+26.594,37.339,GR,0.027,Aegean Sea
+26.598,36.419,GR,0.126,Aegean Sea
+26.598,37.323,GR,0.012,Aegean Sea
+26.599,39.352,TR,0.016,Aegean Sea
+26.604,37.308,GR,0.271,Aegean Sea
+26.605,39.337,TR,1.042,Aegean Sea
+26.62,36.422,GR,0.22,Aegean Sea
+26.632,39.369,TR,0.01,Aegean Sea
+26.658,39.324,TR,0.02,Aegean Sea
+26.669,39.353,TR,0.101,Aegean Sea
+26.677,38.332,TR,0.128,Aegean Sea
+26.692,39.346,TR,0.5,Aegean Sea
+26.696,38.531,TR,0.014,Aegean Sea
+26.696,39.37,TR,0.131,Aegean Sea
+26.7,37.228,GR,0.019,Aegean Sea
+26.705,37.364,GR,1.268,Aegean Sea
+26.706,39.378,TR,0.45,Aegean Sea
+26.709,38.714,TR,0.028,Aegean Sea
+26.709,39.407,TR,0.13,Aegean Sea
+26.712,37.332,GR,0.158,Aegean Sea
+26.715,38.676,TR,0.132,Aegean Sea
+26.716,37.373,GR,0.205,Aegean Sea
+26.716,38.693,TR,0.862,Aegean Sea
+26.718,37.256,GR,0.242,Aegean Sea
+26.719,37.338,GR,0.018,Aegean Sea
+26.723,37.342,GR,0.032,Aegean Sea
+26.724,37.405,GR,0.055,Aegean Sea
+26.725,37.369,GR,0.34,Aegean Sea
+26.726,38.674,TR,0.165,Aegean Sea
+26.726,38.703,TR,0.012,Aegean Sea
+26.726,39.378,TR,0.057,Aegean Sea
+26.728,37.337,GR,0.021,Aegean Sea
+26.73,36.326,GR,0.019,Aegean Sea
+26.732,37.364,GR,0.044,Aegean Sea
+26.732,38.675,TR,0.012,Aegean Sea
+26.733,38.733,TR,0.018,Aegean Sea
+26.736,37.273,GR,0.207,Aegean Sea
+26.737,40.616,TR,0.323,Aegean Sea
+26.74,36.299,GR,0.49,Aegean Sea
+26.742,37.358,GR,0.025,Aegean Sea
+26.745,36.285,GR,0.569,Aegean Sea
+26.745,37.273,GR,0.046,Aegean Sea
+26.746,37.27,GR,0.071,Aegean Sea
+26.748,37.366,GR,0.045,Aegean Sea
+26.749,37.359,GR,0.033,Aegean Sea
+26.751,37.272,GR,0.028,Aegean Sea
+26.752,37.266,GR,0.069,Aegean Sea
+26.752,38.399,TR,0.078,Aegean Sea
+26.754,37.194,GR,0.017,Aegean Sea
+26.754,37.361,GR,0.26,Aegean Sea
+26.756,37.351,GR,0.054,Aegean Sea
+26.756,40.62,TR,0.063,Aegean Sea
+26.757,37.186,GR,0.01,Aegean Sea
+26.758,37.267,GR,0.075,Aegean Sea
+26.759,36.301,GR,0.153,Aegean Sea
+26.76,37.188,GR,0.012,Aegean Sea
+26.762,37.193,GR,0.2,Aegean Sea
+26.765,39.376,TR,0.296,Aegean Sea
+26.766,37.355,GR,0.287,Aegean Sea
+26.766,38.446,TR,2.28,Aegean Sea
+26.77,38.199,TR,0.034,Aegean Sea
+26.771,37.277,GR,0.041,Aegean Sea
+26.771,38.408,TR,0.142,Aegean Sea
+26.776,37.205,GR,1.491,Aegean Sea
+26.783,38.416,TR,0.075,Aegean Sea
+26.785,39.007,TR,0.412,Aegean Sea
+26.787,38.373,TR,0.344,Aegean Sea
+26.788,38.397,TR,0.274,Aegean Sea
+26.793,37.283,GR,0.021,Aegean Sea
+26.793,37.629,GR,0.956,Aegean Sea
+26.795,38.411,TR,0.306,Aegean Sea
+26.795,39.004,TR,0.504,Aegean Sea
+26.797,37.21,GR,0.015,Aegean Sea
+26.799,37.283,GR,0.071,Aegean Sea
+26.803,37.308,GR,0.032,Aegean Sea
+26.803,38.161,TR,0.109,Aegean Sea
+26.805,37.317,GR,0.046,Aegean Sea
+26.806,38.921,TR,0.014,Aegean Sea
+26.806,38.935,TR,0.012,Aegean Sea
+26.807,37.306,GR,0.032,Aegean Sea
+26.812,37.255,GR,0.035,Aegean Sea
+26.814,37.215,GR,0.055,Aegean Sea
+26.816,35.894,GR,0.016,Aegean Sea
+26.817,38.919,TR,1.471,Aegean Sea
+26.818,40.643,TR,0.01,Aegean Sea
+26.82,35.887,GR,0.978,Aegean Sea
+26.821,37.203,GR,0.159,Aegean Sea
+26.824,35.431,GR,0.051,Aegean Sea
+26.825,35.875,GR,0.122,Aegean Sea
+26.827,35.362,GR,0.18,Aegean Sea
+26.831,38.125,TR,0.051,Aegean Sea
+26.833,35.363,GR,0.011,Aegean Sea
+26.836,35.431,GR,0.078,Aegean Sea
+26.836,35.91,GR,0.024,Aegean Sea
+26.836,38.905,TR,0.213,Aegean Sea
+26.839,35.359,GR,0.026,Aegean Sea
+26.842,35.432,GR,0.036,Aegean Sea
+26.843,35.356,GR,0.022,Aegean Sea
+26.855,38.046,TR,0.03,Aegean Sea
+26.861,35.438,GR,2.528,Aegean Sea
+26.866,38.03,TR,0.03,Aegean Sea
+26.882,38.022,TR,0.087,Aegean Sea
+26.882,38.851,TR,0.719,Aegean Sea
+26.885,35.446,GR,0.02,Aegean Sea
+26.885,37.005,GR,0.075,Aegean Sea
+26.886,37.09,GR,0.061,Aegean Sea
+26.886,37.143,GR,0.108,Aegean Sea
+26.889,37.085,GR,0.12,Aegean Sea
+26.892,37.095,GR,0.064,Aegean Sea
+26.893,38.864,TR,0.047,Aegean Sea
+26.896,35.453,GR,0.301,Aegean Sea
+26.906,37.116,GR,0.35,Aegean Sea
+26.908,37.008,GR,4.619,Aegean Sea
+26.908,38.889,TR,0.015,Aegean Sea
+26.911,38.89,TR,0.027,Aegean Sea
+26.912,35.459,GR,0.022,Aegean Sea
+26.912,36.976,GR,0.137,Aegean Sea
+26.921,36.887,GR,0.146,Aegean Sea
+26.93,37.033,GR,0.285,Aegean Sea
+26.936,36.932,GR,0.039,Aegean Sea
+26.939,36.914,GR,0.475,Aegean Sea
+26.952,37.484,GR,0.134,Aegean Sea
+26.962,37.797,GR,0.011,Aegean Sea
+26.971,36.502,GR,1.378,Aegean Sea
+26.971,37.794,GR,0.121,Aegean Sea
+26.976,37.794,GR,0.016,Aegean Sea
+26.976,38.444,TR,0.017,Aegean Sea
+26.979,37.428,TR,0.223,Aegean Sea
+26.98,37.486,TR,0.097,Aegean Sea
+26.987,38.45,TR,0.024,Aegean Sea
+26.988,36.75,GR,0.015,Aegean Sea
+26.995,37.477,TR,0.439,Aegean Sea
+26.998,37.799,GR,0.027,Aegean Sea
+27.003,37.651,TR,0.133,Aegean Sea
+27.007,37.466,TR,0.086,Aegean Sea
+27.013,37.654,TR,0.104,Aegean Sea
+27.014,35.439,GR,0.024,Aegean Sea
+27.015,37.648,TR,0.014,Aegean Sea
+27.017,37.692,TR,0.03,Aegean Sea
+27.017,37.704,GR,0.01,Aegean Sea
+27.024,38.922,TR,0.045,Aegean Sea
+27.033,38.88,TR,0.012,Aegean Sea
+27.034,38.463,TR,0.03,Aegean Sea
+27.035,38.466,TR,0.016,Aegean Sea
+27.038,36.588,GR,1.207,Aegean Sea
+27.04,38.885,TR,0.023,Aegean Sea
+27.042,37.742,GR,0.105,Aegean Sea
+27.05,38.465,TR,0.028,Aegean Sea
+27.057,35.597,GR,0.106,Aegean Sea
+27.057,36.955,GR,0.037,Aegean Sea
+27.064,38.46,TR,0.024,Aegean Sea
+27.066,38.466,TR,0.019,Aegean Sea
+27.067,37.083,GR,0.024,Aegean Sea
+27.07,38.462,TR,0.011,Aegean Sea
+27.072,36.57,GR,1.183,Aegean Sea
+27.081,37.053,GR,0.013,Aegean Sea
+27.086,35.454,GR,0.037,Aegean Sea
+27.088,37.061,GR,1.888,Aegean Sea
+27.089,37.289,TR,3.914,Aegean Sea
+27.095,36.942,GR,0.677,Aegean Sea
+27.096,36.953,GR,0.014,Aegean Sea
+27.122,36.665,GR,4.548,Aegean Sea
+27.129,37.622,TR,0.038,Aegean Sea
+27.136,36.663,GR,0.075,Aegean Sea
+27.14,37.614,TR,0.015,Aegean Sea
+27.144,37.603,TR,0.39,Aegean Sea
+27.145,37.048,TR,0.025,Aegean Sea
+27.15,37.05,TR,0.018,Aegean Sea
+27.157,37.591,TR,0.012,Aegean Sea
+27.179,36.681,GR,0.21,Aegean Sea
+27.18,35.455,GR,0.035,Mediterranean Sea - Eastern Basin
+27.182,37.005,TR,0.029,Aegean Sea
+27.182,37.562,TR,0.033,Aegean Sea
+27.183,37.527,TR,0.035,Aegean Sea
+27.185,37.508,TR,1.202,Aegean Sea
+27.186,37.53,TR,0.159,Aegean Sea
+27.189,37.493,TR,0.192,Aegean Sea
+27.191,37.536,TR,0.082,Aegean Sea
+27.193,37.51,TR,0.014,Aegean Sea
+27.194,37.471,TR,0.055,Aegean Sea
+27.197,36.993,TR,0.022,Aegean Sea
+27.197,37.511,TR,0.062,Aegean Sea
+27.201,37.468,TR,0.031,Aegean Sea
+27.202,37.049,TR,0.15,Aegean Sea
+27.205,36.998,TR,0.019,Aegean Sea
+27.207,35.822,GR,0.015,Aegean Sea
+27.21,37.085,TR,0.484,Aegean Sea
+27.211,37.006,TR,0.012,Aegean Sea
+27.216,37.006,TR,0.748,Aegean Sea
+27.231,36.984,TR,0.074,Aegean Sea
+27.235,35.824,GR,0.019,Aegean Sea
+27.236,37.088,TR,0.186,Aegean Sea
+27.257,37.133,TR,0.017,Aegean Sea
+27.279,37.143,TR,0.014,Aegean Sea
+27.29,36.482,GR,0.746,Aegean Sea
+27.305,36.951,TR,0.022,Aegean Sea
+27.319,36.407,GR,0.015,Aegean Sea
+27.33,37.327,TR,0.408,Aegean Sea
+27.356,37.175,TR,0.134,Aegean Sea
+27.36,37.009,TR,0.126,Aegean Sea
+27.367,37.283,TR,0.122,Aegean Sea
+27.37,37.167,TR,1.006,Aegean Sea
+27.384,36.996,TR,0.422,Aegean Sea
+27.384,37.004,TR,0.015,Aegean Sea
+27.384,37.156,TR,0.012,Aegean Sea
+27.385,37.135,TR,0.017,Aegean Sea
+27.389,36.448,GR,0.012,Aegean Sea
+27.389,37.138,TR,0.2,Aegean Sea
+27.398,36.438,GR,0.193,Aegean Sea
+27.409,36.74,TR,0.071,Aegean Sea
+27.41,37.411,TR,0.079,Aegean Sea
+27.461,36.367,GR,0.501,Aegean Sea
+27.462,36.773,TR,0.138,Aegean Sea
+27.469,36.769,TR,0.014,Aegean Sea
+27.472,37.121,TR,0.182,Aegean Sea
+27.48,37.128,TR,0.179,Aegean Sea
+27.483,40.547,TR,2.444,Sea of Marmara
+27.485,40.642,TR,0.368,Sea of Marmara
+27.488,37.097,TR,0.015,Aegean Sea
+27.51,36.659,TR,0.155,Aegean Sea
+27.515,37.152,TR,5.681,Aegean Sea
+27.521,37.197,TR,0.012,Aegean Sea
+27.548,40.656,TR,0.016,Sea of Marmara
+27.551,37.2,TR,0.017,Aegean Sea
+27.555,37.249,TR,0.32,Aegean Sea
+27.56,37.254,TR,0.027,Aegean Sea
+27.565,40.468,TR,0.129,Sea of Marmara
+27.58,36.978,TR,0.048,Aegean Sea
+27.58,40.507,TR,1.655,Sea of Marmara
+27.584,40.526,TR,0.168,Sea of Marmara
+27.589,40.494,TR,0.022,Sea of Marmara
+27.594,36.974,TR,0.85,Aegean Sea
+27.616,40.661,TR,0.012,Sea of Marmara
+27.619,36.214,GR,0.012,Aegean Sea
+27.628,36.219,GR,0.325,Aegean Sea
+27.639,36.25,GR,0.032,Aegean Sea
+27.641,31.192,EG,0.013,Mediterranean Sea - Eastern Basin
+27.655,36.257,GR,0.658,Aegean Sea
+27.656,36.979,TR,0.02,Aegean Sea
+27.657,36.248,GR,0.074,Aegean Sea
+27.672,36.199,GR,0.025,Aegean Sea
+27.675,36.215,GR,0.047,Aegean Sea
+27.677,36.264,GR,0.074,Aegean Sea
+27.678,40.662,TR,0.105,Sea of Marmara
+27.692,36.142,GR,0.043,Aegean Sea
+27.702,35.936,GR,0.041,Aegean Sea
+27.702,36.112,GR,0.04,Aegean Sea
+27.705,36.222,GR,0.299,Aegean Sea
+27.706,35.99,GR,0.039,Aegean Sea
+27.709,40.525,TR,0.032,Sea of Marmara
+27.747,36.561,GR,0.046,Aegean Sea
+27.747,36.569,GR,0.024,Aegean Sea
+27.753,36.573,GR,0.1,Aegean Sea
+27.758,40.632,TR,0.023,Sea of Marmara
+27.759,35.882,GR,1.535,Mediterranean Sea - Eastern Basin
+27.762,36.581,GR,0.112,Aegean Sea
+27.762,36.753,TR,0.055,Aegean Sea
+27.768,36.259,GR,0.604,Aegean Sea
+27.769,36.585,GR,0.075,Aegean Sea
+27.771,36.243,GR,0.214,Aegean Sea
+27.775,36.755,TR,0.07,Aegean Sea
+27.786,40.376,TR,0.231,Sea of Marmara
+27.793,36.631,GR,0.04,Aegean Sea
+27.806,36.76,TR,0.028,Aegean Sea
+27.811,36.647,GR,0.053,Aegean Sea
+27.819,36.653,GR,0.181,Aegean Sea
+27.848,36.654,GR,4.593,Aegean Sea
+27.85,36.522,GR,0.024,Aegean Sea
+27.862,36.524,GR,1.804,Aegean Sea
+27.869,36.516,GR,0.144,Aegean Sea
+27.873,36.624,GR,0.014,Aegean Sea
+27.989,36.703,TR,0.035,Aegean Sea
+27.997,36.612,TR,0.013,Aegean Sea
+27.997,36.709,TR,0.05,Aegean Sea
+28.003,36.717,TR,0.153,Aegean Sea
+28.013,36.669,TR,0.081,Aegean Sea
+28.023,36.72,TR,1.635,Aegean Sea
+28.024,36.867,TR,0.121,Aegean Sea
+28.035,36.557,TR,0.048,Aegean Sea
+28.035,36.761,TR,0.014,Aegean Sea
+28.035,36.884,TR,0.021,Aegean Sea
+28.036,36.87,TR,0.066,Aegean Sea
+28.037,36.659,TR,1.729,Aegean Sea
+28.038,36.562,TR,0.064,Aegean Sea
+28.041,36.671,TR,0.077,Aegean Sea
+28.043,36.875,TR,0.092,Aegean Sea
+28.044,36.683,TR,0.027,Aegean Sea
+28.05,36.621,TR,0.01,Aegean Sea
+28.053,36.625,TR,0.031,Aegean Sea
+28.055,36.648,TR,0.157,Aegean Sea
+28.055,36.73,TR,1.15,Aegean Sea
+28.056,36.617,TR,0.083,Aegean Sea
+28.058,36.761,TR,0.049,Aegean Sea
+28.062,36.642,TR,0.77,Aegean Sea
+28.07,40.458,TR,0.556,Sea of Marmara
+28.08,40.453,TR,0.013,Sea of Marmara
+28.081,36.746,TR,0.012,Aegean Sea
+28.087,36.06,GR,0.015,Mediterranean Sea - Eastern Basin
+28.09,40.452,TR,0.137,Sea of Marmara
+28.094,36.074,GR,0.015,Mediterranean Sea - Eastern Basin
+28.101,40.468,TR,0.149,Sea of Marmara
+28.122,36.804,TR,0.017,Aegean Sea
+28.124,36.804,TR,0.031,Aegean Sea
+28.125,36.762,TR,0.034,Aegean Sea
+28.126,36.598,TR,0.242,Aegean Sea
+28.145,36.2,GR,0.02,Mediterranean Sea - Eastern Basin
+28.147,36.199,GR,0.01,Mediterranean Sea - Eastern Basin
+28.147,36.651,TR,0.035,Aegean Sea
+28.155,36.945,TR,0.023,Aegean Sea
+28.156,36.935,TR,0.079,Aegean Sea
+28.196,36.96,TR,0.419,Aegean Sea
+28.205,36.992,TR,0.215,Aegean Sea
+28.208,36.998,TR,0.062,Aegean Sea
+28.24,37.002,TR,0.047,Aegean Sea
+28.246,36.714,TR,0.078,Aegean Sea
+28.254,36.806,TR,0.719,Mediterranean Sea - Eastern Basin
+28.284,36.82,TR,0.124,Mediterranean Sea - Eastern Basin
+28.438,36.774,TR,0.474,Mediterranean Sea - Eastern Basin
+28.445,36.863,TR,0.029,Mediterranean Sea - Eastern Basin
+28.669,36.699,TR,0.016,Mediterranean Sea - Eastern Basin
+28.695,36.694,TR,0.123,Mediterranean Sea - Eastern Basin
+28.763,36.628,TR,0.016,Mediterranean Sea - Eastern Basin
+28.893,36.637,TR,0.02,Mediterranean Sea - Eastern Basin
+28.901,36.662,TR,1.889,Mediterranean Sea - Eastern Basin
+28.906,36.668,TR,0.025,Mediterranean Sea - Eastern Basin
+28.92,36.67,TR,3.664,Mediterranean Sea - Eastern Basin
+28.927,36.697,TR,0.308,Mediterranean Sea - Eastern Basin
+28.932,36.696,TR,0.059,Mediterranean Sea - Eastern Basin
+28.932,36.71,TR,0.058,Mediterranean Sea - Eastern Basin
+28.934,36.704,TR,0.129,Mediterranean Sea - Eastern Basin
+28.937,41.052,TR,0.028,Sea of Marmara
+28.94,41.054,TR,0.026,Sea of Marmara
+28.941,36.727,TR,1.422,Mediterranean Sea - Eastern Basin
+28.972,40.876,TR,0.095,Sea of Marmara
+28.994,40.865,TR,0.121,Sea of Marmara
+29.009,36.696,TR,0.257,Mediterranean Sea - Eastern Basin
+29.031,36.67,TR,0.071,Mediterranean Sea - Eastern Basin
+29.035,36.668,TR,0.034,Mediterranean Sea - Eastern Basin
+29.047,36.658,TR,0.668,Mediterranean Sea - Eastern Basin
+29.049,40.909,TR,1.357,Sea of Marmara
+29.06,36.54,TR,0.028,Mediterranean Sea - Eastern Basin
+29.062,40.88,TR,1.456,Sea of Marmara
+29.07,36.554,TR,0.198,Mediterranean Sea - Eastern Basin
+29.077,40.884,TR,0.056,Sea of Marmara
+29.09,40.875,TR,2.493,Sea of Marmara
+29.101,36.65,TR,0.15,Mediterranean Sea - Eastern Basin
+29.113,40.82,TR,0.033,Sea of Marmara
+29.122,40.858,TR,5.348,Sea of Marmara
+29.144,40.851,TR,0.332,Sea of Marmara
+29.274,40.792,TR,0.026,Sea of Marmara
+29.355,36.214,TR,0.501,Mediterranean Sea - Eastern Basin
+29.371,36.222,TR,0.225,Mediterranean Sea - Eastern Basin
+29.436,36.202,TR,0.096,Mediterranean Sea - Eastern Basin
+29.447,36.18,TR,0.015,Mediterranean Sea - Eastern Basin
+29.447,36.217,TR,0.314,Mediterranean Sea - Eastern Basin
+29.498,36.155,TR,1.469,Mediterranean Sea - Eastern Basin
+29.516,36.157,TR,0.016,Mediterranean Sea - Eastern Basin
+29.548,36.185,TR,0.072,Mediterranean Sea - Eastern Basin
+29.604,36.151,TR,0.013,Mediterranean Sea - Eastern Basin
+29.622,36.159,TR,0.012,Mediterranean Sea - Eastern Basin
+29.624,36.152,TR,0.055,Mediterranean Sea - Eastern Basin
+29.626,36.162,TR,0.028,Mediterranean Sea - Eastern Basin
+29.631,36.152,TR,0.012,Mediterranean Sea - Eastern Basin
+29.637,36.114,TR,0.985,Mediterranean Sea - Eastern Basin
+29.651,36.132,TR,0.018,Mediterranean Sea - Eastern Basin
+29.655,36.143,TR,0.027,Mediterranean Sea - Eastern Basin
+29.659,36.133,TR,0.255,Mediterranean Sea - Eastern Basin
+29.752,36.132,TR,1.282,Mediterranean Sea - Eastern Basin
+29.834,36.17,TR,0.042,Mediterranean Sea - Eastern Basin
+29.837,36.169,TR,0.051,Mediterranean Sea - Eastern Basin
+29.862,36.169,TR,0.017,Mediterranean Sea - Eastern Basin
+29.872,36.168,TR,0.022,Mediterranean Sea - Eastern Basin
+29.878,36.18,TR,5.752,Mediterranean Sea - Eastern Basin
+29.899,36.206,TR,0.011,Mediterranean Sea - Eastern Basin
+29.901,36.204,TR,0.082,Mediterranean Sea - Eastern Basin
+29.901,36.21,TR,0.366,Mediterranean Sea - Eastern Basin
+29.912,36.19,TR,0.043,Mediterranean Sea - Eastern Basin
+30.106,31.358,EG,0.02,Mediterranean Sea - Eastern Basin
+30.143,36.265,TR,0.014,Mediterranean Sea - Eastern Basin
+30.402,36.2,TR,0.178,Mediterranean Sea - Eastern Basin
+30.406,36.184,TR,0.396,Mediterranean Sea - Eastern Basin
+30.474,36.236,TR,0.266,Mediterranean Sea - Eastern Basin
+30.546,36.461,TR,0.012,Mediterranean Sea - Eastern Basin
+30.549,36.458,TR,0.041,Mediterranean Sea - Eastern Basin
+30.552,36.46,TR,0.053,Mediterranean Sea - Eastern Basin
+30.589,36.802,TR,0.042,Mediterranean Sea - Eastern Basin
+31.663,36.647,TR,0.023,Mediterranean Sea - Eastern Basin
+32.309,31.245,EG,0.028,Mediterranean Sea - Eastern Basin
+32.31,31.242,EG,0.069,Mediterranean Sea - Eastern Basin
+32.312,34.9,CY,0.024,Mediterranean Sea - Eastern Basin
+32.323,31.224,EG,19.239,Mediterranean Sea - Eastern Basin
+32.349,31.215,EG,2.073,Mediterranean Sea - Eastern Basin
+32.738,35.182,CY,0.012,Mediterranean Sea - Eastern Basin
+33.038,34.667,CY,0.011,Mediterranean Sea - Eastern Basin
+33.039,34.668,CY,0.018,Mediterranean Sea - Eastern Basin
+33.349,36.139,TR,0.021,Mediterranean Sea - Eastern Basin
+33.531,36.127,TR,0.046,Mediterranean Sea - Eastern Basin
+33.532,36.122,TR,0.119,Mediterranean Sea - Eastern Basin
+33.695,36.16,TR,0.062,Mediterranean Sea - Eastern Basin
+33.771,36.19,TR,2.639,Mediterranean Sea - Eastern Basin
+33.827,36.267,TR,0.071,Mediterranean Sea - Eastern Basin
+33.949,35.131,CY,0.032,Mediterranean Sea - Eastern Basin
+33.954,35.125,CY,0.071,Mediterranean Sea - Eastern Basin
+33.955,35.122,CY,0.016,Mediterranean Sea - Eastern Basin
+34.148,36.457,TR,0.011,Mediterranean Sea - Eastern Basin
+34.421,35.648,CY,0.022,Mediterranean Sea - Eastern Basin
+34.59,35.696,CY,0.021,Mediterranean Sea - Eastern Basin
+34.603,35.706,CY,0.078,Mediterranean Sea - Eastern Basin
+34.914,32.609,IL,0.019,Mediterranean Sea - Eastern Basin
+34.914,32.611,IL,0.012,Mediterranean Sea - Eastern Basin
+35.368,33.573,LB,0.016,Mediterranean Sea - Eastern Basin
+35.396,36.558,TR,0.01,Mediterranean Sea - Eastern Basin
+35.478,33.836,LB,0.08,Mediterranean Sea - Eastern Basin
+35.602,36.706,TR,0.017,Mediterranean Sea - Eastern Basin
+35.612,36.722,TR,0.068,Mediterranean Sea - Eastern Basin
+35.762,34.498,LB,0.03,Mediterranean Sea - Eastern Basin
+35.774,34.494,LB,0.173,Mediterranean Sea - Eastern Basin
+35.778,34.486,LB,0.048,Mediterranean Sea - Eastern Basin
+35.8,34.463,LB,0.027,Mediterranean Sea - Eastern Basin
+35.81,34.457,LB,0.016,Mediterranean Sea - Eastern Basin
+35.824,34.464,LB,0.059,Mediterranean Sea - Eastern Basin
+35.859,34.856,SY,0.204,Mediterranean Sea - Eastern Basin
+35.873,34.823,SY,0.011,Mediterranean Sea - Eastern Basin

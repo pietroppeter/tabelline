@@ -178,6 +178,15 @@ rd(stage / "every_island.csv")
   .sort("iho_sea").collect
   .save("seas.csv", "The other islands of each sea, as the IHO draws them (Marine Regions, CC BY 4.0): OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL) that are not one of the list's 195, of 0.01 km² or more; how many (others) and their km² (others_km2).")
 
+# The other islands themselves, for the map of every island: each with its centroid, country,
+# sea and area, of a hectare or more.
+rd(stage / "every_island.csv")
+  .select(col.title, col.code, col.km2.num, col.iho_sea, col.clon.num, col.clat.num)
+  .filter(col.title.isNull and col.km2 >= 0.01)
+  .select(col.clon.round(3).alias("lon"), col.clat.round(3).alias("lat"), col.code, col.km2.round(3).alias("km2"), col.iho_sea)
+  .sort(["lon", "lat"]).collect
+  .save("others.csv", "The islands of the Mediterranean that are not one of the list's 195, of 0.01 km² or more: OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL), each with the centroid of its outline (lon, lat), its country from Natural Earth (public domain), its km² and its sea as the IHO draws them (Marine Regions, CC BY 4.0).")
+
 let gdp = rd(stage / "gdp.csv")
   .select(col.region, col.pps_per_person.num, col.pps_index.num, col.population_m.num)
 

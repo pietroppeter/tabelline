@@ -4,7 +4,9 @@
 ##   nim r -d:release map.nim <raw> <folder>     (writes map-west.svg and map-east.svg, and the
 ##                                                Italian page's map-west-it.svg and map-east-it.svg,
 ##                                                a small map of each sea, seas/<sea>.svg, and of
-##                                                each island in its sea, locators/<rank>.svg)
+##                                                each island in its sea, locators/<rank>.svg,
+##                                                Sicily and its islands, map-sicily(-it).svg, and
+##                                                every island as a dot, map-every.svg)
 ##
 ## The land is OpenStreetMap's (the land polygons fetch.nim downloads, © OpenStreetMap
 ## contributors, ODbL), cut to the box of each map and simplified; the islands are islands.csv's
@@ -188,10 +190,13 @@ const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
 # ------------------------------------------------------------------------------ the drawings
 # Equirectangular, east-west shrunk by the cosine of the map's middle latitude, 1000 wide.
 proc draw(file: string, w, e, s, n: float, italian = false, seaNames = @seas, islandNames = @names,
-          groups: seq[(string, string, float, float)] = @[], highlight: seq[string] = @[], fontSize = 27) =
+          groups: seq[(string, string, float, float)] = @[], highlight: seq[string] = @[], fontSize = 27,
+          every = false) =
   ## The land in the box, the main islands filled (or, with `highlight`, the islands named there),
   ## the other islands of the list a dot, the names of the seas and islands given, and `groups`,
-  ## the names of groups of islands (English, Italian, longitude, latitude of their middle).
+  ## the names of groups of islands (English, Italian, longitude, latitude of their middle). With
+  ## `every`, no names, no limits and nothing filled: a dot for each island of the list and a
+  ## smaller one for each other island of a hectare or more (others.csv).
   let c = cos(((s + n) / 2).degToRad)
   let k = 1000 / ((e - w) * c)
   let height = round((n - s) * k).int
@@ -209,13 +214,30 @@ proc draw(file: string, w, e, s, n: float, italian = false, seaNames = @seas, is
   let lit = islands.filterIt(it.name in highlight)
   for r in rings:
     if r.pts.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
-    let mine = if highlight.len == 0: r.main else: lit.anyIt(r.pts.contains(it.middle) or r.pts.contains((it.lon, it.lat)))
+    let mine = if every: false elif highlight.len == 0: r.main else: lit.anyIt(r.pts.contains(it.middle) or r.pts.contains((it.lon, it.lat)))
     if mine: mainLand.add r.pts.path else: land.add r.pts.path
   var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="{fontSize}">
 <rect class="sea" width="100%" height="100%"/>
 <path class="land" d="{land}"/>
 <path class="main" d="{mainLand}"/>
 """
+  if every:
+    var csvo: CsvParser
+    csvo.open(here / "others.csv")
+    csvo.readHeaderRow()   # the description
+    csvo.readHeaderRow()
+    while csvo.readRow():
+      let (x, y) = xy((csvo.rowEntry("lon").parseFloat, csvo.rowEntry("lat").parseFloat))
+      svg.add &"""<circle cx="{f x}" cy="{f y}" r="3.5" class="other"/>"""
+    csvo.close
+    svg.add "\n"
+    for i in islands:
+      let (x, y) = xy(i.middle)
+      svg.add &"""<circle cx="{f x}" cy="{f y}" r="6" class="listed"/>"""
+    svg.add "\n</svg>\n"
+    writeFile(output / file, svg)
+    echo file, ": ", svg.len div 1024, " kB"
+    return
   var lines = ""
   for l in limits:
     if l.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
@@ -247,10 +269,13 @@ proc draw(file: string, w, e, s, n: float, italian = false, seaNames = @seas, is
   writeFile(output / file, svg)
   echo file, ": ", svg.len div 1024, " kB"
 
-draw("map-west.svg", -6.0, 18.9, 32.6, 46.0)
-draw("map-east.svg", 17.2, 36.3, 31.3, 41.5)
-draw("map-west-it.svg", -6.0, 18.9, 32.6, 46.0, italian = true)
-draw("map-east-it.svg", 17.2, 36.3, 31.3, 41.5, italian = true)
+# the south edge at 30° N, so the Gulf of Sidra, which reaches 30.2°, is on both
+draw("map-west.svg", -6.0, 18.9, 30.0, 46.0)
+draw("map-east.svg", 17.2, 36.3, 30.0, 41.5)
+draw("map-west-it.svg", -6.0, 18.9, 30.0, 46.0, italian = true)
+draw("map-east-it.svg", 17.2, 36.3, 30.0, 41.5, italian = true)
+# every island: the 195 and the others of a hectare or more, as dots (map-every.svg)
+draw("map-every.svg", -6.0, 36.5, 30.0, 46.5, every = true)
 
 # Sicily and its islands, the ones of the list filled, and Malta nearby (map-sicily.svg).
 const sicilyIslands = @["Sicily", "Pantelleria", "Lipari", "Salina", "Vulcano", "Lampedusa", "Favignana", "Stromboli",

@@ -90,7 +90,7 @@ nbShowCode:
   let steps = @[
     (step: "1. fetch", tool: "Nim, standard library", does: "downloads the list and about 70 other Wikipedia pages, 10 Wikidata queries, OpenStreetMap's land polygons, about 900 MB (unzipped to 1.3 GB, not committed), Natural Earth's countries and the IHO's seas"),
     (step: "2. extract", tool: "Nim, standard library", does: "finds each island's outline and what is on it, every other island and its country and sea, reads the weather boxes and the regions' tables"),
-    (step: "3. process", tool: "Nim with nanuq", does: "joins, cleans and counts: the ten tables the story reads"),
+    (step: "3. process", tool: "Nim with nanuq", does: "joins, cleans and counts: the eleven tables the story reads"),
     (step: "4. map", tool: "Nim, standard library", does: "draws the maps of the story, of each sea and of each island in its sea, as SVG")]
   let t = tabella(steps, rownameCol = "step"):
     optCssTheme()
@@ -316,7 +316,9 @@ others of the list a dot, the names where Claude placed them, and the IHO's limi
 drawing names its parts (`sea`, `land`, `main`, `dot`, `limit`) and the page's theme colours
 them, so the maps change with the look: the west and the east of the sea, in English and in
 Italian, and Sicily with its islands, where the islands of Sicily are filled instead of the main
-ones.
+ones. A last one, of every island, has no names and nothing filled: a blue dot for
+each of the 195, and a smaller one for each of the 2,150 others of a hectare or more, from
+`others.csv`.
 
 For the page of all 195 islands it draws two small maps more: each sea in the whole
 Mediterranean (160 points wide) and each island in its sea, a dot in the box of its sea (120
@@ -352,13 +354,13 @@ of all the regions of the list, a group by year.
 nbText: """
 ## The tables
 
-Ten files, in `docs/stories/data/isole/`, each with a first line that says what it is made
+Eleven files, in `docs/stories/data/isole/`, each with a first line that says what it is made
 from; and three written by Claude, the AI that made these pages.
 """
 
 nbShowCode:
   var files: seq[tuple[file: string, rows: int, columns: int, about: string]]
-  for f in ["islands.csv", "main.csv", "countries.csv", "seas.csv", "heritage.csv", "airports.csv", "passengers.csv",
+  for f in ["islands.csv", "main.csv", "countries.csv", "seas.csv", "others.csv", "heritage.csv", "airports.csv", "passengers.csv",
             "climate.csv", "stations.csv", "unemployment.csv", "regions.csv", "history.csv", "highlights.csv"]:
     let d = story(f)
     files.add (f, d.nrows, d.ncols, about(f).split(": ")[0].split(". ")[0].split(" (")[0].split(", with")[0].split(", one")[0])
@@ -369,8 +371,8 @@ nbShowCode:
       file: ""
       about: ""
     tabStyle style.text(size = "12px") & style.css("overflow-wrap: anywhere"), loc.body(cols("about"))
-    tabRowGroup "made by process.nim", toSeq(0 .. 9)
-    tabRowGroup "written by Claude", [10, 11, 12]
+    tabRowGroup "made by process.nim", toSeq(0 .. 10)
+    tabRowGroup "written by Claude", [11, 12, 13]
     rowGroupOrder ["made by process.nim", "written by Claude"]
   nbTable t
 

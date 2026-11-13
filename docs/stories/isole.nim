@@ -33,8 +33,8 @@ readings = @[
   source("deleuze", tr"""Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert islands, where the island is what the sea surrounds. [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze)."""),
   source("lawrence", tr"""D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921): a week's journey from Sicily to Sardinia and back, in the winter of 1921."""),
   source("anedda", tr"""Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the islands off Sardinia where her family comes from. [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda)."""),
-  source("hunt", tr"""Nick Hunt, on the winds, in *Mediterraneo* (above): [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/)."""),
-  source("schildt", tr"""Göran Schildt, *In the Wake of Odysseus* (1953; in Swedish *I Odysseus kölvatten*, 1951), one of his books on the voyages of the *Daphne*, the boat he sailed around the Mediterranean after the Winter War, with the architect Alvar Aalto among his guests. [Schildt on Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt).""")]
+  source("hunt", tr"""Nick Hunt, on the winds, in *Mediterraneo* (above): [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).""")]
+  # Göran Schildt, waiting for Pietro's references: source("schildt", tr"""Göran Schildt, *In the Wake of Odysseus* (1953; in Swedish *I Odysseus kölvatten*, 1951), one of his books on the voyages of the *Daphne*, the boat he sailed around the Mediterranean after the Winter War, with the architect Alvar Aalto among his guests. [Schildt on Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt)."""
 
 # ------------------------------------------------------------------- this story's own helpers
 
@@ -129,21 +129,23 @@ nbText: tr"""
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
-who spent his life on this sea, in *La Méditerranée* (1977)[^braudel]. Not one landscape, he went on, but
-countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
+who spent his life on this sea, in *La Méditerranée* (1977)[^braudel], a later and shorter book. Not one
+landscape, he went on, but countless landscapes; in his great book of 1949, *The Mediterranean and
+the Mediterranean World in the Age of Philip II*, it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
 tables below follow him in three parts, each with the colour of its circles: first the islands'
 shapes, then who ruled them and how they live, then getting there and when to go, where events
 show up as a dip in a line.
 
-Braudel is the first of the voices that guide this story: along the way it quotes passages from
+Braudel is the first of the voices that guide this story: along the way we quote passages from
 books about the Mediterranean and its islands (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze,
 Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
-the others, and each passage was checked against its source. Göran Schildt[^schildt], who sailed this
-sea in his boat, the *Daphne*, and wrote books about it, is a guide of another kind, for
-whoever travels it. They are all listed under
-[To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
+the others, and each passage was checked against its source. They are all listed under
+[To read more](#to-read-more), at the end. The page has a look of its own, the Minoan one, after
+the frescoes of Crete and Thera, chosen in rounds from eighteen Mediterranean sources in
+[Designing a Mediterranean look](../../devlog/mediterranean/); the switch at the top goes back to
+Munari, the plain look of the site. The photos over the headings were chosen as the books were:
 Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
 credited under it; all of them, with the ones left out, are in
 [Photos of the Mediterranean, by the story](../isole-photos/).
@@ -156,6 +158,17 @@ nbDrawing data / (if lang == "it": "map-west-it.svg" else: "map-west.svg"), tr"T
 nbDrawing data / (if lang == "it": "map-east-it.svg" else: "map-east.svg"), tr"The eastern Mediterranean, from the Ionian Sea to Cyprus"
 
 nbText: tr"""
+The main division is in the middle. A shallow ridge from Sicily to Tunisia, under the Strait of
+Sicily, splits the sea in two: the western basin, about 850,000 km², and the eastern one, twice
+as large, 1.65 million. The east is the deeper, with the deepest point of the sea, the
+[Calypso Deep](https://en.wikipedia.org/wiki/Calypso_Deep), 5,267 m off Pylos, and the older:
+some geologists see in its Ionian basin what is left of the Tethys, the ocean before this sea.
+The Adriatic belongs to the east, but it is drawn on the western map, where it fits. For the
+Greeks the Pillars of Hercules closed the sea at Gibraltar; in 2002 the journalist
+[Sergio Frau](https://it.wikipedia.org/wiki/Sergio_Frau) argued that the earliest Greeks set
+them at the Strait of Sicily, between the two halves, a hypothesis that no ancient source
+states, and that remains speculative.
+
 The dashed lines are the limits of the seas, as the International Hydrographic Organization drew
 them in 1953; the table of [All 195](#all-195) counts the islands sea by sea. The names are much
 older than the lines. The [Tyrrhenian](https://en.wikipedia.org/wiki/Tyrrhenian_Sea) is the sea of
@@ -201,8 +214,13 @@ Sazan, Albania's largest island, is a military zone. Petalas, the last, is the l
 island of Greece, with 4,000 olive trees and nobody living there.
 
 Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
-hectare or more, near the estimate. Here they are by country, with the 195 of the list among them:
+hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,150 a
+dot in the colour of the circles.
 """
+
+nbDrawing data / "map-every.svg", tr"Every island of a hectare or more: the 195 of the list in blue, the others in the colour of the circles"
+
+nbText: tr"Here they are by country, with the 195 of the list among them:"
 
 const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0, "ES": 505_990.0,
                     "TN": 163_610.0, "HR": 56_594.0, "MT": 316.0, "TR": 783_562.0, "AL": 28_748.0,

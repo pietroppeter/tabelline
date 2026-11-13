@@ -333,6 +333,8 @@ body /* a drawing (nbDrawing): a Pele diagram in the page's colours */
 .disegno svg.map .main { fill: var(--secondary); }
 .disegno svg.map .limit { fill: none; stroke: var(--secondary-text); stroke-width: 1.5; stroke-dasharray: 6 4; }
 .disegno svg.map .dot { fill: var(--primary); stroke: var(--surface); stroke-width: 1.5; }
+.disegno svg.map .listed { fill: var(--secondary); stroke: var(--surface); stroke-width: 1.5; }
+.disegno svg.map .other { fill: var(--primary); }
 .disegno svg.map text { font-family: inherit; }
 .disegno svg.map .sea-name { fill: var(--muted); font-style: italic; letter-spacing: 1.5px; }
 .disegno svg.map .name { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--surface);

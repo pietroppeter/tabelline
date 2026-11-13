@@ -137,6 +137,10 @@ Le parole che si potevano tradurre in più modi. La prima opzione, **A**, è que
 16. **listed** (colonna della tabella per paese, le isole della lista delle 195). **A.** nella
     lista. **B.** iscritto, la prima stesura. A dalla revisione di Pietro: "iscritto" non si
     capiva, perché in italiano si iscrive una persona, non un'isola.
+17. **along the way we quote passages** (chi cita i libri, all'inizio). **A.** lungo la strada
+    citeremo passi. **B.** lungo la strada cita passi, la prima stesura, con soggetto la storia. A
+    dalla revisione di Pietro: "cita" lasciava chiedersi chi citasse; il "noi" sono Pietro e
+    Claude, e l'inglese è passato da "it quotes" a "we quote".
 """
 
 nbText: """

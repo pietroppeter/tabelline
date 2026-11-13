@@ -98,21 +98,23 @@ en:
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
-who spent his life on this sea, in *La Méditerranée* (1977)[^braudel]. Not one landscape, he went on, but
-countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
+who spent his life on this sea, in *La Méditerranée* (1977)[^braudel], a later and shorter book. Not one
+landscape, he went on, but countless landscapes; in his great book of 1949, *The Mediterranean and
+the Mediterranean World in the Age of Philip II*, it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
 tables below follow him in three parts, each with the colour of its circles: first the islands'
 shapes, then who ruled them and how they live, then getting there and when to go, where events
 show up as a dip in a line.
 
-Braudel is the first of the voices that guide this story: along the way it quotes passages from
+Braudel is the first of the voices that guide this story: along the way we quote passages from
 books about the Mediterranean and its islands (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze,
 Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
-the others, and each passage was checked against its source. Göran Schildt[^schildt], who sailed this
-sea in his boat, the *Daphne*, and wrote books about it, is a guide of another kind, for
-whoever travels it. They are all listed under
-[To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
+the others, and each passage was checked against its source. They are all listed under
+[To read more](#to-read-more), at the end. The page has a look of its own, the Minoan one, after
+the frescoes of Crete and Thera, chosen in rounds from eighteen Mediterranean sources in
+[Designing a Mediterranean look](../../devlog/mediterranean/); the switch at the top goes back to
+Munari, the plain look of the site. The photos over the headings were chosen as the books were:
 Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
 credited under it; all of them, with the ones left out, are in
 [Photos of the Mediterranean, by the story](../isole-photos/).
@@ -123,21 +125,22 @@ it:
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *Che cos'è il Mediterraneo? Mille cose insieme*, scrisse Fernand Braudel, lo storico che passò
-la vita su questo mare, in *La Méditerranée* (1977)[^braudel]. Non un paesaggio, continuava, ma
-innumerevoli paesaggi; nel suo grande libro del 1949 non è un mare ma un complesso di mari,
-pieno di isole. Braudel lo guardava in tre tempi: il tempo lento della terra, del mare e del
+la vita su questo mare, in *La Méditerranée* (1977)[^braudel], un libro più tardo e più breve. Non un
+paesaggio, continuava, ma innumerevoli paesaggi; nel suo grande libro del 1949, *Civiltà e imperi
+del Mediterraneo nell'età di Filippo II*, non è un mare ma un complesso di mari, pieno di isole. Braudel lo guardava in tre tempi: il tempo lento della terra, del mare e del
 clima, il tempo lungo degli stati, delle economie e dei popoli, e il tempo breve degli eventi.
 Le tabelle qui sotto lo seguono in tre parti, ciascuna con il colore dei suoi cerchi: prima le
 forme delle isole, poi chi le ha governate e come ci si vive, poi come arrivarci e quando
 andarci, dove gli eventi si vedono come un avvallamento in una linea.
 
-Braudel è la prima delle voci che guidano questa storia: lungo la strada cita passi di libri sul
+Braudel è la prima delle voci che guidano questa storia: lungo la strada citeremo passi di libri sul
 Mediterraneo e sulle sue isole (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze, Lawrence,
 Anedda), e le tabelle rispondono. Pietro ha suggerito alcuni dei libri, Claude ha trovato gli
-altri, e ogni passo è stato controllato sulla sua fonte. Göran Schildt[^schildt], che ha navigato
-questo mare con la sua barca, la *Daphne*, e ne ha scritto dei libri, è una guida di un altro
-tipo, per chi lo vuole girare. Sono tutti elencati in
-[Letture](#letture), alla fine. Le foto sopra i titoli sono state scelte allo stesso modo: Claude
+altri, e ogni passo è stato controllato sulla sua fonte. Sono tutti elencati in
+[Letture](#letture), alla fine. La pagina ha un aspetto suo, quello minoico, dagli affreschi di
+Creta e di Thera, scelto a turni fra diciotto fonti mediterranee in
+[Designing a Mediterranean look](../../devlog/mediterranean/) (in inglese); il selettore in alto
+torna a Munari, l'aspetto semplice del sito. Le foto sopra i titoli sono state scelte come i libri: Claude
 ha raccolto immagini con licenza libera per ogni sezione, Pietro ne ha scelta una, e ciascuna ha
 i crediti sotto di sé; tutte, anche quelle scartate, sono in
 [Photos of the Mediterranean, by the story](../isole-photos/) (in inglese).
@@ -152,6 +155,17 @@ en: The eastern Mediterranean, from the Ionian Sea to Cyprus
 it: Il Mediterraneo orientale, dallo Ionio a Cipro
 
 en:
+The main division is in the middle. A shallow ridge from Sicily to Tunisia, under the Strait of
+Sicily, splits the sea in two: the western basin, about 850,000 km², and the eastern one, twice
+as large, 1.65 million. The east is the deeper, with the deepest point of the sea, the
+[Calypso Deep](https://en.wikipedia.org/wiki/Calypso_Deep), 5,267 m off Pylos, and the older:
+some geologists see in its Ionian basin what is left of the Tethys, the ocean before this sea.
+The Adriatic belongs to the east, but it is drawn on the western map, where it fits. For the
+Greeks the Pillars of Hercules closed the sea at Gibraltar; in 2002 the journalist
+[Sergio Frau](https://it.wikipedia.org/wiki/Sergio_Frau) argued that the earliest Greeks set
+them at the Strait of Sicily, between the two halves, a hypothesis that no ancient source
+states, and that remains speculative.
+
 The dashed lines are the limits of the seas, as the International Hydrographic Organization drew
 them in 1953; the table of [All 195](#all-195) counts the islands sea by sea. The names are much
 older than the lines. The [Tyrrhenian](https://en.wikipedia.org/wiki/Tyrrhenian_Sea) is the sea of
@@ -164,6 +178,17 @@ comes from is not known, though Aeschylus tied it to Io, who swam across it. The
 [Sea of Marmara](https://en.wikipedia.org/wiki/Sea_of_Marmara) is named after its largest island,
 rich in marble, *mármaron* in Greek.
 it:
+La divisione principale sta nel mezzo. Una soglia poco profonda dalla Sicilia alla Tunisia, sotto
+il Canale di Sicilia, divide il mare in due: il bacino occidentale, circa 850.000 km², e quello
+orientale, grande il doppio, 1,65 milioni. L'est è il più profondo, con il punto più profondo del
+mare, l'[abisso Calypso](https://en.wikipedia.org/wiki/Calypso_Deep), 5.267 m al largo di Pilo, e
+il più antico: alcuni geologi vedono nel suo bacino ionico quel che resta della Tetide, l'oceano
+prima di questo mare. L'Adriatico appartiene all'est, ma è disegnato sulla carta occidentale,
+dove ci sta. Per i Greci le Colonne d'Ercole chiudevano il mare a Gibilterra; nel 2002 il
+giornalista [Sergio Frau](https://it.wikipedia.org/wiki/Sergio_Frau) ha sostenuto che i Greci
+più antichi le ponessero nel Canale di Sicilia, fra le due metà: un'ipotesi che nessuna fonte
+antica afferma, e che resta speculativa.
+
 Le linee tratteggiate sono i confini dei mari, come li ha tracciati l'Organizzazione idrografica
 internazionale nel 1953; la tabella di [Tutte le 195](#tutte-le-195) conta le isole mare per mare.
 I nomi sono molto più antichi delle linee. Il [Tirreno](https://it.wikipedia.org/wiki/Mar_Tirreno)
@@ -1248,11 +1273,6 @@ it:
 Nick Hunt, sui venti, in *Mediterraneo* (sopra): [un estratto sul Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
 
 en:
-Göran Schildt, *In the Wake of Odysseus* (1953; in Swedish *I Odysseus kölvatten*, 1951), one of his books on the voyages of the *Daphne*, the boat he sailed around the Mediterranean after the Winter War, with the architect Alvar Aalto among his guests. [Schildt on Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt).
-it:
-Göran Schildt, *I Odysseus kölvatten* (1951; in inglese *In the Wake of Odysseus*, 1953), uno dei suoi libri sui viaggi della *Daphne*, la barca con cui ha girato il Mediterraneo dopo la guerra d'inverno, con l'architetto Alvar Aalto tra gli ospiti. [Schildt su Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt) (in inglese).
-
-en:
 ## How this story is built
 
 From zero, in four layers. How the data was gathered, cleaned and checked is a story of its
@@ -1591,7 +1611,8 @@ Sazan, Albania's largest island, is a military zone. Petalas, the last, is the l
 island of Greece, with 4,000 olive trees and nobody living there.
 
 Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
-hectare or more, near the estimate. Here they are by country, with the 195 of the list among them:
+hectare or more, near the estimate: on the map, the 195 of the list in blue and the other 2,150 a
+dot in the colour of the circles.
 it:
 ### Quante sono
 
@@ -1616,7 +1637,8 @@ nazionale. Saseno, la più grande isola dell'Albania, è una zona militare. Peta
 più grande isola privata della Grecia, con 4.000 ulivi e nessuno che ci vive.
 
 Contate sulla costa di OpenStreetMap, che disegna ogni isolotto, il mare ha 2.345 isole di un
-ettaro o più, vicino alla stima. Eccole per paese, con fra loro le 195 della lista:
+ettaro o più, vicino alla stima: sulla carta, le 195 della lista in blu e le altre 2.150 un punto
+del colore dei cerchi.
 
 en: of its land
 it: del suo territorio
@@ -1871,3 +1893,9 @@ Lampedusa e Lipari si possono confrontare. La superficie tiene un decimale, `fmt
 
 en: Sicily and its islands; Malta, to the south, is a country of its own
 it: La Sicilia e le sue isole; Malta, a sud, è un paese a sé
+
+en: Every island of a hectare or more: the 195 of the list in blue, the others in the colour of the circles
+it: Ogni isola di un ettaro o più: le 195 della lista in blu, le altre nel colore dei cerchi
+
+en: Here they are by country, with the 195 of the list among them:
+it: Eccole per paese, con fra loro le 195 della lista:
