@@ -80,16 +80,18 @@ They meet on names. The list names each island by a link to its page; Wikidata k
 (and not its redirects, so 24 links are followed first to the page they lead to); OpenStreetMap's
 land polygons have no names, only polygons, and an island gets the polygon that holds its point on Wikidata.
 
-## Three steps, one of them nanuq
+## Four steps, one of them nanuq
 
-The data goes from the web to the story's tables in three steps, as the FOSDEM data did:
+The data goes from the web to the story's tables in three steps, as the FOSDEM data did, and a
+fourth draws the maps:
 """
 
 nbShowCode:
   let steps = @[
-    (step: "1. fetch", tool: "Nim, standard library", does: "downloads the list and about 70 other Wikipedia pages, 6 Wikidata queries and OpenStreetMap's land polygons, about 900 MB (unzipped to 1.3 GB, not committed)"),
-    (step: "2. extract", tool: "Nim, standard library", does: "finds each island's outline and what is on it, reads the weather boxes and the regions' tables"),
-    (step: "3. process", tool: "Nim with nanuq", does: "joins, cleans and counts: the eight tables the story reads")]
+    (step: "1. fetch", tool: "Nim, standard library", does: "downloads the list and about 70 other Wikipedia pages, 10 Wikidata queries, OpenStreetMap's land polygons, about 900 MB (unzipped to 1.3 GB, not committed), Natural Earth's countries and the IHO's seas"),
+    (step: "2. extract", tool: "Nim, standard library", does: "finds each island's outline and what is on it, every other island and its country and sea, reads the weather boxes and the regions' tables"),
+    (step: "3. process", tool: "Nim with nanuq", does: "joins, cleans and counts: the ten tables the story reads"),
+    (step: "4. map", tool: "Nim, standard library", does: "draws the maps of the story, of each sea and of each island in its sea, as SVG")]
   let t = tabella(steps, rownameCol = "step"):
     optCssTheme()
     colsLabel:
@@ -105,7 +107,7 @@ to add up, which heritage parts make one property) happens in the third step, in
 downloads are not committed; the tables are. Here are the scripts, whole:
 """
 
-for f in ["fetch.nim", "extract.nim", "process.nim", "common.nim"]:
+for f in ["fetch.nim", "extract.nim", "process.nim", "map.nim", "common.nim"]:
   nbFoldCode isole / "src" / f, title = "`src/" & f & "`"
 
 nbText: """
@@ -180,6 +182,35 @@ units syntax, `{{km^2}}`.
 """, nkCode)
 
 nbText: """
+### Length
+
+Areas are hard to picture; lengths are not. An island's length here is the longest straight
+line between two points of its outline: in geometry the *diameter* of a shape, in the study of
+particles the *maximum Feret diameter*, the widest a caliper opens around it as it turns. It is
+not in the data: the page of [all 195 islands](../isole-tutte/index.html) computes it from the
+outline, every pair of its points, at most 120 × 119 / 2 = 7,140 of them for an island:
+
+```nim
+proc length(xs, ys: seq[float]): float =
+  for a in 0 ..< xs.len:
+    for b in a + 1 ..< xs.len: result = max(result, hypot(xs[a] - xs[b], ys[a] - ys[b]))
+```
+
+The outline is simplified, so the length can be a little short of the true one: Sicily's is
+290 km, Sardinia's 269 km, Crete's 255 km.
+
+### Highest points
+
+Wikidata gives an island's elevation (P2044) and, for some, its highest point (P610), a peak
+with an elevation of its own. The highest of the two is kept, since P2044 is sometimes another
+height: Sardinia's is 384 m, its highest point Punta La Marmora, 1,834 m. For many small islands
+P2044 is the height of the town, not of the island: Lipari's and Pantelleria's 5 m, Favignana's
+6 m, Ustica's 49 m. Comparing every island without a P610 with its article on Wikipedia found 34
+such heights, wrong or missing: they are written by hand in `extract.nim`, each from the
+infobox or the text of the article, in English, or in Italian, French or Greek where those say
+more (Pantelleria 836 m, Lipari 602 m, Favignana 314 m, Ustica 244 m, Porquerolles 142 m).
+Twenty-one islands still have no height.
+
 ## Seas
 
 Each island's sea comes from Wikidata, which puts an island in or beside a body of water
@@ -212,6 +243,86 @@ nbShowCode:
   nbTable t
 
 nbText: """
+### The IHO's seas
+
+Wikidata's seas are many, and overlap: a gulf in a sea in a basin. The page of all 195 islands
+needs one sea per island, from a map that leaves no water out: the International Hydrographic
+Organization's *Limits of Oceans and Seas* (1953), whose outlines [Marine Regions](https://www.marineregions.org/)
+publishes (CC BY 4.0). It divides the Mediterranean into eleven: nine seas and straits, and the
+two basins, western and eastern, for the open water the others leave.
+
+`fetch.nim` downloads each sea's outline, `common.nim` draws them on a grid of 0.02° (about 2 km,
+2,150 by 850 cells), and an island takes the sea of most of the cells around its coast (sixty of
+its points, and the cells within one, three, eight or twenty of them, until one is in a sea).
+The same grid gives the maps their dashed lines: each edge between two cells of different seas,
+joined into lines and simplified to a twentieth of a degree.
+""" & excerpt("# Every island of the sea, by the IHO's sea") & """
+"""
+
+nbShowCode:
+  let others = story("seas.csv")
+  var listed = initCountTable[string]()
+  for i in 0 ..< islands.nrows: listed.inc $islands["iho_sea", i]
+  var rows: seq[tuple[sea: string, listed: int, others: int, km2: float]]
+  for j in 0 ..< others.nrows:
+    if others["iho_sea", j].isNull: continue
+    let sea = $others["iho_sea", j]
+    rows.add (sea.replace("Mediterranean Sea - ", ""), listed[sea], others["others", j].toFloat.int, others["others_km2", j].toFloat)
+  rows.sort(proc (a, b: auto): int = cmp(b.listed + b.others, a.listed + a.others))
+  let t = tabella(rows, rownameCol = "sea"):
+    tabHeader "Islands by the IHO's seas", "of a hectare or more"
+    optCssTheme()
+    fmtNumber ["km2"], decimals = 1
+    subZero ["listed"], zeroText = "·"
+    colsLabel:
+      sea: ""
+      listed: "of the list"
+      others: "others"
+      km2: "their {{km^2}}"
+    tabSpanner "the other islands", ["others", "km2"]
+    grandSummaryRows:
+      all: agg.sum
+      columns = ["listed", "others", "km2"]
+      missingText = ""
+      fmtInteger()
+  nbTable t
+
+nbNote("""
+The count of the list's islands is made on the page from `islands.csv`, with a `CountTable`; the
+others are `seas.csv`. The Aegean has the most islands, and the most land outside the list.
+""", nkCode)
+
+nbText: """
+## Every island
+
+The list stops at 5.5 km². To say how many islands a country or a sea has, `extract.nim` keeps
+every polygon of OpenStreetMap's land in the sea: 24,470, from Sicily to rocks of a few square
+metres (not the Peloponnese and Kassandra, which only a canal cuts off, and not the islands in
+lakes, which OpenStreetMap's land polygons fill as land). Each gets the list's island it is, if
+any; a country, from Natural Earth's countries at 1:10 million (public domain), the one that
+holds its middle or else the closest; the people Wikidata counts on it; and its sea. The story
+counts those of a hectare or more, 0.01 km²: smaller ones are mostly rocks, and some are piers,
+breakwaters and harbour works drawn as land, as around the port of Genoa. The closest country is not always
+the right one: Alborán, seven hectares in the middle of its sea, is Spain's, and closer to
+Morocco; Agathonisi and Kastellorizo are Greece's, and closer to Turkey. The list's islands take
+the list's country; Alborán is set by hand.
+""" & excerpt("# Every island of the sea, by country") & """
+
+## Maps
+
+`map.nim` draws the maps from the same land: every polygon in the map's box, simplified with
+Douglas–Peucker to a hundredth of a degree, about a kilometre; the 35 main islands filled, the
+others of the list a dot, the names where Claude placed them, and the IHO's limits dashed. The
+drawing names its parts (`sea`, `land`, `main`, `dot`, `limit`) and the page's theme colours
+them, so the maps change with the look: the west and the east of the sea, in English and in
+Italian, and Sicily with its islands, where the islands of Sicily are filled instead of the main
+ones.
+
+For the page of all 195 islands it draws two small maps more: each sea in the whole
+Mediterranean (160 points wide) and each island in its sea, a dot in the box of its sea (120
+wide), simplified to a point and a half of the drawing so each is a few kilobytes. A picture in a
+table does not take the page's colours, so these use the Minoan look's, from `theme.nim`.
+
 ## Counting passengers
 
 Wikidata has 15,637 counts of passengers for the airports around the Mediterranean: by year, by
@@ -241,13 +352,13 @@ of all the regions of the list, a group by year.
 nbText: """
 ## The tables
 
-Eight files, in `docs/stories/data/isole/`, each with a first line that says what it is made
+Ten files, in `docs/stories/data/isole/`, each with a first line that says what it is made
 from; and three written by Claude, the AI that made these pages.
 """
 
 nbShowCode:
   var files: seq[tuple[file: string, rows: int, columns: int, about: string]]
-  for f in ["islands.csv", "main.csv", "heritage.csv", "airports.csv", "passengers.csv",
+  for f in ["islands.csv", "main.csv", "countries.csv", "seas.csv", "heritage.csv", "airports.csv", "passengers.csv",
             "climate.csv", "stations.csv", "unemployment.csv", "regions.csv", "history.csv", "highlights.csv"]:
     let d = story(f)
     files.add (f, d.nrows, d.ncols, about(f).split(": ")[0].split(". ")[0].split(" (")[0].split(", with")[0].split(", one")[0])
@@ -258,8 +369,8 @@ nbShowCode:
       file: ""
       about: ""
     tabStyle style.text(size = "12px") & style.css("overflow-wrap: anywhere"), loc.body(cols("about"))
-    tabRowGroup "made by process.nim", toSeq(0 .. 7)
-    tabRowGroup "written by Claude", [8, 9, 10]
+    tabRowGroup "made by process.nim", toSeq(0 .. 9)
+    tabRowGroup "written by Claude", [10, 11, 12]
     rowGroupOrder ["made by process.nim", "written by Claude"]
   nbTable t
 
@@ -272,7 +383,8 @@ nbShowCode:
   let t = tabellaPreview(islands, topN = 3, bottomN = 2):
     optCssTheme()
     colsHide ["rank", "title", "x", "y", "wikidata", "native", "matched", "town", "archipelago", "main",
-              "lat", "lon", "elevation", "coast_km", "points", "heritage", "airports"]
+              "lat", "lon", "elevation", "coast_km", "points", "heritage", "airports", "code", "italian",
+              "iho_sea", "clon", "clat", "sea_how"]
     fmtAuto(lgNumPref = "suf")
     subMissing everything(), missingText = ""
     tabOptions(tableFontSize = "12px")
@@ -281,7 +393,7 @@ nbShowCode:
 nbNote("""
 `fmtAuto` picks a format for each column from its values: integers with separators, decimals as
 many as needed. `tabellaPreview` shows the first and last rows of a big table, with the place
-of each and a line for the rest; seventeen of the 22 columns are hidden to fit a phone.
+of each and a line for the rest; most of its columns are hidden to fit a phone.
 """, nkCode)
 
 nbText: """
@@ -302,6 +414,7 @@ nbShowCode:
   for i in 0 ..< islands.nrows: siteSum += islands["heritage", i].toFloat.int
   let checks = @[
     ("the list has 195 islands, in order of area", islands.nrows == 195 and toSeq(1 ..< islands.nrows).allIt(islands["km2", it].toFloat <= islands["km2", it - 1].toFloat)),
+    ("every island of the list has one of the IHO's seas", toSeq(0 ..< islands.nrows).allIt(not islands["iho_sea", it].isNull)),
     ("every main island has an outline", toSeq(0 ..< main.nrows).allIt(not islands["x", islandRow(main["title", it])].isNull)),
     ("their outlines' areas are within 10% of the list's", worst < 0.10),
     ("every main island has twelve monthly highs", mains.allIt(clim.has("title", it))),
