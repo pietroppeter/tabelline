@@ -15,6 +15,8 @@
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
+##   nbInPalette "key", look: (nbTable t)            # blocks on another look's paper
+##   nbTryPalette "key", "Yoru", look                 # a button: the whole page in that palette
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
 ##
@@ -670,6 +672,68 @@ template nbDrawing*(tsvg, talt: string) =
   ## a caption in Markdown.
   nb.addDrawing(tsvg, talt)
 
+# ---------------------------------------------------------------------------- a palette sample
+
+newNbBlock(NbInPalette of NbContainer):
+  key: string
+  css: string
+  toHtml:
+    &"""<div class="in-palette palette-{blk.key}"><style>{blk.css}</style>""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbInPalette*(tkey: string, tlook: Look, body: untyped) =
+  ## Blocks drawn on another look's paper, with its six values and every token mixed from them
+  ## (a dark look gets `color-scheme: dark` too): a table in a candidate palette, on a page in
+  ## its own look. `tkey` names the sample, for its CSS class.
+  let sample = newNbInPalette(key = tkey, css = paletteCss(tlook, ".palette-" & tkey))
+  nb.withContainer(sample):
+    body
+  nb.add sample
+
+# ------------------------------------------------------------------------ try a palette on the page
+
+const tryPaletteScript = """<script>
+(function () {
+  if (window.tryPaletteReady) return;
+  window.tryPaletteReady = true;
+  var root = document.documentElement;
+  function show() {
+    var on = root.dataset.palette || '';
+    document.querySelectorAll('.prova-palette').forEach(function (b) {
+      var mine = b.dataset.palette === on;
+      b.setAttribute('aria-pressed', mine ? 'true' : 'false');
+      b.textContent = mine ? b.dataset.off : b.dataset.on;
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.prova-palette');
+    if (!b) return;
+    if (root.dataset.palette === b.dataset.palette) delete root.dataset.palette;
+    else root.dataset.palette = b.dataset.palette;
+    show();
+  });
+  document.addEventListener('DOMContentLoaded', show);
+  show();
+})();
+</script>"""
+
+newNbBlock(NbTryPalette):
+  key: string
+  css: string
+  label: string
+  toHtml:
+    let on = "Try " & blk.label & " on this page"
+    let off = "Back to the page's look"
+    &"""<style>{blk.css}</style><p class="prova"><button type="button" class="prova-palette" """ &
+      &"""data-palette="{blk.key}" data-on="{esc(on)}" data-off="{esc(off)}" aria-pressed="false">{esc(on)}</button></p>""" &
+      tryPaletteScript
+
+template nbTryPalette*(tkey, tlabel: string, tlook: Look) =
+  ## A button that paints the whole page in another look's six values (and every token mixed
+  ## from them; `color-scheme: dark` for a dark look), and back: to see a candidate palette on
+  ## every element of a real page. Not remembered: a reload shows the page's own look.
+  nb.add newNbTryPalette(key = tkey, label = tlabel,
+                         css = paletteCss(tlook, "html[data-palette=\"" & tkey & "\"]"))
+
 # ------------------------------------------------------------------------------------ a fold
 
 newNbBlock(NbFold of NbContainer):
@@ -971,12 +1035,17 @@ const looks* = [("munari", "Munari", "after Bruno Munari"), ("quaderno", "quader
   ## Every look a page can offer: its key (`html[data-tema="..."]`), the label of its button, and
   ## where it comes from. Munari is always first: a page without JavaScript is Munari.
 
-func temaHeadScript(offered: openArray[string], first: string): string =
+func temaHeadScript(offered: openArray[string], first: string, nights: openArray[(string, string)] = []): string =
   ## Before the page is drawn: the look in the address (`?tema=`), or the one chosen last, if this
   ## page offers it, else `first`. A page whose first look is not Munari (the Minoan look of the
-  ## islands) remembers its choice apart, so a choice made elsewhere does not hide it.
+  ## islands) remembers its choice apart, so a choice made elsewhere does not hide it. A page with
+  ## `nights` (a day look and its night look) also has the time of day, *giorno* or *notte*: the
+  ## one chosen last (`?ora=`, remembered), else the system's (`prefers-color-scheme`); at night the
+  ## page shows the night look of the chosen one (`data-tema`), and `data-look` keeps the choice.
   var list = ""
   for k in offered: list.add (if list.len > 0: ", " else: "") & "'" & k & "'"
+  var notti = ""
+  for (day, night) in nights: notti.add (if notti.len > 0: ", " else: "") & "'" & day & "': '" & night & "'"
   let key = if first == "munari": "tabelline-tema" else: "tabelline-tema-" & first
   """<script>
 (function () {
@@ -987,8 +1056,20 @@ func temaHeadScript(offered: openArray[string], first: string): string =
     var q = new URLSearchParams(location.search).get('tema');
     if (offered.indexOf(q) >= 0) localStorage.setItem(key, q);
     var t = q || localStorage.getItem(key);
-    root.dataset.tema = offered.indexOf(t) >= 0 ? t : first;
-  } catch (e) { root.dataset.tema = first; }
+    root.dataset.look = offered.indexOf(t) >= 0 ? t : first;
+  } catch (e) { root.dataset.look = first; }
+  var nights = {""" & notti & """};
+  if (Object.keys(nights).length) {
+    root.dataset.notti = JSON.stringify(nights);
+    try {
+      var o = new URLSearchParams(location.search).get('ora');
+      if (o === 'giorno' || o === 'notte') localStorage.setItem('tabelline-ora', o);
+      o = o || localStorage.getItem('tabelline-ora');
+      root.dataset.ora = o === 'giorno' || o === 'notte' ? o
+        : (matchMedia('(prefers-color-scheme: dark)').matches ? 'notte' : 'giorno');
+    } catch (e) { root.dataset.ora = 'giorno'; }
+  }
+  root.dataset.tema = (root.dataset.ora === 'notte' && nights[root.dataset.look]) || root.dataset.look;
 })();
 </script>"""
 
@@ -998,15 +1079,29 @@ const bodyScript = """<script>
 (function () {
   var root = document.documentElement;
   function show() {
-    var t = root.dataset.tema || 'munari';
+    var t = root.dataset.look || root.dataset.tema || 'munari';
+    var nights = {};
+    try { nights = JSON.parse(root.dataset.notti || '{}'); } catch (e) {}
+    root.dataset.tema = (root.dataset.ora === 'notte' && nights[t]) || t;
     document.querySelectorAll('.tema button').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
+      if (b.dataset.day) b.textContent = (root.dataset.ora === 'notte' && b.dataset.night) || b.dataset.day;
+    });
+    document.querySelectorAll('.ora button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.ora === root.dataset.ora ? 'true' : 'false');
     });
   }
   document.querySelectorAll('.tema button').forEach(function (b) {
     b.addEventListener('click', function () {
-      root.dataset.tema = b.dataset.tema;
+      root.dataset.look = b.dataset.tema;
       try { localStorage.setItem(root.dataset.temaKey || 'tabelline-tema', b.dataset.tema); } catch (e) {}
+      show();
+    });
+  });
+  document.querySelectorAll('.ora button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.dataset.ora = b.dataset.ora;
+      try { localStorage.setItem('tabelline-ora', b.dataset.ora); } catch (e) {}
       show();
     });
   });
@@ -1100,11 +1195,26 @@ func langSwitch(c: JsonNode): string =
               else: &"""<a href="{href}?lang={code}" hreflang="{code}" lang="{code}">{code.toUpperAscii}</a>""")
   if items.len == 0: "" else: """<span class="lingua" role="group" aria-label="Language">""" & items.join(" · ") & "</span>"
 
-func temaSwitch(offered: seq[string]): string =
+func oraSwitch(): string =
+  ## The time of day, for a page with night looks: *giorno* (day) and *notte* (night).
+  """<div class="ora" role="group" aria-label="Day or night">""" &
+    """<button type="button" data-ora="giorno" title="the day look" aria-pressed="true">☀ giorno</button>""" &
+    """<button type="button" data-ora="notte" title="the night look" aria-pressed="false">☾ notte</button></div>"""
+
+const nightLabels* = [("terminale", "Terminal")]
+  ## The name a look's button takes at night, when its night look has a name of its own (the
+  ## quaderno at night is the Terminal); Munari notte keeps Munari's.
+
+func temaSwitch(offered: seq[string], nights: JsonNode): string =
   result = """<div class="tema" role="group" aria-label="Look of the page">"""
   for (key, label, title) in looks:
     if key in offered:
-      result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
+      var night = ""
+      for n in nights.getElems:
+        if n[0].getStr == key:
+          for (k, l) in nightLabels:
+            if k == n[1].getStr: night = &""" data-night="{l}""""
+      result.add &"""<button type="button" data-tema="{key}" data-day="{label}"{night} title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
   result.add "</div>"
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
@@ -1128,9 +1238,11 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       let wordmarkHref = c{"wordmark_href"}.getStr
       let shown = if key == "wordmark" and wordmarkHref.len > 0: &"""<a href="{wordmarkHref}">{v}</a>""" else: v
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
+  let ora = if c{"nights"}.len > 0: oraSwitch() else: ""
+  let switch = temaSwitch(offered, c{"nights"})
   &"""<header>
 <nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-{temaSwitch(offered)}{forme}
+<div class="switches">{ora}{switch}</div>{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
@@ -1152,7 +1264,8 @@ proc sharedReviewScript*(nb: Nb): string =
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
                    reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari",
-                   lang = "en", languages: openArray[(string, string)] = []) =
+                   lang = "en", languages: openArray[(string, string)] = [],
+                   nights: openArray[(string, string)] = [], textTables = false) =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -1165,18 +1278,25 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## reader chooses (with JavaScript off, always Munari). A page in more than one language gives
   ## its `lang` and every version as `languages` (code and link, its own included, as for the
   ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
-  ## and a first visit goes to the one in the browser's language.
+  ## and a first visit goes to the one in the browser's language. `nights` gives a night look for
+  ## each day look (`("munari", "munari-notte")`): the header gets a *giorno* / *notte* switch,
+  ## which starts from the system's setting. `textTables` writes every table as text too
+  ## (`toText`), for a look that shows tables as text (the terminal).
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
-    "\n" & temaHeadScript(looks, firstLook) & "\n" &
+    "\n" & temaHeadScript(looks, firstLook, nights) & "\n" &
     (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
   nb.doc.context["lang"] = %lang
   var versions = newJArray()
   for (code, href) in languages: versions.add %[code, href]
   nb.doc.context["languages"] = versions
   nb.doc.context["looks"] = %(@looks)
+  var notti = newJArray()
+  for (day, night) in nights: notti.add %[day, night]
+  nb.doc.context["nights"] = notti
+  if textTables: nb.doc.context["tableText"] = %true
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true

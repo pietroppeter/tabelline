@@ -51,6 +51,13 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Named font stacks** (S, from the book's port of the Great Tables blog). Great Tables'
   `system_fonts()` ("industrial", "humanist", ...) as `systemFonts(name)`, for `optTableFont`
   and `tableFontNames`: no fonts to load.
+- **A dark look** (M-L, Pietro, 13 Nov 2026). A dark background for the tables and the pages,
+  marked as such (`color-scheme`, `prefers-color-scheme`) so that a reader whose browser or
+  extension asks for dark (Dark Reader, Chrome's auto dark) gets ours instead of an automatic
+  inversion. The library's defaults are gt's white (`#FFFFFF`, text `#333333`); the pages are
+  light (Haru's white silk, `#FCFAF2`). Sources to draw from (sci-fi screens, terminals,
+  dashboards) and the options are in the devlog post
+  [Toward a dark tabelline](https://pietroppeter.github.io/tabelline/devlog/dark/).
 - **Scroll on narrow screens** (S). Wrap wide tables in a container with `overflow-x: auto` by
   default (an option to turn it off), instead of each page adding it.
 

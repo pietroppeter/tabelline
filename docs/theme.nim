@@ -53,8 +53,11 @@ const fonts = face("Patrick Hand", "patrick-hand.woff2", "400", "normal") &
 # ------------------------------------------------------------------------------------ the palette
 
 type Look* = object
-  ## The six values a look gives; every token is mixed from them.
+  ## The six values a look gives; every token is mixed from them. A dark look (`dark`) has a dark
+  ## paper and a light ink: its `--surface`, the sheet set above the paper, is a little lighter
+  ## than the paper instead of whiter (devlog "Toward a dark tabelline").
   paper*, ink*, primary*, secondary*, warning*, success*: string
+  dark*: bool
 
 const
   quadernoLook* = Look(paper: "#FDFDF9", ink: "#2B2D38",
@@ -96,12 +99,14 @@ const
     ## The categorical palette of the parts of a table (`table_parts.nim`): Haru and its neighbours
     ## (菜の花, 勿忘草, 紅梅, 洒落柿, 藤, 苗, 瓶覗), about 40% in the paper, readable in both looks.
 
-func tokensCss(): string =
-  ## The derived tokens, declared once on `html` for both looks.
+func tokensCss(dark = false): string =
+  ## The derived tokens, declared once on `html` for both looks. On a dark paper the surface is
+  ## the paper with a little ink in it, a sheet lifted towards the light, never white.
   for i, s in neutralSteps:
     result.add &"--neutral-{i}: color-mix(in oklab, var(--ink) {s}%, var(--paper));\n"
   result.add "--shade: var(--neutral-1); --line: var(--neutral-3); --muted: var(--neutral-7);\n"
-  result.add "--surface: color-mix(in oklab, #FFFFFF 60%, var(--paper));\n"
+  result.add(if dark: "--surface: color-mix(in oklab, var(--ink) 7%, var(--paper));\n"
+             else: "--surface: color-mix(in oklab, #FFFFFF 60%, var(--paper));\n")
   for role in ["primary", "secondary", "warning", "success"]:
     result.add &"--{role}-soft: color-mix(in oklab, var(--{role}) {softShare}%, var(--paper));\n"
     if role != "warning":
@@ -114,7 +119,8 @@ func lookCss(l: Look): string =
 func paletteCss*(l: Look, selector = "html"): string =
   ## The six values of a look and every token mixed from them, on one selector: for a page with
   ## one look, such as the book (`book/bookbuild.nim` puts `paletteCss(edo)` before its theme).
-  selector & " {\n" & lookCss(l) & "\n" & tokensCss() & "}\n"
+  selector & " {\n" & lookCss(l) & "\n" & tokensCss(l.dark) &
+    (if l.dark: "color-scheme: dark;\n" else: "") & "}\n"
 
 const tokens =
   # Munari names its six values after where they go; the palettes post swaps them on the page.
@@ -349,6 +355,16 @@ body details.foldcode pre > code { font-size: 12.5px; }
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .3rem .8rem; margin: .2rem 0 0; }
 .mostra-parti[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
+/* a palette sample (nbInPalette): blocks on another look's paper, with its tokens */
+.in-palette { background: var(--paper); color: var(--ink); padding: .9rem .7rem; margin: .8rem 0;
+  border: 1px solid var(--line); }
+.in-palette > p:first-child { margin-top: 0; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* a palette tried on the page (nbTryPalette): the button, pressed while the palette is on */
+.prova-palette { font: 700 .72rem/1.6 var(--font); letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .35rem .8rem; }
+.prova-palette[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
 /* swatches (nbSwatches): a colour beside its name */
 .tinte { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .8rem; margin: 1rem 0; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }
@@ -471,11 +487,13 @@ details.fold[open] > summary { border-bottom: 1px solid var(--line); }
 .api details.api-ex > summary { cursor: pointer; font: 700 .9rem var(--font); color: var(--muted); }
 
 /* the look switch: ink, the selected one filled */
-.tema { display: flex; justify-content: flex-end; gap: 0; margin: .6rem 0 0; }
-.tema button { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+.switches { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 0; }
+@media (max-width: 560px) { .switches:has(.ora) + .forme { top: 8.4rem; } .switches:has(.ora) ~ .etichetta { margin-top: 3.6rem; } }
+.tema, .ora { display: flex; gap: 0; }
+.tema button, .ora button { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .2rem .7rem; }
-.tema button:last-child { border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.tema button:last-child, .ora button:last-child { border-left: 0; }
+.tema button[aria-pressed="true"], .ora button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
 /* footer, with Munari's motto */
 footer { font: 400 .9rem/1.5 var(--font); color: var(--muted); padding: 1rem 0 3rem; text-align: center;
@@ -611,10 +629,10 @@ details.spec > summary b { font: 1.45rem var(--hand); color: var(--primary); }
 .scen-name { font: 1.1rem var(--hand); color: var(--primary); }
 
 /* the look switch */
-.tema button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
+.tema button, .ora button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
   background: var(--surface); border: 1.5px solid var(--primary); padding: .1rem .7rem; }
-.tema button:first-child { border-radius: 10px 0 0 10px; } .tema button:last-child { border-radius: 0 10px 10px 0; border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--primary); color: var(--paper); }
+.tema button:first-child, .ora button:first-child { border-radius: 10px 0 0 10px; } .tema button:last-child, .ora button:last-child { border-radius: 0 10px 10px 0; border-left: 0; }
+.tema button[aria-pressed="true"], .ora button[aria-pressed="true"] { background: var(--primary); color: var(--paper); }
 .forme, .motto { display: none; }
 
 footer { font: 1.05rem var(--hand); border-top: 0; }
@@ -712,7 +730,7 @@ blockquote { border-left: 3px solid var(--primary); font-style: italic; }
 pre > code, pre.nb-output { font-variant-numeric: normal; }
 
 /* the look switch, in small capitals */
-.tema button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
+.tema button, .ora button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
 
 /* the footer: a meander above it, in black glaze */
 body > footer { padding-top: 2.4rem; }
@@ -723,7 +741,62 @@ body > footer::before { content: ""; position: absolute; top: 0; left: 0; right:
 
 const minoanCss = scoped(minoanRules, "html[data-tema=\"minoan\"]")
 
-const css* = fonts & tokens & munariCss & quadernoCss & minoanCss
+# ------------------------------------------------------------------------------- the night looks
+# A page with night looks (`useTabelline(nights = ...)`, devlog "Toward a dark tabelline") has a
+# giorno / notte switch: at night Munari becomes Munari notte, the same rules on a night palette,
+# and the quaderno, the playful look of the day, becomes the terminal: a retro screen after the
+# Matrix and Blade Runner, in a monospace, where every table is shown as text (`toText`).
+
+const
+  munariNotte* = Look(paper: "#0F2540",     # 濃藍 koai, deep indigo
+                      ink: "#FCFAF2",       # 白練 shironeri, white silk
+                      primary: "#E16B8C", secondary: "#7DB9DE", warning: "#F7D94C", success: "#86C166",
+                      dark: true)
+    ## Munari at night: Haru's four colours (紅梅, 勿忘草, 菜の花, 苗) on deep indigo ("Yoru").
+  terminale* = Look(paper: "#0A0F0D",       # dark glass of a monitor
+                    ink: "#9CF2B0",         # green phosphor, softened for reading
+                    primary: "#FF8A3D",     # sodium orange of Blade Runner's city: the circle, links
+                    secondary: "#38D3DB",   # neon cyan: the square, bars
+                    warning: "#FFD24A",     # amber: the triangle
+                    success: "#3DFF7A",     # code-rain green of the Matrix
+                    dark: true)
+    ## The terminal, the quaderno's night look.
+
+const terminaleRules = """
+html { --font: var(--mono); --hand: var(--mono); }
+body { font-size: 16px; }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.2) 2px 3px); }
+h1, h2, h3, .etichetta .nome span:last-child { text-transform: uppercase; letter-spacing: .02em;
+  text-shadow: 0 0 .4em color-mix(in oklab, var(--ink) 50%, transparent); }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.1rem; }
+.lede { font-size: 1.1rem; }
+.etichetta .nome span:last-child { font: 700 2.2rem/1 var(--mono); }
+.etichetta .nome span:last-child::after { content: "▋"; color: var(--primary); text-shadow: none; }
+.forme i { mix-blend-mode: screen; }
+.switches:has(.ora) + .forme { top: 6rem; }
+.switches:has(.ora) ~ .etichetta { margin-top: 2.4rem; }
+a { text-decoration-color: var(--primary); }
+pre > code { border: 1px solid var(--line); }
+.tabella-html { display: none; }
+.in-palette .tabella-html { display: block; }
+.in-palette pre.tabella-text { display: none; }
+pre.tabella-text { display: block; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  text-shadow: 0 0 .3em color-mix(in oklab, var(--ink) 35%, transparent); }
+"""
+
+const nightCss =
+  "/* tables as text: shown only by a look that wants them (the terminal) */\n" &
+  ".tabella-text { display: none; }\n" &
+  "pre.tabella-text { overflow-x: auto; white-space: pre; font: 12.5px/1.2 var(--mono); padding: .8rem .9rem; margin: 1.4rem 0; }\n" &
+  paletteCss(munariNotte, "html[data-tema=\"munari-notte\"]") &
+  "html[data-tema=\"munari-notte\"] .forme i { mix-blend-mode: screen; }\n" &
+  paletteCss(terminale, "html[data-tema=\"terminale\"]") &
+  scoped(terminaleRules, "html[data-tema=\"terminale\"]")
+
+const css* = fonts & tokens & munariCss & quadernoCss & minoanCss & nightCss
   ## All the CSS of a page: Munari, the default, then the quaderno and the Minoan look, scoped.
 
 proc assetHref*(name, pageFile: string): string =
@@ -837,3 +910,58 @@ func sourceSwatches*(key: string): seq[(string, string, string)] =
   ## The six colours of a Mediterranean source, for `nbSwatches`: colour, name, role.
   for c in sourceColours(key):
     result.add (c.hex, c.name, c.role & (if c.fromPlace: ", from the place" else: ""))
+
+# ---------------------------------------------------------------------------------- dark sources
+# The colours of the post "Toward a dark tabelline": for each source of a dark look, six colours
+# in the roles of a look, on a dark paper. Picked by eye from the source (or, for a design system,
+# taken from its published values); `added` marks a role the source has no colour for, filled
+# from outside it. Candidates only: none is a look yet.
+
+type DarkColour* = tuple[hex, name, role: string, added: bool]
+
+const darkSources*: seq[(string, array[6, DarkColour])] = @[
+  ("yoru", [("#0F2540", "濃藍 koai, deep indigo", "paper", false), ("#FCFAF2", "白練 shironeri, white silk", "ink", false),
+            ("#E16B8C", "紅梅 kōbai, red plum", "primary", false), ("#7DB9DE", "勿忘草 wasurenagusa, forget-me-not", "secondary", false),
+            ("#F7D94C", "菜の花 nanohana, rapeseed", "warning", false), ("#86C166", "苗 nae, seedling", "success", false)]),
+  ("matrix", [("#0D0208", "the screen's black", "paper", false), ("#C9F7CF", "the bright head of a falling string", "ink", false),
+              ("#00FF41", "code-rain green", "primary", false), ("#3C6FE0", "the blue pill", "secondary", false),
+              ("#E8C547", "amber", "warning", true), ("#2FBF4F", "the trail behind", "success", false)]),
+  ("androids", [("#0B1317", "wet night", "paper", false), ("#EFE4D0", "fog under sodium light", "ink", false),
+                ("#FF7A2F", "sodium orange", "primary", false), ("#2BC4C9", "neon cyan", "secondary", false),
+                ("#F2C14E", "a lit window", "warning", false), ("#6FBF73", "green", "success", true)]),
+  ("phosphor", [("#0C0C0C", "dark glass", "paper", false), ("#FFB000", "P3 amber phosphor", "ink", false),
+                ("#FF5555", "bright red", "primary", false), ("#55FFFF", "bright cyan", "secondary", false),
+                ("#FFFF55", "bright yellow", "warning", false), ("#55FF55", "bright green", "success", false)]),
+  ("lcars", [("#000000", "space", "paper", false), ("#FFCC99", "peach", "ink", false),
+             ("#FF9900", "orange", "primary", false), ("#9999FF", "periwinkle", "secondary", false),
+             ("#FFCC00", "gold", "warning", false), ("#99CC66", "green", "success", true)]),
+  ("bloomberg", [("#000000", "black", "paper", false), ("#E8E8E8", "white figures", "ink", false),
+                 ("#FB8B1E", "terminal amber", "primary", false), ("#4FA8FF", "header blue", "secondary", false),
+                 ("#FFD400", "alert yellow", "warning", false), ("#4CD964", "up green", "success", false)]),
+  ("solarized", [("#002B36", "base03", "paper", false), ("#93A1A1", "base1", "ink", false),
+                 ("#D33682", "magenta", "primary", false), ("#268BD2", "blue", "secondary", false),
+                 ("#B58900", "yellow", "warning", false), ("#859900", "green", "success", false)]),
+  ("primer", [("#0D1117", "canvas", "paper", false), ("#E6EDF3", "foreground", "ink", false),
+              ("#DB61A2", "sponsors pink", "primary", false), ("#58A6FF", "accent blue", "secondary", false),
+              ("#D29922", "attention", "warning", false), ("#3FB950", "success", "success", false)]),
+  ("material", [("#121212", "dark surface", "paper", false), ("#E0E0E0", "white at 87%", "ink", false),
+                ("#BB86FC", "purple 200", "primary", false), ("#03DAC6", "teal 200", "secondary", false),
+                ("#FFD54F", "amber 300", "warning", true), ("#81C784", "green 300", "success", true)]),
+]
+
+func darkColours*(key: string): array[6, DarkColour] =
+  ## The six colours of a dark source, in the order of the roles.
+  for (k, colours) in darkSources:
+    if k == key: return colours
+  doAssert false, "no dark source: " & key
+
+func darkLook*(key: string): Look =
+  ## A dark source as a look, for `nbInPalette`.
+  let c = darkColours(key)
+  Look(paper: c[0].hex, ink: c[1].hex, primary: c[2].hex, secondary: c[3].hex, warning: c[4].hex,
+       success: c[5].hex, dark: true)
+
+func darkSwatches*(key: string): seq[(string, string, string)] =
+  ## The six colours of a dark source, for `nbSwatches`: colour, name, role.
+  for c in darkColours(key):
+    result.add (c.hex, c.name, c.role & (if c.added: ", added" else: ""))
