@@ -231,7 +231,8 @@ at the end of the sources.
 Nine sources, from the nearest to the farthest from Munari: a night for our own palette, three
 screens from films and television, two kinds of screens that people read tables on for hours, and three design systems that
 wrote their dark rules down. Each card has the same small table in its colours (a table with
-`optCssTheme()`, its temperature scale from the palette's secondary, paper and primary).
+`optCssTheme()`, its temperature scale from the palette's secondary, paper and primary). Its
+button paints this whole page in the palette, every element, until you press it again or reload.
 """
 
 proc planetsIn(key: string): Tabella =
@@ -245,17 +246,18 @@ proc planetsIn(key: string): Tabella =
     dataColor "mean_temp", palette = @[l.secondary, l.paper, l.primary], domain = (-200.0, 200.0)
     optCssTheme()
 
-template sourceCard(key, heading, era, text, links: string) =
+template sourceCard(key, short, heading, era, text, links: string) =
   nbGalleryCard(heading, era):
     nbText text
     nbSwatches darkSwatches(key)
+    nbTryPalette key, short, darkLook(key)
     nbInPalette key, darkLook(key):
       nbText heading
       nbTable planetsIn(key)
     nbText links
 
 nbGallery "nine sources for a dark look":
-  sourceCard("yoru", "Yoru: Munari at night", "Japanese colour names", """
+  sourceCard("yoru", "Yoru", "Yoru: Munari at night", "Japanese colour names", """
 **Who.** The same traditional Japanese colour names that gave Munari its palette, Haru (spring),
 as collected on [nipponcolors.com](https://nipponcolors.com/).
 
@@ -267,7 +269,7 @@ and puts them on 濃藍 koai, the deepest of the indigo dyes, under white silk.
 **For a page.** Way A as it stands: Munari's rules with six new values.
 """, """[Munari meets Japan](../palettes/) · [nipponcolors.com](https://nipponcolors.com/)""")
 
-  sourceCard("matrix", "The Matrix", "1999", """
+  sourceCard("matrix", "the Matrix", "The Matrix", "1999", """
 **Who.** The Wachowskis' film; its falling code was designed by Simon Whiteley, who has said the
 glyphs came from Japanese cookbooks.
 
@@ -283,7 +285,7 @@ matters (the head of the string), and one other colour, the blue pill, for links
 fill six roles: the warning is added.
 """, """[Matrix digital rain](https://en.wikipedia.org/wiki/Matrix_digital_rain)""")
 
-  sourceCard("androids", "Electric sheep and Blade Runner", "1968–2017", """
+  sourceCard("androids", "Blade Runner", "Electric sheep and Blade Runner", "1968–2017", """
 **Who.** Philip K. Dick's novel *Do Androids Dream of Electric Sheep?* (1968), Ridley Scott's
 *Blade Runner* (1982) made from it, and Denis Villeneuve's *Blade Runner 2049* (2017), shot by
 Roger Deakins.
@@ -303,7 +305,7 @@ Draves's fractal flames glowing on black, is named after the novel.)
 [Blade Runner 2049](https://en.wikipedia.org/wiki/Blade_Runner_2049) ·
 [Electric Sheep](https://en.wikipedia.org/wiki/Electric_Sheep)""")
 
-  sourceCard("phosphor", "Phosphor terminals", "1970s–1980s", """
+  sourceCard("phosphor", "phosphor", "Phosphor terminals", "1970s–1980s", """
 **Who.** The video terminals that tables were first read on, after paper: green and amber
 monochrome screens (the P1 and P3 phosphors), DEC's VT100 (1978), the IBM PC's colour adapter and
 its sixteen colours, and the films that showed them, from *Alien*'s Nostromo to *WarGames*.
@@ -319,7 +321,7 @@ something. Long text in amber is heavy: for tables and code, not for prose.
 [VT100](https://en.wikipedia.org/wiki/VT100) ·
 [Color Graphics Adapter](https://en.wikipedia.org/wiki/Color_Graphics_Adapter)""")
 
-  sourceCard("lcars", "LCARS", "1987", """
+  sourceCard("lcars", "LCARS", "LCARS", "1987", """
 **Who.** Michael Okuda, who designed the computer screens of *Star Trek: The Next Generation*.
 
 **What.** LCARS: black screens framed by rounded bars and elbows in orange, peach and lilac, with
@@ -334,7 +336,7 @@ as coloured bars, the cells left plain. Pure black fails rule 2.
 """, """[LCARS](https://en.wikipedia.org/wiki/LCARS) ·
 [Michael Okuda](https://en.wikipedia.org/wiki/Michael_Okuda)""")
 
-  sourceCard("bloomberg", "The Bloomberg Terminal", "since 1982", """
+  sourceCard("bloomberg", "Bloomberg", "The Bloomberg Terminal", "since 1982", """
 **Who.** Bloomberg L.P.'s terminal, on the desks of traders since 1982.
 
 **What.** Black screens dense with figures: amber labels, white values, green for up and red for
@@ -347,7 +349,7 @@ and every colour has a job.
 good test of tabelline's compact options. Pure black fails rule 2.
 """, """[Bloomberg Terminal](https://en.wikipedia.org/wiki/Bloomberg_Terminal)""")
 
-  sourceCard("solarized", "Solarized", "2011", """
+  sourceCard("solarized", "Solarized", "Solarized", "2011", """
 **Who.** Ethan Schoonover, a designer, for terminals and code editors.
 
 **What.** Sixteen colours picked in CIELAB so that the same eight accents work on a dark ground
@@ -360,7 +362,7 @@ than our rule on purpose (about 6:1), for long hours of reading.
 grounds swapped.
 """, """[Solarized](https://ethanschoonover.com/solarized/)""")
 
-  sourceCard("primer", "GitHub's dark themes", "since 2020", """
+  sourceCard("primer", "Primer", "GitHub's dark themes", "since 2020", """
 **Who.** GitHub's design system, Primer, which brought dark mode to github.com in December 2020
 and has added dimmed and high-contrast versions since.
 
@@ -375,7 +377,7 @@ where tabelline lives.
 kept, only their tones moved.
 """, """[Primer](https://primer.style/)""")
 
-  sourceCard("material", "Material's dark theme", "2019", """
+  sourceCard("material", "Material", "Material's dark theme", "2019", """
 **Who.** Google's Material Design, whose guide added a dark theme in 2019.
 
 **What.** The clearest written rules for dark screens: a surface of very dark grey, not black; higher

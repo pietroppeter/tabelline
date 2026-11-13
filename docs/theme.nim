@@ -360,6 +360,11 @@ body details.foldcode pre > code { font-size: 12.5px; }
   border: 1px solid var(--line); }
 .in-palette > p:first-child { margin-top: 0; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 
+/* a palette tried on the page (nbTryPalette): the button, pressed while the palette is on */
+.prova-palette { font: 700 .72rem/1.6 var(--font); letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .35rem .8rem; }
+.prova-palette[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
 /* swatches (nbSwatches): a colour beside its name */
 .tinte { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .8rem; margin: 1rem 0; }
 .tinte .tinta { font-size: .86rem; line-height: 1.35; }

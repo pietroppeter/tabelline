@@ -16,6 +16,7 @@
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
 ##   nbInPalette "key", look: (nbTable t)            # blocks on another look's paper
+##   nbTryPalette "key", "Yoru", look                 # a button: the whole page in that palette
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
 ##
@@ -687,6 +688,51 @@ template nbInPalette*(tkey: string, tlook: Look, body: untyped) =
   nb.withContainer(sample):
     body
   nb.add sample
+
+# ------------------------------------------------------------------------ try a palette on the page
+
+const tryPaletteScript = """<script>
+(function () {
+  if (window.tryPaletteReady) return;
+  window.tryPaletteReady = true;
+  var root = document.documentElement;
+  function show() {
+    var on = root.dataset.palette || '';
+    document.querySelectorAll('.prova-palette').forEach(function (b) {
+      var mine = b.dataset.palette === on;
+      b.setAttribute('aria-pressed', mine ? 'true' : 'false');
+      b.textContent = mine ? b.dataset.off : b.dataset.on;
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.prova-palette');
+    if (!b) return;
+    if (root.dataset.palette === b.dataset.palette) delete root.dataset.palette;
+    else root.dataset.palette = b.dataset.palette;
+    show();
+  });
+  document.addEventListener('DOMContentLoaded', show);
+  show();
+})();
+</script>"""
+
+newNbBlock(NbTryPalette):
+  key: string
+  css: string
+  label: string
+  toHtml:
+    let on = "Try " & blk.label & " on this page"
+    let off = "Back to the page's look"
+    &"""<style>{blk.css}</style><p class="prova"><button type="button" class="prova-palette" """ &
+      &"""data-palette="{blk.key}" data-on="{esc(on)}" data-off="{esc(off)}" aria-pressed="false">{esc(on)}</button></p>""" &
+      tryPaletteScript
+
+template nbTryPalette*(tkey, tlabel: string, tlook: Look) =
+  ## A button that paints the whole page in another look's six values (and every token mixed
+  ## from them; `color-scheme: dark` for a dark look), and back: to see a candidate palette on
+  ## every element of a real page. Not remembered: a reload shows the page's own look.
+  nb.add newNbTryPalette(key = tkey, label = tlabel,
+                         css = paletteCss(tlook, "html[data-palette=\"" & tkey & "\"]"))
 
 # ------------------------------------------------------------------------------------ a fold
 
