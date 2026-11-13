@@ -1466,7 +1466,8 @@
       "title": "Lemurs at Duke Lemur Center",
       "by": "Nicola Rennie",
       "post": "https://forum.posit.co/t/lemurs-at-duke-lemur-center-table-contest/153662",
-      "prize": "Honourable mention"
+      "prize": "Honourable mention",
+      "book": "contest/lemurs.html"
      },
      {
       "repo": "bamattre/tidytuesday",

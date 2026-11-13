@@ -14,6 +14,9 @@
 #
 # Needs R with the packages gt (the book records its version), dplyr, tidyr and jsonlite:
 # install.packages(c("gt", "dplyr", "tidyr", "jsonlite", "knitr")).
+# text is UTF-8 even when the machine's locale is not (a sandbox's POSIX locale turned "’" into "<e2><80><99>")
+if (!isTRUE(l10n_info()[["UTF-8"]])) invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+
 suppressPackageStartupMessages({
   library(jsonlite)
 })

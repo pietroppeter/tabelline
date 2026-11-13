@@ -27,6 +27,7 @@ to the backlog.
 | Formats | `accounting` in `fmtNumber`, `fmtInteger` and `fmtPercent` (`fmtCurrency` has it) | [v0.15.0](blog/v0_15.html) | **new** |
 | Formats | Significant figures in `fmtNumber` (`nSigfig`, gt's `n_sigfig`), also with `compact` | [Examples](examples/examples.html) | **new** |
 | Formats | `fmtDatetime(formatStr = ...)`, a datetime by a format string | [v0.18.0](blog/v0_18.html) | **new** |
+| Formats | A small chart in each row drawn from other data (a bar chart, a line chart with axes), as gt's `ggplot_image()` or gt-extras' plots: today a proc that writes SVG, through `fmt` | [Lemurs](contest/lemurs.html), [An NFL season](extras/nfl_season.html) | **new** |
 | Formats | Markdown in `subMissing`'s text, as `missing_text=md("**STABLE**")` | [v0.13.0](blog/v0_13.html) | **new** |
 | Formats | `fmtFlag`: the country's name on hover (it shows the code) and Great Tables' round flags (emoji are drawn by the reader's system, as two letters on Windows) | [v0.15.0](blog/v0_15.html) | **new** |
 | Formats | The format functions with every argument of their verb: `pattern`, `locale` (`formatDate` has it, `formatNumber` not), `expStyle` | [Formatting Values](get-started/basic_formatting.html), [Creating Summary Lines](vignettes/summary_lines.html) | **new** |
@@ -34,7 +35,7 @@ to the backlog.
 | Options | White text on a dark stub background set by options (tabelline picks the text colour for the heading and the column labels only) | [Table Theme Options](get-started/table_theme_options.html) | **new** |
 | Options | `optStylize` with gt's six styles | [Premade Themes](get-started/table_theme_premade.html) | **new** |
 | Options | `optAllCaps` on the stub and the row group labels too | [Premade Themes](get-started/table_theme_premade.html), [v0.3.0](blog/v0_3.html) | **new** |
-| Styles | `style.text(vAlign = ...)` (`style.css("vertical-align: middle")` does it) | [v0.13.0](blog/v0_13.html) | **new** |
+| Styles | `style.text(vAlign = ...)` (`style.css("vertical-align: middle")` does it) | [v0.13.0](blog/v0_13.html), [Lemurs](contest/lemurs.html) | **new** |
 | Styles | `loc.stub` by row label (`"banana"`), and mixed with indices | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.rowGroups` by a row of the group, or by a condition | [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | `loc.body(mask = ...)`: a condition for each cell | [Styling the Table Body](get-started/basic_styling.html), [Location selection](get-started/loc_selection.html) | **new** |
