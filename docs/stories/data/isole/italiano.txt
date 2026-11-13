@@ -1,0 +1,1444 @@
+en: Islands of the Mediterranean
+it: Isole del Mediterraneo
+
+en: Stories
+it: Storie
+
+en: Italy
+it: Italia
+
+en: Cyprus
+it: Cipro
+
+en: France
+it: Francia
+
+en: Greece
+it: Grecia
+
+en: Spain
+it: Spagna
+
+en: Tunisia
+it:
+
+en: Croatia
+it: Croazia
+
+en: Turkey
+it: Turchia
+
+en: Malta
+it:
+
+en: Albania
+it:
+
+en: Sicily
+it: Sicilia
+
+en: Sardinia
+it: Sardegna
+
+en: Corsica
+it:
+
+en: Crete
+it: Creta
+
+en: Central Greece
+it: Grecia Centrale
+
+en: Balearic Islands
+it: Isole Baleari
+
+en: North Aegean
+it: Egeo del Nord
+
+en: South Aegean
+it: Egeo del Sud
+
+en: Ionian Islands
+it: Isole Ionie
+
+en: Adriatic Croatia
+it: Croazia adriatica
+
+en: A story · tabelline 0.2
+it: Una storia · tabelline 0.2
+
+en:
+The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
+Sicily to rocks that only just have a name. This is a tour of them in tables: their shapes and
+sizes, who ruled them, how they live now, how people get there, and when to go.
+it:
+Il Mediterraneo ha migliaia di isole, e Wikipedia ne elenca 195 per superficie, dalla Sicilia a
+scogli che hanno appena un nome. Questo è un giro tra loro in tabelle: le forme e le dimensioni,
+chi le ha governate, come si vive oggi, come ci si arriva e quando andarci.
+
+en:
+Green cards like this one are about how the tables are made. Every table here is made with
+tabelline 0.2: this story uses what 0.2 added that the [FOSDEM story](../fosdem/) does not, and
+a new kind of nanoplot made for it, the *shape*. The data was gathered and shaped with
+[nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim, in a story of its own,
+[The islands' data, made with nanuq](../isole-data/); this page only reads its CSV files.
+*Show code* under a table opens the Nim that made it. The green cards can be skipped: the rest
+of the text is about the islands.
+it:
+Le schede verdi come questa raccontano come sono fatte le tabelle. Ogni tabella qui è fatta con
+tabelline 0.2: questa storia usa ciò che la 0.2 ha aggiunto e che la [storia del FOSDEM](../fosdem/)
+non usa, e un nuovo tipo di nanoplot fatto apposta, la *forma*. I dati sono stati raccolti e
+preparati con [nanuq](https://github.com/pietroppeter/nanuq), Polars per Nim, in una storia a sé,
+[The islands' data, made with nanuq](../isole-data/) (in inglese); questa pagina legge soltanto i
+suoi file CSV. *Show code*, sotto una tabella, apre il codice Nim che l'ha fatta; il codice è
+lo stesso della pagina inglese, e il testo passa per `tr`, che lo traduce. Le schede verdi si
+possono saltare: il resto del testo parla delle isole.
+
+en: Southern Italy and Sicily, south at the top
+it: Italia meridionale e Sicilia, con il sud in alto
+
+en: source
+it: fonte
+
+en: A thousand things at once
+it: Mille cose insieme
+
+en:
+> Qu'est-ce que la Méditerranée ? Mille choses à la fois.
+
+*What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
+who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape, he went on, but
+countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
+islands. Braudel looked at it in three times: the slow time of the land, the sea and the
+climate, the long time of states, economies and peoples, and the quick time of events. The
+tables below follow him in three parts, each with the colour of its circles: first the islands'
+shapes, then who ruled them and how they live, then getting there and when to go, where events
+show up as a dip in a line.
+
+Braudel is the first of the voices that guide this story: along the way it quotes passages from
+books about the Mediterranean and its islands (Matvejević, *The Passenger*, Ramondino, Deleuze,
+Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
+the others, and each passage was checked against its source. They are all listed under
+[To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
+Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
+credited under it; all of them, with the ones left out, are in
+[Photos of the Mediterranean, by the story](../isole-photos/).
+
+Braudel's complex of seas, west and east: the 22 main islands of this story in blue, with their
+names, and the other 173 a dot in the colour of the circles.
+it:
+> Qu'est-ce que la Méditerranée ? Mille choses à la fois.
+
+*Che cos'è il Mediterraneo? Mille cose insieme*, scrisse Fernand Braudel, lo storico che passò
+la vita su questo mare, in *La Méditerranée* (1977). Non un paesaggio, continuava, ma
+innumerevoli paesaggi; nel suo grande libro del 1949 non è un mare ma un complesso di mari,
+pieno di isole. Braudel lo guardava in tre tempi: il tempo lento della terra, del mare e del
+clima, il tempo lungo degli stati, delle economie e dei popoli, e il tempo breve degli eventi.
+Le tabelle qui sotto lo seguono in tre parti, ciascuna con il colore dei suoi cerchi: prima le
+forme delle isole, poi chi le ha governate e come ci si vive, poi come arrivarci e quando
+andarci, dove gli eventi si vedono come un avvallamento in una linea.
+
+Braudel è la prima delle voci che guidano questa storia: lungo la strada cita passi di libri sul
+Mediterraneo e sulle sue isole (Matvejević, *The Passenger*, Ramondino, Deleuze, Lawrence,
+Anedda), e le tabelle rispondono. Pietro ha suggerito alcuni dei libri, Claude ha trovato gli
+altri, e ogni passo è stato controllato sulla sua fonte. Sono tutti elencati in
+[Letture](#letture), alla fine. Le foto sopra i titoli sono state scelte allo stesso modo: Claude
+ha raccolto immagini con licenza libera per ogni sezione, Pietro ne ha scelta una, e ciascuna ha
+i crediti sotto di sé; tutte, anche quelle scartate, sono in
+[Photos of the Mediterranean, by the story](../isole-photos/) (in inglese).
+
+Il complesso di mari di Braudel, a ovest e a est: le 22 isole principali di questa storia in
+blu, con il loro nome, e le altre 173 un punto del colore dei cerchi.
+
+en: The western Mediterranean, from the Alboran Sea to the Adriatic and Malta
+it: Il Mediterraneo occidentale, dal Mare di Alborán all'Adriatico e a Malta (i nomi della carta sono in inglese)
+
+en: The eastern Mediterranean, from the Ionian Sea to Cyprus
+it: Il Mediterraneo orientale, dallo Ionio a Cipro
+
+en:
+The maps are not tables: they are two drawings made with the data, by
+[map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
+from OpenStreetMap's coast and the islands' places on Wikidata. Where each name goes was
+written by Claude, the AI that wrote this story. Their colours are the page's, so they change
+with its look.
+it:
+Le carte non sono tabelle: sono due disegni fatti con i dati, da
+[map.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/map.nim),
+con la costa di OpenStreetMap e la posizione delle isole su Wikidata. Dove va ogni nome l'ha
+scritto Claude, l'IA che ha scritto questa storia. I colori sono quelli della pagina, e cambiano
+con il suo aspetto. Le carte, per ora, hanno i nomi in inglese.
+
+en: Etna's plume
+it: Il pennacchio dell'Etna
+
+en: One island to start
+it: Un'isola per cominciare
+
+en:
+Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
+
+> Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
+
+*First of all, let us choose a starting point: a shore or a scene, a port or an event, a voyage
+or a tale.* This story starts from an island: the largest of the Mediterranean, in one row: its outline, how big it is, how many live
+there, and how high it goes.
+it:
+Il *Breviario mediterraneo* di Predrag Matvejević (1987) si apre con una scelta:
+
+> Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
+
+Questa storia parte da un'isola: la più grande del Mediterraneo, in una riga: il suo profilo,
+quanto è grande, quanti ci vivono e quanto sale in alto.
+
+en: area, {{km^2}}
+it: superficie, {{km^2}}
+
+en: highest, {{m}}
+it: vetta, {{m}}
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); [Wikidata](https://www.wikidata.org/); the outline © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); [Wikidata](https://www.wikidata.org/); il profilo © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+
+en:
+The outline is a nanoplot of a new kind, `plotType = "shape"`: the cell holds a record of `x` and
+`y` (here kilometres east and north of the island's middle), and the shape joins the points in
+their order, closes them and fills them, at the same scale across and up. OpenStreetMap's
+coastline has 56,300 points around Sicily; the data's extract step kept 120. The units in the labels,
+`{{km^2}}` and `{{m}}`, are gt's units syntax, new in 0.2: "km²" in HTML and in text.
+it:
+Il profilo è un nanoplot di un tipo nuovo, `plotType = "shape"`: la cella contiene un record di
+`x` e `y` (qui i chilometri a est e a nord dal centro dell'isola), e la forma unisce i punti nel
+loro ordine, li chiude e li riempie, alla stessa scala in orizzontale e in verticale. La costa di
+OpenStreetMap ha 56.300 punti attorno alla Sicilia; il passo di estrazione dei dati ne ha tenuti
+120. Le unità nelle etichette, `{{km^2}}` e `{{m}}`, sono la sintassi delle unità di gt, nuova
+nella 0.2: "km²" in HTML e nel testo. I numeri sono scritti all'italiana perché la tabella ha
+`locale = lang`.
+
+en:
+Sicily is a triangle of 25,834 km² with five million people, and its highest point is Etna,
+3,340 m, the highest active volcano in Europe outside the Caucasus.
+it:
+La Sicilia è un triangolo di 25.834 km² con cinque milioni di abitanti, e il suo punto più alto
+è l'Etna, 3.340 m, il vulcano attivo più alto d'Europa fuori dal Caucaso.
+
+en: The dolphins of Knossos
+it: I delfini di Cnosso
+
+en: Twenty-two islands
+it: Ventidue isole
+
+en:
+Most of the 195 are small: only 21 are larger than 400 km², and Malta, the island of a country,
+is the 34th. These 22 are the *main islands* of this story, each drawn with its outline.
+
+> Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
+> forma di coralli, altre di sirena.
+
+*There are islands shaped like fish, a dolphin, say, or a torpedo ray, others shaped like
+corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
+di Spagna* (2001).
+it:
+Quasi tutte le 195 sono piccole: solo 21 superano i 400 km², e Malta, l'isola di uno stato, è la
+34ª. Queste 22 sono le *isole principali* di questa storia, ognuna disegnata con il suo profilo.
+
+> Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
+> forma di coralli, altre di sirena.
+
+Così scriveva Fabrizia Ramondino di Maiorca, in *Guerra di infanzia e di Spagna* (2001).
+
+en: country
+it: paese
+
+en: Wikipedia's list gives no population for Cyprus, divided since 1974.
+it: La lista di Wikipedia non dà la popolazione di Cipro, divisa dal 1974.
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (superficie, popolazione); profili © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+
+en:
+`fmtCountry` writes a country's name from its code (`IT` is Italy), from CLDR, so the data keeps
+the code. The rule after the stub moves past the shape: `tabOptions(stubBorderStyle = "none")`
+takes it away, and `style.borders` on the shape's cells draws it again. The total row is
+`grandSummaryRows`, formatted with `fmtInteger()` in its block. Each shape here is drawn at its
+own scale, as large as the cell allows.
+it:
+`fmtCountry` scrive il nome di un paese dal suo codice (`IT` è Italy), da CLDR, così i dati tengono
+il codice; ma solo in inglese, e `textTransform tr` lo traduce. La riga dopo lo stub si sposta
+oltre la forma: `tabOptions(stubBorderStyle = "none")` la toglie, e `style.borders` sulle celle
+della forma la ridisegna. La riga del totale è `grandSummaryRows`, formattata con `fmtInteger()`
+nel suo blocco. Ogni forma qui è disegnata alla sua scala, grande quanto la cella permette.
+
+en:
+Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
+Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
+Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
+how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
+it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one (the census of 2001
+counted a single man):
+it:
+Malta è di gran lunga la più affollata: 1.664 persone per km², più di otto volte la Sicilia.
+Cherso e Veglia hanno la stessa superficie nella lista, 405,78 km², ma Veglia ha 19.383 abitanti
+e Cherso 3.079, uno ogni 13 ettari. Tra tutte le isole abitate, in ordine di quanti vivono su
+ogni km², Malta è ancora prima, seguita da due isole del Golfo di Napoli; all'altro capo, poche
+persone su molta roccia, e all'Asinara, la vecchia isola carcere, una sola (il censimento del
+2001 contò un solo uomo):
+
+en: per {{km^2}}
+it: per {{km^2}}
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean): the islands where people live.
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean): le isole abitate.
+
+en:
+The density is computed before the table, and the rows are put in its order: `tabellaPreview`
+shows the first and the last rows of the data as it is. `dataColor` colours each density on a
+scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
+it:
+La densità è calcolata prima della tabella, e le righe sono messe in quell'ordine:
+`tabellaPreview` mostra le prime e le ultime righe dei dati così come sono. `dataColor` colora
+ogni densità su una scala dal bianco al rosso, con lo stesso `domain` per ogni riga, da 0 a
+1.700 persone per km². `tabellaPreview` non prende un `locale`, e la lingua dei numeri si dà
+dopo, con `t.locale = lang`.
+
+en: Lemnos, in Piri Reis's Book of the Sea
+it: Lemno, nel Libro del mare di Piri Reis
+
+en: At the same scale
+it: Alla stessa scala
+
+en:
+Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
+the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
+times Malta. Grouped by country, each with the share of its country's land it is. Alone, an
+outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)
+warns against that look:
+
+> Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
+> tratta di una mistificazione.
+
+*Looking at a map, an island gives us the illusion of being a small world of its own. […] But
+it is a mystification.*
+it:
+Disegnata alla sua scala, Malta sembra grande quanto la Sicilia. Con `autoscale` ogni forma
+prende la scala della più grande della colonna, e le dimensioni si possono confrontare: la
+Sicilia è cento volte Malta. Raggruppate per paese, ciascuna con la parte del territorio del suo
+paese che occupa. Da solo, un profilo sembra un mondo a sé; il libro di *The Passenger* sulla
+Sicilia (Iperborea, 2024) mette in guardia da questo sguardo:
+
+> Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
+> tratta di una mistificazione.
+
+en: of its country
+it: del suo paese
+
+en:
+Areas: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); the countries' areas from their articles (France: metropolitan).
+it:
+Superfici: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean); quelle dei paesi dalle loro voci (Francia: metropolitana).
+
+en:
+`rowGroupAsColumn = true` puts the country in a column of its own, left of the islands, instead
+of a row above them. `fmtFraction` writes the share as a fraction, with up to two digits
+below (`accuracy = "med"`): Sicily is 1/12 of Italy, Crete 1/16 of Greece. `summaryRows` adds them up
+for each country, in the format of their column.
+it:
+`rowGroupAsColumn = true` mette il paese in una colonna sua, a sinistra delle isole, invece che
+in una riga sopra di esse. `fmtFraction` scrive la quota come frazione, con al più due cifre al
+denominatore (`accuracy = "med"`): la Sicilia è 1/12 dell'Italia, Creta 1/16 della Grecia.
+`summaryRows` le somma per ogni paese, nel formato della loro colonna.
+
+en:
+Greece has twelve of the 22, and together they are a seventh of its land. Cyprus and
+Malta are the islands of their countries: Cyprus all of it, Malta the larger of its three.
+it:
+La Grecia ne ha dodici delle 22, e insieme sono un settimo del suo territorio. Cipro e Malta sono
+le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle sue tre.
+
+en: Strombolicchio
+it:
+
+en: All 195
+it: Tutte le 195
+
+en:
+*Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
+set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
+with the place of each in the list:
+it:
+*Non c'è alcuna unità oggettiva nell'insieme delle isole*, scriveva Gilles Deleuze in *L'isola
+deserta*. La lista intera è lunga. Un'anteprima ne mostra i due capi, le isole più grandi e le
+più piccole, con il posto di ciascuna nella lista:
+
+en: {{km^2}}
+it:
+
+en:
+`tabellaPreview(data, topN, bottomN)` makes a table of the first and last rows of a big one,
+with the place of each row and a line for the rows left out between them. Three islands have no
+outline: Wikidata has no place for them, so there is no point to find their coast from.
+it:
+`tabellaPreview(data, topN, bottomN)` fa una tabella delle prime e delle ultime righe di una
+grande, con il posto di ogni riga e una riga per quelle lasciate fuori in mezzo. Tre isole non
+hanno profilo: Wikidata non ha la loro posizione, e non c'è un punto da cui cercarne la costa.
+
+en:
+And here they all are, in the order of the list, each at its own scale and with its place: the
+22 main islands in blue, the others in the colour of the circles. Malta, the island of a country, is 34th.
+it:
+Ed eccole tutte, nell'ordine della lista, ciascuna alla sua scala e con il suo posto: le 22 isole
+principali in blu, le altre nel colore dei cerchi. Malta, l'isola di uno stato, è la 34ª.
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area. Outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)); the three without one have no place on Wikidata.
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), per superficie. Profili © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)); le tre senza profilo non hanno una posizione su Wikidata.
+
+en:
+A grid is a table too: 195 islands in rows of five, each cell a shape over its place and name.
+The data is built for it, a column of shapes and one of names for each place in the row;
+`colsMerge` puts the two in one cell with the pattern `{1}<br>{2}`. `fmtNanoplot` takes `rows`,
+and a later format of a cell replaces an earlier one, so the main islands are drawn again in
+blue, one cell at a time. `columnLabelsHidden` leaves out the labels a grid does not need.
+it:
+Anche una griglia è una tabella: 195 isole in righe di cinque, ogni cella una forma sopra il suo
+posto e il suo nome. I dati sono costruiti apposta, una colonna di forme e una di nomi per ogni
+posto della riga; `colsMerge` mette le due in una cella con lo schema `{1}<br>{2}`. `fmtNanoplot`
+accetta `rows`, e un formato successivo di una cella sostituisce il precedente, così le isole
+principali sono ridisegnate in blu, una cella alla volta. `columnLabelsHidden` toglie le
+etichette che a una griglia non servono.
+
+en:
+By country, the islands' sizes make a box plot each, for the countries with three or more: the
+box holds the middle half of a country's islands, the whiskers the rest, and dots the islands
+far larger than the others. Each box has its own scale, up to the country's largest island:
+everywhere most islands are small and a few are very large.
+
+Braudel called the islands *isolated worlds* and *lands of hunger*, and then qualified it:
+isolation is relative, and Sicily, a granary of the whole sea, was no such world. The
+small islands still are: only 45 of the 195 have an airport or a World Heritage site, and past
+the hundredth in size only Lampedusa and Kastellorizo have an airport.
+it:
+Per paese, le dimensioni delle isole fanno un box plot ciascuno, per i paesi che ne hanno tre o
+più: la scatola contiene la metà centrale delle isole di un paese, i baffi il resto, e i punti le
+isole molto più grandi delle altre. Ogni scatola ha la sua scala, fino all'isola più grande del
+paese: ovunque quasi tutte le isole sono piccole e poche sono molto grandi.
+
+Braudel chiamava le isole *mondi isolati* e *terre della fame*, e poi lo correggeva:
+l'isolamento è relativo, e la Sicilia, granaio di tutto il mare, non era un mondo simile. Le
+isole piccole lo sono ancora: solo 45 delle 195 hanno un aeroporto o un sito del Patrimonio
+mondiale, e oltre la centesima per superficie solo Lampedusa e Castelrosso hanno un aeroporto.
+
+en: their areas, {{km^2}}
+it: le superfici, {{km^2}}
+
+en: largest
+it: la più grande
+
+en: together
+it: insieme
+
+en:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), by area.
+it:
+Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean), per superficie.
+
+en:
+A box plot is one of the three nanoplots ported from Great Tables (`plotType = "boxplot"`); the
+cell holds every value, here the areas as a text of numbers. Without `autoscale` each box has
+its own axis. Hover over a box to read its quartiles.
+it:
+Il box plot è uno dei tre nanoplot portati da Great Tables (`plotType = "boxplot"`); la cella
+contiene tutti i valori, qui le superfici come un testo di numeri. Senza `autoscale` ogni scatola
+ha il suo asse. Passando sopra una scatola se ne leggono i quartili.
+
+en: Venice, in Bordone's book of islands
+it: Venezia, nell'isolario di Bordone
+
+en: Who ruled them
+it: Chi le ha governate
+
+en:
+Islands in the middle of a sea are crossroads, and every power of the Mediterranean took its
+turn. Braudel saw them for the parts they played as much as for their land: lairs of fishermen
+and pirates, places people left and places people came to. The powers that ruled each main island, a dot each, in the order they came, from the first
+peoples to the last empires, and the state each island is in today; the islands from the largest:
+it:
+Le isole in mezzo a un mare sono crocevia, e ogni potenza del Mediterraneo ha avuto il suo turno.
+Braudel le guardava per i ruoli che hanno avuto quanto per la loro terra: covi di pescatori e di
+pirati, luoghi da cui si partiva e in cui si arrivava. Le potenze che hanno governato ogni isola
+principale, un punto ciascuna, nell'ordine in cui sono arrivate, dai primi popoli agli ultimi
+imperi, e lo stato in cui ogni isola è oggi; le isole dalla più grande:
+
+en: Sicilian
+it: siciliano
+
+en: Sardinian
+it: sardo
+
+en: Turkish
+it: turco
+
+en: Corsican
+it: corso
+
+en: Catalan
+it: catalano
+
+en: Berber
+it: berbero
+
+en: Chakavian
+it: ciacavo
+
+en: Maltese
+it: maltese
+
+en: first peoples
+it: primi popoli
+
+en: Greeks
+it: Greci
+
+en: Phoenicians, Carthage
+it: Fenici, Cartagine
+
+en: Rome
+it: Roma
+
+en: Byzantium
+it: Bisanzio
+
+en: Arabs
+it: Arabi
+
+en: Normans, Franks
+it: Normanni, Franchi
+
+en: Venice
+it: Venezia
+
+en: Genoa, Pisa
+it: Genova, Pisa
+
+en: Aragon, Spain
+it: Aragona, Spagna
+
+en: Knights
+it: Cavalieri
+
+en: Ottomans
+it: Ottomani
+
+en: Britain
+it: Regno Unito
+
+en: Hungary, Austria
+it: Ungheria, Austria
+
+en: {1}<br>since&nbsp;{2}
+it: {1}<br>dal&nbsp;{2}
+
+en: today
+it: oggi
+
+en: ancient
+it: antichità
+
+en: middle ages
+it: medioevo
+
+en: modern
+it: età moderna
+
+en: Each island's history on Wikipedia, read and summed up by Claude, the AI that wrote this story: a dot, not the whole story.
+it: La storia di ogni isola su Wikipedia, letta e riassunta da Claude, l'IA che ha scritto questa storia: un punto, non tutta la storia.
+
+en:
+One column for each power, a dot where it ruled: the dots are made before the table, a "●" or
+nothing, and `colsLabelRotate` turns the fifteen labels on their side so the columns stay as
+narrow as a dot (`label` keeps each one on a single line, with no-break spaces). The three `tabSpanner`s name the ages over them, `tabStyle` colours each
+age's dots, and shades every other column, label and dots, so each label stays with its dots. `colsMerge` writes the state and the year in one cell, with the pattern
+`{1}<br>since&nbsp;{2}`, and the table is set a size smaller (`tabOptions`) to fit a phone. Under each island's name, in
+italics, its own language, beside the state's: the stub is Markdown (`fmtMarkdown`).
+it:
+Una colonna per ogni potenza, un punto dove ha governato: i punti sono fatti prima della tabella,
+un "●" o niente, e `colsLabelRotate` gira le quindici etichette su un fianco perché le colonne
+restino strette come un punto (`label` tiene ognuna su una riga, con spazi non separabili). I tre
+`tabSpanner` danno il nome alle epoche sopra di esse, `tabStyle` colora i punti di ogni epoca e
+ombreggia una colonna sì e una no, etichetta e punti, perché ogni etichetta resti con i suoi
+punti. `colsMerge` scrive lo stato e l'anno in una cella, con lo schema `{1}<br>dal&nbsp;{2}`, e
+la tabella è un po' più piccola (`tabOptions`) per stare in un telefono. Sotto il nome di ogni
+isola, in corsivo, la sua lingua, accanto a quella dello stato: lo stub è Markdown
+(`fmtMarkdown`).
+
+en:
+*They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
+Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
+Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
+islands that became states: Cyprus in 1960, Malta in 1964, and Cres and Krk with Croatia in 1991.
+it:
+*Dicono che né Romani né Fenici, né Greci né Arabi abbiano mai sottomesso la Sardegna*, scriveva
+D. H. Lawrence in *Mare e Sardegna* (1921). La tabella dice altro: Cartagine, Roma, Bisanzio,
+l'Aragona e i Savoia sono arrivati tutti. Roma e Bisanzio le hanno governate quasi tutte. Le
+ultime a entrare nello stato in cui sono oggi sono le isole che sono diventate stati: Cipro nel
+1960, Malta nel 1964, e Cherso e Veglia con la Croazia nel 1991.
+
+en: Palermo cathedral, about 1900
+it: La cattedrale di Palermo, intorno al 1900
+
+en: World Heritage
+it: Patrimonio mondiale
+
+en:
+UNESCO lists 28 World Heritage properties on the islands. Sicily has six, Malta three, Cyprus
+three. Some are one place; others are several, a serial property in UNESCO's words: the late
+Baroque towns of the Val di Noto are eight towns, and Malta's megalithic temples are seven, on Malta and Gozo.
+it:
+L'UNESCO elenca 28 siti del Patrimonio mondiale sulle isole. La Sicilia ne ha sei, Malta tre,
+Cipro tre. Alcuni sono un luogo solo; altri sono diversi, un sito seriale nelle parole
+dell'UNESCO: le città tardo barocche del Val di Noto sono otto, e i templi megalitici di Malta
+sono sette, tra Malta e Gozo. I nomi dei siti sono quelli inglesi di Wikidata.
+
+en: listed
+it: iscritto
+
+en: places
+it: luoghi
+
+en:
+[UNESCO's list](https://whc.unesco.org/en/list/) as Wikidata has it; a property is placed on an island by the outline that holds its places. A mountain marks a natural property.
+it:
+[La lista dell'UNESCO](https://whc.unesco.org/en/list/) come la riporta Wikidata; un sito è posto su un'isola dal profilo che contiene i suoi luoghi. Una montagna segna un sito naturale.
+
+en:
+One table, two levels: each island is a row with its name in bold, and its properties follow,
+indented with `tabStubIndent` (new in 0.2), which moves a stub's text in by a step. The icons are
+Font Awesome's `landmark` and `mountain-sun`. Gozo, Hvar, Lipari, Patmos and the others are not
+among the 22 main islands, but have a property too.
+it:
+Una tabella, due livelli: ogni isola è una riga con il nome in grassetto, e i suoi siti seguono,
+rientrati con `tabStubIndent` (nuovo nella 0.2), che sposta il testo dello stub di un passo. Le
+icone sono `landmark` e `mountain-sun` di Font Awesome. Gozo, Lesina, Lipari, Patmo e le altre
+non sono tra le 22 isole principali, ma hanno anch'esse un sito.
+
+en: Luzzus in Marsaxlokk
+it: Luzzu a Marsaxlokk
+
+en: How they live now
+it: Come si vive oggi
+
+en:
+Eurostat measures the European Union by regions, and most of the main islands are a region of
+their own, or part of one: the Balearic Islands, the North and South Aegean, the Ionian Islands.
+Djerba, in Tunisia, is outside these numbers. The richness of a region is its gross domestic
+product per person, in *purchasing power standards*, euros that buy the same everywhere; each
+region's amount is written here the way its own language writes money.
+it:
+Eurostat misura l'Unione europea per regioni, e quasi tutte le isole principali sono una regione
+a sé, o parte di una: le Isole Baleari, l'Egeo del Nord e del Sud, le Isole Ionie.
+Gerba, in Tunisia, è fuori da questi numeri. La ricchezza di una regione è il suo prodotto
+interno lordo per abitante, in *standard di potere d'acquisto*, euro che comprano ovunque la
+stessa cosa; la cifra di ogni regione è scritta qui come la sua lingua scrive il denaro.
+
+en: per person
+it: per abitante
+
+en: EU = 100
+it: UE = 100
+
+en: jobless
+it: disoccupati
+
+en: GDP in PPS, 2024
+it: PIL in SPA, 2024
+
+en:
+Eurostat, as Wikipedia lists it: [GDP of the NUTS 2 regions](https://en.wikipedia.org/wiki/List_of_European_Union_regions_by_GDP) in 2024, [unemployment](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) in 2025.
+it:
+Eurostat, come lo riporta Wikipedia: [PIL delle regioni NUTS 2](https://en.wikipedia.org/wiki/List_of_European_Union_regions_by_GDP) nel 2024, [disoccupazione](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) nel 2025.
+
+en:
+The amounts are formatted in each region's locale: "24.500 €" in Italian, "34 500 €" in French,
+"€43,900" in Maltese English. tabelline 0.2 has every locale of CLDR (657 of them), and
+`fmtCurrency` takes `locale` and `rows`, so one column can speak several languages. The
+index is a nanoplot of single values: one bar per row from a shared zero, with a dashed line at
+the EU's 100. The rows below 75, where the EU's cohesion funds go first, are highlighted:
+`tabStyle` with a proc of the row, on the stub and the body.
+it:
+Le cifre sono formattate nel locale di ogni regione: "24.500 €" in italiano, "34 500 €" in
+francese, "€43,900" nell'inglese di Malta. tabelline 0.2 ha tutti i locale di CLDR (657), e
+`fmtCurrency` accetta `locale` e `rows`, così una colonna può parlare più lingue. L'indice è un
+nanoplot di valori singoli: una barra per riga da uno zero comune, con una linea tratteggiata al
+100 dell'UE. Le righe sotto 75, dove vanno per primi i fondi di coesione dell'UE, sono
+evidenziate: `tabStyle` con una proc della riga, sullo stub e sul corpo.
+
+en:
+The Balearic Islands and Malta are as rich as the European average, or richer, from tourism and,
+in Malta, finance and gaming. The North Aegean, Lesbos, Chios, Lemnos and Samos, is among the
+poorest regions of the Union, at 42.
+
+### Twenty years of work
+
+Unemployment, every year from 2006 to 2025: the line of each region against the median of the
+300 or so regions of Europe, its mean over the twenty years, and how much it moved around it.
+it:
+Le Baleari e Malta sono ricche quanto la media europea, o di più, grazie al turismo e, a Malta,
+alla finanza e al gioco. L'Egeo del Nord, Lesbo, Chio, Lemno e Samo, è tra le regioni più
+povere dell'Unione, a 42.
+
+### Vent'anni di lavoro
+
+La disoccupazione, ogni anno dal 2006 al 2025: la linea di ogni regione contro la mediana delle
+circa 300 regioni d'Europa, la sua media nei vent'anni, e quanto si è mossa attorno a essa.
+
+en: All regions (median)
+it: Tutte le regioni (mediana)
+
+en: mean ± sd
+it: media ± ds
+
+en: 2025
+it:
+
+en:
+Eurostat, as Wikipedia lists it: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).
+it:
+Eurostat, come lo riporta Wikipedia: [List of European regions by unemployment rate](https://en.wikipedia.org/wiki/List_of_European_regions_by_unemployment_rate) (%).
+
+en:
+`summaryColumns` adds a column for each aggregate, computed across the columns of each row:
+here the mean and the standard deviation of the twenty years. `colsMergeUncert` writes them as
+one value, "14.2 ± 4.1". `colsNanoplot` draws the twenty columns as a line in a new column and
+hides them; `colsUnhide` shows 2025 again. `xVals` gives each column its year, so `referenceX`
+can draw the dashed line at 2013 (both not from gt). The median of Europe's regions, a yardstick
+and not a region, is the shaded row in bold: `tabStyle` on the stub and the body of the rows
+`where` the region is the median's.
+it:
+`summaryColumns` aggiunge una colonna per ogni aggregato, calcolato tra le colonne di ogni riga:
+qui la media e la deviazione standard dei vent'anni. `colsMergeUncert` le scrive come un solo
+valore, "14,2 ± 4,1". `colsNanoplot` disegna le venti colonne come una linea in una colonna nuova
+e le nasconde; `colsUnhide` mostra di nuovo il 2025. `xVals` dà a ogni colonna il suo anno, così
+`referenceX` può disegnare la linea tratteggiata al 2013 (nessuno dei due viene da gt). La
+mediana delle regioni d'Europa, un metro e non una regione, è la riga ombreggiata in grassetto:
+`tabStyle` sullo stub e sul corpo delle righe `where` la regione è quella della mediana.
+
+en: Sicily in 2014, as the table writes it: **{sicily14}**
+it: La Sicilia nel 2014, come la scrive la tabella: **{sicily14}**
+
+en:
+Sicily's rate in 2014, in the next paragraph, is not typed: `extractCells` takes it from the
+table's cell, formatted as the table writes it, and the paragraph puts it in its text.
+it:
+Il tasso della Sicilia nel 2014, nel paragrafo che segue, non è scritto a mano: `extractCells` lo
+prende dalla cella della tabella, formattato come lo scrive la tabella (qui con la virgola), e il
+paragrafo lo mette nel suo testo.
+
+en:
+The crisis of the 2010s is a hill on every line, and the dashed line is 2013, the year the
+European Union had the most people out of work: in 2014 Sicily had {sicily14}% of its people
+out of work, the South Aegean more than one in five in 2013. Every region is back down now, and
+Malta, at 3.1%, has fewer out of work than almost anywhere in Europe.
+it:
+La crisi degli anni Dieci è una collina su ogni linea, e la linea tratteggiata è il 2013, l'anno
+in cui l'Unione europea ha avuto più disoccupati: nel 2014 la Sicilia aveva il {sicily14}% di
+disoccupati, l'Egeo del Sud più di uno su cinque nel 2013. Ogni regione ora è scesa di nuovo,
+e Malta, al 3,1%, ha meno disoccupati di quasi ogni altro luogo d'Europa.
+
+en: Capri's harbour, about 1880
+it: Il porto di Capri, intorno al 1880
+
+en: Getting there
+it: Come arrivarci
+
+en:
+> La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
+> bitte, sartie. Devi prendere una nave o un aereo.
+
+*The first lesson of islands is that you can't leave on foot. Water, air, wind, waves, ropes,
+bollards, shrouds. You have to take a ship or a plane*: the first lines of Antonella Anedda's
+*Isolatria* (2013), on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
+some since the 1960s; for each island, the sum of its airports (an island that has a large
+airport leaves its airstrips out). Every line starts in 2000 and ends in 2025, and the dashed
+line is 11 March 2020, when the World Health Organization called COVID-19 a pandemic: the dip
+right after it is the year without travel.
+it:
+> La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
+> bitte, sartie. Devi prendere una nave o un aereo.
+
+Sono le prime righe di *Isolatria* di Antonella Anedda (2013), sull'arcipelago della Maddalena.
+Quasi tutti i visitatori arrivano in aereo. Wikidata ha i passeggeri di 64 aeroporti sulle isole,
+anno per anno, alcuni dagli anni Sessanta; per ogni isola, la somma dei suoi aeroporti (un'isola
+con un grande aeroporto lascia fuori le sue piste minori). Ogni linea va dal 2000 al 2025, e la
+linea tratteggiata è l'11 marzo 2020, quando l'Organizzazione mondiale della sanità dichiarò il
+COVID-19 una pandemia: l'avvallamento subito dopo è l'anno senza viaggi.
+
+en: passengers a year, 2000 on
+it: passeggeri l'anno, dal 2000
+
+en: last count
+it: ultimo dato
+
+en: 2020
+it:
+
+en:
+Wikidata ([P3872](https://www.wikidata.org/wiki/Property:P3872)), the yearly counts of each airport, added up for each island; the last count is of 2022, of 2025 for Mallorca and Ibiza.
+it:
+Wikidata ([P3872](https://www.wikidata.org/wiki/Property:P3872)), i conteggi annuali di ogni aeroporto, sommati per ogni isola; l'ultimo dato è del 2022, del 2025 per Maiorca e Ibiza.
+
+en:
+The points of each line are placed by date (`x` is a list of ISO dates, "2019-07-01"), so a year
+without a count leaves a gap of the right width, and `expandX` makes every axis run from 2000
+to 2025: on an axis shared by the rows every plot has the same width, so the years line up.
+`referenceX` (new in tabelline 0.2, and not in gt or Great Tables) draws the dashed line at a date, with the date on hover. Each line has its own y axis, from its lowest year to its highest, so the dip of 2020
+shows on the small islands too.
+`fmtNumberSi` writes "33.8 M"; the last count is of 2022 for most islands.
+it:
+I punti di ogni linea sono messi per data (`x` è una lista di date ISO, "2019-07-01"), così un
+anno senza dato lascia un vuoto della larghezza giusta, e `expandX` fa andare ogni asse dal 2000
+al 2025: su un asse condiviso dalle righe ogni grafico ha la stessa larghezza, e gli anni si
+allineano. `referenceX` (nuovo in tabelline 0.2, e non in gt né in Great Tables) disegna la linea
+tratteggiata a una data, con la data al passaggio del mouse. Ogni linea ha il suo asse y,
+dall'anno più basso al più alto, così l'avvallamento del 2020 si vede anche sulle isole piccole.
+`fmtNumberSi` scrive "33,8 M"; l'ultimo dato è del 2022 per quasi tutte le isole.
+
+en: Lussinpiccolo, about 1900
+it: Lussinpiccolo, intorno al 1900
+
+en: When to go
+it: Quando andarci
+
+en:
+Every main island has a Mediterranean climate: hot dry summers, mild wet winters. The highest
+temperature of an average day, month by month, from the weather box of each island's main town
+on Wikipedia; and the sea, where a page has it. The Mediterranean is a sea of seas, and the
+islands are grouped by theirs: Wikidata puts each island in or beside a sea, a gulf or a strait,
+and the gulfs and straits are taken to the sea they are part of. Ten seas and the Strait of
+Sicily hold all but four of the 195 (the Îles d'Hyères and La Galite are in the open sea), the
+Aegean alone 90 of them; Sicily is on three, and here goes with the first. These are averages of the past, and the past is
+moving, as Giacomo Di Girolamo writes in *The Passenger*'s Sicily:
+
+> Una volta, dire Sicilia significava dire Mediterraneo. […] Adesso, dire Sicilia significa
+> quasi dire Tropici.
+
+*Once, to say Sicily was to say the Mediterranean. […] Now, to say Sicily is almost to say the
+Tropics.*
+it:
+Ogni isola principale ha un clima mediterraneo: estati calde e secche, inverni miti e piovosi. La
+temperatura massima di un giorno medio, mese per mese, dal riquadro del clima della città
+principale di ogni isola su Wikipedia; e il mare, dove una pagina lo riporta. Il Mediterraneo è
+un mare di mari, e le isole sono raggruppate per il loro: Wikidata mette ogni isola in un mare,
+un golfo o uno stretto, o accanto, e golfi e stretti sono ricondotti al mare di cui fanno parte.
+Dieci mari e il Canale di Sicilia contengono tutte le 195 tranne quattro (le isole di Hyères e La
+Galite sono in mare aperto), l'Egeo da solo 90; la Sicilia è su tre, e qui va con il primo. Sono
+medie del passato, e il passato si muove, come scrive Giacomo Di Girolamo nella Sicilia di
+*The Passenger*:
+
+> Una volta, dire Sicilia significava dire Mediterraneo. […] Adesso, dire Sicilia significa
+> quasi dire Tropici.
+
+en: Ionian
+it: Ionio
+
+en: Aegean
+it: Egeo
+
+en: Ligurian
+it: Mar Ligure
+
+en: Adriatic
+it: Adriatico
+
+en: Strait of Sicily
+it: Canale di Sicilia
+
+en: Levantine
+it: Mar di Levante
+
+en: Balearic
+it: Mar delle Baleari
+
+en: Tyrrhenian
+it: Tirreno
+
+en: Jan
+it: gen
+
+en: Feb
+it: feb
+
+en: Mar
+it: mar
+
+en: Apr
+it: apr
+
+en: May
+it: mag
+
+en: Jun
+it: giu
+
+en: Jul
+it: lug
+
+en: Aug
+it: ago
+
+en: Sep
+it: set
+
+en: Oct
+it: ott
+
+en: Nov
+it: nov
+
+en: Dec
+it: dic
+
+en: sea in Aug
+it: mare, ago
+
+en: high of an average day, {{degC}}
+it: massima di un giorno medio, {{degC}}
+
+en:
+Wikipedia, the weather box of each island's main town (Krk: Rijeka; Cres: Mali Lošinj; Cyprus: Nicosia, inland); the sea from tables beside them.
+it:
+Wikipedia, il riquadro del clima della città principale di ogni isola (Veglia: Fiume; Cherso: Lussinpiccolo; Cipro: Nicosia, nell'entroterra); il mare dalle tabelle accanto.
+
+en:
+The islands are grouped by their sea (`groupnameCol`), from west to east with `rowGroupOrder`,
+and in each sea by size. Twelve narrow columns: `colsLabelRotate(dir = "slanted")` (new in tabelline 0.2, and not in gt or Great Tables) turns their
+labels at 45 degrees, so the months keep their names and the columns stay as narrow as their
+numbers. `dataColor` colours each cell on a scale from cool blue to hot red
+over 5–38 °C, with the palette `rdbu`. `colsUnits` puts the unit after the sea's label; in the
+spanner it is written inside the label, `{{degC}}`.
+it:
+Le isole sono raggruppate per mare (`groupnameCol`), da ovest a est con `rowGroupOrder`, e in ogni
+mare per superficie. Dodici colonne strette: `colsLabelRotate(dir = "slanted")` (nuovo in
+tabelline 0.2, e non in gt né in Great Tables) inclina le etichette a 45 gradi, così i mesi
+tengono il loro nome e le colonne restano strette come i loro numeri. `dataColor` colora ogni
+cella su una scala dal blu fresco al rosso caldo tra 5 e 38 °C, con la palette `rdbu`.
+`colsUnits` mette l'unità dopo l'etichetta del mare; nello spanner è scritta dentro l'etichetta,
+`{{degC}}`.
+
+en:
+Nicosia, inland, reaches 37 °C in August; Cres and Krk, in the north of the Adriatic, are the
+coolest in winter, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind)) comes down from
+the mountains. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
+[meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
+own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
+in Tommaso Stella's Italian):
+
+> Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
+> anziché liquido.
+
+*Above the Mediterranean there is another sea: a turbulent, throbbing ocean of air instead of
+water.*
+it:
+Nicosia, nell'entroterra, arriva a 37 °C in agosto; Cherso e Veglia, nel nord dell'Adriatico,
+sono le più fresche d'inverno, quando la [bora](https://it.wikipedia.org/wiki/Bora_(vento))
+scende dai monti. Il mare è più caldo in agosto, da 26 a 28 °C al sud, e nell'Egeo il
+[meltemi](https://it.wikipedia.org/wiki/Meltemi) soffia tutta l'estate. I venti sono un mare a
+sé, come scrive Nick Hunt in *Mediterraneo*, il libro di The Passenger su questo mare (Iperborea,
+2023, nella traduzione di Tommaso Stella):
+
+> Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
+> anziché liquido.
+
+en: Rabbit Beach, Lampedusa
+it: La spiaggia dei Conigli, Lampedusa
+
+en: Something to see, a beach, a taste
+it: Da vedere, una spiaggia, un sapore
+
+en:
+To end, one thing to see, a beach and a taste for each main island: a starting point, chosen
+by Claude, the AI that wrote this story, from what Wikipedia says of each island, each with its
+page on Wikipedia. Predrag Matvejević, whose *Mediterranean Breviary*
+(1987) is a tour of the sea's shores, ports and islands, wrote later a whole book on bread,
+*Pane nostro* (2010). A taste is a good way in.
+it:
+Per finire, una cosa da vedere, una spiaggia e un sapore per ogni isola principale: un punto di
+partenza, scelto da Claude, l'IA che ha scritto questa storia, da ciò che Wikipedia dice di ogni
+isola, ciascuno con la sua pagina su Wikipedia (in inglese). Predrag Matvejević, il cui
+*Breviario mediterraneo* (1987) è un giro per le rive, i porti e le isole di questo mare, scrisse
+poi un libro intero sul pane, *Pane nostro* (2010). Un sapore è un buon modo per entrare.
+
+en: Valley of the Temples
+it: la Valle dei Templi
+
+en: Su Nuraxi
+it:
+
+en: Paphos
+it: Pafo
+
+en: the Calanques de Piana
+it: le Calanche di Piana
+
+en: Knossos
+it: Cnosso
+
+en: the Dimosari Gorge
+it: la gola di Dimosari
+
+en: the Serra de Tramuntana
+it: la Serra de Tramuntana
+
+en: the Petrified Forest
+it: la foresta pietrificata
+
+en: the Medieval City
+it: la città medievale
+
+en: Pyrgi
+it:
+
+en: Melissani Cave
+it: la grotta di Melissani
+
+en: the talaiots
+it: i talaiot
+
+en: the Old Town
+it: la città vecchia
+
+en: Dalt Vila
+it:
+
+en: El Ghriba
+it:
+
+en: Poliochni
+it: Poliochni
+
+en: the Heraion
+it: l'Heraion
+
+en: the Portara
+it: la Portara
+
+en: the Blue Caves
+it: le Grotte Azzurre
+
+en: Lubenice
+it:
+
+en: the Baška tablet
+it: la lapide di Bescanuova
+
+en: Valletta
+it: La Valletta
+
+en: San Vito Lo Capo
+it:
+
+en: La Pelosa
+it:
+
+en: Fig Tree Bay
+it:
+
+en: Palombaggia
+it:
+
+en: Elafonisi
+it:
+
+en: Chiliadou
+it:
+
+en: Cala Mondragó
+it:
+
+en: Skala Eresou
+it:
+
+en: Lindos
+it:
+
+en: Mavra Volia
+it:
+
+en: Myrtos
+it:
+
+en: Cala Macarella
+it:
+
+en: Paleokastritsa
+it:
+
+en: Ses Salines
+it:
+
+en: Sidi Mahrez
+it:
+
+en: the Gomati dunes
+it: le dune di Gomati
+
+en: Tsampou
+it:
+
+en: Plaka
+it:
+
+en: Navagio
+it:
+
+en: Sveti Ivan
+it:
+
+en: Vela plaža
+it:
+
+en: Golden Bay
+it:
+
+en: arancini
+it:
+
+en: culurgiones
+it:
+
+en: halloumi
+it:
+
+en: brocciu
+it:
+
+en: dakos
+it:
+
+en: ensaïmada
+it:
+
+en: ouzo
+it:
+
+en: mastic
+it: il mastice
+
+en: Kefalonian meat pie
+it: la torta di carne di Cefalonia
+
+en: Mahón cheese
+it: il formaggio di Mahón
+
+en: pastitsada
+it:
+
+en: flaó
+it:
+
+en: Samos muscat
+it: il moscato di Samo
+
+en: graviera
+it:
+
+en: Žlahtina wine
+it: il vino Žlahtina
+
+en: pastizzi
+it:
+
+en: see
+it: vedere
+
+en: swim
+it: nuotare
+
+en: taste
+it: assaggiare
+
+en: Chosen by Claude, the AI that wrote this story; links to Wikipedia.
+it: Scelti da Claude, l'IA che ha scritto questa storia; i link portano a Wikipedia.
+
+en:
+The links are Markdown, `[Knossos](https://...)`, shown by `fmtMarkdown`; the icons in the
+labels are Font Awesome's, as SVG, from `iconSvg`, inside `html()` so the label keeps them.
+it:
+I link sono Markdown, `[Cnosso](https://...)`, mostrati da `fmtMarkdown`; le icone nelle
+etichette sono di Font Awesome, in SVG, da `iconSvg`, dentro `html()` perché l'etichetta le tenga.
+
+en: Al-Idrisi's map, south at the top
+it: La carta di al-Idrisi, con il sud in alto
+
+en: To read more
+it: Letture
+
+en:
+Three books on the whole sea, which this story borrows from:
+
+- Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II*
+  (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel).
+- Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*;
+  in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography
+  told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of
+  islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
+- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
+  (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
+  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its
+  books on Sicily (2024) and Sardinia (2026).
+
+And the others quoted along the way, in the order the story meets them:
+
+- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca,
+  where the islands have the shapes of fish and mermaids.
+  [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
+- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
+  2024): its introduction, on the island that looks like a world of its own on a map; and
+  Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical
+  ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
+- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert
+  islands, where the island is what the sea surrounds.
+  [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze).
+- D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921):
+  a week's journey from Sicily to Sardinia and back, in the winter of 1921.
+- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the
+  islands off Sardinia where her family comes from.
+  [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
+- Nick Hunt, on the winds, in *Mediterraneo* (above):
+  [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
+
+## How this story is built
+
+From zero, in four layers. How the data was gathered, cleaned and checked is a story of its
+own: [The islands' data, made with nanuq](../isole-data/).
+
+**1. The sources** are open: Wikipedia's *List of islands in the Mediterranean* (the 195 islands,
+their area, population and main town), Wikidata (each island's place and highest point, World
+Heritage sites, airports and their passengers), the outlines of OpenStreetMap (© OpenStreetMap contributors, ODbL),
+the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's regional figures
+(Eurostat's own site could not be read where this was made).
+
+**2. The tables of the data** are made in three steps, in `docs/stories/data/isole/src/`:
+`fetch.nim` downloads, `extract.nim` (standard library) finds each island's outline and what is
+on it and reads the wikitext, and `process.nim`, written with
+[nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim), joins, cleans and counts
+them into the CSV files this page reads. Three small tables are written by Claude, not gathered: the regions,
+the history and the highlights.
+
+**3. The shapes** are OpenStreetMap's land polygons, which follow the coast to a few metres: for each island, the polygon
+that holds its point on Wikidata, in kilometres from its middle, simplified to at most 120
+points with the [Douglas–Peucker algorithm](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm):
+it joins the two ends of a coastline with a straight line, keeps the point farthest from it, and
+does the same again on each side, until no point left out is farther than a set distance, so
+the capes and bays that give an island its shape stay and the small wiggles go. It was written
+for this story, with the standard library, in `extract.nim` (`douglasPeucker` and `simplify`;
+[the data story](../isole-data/#outlines) shows the whole file). The outlines are numbers in two columns, `x`
+and `y`, and a record of the two is a cell of a shape nanoplot.
+
+**4. The tables on this page** are tabelline 0.2, with `nbShowCode` running a cell of Nim and
+showing the table it makes, its code folded under it. What 0.2 brought that they use:
+it:
+Tre libri su tutto il mare, a cui questa storia prende in prestito:
+
+- Fernand Braudel, *Civiltà e imperi del Mediterraneo nell'età di Filippo II* (1949), e *Il
+  Mediterraneo* (1977, *La Méditerranée*): il mare come storia di tempi lenti.
+  [Braudel su Wikipedia](https://it.wikipedia.org/wiki/Fernand_Braudel).
+- Predrag Matvejević, *Breviario mediterraneo* (1987, *Mediteranski brevijar*): porti, fari, venti
+  e isole, una geografia raccontata come poesia. Scrisse anche un *Isolario Mediterraneo* (2000),
+  sul modello dei vecchi libri di isole.
+  [Matvejević su Wikipedia](https://it.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
+- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
+  (Iperborea, 2023): il mare di oggi in saggi e fotografie, con testi di David Abulafia, autore di
+  *Il grande mare* (2011), Nick Hunt sui venti, Annalisa Camilli, Rachel Roddy e altri; e i suoi
+  libri sulla Sicilia (2024) e sulla Sardegna (2026).
+
+E gli altri citati lungo la strada, nell'ordine in cui la storia li incontra:
+
+- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): un'infanzia a Maiorca,
+  dove le isole hanno la forma di pesci e di sirene.
+  [Ramondino su Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
+- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
+  2024): la sua introduzione, sull'isola che su una cartina sembra un mondo a sé; e "Tropico di
+  Sicilia" di Giacomo Di Girolamo, su un clima che diventa tropicale
+  ([un estratto sul Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
+- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): il suo primo saggio sulle
+  isole deserte, dove l'isola è ciò che il mare circonda.
+  [Deleuze su Wikipedia](https://it.wikipedia.org/wiki/Gilles_Deleuze).
+- D. H. Lawrence, *Mare e Sardegna* (1921, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia)):
+  una settimana di viaggio dalla Sicilia alla Sardegna e ritorno, nell'inverno del 1921.
+- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): le isole
+  al largo della Sardegna da cui viene la sua famiglia.
+  [Anedda su Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
+- Nick Hunt, sui venti, in *Mediterraneo* (sopra):
+  [un estratto sul Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
+
+## Come è fatta questa storia
+
+Da zero, in quattro strati. Come i dati sono stati raccolti, puliti e controllati è una storia a
+sé: [The islands' data, made with nanuq](../isole-data/) (in inglese).
+
+**1. Le fonti** sono aperte: la *List of islands in the Mediterranean* di Wikipedia (le 195
+isole, la superficie, la popolazione e la città principale), Wikidata (la posizione e la vetta di
+ogni isola, i siti del Patrimonio mondiale, gli aeroporti e i loro passeggeri, i nomi italiani), i
+profili di OpenStreetMap (© i contributori di OpenStreetMap, ODbL), i riquadri del clima delle
+città delle isole, e due liste di Wikipedia con i dati regionali di Eurostat (il sito di Eurostat
+non si poteva leggere dove questa storia è stata fatta).
+
+**2. Le tabelle dei dati** sono fatte in tre passi, in `docs/stories/data/isole/src/`:
+`fetch.nim` scarica, `extract.nim` (libreria standard) trova il profilo di ogni isola e ciò che ci
+sta sopra e legge il wikitesto, e `process.nim`, scritto con
+[nanuq](https://github.com/pietroppeter/nanuq) (Polars per Nim), unisce, pulisce e conta,
+scrivendo i file CSV che questa pagina legge. Tre piccole tabelle sono scritte da Claude, non
+raccolte: le regioni, la storia e i luoghi da vedere.
+
+**3. Le forme** sono i poligoni delle terre di OpenStreetMap, che seguono la costa a pochi metri:
+per ogni isola, il poligono che contiene il suo punto su Wikidata, in chilometri dal suo centro,
+semplificato ad al più 120 punti con
+l'[algoritmo di Douglas–Peucker](https://it.wikipedia.org/wiki/Algoritmo_di_Ramer-Douglas-Peucker):
+unisce i due capi di una costa con una linea retta, tiene il punto più lontano da essa, e rifà lo
+stesso da ciascun lato, finché nessun punto lasciato fuori è più lontano di una distanza data,
+così i capi e le baie che danno a un'isola la sua forma restano e le piccole increspature se ne
+vanno. È stato scritto per questa storia, con la libreria standard, in `extract.nim`
+(`douglasPeucker` e `simplify`; [la storia dei dati](../isole-data/#outlines) mostra il file
+intero). I profili sono numeri in due colonne, `x` e `y`, e un record dei due è una cella di un
+nanoplot di forma.
+
+**4. Le tabelle di questa pagina** sono tabelline 0.2, con `nbShowCode` che esegue una cella di
+Nim e mostra la tabella che fa, con il codice piegato sotto. Ciò che la 0.2 ha portato e che
+usano:
+
+en: shape nanoplots, `referenceX`, slanted labels (new)
+it: nanoplot di forma, `referenceX`, etichette inclinate (nuovi)
+
+en: box, line and bar nanoplots, `colsNanoplot`
+it: nanoplot a scatola, a linea e a barre, `colsNanoplot`
+
+en: units in labels, `colsUnits`
+it: unità nelle etichette, `colsUnits`
+
+en: `fmtCountry`, `fmtFraction`, `fmtNumberSi`
+it:
+
+en: every locale of CLDR
+it: tutti i locale di CLDR
+
+en: `colsLabelRotate`
+it:
+
+en: `summaryRows`, `grandSummaryRows`, `summaryColumns`
+it:
+
+en: `colsMergeRange`, `colsMergeUncert`, `colsMerge`
+it:
+
+en: `rowGroupAsColumn`, `tabStubIndent`
+it:
+
+en: `tabellaPreview`, `extractCells`
+it:
+
+en: `tabStyle` with a proc, `tabStyleBody`
+it: `tabStyle` con una proc, `tabStyleBody`
+
+en: lists and records in a cell
+it: liste e record in una cella
+
+en: `fmtIcon`, `iconSvg`
+it:
+
+en: every outline, getting there, when to go
+it: ogni profilo, come arrivarci, quando andarci
+
+en: sizes by country, unemployment, passengers, GDP
+it: superfici per paese, disoccupazione, passeggeri, PIL
+
+en: most tables
+it: quasi tutte le tabelle
+
+en: twenty-two islands, the same scale, getting there
+it: ventidue isole, alla stessa scala, come arrivarci
+
+en: how they live now
+it: come si vive oggi
+
+en: when to go
+it: quando andarci
+
+en: twenty-two islands, the same scale, all 195, twenty years of work
+it: ventidue isole, alla stessa scala, tutte le 195, vent'anni di lavoro
+
+en: who ruled them, twenty years of work, all 195
+it: chi le ha governate, vent'anni di lavoro, tutte le 195
+
+en: the same scale, World Heritage
+it: alla stessa scala, Patrimonio mondiale
+
+en: all 195, twenty years of work
+it: tutte le 195, vent'anni di lavoro
+
+en: how they live now, twenty years of work
+it: come si vive oggi, vent'anni di lavoro
+
+en: the outlines, who ruled them
+it: i profili, chi le ha governate
+
+en: World Heritage, something to see
+it: Patrimonio mondiale, da vedere
+
+en: where
+it: dove
+
+en:
+**5. The look and the photos.** The page opens in its own look, the Minoan one, after the frescoes
+of Crete and Thera and the vases of Athens (the switch at the top goes back to Munari). It was
+chosen in rounds, from eighteen sources, in the devlog post
+[Designing a Mediterranean look](../../devlog/mediterranean/). The photos over the headings were
+picked from the gallery [Photos of the Mediterranean, by the story](../isole-photos/), which
+says for each where it is from, who made it, its licence and why it could go there; the page
+holds a copy of each pick, made smaller, with its credit under it.
+
+**6. Two languages.** This page and the Italian one are the same file, `isole.nim`: the Italian
+page, `isole_it.nim`, includes it with `lang = "it"`. Every text a reader sees goes through `tr`,
+which leaves it as it is in English and looks it up in `data/isole/italiano.txt` in Italian (the
+English text, then its Italian); when a translation is missing, the Italian page does not build.
+The islands' Italian names come from Wikidata, the numbers follow `locale = lang` in every
+table, and EN · IT at the top goes to the other language, remembered; a first visit opens the
+browser's language.
+it:
+**5. L'aspetto e le foto.** La pagina si apre in un aspetto suo, quello minoico, dagli affreschi
+di Creta e di Thera e dai vasi di Atene (l'interruttore in alto torna a Munari). È stato scelto a
+più riprese, da diciotto fonti, nel post del devlog
+[Designing a Mediterranean look](../../devlog/mediterranean/) (in inglese). Le foto sopra i
+titoli sono state scelte dalla galleria
+[Photos of the Mediterranean, by the story](../isole-photos/), che dice per ognuna da dove viene,
+chi l'ha fatta, la sua licenza e perché poteva stare lì; la pagina tiene una copia di ognuna,
+rimpicciolita, con i crediti sotto.
+
+**6. Due lingue.** Questa pagina e quella inglese sono lo stesso file, `isole.nim`: la pagina
+italiana, `isole_it.nim`, lo include con `lang = "it"`. Ogni testo che un lettore vede passa per
+`tr`, che in inglese lo lascia com'è e in italiano lo cerca in `data/isole/italiano.txt` (il testo
+inglese, poi il suo italiano); se una traduzione manca, la pagina italiana non si costruisce. I
+nomi delle isole vengono da Wikidata, i numeri hanno la virgola perché ogni tabella ha
+`locale = lang`, e in cima alla pagina EN · IT passa all'altra lingua, che la pagina ricorda;
+alla prima visita si apre la lingua del browser.
+
+en: Reading the code
+it: Leggere il codice
+
+en: population
+it: abitanti
+
+en: islands
+it: isole
+
+en: total
+it: totale
+
+en: all
+it: in tutto

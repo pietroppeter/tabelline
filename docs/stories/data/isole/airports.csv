@@ -1,0 +1,989 @@
+# Passengers of each airport on the islands, by year: Wikidata P3872 (yearly counts; the largest when there are several).
+title,iata,airport,year,passengers
+Astypalaia,JTY,Astypalaia National Airport,2013,1194
+Astypalaia,JTY,Astypalaia National Airport,2014,13772
+Astypalaia,JTY,Astypalaia National Airport,2015,14095
+Astypalaia,JTY,Astypalaia National Airport,2016,12014
+Astypalaia,JTY,Astypalaia National Airport,2017,12489
+Astypalaia,JTY,Astypalaia National Airport,2018,14117
+Astypalaia,JTY,Astypalaia National Airport,2021,15811
+Astypalaia,JTY,Astypalaia National Airport,2022,22633
+Brač,BWK,Brač Airport,2009,13020
+Brač,BWK,Brač Airport,2010,11613
+Brač,BWK,Brač Airport,2011,12504
+Brač,BWK,Brač Airport,2012,12583
+Brač,BWK,Brač Airport,2013,9433
+Brač,BWK,Brač Airport,2014,10418
+Brač,BWK,Brač Airport,2015,8870
+Brač,BWK,Brač Airport,2016,12354
+Brač,BWK,Brač Airport,2017,21596
+Brač,BWK,Brač Airport,2018,30170
+Brač,BWK,Brač Airport,2019,25342
+Brač,BWK,Brač Airport,2020,4261
+Brač,BWK,Brač Airport,2021,8061
+Brač,BWK,Brač Airport,2022,15948
+Cephalonia,EFL,Kefalonia International Airport,2009,356889
+Cephalonia,EFL,Kefalonia International Airport,2010,355968
+Cephalonia,EFL,Kefalonia International Airport,2011,346397
+Cephalonia,EFL,Kefalonia International Airport,2012,378527
+Cephalonia,EFL,Kefalonia International Airport,2013,430362
+Cephalonia,EFL,Kefalonia International Airport,2014,479422
+Cephalonia,EFL,Kefalonia International Airport,2015,502780
+Cephalonia,EFL,Kefalonia International Airport,2016,546816
+Cephalonia,EFL,Kefalonia International Airport,2017,629671
+Cephalonia,EFL,Kefalonia International Airport,2018,761647
+Cephalonia,EFL,Kefalonia International Airport,2019,774170
+Cephalonia,EFL,Kefalonia International Airport,2020,192477
+Cephalonia,EFL,Kefalonia International Airport,2021,303338
+Cephalonia,EFL,Kefalonia International Airport,2022,817216
+Chios,JKH,Chios Island National Airport,2013,17354
+Chios,JKH,Chios Island National Airport,2014,185082
+Chios,JKH,Chios Island National Airport,2015,200986
+Chios,JKH,Chios Island National Airport,2016,200628
+Chios,JKH,Chios Island National Airport,2017,218361
+Chios,JKH,Chios Island National Airport,2018,229327
+Chios,JKH,Chios Island National Airport,2021,168929
+Chios,JKH,Chios Island National Airport,2022,244694
+Corfu,CFU,Corfu International Airport,2009,1792565
+Corfu,CFU,Corfu International Airport,2010,1744761
+Corfu,CFU,Corfu International Airport,2011,1844173
+Corfu,CFU,Corfu International Airport,2012,1914522
+Corfu,CFU,Corfu International Airport,2013,2106827
+Corfu,CFU,Corfu International Airport,2014,2383353
+Corfu,CFU,Corfu International Airport,2015,2450012
+Corfu,CFU,Corfu International Airport,2016,2788923
+Corfu,CFU,Corfu International Airport,2017,2918434
+Corfu,CFU,Corfu International Airport,2018,3364115
+Corfu,CFU,Corfu International Airport,2019,3275897
+Corfu,CFU,Corfu International Airport,2020,961037
+Corfu,CFU,Corfu International Airport,2021,2044704
+Corfu,CFU,Corfu International Airport,2022,3749106
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1980,604000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1984,621000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1985,608000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1986,677000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1987,724000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1988,692000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1989,749000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1990,818000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1991,800000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1992,834000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1993,834000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1994,860000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1995,818000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1996,821000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1997,833421
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1998,939000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,1999,1038471
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2000,1072532
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2001,1098764
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2002,1062854
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2003,1061948
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2004,975000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2005,978548
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2006,985000
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2007,1023838
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2008,1072768
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2009,1089797
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2010,1114573
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2011,1175874
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2012,1218705
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2013,1350731
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2014,1366020
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2015,1362353
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2016,1422259
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2017,1569649
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2018,1673308
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2019,1618357
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2020,940983
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2021,1412091
+Corsica,AJA,Ajaccio Napoleon Bonaparte Airport,2022,1662931
+Corsica,BIA,Bastia – Poretta Airport,1980,593000
+Corsica,BIA,Bastia – Poretta Airport,1984,583000
+Corsica,BIA,Bastia – Poretta Airport,1985,587000
+Corsica,BIA,Bastia – Poretta Airport,1986,617000
+Corsica,BIA,Bastia – Poretta Airport,1987,658000
+Corsica,BIA,Bastia – Poretta Airport,1988,699000
+Corsica,BIA,Bastia – Poretta Airport,1989,665000
+Corsica,BIA,Bastia – Poretta Airport,1990,725000
+Corsica,BIA,Bastia – Poretta Airport,1991,667000
+Corsica,BIA,Bastia – Poretta Airport,1992,727000
+Corsica,BIA,Bastia – Poretta Airport,1993,720000
+Corsica,BIA,Bastia – Poretta Airport,1994,727000
+Corsica,BIA,Bastia – Poretta Airport,1995,707000
+Corsica,BIA,Bastia – Poretta Airport,1996,698000
+Corsica,BIA,Bastia – Poretta Airport,1997,739121
+Corsica,BIA,Bastia – Poretta Airport,1998,777010
+Corsica,BIA,Bastia – Poretta Airport,1999,810000
+Corsica,BIA,Bastia – Poretta Airport,2000,841921
+Corsica,BIA,Bastia – Poretta Airport,2001,877438
+Corsica,BIA,Bastia – Poretta Airport,2002,831810
+Corsica,BIA,Bastia – Poretta Airport,2003,844540
+Corsica,BIA,Bastia – Poretta Airport,2004,834792
+Corsica,BIA,Bastia – Poretta Airport,2005,829568
+Corsica,BIA,Bastia – Poretta Airport,2006,822823
+Corsica,BIA,Bastia – Poretta Airport,2007,860046
+Corsica,BIA,Bastia – Poretta Airport,2008,933695
+Corsica,BIA,Bastia – Poretta Airport,2009,1011820
+Corsica,BIA,Bastia – Poretta Airport,2010,1007408
+Corsica,BIA,Bastia – Poretta Airport,2011,1025346
+Corsica,BIA,Bastia – Poretta Airport,2012,1003728
+Corsica,BIA,Bastia – Poretta Airport,2013,1126096
+Corsica,BIA,Bastia – Poretta Airport,2014,1162840
+Corsica,BIA,Bastia – Poretta Airport,2015,1191904
+Corsica,BIA,Bastia – Poretta Airport,2016,1287697
+Corsica,BIA,Bastia – Poretta Airport,2017,1400632
+Corsica,BIA,Bastia – Poretta Airport,2018,1525159
+Corsica,BIA,Bastia – Poretta Airport,2019,1559492
+Corsica,BIA,Bastia – Poretta Airport,2020,812424
+Corsica,BIA,Bastia – Poretta Airport,2021,1200201
+Corsica,BIA,Bastia – Poretta Airport,2022,1489038
+Corsica,CLY,Calvi – Sainte-Catherine Airport,1997,205869
+Corsica,CLY,Calvi – Sainte-Catherine Airport,1998,237577
+Corsica,CLY,Calvi – Sainte-Catherine Airport,1999,259616
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2000,256251
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2001,262087
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2002,264382
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2003,252681
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2004,246687
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2005,246687
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2006,270891
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2007,273573
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2008,275859
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2009,286273
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2010,273832
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2011,294451
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2012,313019
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2013,302672
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2014,326490
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2015,317173
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2016,321509
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2017,325475
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2018,335289
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2019,336672
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2020,185300
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2021,297930
+Corsica,CLY,Calvi – Sainte-Catherine Airport,2022,346496
+Corsica,FSC,Figari Sud-Corse Airport,1997,220479
+Corsica,FSC,Figari Sud-Corse Airport,1998,261053
+Corsica,FSC,Figari Sud-Corse Airport,1999,289435
+Corsica,FSC,Figari Sud-Corse Airport,2000,301786
+Corsica,FSC,Figari Sud-Corse Airport,2001,256842
+Corsica,FSC,Figari Sud-Corse Airport,2002,304121
+Corsica,FSC,Figari Sud-Corse Airport,2003,305134
+Corsica,FSC,Figari Sud-Corse Airport,2004,261791
+Corsica,FSC,Figari Sud-Corse Airport,2005,275701
+Corsica,FSC,Figari Sud-Corse Airport,2006,312822
+Corsica,FSC,Figari Sud-Corse Airport,2007,343694
+Corsica,FSC,Figari Sud-Corse Airport,2008,372492
+Corsica,FSC,Figari Sud-Corse Airport,2009,401622
+Corsica,FSC,Figari Sud-Corse Airport,2010,437809
+Corsica,FSC,Figari Sud-Corse Airport,2011,445387
+Corsica,FSC,Figari Sud-Corse Airport,2012,459049
+Corsica,FSC,Figari Sud-Corse Airport,2013,451446
+Corsica,FSC,Figari Sud-Corse Airport,2014,504497
+Corsica,FSC,Figari Sud-Corse Airport,2015,586046
+Corsica,FSC,Figari Sud-Corse Airport,2016,639916
+Corsica,FSC,Figari Sud-Corse Airport,2017,730707
+Corsica,FSC,Figari Sud-Corse Airport,2018,756454
+Corsica,FSC,Figari Sud-Corse Airport,2019,748652
+Corsica,FSC,Figari Sud-Corse Airport,2020,475507
+Corsica,FSC,Figari Sud-Corse Airport,2021,789721
+Corsica,FSC,Figari Sud-Corse Airport,2022,907102
+Crete,CHQ,Chania International Airport,1994,826346
+Crete,CHQ,Chania International Airport,1995,890426
+Crete,CHQ,Chania International Airport,1996,831252
+Crete,CHQ,Chania International Airport,1997,924160
+Crete,CHQ,Chania International Airport,1998,969191
+Crete,CHQ,Chania International Airport,1999,1230474
+Crete,CHQ,Chania International Airport,2000,1416803
+Crete,CHQ,Chania International Airport,2001,1428982
+Crete,CHQ,Chania International Airport,2002,1384579
+Crete,CHQ,Chania International Airport,2003,1479653
+Crete,CHQ,Chania International Airport,2004,1446377
+Crete,CHQ,Chania International Airport,2005,1512769
+Crete,CHQ,Chania International Airport,2006,1760959
+Crete,CHQ,Chania International Airport,2007,1882834
+Crete,CHQ,Chania International Airport,2008,1866581
+Crete,CHQ,Chania International Airport,2009,1795466
+Crete,CHQ,Chania International Airport,2010,1654864
+Crete,CHQ,Chania International Airport,2011,1774708
+Crete,CHQ,Chania International Airport,2012,1832974
+Crete,CHQ,Chania International Airport,2013,2078857
+Crete,CHQ,Chania International Airport,2014,2458130
+Crete,CHQ,Chania International Airport,2015,2717411
+Crete,CHQ,Chania International Airport,2016,2966697
+Crete,CHQ,Chania International Airport,2017,3042903
+Crete,CHQ,Chania International Airport,2018,3008687
+Crete,CHQ,Chania International Airport,2019,2983542
+Crete,CHQ,Chania International Airport,2020,703482
+Crete,CHQ,Chania International Airport,2021,1795236
+Crete,CHQ,Chania International Airport,2022,3290802
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1994,3994441
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1995,3559143
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1996,3411883
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1997,3872449
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1998,4044381
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",1999,4964967
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2000,5150637
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2001,5046726
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2002,4791729
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2003,4833507
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2004,4712508
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2005,4932911
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2006,5345652
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2007,5438369
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2008,5437068
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2009,5052840
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2010,4907337
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2011,5247007
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2012,5051496
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2013,5778764
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2014,6024958
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2015,6095081
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2016,6865681
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2017,7480408
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2018,8098465
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2021,5046236
+Crete,HER,"Heraklion International Airport ""Nikos Kazantzakis""",2022,8087146
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2013,35962
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2014,3487
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2015,27836
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2016,21246
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2017,32716
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2018,61582
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2021,17158
+Crete,JSH,"Sitia Public Airport ""Vitsentzos Kornaros""",2022,22692
+Djerba,DJE,Djerba–Zarzis International Airport,2011,1791144
+Djerba,DJE,Djerba–Zarzis International Airport,2012,1969043
+Elba,EBA,Marina di Campo Airport,1999,893
+Elba,EBA,Marina di Campo Airport,2000,914
+Elba,EBA,Marina di Campo Airport,2001,835
+Elba,EBA,Marina di Campo Airport,2002,9821
+Elba,EBA,Marina di Campo Airport,2006,12804
+Elba,EBA,Marina di Campo Airport,2015,17009
+Elba,EBA,Marina di Campo Airport,2016,9473
+Elba,EBA,Marina di Campo Airport,2017,9227
+Elba,EBA,Marina di Campo Airport,2018,718
+Elba,EBA,Marina di Campo Airport,2019,1869
+Elba,EBA,Marina di Campo Airport,2020,1749
+Elba,EBA,Marina di Campo Airport,2021,3413
+Elba,EBA,Marina di Campo Airport,2022,5249
+Elba,EBA,Marina di Campo Airport,2023,3932
+Elba,EBA,Marina di Campo Airport,2024,1815
+Geography of Cyprus,ECN,Ercan International Airport,1988,331036
+Geography of Cyprus,ECN,Ercan International Airport,1989,368608
+Geography of Cyprus,ECN,Ercan International Airport,1990,396966
+Geography of Cyprus,ECN,Ercan International Airport,1991,356256
+Geography of Cyprus,ECN,Ercan International Airport,1992,499410
+Geography of Cyprus,ECN,Ercan International Airport,1993,664440
+Geography of Cyprus,ECN,Ercan International Airport,1994,856202
+Geography of Cyprus,ECN,Ercan International Airport,1995,798430
+Geography of Cyprus,ECN,Ercan International Airport,1996,740003
+Geography of Cyprus,ECN,Ercan International Airport,1997,722752
+Geography of Cyprus,ECN,Ercan International Airport,1998,740003
+Geography of Cyprus,ECN,Ercan International Airport,1999,816669
+Geography of Cyprus,ECN,Ercan International Airport,2000,856202
+Geography of Cyprus,ECN,Ercan International Airport,2001,758740
+Geography of Cyprus,ECN,Ercan International Airport,2002,796386
+Geography of Cyprus,ECN,Ercan International Airport,2003,847654
+Geography of Cyprus,ECN,Ercan International Airport,2004,1021966
+Geography of Cyprus,ECN,Ercan International Airport,2005,1216256
+Geography of Cyprus,ECN,Ercan International Airport,2006,1517704
+Geography of Cyprus,ECN,Ercan International Airport,2007,1792970
+Geography of Cyprus,ECN,Ercan International Airport,2008,1864267
+Geography of Cyprus,ECN,Ercan International Airport,2009,1913479
+Geography of Cyprus,ECN,Ercan International Airport,2010,2151226
+Geography of Cyprus,ECN,Ercan International Airport,2011,2443211
+Geography of Cyprus,ECN,Ercan International Airport,2012,2777148
+Geography of Cyprus,ECN,Ercan International Airport,2013,2954738
+Geography of Cyprus,ECN,Ercan International Airport,2014,3236905
+Geography of Cyprus,ECN,Ercan International Airport,2015,3457064
+Geography of Cyprus,ECN,Ercan International Airport,2016,3628887
+Geography of Cyprus,ECN,Ercan International Airport,2017,3962541
+Geography of Cyprus,ECN,Ercan International Airport,2018,4020229
+Geography of Cyprus,ECN,Ercan International Airport,2022,3048395
+Geography of Cyprus,ECN,Ercan International Airport,2023,3990324
+Geography of Cyprus,ECN,Ercan International Airport,2024,4842120
+Geography of Cyprus,LCA,Larnaca International Airport,2015,5321235
+Geography of Cyprus,LCA,Larnaca International Airport,2016,6631064
+Geography of Cyprus,LCA,Larnaca International Airport,2017,7728687
+Geography of Cyprus,LCA,Larnaca International Airport,2018,8062043
+Geography of Cyprus,LCA,Larnaca International Airport,2020,1679807
+Geography of Cyprus,LCA,Larnaca International Airport,2021,3592011
+Geography of Cyprus,LCA,Larnaca International Airport,2022,6037053
+Geography of Cyprus,PFO,Paphos International Airport,2015,2276274
+Geography of Cyprus,PFO,Paphos International Airport,2016,2334629
+Geography of Cyprus,PFO,Paphos International Airport,2017,2516628
+Geography of Cyprus,PFO,Paphos International Airport,2018,2871038
+Geography of Cyprus,PFO,Paphos International Airport,2020,632890
+Geography of Cyprus,PFO,Paphos International Airport,2021,1517465
+Geography of Cyprus,PFO,Paphos International Airport,2022,3179776
+Gökçeada,GKD,Gökçeada Airport,2010,0
+Gökçeada,GKD,Gökçeada Airport,2011,1106
+Gökçeada,GKD,Gökçeada Airport,2012,1666
+Gökçeada,GKD,Gökçeada Airport,2013,1726
+Gökçeada,GKD,Gökçeada Airport,2014,0
+Gökçeada,GKD,Gökçeada Airport,2015,0
+Gökçeada,GKD,Gökçeada Airport,2016,0
+Gökçeada,GKD,Gökçeada Airport,2017,14
+Gökçeada,GKD,Gökçeada Airport,2018,0
+Gökçeada,GKD,Gökçeada Airport,2019,0
+Gökçeada,GKD,Gökçeada Airport,2020,0
+Gökçeada,GKD,Gökçeada Airport,2021,0
+Ibiza,IBZ,Ibiza Airport,2003,4157291
+Ibiza,IBZ,Ibiza Airport,2004,4171580
+Ibiza,IBZ,Ibiza Airport,2005,4164703
+Ibiza,IBZ,Ibiza Airport,2006,4460143
+Ibiza,IBZ,Ibiza Airport,2007,4765625
+Ibiza,IBZ,Ibiza Airport,2008,4647360
+Ibiza,IBZ,Ibiza Airport,2009,4572819
+Ibiza,IBZ,Ibiza Airport,2010,5040800
+Ibiza,IBZ,Ibiza Airport,2011,5643180
+Ibiza,IBZ,Ibiza Airport,2012,5555048
+Ibiza,IBZ,Ibiza Airport,2013,5726579
+Ibiza,IBZ,Ibiza Airport,2014,6212198
+Ibiza,IBZ,Ibiza Airport,2015,6477283
+Ibiza,IBZ,Ibiza Airport,2016,7416161
+Ibiza,IBZ,Ibiza Airport,2017,7903928
+Ibiza,IBZ,Ibiza Airport,2018,8104316
+Ibiza,IBZ,Ibiza Airport,2019,8155635
+Ibiza,IBZ,Ibiza Airport,2020,2110348
+Ibiza,IBZ,Ibiza Airport,2021,4851819
+Ibiza,IBZ,Ibiza Airport,2022,8156675
+Ibiza,IBZ,Ibiza Airport,2023,8931598
+Ibiza,IBZ,Ibiza Airport,2024,9049784
+Ibiza,IBZ,Ibiza Airport,2025,9138224
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2013,36162
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2014,39679
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2015,42902
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2016,41254
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2017,41557
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2018,44203
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2021,42511
+Icaria,JIK,"Ikaria National Airport ""Icarus""",2022,57240
+Kalymnos,JKL,Kalymnos Island National Airport,2013,20677
+Kalymnos,JKL,Kalymnos Island National Airport,2014,24511
+Kalymnos,JKL,Kalymnos Island National Airport,2015,27238
+Kalymnos,JKL,Kalymnos Island National Airport,2016,20213
+Kalymnos,JKL,Kalymnos Island National Airport,2017,13140
+Kalymnos,JKL,Kalymnos Island National Airport,2018,10234
+Kalymnos,JKL,Kalymnos Island National Airport,2021,8888
+Kalymnos,JKL,Kalymnos Island National Airport,2022,14956
+Karpathos,AOK,Karpathos National Airport,2013,16819
+Karpathos,AOK,Karpathos National Airport,2014,204621
+Karpathos,AOK,Karpathos National Airport,2015,237459
+Karpathos,AOK,Karpathos National Airport,2016,229660
+Karpathos,AOK,Karpathos National Airport,2017,235338
+Karpathos,AOK,Karpathos National Airport,2018,206758
+Karpathos,AOK,Karpathos National Airport,2021,139577
+Karpathos,AOK,Karpathos National Airport,2022,275007
+Kasos,KSJ,Kassos Public Airport,2013,3265
+Kasos,KSJ,Kassos Public Airport,2014,3478
+Kasos,KSJ,Kassos Public Airport,2015,9133
+Kasos,KSJ,Kassos Public Airport,2016,7233
+Kasos,KSJ,Kassos Public Airport,2017,3112
+Kasos,KSJ,Kassos Public Airport,2018,284
+Kasos,KSJ,Kassos Public Airport,2021,2047
+Kasos,KSJ,Kassos Public Airport,2022,2584
+Kastellorizo,KZS,Kastellorizo Airport,1994,3554
+Kastellorizo,KZS,Kastellorizo Airport,1995,3806
+Kastellorizo,KZS,Kastellorizo Airport,1996,4425
+Kastellorizo,KZS,Kastellorizo Airport,1997,5015
+Kastellorizo,KZS,Kastellorizo Airport,1998,4911
+Kastellorizo,KZS,Kastellorizo Airport,1999,5165
+Kastellorizo,KZS,Kastellorizo Airport,2000,5666
+Kastellorizo,KZS,Kastellorizo Airport,2001,5298
+Kastellorizo,KZS,Kastellorizo Airport,2002,6173
+Kastellorizo,KZS,Kastellorizo Airport,2003,7939
+Kastellorizo,KZS,Kastellorizo Airport,2004,8302
+Kastellorizo,KZS,Kastellorizo Airport,2005,8243
+Kastellorizo,KZS,Kastellorizo Airport,2006,9626
+Kastellorizo,KZS,Kastellorizo Airport,2007,9564
+Kastellorizo,KZS,Kastellorizo Airport,2008,8329
+Kastellorizo,KZS,Kastellorizo Airport,2009,7490
+Kastellorizo,KZS,Kastellorizo Airport,2010,7817
+Kastellorizo,KZS,Kastellorizo Airport,2011,8723
+Kastellorizo,KZS,Kastellorizo Airport,2012,7943
+Kastellorizo,KZS,Kastellorizo Airport,2013,7946
+Kastellorizo,KZS,Kastellorizo Airport,2014,8196
+Kastellorizo,KZS,Kastellorizo Airport,2015,8019
+Kastellorizo,KZS,Kastellorizo Airport,2016,6958
+Kastellorizo,KZS,Kastellorizo Airport,2017,5494
+Kastellorizo,KZS,Kastellorizo Airport,2018,5485
+Kastellorizo,KZS,Kastellorizo Airport,2021,5158
+Kastellorizo,KZS,Kastellorizo Airport,2022,6203
+Kos,KGS,"Kos International Airport ""Hippocrates""",1994,1255267
+Kos,KGS,"Kos International Airport ""Hippocrates""",1995,1156431
+Kos,KGS,"Kos International Airport ""Hippocrates""",1996,1042425
+Kos,KGS,"Kos International Airport ""Hippocrates""",1997,1159575
+Kos,KGS,"Kos International Airport ""Hippocrates""",1998,1189916
+Kos,KGS,"Kos International Airport ""Hippocrates""",1999,1444306
+Kos,KGS,"Kos International Airport ""Hippocrates""",2000,1578156
+Kos,KGS,"Kos International Airport ""Hippocrates""",2001,1641600
+Kos,KGS,"Kos International Airport ""Hippocrates""",2002,1498102
+Kos,KGS,"Kos International Airport ""Hippocrates""",2003,1462683
+Kos,KGS,"Kos International Airport ""Hippocrates""",2004,1504699
+Kos,KGS,"Kos International Airport ""Hippocrates""",2005,1462775
+Kos,KGS,"Kos International Airport ""Hippocrates""",2006,1573117
+Kos,KGS,"Kos International Airport ""Hippocrates""",2007,1641681
+Kos,KGS,"Kos International Airport ""Hippocrates""",2008,1615453
+Kos,KGS,"Kos International Airport ""Hippocrates""",2009,1517946
+Kos,KGS,"Kos International Airport ""Hippocrates""",2010,1627240
+Kos,KGS,"Kos International Airport ""Hippocrates""",2011,1926223
+Kos,KGS,"Kos International Airport ""Hippocrates""",2012,1797501
+Kos,KGS,"Kos International Airport ""Hippocrates""",2013,2028618
+Kos,KGS,"Kos International Airport ""Hippocrates""",2014,2214464
+Kos,KGS,"Kos International Airport ""Hippocrates""",2015,2167407
+Kos,KGS,"Kos International Airport ""Hippocrates""",2016,1930235
+Kos,KGS,"Kos International Airport ""Hippocrates""",2017,2335639
+Kos,KGS,"Kos International Airport ""Hippocrates""",2018,2666307
+Kos,KGS,"Kos International Airport ""Hippocrates""",2019,2676644
+Kos,KGS,"Kos International Airport ""Hippocrates""",2020,800655
+Kos,KGS,"Kos International Airport ""Hippocrates""",2021,1574518
+Kos,KGS,"Kos International Airport ""Hippocrates""",2022,2791590
+Krk (island),RJK,Rijeka Airport,2003,41498
+Krk (island),RJK,Rijeka Airport,2004,51349
+Krk (island),RJK,Rijeka Airport,2005,118244
+Krk (island),RJK,Rijeka Airport,2006,166675
+Krk (island),RJK,Rijeka Airport,2007,160862
+Krk (island),RJK,Rijeka Airport,2008,109706
+Krk (island),RJK,Rijeka Airport,2009,110208
+Krk (island),RJK,Rijeka Airport,2010,61855
+Krk (island),RJK,Rijeka Airport,2011,84713
+Krk (island),RJK,Rijeka Airport,2012,77082
+Krk (island),RJK,Rijeka Airport,2013,142975
+Krk (island),RJK,Rijeka Airport,2014,106235
+Krk (island),RJK,Rijeka Airport,2015,139718
+Krk (island),RJK,Rijeka Airport,2016,160000
+Krk (island),RJK,Rijeka Airport,2017,142111
+Krk (island),RJK,Rijeka Airport,2018,183606
+Krk (island),RJK,Rijeka Airport,2019,200841
+Krk (island),RJK,Rijeka Airport,2020,27680
+Krk (island),RJK,Rijeka Airport,2021,56388
+Krk (island),RJK,Rijeka Airport,2022,164086
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2013,33183
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2014,33183
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2015,42218
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2016,37139
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2017,35750
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2018,37759
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2021,25075
+Kythira,KIT,"Kithira Island National Airport ""Alexandros Aristotelous Onassis""",2022,35018
+Lampedusa,LMP,Lampedusa Airport,1996,115039
+Lampedusa,LMP,Lampedusa Airport,1997,129256
+Lampedusa,LMP,Lampedusa Airport,1998,127480
+Lampedusa,LMP,Lampedusa Airport,1999,116295
+Lampedusa,LMP,Lampedusa Airport,2000,120471
+Lampedusa,LMP,Lampedusa Airport,2001,147675
+Lampedusa,LMP,Lampedusa Airport,2002,145395
+Lampedusa,LMP,Lampedusa Airport,2003,169708
+Lampedusa,LMP,Lampedusa Airport,2004,188445
+Lampedusa,LMP,Lampedusa Airport,2005,205903
+Lampedusa,LMP,Lampedusa Airport,2006,196604
+Lampedusa,LMP,Lampedusa Airport,2007,188708
+Lampedusa,LMP,Lampedusa Airport,2008,208567
+Lampedusa,LMP,Lampedusa Airport,2009,187952
+Lampedusa,LMP,Lampedusa Airport,2010,192306
+Lampedusa,LMP,Lampedusa Airport,2011,185503
+Lampedusa,LMP,Lampedusa Airport,2012,170274
+Lampedusa,LMP,Lampedusa Airport,2013,203389
+Lampedusa,LMP,Lampedusa Airport,2014,177747
+Lampedusa,LMP,Lampedusa Airport,2015,184803
+Lampedusa,LMP,Lampedusa Airport,2016,227576
+Lampedusa,LMP,Lampedusa Airport,2017,258808
+Lampedusa,LMP,Lampedusa Airport,2018,269873
+Lampedusa,LMP,Lampedusa Airport,2019,276972
+Lampedusa,LMP,Lampedusa Airport,2020,176233
+Lampedusa,LMP,Lampedusa Airport,2021,284950
+Lampedusa,LMP,Lampedusa Airport,2022,328576
+Lemnos,LXS,Lemnos International Airport,2013,81201
+Lemnos,LXS,Lemnos International Airport,2014,92964
+Lemnos,LXS,Lemnos International Airport,2015,110597
+Lemnos,LXS,Lemnos International Airport,2016,95759
+Lemnos,LXS,Lemnos International Airport,2017,91874
+Lemnos,LXS,Lemnos International Airport,2018,93612
+Lemnos,LXS,Lemnos International Airport,2021,77574
+Lemnos,LXS,Lemnos International Airport,2022,124089
+Leros,LRS,Leros Island National Airport,2013,2568
+Leros,LRS,Leros Island National Airport,2014,2925
+Leros,LRS,Leros Island National Airport,2015,31111
+Leros,LRS,Leros Island National Airport,2016,26715
+Leros,LRS,Leros Island National Airport,2017,28629
+Leros,LRS,Leros Island National Airport,2018,24048
+Leros,LRS,Leros Island National Airport,2021,15254
+Leros,LRS,Leros Island National Airport,2022,19974
+Lesbos,MJT,Mytilene International Airport,2013,400911
+Lesbos,MJT,Mytilene International Airport,2014,459923
+Lesbos,MJT,Mytilene International Airport,2015,496403
+Lesbos,MJT,Mytilene International Airport,2016,419790
+Lesbos,MJT,Mytilene International Airport,2017,437114
+Lesbos,MJT,Mytilene International Airport,2018,477056
+Lesbos,MJT,Mytilene International Airport,2019,496577
+Lesbos,MJT,Mytilene International Airport,2020,206095
+Lesbos,MJT,Mytilene International Airport,2021,285344
+Lesbos,MJT,Mytilene International Airport,2022,439185
+Lošinj,LSZ,Lošinj Airport,2009,10190
+Lošinj,LSZ,Lošinj Airport,2010,5019
+Lošinj,LSZ,Lošinj Airport,2011,6152
+Lošinj,LSZ,Lošinj Airport,2012,4659
+Lošinj,LSZ,Lošinj Airport,2013,0
+Lošinj,LSZ,Lošinj Airport,2014,5713
+Lošinj,LSZ,Lošinj Airport,2015,14116
+Lošinj,LSZ,Lošinj Airport,2016,6402
+Lošinj,LSZ,Lošinj Airport,2017,6402
+Lošinj,LSZ,Lošinj Airport,2018,6939
+Lošinj,LSZ,Lošinj Airport,2019,6495
+Lošinj,LSZ,Lošinj Airport,2020,3214
+Lošinj,LSZ,Lošinj Airport,2021,5835
+Lošinj,LSZ,Lošinj Airport,2022,5384
+Mallorca,PMI,Palma de Mallorca Airport,1999,19127773
+Mallorca,PMI,Palma de Mallorca Airport,2000,19424243
+Mallorca,PMI,Palma de Mallorca Airport,2001,19206964
+Mallorca,PMI,Palma de Mallorca Airport,2002,17832558
+Mallorca,PMI,Palma de Mallorca Airport,2003,19185919
+Mallorca,PMI,Palma de Mallorca Airport,2004,20416083
+Mallorca,PMI,Palma de Mallorca Airport,2005,21240736
+Mallorca,PMI,Palma de Mallorca Airport,2006,22408427
+Mallorca,PMI,Palma de Mallorca Airport,2007,23228879
+Mallorca,PMI,Palma de Mallorca Airport,2008,22832857
+Mallorca,PMI,Palma de Mallorca Airport,2009,21203041
+Mallorca,PMI,Palma de Mallorca Airport,2010,21117417
+Mallorca,PMI,Palma de Mallorca Airport,2011,22726707
+Mallorca,PMI,Palma de Mallorca Airport,2012,22666858
+Mallorca,PMI,Palma de Mallorca Airport,2013,22768032
+Mallorca,PMI,Palma de Mallorca Airport,2014,23115622
+Mallorca,PMI,Palma de Mallorca Airport,2015,23745023
+Mallorca,PMI,Palma de Mallorca Airport,2016,26254110
+Mallorca,PMI,Palma de Mallorca Airport,2017,27970656
+Mallorca,PMI,Palma de Mallorca Airport,2018,29081787
+Mallorca,PMI,Palma de Mallorca Airport,2019,29721123
+Mallorca,PMI,Palma de Mallorca Airport,2020,6108486
+Mallorca,PMI,Palma de Mallorca Airport,2021,14496857
+Mallorca,PMI,Palma de Mallorca Airport,2022,28573364
+Mallorca,PMI,Palma de Mallorca Airport,2023,31105987
+Mallorca,PMI,Palma de Mallorca Airport,2024,33298164
+Mallorca,PMI,Palma de Mallorca Airport,2025,33806427
+Malta (island),MLA,Malta International Airport,2013,4031500
+Malta (island),MLA,Malta International Airport,2014,4290304
+Malta (island),MLA,Malta International Airport,2015,4649057
+Malta (island),MLA,Malta International Airport,2016,5104263
+Malta (island),MLA,Malta International Airport,2017,6034650
+Malta (island),MLA,Malta International Airport,2019,7310289
+Malta (island),MLA,Malta International Airport,2021,2540335
+Malta (island),MLA,Malta International Airport,2022,5851079
+Menorca,MAH,Menorca Airport,2003,2704038
+Menorca,MAH,Menorca Airport,2004,2631334
+Menorca,MAH,Menorca Airport,2005,2590733
+Menorca,MAH,Menorca Airport,2006,2690992
+Menorca,MAH,Menorca Airport,2007,2776458
+Menorca,MAH,Menorca Airport,2008,2605932
+Menorca,MAH,Menorca Airport,2009,2433666
+Menorca,MAH,Menorca Airport,2010,2511629
+Menorca,MAH,Menorca Airport,2011,2576200
+Menorca,MAH,Menorca Airport,2012,2545942
+Menorca,MAH,Menorca Airport,2013,2565462
+Menorca,MAH,Menorca Airport,2014,2632616
+Menorca,MAH,Menorca Airport,2015,2867521
+Menorca,MAH,Menorca Airport,2016,3178284
+Menorca,MAH,Menorca Airport,2017,3434615
+Menorca,MAH,Menorca Airport,2018,3442752
+Menorca,MAH,Menorca Airport,2019,3495025
+Menorca,MAH,Menorca Airport,2020,1076952
+Menorca,MAH,Menorca Airport,2021,2325327
+Menorca,MAH,Menorca Airport,2022,3900935
+Milos,MLO,Milos Island National Airport,2013,30744
+Milos,MLO,Milos Island National Airport,2014,39239
+Milos,MLO,Milos Island National Airport,2015,50590
+Milos,MLO,Milos Island National Airport,2016,48701
+Milos,MLO,Milos Island National Airport,2017,46710
+Milos,MLO,Milos Island National Airport,2018,75236
+Milos,MLO,Milos Island National Airport,2021,64711
+Milos,MLO,Milos Island National Airport,2022,86191
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1994,245707
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1995,251537
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1996,258736
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1997,296922
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1998,313387
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",1999,322977
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2000,364279
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2001,346121
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2002,342549
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2003,349319
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2004,336675
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2005,369686
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2006,396262
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2007,427458
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2008,418923
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2009,428450
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2010,432455
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2011,482809
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2012,501943
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2013,584559
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2014,778619
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2015,901967
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2016,1017182
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2017,1207061
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2018,1395787
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2019,1520145
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2020,409060
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2021,1052080
+Mykonos,JMK,"Mykonos National Airport ""Manto Mavrogeni""",2022,1688037
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2013,23442
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2014,31685
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2015,43951
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2016,35135
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2017,56647
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2018,85894
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2021,92034
+Naxos (island),JNX,"Naxos National Airport ""Apollon""",2022,123220
+Pantelleria,PNL,Pantelleria Airport,1996,81865
+Pantelleria,PNL,Pantelleria Airport,1997,87288
+Pantelleria,PNL,Pantelleria Airport,1998,89163
+Pantelleria,PNL,Pantelleria Airport,1999,57693
+Pantelleria,PNL,Pantelleria Airport,2000,64539
+Pantelleria,PNL,Pantelleria Airport,2001,80263
+Pantelleria,PNL,Pantelleria Airport,2002,84760
+Pantelleria,PNL,Pantelleria Airport,2003,101396
+Pantelleria,PNL,Pantelleria Airport,2004,134669
+Pantelleria,PNL,Pantelleria Airport,2005,138057
+Pantelleria,PNL,Pantelleria Airport,2006,152427
+Pantelleria,PNL,Pantelleria Airport,2007,165826
+Pantelleria,PNL,Pantelleria Airport,2008,153268
+Pantelleria,PNL,Pantelleria Airport,2009,136860
+Pantelleria,PNL,Pantelleria Airport,2010,139805
+Pantelleria,PNL,Pantelleria Airport,2011,134556
+Pantelleria,PNL,Pantelleria Airport,2012,125093
+Pantelleria,PNL,Pantelleria Airport,2013,127102
+Pantelleria,PNL,Pantelleria Airport,2014,127160
+Pantelleria,PNL,Pantelleria Airport,2015,130934
+Pantelleria,PNL,Pantelleria Airport,2016,139927
+Pantelleria,PNL,Pantelleria Airport,2017,151917
+Pantelleria,PNL,Pantelleria Airport,2018,151706
+Pantelleria,PNL,Pantelleria Airport,2019,165118
+Pantelleria,PNL,Pantelleria Airport,2020,108581
+Pantelleria,PNL,Pantelleria Airport,2021,169015
+Paros,PAS,Paros National Airport,2001,23388
+Paros,PAS,Paros National Airport,2002,10805
+Paros,PAS,Paros National Airport,2003,22609
+Paros,PAS,Paros National Airport,2004,32401
+Paros,PAS,Paros National Airport,2005,33587
+Paros,PAS,Paros National Airport,2006,37339
+Paros,PAS,Paros National Airport,2007,37017
+Paros,PAS,Paros National Airport,2008,31986
+Paros,PAS,Paros National Airport,2009,30722
+Paros,PAS,Paros National Airport,2010,34204
+Paros,PAS,Paros National Airport,2011,36271
+Paros,PAS,Paros National Airport,2012,35311
+Paros,PAS,Paros National Airport,2013,36429
+Paros,PAS,Paros National Airport,2014,40171
+Paros,PAS,Paros National Airport,2015,43182
+Paros,PAS,Paros National Airport,2016,74344
+Paros,PAS,Paros National Airport,2017,163368
+Paros,PAS,Paros National Airport,2018,204759
+Paros,PAS,Paros National Airport,2021,202903
+Paros,PAS,Paros National Airport,2022,295088
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1994,2491786
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1995,2344623
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1996,2241517
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1997,2515295
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1998,2672312
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",1999,3291518
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2000,3407050
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2001,3428175
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2002,3230483
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2003,3166070
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2004,3036523
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2005,3207514
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2006,3491522
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2007,3625962
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2008,3567469
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2009,3470111
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2010,3586572
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2011,4148386
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2012,3813947
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2013,4200059
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2014,4552056
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2015,4611089
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2016,5007159
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2017,5301517
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2018,5567748
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2019,5542567
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2020,1551123
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2021,3366614
+Rhodes,RHO,"Rhodes International Airport ""Diagoras""",2022,5857036
+Samos,SMI,Samos International Airport,1994,418010
+Samos,SMI,Samos International Airport,1995,414461
+Samos,SMI,Samos International Airport,1996,406294
+Samos,SMI,Samos International Airport,1997,412898
+Samos,SMI,Samos International Airport,1998,423554
+Samos,SMI,Samos International Airport,1999,503836
+Samos,SMI,Samos International Airport,2000,468394
+Samos,SMI,Samos International Airport,2001,458690
+Samos,SMI,Samos International Airport,2002,424850
+Samos,SMI,Samos International Airport,2003,409047
+Samos,SMI,Samos International Airport,2004,393629
+Samos,SMI,Samos International Airport,2005,392127
+Samos,SMI,Samos International Airport,2006,450918
+Samos,SMI,Samos International Airport,2007,481987
+Samos,SMI,Samos International Airport,2008,471866
+Samos,SMI,Samos International Airport,2009,447142
+Samos,SMI,Samos International Airport,2010,410565
+Samos,SMI,Samos International Airport,2011,408720
+Samos,SMI,Samos International Airport,2012,364648
+Samos,SMI,Samos International Airport,2013,343717
+Samos,SMI,Samos International Airport,2014,396308
+Samos,SMI,Samos International Airport,2015,418267
+Samos,SMI,Samos International Airport,2016,363284
+Samos,SMI,Samos International Airport,2017,410331
+Samos,SMI,Samos International Airport,2018,462749
+Samos,SMI,Samos International Airport,2019,479975
+Samos,SMI,Samos International Airport,2020,144299
+Samos,SMI,Samos International Airport,2021,270298
+Samos,SMI,Samos International Airport,2022,452792
+Santorini,JTR,Santorini (Thira) National Airport,1994,401048
+Santorini,JTR,Santorini (Thira) National Airport,1995,446439
+Santorini,JTR,Santorini (Thira) National Airport,1996,435458
+Santorini,JTR,Santorini (Thira) National Airport,1997,471930
+Santorini,JTR,Santorini (Thira) National Airport,1998,496314
+Santorini,JTR,Santorini (Thira) National Airport,1999,578353
+Santorini,JTR,Santorini (Thira) National Airport,2000,675500
+Santorini,JTR,Santorini (Thira) National Airport,2001,675743
+Santorini,JTR,Santorini (Thira) National Airport,2002,578837
+Santorini,JTR,Santorini (Thira) National Airport,2003,533927
+Santorini,JTR,Santorini (Thira) National Airport,2004,548141
+Santorini,JTR,Santorini (Thira) National Airport,2005,611284
+Santorini,JTR,Santorini (Thira) National Airport,2006,678235
+Santorini,JTR,Santorini (Thira) National Airport,2007,746674
+Santorini,JTR,Santorini (Thira) National Airport,2008,732154
+Santorini,JTR,Santorini (Thira) National Airport,2009,699108
+Santorini,JTR,Santorini (Thira) National Airport,2010,722155
+Santorini,JTR,Santorini (Thira) National Airport,2011,785547
+Santorini,JTR,Santorini (Thira) National Airport,2012,763539
+Santorini,JTR,Santorini (Thira) National Airport,2013,898153
+Santorini,JTR,Santorini (Thira) National Airport,2014,1179808
+Santorini,JTR,Santorini (Thira) National Airport,2015,1522795
+Santorini,JTR,Santorini (Thira) National Airport,2016,1706678
+Santorini,JTR,Santorini (Thira) National Airport,2017,1928295
+Santorini,JTR,Santorini (Thira) National Airport,2018,2254926
+Santorini,JTR,Santorini (Thira) National Airport,2019,2300408
+Santorini,JTR,Santorini (Thira) National Airport,2020,572963
+Santorini,JTR,Santorini (Thira) National Airport,2021,1546584
+Santorini,JTR,Santorini (Thira) National Airport,2022,2744650
+Sardinia,AHO,Alghero Fertilia airport,1999,587814
+Sardinia,AHO,Alghero Fertilia airport,2000,669886
+Sardinia,AHO,Alghero Fertilia airport,2001,689858
+Sardinia,AHO,Alghero Fertilia airport,2002,804937
+Sardinia,AHO,Alghero Fertilia airport,2003,888991
+Sardinia,AHO,Alghero Fertilia airport,2004,998811
+Sardinia,AHO,Alghero Fertilia airport,2005,1079843
+Sardinia,AHO,Alghero Fertilia airport,2006,1070491
+Sardinia,AHO,Alghero Fertilia airport,2007,1302871
+Sardinia,AHO,Alghero Fertilia airport,2008,1383296
+Sardinia,AHO,Alghero Fertilia airport,2009,1507016
+Sardinia,AHO,Alghero Fertilia airport,2010,1388217
+Sardinia,AHO,Alghero Fertilia airport,2011,1514254
+Sardinia,AHO,Alghero Fertilia airport,2012,1518870
+Sardinia,AHO,Alghero Fertilia airport,2013,1563908
+Sardinia,AHO,Alghero Fertilia airport,2014,1639374
+Sardinia,AHO,Alghero Fertilia airport,2015,1677967
+Sardinia,AHO,Alghero Fertilia airport,2016,1346403
+Sardinia,AHO,Alghero Fertilia airport,2017,1321676
+Sardinia,AHO,Alghero Fertilia airport,2018,1365129
+Sardinia,AHO,Alghero Fertilia airport,2019,1390379
+Sardinia,AHO,Alghero Fertilia airport,2020,536716
+Sardinia,AHO,Alghero Fertilia airport,2021,908551
+Sardinia,AHO,Alghero Fertilia airport,2022,1533427
+Sardinia,AHO,Alghero Fertilia airport,2023,1494256
+Sardinia,AHO,Alghero Fertilia airport,2024,1611625
+Sardinia,CAG,Cagliari Elmas Airport,1999,1798820
+Sardinia,CAG,Cagliari Elmas Airport,2000,2067116
+Sardinia,CAG,Cagliari Elmas Airport,2001,1936237
+Sardinia,CAG,Cagliari Elmas Airport,2002,2178860
+Sardinia,CAG,Cagliari Elmas Airport,2003,2307035
+Sardinia,CAG,Cagliari Elmas Airport,2004,2282559
+Sardinia,CAG,Cagliari Elmas Airport,2005,2355796
+Sardinia,CAG,Cagliari Elmas Airport,2006,2492710
+Sardinia,CAG,Cagliari Elmas Airport,2007,2671306
+Sardinia,CAG,Cagliari Elmas Airport,2008,2929870
+Sardinia,CAG,Cagliari Elmas Airport,2009,3333421
+Sardinia,CAG,Cagliari Elmas Airport,2010,3443227
+Sardinia,CAG,Cagliari Elmas Airport,2011,3698982
+Sardinia,CAG,Cagliari Elmas Airport,2012,3592020
+Sardinia,CAG,Cagliari Elmas Airport,2013,3587907
+Sardinia,CAG,Cagliari Elmas Airport,2014,3639631
+Sardinia,CAG,Cagliari Elmas Airport,2015,3719289
+Sardinia,CAG,Cagliari Elmas Airport,2016,3706924
+Sardinia,CAG,Cagliari Elmas Airport,2017,4157612
+Sardinia,CAG,Cagliari Elmas Airport,2018,4370014
+Sardinia,CAG,Cagliari Elmas Airport,2019,4747806
+Sardinia,CAG,Cagliari Elmas Airport,2020,1767890
+Sardinia,CAG,Cagliari Elmas Airport,2021,2753899
+Sardinia,CAG,Cagliari Elmas Airport,2022,4396594
+Sardinia,CAG,Cagliari Elmas Airport,2023,4846000
+Sardinia,CAG,Cagliari Elmas Airport,2025,5254433
+Sardinia,OLB,Olbia Costa Smeralda Airport,1999,1134137
+Sardinia,OLB,Olbia Costa Smeralda Airport,2000,1336618
+Sardinia,OLB,Olbia Costa Smeralda Airport,2001,1350868
+Sardinia,OLB,Olbia Costa Smeralda Airport,2002,1385144
+Sardinia,OLB,Olbia Costa Smeralda Airport,2003,1554254
+Sardinia,OLB,Olbia Costa Smeralda Airport,2004,1585662
+Sardinia,OLB,Olbia Costa Smeralda Airport,2005,1671218
+Sardinia,OLB,Olbia Costa Smeralda Airport,2006,1832085
+Sardinia,OLB,Olbia Costa Smeralda Airport,2007,1800206
+Sardinia,OLB,Olbia Costa Smeralda Airport,2008,1803324
+Sardinia,OLB,Olbia Costa Smeralda Airport,2009,1694089
+Sardinia,OLB,Olbia Costa Smeralda Airport,2010,1646247
+Sardinia,OLB,Olbia Costa Smeralda Airport,2011,1874696
+Sardinia,OLB,Olbia Costa Smeralda Airport,2012,1887640
+Sardinia,OLB,Olbia Costa Smeralda Airport,2013,1999618
+Sardinia,OLB,Olbia Costa Smeralda Airport,2014,2127718
+Sardinia,OLB,Olbia Costa Smeralda Airport,2015,2240016
+Sardinia,OLB,Olbia Costa Smeralda Airport,2016,2546073
+Sardinia,OLB,Olbia Costa Smeralda Airport,2017,2813517
+Sardinia,OLB,Olbia Costa Smeralda Airport,2018,2999253
+Sardinia,OLB,Olbia Costa Smeralda Airport,2019,2978769
+Sardinia,OLB,Olbia Costa Smeralda Airport,2020,1023964
+Sardinia,OLB,Olbia Costa Smeralda Airport,2021,2081057
+Sardinia,OLB,Olbia Costa Smeralda Airport,2022,3167368
+Sardinia,TTB,Tortolì-Arbatax Airport,1998,44412
+Sardinia,TTB,Tortolì-Arbatax Airport,1999,33266
+Sardinia,TTB,Tortolì-Arbatax Airport,2000,37039
+Sardinia,TTB,Tortolì-Arbatax Airport,2004,42655
+Sardinia,TTB,Tortolì-Arbatax Airport,2006,26083
+Sicily,CIY,Comiso Airport,2013,56854
+Sicily,CIY,Comiso Airport,2014,328027
+Sicily,CIY,Comiso Airport,2015,372963
+Sicily,CIY,Comiso Airport,2016,459865
+Sicily,CIY,Comiso Airport,2017,437940
+Sicily,CIY,Comiso Airport,2018,424487
+Sicily,CIY,Comiso Airport,2019,352095
+Sicily,CIY,Comiso Airport,2020,91161
+Sicily,CIY,Comiso Airport,2021,199420
+Sicily,CIY,Comiso Airport,2022,364735
+Sicily,CTA,Catania-Fontanarossa Airport,1966,260412
+Sicily,CTA,Catania-Fontanarossa Airport,1968,362251
+Sicily,CTA,Catania-Fontanarossa Airport,1983,1067510
+Sicily,CTA,Catania-Fontanarossa Airport,1989,1756894
+Sicily,CTA,Catania-Fontanarossa Airport,1990,1947467
+Sicily,CTA,Catania-Fontanarossa Airport,1991,1495624
+Sicily,CTA,Catania-Fontanarossa Airport,1992,1619780
+Sicily,CTA,Catania-Fontanarossa Airport,1993,2026011
+Sicily,CTA,Catania-Fontanarossa Airport,1994,2107500
+Sicily,CTA,Catania-Fontanarossa Airport,1995,2284563
+Sicily,CTA,Catania-Fontanarossa Airport,1996,2534040
+Sicily,CTA,Catania-Fontanarossa Airport,1997,2930157
+Sicily,CTA,Catania-Fontanarossa Airport,1998,3158103
+Sicily,CTA,Catania-Fontanarossa Airport,1999,3557718
+Sicily,CTA,Catania-Fontanarossa Airport,2000,3970754
+Sicily,CTA,Catania-Fontanarossa Airport,2001,3925289
+Sicily,CTA,Catania-Fontanarossa Airport,2002,4079609
+Sicily,CTA,Catania-Fontanarossa Airport,2003,4807643
+Sicily,CTA,Catania-Fontanarossa Airport,2004,5107832
+Sicily,CTA,Catania-Fontanarossa Airport,2005,5192697
+Sicily,CTA,Catania-Fontanarossa Airport,2006,5396380
+Sicily,CTA,Catania-Fontanarossa Airport,2007,6083735
+Sicily,CTA,Catania-Fontanarossa Airport,2008,6054469
+Sicily,CTA,Catania-Fontanarossa Airport,2009,5935027
+Sicily,CTA,Catania-Fontanarossa Airport,2010,6321753
+Sicily,CTA,Catania-Fontanarossa Airport,2011,6794063
+Sicily,CTA,Catania-Fontanarossa Airport,2012,6246888
+Sicily,CTA,Catania-Fontanarossa Airport,2013,6400127
+Sicily,CTA,Catania-Fontanarossa Airport,2014,7304012
+Sicily,CTA,Catania-Fontanarossa Airport,2015,7105487
+Sicily,CTA,Catania-Fontanarossa Airport,2016,7914117
+Sicily,CTA,Catania-Fontanarossa Airport,2017,9120913
+Sicily,CTA,Catania-Fontanarossa Airport,2018,9933318
+Sicily,CTA,Catania-Fontanarossa Airport,2019,10223113
+Sicily,CTA,Catania-Fontanarossa Airport,2020,3654457
+Sicily,CTA,Catania-Fontanarossa Airport,2021,6123791
+Sicily,CTA,Catania-Fontanarossa Airport,2022,10099441
+Sicily,CTA,Catania-Fontanarossa Airport,2025,12369485
+Sicily,PMO,Falcone–Borsellino Airport,1999,2886775
+Sicily,PMO,Falcone–Borsellino Airport,2000,3231267
+Sicily,PMO,Falcone–Borsellino Airport,2001,3213389
+Sicily,PMO,Falcone–Borsellino Airport,2002,3539435
+Sicily,PMO,Falcone–Borsellino Airport,2003,3649494
+Sicily,PMO,Falcone–Borsellino Airport,2004,3783651
+Sicily,PMO,Falcone–Borsellino Airport,2005,3831876
+Sicily,PMO,Falcone–Borsellino Airport,2006,4280614
+Sicily,PMO,Falcone–Borsellino Airport,2007,4511165
+Sicily,PMO,Falcone–Borsellino Airport,2008,4446142
+Sicily,PMO,Falcone–Borsellino Airport,2009,4376143
+Sicily,PMO,Falcone–Borsellino Airport,2010,4367342
+Sicily,PMO,Falcone–Borsellino Airport,2011,4992798
+Sicily,PMO,Falcone–Borsellino Airport,2012,4608533
+Sicily,PMO,Falcone–Borsellino Airport,2013,4349672
+Sicily,PMO,Falcone–Borsellino Airport,2014,4569550
+Sicily,PMO,Falcone–Borsellino Airport,2015,4910791
+Sicily,PMO,Falcone–Borsellino Airport,2016,5325539
+Sicily,PMO,Falcone–Borsellino Airport,2017,5775274
+Sicily,PMO,Falcone–Borsellino Airport,2018,6628558
+Sicily,PMO,Falcone–Borsellino Airport,2019,7018087
+Sicily,PMO,Falcone–Borsellino Airport,2020,2701519
+Sicily,PMO,Falcone–Borsellino Airport,2021,4576246
+Sicily,PMO,Falcone–Borsellino Airport,2022,7117822
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,1999,2871
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2000,3444
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2001,62430
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2002,49932
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2003,246474
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2004,410898
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2005,392997
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2006,313798
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2007,507185
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2008,533310
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2009,1069528
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2010,1682991
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2011,1470508
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2012,1578753
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2013,1878557
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2014,1598571
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2015,1586992
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2016,1496942
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2017,1293129
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2018,480524
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2019,411437
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2020,185581
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2021,427893
+Sicily,TPS,Vincenzo Florio Airport Trapani-Birgi,2022,891670
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2009,235071
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2010,230489
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2011,246658
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2012,254905
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2013,265773
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2014,315397
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2015,366012
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2016,404111
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2017,425287
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2018,437916
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2019,446219
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2020,88916
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2021,206007
+Skiathos,JSI,"Skiathos National Airport ""Alexandros Papadiamantis""",2022,511611
+Skyros,SKU,Skyros Island National Airport,2013,20368
+Skyros,SKU,Skyros Island National Airport,2014,12831
+Skyros,SKU,Skyros Island National Airport,2015,21593
+Skyros,SKU,Skyros Island National Airport,2016,29397
+Skyros,SKU,Skyros Island National Airport,2017,17148
+Skyros,SKU,Skyros Island National Airport,2018,18057
+Skyros,SKU,Skyros Island National Airport,2021,13530
+Skyros,SKU,Skyros Island National Airport,2022,18924
+Syros,JSY,Syros Island National Airport,2013,13715
+Syros,JSY,Syros Island National Airport,2014,15399
+Syros,JSY,Syros Island National Airport,2015,14693
+Syros,JSY,Syros Island National Airport,2016,17892
+Syros,JSY,Syros Island National Airport,2017,21397
+Syros,JSY,Syros Island National Airport,2018,17748
+Syros,JSY,Syros Island National Airport,2021,10398
+Syros,JSY,Syros Island National Airport,2022,15885
+Zakynthos,ZTH,Zakynthos International Airport,2013,1004486
+Zakynthos,ZTH,Zakynthos International Airport,2014,1188112
+Zakynthos,ZTH,Zakynthos International Airport,2015,1276672
+Zakynthos,ZTH,Zakynthos International Airport,2016,1423044
+Zakynthos,ZTH,Zakynthos International Airport,2017,1659646
+Zakynthos,ZTH,Zakynthos International Airport,2018,1800457
+Zakynthos,ZTH,Zakynthos International Airport,2019,1810427
+Zakynthos,ZTH,Zakynthos International Airport,2020,430255
+Zakynthos,ZTH,Zakynthos International Airport,2021,1012913
+Zakynthos,ZTH,Zakynthos International Airport,2022,1903404

@@ -932,7 +932,8 @@ echo t
 `fmtNanoplot` SHALL read a list of numbers as the values of a cell, and a record as its field
 `y`, with its field `x` (as many) the places of the values on the x axis of a line plot, in the
 order of `x`; a bar or box plot SHALL leave `x` out. With `autoscale` the rows SHALL share the x
-axis too, and `expandX` SHALL widen it. A record without `y`, or with an `x` of another length,
+axis too, and `expandX` SHALL widen it; on a shared x axis every row's plot SHALL have the same
+width, so the axes line up. A record without `y`, or with an `x` of another length,
 SHALL raise `ValueError` when the verb is called. In text output the sparkline SHALL follow the
 order of `x`.
 
@@ -956,6 +957,34 @@ echo nanoplotXValues(d["laps", 1]), " ", t.toHtml.count("class=\"tb_nanoplot\"")
 │ Bruno │ ▇▅█▂ 59–66 │ person-biking             │
 └───────┴────────────┴───────────────────────────┘
 @[0.0, 3.0, 4.0, 5.0] 2
+```
+
+### Requirement: Vertical reference lines
+`fmtNanoplot` SHALL take `referenceX`, a list of places on the x axis (numbers, or ISO dates
+such as "2020-03-11"), and in a line plot of records of `x` and `y` SHALL draw a dashed vertical
+line at each place inside the axis, its text shown on hover. A place outside the axis SHALL
+draw nothing; a place that is neither a number nor a date SHALL raise `ValueError` when the verb
+is called. Text output SHALL be unchanged.
+
+```nim
+let d = tableData:
+  airport: ["north", "south"]
+  flights: [(x: @["2018-07-01", "2019-07-01", "2020-07-01", "2021-07-01"], y: @[6.8, 7.3, 1.8, 2.7]),
+            (x: @["2019-07-01", "2020-07-01", "2021-07-01"], y: @[3.4, 1.0, 1.9])]
+let t = tabella(d, rownameCol = "airport"):
+  fmtNanoplot "flights", autoscale = true, referenceX = @["2020-03-11"]
+echo t
+echo t.toHtml.count("2020-03-11"), " lines"
+```
+
+```text
+┌───────┬────────────────┐
+│       │ flights        │
+╞═══════╪════════════════╡
+│ north │ ▇█▂▃ 1.80–7.30 │
+│ south │ ▄▁▂ 1.00–3.40  │
+└───────┴────────────────┘
+2 lines
 ```
 
 ### Requirement: Images anywhere
@@ -1033,4 +1062,32 @@ echo t.toHtml.count("fill=\"#2E7D32\""), " green points; the last is ", (x[2] - 
 │ two │ ▁▅█ 5–9 │
 └─────┴─────────┘
 2 green points; the last is 7.0 days after the first
+```
+
+### Requirement: Shape nanoplots
+`fmtNanoplot(columns, plotType = "shape", ...)` SHALL draw each cell's record of `x` and `y` as
+one outline: the points joined in their order and closed, filled, at the same scale across and
+up, in a square as high as the plot (not from gt or Great Tables). With `autoscale` every shape
+of the column SHALL have the scale of the largest one; a missing value SHALL start a new ring.
+The fill and the line SHALL be `dataBarFillColor` and `dataBarStrokeColor`. A cell that is not
+a record of `x` and `y` SHALL raise `ValueError`. In text a shape SHALL be "◆ shape of N points".
+
+```nim
+let d = tableData:
+  field: ["square", "strip"]
+  outline: [toValue((x: @[0, 2, 2, 0], y: @[0, 0, 2, 2])), toValue((x: @[0, 4, 4, 0], y: @[0, 0, 1, 1]))]
+let t = tabella(d, rownameCol = "field"):
+  fmtNanoplot "outline", plotType = "shape", autoscale = true
+echo t
+echo t.toHtml.count("class=\"tb_shape\""), " shapes; the square is ", shapeSide(@[0.0, 0, 2, 2], @[0.0, 2, 2, 0]), " wide"
+```
+
+```text
+┌────────┬─────────────────────┐
+│        │ outline             │
+╞════════╪═════════════════════╡
+│ square │ ◆ shape of 4 points │
+│ strip  │ ◆ shape of 4 points │
+└────────┴─────────────────────┘
+2 shapes; the square is 2.0 wide
 ```

@@ -18,3 +18,5 @@ book/gt/.venv/
 book/plan/cache/
 __pycache__/
 docs/assets/site.css
+docs/**/pictures/
+docs/stories/data/isole/italiano-missing.txt

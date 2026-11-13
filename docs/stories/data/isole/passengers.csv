@@ -1,0 +1,617 @@
+# Passengers of the islands' airports by year, 2000 on: the sum of the island's airports (those with a million passengers in some year, or all when none has), in the years every one of them has a count (airports.csv).
+island,title,year,passengers,iata
+Astypalaia,Astypalaia,2013,1194,JTY
+Astypalaia,Astypalaia,2014,13772,JTY
+Astypalaia,Astypalaia,2015,14095,JTY
+Astypalaia,Astypalaia,2016,12014,JTY
+Astypalaia,Astypalaia,2017,12489,JTY
+Astypalaia,Astypalaia,2018,14117,JTY
+Astypalaia,Astypalaia,2021,15811,JTY
+Astypalaia,Astypalaia,2022,22633,JTY
+Brač,Brač,2009,13020,BWK
+Brač,Brač,2010,11613,BWK
+Brač,Brač,2011,12504,BWK
+Brač,Brač,2012,12583,BWK
+Brač,Brač,2013,9433,BWK
+Brač,Brač,2014,10418,BWK
+Brač,Brač,2015,8870,BWK
+Brač,Brač,2016,12354,BWK
+Brač,Brač,2017,21596,BWK
+Brač,Brač,2018,30170,BWK
+Brač,Brač,2019,25342,BWK
+Brač,Brač,2020,4261,BWK
+Brač,Brač,2021,8061,BWK
+Brač,Brač,2022,15948,BWK
+Cephalonia,Cephalonia,2009,356889,EFL
+Cephalonia,Cephalonia,2010,355968,EFL
+Cephalonia,Cephalonia,2011,346397,EFL
+Cephalonia,Cephalonia,2012,378527,EFL
+Cephalonia,Cephalonia,2013,430362,EFL
+Cephalonia,Cephalonia,2014,479422,EFL
+Cephalonia,Cephalonia,2015,502780,EFL
+Cephalonia,Cephalonia,2016,546816,EFL
+Cephalonia,Cephalonia,2017,629671,EFL
+Cephalonia,Cephalonia,2018,761647,EFL
+Cephalonia,Cephalonia,2019,774170,EFL
+Cephalonia,Cephalonia,2020,192477,EFL
+Cephalonia,Cephalonia,2021,303338,EFL
+Cephalonia,Cephalonia,2022,817216,EFL
+Chios,Chios,2013,17354,JKH
+Chios,Chios,2014,185082,JKH
+Chios,Chios,2015,200986,JKH
+Chios,Chios,2016,200628,JKH
+Chios,Chios,2017,218361,JKH
+Chios,Chios,2018,229327,JKH
+Chios,Chios,2021,168929,JKH
+Chios,Chios,2022,244694,JKH
+Corfu,Corfu,2009,1792565,CFU
+Corfu,Corfu,2010,1744761,CFU
+Corfu,Corfu,2011,1844173,CFU
+Corfu,Corfu,2012,1914522,CFU
+Corfu,Corfu,2013,2106827,CFU
+Corfu,Corfu,2014,2383353,CFU
+Corfu,Corfu,2015,2450012,CFU
+Corfu,Corfu,2016,2788923,CFU
+Corfu,Corfu,2017,2918434,CFU
+Corfu,Corfu,2018,3364115,CFU
+Corfu,Corfu,2019,3275897,CFU
+Corfu,Corfu,2020,961037,CFU
+Corfu,Corfu,2021,2044704,CFU
+Corfu,Corfu,2022,3749106,CFU
+Corsica,Corsica,2000,1914453,AJA BIA
+Corsica,Corsica,2001,1976202,AJA BIA
+Corsica,Corsica,2002,1894664,AJA BIA
+Corsica,Corsica,2003,1906488,AJA BIA
+Corsica,Corsica,2004,1809792,AJA BIA
+Corsica,Corsica,2005,1808116,AJA BIA
+Corsica,Corsica,2006,1807823,AJA BIA
+Corsica,Corsica,2007,1883884,AJA BIA
+Corsica,Corsica,2008,2006463,AJA BIA
+Corsica,Corsica,2009,2101617,AJA BIA
+Corsica,Corsica,2010,2121981,AJA BIA
+Corsica,Corsica,2011,2201220,AJA BIA
+Corsica,Corsica,2012,2222433,AJA BIA
+Corsica,Corsica,2013,2476827,AJA BIA
+Corsica,Corsica,2014,2528860,AJA BIA
+Corsica,Corsica,2015,2554257,AJA BIA
+Corsica,Corsica,2016,2709956,AJA BIA
+Corsica,Corsica,2017,2970281,AJA BIA
+Corsica,Corsica,2018,3198467,AJA BIA
+Corsica,Corsica,2019,3177849,AJA BIA
+Corsica,Corsica,2020,1753407,AJA BIA
+Corsica,Corsica,2021,2612292,AJA BIA
+Corsica,Corsica,2022,3151969,AJA BIA
+Crete,Crete,2000,6567440,CHQ HER
+Crete,Crete,2001,6475708,CHQ HER
+Crete,Crete,2002,6176308,CHQ HER
+Crete,Crete,2003,6313160,CHQ HER
+Crete,Crete,2004,6158885,CHQ HER
+Crete,Crete,2005,6445680,CHQ HER
+Crete,Crete,2006,7106611,CHQ HER
+Crete,Crete,2007,7321203,CHQ HER
+Crete,Crete,2008,7303649,CHQ HER
+Crete,Crete,2009,6848306,CHQ HER
+Crete,Crete,2010,6562201,CHQ HER
+Crete,Crete,2011,7021715,CHQ HER
+Crete,Crete,2012,6884470,CHQ HER
+Crete,Crete,2013,7857621,CHQ HER
+Crete,Crete,2014,8483088,CHQ HER
+Crete,Crete,2015,8812492,CHQ HER
+Crete,Crete,2016,9832378,CHQ HER
+Crete,Crete,2017,10523311,CHQ HER
+Crete,Crete,2018,11107152,CHQ HER
+Crete,Crete,2021,6841472,CHQ HER
+Crete,Crete,2022,11377948,CHQ HER
+Djerba,Djerba,2011,1791144,DJE
+Djerba,Djerba,2012,1969043,DJE
+Elba,Elba,2000,914,EBA
+Elba,Elba,2001,835,EBA
+Elba,Elba,2002,9821,EBA
+Elba,Elba,2006,12804,EBA
+Elba,Elba,2015,17009,EBA
+Elba,Elba,2016,9473,EBA
+Elba,Elba,2017,9227,EBA
+Elba,Elba,2018,718,EBA
+Elba,Elba,2019,1869,EBA
+Elba,Elba,2020,1749,EBA
+Elba,Elba,2021,3413,EBA
+Elba,Elba,2022,5249,EBA
+Elba,Elba,2023,3932,EBA
+Elba,Elba,2024,1815,EBA
+Cyprus,Geography of Cyprus,2015,11054573,ECN LCA PFO
+Cyprus,Geography of Cyprus,2016,12594580,ECN LCA PFO
+Cyprus,Geography of Cyprus,2017,14207856,ECN LCA PFO
+Cyprus,Geography of Cyprus,2018,14953310,ECN LCA PFO
+Cyprus,Geography of Cyprus,2022,12265224,ECN LCA PFO
+Gökçeada,Gökçeada,2010,0,GKD
+Gökçeada,Gökçeada,2011,1106,GKD
+Gökçeada,Gökçeada,2012,1666,GKD
+Gökçeada,Gökçeada,2013,1726,GKD
+Gökçeada,Gökçeada,2014,0,GKD
+Gökçeada,Gökçeada,2015,0,GKD
+Gökçeada,Gökçeada,2016,0,GKD
+Gökçeada,Gökçeada,2017,14,GKD
+Gökçeada,Gökçeada,2018,0,GKD
+Gökçeada,Gökçeada,2019,0,GKD
+Gökçeada,Gökçeada,2020,0,GKD
+Gökçeada,Gökçeada,2021,0,GKD
+Ibiza,Ibiza,2003,4157291,IBZ
+Ibiza,Ibiza,2004,4171580,IBZ
+Ibiza,Ibiza,2005,4164703,IBZ
+Ibiza,Ibiza,2006,4460143,IBZ
+Ibiza,Ibiza,2007,4765625,IBZ
+Ibiza,Ibiza,2008,4647360,IBZ
+Ibiza,Ibiza,2009,4572819,IBZ
+Ibiza,Ibiza,2010,5040800,IBZ
+Ibiza,Ibiza,2011,5643180,IBZ
+Ibiza,Ibiza,2012,5555048,IBZ
+Ibiza,Ibiza,2013,5726579,IBZ
+Ibiza,Ibiza,2014,6212198,IBZ
+Ibiza,Ibiza,2015,6477283,IBZ
+Ibiza,Ibiza,2016,7416161,IBZ
+Ibiza,Ibiza,2017,7903928,IBZ
+Ibiza,Ibiza,2018,8104316,IBZ
+Ibiza,Ibiza,2019,8155635,IBZ
+Ibiza,Ibiza,2020,2110348,IBZ
+Ibiza,Ibiza,2021,4851819,IBZ
+Ibiza,Ibiza,2022,8156675,IBZ
+Ibiza,Ibiza,2023,8931598,IBZ
+Ibiza,Ibiza,2024,9049784,IBZ
+Ibiza,Ibiza,2025,9138224,IBZ
+Icaria,Icaria,2013,36162,JIK
+Icaria,Icaria,2014,39679,JIK
+Icaria,Icaria,2015,42902,JIK
+Icaria,Icaria,2016,41254,JIK
+Icaria,Icaria,2017,41557,JIK
+Icaria,Icaria,2018,44203,JIK
+Icaria,Icaria,2021,42511,JIK
+Icaria,Icaria,2022,57240,JIK
+Kalymnos,Kalymnos,2013,20677,JKL
+Kalymnos,Kalymnos,2014,24511,JKL
+Kalymnos,Kalymnos,2015,27238,JKL
+Kalymnos,Kalymnos,2016,20213,JKL
+Kalymnos,Kalymnos,2017,13140,JKL
+Kalymnos,Kalymnos,2018,10234,JKL
+Kalymnos,Kalymnos,2021,8888,JKL
+Kalymnos,Kalymnos,2022,14956,JKL
+Karpathos,Karpathos,2013,16819,AOK
+Karpathos,Karpathos,2014,204621,AOK
+Karpathos,Karpathos,2015,237459,AOK
+Karpathos,Karpathos,2016,229660,AOK
+Karpathos,Karpathos,2017,235338,AOK
+Karpathos,Karpathos,2018,206758,AOK
+Karpathos,Karpathos,2021,139577,AOK
+Karpathos,Karpathos,2022,275007,AOK
+Kasos,Kasos,2013,3265,KSJ
+Kasos,Kasos,2014,3478,KSJ
+Kasos,Kasos,2015,9133,KSJ
+Kasos,Kasos,2016,7233,KSJ
+Kasos,Kasos,2017,3112,KSJ
+Kasos,Kasos,2018,284,KSJ
+Kasos,Kasos,2021,2047,KSJ
+Kasos,Kasos,2022,2584,KSJ
+Kastellorizo,Kastellorizo,2000,5666,KZS
+Kastellorizo,Kastellorizo,2001,5298,KZS
+Kastellorizo,Kastellorizo,2002,6173,KZS
+Kastellorizo,Kastellorizo,2003,7939,KZS
+Kastellorizo,Kastellorizo,2004,8302,KZS
+Kastellorizo,Kastellorizo,2005,8243,KZS
+Kastellorizo,Kastellorizo,2006,9626,KZS
+Kastellorizo,Kastellorizo,2007,9564,KZS
+Kastellorizo,Kastellorizo,2008,8329,KZS
+Kastellorizo,Kastellorizo,2009,7490,KZS
+Kastellorizo,Kastellorizo,2010,7817,KZS
+Kastellorizo,Kastellorizo,2011,8723,KZS
+Kastellorizo,Kastellorizo,2012,7943,KZS
+Kastellorizo,Kastellorizo,2013,7946,KZS
+Kastellorizo,Kastellorizo,2014,8196,KZS
+Kastellorizo,Kastellorizo,2015,8019,KZS
+Kastellorizo,Kastellorizo,2016,6958,KZS
+Kastellorizo,Kastellorizo,2017,5494,KZS
+Kastellorizo,Kastellorizo,2018,5485,KZS
+Kastellorizo,Kastellorizo,2021,5158,KZS
+Kastellorizo,Kastellorizo,2022,6203,KZS
+Kos,Kos,2000,1578156,KGS
+Kos,Kos,2001,1641600,KGS
+Kos,Kos,2002,1498102,KGS
+Kos,Kos,2003,1462683,KGS
+Kos,Kos,2004,1504699,KGS
+Kos,Kos,2005,1462775,KGS
+Kos,Kos,2006,1573117,KGS
+Kos,Kos,2007,1641681,KGS
+Kos,Kos,2008,1615453,KGS
+Kos,Kos,2009,1517946,KGS
+Kos,Kos,2010,1627240,KGS
+Kos,Kos,2011,1926223,KGS
+Kos,Kos,2012,1797501,KGS
+Kos,Kos,2013,2028618,KGS
+Kos,Kos,2014,2214464,KGS
+Kos,Kos,2015,2167407,KGS
+Kos,Kos,2016,1930235,KGS
+Kos,Kos,2017,2335639,KGS
+Kos,Kos,2018,2666307,KGS
+Kos,Kos,2019,2676644,KGS
+Kos,Kos,2020,800655,KGS
+Kos,Kos,2021,1574518,KGS
+Kos,Kos,2022,2791590,KGS
+Krk,Krk (island),2003,41498,RJK
+Krk,Krk (island),2004,51349,RJK
+Krk,Krk (island),2005,118244,RJK
+Krk,Krk (island),2006,166675,RJK
+Krk,Krk (island),2007,160862,RJK
+Krk,Krk (island),2008,109706,RJK
+Krk,Krk (island),2009,110208,RJK
+Krk,Krk (island),2010,61855,RJK
+Krk,Krk (island),2011,84713,RJK
+Krk,Krk (island),2012,77082,RJK
+Krk,Krk (island),2013,142975,RJK
+Krk,Krk (island),2014,106235,RJK
+Krk,Krk (island),2015,139718,RJK
+Krk,Krk (island),2016,160000,RJK
+Krk,Krk (island),2017,142111,RJK
+Krk,Krk (island),2018,183606,RJK
+Krk,Krk (island),2019,200841,RJK
+Krk,Krk (island),2020,27680,RJK
+Krk,Krk (island),2021,56388,RJK
+Krk,Krk (island),2022,164086,RJK
+Kythira,Kythira,2013,33183,KIT
+Kythira,Kythira,2014,33183,KIT
+Kythira,Kythira,2015,42218,KIT
+Kythira,Kythira,2016,37139,KIT
+Kythira,Kythira,2017,35750,KIT
+Kythira,Kythira,2018,37759,KIT
+Kythira,Kythira,2021,25075,KIT
+Kythira,Kythira,2022,35018,KIT
+Lampedusa,Lampedusa,2000,120471,LMP
+Lampedusa,Lampedusa,2001,147675,LMP
+Lampedusa,Lampedusa,2002,145395,LMP
+Lampedusa,Lampedusa,2003,169708,LMP
+Lampedusa,Lampedusa,2004,188445,LMP
+Lampedusa,Lampedusa,2005,205903,LMP
+Lampedusa,Lampedusa,2006,196604,LMP
+Lampedusa,Lampedusa,2007,188708,LMP
+Lampedusa,Lampedusa,2008,208567,LMP
+Lampedusa,Lampedusa,2009,187952,LMP
+Lampedusa,Lampedusa,2010,192306,LMP
+Lampedusa,Lampedusa,2011,185503,LMP
+Lampedusa,Lampedusa,2012,170274,LMP
+Lampedusa,Lampedusa,2013,203389,LMP
+Lampedusa,Lampedusa,2014,177747,LMP
+Lampedusa,Lampedusa,2015,184803,LMP
+Lampedusa,Lampedusa,2016,227576,LMP
+Lampedusa,Lampedusa,2017,258808,LMP
+Lampedusa,Lampedusa,2018,269873,LMP
+Lampedusa,Lampedusa,2019,276972,LMP
+Lampedusa,Lampedusa,2020,176233,LMP
+Lampedusa,Lampedusa,2021,284950,LMP
+Lampedusa,Lampedusa,2022,328576,LMP
+Lemnos,Lemnos,2013,81201,LXS
+Lemnos,Lemnos,2014,92964,LXS
+Lemnos,Lemnos,2015,110597,LXS
+Lemnos,Lemnos,2016,95759,LXS
+Lemnos,Lemnos,2017,91874,LXS
+Lemnos,Lemnos,2018,93612,LXS
+Lemnos,Lemnos,2021,77574,LXS
+Lemnos,Lemnos,2022,124089,LXS
+Leros,Leros,2013,2568,LRS
+Leros,Leros,2014,2925,LRS
+Leros,Leros,2015,31111,LRS
+Leros,Leros,2016,26715,LRS
+Leros,Leros,2017,28629,LRS
+Leros,Leros,2018,24048,LRS
+Leros,Leros,2021,15254,LRS
+Leros,Leros,2022,19974,LRS
+Lesbos,Lesbos,2013,400911,MJT
+Lesbos,Lesbos,2014,459923,MJT
+Lesbos,Lesbos,2015,496403,MJT
+Lesbos,Lesbos,2016,419790,MJT
+Lesbos,Lesbos,2017,437114,MJT
+Lesbos,Lesbos,2018,477056,MJT
+Lesbos,Lesbos,2019,496577,MJT
+Lesbos,Lesbos,2020,206095,MJT
+Lesbos,Lesbos,2021,285344,MJT
+Lesbos,Lesbos,2022,439185,MJT
+Lošinj,Lošinj,2009,10190,LSZ
+Lošinj,Lošinj,2010,5019,LSZ
+Lošinj,Lošinj,2011,6152,LSZ
+Lošinj,Lošinj,2012,4659,LSZ
+Lošinj,Lošinj,2013,0,LSZ
+Lošinj,Lošinj,2014,5713,LSZ
+Lošinj,Lošinj,2015,14116,LSZ
+Lošinj,Lošinj,2016,6402,LSZ
+Lošinj,Lošinj,2017,6402,LSZ
+Lošinj,Lošinj,2018,6939,LSZ
+Lošinj,Lošinj,2019,6495,LSZ
+Lošinj,Lošinj,2020,3214,LSZ
+Lošinj,Lošinj,2021,5835,LSZ
+Lošinj,Lošinj,2022,5384,LSZ
+Mallorca,Mallorca,2000,19424243,PMI
+Mallorca,Mallorca,2001,19206964,PMI
+Mallorca,Mallorca,2002,17832558,PMI
+Mallorca,Mallorca,2003,19185919,PMI
+Mallorca,Mallorca,2004,20416083,PMI
+Mallorca,Mallorca,2005,21240736,PMI
+Mallorca,Mallorca,2006,22408427,PMI
+Mallorca,Mallorca,2007,23228879,PMI
+Mallorca,Mallorca,2008,22832857,PMI
+Mallorca,Mallorca,2009,21203041,PMI
+Mallorca,Mallorca,2010,21117417,PMI
+Mallorca,Mallorca,2011,22726707,PMI
+Mallorca,Mallorca,2012,22666858,PMI
+Mallorca,Mallorca,2013,22768032,PMI
+Mallorca,Mallorca,2014,23115622,PMI
+Mallorca,Mallorca,2015,23745023,PMI
+Mallorca,Mallorca,2016,26254110,PMI
+Mallorca,Mallorca,2017,27970656,PMI
+Mallorca,Mallorca,2018,29081787,PMI
+Mallorca,Mallorca,2019,29721123,PMI
+Mallorca,Mallorca,2020,6108486,PMI
+Mallorca,Mallorca,2021,14496857,PMI
+Mallorca,Mallorca,2022,28573364,PMI
+Mallorca,Mallorca,2023,31105987,PMI
+Mallorca,Mallorca,2024,33298164,PMI
+Mallorca,Mallorca,2025,33806427,PMI
+Malta,Malta (island),2013,4031500,MLA
+Malta,Malta (island),2014,4290304,MLA
+Malta,Malta (island),2015,4649057,MLA
+Malta,Malta (island),2016,5104263,MLA
+Malta,Malta (island),2017,6034650,MLA
+Malta,Malta (island),2019,7310289,MLA
+Malta,Malta (island),2021,2540335,MLA
+Malta,Malta (island),2022,5851079,MLA
+Menorca,Menorca,2003,2704038,MAH
+Menorca,Menorca,2004,2631334,MAH
+Menorca,Menorca,2005,2590733,MAH
+Menorca,Menorca,2006,2690992,MAH
+Menorca,Menorca,2007,2776458,MAH
+Menorca,Menorca,2008,2605932,MAH
+Menorca,Menorca,2009,2433666,MAH
+Menorca,Menorca,2010,2511629,MAH
+Menorca,Menorca,2011,2576200,MAH
+Menorca,Menorca,2012,2545942,MAH
+Menorca,Menorca,2013,2565462,MAH
+Menorca,Menorca,2014,2632616,MAH
+Menorca,Menorca,2015,2867521,MAH
+Menorca,Menorca,2016,3178284,MAH
+Menorca,Menorca,2017,3434615,MAH
+Menorca,Menorca,2018,3442752,MAH
+Menorca,Menorca,2019,3495025,MAH
+Menorca,Menorca,2020,1076952,MAH
+Menorca,Menorca,2021,2325327,MAH
+Menorca,Menorca,2022,3900935,MAH
+Milos,Milos,2013,30744,MLO
+Milos,Milos,2014,39239,MLO
+Milos,Milos,2015,50590,MLO
+Milos,Milos,2016,48701,MLO
+Milos,Milos,2017,46710,MLO
+Milos,Milos,2018,75236,MLO
+Milos,Milos,2021,64711,MLO
+Milos,Milos,2022,86191,MLO
+Mykonos,Mykonos,2000,364279,JMK
+Mykonos,Mykonos,2001,346121,JMK
+Mykonos,Mykonos,2002,342549,JMK
+Mykonos,Mykonos,2003,349319,JMK
+Mykonos,Mykonos,2004,336675,JMK
+Mykonos,Mykonos,2005,369686,JMK
+Mykonos,Mykonos,2006,396262,JMK
+Mykonos,Mykonos,2007,427458,JMK
+Mykonos,Mykonos,2008,418923,JMK
+Mykonos,Mykonos,2009,428450,JMK
+Mykonos,Mykonos,2010,432455,JMK
+Mykonos,Mykonos,2011,482809,JMK
+Mykonos,Mykonos,2012,501943,JMK
+Mykonos,Mykonos,2013,584559,JMK
+Mykonos,Mykonos,2014,778619,JMK
+Mykonos,Mykonos,2015,901967,JMK
+Mykonos,Mykonos,2016,1017182,JMK
+Mykonos,Mykonos,2017,1207061,JMK
+Mykonos,Mykonos,2018,1395787,JMK
+Mykonos,Mykonos,2019,1520145,JMK
+Mykonos,Mykonos,2020,409060,JMK
+Mykonos,Mykonos,2021,1052080,JMK
+Mykonos,Mykonos,2022,1688037,JMK
+Naxos,Naxos (island),2013,23442,JNX
+Naxos,Naxos (island),2014,31685,JNX
+Naxos,Naxos (island),2015,43951,JNX
+Naxos,Naxos (island),2016,35135,JNX
+Naxos,Naxos (island),2017,56647,JNX
+Naxos,Naxos (island),2018,85894,JNX
+Naxos,Naxos (island),2021,92034,JNX
+Naxos,Naxos (island),2022,123220,JNX
+Pantelleria,Pantelleria,2000,64539,PNL
+Pantelleria,Pantelleria,2001,80263,PNL
+Pantelleria,Pantelleria,2002,84760,PNL
+Pantelleria,Pantelleria,2003,101396,PNL
+Pantelleria,Pantelleria,2004,134669,PNL
+Pantelleria,Pantelleria,2005,138057,PNL
+Pantelleria,Pantelleria,2006,152427,PNL
+Pantelleria,Pantelleria,2007,165826,PNL
+Pantelleria,Pantelleria,2008,153268,PNL
+Pantelleria,Pantelleria,2009,136860,PNL
+Pantelleria,Pantelleria,2010,139805,PNL
+Pantelleria,Pantelleria,2011,134556,PNL
+Pantelleria,Pantelleria,2012,125093,PNL
+Pantelleria,Pantelleria,2013,127102,PNL
+Pantelleria,Pantelleria,2014,127160,PNL
+Pantelleria,Pantelleria,2015,130934,PNL
+Pantelleria,Pantelleria,2016,139927,PNL
+Pantelleria,Pantelleria,2017,151917,PNL
+Pantelleria,Pantelleria,2018,151706,PNL
+Pantelleria,Pantelleria,2019,165118,PNL
+Pantelleria,Pantelleria,2020,108581,PNL
+Pantelleria,Pantelleria,2021,169015,PNL
+Paros,Paros,2001,23388,PAS
+Paros,Paros,2002,10805,PAS
+Paros,Paros,2003,22609,PAS
+Paros,Paros,2004,32401,PAS
+Paros,Paros,2005,33587,PAS
+Paros,Paros,2006,37339,PAS
+Paros,Paros,2007,37017,PAS
+Paros,Paros,2008,31986,PAS
+Paros,Paros,2009,30722,PAS
+Paros,Paros,2010,34204,PAS
+Paros,Paros,2011,36271,PAS
+Paros,Paros,2012,35311,PAS
+Paros,Paros,2013,36429,PAS
+Paros,Paros,2014,40171,PAS
+Paros,Paros,2015,43182,PAS
+Paros,Paros,2016,74344,PAS
+Paros,Paros,2017,163368,PAS
+Paros,Paros,2018,204759,PAS
+Paros,Paros,2021,202903,PAS
+Paros,Paros,2022,295088,PAS
+Rhodes,Rhodes,2000,3407050,RHO
+Rhodes,Rhodes,2001,3428175,RHO
+Rhodes,Rhodes,2002,3230483,RHO
+Rhodes,Rhodes,2003,3166070,RHO
+Rhodes,Rhodes,2004,3036523,RHO
+Rhodes,Rhodes,2005,3207514,RHO
+Rhodes,Rhodes,2006,3491522,RHO
+Rhodes,Rhodes,2007,3625962,RHO
+Rhodes,Rhodes,2008,3567469,RHO
+Rhodes,Rhodes,2009,3470111,RHO
+Rhodes,Rhodes,2010,3586572,RHO
+Rhodes,Rhodes,2011,4148386,RHO
+Rhodes,Rhodes,2012,3813947,RHO
+Rhodes,Rhodes,2013,4200059,RHO
+Rhodes,Rhodes,2014,4552056,RHO
+Rhodes,Rhodes,2015,4611089,RHO
+Rhodes,Rhodes,2016,5007159,RHO
+Rhodes,Rhodes,2017,5301517,RHO
+Rhodes,Rhodes,2018,5567748,RHO
+Rhodes,Rhodes,2019,5542567,RHO
+Rhodes,Rhodes,2020,1551123,RHO
+Rhodes,Rhodes,2021,3366614,RHO
+Rhodes,Rhodes,2022,5857036,RHO
+Samos,Samos,2000,468394,SMI
+Samos,Samos,2001,458690,SMI
+Samos,Samos,2002,424850,SMI
+Samos,Samos,2003,409047,SMI
+Samos,Samos,2004,393629,SMI
+Samos,Samos,2005,392127,SMI
+Samos,Samos,2006,450918,SMI
+Samos,Samos,2007,481987,SMI
+Samos,Samos,2008,471866,SMI
+Samos,Samos,2009,447142,SMI
+Samos,Samos,2010,410565,SMI
+Samos,Samos,2011,408720,SMI
+Samos,Samos,2012,364648,SMI
+Samos,Samos,2013,343717,SMI
+Samos,Samos,2014,396308,SMI
+Samos,Samos,2015,418267,SMI
+Samos,Samos,2016,363284,SMI
+Samos,Samos,2017,410331,SMI
+Samos,Samos,2018,462749,SMI
+Samos,Samos,2019,479975,SMI
+Samos,Samos,2020,144299,SMI
+Samos,Samos,2021,270298,SMI
+Samos,Samos,2022,452792,SMI
+Santorini,Santorini,2000,675500,JTR
+Santorini,Santorini,2001,675743,JTR
+Santorini,Santorini,2002,578837,JTR
+Santorini,Santorini,2003,533927,JTR
+Santorini,Santorini,2004,548141,JTR
+Santorini,Santorini,2005,611284,JTR
+Santorini,Santorini,2006,678235,JTR
+Santorini,Santorini,2007,746674,JTR
+Santorini,Santorini,2008,732154,JTR
+Santorini,Santorini,2009,699108,JTR
+Santorini,Santorini,2010,722155,JTR
+Santorini,Santorini,2011,785547,JTR
+Santorini,Santorini,2012,763539,JTR
+Santorini,Santorini,2013,898153,JTR
+Santorini,Santorini,2014,1179808,JTR
+Santorini,Santorini,2015,1522795,JTR
+Santorini,Santorini,2016,1706678,JTR
+Santorini,Santorini,2017,1928295,JTR
+Santorini,Santorini,2018,2254926,JTR
+Santorini,Santorini,2019,2300408,JTR
+Santorini,Santorini,2020,572963,JTR
+Santorini,Santorini,2021,1546584,JTR
+Santorini,Santorini,2022,2744650,JTR
+Sardinia,Sardinia,2000,4073620,AHO CAG OLB
+Sardinia,Sardinia,2001,3976963,AHO CAG OLB
+Sardinia,Sardinia,2002,4368941,AHO CAG OLB
+Sardinia,Sardinia,2003,4750280,AHO CAG OLB
+Sardinia,Sardinia,2004,4867032,AHO CAG OLB
+Sardinia,Sardinia,2005,5106857,AHO CAG OLB
+Sardinia,Sardinia,2006,5395286,AHO CAG OLB
+Sardinia,Sardinia,2007,5774383,AHO CAG OLB
+Sardinia,Sardinia,2008,6116490,AHO CAG OLB
+Sardinia,Sardinia,2009,6534526,AHO CAG OLB
+Sardinia,Sardinia,2010,6477691,AHO CAG OLB
+Sardinia,Sardinia,2011,7087932,AHO CAG OLB
+Sardinia,Sardinia,2012,6998530,AHO CAG OLB
+Sardinia,Sardinia,2013,7151433,AHO CAG OLB
+Sardinia,Sardinia,2014,7406723,AHO CAG OLB
+Sardinia,Sardinia,2015,7637272,AHO CAG OLB
+Sardinia,Sardinia,2016,7599400,AHO CAG OLB
+Sardinia,Sardinia,2017,8292805,AHO CAG OLB
+Sardinia,Sardinia,2018,8734396,AHO CAG OLB
+Sardinia,Sardinia,2019,9116954,AHO CAG OLB
+Sardinia,Sardinia,2020,3328570,AHO CAG OLB
+Sardinia,Sardinia,2021,5743507,AHO CAG OLB
+Sardinia,Sardinia,2022,9097389,AHO CAG OLB
+Sicily,Sicily,2000,7205465,CTA PMO TPS
+Sicily,Sicily,2001,7201108,CTA PMO TPS
+Sicily,Sicily,2002,7668976,CTA PMO TPS
+Sicily,Sicily,2003,8703611,CTA PMO TPS
+Sicily,Sicily,2004,9302381,CTA PMO TPS
+Sicily,Sicily,2005,9417570,CTA PMO TPS
+Sicily,Sicily,2006,9990792,CTA PMO TPS
+Sicily,Sicily,2007,11102085,CTA PMO TPS
+Sicily,Sicily,2008,11033921,CTA PMO TPS
+Sicily,Sicily,2009,11380698,CTA PMO TPS
+Sicily,Sicily,2010,12372086,CTA PMO TPS
+Sicily,Sicily,2011,13257369,CTA PMO TPS
+Sicily,Sicily,2012,12434174,CTA PMO TPS
+Sicily,Sicily,2013,12628356,CTA PMO TPS
+Sicily,Sicily,2014,13472133,CTA PMO TPS
+Sicily,Sicily,2015,13603270,CTA PMO TPS
+Sicily,Sicily,2016,14736598,CTA PMO TPS
+Sicily,Sicily,2017,16189316,CTA PMO TPS
+Sicily,Sicily,2018,17042400,CTA PMO TPS
+Sicily,Sicily,2019,17652637,CTA PMO TPS
+Sicily,Sicily,2020,6541557,CTA PMO TPS
+Sicily,Sicily,2021,11127930,CTA PMO TPS
+Sicily,Sicily,2022,18108933,CTA PMO TPS
+Skiathos,Skiathos,2009,235071,JSI
+Skiathos,Skiathos,2010,230489,JSI
+Skiathos,Skiathos,2011,246658,JSI
+Skiathos,Skiathos,2012,254905,JSI
+Skiathos,Skiathos,2013,265773,JSI
+Skiathos,Skiathos,2014,315397,JSI
+Skiathos,Skiathos,2015,366012,JSI
+Skiathos,Skiathos,2016,404111,JSI
+Skiathos,Skiathos,2017,425287,JSI
+Skiathos,Skiathos,2018,437916,JSI
+Skiathos,Skiathos,2019,446219,JSI
+Skiathos,Skiathos,2020,88916,JSI
+Skiathos,Skiathos,2021,206007,JSI
+Skiathos,Skiathos,2022,511611,JSI
+Skyros,Skyros,2013,20368,SKU
+Skyros,Skyros,2014,12831,SKU
+Skyros,Skyros,2015,21593,SKU
+Skyros,Skyros,2016,29397,SKU
+Skyros,Skyros,2017,17148,SKU
+Skyros,Skyros,2018,18057,SKU
+Skyros,Skyros,2021,13530,SKU
+Skyros,Skyros,2022,18924,SKU
+Syros,Syros,2013,13715,JSY
+Syros,Syros,2014,15399,JSY
+Syros,Syros,2015,14693,JSY
+Syros,Syros,2016,17892,JSY
+Syros,Syros,2017,21397,JSY
+Syros,Syros,2018,17748,JSY
+Syros,Syros,2021,10398,JSY
+Syros,Syros,2022,15885,JSY
+Zakynthos,Zakynthos,2013,1004486,ZTH
+Zakynthos,Zakynthos,2014,1188112,ZTH
+Zakynthos,Zakynthos,2015,1276672,ZTH
+Zakynthos,Zakynthos,2016,1423044,ZTH
+Zakynthos,Zakynthos,2017,1659646,ZTH
+Zakynthos,Zakynthos,2018,1800457,ZTH
+Zakynthos,Zakynthos,2019,1810427,ZTH
+Zakynthos,Zakynthos,2020,430255,ZTH
+Zakynthos,Zakynthos,2021,1012913,ZTH
+Zakynthos,Zakynthos,2022,1903404,ZTH

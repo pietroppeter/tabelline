@@ -4,6 +4,7 @@
 
 - CI: `tools/setup.sh` installs libpcre3 from Ubuntu 24.04's .deb, kept in `tools/vendor/` (checked by sha256), before trying apt, so CI no longer needs an Ubuntu mirror (#100).
 - Book findings: every CSS colour name (148) for `dataColor` and the other colour helpers, and white text on a dark heading or column labels background given by name; `nbTable data: body`, a table in one step in a notebook; `tabelline/nanuq`, `tabella(df)` for a nanuq (Polars for Nim) DataFrame, an optional module (nanuq is in the `docs` feature); the clinical case study shapes its data with nanuq, and the chapters use what 0.2 gained (#86).
+- Shape nanoplots: `fmtNanoplot(plotType = "shape")` draws an outline from a record of x and y, in its own order, closed, with holes, and at one scale with `autoscale`; line plots on a shared x axis line up, and `referenceX` marks places on it with vertical lines (and `colsNanoplot` takes `xVals`, a year for each column, to use it); `colsLabelRotate(dir = "slanted")`; two stories on the islands of the Mediterranean, *Islands of the Mediterranean* and *The islands' data, made with nanuq* (#88).
 ## 0.2.0 (11 Nov 2026)
 
 tabelline 0.2 is the big one: it brings most of the rest of gt and Great Tables. Tables can now sum

@@ -57,6 +57,8 @@ working rules that are easy to miss.
   work alone, such as a one-page artifact. It has two looks: Munari, the
   default (plain rules, so a page without JavaScript is Munari), and the quaderno (rules under
   `html[data-tema="quaderno"]`); the header switches between them and the choice is remembered.
+  The pages of the islands of the Mediterranean offer the Minoan look instead of the quaderno
+  (`useTabelline(looks = ["munari", "minoan"], firstLook = "minoan")`).
   Check new page elements at 390px in Munari; in the quaderno only what might affect it (a
   broken quaderno is a minor issue for now). The HTML is not committed: CI builds every
   page (`nim r -d:release docs/all.nim`) and deploys `docs/` to GitHub Pages from `main`.
@@ -71,6 +73,8 @@ working rules that are easy to miss.
   `optCssTheme()`; a colour in a page is a token (`"var(--secondary)"`), never a hex value.
   `nim r tools/drift.nim` (in CI) fails when a page has more HTML, styles, scripts or colours than
   its line in `tools/drift.tsv`; when a page loses some, lower its line with `--update`.
+- Every explainer, story and devlog post has a table of contents: `nbToc` right after `nbTitle`,
+  which also gives every heading its ↑ back to it (Pietro's review of the Mediterranean post).
 - Every link leads somewhere. After building the pages and the book, `nim r tools/links.nim` checks
   the links inside the site (files and `#anchors`, and links to this repository's files on main,
   the PR's branch or a commit, in the checkout), and `nim r -d:ssl tools/links.nim --external` the
