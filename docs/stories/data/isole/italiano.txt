@@ -151,7 +151,7 @@ Il complesso di mari di Braudel, a ovest e a est: le 22 isole principali di ques
 blu, con il loro nome, e le altre 173 un punto del colore dei cerchi.
 
 en: The western Mediterranean, from the Alboran Sea to the Adriatic and Malta
-it: Il Mediterraneo occidentale, dal Mare di Alborán all'Adriatico e a Malta (i nomi della carta sono in inglese)
+it: Il Mediterraneo occidentale, dal Mare di Alborán all'Adriatico e a Malta
 
 en: The eastern Mediterranean, from the Ionian Sea to Cyprus
 it: Il Mediterraneo orientale, dallo Ionio a Cipro
@@ -1426,7 +1426,8 @@ italiana, `isole_it.nim`, lo include con `lang = "it"`. Ogni testo che un lettor
 inglese, poi il suo italiano); se una traduzione manca, la pagina italiana non si costruisce. I
 nomi delle isole vengono da Wikidata, i numeri hanno la virgola perché ogni tabella ha
 `locale = lang`, e in cima alla pagina EN · IT passa all'altra lingua, che la pagina ricorda;
-alla prima visita si apre la lingua del browser.
+alla prima visita si apre la lingua del browser. Le scelte della traduzione, e ogni testo accanto
+al suo inglese, sono nelle [note di traduzione](../isole-note/index.html).
 
 en: Reading the code
 it: Leggere il codice

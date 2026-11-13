@@ -166,8 +166,8 @@ Braudel's complex of seas, west and east: the 22 main islands of this story in b
 names, and the other 173 a dot in the colour of the circles.
 """
 
-nbDrawing data / "map-west.svg", tr"The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
-nbDrawing data / "map-east.svg", tr"The eastern Mediterranean, from the Ionian Sea to Cyprus"
+nbDrawing data / (if lang == "it": "map-west-it.svg" else: "map-west.svg"), tr"The western Mediterranean, from the Alboran Sea to the Adriatic and Malta"
+nbDrawing data / (if lang == "it": "map-east-it.svg" else: "map-east.svg"), tr"The eastern Mediterranean, from the Ionian Sea to Cyprus"
 
 nbNote(tr"""
 The maps are not tables: they are two drawings made with the data, by

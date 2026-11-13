@@ -95,7 +95,8 @@ jobs:
       - name: Assemble site
         run: |
           mkdir _site
-          (cd docs && find . \( -name '*.html' -o -name llms.txt \) -not -path './book/*' | tar -c -T - | tar -x -C ../_site)
+          # the pages, and the pictures a page keeps beside it (pictures/, built, like the page)
+          (cd docs && find . \( -name '*.html' -o -name llms.txt -o -path '*/pictures/*' -type f \) -not -path './book/*' | tar -c -T - | tar -x -C ../_site)
           # the files every page shares: site.css (written by the build), the fonts, review.js
           cp -r docs/assets _site/assets
           # the book whole: its pages, assets and images, and the chapters' JSON for the next build

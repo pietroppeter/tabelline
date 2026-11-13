@@ -9,7 +9,7 @@ cd src
 nim r -d:ssl fetch.nim <raw dir>                    # Wikipedia pages, Wikidata queries, OpenStreetMap's land (needs unzip)
 nim r -d:release extract.nim <raw dir> <stage dir>  # staging CSVs: outlines, lists, weather boxes
 cd .. && nim r -d:release --path:<nanuq>/src src/process.nim <stage dir> .   # the tables, with nanuq
-nim r -d:release src/map.nim <raw dir> .            # the two maps, map-west.svg and map-east.svg
+nim r -d:release src/map.nim <raw dir> .            # the maps, map-west.svg and map-east.svg (and -it)
 ```
 
 `regions.csv`, `history.csv` and `highlights.csv` are written by Claude (from Wikipedia); the rest is generated.

@@ -1,7 +1,8 @@
 ## The maps of the story: the Mediterranean, its seas and its islands, as two SVG drawings, the
 ## west and the east, so the names can be read on a phone.
 ##
-##   nim r -d:release map.nim <raw> <folder>     (writes map-west.svg and map-east.svg)
+##   nim r -d:release map.nim <raw> <folder>     (writes map-west.svg and map-east.svg, and the
+##                                                Italian page's map-west-it.svg and map-east-it.svg)
 ##
 ## The land is OpenStreetMap's (the land polygons fetch.nim downloads, © OpenStreetMap
 ## contributors, ODbL), cut to the box of each map and simplified; the islands are islands.csv's
@@ -17,7 +18,7 @@ let here = currentSourcePath().parentDir.parentDir
 
 # ------------------------------------------------------------------------------ the islands
 type Island = object
-  name: string
+  name, italian: string
   lon, lat: float
   main: bool
 var islands: seq[Island]
@@ -27,7 +28,7 @@ csv.readHeaderRow()   # the first line is the description
 csv.readHeaderRow()
 while csv.readRow():
   if csv.rowEntry("lat") == "": continue   # three islands have no place on Wikidata
-  islands.add Island(name: csv.rowEntry("island"), lon: csv.rowEntry("lon").parseFloat,
+  islands.add Island(name: csv.rowEntry("island"), italian: csv.rowEntry("italian"), lon: csv.rowEntry("lon").parseFloat,
                      lat: csv.rowEntry("lat").parseFloat, main: csv.rowEntry("main") == "true")
 csv.close
 
@@ -105,11 +106,14 @@ shx.close; shp.close
 # middle, on one or two lines; a main island's from its point, moved by so many points of the
 # drawing (1000 wide) and running from there to the right (start), both ways (middle) or to
 # the left (end).
-const seas = [("Alboran Sea", -2.8, 36.1), ("Balearic|Sea", 5.2, 41.25), ("Sea of|Sardinia", 6.5, 38.6),
-              ("Ligurian Sea", 8.3, 43.65), ("Tyrrhenian|Sea", 12.4, 39.9), ("Adriatic|Sea", 17.6, 42.0),
-              ("Strait of|Sicily", 12.2, 36.3), ("the Mediterranean", 6.0, 37.3),
-              ("Ionian Sea", 19.2, 36.6), ("Aegean Sea", 25.0, 35.95), ("Libyan Sea", 24.0, 33.9),
-              ("Levantine Sea", 30.6, 33.6), ("Sea of Marmara", 28.4, 40.82)]
+# The Italian names of the seas are Claude's too, as in italiano.txt.
+const seas = [("Alboran Sea", "Mare di Alborán", -2.8, 36.1), ("Balearic|Sea", "Mare delle|Baleari", 5.2, 41.25),
+              ("Sea of|Sardinia", "Mare di|Sardegna", 6.5, 38.6), ("Ligurian Sea", "Mar Ligure", 8.3, 43.65),
+              ("Tyrrhenian|Sea", "Mar|Tirreno", 12.4, 39.9), ("Adriatic|Sea", "Mare|Adriatico", 17.15, 42.15),
+              ("Strait of|Sicily", "Canale di|Sicilia", 12.2, 36.3), ("the Mediterranean", "Mediterraneo", 6.0, 37.3),
+              ("Ionian Sea", "Mar Ionio", 19.2, 36.6), ("Aegean Sea", "Mar Egeo", 25.0, 35.95),
+              ("Libyan Sea", "Mar Libico", 24.0, 33.9), ("Levantine Sea", "Mar di Levante", 30.6, 33.6),
+              ("Sea of Marmara", "Mar di Marmara", 28.4, 40.82)]
 const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
                ("Corsica", 0.0, 0.0, "middle"), ("Cyprus", 0.0, 0.0, "middle"),
                ("Crete", 0.0, 0.0, "middle"), ("Mallorca", 0.0, -30.0, "middle"),
@@ -124,7 +128,7 @@ const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
 
 # ------------------------------------------------------------------------------ the drawings
 # Equirectangular, east-west shrunk by the cosine of the map's middle latitude, 1000 wide.
-proc draw(file: string, w, e, s, n: float) =
+proc draw(file: string, w, e, s, n: float, italian = false) =
   let c = cos(((s + n) / 2).degToRad)
   let k = 1000 / ((e - w) * c)
   let height = round((n - s) * k).int
@@ -152,11 +156,11 @@ proc draw(file: string, w, e, s, n: float) =
     if i.main or not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
     svg.add &"""<circle cx="{f x}" cy="{f y}" r="5" class="dot"/>""" & "\n"
-  for (name, lon, lat) in seas:
+  for (english, italiano, lon, lat) in seas:
     if lon notin w .. e or lat notin s .. n: continue
     let (x, y) = xy((lon, lat))
-    let lines = name.split('|')
-    let size = if name == "Sea of Marmara": 22 else: 27   # a small sea between islands
+    let lines = (if italian: italiano else: english).split('|')
+    let size = if english == "Sea of Marmara": 22 else: 27   # a small sea between islands
     for i, line in lines:
       let dy = (i.float - (lines.len - 1) / 2) * 32 + 9
       svg.add &"""<text x="{f x}" y="{f y + dy}" text-anchor="middle" font-size="{size}" class="sea-name">{line}</text>""" & "\n"
@@ -164,10 +168,12 @@ proc draw(file: string, w, e, s, n: float) =
     let i = islands.filterIt(it.name == name)[0]
     if not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
-    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" class="name">{name}</text>""" & "\n"
+    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" class="name">{(if italian: i.italian else: i.name)}</text>""" & "\n"
   svg.add "</svg>\n"
   writeFile(output / file, svg)
   echo file, ": ", svg.len div 1024, " kB"
 
 draw("map-west.svg", -6.0, 18.9, 32.6, 46.0)
 draw("map-east.svg", 17.2, 36.3, 31.3, 41.5)
+draw("map-west-it.svg", -6.0, 18.9, 32.6, 46.0, italian = true)
+draw("map-east-it.svg", 17.2, 36.3, 31.3, 41.5, italian = true)
