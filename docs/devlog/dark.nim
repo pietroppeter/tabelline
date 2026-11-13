@@ -9,7 +9,8 @@ let docs = currentSourcePath().parentDir.parentDir
 let shots = currentSourcePath().parentDir / "data" / "dark"
 nbInit
 nb.doc.filename = docs / "devlog" / "dark" / "index.html"
-nb.useTabelline(title = "Toward a dark tabelline", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
+nb.useTabelline(title = "Toward a dark tabelline", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../",
+                nights = [("munari", "munari-notte"), ("quaderno", "terminale")], textTables = true)
 
 nbTitle "13 November 2026", "Toward a dark tabelline", """
 tabelline's tables are white and its pages are light, so a reader who asks for dark gets a guess
@@ -458,21 +459,211 @@ nbFold "Every colour of every source, checked":
 nbText: """
 ## What to decide
 
+The questions of round 1, and Pietro's answers (13 November, round 2):
+
 1. **The way**: A (a night palette for Munari), B (a dark look of its own) or C (a dark twin of
-   every look). My pick: C's machinery with A's palette first.
-2. **The source**, for the first dark palette: Yoru, or one of the others. A tournament, as for
-   the Mediterranean look, if there are more than two in the running.
-3. **The switch**: a third button beside Munari and quaderno (way A or B), or a light and dark
-   switch of its own (way C).
+   every look). *Answer:* C, a *giorno* / *notte* switch.
+2. **The source**, for the first dark palette. *Answer:* at night Munari becomes Munari notte, and
+   the quaderno, the playful look of the day, becomes a retro terminal, after the Matrix and Blade
+   Runner.
+3. **The switch**: a third button beside Munari and quaderno, or a light and dark switch of its
+   own. *Answer:* a switch of its own.
 4. **The library**: nothing, defaults with `light-dark()`, and a `dataColor` palette named by
-   tokens. My pick: the token palette first, it is the gap that shows.
+   tokens. Still open; my pick is the token palette first, it is the gap that shows.
 
 Two sources I could not read from here, because the sandbox's network does not reach them:
 ProPublica's design guide on dark mode, and Datawrapper's notes on its automatic dark mode for
 embedded charts (it recolours a chart by contrast when the page is dark, and a custom theme can give
 a dark twin for each colour of its palette). Both are worth a look before the design.
 
+## Giorno and notte
+
+This page has the switch, in its header: **☀ giorno** and **☾ notte**, beside the look. Until
+you press it, it follows your system (`prefers-color-scheme`); then it remembers. At night:
+
+- **Munari notte** is Munari with six night values, Yoru's: Haru's four colours on 濃藍 koai,
+  deep indigo, under white silk. Every rule is Munari's; the only token that changes how it is
+  made is `--surface`, lighter than the paper instead of whiter.
+- **The terminal** is the quaderno's night: a monitor's dark glass, green phosphor for the text,
+  Blade Runner's sodium orange for the circle and links, neon cyan for the square, the Matrix's
+  code-rain green for what works. One monospace for everything, headings in capitals with a
+  faint glow, scan lines over the page, a cursor after the wordmark. And **every table is shown
+  as text**, as `echo t` prints it (`toText`), in box-drawing characters; the cards' sample
+  tables above stay in colour, they are there to show a palette.
+
+Both set `color-scheme: dark`, so a browser draws its own parts dark, and Dark Reader sees a dark
+page and steps aside.
+
+For now only this page has it: `useTabelline(nights = ..., textTables = true)`. A site-wide
+switch needs the night looks of the other looks (the Minoan one has none yet), a check of every
+page and block at night, and the text tables on by default (every table is written twice, so
+pages grow; a terminal page could write only the text).
+
+## A page to try them on
+
+The blocks and tables of the other pages, borrowed to see what the night does to a page that is
+not about the night. Switch between the four (giorno and notte, Munari and quaderno) and scroll.
+
+### The guide's planets
+
+From [the guide](../../explainer/): a spanner, a colour scale and summary rows, with its code.
+"""
+
+nbCode:
+  let planetsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    tabHeader md("The **planets** of the Solar System"), "from the smallest orbit to the largest"
+    colsHide ["density", "gravity", "day_length", "rings", "orbital_period"]
+    tabSpanner "Size", ["mass", "diameter"]
+    fmtNumber "mass", decimals = 3, dropTrailingZeros = true
+    dataColor "mean_temp", palette = palette("rdbu"), domain = (-200.0, 200.0)
+    summaryRows fns = {"total": agg.sum}, columns = ["mass", "moons"], missingText = ""
+    optCssTheme()
+nbTable planetsTable
+
+nbNote("""
+A note about the code, the green card, as the guide puts one under each table: `dataColor` takes
+a fixed palette, `rdbu`, so at night its pale middle still glows.
+""", nkCode)
+
+nbText: """
+### Formats, icons and a nanoplot
+
+gt's `exibble`, one format per column, and the guide's warm planets with icons and bars:
+"""
+
+nbTable exibble(), rownameCol = "row", groupnameCol = "group":
+  tabHeader "Formats on exibble", "one column, one format; missing values shown as —"
+  fmtScientific "num", decimals = 2
+  fmtCurrency "currency", currency = "EUR"
+  fmtDate "date", dateStyle = "day_month_year"
+  subMissing everything(), missingText = "—"
+  colsHide ["fctr", "time", "datetime", "char"]
+  optCssTheme()
+
+nbTable planets(), rownameCol = "planet":
+  colsAdd "kind", proc (r: Row): Value =
+    toValue(case r["type"].s
+      of "Terrestrial": "mountain"
+      of "Gas giant": "cloud"
+      else: "snowflake")
+  colsHide ["type", "mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "rings"]
+  fmtIcon "kind"
+  fmtNanoplot "mean_temp", plotType = "bar",
+    options = nanoplotOptions(dataBarFillColor = "var(--primary)", dataBarStrokeColor = "var(--primary)",
+                              dataBarNegativeFillColor = "var(--secondary)", dataBarNegativeStrokeColor = "var(--secondary)")
+  colsLabel:
+    mean_temp: "mean temperature, °C"
+  optCssTheme()
+
+nbText: """
+### Islands, side by side
+
+The five largest islands of the Mediterranean, from [the islands story](../../stories/isole/),
+in two small tables beside each other:
+"""
+
+let lastIsland = isole().nrows - 1
+nbBeside:
+  nbTable isole(), rownameCol = "island":
+    tabHeader "Largest", "area, km²"
+    rowsHide 5 .. lastIsland
+    colsHide ["population", "city"]
+    fmtNumber "area", decimals = 0
+    optCssTheme()
+  nbTable isole(), rownameCol = "island":
+    tabHeader "Who lives there", "and the largest city"
+    rowsHide 5 .. lastIsland
+    colsHide ["area", "country"]
+    fmtNumber "population", decimals = 0
+    optCssTheme()
+
+nbText: """
+### Code, its output, and three languages
+
+A code block and what it prints: here a table printed with `echo`, the same text the terminal
+shows in place of every table.
+"""
+
+nbCode:
+  let moons = tableData:
+    planet: ["Earth", "Mars", "Jupiter"]
+    moons: [1, 2, 95]
+  let moonsTable = tabella(moons, rownameCol = "planet"):
+    tabHeader "Moons"
+  echo moonsTable
+
+nbTabs(python = """
+import polars as pl
+from great_tables import GT
+
+moons = pl.DataFrame({"planet": ["Earth", "Mars", "Jupiter"], "moons": [1, 2, 95]})
+GT(moons, rowname_col="planet").tab_header("Moons")""", r = """
+library(gt)
+
+moons <- data.frame(planet = c("Earth", "Mars", "Jupiter"), moons = c(1, 2, 95))
+moons |> gt(rowname_col = "planet") |> tab_header("Moons")"""):
+  nbCode:
+    nbTable moonsTable  # the same table, shown
+
+nbText: """
+### The parts of a table
+
+From [the design guide](../../design/): a table, and a switch that shows its parts in their
+colours (the seven tints are fixed pastels, one of the things to give a night twin).
+"""
+
+let partsTable = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+  tabHeader "Planets", "a few columns"
+  colsHide ["mass", "density", "gravity", "day_length", "distance", "orbital_period", "rings", "mean_temp"]
+  tabSourceNote "NASA Planetary Fact Sheet"
+nbParts partsTable
+
+nbText: """
+### Notes, cards and swatches
+
+Every kind of note:
+"""
+
+nbNote("A plain note: an aside.")
+nbNote("An information note: a page to go to, such as [the roadmap](../../roadmap/).", nkInfo)
+nbNote("What is done: the switch works on this page.", nkDone)
+nbNote("What is missing: the Minoan look has no night yet.", nkMissing)
+nbNote("A warning: the text tables double the size of every table on the page.", nkWarning)
+
+nbCards "Pages to go to":
+  nbCard("The guide", "../../explainer/", "1"):
+    nbText "Great tables, for Nim, from zero."
+  nbCard("The design guide", "../../design/", "2"):
+    nbText "Tokens, shapes and blocks."
+
+nbSwatches [("--paper", "paper", "the ground"), ("--ink", "ink", "text"), ("--primary", "primary", "the circle, links"),
+            ("--secondary", "secondary", "the square"), ("--warning", "warning", "the triangle"),
+            ("--success", "success", "what works")]
+
+nbText: """
+And plain Markdown: a list, a quote and a small table.
+
+- a list item with **bold**, *italic* and `code`
+- a [link](../../)
+
+> "Complicare è facile, semplificare è difficile." Bruno Munari
+
+| look | at night |
+|---|---|
+| Munari | Munari notte |
+| quaderno | the terminal |
+
 ## How this post is built
+
+The switch is `useTabelline(nights = [("munari", "munari-notte"), ("quaderno", "terminale")])`
+(`docs/blocks.nim`): a script in the head reads the time of day (`?ora=`, then the last choice,
+then `prefers-color-scheme`) before the page is drawn, and sets `data-tema` to the night look of
+the chosen one, keeping the choice in `data-look`. The two night looks are `munariNotte` and
+`terminale` in `docs/theme.nim`: their six values, every token mixed from them, and for the
+terminal its own rules. `textTables = true` makes tabelline's nimib module write every table twice,
+its HTML and its `toText` (`tableHtml` in `src/tabelline/nimib.nim`), and only the terminal shows
+the text.
+
 
 The candidates are `darkSources` in `docs/theme.nim`, beside the Mediterranean ones; `darkLook`
 turns one into a `Look` with `dark = true`. A dark look changes one token: its `--surface` is the

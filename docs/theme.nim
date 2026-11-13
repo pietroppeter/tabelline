@@ -487,11 +487,13 @@ details.fold[open] > summary { border-bottom: 1px solid var(--line); }
 .api details.api-ex > summary { cursor: pointer; font: 700 .9rem var(--font); color: var(--muted); }
 
 /* the look switch: ink, the selected one filled */
-.tema { display: flex; justify-content: flex-end; gap: 0; margin: .6rem 0 0; }
-.tema button { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+.switches { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 0; }
+@media (max-width: 560px) { .switches:has(.ora) + .forme { top: 8.4rem; } .switches:has(.ora) ~ .etichetta { margin-top: 3.6rem; } }
+.tema, .ora { display: flex; gap: 0; }
+.tema button, .ora button { font: 700 .72rem/1.6 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
   border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: .2rem .7rem; }
-.tema button:last-child { border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.tema button:last-child, .ora button:last-child { border-left: 0; }
+.tema button[aria-pressed="true"], .ora button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
 /* footer, with Munari's motto */
 footer { font: 400 .9rem/1.5 var(--font); color: var(--muted); padding: 1rem 0 3rem; text-align: center;
@@ -627,10 +629,10 @@ details.spec > summary b { font: 1.45rem var(--hand); color: var(--primary); }
 .scen-name { font: 1.1rem var(--hand); color: var(--primary); }
 
 /* the look switch */
-.tema button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
+.tema button, .ora button { font: 1rem var(--hand); letter-spacing: normal; text-transform: none; color: var(--primary);
   background: var(--surface); border: 1.5px solid var(--primary); padding: .1rem .7rem; }
-.tema button:first-child { border-radius: 10px 0 0 10px; } .tema button:last-child { border-radius: 0 10px 10px 0; border-left: 0; }
-.tema button[aria-pressed="true"] { background: var(--primary); color: var(--paper); }
+.tema button:first-child, .ora button:first-child { border-radius: 10px 0 0 10px; } .tema button:last-child, .ora button:last-child { border-radius: 0 10px 10px 0; border-left: 0; }
+.tema button[aria-pressed="true"], .ora button[aria-pressed="true"] { background: var(--primary); color: var(--paper); }
 .forme, .motto { display: none; }
 
 footer { font: 1.05rem var(--hand); border-top: 0; }
@@ -728,7 +730,7 @@ blockquote { border-left: 3px solid var(--primary); font-style: italic; }
 pre > code, pre.nb-output { font-variant-numeric: normal; }
 
 /* the look switch, in small capitals */
-.tema button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
+.tema button, .ora button { font-family: var(--font); font-variant: small-caps; text-transform: lowercase; letter-spacing: .1em; font-weight: 700; }
 
 /* the footer: a meander above it, in black glaze */
 body > footer { padding-top: 2.4rem; }
@@ -739,7 +741,62 @@ body > footer::before { content: ""; position: absolute; top: 0; left: 0; right:
 
 const minoanCss = scoped(minoanRules, "html[data-tema=\"minoan\"]")
 
-const css* = fonts & tokens & munariCss & quadernoCss & minoanCss
+# ------------------------------------------------------------------------------- the night looks
+# A page with night looks (`useTabelline(nights = ...)`, devlog "Toward a dark tabelline") has a
+# giorno / notte switch: at night Munari becomes Munari notte, the same rules on a night palette,
+# and the quaderno, the playful look of the day, becomes the terminal: a retro screen after the
+# Matrix and Blade Runner, in a monospace, where every table is shown as text (`toText`).
+
+const
+  munariNotte* = Look(paper: "#0F2540",     # 濃藍 koai, deep indigo
+                      ink: "#FCFAF2",       # 白練 shironeri, white silk
+                      primary: "#E16B8C", secondary: "#7DB9DE", warning: "#F7D94C", success: "#86C166",
+                      dark: true)
+    ## Munari at night: Haru's four colours (紅梅, 勿忘草, 菜の花, 苗) on deep indigo ("Yoru").
+  terminale* = Look(paper: "#0A0F0D",       # dark glass of a monitor
+                    ink: "#9CF2B0",         # green phosphor, softened for reading
+                    primary: "#FF8A3D",     # sodium orange of Blade Runner's city: the circle, links
+                    secondary: "#38D3DB",   # neon cyan: the square, bars
+                    warning: "#FFD24A",     # amber: the triangle
+                    success: "#3DFF7A",     # code-rain green of the Matrix
+                    dark: true)
+    ## The terminal, the quaderno's night look.
+
+const terminaleRules = """
+html { --font: var(--mono); --hand: var(--mono); }
+body { font-size: 16px; }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.2) 2px 3px); }
+h1, h2, h3, .etichetta .nome span:last-child { text-transform: uppercase; letter-spacing: .02em;
+  text-shadow: 0 0 .4em color-mix(in oklab, var(--ink) 50%, transparent); }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.1rem; }
+.lede { font-size: 1.1rem; }
+.etichetta .nome span:last-child { font: 700 2.2rem/1 var(--mono); }
+.etichetta .nome span:last-child::after { content: "▋"; color: var(--primary); text-shadow: none; }
+.forme i { mix-blend-mode: screen; }
+.switches:has(.ora) + .forme { top: 6rem; }
+.switches:has(.ora) ~ .etichetta { margin-top: 2.4rem; }
+a { text-decoration-color: var(--primary); }
+pre > code { border: 1px solid var(--line); }
+.tabella-html { display: none; }
+.in-palette .tabella-html { display: block; }
+.in-palette pre.tabella-text { display: none; }
+pre.tabella-text { display: block; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  text-shadow: 0 0 .3em color-mix(in oklab, var(--ink) 35%, transparent); }
+"""
+
+const nightCss =
+  "/* tables as text: shown only by a look that wants them (the terminal) */\n" &
+  ".tabella-text { display: none; }\n" &
+  "pre.tabella-text { overflow-x: auto; white-space: pre; font: 12.5px/1.2 var(--mono); padding: .8rem .9rem; margin: 1.4rem 0; }\n" &
+  paletteCss(munariNotte, "html[data-tema=\"munari-notte\"]") &
+  "html[data-tema=\"munari-notte\"] .forme i { mix-blend-mode: screen; }\n" &
+  paletteCss(terminale, "html[data-tema=\"terminale\"]") &
+  scoped(terminaleRules, "html[data-tema=\"terminale\"]")
+
+const css* = fonts & tokens & munariCss & quadernoCss & minoanCss & nightCss
   ## All the CSS of a page: Munari, the default, then the quaderno and the Minoan look, scoped.
 
 proc assetHref*(name, pageFile: string): string =

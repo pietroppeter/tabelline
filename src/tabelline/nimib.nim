@@ -16,7 +16,7 @@
 ## backends (`nbInit` for HTML, `nbInitMd` for Markdown, as in a README). The first table of a
 ## page carries `tabellaCss`, the stylesheet of every table; the others leave it out.
 
-import std/[json, macros]
+import std/[json, macros, strutils]
 import pkg/nimib
 import ../tabelline
 
@@ -34,9 +34,15 @@ const cssWritten = "tabelline_css_written"
 proc tableHtml*(nb: var Nb, t: Tabella): string =
   ## The HTML of `t` for this page: with `tabellaCss` the first time on the page, without it
   ## afterwards. For a block that puts a table inside its own HTML.
+  ## A page that asks for tables as text too (`nb.doc.context["tableText"] = %true`) gets each
+  ## table twice: its HTML in `<div class="tabella-html">`, then `toText` in
+  ## `<pre class="tabella-text">`, for its CSS to show one of them (a terminal look shows the text).
   let first = not nb.doc.context.hasKey(cssWritten)
   if first: nb.doc.context[cssWritten] = %true
-  t.toHtml(withStyle = first)
+  result = t.toHtml(withStyle = first)
+  if nb.doc.context{"tableText"}.getBool:
+    let text = t.toText.multiReplace(("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"))
+    result = "<div class=\"tabella-html\">" & result & "</div><pre class=\"tabella-text\">" & text & "</pre>"
 
 proc table*(nb: var Nb, t: Tabella) =
   nb.add newNbTable(html = nb.tableHtml(t), markdown = t.toMarkdown)
