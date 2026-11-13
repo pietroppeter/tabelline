@@ -55,6 +55,13 @@ proc gtBlog*(title, url, author, date, changes: string): Source =
          url: "https://posit-dev.github.io/great-tables/blog/" & url,
          authors: author, license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
 
+proc gtExample*(title, url, changes: string): Source =
+  ## An example of the Great Tables site (posit-dev.github.io/great-tables/examples/), by its
+  ## address there or on GitHub.
+  Source(title: "“" & title & "”, an example of Great Tables", url: url,
+         authors: "Rich Iannone, Michael Chow and the Great Tables contributors",
+         license: "MIT", licenseUrl: gtLicenseUrl, changes: changes)
+
 proc gtVignette*(title, page, changes: string): Source =
   ## An article of gt's site (gt.rstudio.com/articles/), from its vignettes in R.
   Source(title: "“" & title & "”, an article of gt", url: "https://gt.rstudio.com/articles/" &

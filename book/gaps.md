@@ -1,7 +1,7 @@
 # What the port found
 
-Everything tabelline still lacks to do what the Great Tables *Get Started* guide and blog posts,
-and gt's articles, do, found while porting them. What the port found that tabelline has gained since, in 0.1, is told in the
+Everything tabelline still lacks to do what the Great Tables *Get Started* guide, blog posts and
+examples, and gt's articles, do, found while porting them. What the port found that tabelline has gained since, in 0.1, is told in the
 devlog post [What the book found for 0.1](https://pietroppeter.github.io/tabelline/devlog/book-found/);
 what 0.2 closed is listed at the end of this page.
 
@@ -17,6 +17,7 @@ to the backlog.
 | ---- | ---- | -------------- | ---- |
 | Data | The Get Started pages and the blog still take pandas' `head`, `select` and `loc` from the book's helpers in `gtdata`: nanuq has them, the chapters have not moved to it yet | every page, [v0.2.0](blog/v0_2.html) and [v0.4.0](blog/v0_4.html) the most | later |
 | Data | `readCsv` reads `"0400"` as the number 400; text with leading zeros could stay text | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
+| Data | `tabella` of a nanuq data frame with a list column (a nanoplot's values): `toTableData` casts it to text, which Polars refuses | [Examples](examples/examples.html) | **new** |
 | Parts | `tabStub` (the stub is only chosen in `tabella(rownameCol = ...)`) | [Stub](get-started/basic_stub.html) | **new** |
 | Parts | Markdown (a link) in a row group label, as gt's `tab_row_group(label = md(...))` | [Find an example by feature](features.html) | **new** |
 | Columns | A block of `colsLabel` that mixes plain labels with `html`/`md` ones | [SEPTA timetables](blog/septa.html) | **new** |
@@ -24,6 +25,7 @@ to the backlog.
 | Columns | Columns by any function of the name; the columns two rules share (`&`: `a + b` and `a - b` are there); gt's `matches()` | [Column Selection](get-started/column_selection.html), [Styling the Table Body](get-started/basic_styling.html), [Case Study: Clinical Tables](vignettes/case_study_clinical.html) | **new** |
 | Rows | Negative row indices (`[0, -1]`; in Nim, `^1`) | [Row Selection](get-started/row_selection.html) | **new** |
 | Formats | `accounting` in `fmtNumber`, `fmtInteger` and `fmtPercent` (`fmtCurrency` has it) | [v0.15.0](blog/v0_15.html) | **new** |
+| Formats | Significant figures in `fmtNumber` (`nSigfig`, gt's `n_sigfig`), also with `compact` | [Examples](examples/examples.html) | **new** |
 | Formats | `fmtDatetime(formatStr = ...)`, a datetime by a format string | [v0.18.0](blog/v0_18.html) | **new** |
 | Formats | Markdown in `subMissing`'s text, as `missing_text=md("**STABLE**")` | [v0.13.0](blog/v0_13.html) | **new** |
 | Formats | `fmtFlag`: the country's name on hover (it shows the code) and Great Tables' round flags (emoji are drawn by the reader's system, as two letters on Windows) | [v0.15.0](blog/v0_15.html) | **new** |
@@ -38,6 +40,7 @@ to the backlog.
 | Styles | `loc.body(mask = ...)`: a condition for each cell | [Styling the Table Body](get-started/basic_styling.html), [Location selection](get-started/loc_selection.html) | **new** |
 | Styles | A fill on a spanner colours its whole cell, not only the label | [Styling the whole table](get-started/targeted_styles.html) | **new** |
 | Styles | `dataColor` colours the stub's column too when it is numeric; Great Tables leaves the stub out | [Super Bowl Squares](blog/superbowl.html) | **new** |
+| Styles | R's colour names with a number (`sienna4`, `chartreuse3`), which gt and Great Tables take; tabelline knows the 148 of CSS | [Examples](examples/examples.html) | **new** |
 | Styles | `dataColor`'s defaults: Great Tables' palette and its grey for missing values | [Colorizing with Data](get-started/colorizing_with_data.html) | **new** |
 | Look | On a phone, numbers break inside a cell: `−$24,334.23` puts its minus on a line of its own, `1.63 × 10⁻²` its power of ten (`white-space: nowrap` on formatted numbers) | [v0.15.0](blog/v0_15.html), [v0.13.0](blog/v0_13.html) | **new** |
 | Look | Columns that stay in place (the stub, the first columns) while a wide table scrolls sideways, for a timetable on a phone | [SEPTA timetables](blog/septa.html) | **new** |

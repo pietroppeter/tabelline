@@ -33,7 +33,11 @@ var book = initBookWithToc:
     entry("v0.15.0: Flags, Icons, and Other Formatting Goodies", "v0_15")
     entry("v0.18.0: Easy Column Spanners and More!", "v0_18")
     entry("Recreating Septa Transit Timetables in Python", "septa")
+  section("Great Tables: examples", "examples/index.md"):
+    entry("Examples", "examples")
+    entry("Sports earnings", "sports_earnings")
   section("gt: articles", "vignettes/index.md"):
+    entry("gt Datasets", "gt_datasets")
     entry("Creating Summary Lines", "summary_lines")
     entry("Case Study: gtcars", "case_study_gtcars")
     entry("Case Study: Clinical Tables", "case_study_clinical")

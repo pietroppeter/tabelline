@@ -1,7 +1,7 @@
 ## The datasets of Great Tables that the book's pages use and tabelline does not ship
 ## (`tabelline/datasets` has `exibble`, `gtcars`, `countrypops`, `illness` and `metro`, exported
 ## here): `islands`, `airquality` and `sza`, and `peeps`, `films`, `towny`, `nuclides`,
-## `gibraltar` and `reactions` (as CSV text, for nanuq's `readCsv`), and the images of the metro lines, as files in
+## `gibraltar`, `reactions`, `sp500` (2010) and `pizzaplace` (as CSV text, for nanuq's `readCsv`), and the images of the metro lines, as files in
 ## book/data/great-tables/, copied from the `great_tables` package (MIT), and gt's `rx_adsl` and
 ## `rx_addv` in book/data/gt/, written from the `gt` R package (MIT) with their labels. They are read when the
 ## chapter is compiled (`staticRead`), so a chapter reruns when its data changes.
@@ -14,9 +14,10 @@ export datasets
 
 const dataDir = currentSourcePath().parentDir & "/data/great-tables/"
 const
-  islandsCsv = staticRead(dataDir & "islands.csv")
-  airqualityCsv = staticRead(dataDir & "airquality.csv")
-  szaCsv = staticRead(dataDir & "sza.csv")
+  islandsCsv* = staticRead(dataDir & "islands.csv")
+    ## `islands` as CSV text, for nanuq's `readCsv`.
+  airqualityCsv* = staticRead(dataDir & "airquality.csv")
+    ## `airquality` as CSV text, for nanuq's `readCsv`.
 const
   peepsCsv* = staticRead(dataDir & "peeps.csv")
     ## Great Tables' `peeps`: 100 made-up people with an address in North America.
@@ -37,6 +38,13 @@ const
     ## The weekend trains of the same line: a row for each station, a column for each train.
   reactionsCsv* = staticRead(dataDir & "reactions.csv")
     ## Great Tables' `reactions`: rate constants of gas-phase reactions of 1,683 organic compounds.
+  szaCsv* = staticRead(dataDir & "sza.csv")
+    ## `sza` (the solar zenith angles) as CSV text, for nanuq's `readCsv`.
+  sp500Csv* = staticRead(dataDir & "sp500-2010.csv")
+    ## gt's `sp500`, cut to the 252 trading days of 2010: the daily prices of the S&P 500 index.
+  pizzaplaceCsv* = staticRead(dataDir & "pizzaplace.csv")
+    ## gt's `pizzaplace`: every pizza sold at a made-up pizzeria in 2015 (49,574 rows), cut to
+    ## its `type`, `size` and `price`.
 
 const
   gtDir = currentSourcePath().parentDir & "/data/gt/"
@@ -52,6 +60,22 @@ const
     ## `illness` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
   gtcarsCsv* = staticRead(tabDataDir & "gtcars.csv")
     ## `gtcars` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
+  countrypopsCsv* = staticRead(tabDataDir & "countrypops.csv")
+    ## `countrypops` (in `tabelline/datasets`) as CSV text, for nanuq's `readCsv`.
+
+const
+  examplesDir = dataDir & "examples/"
+  powerCieCsv* = staticRead(examplesDir & "power_cie_prepared_tbl.csv")
+    ## The carbon intensity and power breakdown of 2023 by zone (Electricity Maps), as the
+    ## Great Tables Examples page has it.
+  coffeeSalesNdjson* = staticRead(examplesDir & "coffee-sales.ndjson")
+    ## A year of sales of coffee equipment (machow/coffee-sales-data), one JSON line a product.
+  sportsEarningsCsv* = staticRead(examplesDir & "sports_earnings.csv")
+    ## The highest paid athletes of 2023 (Forbes), as the Sports earnings example has them.
+  coffeeIcons* = examplesDir & "coffee-table-icons"
+    ## The folder of the coffee table's icons, for `fmtImage(path = ...)`.
+  sportsIcons* = examplesDir & "sports-icons"
+    ## The folder of the sports icons (`soccer.png`, ...), for `fmtImage(path = ...)`.
 
 const metroImages* = dataDir & "metro_images"
   ## The folder of the metro lines' images (`metro_1.svg`, ...), for `fmtImage(path = ...)`.
