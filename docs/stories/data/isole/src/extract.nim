@@ -68,6 +68,17 @@ for w in readRows(raw / "wd_islands.csv"):
   if w["archipelagoLabel"].len > 0 and isl.archipelago.len == 0: isl.archipelago = w["archipelagoLabel"]
   if w["native"].len > 0 and w["native"] notin isl.native: isl.native.add w["native"]
 
+# Three islands whose page has no Wikidata item (a redirect or a page that does not exist):
+# a point from the {{coord}} of the Wikipedia article that stands for them, read by hand on 13
+# Nov 2026, so their outline is found like the others'.
+const pointsByHand = [
+  ("Avsa", 27.4986, 40.5119),                     # Avşa (the page Avsa redirects to): its town
+  ("La Maddalena (island)", 9.4069, 41.2153),     # La Maddalena, the town on the island
+  ("Megalonisos Petalion", 24.2636, 38.0116)]     # Petalioi, the group it is the largest of
+for (title, lon, lat) in pointsByHand:
+  if title in byPage and islands[byPage[title]].lon.isNaN:
+    (islands[byPage[title]].lon, islands[byPage[title]].lat) = (lon, lat)
+
 # ------------------------------------------------------------------------- the seas
 
 # The sea each island is in. Wikidata says, for most (P206, "located in or next to body of
@@ -235,6 +246,97 @@ for i, isl in islands:
       if dk < d: (d, best) = (dk, k)
     if best >= 0: how[i] = "closest, " & formatFloat(d, ffDecimal, 1) & " km"
   if best >= 0: rings[best].island = i
+
+# --------------------------------------------------------------- every island, by country
+
+# All the islands of the Mediterranean, not only the list's: every ring of OpenStreetMap's land
+# polygons in the sea (not in the Atlantic, the Black Sea or the Red Sea, and not the
+# Peloponnese and Kassandra, cut off only by a canal), its country from Natural Earth's countries
+# (the one that holds its middle, or the closest, for an islet Natural Earth does not draw), and
+# the largest count of people on Wikidata of an island whose point is on it (process.nim gives the
+# list's islands the list's country and people). Lakes are land in OpenStreetMap's polygons, so
+# their islands are not here.
+proc inSea(lon, lat: float): bool =
+  if lon < -5.6: return false                                   # the Atlantic, past Gibraltar
+  if lon < 0 and lat > 43.4: return false                       # the Bay of Biscay
+  if (lon > 27.4 and lat > 41.6) or (lon > 28.9 and lat > 41.15): return false   # the Black Sea
+  if lon > 32.3 and lat < 31.2: return false                    # the Gulf of Suez and the Red Sea
+  true
+
+type Shape = object
+  code: string
+  rings: seq[Ring]
+var countries: seq[Shape]
+let neCodes = {"CYN": "CY", "CNM": "CY", "ESB": "CY", "WSB": "CY"}.toTable   # northern Cyprus, the buffer zone, the bases
+for f in parseFile(raw / "ne" / "ne_10m_admin_0_countries.geojson")["features"]:
+  let a3 = f["properties"]["ADM0_A3"].getStr
+  let code = neCodes.getOrDefault(a3, f["properties"]["ISO_A2_EH"].getStr)
+  if code == "-99": continue
+  var shape = Shape(code: code)
+  let g = f["geometry"]
+  let polys = if g["type"].getStr == "Polygon": @[g["coordinates"]] else: g["coordinates"].getElems
+  for poly in polys:
+    var r = Ring(island: -1)
+    for c in poly[0]: r.pts.add (c[0].getFloat, c[1].getFloat)
+    r.lo = (r.pts.mapIt(it[0]).min, r.pts.mapIt(it[1]).min)
+    r.hi = (r.pts.mapIt(it[0]).max, r.pts.mapIt(it[1]).max)
+    if r.hi[0] < -7 or r.lo[0] > 38 or r.hi[1] < 29 or r.lo[1] > 47.5: continue
+    shape.rings.add r
+  if shape.rings.len > 0: countries.add shape
+
+# the countries' coasts in cells of a quarter degree, to find the closest quickly
+var coastCells: Table[(int, int), seq[(float, float, int)]]
+proc cell(lon, lat: float): (int, int) = (int(floor(lon * 4)), int(floor(lat * 4)))
+for k, c in countries:
+  for r in c.rings:
+    for (x, y) in r.pts: coastCells.mgetOrPut(cell(x, y), @[]).add (x, y, k)
+
+proc countryOf(lon, lat: float): string =
+  for c in countries:
+    for r in c.rings:
+      if r.contains(lon, lat): return c.code
+  let (cx, cy) = cell(lon, lat)
+  var (best, d) = (-1, Inf)
+  for reach in 0 .. 12:   # up to three degrees away
+    for i in cx - reach .. cx + reach:
+      for j in cy - reach .. cy + reach:
+        if max(abs(i - cx), abs(j - cy)) != reach: continue
+        for (x, y, k) in coastCells.getOrDefault((i, j)):
+          let dk = hypot((x - lon) * kmLon(lat), (y - lat) * kmLat)
+          if dk < d: (best, d) = (k, dk)
+    if best >= 0 and d < reach.float * 25: break   # a cell is at least 25 km across
+  if best >= 0: countries[best].code else: ""
+
+const canals = [(22.0, 37.5), (23.42, 40.05)]   # the Peloponnese and Kassandra, cut off by a canal
+var inMed: seq[int]
+for k, r in rings:
+  let (lon, lat) = ((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2)
+  if inSea(lon, lat) and not canals.anyIt(r.contains(it[0], it[1])): inMed.add k
+
+# each ring's people
+var ringCells: Table[(int, int), seq[int]]
+for k in inMed:
+  let r = rings[k]
+  for i in cell(r.lo[0], r.lo[1])[0] .. cell(r.hi[0], r.hi[1])[0]:
+    for j in cell(r.lo[0], r.lo[1])[1] .. cell(r.hi[0], r.hi[1])[1]:
+      ringCells.mgetOrPut((i, j), @[]).add k
+var people: Table[int, float]
+for w in readRows(raw / "wd_all_islands.csv"):
+  if w["population"].len == 0 or w["coord"].len == 0: continue
+  let (lon, lat) = point(w["coord"])
+  for k in ringCells.getOrDefault(cell(lon, lat)):
+    if rings[k].island < 0 and rings[k].contains(lon, lat):
+      people[k] = max(people.getOrDefault(k), w["population"].parseFloat)
+var everyRows: seq[seq[string]]
+for k in inMed:
+  let r = rings[k]
+  everyRows.add @[(if r.island >= 0: islands[r.island].row.title else: ""),
+                  countryOf((r.lo[0] + r.hi[0]) / 2, (r.lo[1] + r.hi[1]) / 2),
+                  formatFloat(r.km2, ffDecimal, 4), (if k in people: $people[k].int else: ""),
+                  formatFloat((r.lo[0] + r.hi[0]) / 2, ffDecimal, 4), formatFloat((r.lo[1] + r.hi[1]) / 2, ffDecimal, 4)]
+echo everyRows.len, " islands in the sea"
+writeCsv(stage / "every_island.csv", "Every island of the Mediterranean: each of OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals; lakes are land there), the list's island it is (title), its country from Natural Earth's countries (public domain; the one that holds its middle, or the closest), its km², and the largest count of people on Wikidata (P1082) of an island whose point is on it; the middle of its box (lon, lat).",
+  ["title", "code", "km2", "wd_people", "lon", "lat"], everyRows)
 
 proc perpendicular(p, a, b: (float, float)): float =
   let (dx, dy) = (b[0] - a[0], b[1] - a[1])

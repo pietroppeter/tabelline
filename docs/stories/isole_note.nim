@@ -27,6 +27,14 @@ block:
     elif side == "en": en.add line & "\n"
     elif side == "it": it.add line & "\n"
   flush()
+proc uncited(s: string): string =
+  ## A text without its citations (`[^braudel]`), which point to the story's list of books.
+  result = s
+  var at = result.find("[^")
+  while at >= 0:
+    result.delete(at .. result.find(']', at))
+    at = result.find("[^")
+for m in catalog.mitems: (m.en = uncited(m.en); m.it = uncited(m.it))
 let short = catalog.filterIt(it.en.splitWhitespace.len <= 5)
 let long = catalog.filterIt(it.en.splitWhitespace.len > 5)
 

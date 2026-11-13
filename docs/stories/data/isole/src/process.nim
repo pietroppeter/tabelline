@@ -51,6 +51,12 @@ let properties = rd(stage / "heritage.csv")
 
 let airports = rd(stage / "airports.csv")
 
+# Wikipedia's list gives Cyprus no population: the island has been divided since 1974. Its
+# estimate is the sum of the two counts on Wikipedia (read 13 Nov 2026): 918,100 in the areas the
+# Republic of Cyprus controls (census 2021, page Cyprus) and 382,836 in the north (estimate 2021,
+# page Northern Cyprus).
+const cyprusPeople = 918_100 + 382_836
+
 let islands = rd(stage / "islands.csv")
   .join(isole, on = ["label"], how = JoinType.Left)
   .join(rd(stage / "shapes.csv").select(col.title, col.outline_km2.num, col.coast_km.num,
@@ -58,8 +64,13 @@ let islands = rd(stage / "islands.csv")
         on = ["title"], how = JoinType.Left)
   .join(properties.groupBy(col.title).agg(len().alias("heritage")), on = ["title"], how = JoinType.Left)
   .join(airports.groupBy(col.title).agg(len().alias("airports")), on = ["title"], how = JoinType.Left)
-  .select(col.rank.int64, col.label.alias("island"), col.title, col.country, col.list_km2.num.alias("km2"),
-          col.population, col.town, col.wikidata, col.lat.num, col.lon.num, col.elevation.num,
+  .select(col.rank.int64, col.label.alias("island"), col.title,
+          # two islands tabelline's isole has no country for
+          `when`(col.label == "La Galite").then("Tunisia").`when`(col.label == "Île du Levant").then("France")
+            .otherwise(col.country).alias("country"),
+          col.list_km2.num.alias("km2"),
+          `when`(col.title == "Geography of Cyprus").then(cyprusPeople).otherwise(col.population).alias("population"),
+          col.town, col.wikidata, col.lat.num, col.lon.num, col.elevation.num,
           col.archipelago, col.native, col.italian, (col.main == "true").alias("main"), col.sea, col.sea_how,
           col.outline_km2, col.coast_km, col.points, col.matched,
           col.heritage.fillNull(0), col.airports.fillNull(0), col.x, col.y)
@@ -129,6 +140,29 @@ concat([
   .pivot(on = "y", index = "region", values = "rate", aggregateFunction = PivotAgg.First, sortColumns = true)
   .sort("region")
   .save("unemployment.csv", "Unemployment rate (%) of the main islands' regions, 2006-2025 (y2006 ... y2025), and the median of the 300 or so regions listed: Wikipedia, List of European regions by unemployment rate (Eurostat).")
+
+# Every island of the sea, by country: extract.nim's rings of OpenStreetMap, each with its country
+# from Natural Earth and its people on Wikidata; the list's islands take the list's country and
+# area and people (Natural Earth's closest country for Agathonisi and Kastellorizo is Turkey).
+const codeOf = [("Italy", "IT"), ("Greece", "GR"), ("Cyprus", "CY"), ("France", "FR"), ("Spain", "ES"),
+                ("Croatia", "HR"), ("Tunisia", "TN"), ("Turkey", "TR"), ("Malta", "MT"), ("Albania", "AL")]
+var listCode = `when`(col.country == codeOf[0][0]).then(codeOf[0][1])
+for (name, code) in codeOf[1 .. ^1]: listCode = listCode.`when`(col.country == name).then(code)
+let listed = islands.lazy
+  .withColumns(listCode.otherwise("").alias("list_code"))
+  .select(col.title, col.list_code, col.km2.alias("list_km2"), col.population.cast(Float64).alias("list_people"), col.main)
+rd(stage / "every_island.csv")
+  .select(col.title, col.code, col.km2.num, col.wd_people.num)
+  .join(listed, on = ["title"], how = JoinType.Left)
+  .withColumns(col.list_code.fillNull(col.code).alias("code"), col.list_km2.fillNull(col.km2).alias("km2"),
+               col.list_people.fillNull(col.wd_people).alias("people"))
+  .groupBy(col.code)
+  .agg(len().alias("islands"), col.km2.filter(col.km2 >= 0.01).len.alias("hectare"),
+       col.title.count.alias("listed"), col.main.filter(col.main).len.alias("main"),
+       col.km2.sum.round(1).alias("km2"), col.people.sum.cast(Int64).alias("people"),
+       col.people.count.alias("peopled"))
+  .sort("km2", descending = true).collect
+  .save("countries.csv", "Every island of the Mediterranean, by country: OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals, nor islands in lakes), the country from Natural Earth (public domain), the area and people from Wikipedia's list for its 195 islands, and for the others the polygon's area and the people on Wikidata (P1082). islands: every polygon; hectare: those of 0.01 km² or more; listed and main: of the 195 and the 35; peopled: those with a count.")
 
 let gdp = rd(stage / "gdp.csv")
   .select(col.region, col.pps_per_person.num, col.pps_index.num, col.population_m.num)

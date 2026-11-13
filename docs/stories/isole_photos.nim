@@ -21,7 +21,7 @@ const storyFiles = [("Southern Italy and Sicily, south at the top", "night-south
   ("Etna's plume", "etna-plume"), ("The dolphins of Knossos", "dolphins-knossos"),
   ("Lemnos, in Piri Reis's Book of the Sea", "lemnos-piri-reis"), ("Strombolicchio", "strombolicchio"),
   ("Venice, in Bordone's book of islands", "venice-bordone"), ("Palermo cathedral, about 1900", "palermo-cathedral"),
-  ("Luzzus in Marsaxlokk", "luzzus-marsaxlokk"), ("Capri's harbour, about 1880", "capri-harbour"),
+  ("Luzzus in Marsaxlokk, Malta", "luzzus-marsaxlokk"), ("Capri's harbour, about 1880", "capri-harbour"),
   ("Lussinpiccolo, about 1900", "lussinpiccolo"), ("Rabbit Beach, Lampedusa", "rabbit-beach"),
   ("Al-Idrisi's map, south at the top", "al-idrisi")]
 

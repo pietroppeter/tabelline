@@ -249,6 +249,13 @@ main table:not(.tb_table) th, main table:not(.tb_table) td { border: 1px solid v
 .su:hover, .su:focus-visible { color: var(--ink); border-color: var(--ink); }
 body:has(#indice) .su { display: inline-block; }
 .indice ol ol li::before { content: "— "; color: var(--muted); }
+sup.cite { font: 700 .68em/0 var(--font); margin-left: .1em; }
+sup.cite a { text-decoration: none; }
+ol.sources { padding-left: 1.8rem; }
+ol.sources li { margin: .35rem 0; scroll-margin-top: 1rem; }
+ol.sources li::marker { font: 700 .9em var(--font); color: var(--primary-text); }
+ol.sources li:target { background: var(--primary-soft); }
+.cite-back { text-decoration: none; }
 .indice a { text-decoration-line: none; color: var(--ink); }
 .indice a:hover { text-decoration-line: underline; }
 

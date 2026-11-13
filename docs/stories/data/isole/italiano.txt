@@ -68,15 +68,6 @@ en: A story · tabelline 0.2
 it: Una storia · tabelline 0.2
 
 en:
-The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
-Sicily to rocks that only just have a name. This is a tour of them in tables: their shapes and
-sizes, who ruled them, how they live now, how people get there, and when to go.
-it:
-Il Mediterraneo ha migliaia di isole, e Wikipedia ne elenca 195 per superficie, dalla Sicilia a
-scogli che hanno appena un nome. Questo è un giro tra loro in tabelle: le forme e le dimensioni,
-chi le ha governate, come si vive oggi, come ci si arriva e quando andarci.
-
-en:
 Green cards like this one are about how the tables are made. Every table here is made with
 tabelline 0.2: this story uses what 0.2 added that the [FOSDEM story](../fosdem/) does not, and
 a new kind of nanoplot made for it, the *shape*. The data was gathered and shaped with
@@ -87,7 +78,7 @@ of the text is about the islands.
 it:
 Le schede verdi come questa raccontano come sono fatte le tabelle. Ogni tabella qui è fatta con
 tabelline 0.2: questa storia usa ciò che la 0.2 ha aggiunto e che la [storia del FOSDEM](../fosdem/)
-non usa, e un nuovo tipo di nanoplot fatto apposta, la *forma*. I dati sono stati raccolti e
+non usa, e un nuovo tipo di nanoplot fatto apposta, la *shape* (la forma). I dati sono stati raccolti e
 preparati con [nanuq](https://github.com/pietroppeter/nanuq), Polars per Nim, in una storia a sé,
 [The islands' data, made with nanuq](../isole-data/) (in inglese); questa pagina legge soltanto i
 suoi file CSV. *Show code*, sotto una tabella, apre il codice Nim che l'ha fatta; il codice è
@@ -107,7 +98,7 @@ en:
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
-who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape, he went on, but
+who spent his life on this sea, in *La Méditerranée* (1977)[^braudel]. Not one landscape, he went on, but
 countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
@@ -116,9 +107,11 @@ shapes, then who ruled them and how they live, then getting there and when to go
 show up as a dip in a line.
 
 Braudel is the first of the voices that guide this story: along the way it quotes passages from
-books about the Mediterranean and its islands (Matvejević, *The Passenger*, Ramondino, Deleuze,
+books about the Mediterranean and its islands (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze,
 Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
-the others, and each passage was checked against its source. They are all listed under
+the others, and each passage was checked against its source. Göran Schildt[^schildt], who sailed this
+sea in his boat, the *Daphne*, and wrote books about it, is a guide of another kind, for
+whoever travels it. They are all listed under
 [To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
 Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
 credited under it; all of them, with the ones left out, are in
@@ -130,7 +123,7 @@ it:
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *Che cos'è il Mediterraneo? Mille cose insieme*, scrisse Fernand Braudel, lo storico che passò
-la vita su questo mare, in *La Méditerranée* (1977). Non un paesaggio, continuava, ma
+la vita su questo mare, in *La Méditerranée* (1977)[^braudel]. Non un paesaggio, continuava, ma
 innumerevoli paesaggi; nel suo grande libro del 1949 non è un mare ma un complesso di mari,
 pieno di isole. Braudel lo guardava in tre tempi: il tempo lento della terra, del mare e del
 clima, il tempo lungo degli stati, delle economie e dei popoli, e il tempo breve degli eventi.
@@ -139,9 +132,11 @@ forme delle isole, poi chi le ha governate e come ci si vive, poi come arrivarci
 andarci, dove gli eventi si vedono come un avvallamento in una linea.
 
 Braudel è la prima delle voci che guidano questa storia: lungo la strada cita passi di libri sul
-Mediterraneo e sulle sue isole (Matvejević, *The Passenger*, Ramondino, Deleuze, Lawrence,
+Mediterraneo e sulle sue isole (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze, Lawrence,
 Anedda), e le tabelle rispondono. Pietro ha suggerito alcuni dei libri, Claude ha trovato gli
-altri, e ogni passo è stato controllato sulla sua fonte. Sono tutti elencati in
+altri, e ogni passo è stato controllato sulla sua fonte. Göran Schildt[^schildt], che ha navigato
+questo mare con la sua barca, la *Daphne*, e ne ha scritto dei libri, è una guida di un altro
+tipo, per chi lo vuole girare. Sono tutti elencati in
 [Letture](#letture), alla fine. Le foto sopra i titoli sono state scelte allo stesso modo: Claude
 ha raccolto immagini con licenza libera per ogni sezione, Pietro ne ha scelta una, e ciascuna ha
 i crediti sotto di sé; tutte, anche quelle scartate, sono in
@@ -176,7 +171,7 @@ en: One island to start
 it: Un'isola per cominciare
 
 en:
-Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
+Predrag Matvejević's *Mediterranean Breviary* (1987)[^matvejevic] opens with a choice:
 
 > Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
 
@@ -184,7 +179,7 @@ Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
 or a tale.* This story starts from an island: the largest of the Mediterranean, in one row: its outline, how big it is, how many live
 there, and how high it goes.
 it:
-Il *Breviario mediterraneo* di Predrag Matvejević (1987) si apre con una scelta:
+Il *Breviario mediterraneo* di Predrag Matvejević (1987)[^matvejevic] si apre con una scelta:
 
 > Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
 
@@ -242,7 +237,7 @@ story, each drawn with its outline.
 
 *There are islands shaped like fish, a dolphin, say, or a torpedo ray, others shaped like
 corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
-di Spagna* (2001).
+di Spagna* (2001)[^ramondino].
 it:
 Quasi tutte le 195 sono piccole: metà sono sotto i 27 km². Le 35 più grandi, fino all'Elba, 224
 km², la più grande delle isole toscane, con Malta, l'isola di uno stato, appena prima, sono le
@@ -251,13 +246,10 @@ km², la più grande delle isole toscane, con Malta, l'isola di uno stato, appen
 > Ci sono isole che hanno forma di pesci, di delfino, ad esempio o di torpedine, altre che hanno
 > forma di coralli, altre di sirena.
 
-Così scriveva Fabrizia Ramondino di Maiorca, in *Guerra di infanzia e di Spagna* (2001).
+Così scriveva Fabrizia Ramondino di Maiorca, in *Guerra di infanzia e di Spagna* (2001)[^ramondino].
 
 en: country
 it: paese
-
-en: Wikipedia's list gives no population for Cyprus, divided since 1974.
-it: La lista di Wikipedia non dà la popolazione di Cipro, divisa dal 1974.
 
 en:
 Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
@@ -277,21 +269,6 @@ oltre la forma: `tabOptions(stubBorderStyle = "none")` la toglie, e `style.borde
 della forma la ridisegna. La riga del totale è `grandSummaryRows`, formattata con `fmtInteger()`
 nel suo blocco. Ogni forma qui è disegnata alla sua scala, grande quanto la cella permette.
 
-en:
-Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
-Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
-Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
-how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
-it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one (the census of 2001
-counted a single man):
-it:
-Malta è di gran lunga la più affollata: 1.664 persone per km², più di otto volte la Sicilia.
-Cherso e Veglia hanno la stessa superficie nella lista, 405,78 km², ma Veglia ha 19.383 abitanti
-e Cherso 3.079, uno ogni 13 ettari. Tra tutte le isole abitate, in ordine di quanti vivono su
-ogni km², Malta è ancora prima, seguita da due isole del Golfo di Napoli; all'altro capo, poche
-persone su molta roccia, e all'Asinara, la vecchia isola carcere, una sola (il censimento del
-2001 contò un solo uomo):
-
 en: per {{km^2}}
 it: per {{km^2}}
 
@@ -299,17 +276,6 @@ en:
 Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean): the islands where people live.
 it:
 Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean): le isole abitate.
-
-en:
-The density is computed before the table, and the rows are put in its order: `tabellaPreview`
-shows the first and the last rows of the data as it is. `dataColor` colours each density on a
-scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
-it:
-La densità è calcolata prima della tabella, e le righe sono messe in quell'ordine:
-`tabellaPreview` mostra le prime e le ultime righe dei dati così come sono. `dataColor` colora
-ogni densità su una scala dal bianco al rosso, con lo stesso `domain` per ogni riga, da 0 a
-1.700 persone per km². `tabellaPreview` non prende un `locale`, e la lingua dei numeri si dà
-dopo, con `t.locale = lang`.
 
 en: Lemnos, in Piri Reis's Book of the Sea
 it: Lemno, nel Libro del mare di Piri Reis
@@ -321,7 +287,7 @@ en:
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
 the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
 times Malta. Grouped by country, each with the share of its country's land it is. Alone, an
-outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)
+outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)[^sicilia]
 warns against that look:
 
 > Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
@@ -334,7 +300,7 @@ Disegnata alla sua scala, Malta sembra grande quanto la Sicilia. Con `autoscale`
 prende la scala della più grande della colonna, e le dimensioni si possono confrontare: la
 Sicilia è cento volte Malta. Raggruppate per paese, ciascuna con la parte del territorio del suo
 paese che occupa. Da solo, un profilo sembra un mondo a sé; il libro di *The Passenger* sulla
-Sicilia (Iperborea, 2024) mette in guardia da questo sguardo:
+Sicilia (Iperborea, 2024)[^sicilia] mette in guardia da questo sguardo:
 
 > Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
 > tratta di una mistificazione.
@@ -360,15 +326,6 @@ denominatore (`accuracy = "med"`): la Sicilia è 1/12 dell'Italia, Creta 1/16 de
 `subSmallVals` scrive "<1/100" per le piccole, che come frazione sarebbero 0. `summaryRows` le
 somma per ogni paese che ne ha più di una (`groups`), nel formato della loro colonna.
 
-en:
-Greece has nineteen of the 35, and together they are a sixth of its land; Croatia has six.
-Cyprus and Malta are the islands of their countries: Cyprus all of it, Malta the larger of its
-three.
-it:
-La Grecia ne ha diciannove delle 35, e insieme sono un sesto del suo territorio; la Croazia ne ha
-sei. Cipro e Malta sono le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle
-sue tre.
-
 en: Strombolicchio
 it:
 
@@ -377,11 +334,11 @@ it: Tutte le 195
 
 en:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
 with the place of each in the list:
 it:
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, scriveva Gilles Deleuze in *L'isola
-deserta*. La lista intera è lunga. Un'anteprima ne mostra i due capi, le isole più grandi e le
+deserta*[^deleuze]. La lista intera è lunga. Un'anteprima ne mostra i due capi, le isole più grandi e le
 più piccole, con il posto di ciascuna nella lista:
 
 en: {{km^2}}
@@ -589,14 +546,14 @@ isola, in corsivo, la sua lingua, accanto a quella dello stato: lo stub è Markd
 
 en:
 *They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
-Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
+Lawrence in *Sea and Sardinia* (1921)[^lawrence]. The table says otherwise: Carthage, Rome, Byzantium,
 Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
 islands that became states: Cyprus in 1960, Malta in 1964, and the six Croatian islands with
 Croatia in 1991. Before them, Rhodes, Kos and Karpathos joined Greece in 1947, after thirty-five
 years under Italy, and Gökçeada, the Greek Imbros, went to Turkey at Lausanne in 1923.
 it:
 *Dicono che né Romani né Fenici, né Greci né Arabi abbiano mai sottomesso la Sardegna*, scriveva
-D. H. Lawrence in *Mare e Sardegna* (1921). La tabella dice altro: Cartagine, Roma, Bisanzio,
+D. H. Lawrence in *Mare e Sardegna* (1921)[^lawrence]. La tabella dice altro: Cartagine, Roma, Bisanzio,
 l'Aragona e i Savoia sono arrivati tutti. Roma e Bisanzio le hanno governate quasi tutte. Le
 ultime a entrare nello stato in cui sono oggi sono le isole che sono diventate stati: Cipro nel
 1960, Malta nel 1964, e le sei isole croate con la Croazia nel 1991. Prima di loro, Rodi, Coo e
@@ -641,8 +598,8 @@ rientrati con `tabStubIndent` (nuovo nella 0.2), che sposta il testo dello stub 
 icone sono `landmark` e `mountain-sun` di Font Awesome. Gozo, Lipari, Patmo e Bua non sono tra
 le 35 isole principali, ma hanno anch'esse un sito.
 
-en: Luzzus in Marsaxlokk
-it: Luzzu a Marsaxlokk
+en: Luzzus in Marsaxlokk, Malta
+it: Luzzu a Marsaxlokk, Malta
 
 en: How they live now
 it: Come si vive oggi
@@ -782,7 +739,7 @@ en:
 
 *The first lesson of islands is that you can't leave on foot. Water, air, wind, waves, ropes,
 bollards, shrouds. You have to take a ship or a plane*: the first lines of Antonella Anedda's
-*Isolatria* (2013), on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
+*Isolatria* (2013)[^anedda], on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
 some since the 1960s; for each island, the sum of its airports (an island that has a large
 airport leaves its airstrips out). Every line starts in 2000 and ends in 2025, and the dashed
 line is 11 March 2020, when the World Health Organization called COVID-19 a pandemic: the dip
@@ -791,7 +748,7 @@ it:
 > La prima lezione delle isole è che non puoi andartene a piedi. Acqua, aria, vento, onde, corde,
 > bitte, sartie. Devi prendere una nave o un aereo.
 
-Sono le prime righe di *Isolatria* di Antonella Anedda (2013), sull'arcipelago della Maddalena.
+Sono le prime righe di *Isolatria* di Antonella Anedda (2013)[^anedda], sull'arcipelago della Maddalena.
 Quasi tutti i visitatori arrivano in aereo. Wikidata ha i passeggeri di 64 aeroporti sulle isole,
 anno per anno, alcuni dagli anni Sessanta; per ogni isola, la somma dei suoi aeroporti (un'isola
 con un grande aeroporto lascia fuori le sue piste minori). Ogni linea va dal 2000 al 2025, e la
@@ -955,7 +912,7 @@ Nicosia, inland, reaches 37 °C in August. The coolest in winter are the islands
 Krk and Cres at the top of the Adriatic, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind))
 comes down from the mountains, Gökçeada and Thasos at the top of the Aegean, and Elba. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
 [meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
-own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
+own, as Nick Hunt[^hunt] writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
 in Tommaso Stella's Italian):
 
 > Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
@@ -968,7 +925,7 @@ Nicosia, nell'entroterra, arriva a 37 °C in agosto. Le più fresche d'inverno s
 nord: Veglia e Cherso in cima all'Adriatico, quando la [bora](https://it.wikipedia.org/wiki/Bora_(vento))
 scende dai monti, Imbro e Taso in cima all'Egeo, e l'Elba. Il mare è più caldo in agosto, da 26 a
 28 °C al sud, e nell'Egeo il [meltemi](https://it.wikipedia.org/wiki/Meltemi) soffia tutta
-l'estate. I venti sono un mare a sé, come scrive Nick Hunt in *Mediterraneo*, il libro di The
+l'estate. I venti sono un mare a sé, come scrive Nick Hunt[^hunt] in *Mediterraneo*, il libro di The
 Passenger su questo mare (Iperborea, 2023, nella traduzione di Tommaso Stella):
 
 > Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
@@ -1199,45 +1156,69 @@ en: To read more
 it: Letture
 
 en:
-Three books on the whole sea, which this story borrows from:
+Every book this story quotes or names, in the order it first meets them: the number is the one
+beside that first mention, and ↩ goes back to it.
+it:
+Ogni libro che questa storia cita o nomina, nell'ordine in cui lo incontra la prima volta: il
+numero è quello accanto a quella prima menzione, e ↩ ci riporta.
 
-- Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II*
-  (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel).
-- Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*;
-  in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography
-  told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of
-  islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
-- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
-  (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
-  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its
-  books on Sicily (2024) and Sardinia (2026).
+en:
+Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II* (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel).
+it:
+Fernand Braudel, *Civiltà e imperi del Mediterraneo nell'età di Filippo II* (1949), e *Il Mediterraneo* (1977, *La Méditerranée*): il mare come storia di tempi lenti. [Braudel su Wikipedia](https://it.wikipedia.org/wiki/Fernand_Braudel).
 
-And the others quoted along the way, in the order the story meets them:
+en:
+Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*; in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
+it:
+Predrag Matvejević, *Breviario mediterraneo* (1987, *Mediteranski brevijar*): porti, fari, venti e isole, una geografia raccontata come poesia. Scrisse anche un *Isolario Mediterraneo* (2000), sul modello dei vecchi libri di isole. [Matvejević su Wikipedia](https://it.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
 
-- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca,
-  where the islands have the shapes of fish and mermaids.
-  [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
-- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
-  2024): its introduction, on the island that looks like a world of its own on a map; and
-  Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical
-  ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
-- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert
-  islands, where the island is what the sea surrounds.
-  [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze).
-- D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921):
-  a week's journey from Sicily to Sardinia and back, in the winter of 1921.
-- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the
-  islands off Sardinia where her family comes from.
-  [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
-- Nick Hunt, on the winds, in *Mediterraneo* (above):
-  [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
+en:
+[*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean) (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its books on Sicily (2024) and Sardinia (2026).
+it:
+[*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger (Iperborea, 2023): il mare di oggi in saggi e fotografie, con testi di David Abulafia, autore di *Il grande mare* (2011), Nick Hunt sui venti, Annalisa Camilli, Rachel Roddy e altri; e i suoi libri sulla Sicilia (2024) e sulla Sardegna (2026).
 
+en:
+Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca, where the islands have the shapes of fish and mermaids. [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
+it:
+Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): un'infanzia a Maiorca, dove le isole hanno la forma di pesci e di sirene. [Ramondino su Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
+
+en:
+[*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea, 2024): its introduction, on the island that looks like a world of its own on a map; and Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
+it:
+[*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea, 2024): la sua introduzione, sull'isola che su una cartina sembra un mondo a sé; e "Tropico di Sicilia" di Giacomo Di Girolamo, su un clima che diventa tropicale ([un estratto sul Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
+
+en:
+Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert islands, where the island is what the sea surrounds. [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze).
+it:
+Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): il suo primo saggio sulle isole deserte, dove l'isola è ciò che il mare circonda. [Deleuze su Wikipedia](https://it.wikipedia.org/wiki/Gilles_Deleuze).
+
+en:
+D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921): a week's journey from Sicily to Sardinia and back, in the winter of 1921.
+it:
+D. H. Lawrence, *Mare e Sardegna* (1921, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia)): una settimana di viaggio dalla Sicilia alla Sardegna e ritorno, nell'inverno del 1921.
+
+en:
+Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the islands off Sardinia where her family comes from. [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
+it:
+Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): le isole al largo della Sardegna da cui viene la sua famiglia. [Anedda su Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
+
+en:
+Nick Hunt, on the winds, in *Mediterraneo* (above): [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
+it:
+Nick Hunt, sui venti, in *Mediterraneo* (sopra): [un estratto sul Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
+
+en:
+Göran Schildt, *In the Wake of Odysseus* (1953; in Swedish *I Odysseus kölvatten*, 1951), one of his books on the voyages of the *Daphne*, the boat he sailed around the Mediterranean after the Winter War, with the architect Alvar Aalto among his guests. [Schildt on Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt).
+it:
+Göran Schildt, *I Odysseus kölvatten* (1951; in inglese *In the Wake of Odysseus*, 1953), uno dei suoi libri sui viaggi della *Daphne*, la barca con cui ha girato il Mediterraneo dopo la guerra d'inverno, con l'architetto Alvar Aalto tra gli ospiti. [Schildt su Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt) (in inglese).
+
+en:
 ## How this story is built
 
 From zero, in four layers. How the data was gathered, cleaned and checked is a story of its
 own: [The islands' data, made with nanuq](../isole-data/).
 
-**1. The sources** are open: Wikipedia's *List of islands in the Mediterranean* (the 195 islands,
+**1. The sources** are open: Wikipedia's [*List of islands in the Mediterranean*](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (the 195 islands,
 their area, population and main town), Wikidata (each island's place and highest point, World
 Heritage sites, airports and their passengers), the outlines of OpenStreetMap (© OpenStreetMap contributors, ODbL),
 the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's regional figures
@@ -1263,46 +1244,12 @@ and `y`, and a record of the two is a cell of a shape nanoplot.
 **4. The tables on this page** are tabelline 0.2, with `nbShowCode` running a cell of Nim and
 showing the table it makes, its code folded under it. What 0.2 brought that they use:
 it:
-Tre libri su tutto il mare, a cui questa storia prende in prestito:
-
-- Fernand Braudel, *Civiltà e imperi del Mediterraneo nell'età di Filippo II* (1949), e *Il
-  Mediterraneo* (1977, *La Méditerranée*): il mare come storia di tempi lenti.
-  [Braudel su Wikipedia](https://it.wikipedia.org/wiki/Fernand_Braudel).
-- Predrag Matvejević, *Breviario mediterraneo* (1987, *Mediteranski brevijar*): porti, fari, venti
-  e isole, una geografia raccontata come poesia. Scrisse anche un *Isolario Mediterraneo* (2000),
-  sul modello dei vecchi libri di isole.
-  [Matvejević su Wikipedia](https://it.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
-- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
-  (Iperborea, 2023): il mare di oggi in saggi e fotografie, con testi di David Abulafia, autore di
-  *Il grande mare* (2011), Nick Hunt sui venti, Annalisa Camilli, Rachel Roddy e altri; e i suoi
-  libri sulla Sicilia (2024) e sulla Sardegna (2026).
-
-E gli altri citati lungo la strada, nell'ordine in cui la storia li incontra:
-
-- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): un'infanzia a Maiorca,
-  dove le isole hanno la forma di pesci e di sirene.
-  [Ramondino su Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
-- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
-  2024): la sua introduzione, sull'isola che su una cartina sembra un mondo a sé; e "Tropico di
-  Sicilia" di Giacomo Di Girolamo, su un clima che diventa tropicale
-  ([un estratto sul Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
-- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): il suo primo saggio sulle
-  isole deserte, dove l'isola è ciò che il mare circonda.
-  [Deleuze su Wikipedia](https://it.wikipedia.org/wiki/Gilles_Deleuze).
-- D. H. Lawrence, *Mare e Sardegna* (1921, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia)):
-  una settimana di viaggio dalla Sicilia alla Sardegna e ritorno, nell'inverno del 1921.
-- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): le isole
-  al largo della Sardegna da cui viene la sua famiglia.
-  [Anedda su Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
-- Nick Hunt, sui venti, in *Mediterraneo* (sopra):
-  [un estratto sul Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
-
 ## Come è fatta questa storia
 
 Da zero, in quattro strati. Come i dati sono stati raccolti, puliti e controllati è una storia a
 sé: [The islands' data, made with nanuq](../isole-data/) (in inglese).
 
-**1. Le fonti** sono aperte: la *List of islands in the Mediterranean* di Wikipedia (le 195
+**1. Le fonti** sono aperte: la [*List of islands in the Mediterranean*](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) di Wikipedia (le 195
 isole, la superficie, la popolazione e la città principale), Wikidata (la posizione e la vetta di
 ogni isola, i siti del Patrimonio mondiale, gli aeroporti e i loro passeggeri, i nomi italiani), i
 profili di OpenStreetMap (© i contributori di OpenStreetMap, ODbL), i riquadri del clima delle
@@ -1466,6 +1413,7 @@ it: totale
 
 en: all
 it: in tutto
+
 en: Eastern Macedonia and Thrace
 it: Macedonia Orientale e Tracia
 
@@ -1570,3 +1518,165 @@ it:
 
 en: Aleatico
 it: l'Aleatico
+
+en:
+The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
+Sicily down to islands of 5.5 km². This is a tour of them in tables: their shapes and
+sizes, who ruled them, how they live now, how people get there, and when to go.
+it:
+Il Mediterraneo ha migliaia di isole, e Wikipedia ne elenca 195 per superficie, dalla Sicilia
+fino a isole di 5,5 km². Questo è un giro tra loro in tabelle: le forme e le dimensioni, chi le ha
+governate, come si vive oggi, come ci si arriva e quando andarci.
+
+en:
+### How many there are
+
+No one knows how many islands the Mediterranean has: it depends on how small an island may be.
+The sea holds more than 10,000, by an estimate of 2022, and 2,217 of them are larger than a
+hectare. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
+6,000, by the smallest size counted, and people live on 166 to 227 of them. Croatia's statistics
+office counts 1,185: 718 islands, 48 of them lived on, 389 rocks and 78 reefs. Italy has nearly
+450, with those of its lakes and rivers, and Turkey about 500, in four seas and its lakes.
+
+This story's 195 are the islands Wikipedia's list gives an area for, from Sicily down to Ilovik
+and Petalas, 5.5 km² each. Its 35 main islands are the largest of them, down to Elba, so that the
+last two are Malta, an island that is a country, and Elba, the largest of the Tuscan islands.
+
+The end of the list is not rocks, then, but small islands with a story each. Levanzo, 5.8 km²,
+has 208 people and the Grotta del Genovese, a cave with Neolithic paintings. Tavolara is one
+limestone mountain off Sardinia, where a handful of families live; in 1836 the king of Sardinia
+gave it, as a kingdom of make-believe, to the Bertoleoni family. Veli Brijun was Tito's summer
+residence from 1947 to 1979, where he received heads of state, and is now a national park.
+Sazan, Albania's largest island, is a military zone. Petalas, the last, is the largest private
+island of Greece, with 4,000 olive trees and nobody living there.
+
+Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
+hectare or more, near the estimate. Here they are by country, with the 195 of the list among them:
+it:
+### Quante sono
+
+Nessuno sa quante isole abbia il Mediterraneo: dipende da quanto può essere piccola un'isola. Il
+mare ne ha più di 10.000, secondo una stima del 2022, e 2.217 sono più grandi di un ettaro. Ogni
+paese conta le sue, con le sue regole. La Grecia ne ha fra 1.200 e 6.000, a seconda della misura
+più piccola che conta, e da 166 a 227 sono abitate. L'istituto di statistica croato ne conta
+1.185: 718 isole, di cui 48 abitate, 389 scogli e 78 secche. L'Italia ne ha quasi 450, con quelle
+dei laghi e dei fiumi, e la Turchia circa 500, in quattro mari e nei suoi laghi.
+
+Le 195 di questa storia sono le isole a cui la lista di Wikipedia dà una superficie, dalla Sicilia
+fino a Ilovik (Asinello) e Petalas, 5,5 km² ciascuna. Le sue 35 isole principali sono le più grandi
+fra queste, fino all'Elba, così che le ultime due sono Malta, un'isola che è uno stato, e l'Elba,
+la più grande delle isole toscane.
+
+La fine della lista, quindi, non sono scogli, ma piccole isole con una storia ciascuna. Levanzo,
+5,8 km², ha 208 abitanti e la Grotta del Genovese, con pitture del Neolitico. Tavolara è una sola
+montagna di calcare al largo della Sardegna, dove vive qualche famiglia; nel 1836 il re di Sardegna
+la diede, come regno per finta, alla famiglia Bertoleoni. Veli Brijun (Brioni Maggiore) fu la
+residenza estiva di Tito dal 1947 al 1979, dove riceveva i capi di stato, e oggi è un parco
+nazionale. Saseno, la più grande isola dell'Albania, è una zona militare. Petalas, l'ultima, è la
+più grande isola privata della Grecia, con 4.000 ulivi e nessuno che ci vive.
+
+Contate sulla costa di OpenStreetMap, che disegna ogni isolotto, il mare ha 2.345 isole di un
+ettaro o più, vicino alla stima. Eccole per paese, con fra loro le 195 della lista:
+
+en: of its land
+it: del suo territorio
+
+en:
+Islands of a hectare or more; the area and the people are those of every island, of any size.
+it:
+Isole di un ettaro o più; la superficie e gli abitanti sono quelli di tutte le isole, di ogni misura.
+
+en:
+From Wikipedia's list for its 195 islands, and from Wikidata for the others, where it has a count: most small islands have none, and few people.
+it:
+Dalla lista di Wikipedia per le sue 195 isole, e da Wikidata per le altre, dove ha un numero: quasi tutte le isole piccole non ne hanno, e hanno pochi abitanti.
+
+en:
+Every island: OpenStreetMap's land polygons (© [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL), not the Peloponnese and Kassandra, cut off by canals, nor islands in lakes; the country from [Natural Earth](https://www.naturalearthdata.com/); Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); Wikidata. Nine other countries have islets under 1 km² in all.
+it:
+Tutte le isole: i poligoni delle terre di OpenStreetMap (© i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright), ODbL), senza il Peloponneso e la penisola di Cassandra, staccati da canali, né le isole dei laghi; il paese da [Natural Earth](https://www.naturalearthdata.com/); Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (superficie, popolazione); Wikidata. Altri nove paesi hanno isolotti per meno di 1 km² in tutto.
+
+en: Egypt
+it: Egitto
+
+en: Libya
+it: Libia
+
+en: Algeria
+it: 
+
+en:
+This table counts every island, not only the list's: [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+takes each of OpenStreetMap's land polygons in the sea and finds its country, and
+[process.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/process.nim)
+adds them up by country, with nanuq. `tabSpanner` puts the two counts under one label, and
+`fmtFraction` writes the share again, as in the table of the main islands.
+it:
+Questa tabella conta tutte le isole, non solo quelle della lista: [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+prende ogni poligono delle terre di OpenStreetMap nel mare e ne trova il paese, e
+[process.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/process.nim)
+le somma per paese, con nanuq. `tabSpanner` mette i due conteggi sotto un'etichetta, e
+`fmtFraction` scrive di nuovo la quota, come nella tabella delle isole principali.
+
+en:
+Italy has the most land on islands, a sixth of the country, almost all of it Sicily and
+Sardinia; Greece has the most islands, 871 of a hectare or more, and a fifth of its land. Croatia
+has 604, more than Italy, France and Spain together, and they are a seventeenth of its land.
+Cyprus and Malta are islands and nothing else.
+it:
+L'Italia ha più terra in isole di tutti, un sesto del paese, quasi tutta Sicilia e Sardegna; la
+Grecia ha più isole di tutti, 871 di un ettaro o più, e un quinto del suo territorio. La Croazia
+ne ha 604, più di Italia, Francia e Spagna insieme, e sono un diciassettesimo del suo territorio.
+Cipro e Malta sono isole e nient'altro.
+
+en:
+Wikipedia's list gives no population for Cyprus, divided since 1974: 918,100 in the Republic's areas (census 2021) and 382,836 in the north (estimate 2021), from Wikipedia's articles.
+it:
+La lista di Wikipedia non dà la popolazione di Cipro, divisa dal 1974: 918.100 nelle zone della Repubblica (censimento 2021) e 382.836 nel nord (stima 2021), dalle voci di Wikipedia.
+
+en:
+Together the 35 are 97,297 km² with 11.4 million people, about as much land, and as many people,
+as Portugal (92,225 km², 11.4 million in 2025). Sicily alone is a quarter of the land and almost
+half of the people.
+
+Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
+Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
+Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
+how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
+it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one (the census of 2001
+counted a single man). Sicily, Krk and Cres are shown in their places:
+it:
+Insieme le 35 fanno 97.297 km² con 11,4 milioni di abitanti, più o meno la terra e la gente del
+Portogallo (92.225 km², 11,4 milioni nel 2025). La sola Sicilia è un quarto della terra e quasi
+metà degli abitanti.
+
+Malta è di gran lunga la più affollata: 1.664 persone per km², più di otto volte la Sicilia.
+Cherso e Veglia hanno la stessa superficie nella lista, 405,78 km², ma Veglia ha 19.383 abitanti
+e Cherso 3.079, uno ogni 13 ettari. Tra tutte le isole abitate, in ordine di quanti vivono su
+ogni km², Malta è ancora prima, seguita da due isole del Golfo di Napoli; all'altro capo, poche
+persone su molta roccia, e all'Asinara, la vecchia isola carcere, una sola (il censimento del
+2001 contò un solo uomo). La Sicilia, Veglia e Cherso sono al loro posto:
+
+en:
+The density is computed before the table, and the rows are put in its order: `tabellaPreview`
+shows the first and the last rows of the data as it is, and with `moreRows` (new in 0.2, not
+from gt) the rows the text talks about, here chosen by their page with `where`, wherever they
+fall; each run of rows left out is a grey row that says which. `dataColor` colours each density on a
+scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
+it:
+La densità è calcolata prima della tabella, e le righe sono messe in quell'ordine:
+`tabellaPreview` mostra le prime e le ultime righe dei dati così come sono, e con `moreRows`
+(nuovo nella 0.2, non da gt) le righe di cui parla il testo, qui scelte per la loro pagina con
+`where`, ovunque cadano; ogni tratto di righe lasciate fuori è una riga grigia che dice quali.
+`dataColor` colora ogni densità su una scala dal bianco al rosso, con lo stesso `domain` per ogni
+riga, da 0 a 1.700 persone per km². `tabellaPreview` non prende un `locale`, e la lingua dei
+numeri si dà dopo, con `t.locale = lang`.
+
+en:
+Greece has eighteen of the 35, and together they are a sixth of its land; Croatia has six.
+Cyprus and Malta are the islands of their countries: Cyprus all of it, Malta the larger of its
+three.
+it:
+La Grecia ne ha diciotto delle 35, e insieme sono un sesto del suo territorio; la Croazia ne ha
+sei. Cipro e Malta sono le isole dei loro stati: Cipro tutto lo stato, Malta la più grande delle
+sue tre.

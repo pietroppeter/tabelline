@@ -1,4 +1,4 @@
-## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily to rocks that only just have a name: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and OpenStreetMap, gathered with nanuq; every table made with tabelline 0.2.
+## story: 0.2 | Islands of the Mediterranean | 195 islands, from Sicily down to islands of 5.5 km²: their shapes, who ruled them, how they live now and when to go. The data from Wikipedia, Wikidata and OpenStreetMap, gathered with nanuq; every table made with tabelline 0.2.
 ## A story, kept up to date (first written on 11 November 2026, with tabelline 0.2). It shows
 ## what 0.2 added that the FOSDEM story does not use, and the new shape nanoplot. The data is in
 ## docs/stories/data/isole/, made by its src/ (fetch.nim, extract.nim, process.nim with nanuq);
@@ -38,20 +38,37 @@ when lang == "it":
     elif side == "it": translated.add line & "\n"
   flush()
 
+var readings: seq[Source]
+  ## The books the story quotes, numbered in this order: a text cites one with `[^key]` where it
+  ## first quotes it (`citing`), and "To read more" lists them (`nbSources`).
+
 proc tr(s: string): string =
-  ## `s` in the page's language.
-  when lang == "en": s
+  ## `s` in the page's language, with its citations.
+  when lang == "en": result = s
   else:
-    if key(s) in italian: (used.incl key(s); italian[key(s)])
+    if key(s) in italian: (used.incl key(s); result = italian[key(s)])
     else:
       if s notin missing: missing.add s
-      s
+      result = s
+  if "[^" in result: result = citing(result, readings)
 
 nbInit
 nb.doc.filename = docs / "stories" / (if lang == "it": "isole-it" else: "isole") / "index.html"
 nb.useTabelline(title = tr"Islands of the Mediterranean", homeHref = "../", backLabel = tr"Stories", wordmarkHref = "../../",
   looks = ["munari", "minoan"], firstLook = "minoan",
   lang = lang, languages = [("en", "../isole/index.html"), ("it", "../isole-it/index.html")])
+
+readings = @[
+  source("braudel", tr"""Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II* (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel)."""),
+  source("matvejevic", tr"""Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*; in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87)."""),
+  source("mediterraneo", tr"""[*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean) (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its books on Sicily (2024) and Sardinia (2026)."""),
+  source("ramondino", tr"""Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca, where the islands have the shapes of fish and mermaids. [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino)."""),
+  source("sicilia", tr"""[*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea, 2024): its introduction, on the island that looks like a world of its own on a map; and Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/))."""),
+  source("deleuze", tr"""Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert islands, where the island is what the sea surrounds. [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze)."""),
+  source("lawrence", tr"""D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921): a week's journey from Sicily to Sardinia and back, in the winter of 1921."""),
+  source("anedda", tr"""Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the islands off Sardinia where her family comes from. [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda)."""),
+  source("hunt", tr"""Nick Hunt, on the winds, in *Mediterraneo* (above): [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/)."""),
+  source("schildt", tr"""Göran Schildt, *In the Wake of Odysseus* (1953; in Swedish *I Odysseus kölvatten*, 1951), one of his books on the voyages of the *Daphne*, the boat he sailed around the Mediterranean after the Winter War, with the architect Alvar Aalto among his guests. [Schildt on Wikipedia](https://en.wikipedia.org/wiki/G%C3%B6ran_Schildt).""")]
 
 # ------------------------------------------------------------------- this story's own helpers
 
@@ -125,7 +142,7 @@ proc mainRow(title: string): int =
 
 nbTitle tr"A story · tabelline 0.2", tr"Islands of the Mediterranean", tr"""
 The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
-Sicily to rocks that only just have a name. This is a tour of them in tables: their shapes and
+Sicily down to islands of 5.5 km². This is a tour of them in tables: their shapes and
 sizes, who ruled them, how they live now, how people get there, and when to go.
 """
 
@@ -146,7 +163,7 @@ nbText: tr"""
 > Qu'est-ce que la Méditerranée ? Mille choses à la fois.
 
 *What is the Mediterranean? A thousand things at once*, wrote Fernand Braudel, the historian
-who spent his life on this sea, in *La Méditerranée* (1977). Not one landscape, he went on, but
+who spent his life on this sea, in *La Méditerranée* (1977)[^braudel]. Not one landscape, he went on, but
 countless landscapes; in his great book of 1949 it is not one sea but a complex of seas, full of
 islands. Braudel looked at it in three times: the slow time of the land, the sea and the
 climate, the long time of states, economies and peoples, and the quick time of events. The
@@ -155,9 +172,11 @@ shapes, then who ruled them and how they live, then getting there and when to go
 show up as a dip in a line.
 
 Braudel is the first of the voices that guide this story: along the way it quotes passages from
-books about the Mediterranean and its islands (Matvejević, *The Passenger*, Ramondino, Deleuze,
+books about the Mediterranean and its islands (Matvejević, *The Passenger*[^mediterraneo], Ramondino, Deleuze,
 Lawrence, Anedda), and the tables answer them. Pietro suggested some of the books, Claude found
-the others, and each passage was checked against its source. They are all listed under
+the others, and each passage was checked against its source. Göran Schildt[^schildt], who sailed this
+sea in his boat, the *Daphne*, and wrote books about it, is a guide of another kind, for
+whoever travels it. They are all listed under
 [To read more](#to-read-more), at the end. The photos over the headings were chosen the same way:
 Claude gathered openly licensed pictures for each section, Pietro picked one, and each is
 credited under it; all of them, with the ones left out, are in
@@ -178,10 +197,91 @@ written by Claude, the AI that wrote this story. Their colours are the page's, s
 with its look.
 """, nkCode)
 
+nbText: tr"""
+### How many there are
+
+No one knows how many islands the Mediterranean has: it depends on how small an island may be.
+The sea holds more than 10,000, by an estimate of 2022, and 2,217 of them are larger than a
+hectare. Each country counts its own, by its own rules. Greece has somewhere between 1,200 and
+6,000, by the smallest size counted, and people live on 166 to 227 of them. Croatia's statistics
+office counts 1,185: 718 islands, 48 of them lived on, 389 rocks and 78 reefs. Italy has nearly
+450, with those of its lakes and rivers, and Turkey about 500, in four seas and its lakes.
+
+This story's 195 are the islands Wikipedia's list gives an area for, from Sicily down to Ilovik
+and Petalas, 5.5 km² each. Its 35 main islands are the largest of them, down to Elba, so that the
+last two are Malta, an island that is a country, and Elba, the largest of the Tuscan islands.
+
+The end of the list is not rocks, then, but small islands with a story each. Levanzo, 5.8 km²,
+has 208 people and the Grotta del Genovese, a cave with Neolithic paintings. Tavolara is one
+limestone mountain off Sardinia, where a handful of families live; in 1836 the king of Sardinia
+gave it, as a kingdom of make-believe, to the Bertoleoni family. Veli Brijun was Tito's summer
+residence from 1947 to 1979, where he received heads of state, and is now a national park.
+Sazan, Albania's largest island, is a military zone. Petalas, the last, is the largest private
+island of Greece, with 4,000 olive trees and nobody living there.
+
+Counted from OpenStreetMap's coastline, which draws every islet, the sea has 2,345 islands of a
+hectare or more, near the estimate. Here they are by country, with the 195 of the list among them:
+"""
+
+const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0, "ES": 505_990.0,
+                    "TN": 163_610.0, "HR": 56_594.0, "MT": 316.0, "TR": 783_562.0, "AL": 28_748.0,
+                    "EG": 1_010_408.0, "LY": 1_759_541.0, "DZ": 2_381_741.0}.toTable
+  ## Each country's area (Wikipedia; France: metropolitan; Cyprus: the whole island).
+
+nbShowCode:
+  let every = story("countries.csv")
+  let d = every.keep(proc (i: int): bool = every["km2", i].toFloat >= 1)
+               .withColumn("share", proc (i: int): Value =
+                 toValue(every["km2", i].toFloat / countryKm2[$every["code", i]]))
+  let t = tabella(d, rownameCol = "code", locale = lang):
+    optCssTheme()
+    colsHide ["islands", "peopled", "main"]
+    fmtCountry "code"
+    textTransform tr, loc.stub()
+    fmtInteger ["hectare", "listed", "km2", "people"]
+    subZero "people", zeroText = "—"
+    tabOptions(tableFontSize = "14px", dataRowPaddingHorizontal = "3px", columnLabelsPaddingHorizontal = "3px")
+    fmtFraction "share", accuracy = "low"
+    subSmallVals "share", threshold = 0.01, smallPattern = "<1/100"
+    tabSpanner tr"islands", ["hectare", "listed"]
+    colsLabel:
+      hectare: tr"all"
+      listed: tr"listed"
+      km2: tr"area, {{km^2}}"
+      people: tr"population"
+      share: tr"of its land"
+    grandSummaryRows:
+      total: agg.sum
+      columns = ["hectare", "listed", "km2", "people"]
+      missingText = ""
+      fmtInteger(sepMark = localeMarks(lang).sep)
+    textTransform tr, loc.grandSummaryStub()
+    tabFootnote tr"Islands of a hectare or more; the area and the people are those of every island, of any size.",
+      loc.columnLabels(cols("hectare"))
+    tabFootnote tr"From Wikipedia's list for its 195 islands, and from Wikidata for the others, where it has a count: most small islands have none, and few people.",
+      loc.columnLabels(cols("people"))
+    tabSourceNote md(tr"Every island: OpenStreetMap's land polygons (© [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL), not the Peloponnese and Kassandra, cut off by canals, nor islands in lakes; the country from [Natural Earth](https://www.naturalearthdata.com/); Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); Wikidata. Nine other countries have islets under 1 km² in all.")
+  nbTable t
+
+nbNote(tr"""
+This table counts every island, not only the list's: [extract.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/extract.nim)
+takes each of OpenStreetMap's land polygons in the sea and finds its country, and
+[process.nim](https://github.com/pietroppeter/tabelline/blob/main/docs/stories/data/isole/src/process.nim)
+adds them up by country, with nanuq. `tabSpanner` puts the two counts under one label, and
+`fmtFraction` writes the share again, as in the table of the main islands.
+""", nkCode)
+
+nbText: tr"""
+Italy has the most land on islands, a sixth of the country, almost all of it Sicily and
+Sardinia; Greece has the most islands, 871 of a hectare or more, and a fifth of its land. Croatia
+has 604, more than Italy, France and Spain together, and they are a seventeenth of its land.
+Cyprus and Malta are islands and nothing else.
+"""
+
 photoHeading "One island to start", "etna-plume", "Etna's plume"
 nbText: tr"""
 
-Predrag Matvejević's *Mediterranean Breviary* (1987) opens with a choice:
+Predrag Matvejević's *Mediterranean Breviary* (1987)[^matvejevic] opens with a choice:
 
 > Scegliamo innanzitutto un punto di partenza: riva o scena, porto o evento, navigazione o racconto.
 
@@ -233,7 +333,7 @@ story, each drawn with its outline.
 
 *There are islands shaped like fish, a dolphin, say, or a torpedo ray, others shaped like
 corals, others like a mermaid*, wrote Fabrizia Ramondino of Mallorca, in *Guerra di infanzia e
-di Spagna* (2001).
+di Spagna* (2001)[^ramondino].
 """
 
 nbShowCode:
@@ -265,7 +365,7 @@ nbShowCode:
       missingText = ""
       fmtInteger(sepMark = localeMarks(lang).sep)   # a summary's format does not take the table's locale
     textTransform tr, loc.grandSummaryStub()
-    tabFootnote tr"Wikipedia's list gives no population for Cyprus, divided since 1974.", loc.body(cols("population"), 2)
+    tabFootnote tr"Wikipedia's list gives no population for Cyprus, divided since 1974: 918,100 in the Republic's areas (census 2021) and 382,836 in the north (estimate 2021), from Wikipedia's articles.", loc.body(cols("population"), 2)
     tabSourceNote md(tr"Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (area, population); outlines © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).")
   nbTable t
 
@@ -278,12 +378,16 @@ own scale, as large as the cell allows.
 """, nkCode)
 
 nbText: tr"""
+Together the 35 are 97,297 km² with 11.4 million people, about as much land, and as many people,
+as Portugal (92,225 km², 11.4 million in 2025). Sicily alone is a quarter of the land and almost
+half of the people.
+
 Malta is the most crowded of them by far: 1,664 people on each km², more than eight times
 Sicily. Cres and Krk have the same area in the list, 405.78 km², but Krk has 19,383 people and
 Cres 3,079, one for every 13 hectares. Among all the islands where people live, ordered by
 how many live on each km², Malta is still first, with two islands of the Gulf of Naples after
 it; at the other end, a few people on a lot of rock, and on Asinara, the old prison island, one (the census of 2001
-counted a single man):
+counted a single man). Sicily, Krk and Cres are shown in their places:
 """
 
 nbShowCode:
@@ -295,7 +399,8 @@ nbShowCode:
   let order = toSeq(0 ..< d.nrows).sortedByIt(-d["density", it].toFloat)
   var sorted = TableData()
   for c in d.columns: sorted.addColumn(c.name, order.mapIt(c.values[it]))
-  var t = tabellaPreview(sorted, topN = 3, bottomN = 3):
+  var t = tabellaPreview(sorted, topN = 3, bottomN = 3,
+                         moreRows = where($it.title in ["Sicily", "Krk (island)", "Cres (island)"])):
     optCssTheme()
     colsHide everything()
     colsUnhide ["island", "shape", "population", "density"]
@@ -315,7 +420,9 @@ nbShowCode:
 
 nbNote(tr"""
 The density is computed before the table, and the rows are put in its order: `tabellaPreview`
-shows the first and the last rows of the data as it is. `dataColor` colours each density on a
+shows the first and the last rows of the data as it is, and with `moreRows` (new in 0.2, not
+from gt) the rows the text talks about, here chosen by their page with `where`, wherever they
+fall; each run of rows left out is a grey row that says which. `dataColor` colours each density on a
 scale from white to red, with the same `domain` for every row, 0 to 1,700 people a km².
 """, nkCode)
 
@@ -325,7 +432,7 @@ nbText: tr"""
 Drawn at their own scale, Malta looks as large as Sicily. With `autoscale`, every shape takes
 the scale of the largest one in the column, and the sizes can be compared: Sicily is a hundred
 times Malta. Grouped by country, each with the share of its country's land it is. Alone, an
-outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)
+outline looks like a world of its own; *The Passenger*'s book on Sicily (Iperborea, 2024)[^sicilia]
 warns against that look:
 
 > Guardando una cartina, un'isola ci dà l'illusione di essere un piccolo mondo a sé. […] Ma si
@@ -334,10 +441,6 @@ warns against that look:
 *Looking at a map, an island gives us the illusion of being a small world of its own. […] But
 it is a mystification.*
 """
-
-const countryKm2 = {"IT": 302_068.0, "CY": 9_251.0, "FR": 551_695.0, "GR": 131_957.0,
-                    "ES": 505_990.0, "TN": 163_610.0, "HR": 56_594.0, "MT": 316.0, "TR": 783_562.0}.toTable
-  ## Each country's area (Wikipedia; France: metropolitan; Cyprus: the whole island).
 
 nbShowCode:
   var d = main.withColumn("shape", proc (i: int): Value =
@@ -375,7 +478,7 @@ for each country with more than one (`groups`), in the format of their column.
 """, nkCode)
 
 nbText: tr"""
-Greece has nineteen of the 35, and together they are a sixth of its land; Croatia has six.
+Greece has eighteen of the 35, and together they are a sixth of its land; Croatia has six.
 Cyprus and Malta are the islands of their countries: Cyprus all of it, Malta the larger of its
 three.
 
@@ -384,7 +487,7 @@ photoHeading "All 195", "strombolicchio", "Strombolicchio"
 nbText: tr"""
 
 *Non c'è alcuna unità oggettiva nell'insieme delle isole*, there is no objective unity in the
-set of islands, wrote Gilles Deleuze in *L'isola deserta*. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
+set of islands, wrote Gilles Deleuze in *L'isola deserta*[^deleuze]. The whole list is long. A preview shows its two ends, the largest and the smallest islands,
 with the place of each in the list:
 """
 
@@ -560,10 +663,20 @@ nbShowCode:
     tabSpanner tr"ancient", byAge("ancient")
     tabSpanner tr"middle ages", byAge("medieval")
     tabSpanner tr"modern", byAge("modern")
-    tabStyle style.text(color = tint("--success-text")), loc.body(cols(byAge("ancient")))
-    tabStyle style.text(color = tint("--secondary-text")), loc.body(cols(byAge("medieval")))
-    tabStyle style.text(color = tint("--primary-text")), loc.body(cols(byAge("modern")))
+    tabStyle style.text(color = tint("--success")), loc.body(cols(byAge("ancient")))
+    tabStyle style.text(color = tint("--secondary")), loc.body(cols(byAge("medieval")))
+    tabStyle style.text(color = tint("--primary")), loc.body(cols(byAge("modern")))
     tabStyle style.fill(tint("--shade")), loc.columnLabels(cols(stripes)), loc.body(cols(stripes))
+    # a rule where an age begins, and before today, through the labels and the dots
+    let starts = @[byAge("medieval")[0], byAge("modern")[0], "today"]
+    tabStyle style.borders({sLeft}, color = tint("--ink"), weight = "1.5px"),
+      [loc.body(cols(starts)), loc.columnLabels(cols(starts))]
+    tabStyle style.borders({sLeft}, color = tint("--ink"), weight = "1.5px"),
+      loc.spanners(tr"middle ages", tr"modern")
+    # each age's name in its dots' colour, so the key is over the dots
+    tabStyle style.text(color = tint("--success-text"), weight = "bold"), loc.spanners(tr"ancient")
+    tabStyle style.text(color = tint("--secondary-text"), weight = "bold"), loc.spanners(tr"middle ages")
+    tabStyle style.text(color = tint("--primary-text"), weight = "bold"), loc.spanners(tr"modern")
     tabStyle style.text(size = "11px"), loc.body(cols("today"))
     tabOptions(tableFontSize = "12.5px", columnLabelsFontSize = "75%",
                dataRowPaddingHorizontal = "1px", columnLabelsPaddingHorizontal = "1px")
@@ -581,7 +694,7 @@ italics, its own language, beside the state's: the stub is Markdown (`fmtMarkdow
 
 nbText: tr"""
 *They say neither Romans nor Phoenicians, Greeks nor Arabs ever subdued Sardinia*, wrote D. H.
-Lawrence in *Sea and Sardinia* (1921). The table says otherwise: Carthage, Rome, Byzantium,
+Lawrence in *Sea and Sardinia* (1921)[^lawrence]. The table says otherwise: Carthage, Rome, Byzantium,
 Aragon and Savoy all came. Rome and Byzantium ruled almost all of them. The last to join the state they are in were the
 islands that became states: Cyprus in 1960, Malta in 1964, and the six Croatian islands with
 Croatia in 1991. Before them, Rhodes, Kos and Karpathos joined Greece in 1947, after thirty-five
@@ -637,7 +750,7 @@ among the 35 main islands, but have a property too.
 
 # ------------------------------------------------------------------------------------ economy
 
-photoHeading "How they live now", "luzzus-marsaxlokk", "Luzzus in Marsaxlokk"
+photoHeading "How they live now", "luzzus-marsaxlokk", "Luzzus in Marsaxlokk, Malta"
 nbText: tr"""
 
 Eurostat measures the European Union by regions, and most of the main islands are a region of
@@ -767,7 +880,7 @@ nbText: tr"""
 
 *The first lesson of islands is that you can't leave on foot. Water, air, wind, waves, ropes,
 bollards, shrouds. You have to take a ship or a plane*: the first lines of Antonella Anedda's
-*Isolatria* (2013), on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
+*Isolatria* (2013)[^anedda], on the Maddalena islands. Most visitors fly. Wikidata has the passengers of 64 airports on the islands, year by year,
 some since the 1960s; for each island, the sum of its airports (an island that has a large
 airport leaves its airstrips out). Every line starts in 2000 and ends in 2025, and the dashed
 line is 11 March 2020, when the World Health Organization called COVID-19 a pandemic: the dip
@@ -884,7 +997,7 @@ Nicosia, inland, reaches 37 °C in August. The coolest in winter are the islands
 Krk and Cres at the top of the Adriatic, when the [bora](https://en.wikipedia.org/wiki/Bora_(wind))
 comes down from the mountains, Gökçeada and Thasos at the top of the Aegean, and Elba. The sea is warmest in August, 26 to 28 °C in the south, and in the Aegean the
 [meltemi](https://en.wikipedia.org/wiki/Meltemi) blows all summer. The winds are a sea of their
-own, as Nick Hunt writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
+own, as Nick Hunt[^hunt] writes in *Mediterraneo*, The Passenger's book on this sea (Iperborea, 2023,
 in Tommaso Stella's Italian):
 
 > Al di sopra del Mediterraneo esiste un altro mare: un turbolento e palpitante oceano gassoso
@@ -939,45 +1052,18 @@ nbPart 4, "", prPrimary   # the closing sections: readings, how it is built
 photoHeading "To read more", "al-idrisi", "Al-Idrisi's map, south at the top"
 nbText: tr"""
 
-Three books on the whole sea, which this story borrows from:
+Every book this story quotes or names, in the order it first meets them: the number is the one
+beside that first mention, and ↩ goes back to it.
+"""
+nbSources readings
 
-- Fernand Braudel, *The Mediterranean and the Mediterranean World in the Age of Philip II*
-  (1949), and *La Méditerranée* (1977): the sea as a history of slow times. [Braudel on Wikipedia](https://en.wikipedia.org/wiki/Fernand_Braudel).
-- Predrag Matvejević, *Mediterranean: A Cultural Landscape* (1987, *Mediteranski brevijar*;
-  in Italian *Breviario mediterraneo*): ports, lighthouses, winds and islands, a geography
-  told as poetry. He also wrote an *Isolario Mediterraneo* (2000), after the old books of
-  islands. [Matvejević on Wikipedia](https://en.wikipedia.org/wiki/Predrag_Matvejevi%C4%87).
-- [*Mediterraneo*](https://thepassenger.iperborea.com/titoli/mediterraneo/), The Passenger
-  (Iperborea, 2023): today's sea in essays and photographs, with essays by David Abulafia, author of [*The Great Sea*](https://en.wikipedia.org/wiki/The_Great_Sea:_A_Human_History_of_the_Mediterranean)
-  (2011), Nick Hunt on the winds, Annalisa Camilli, Rachel Roddy and others; and its
-  books on Sicily (2024) and Sardinia (2026).
-
-And the others quoted along the way, in the order the story meets them:
-
-- Fabrizia Ramondino, *Guerra di infanzia e di Spagna* (Einaudi, 2001): a childhood in Mallorca,
-  where the islands have the shapes of fish and mermaids.
-  [Ramondino on Wikipedia](https://it.wikipedia.org/wiki/Fabrizia_Ramondino).
-- [*Sicilia*](https://thepassenger.iperborea.com/titoli/sicilia/), The Passenger (Iperborea,
-  2024): its introduction, on the island that looks like a world of its own on a map; and
-  Giacomo Di Girolamo's "Tropico di Sicilia", on a climate turning tropical
-  ([an excerpt in Il Post](https://www.ilpost.it/2024/04/17/sicilia-coltivazione-frutta-esotica/)).
-- Gilles Deleuze, *L'isola deserta e altri scritti* (Einaudi, 2007): his early essay on desert
-  islands, where the island is what the sea surrounds.
-  [Deleuze on Wikipedia](https://en.wikipedia.org/wiki/Gilles_Deleuze).
-- D. H. Lawrence, [*Sea and Sardinia*](https://en.wikipedia.org/wiki/Sea_and_Sardinia) (1921):
-  a week's journey from Sicily to Sardinia and back, in the winter of 1921.
-- Antonella Anedda, *Isolatria. Viaggio nell'arcipelago della Maddalena* (Laterza, 2013): the
-  islands off Sardinia where her family comes from.
-  [Anedda on Wikipedia](https://it.wikipedia.org/wiki/Antonella_Anedda).
-- Nick Hunt, on the winds, in *Mediterraneo* (above):
-  [an excerpt in Il Post](https://www.ilpost.it/2023/06/09/mistral-vento-mediterraneo/).
-
+nbText: tr"""
 ## How this story is built
 
 From zero, in four layers. How the data was gathered, cleaned and checked is a story of its
 own: [The islands' data, made with nanuq](../isole-data/).
 
-**1. The sources** are open: Wikipedia's *List of islands in the Mediterranean* (the 195 islands,
+**1. The sources** are open: Wikipedia's [*List of islands in the Mediterranean*](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean) (the 195 islands,
 their area, population and main town), Wikidata (each island's place and highest point, World
 Heritage sites, airports and their passengers), the outlines of OpenStreetMap (© OpenStreetMap contributors, ODbL),
 the weather boxes of the islands' towns, and two Wikipedia lists of Eurostat's regional figures

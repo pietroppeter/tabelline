@@ -17,6 +17,7 @@
 ##   nbSwatches [("--primary", "primary", "sections")]
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
+##   citing(text, sources); nbSources sources              # [^key] in a text, a numbered list
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
@@ -313,6 +314,58 @@ proc addNote*(nb: var Nb, text: string, kind = nkPlain, title = "") =
 template nbNote*(ttext: string, tkind = nkPlain, ttitle = "") =
   ## A note beside the text, in Markdown, of a kind: `nbNote "The API will change.", nkWarning`.
   nb.addNote(ttext, tkind, ttitle)
+
+# --------------------------------------------------------------------------------------- sources
+
+type Source* = object
+  ## A source a page cites: `key` names it in the text (`[^key]`), `text` is its entry, Markdown.
+  key*, text*: string
+
+func source*(key, text: string): Source = Source(key: key, text: text)
+
+var citedKeys {.threadvar.}: seq[string]   # the sources cited so far, in the order the page cites them
+
+proc citing*(text: string, sources: openArray[Source]): string =
+  ## `text` with each `[^key]` as a small number that leads to the source's entry in
+  ## `nbSources`. Sources are numbered in the order the page first cites them, and only the first
+  ## citation is where the entry's ↩ goes back to. A key not in `sources` stops the build.
+  result = text
+  var at = result.find("[^")
+  while at >= 0:
+    let stop = result.find(']', at)
+    let key = result[at + 2 ..< stop]
+    doAssert sources.anyIt(it.key == key), "no source " & key
+    let first = key notin citedKeys
+    if first: citedKeys.add key
+    let back = if first: &" id=\"cite-{key}\"" else: ""
+    let mark = &"""<sup class="cite"><a href="#source-{key}"{back}>{citedKeys.find(key) + 1}</a></sup>"""
+    result = result[0 ..< at] & mark & result[stop + 1 .. ^1]
+    at = result.find("[^", at + mark.len)
+
+newNbBlock(NbSources):
+  entries: seq[Source]
+  cited: int
+  toHtml:
+    var items = ""
+    for i, s in blk.entries:
+      let back = if i < blk.cited: &""" <a class="cite-back" href="#cite-{s.key}" aria-label="back">↩</a>""" else: ""
+      items.add &"""<li id="source-{s.key}">{inline(s.text)}{back}</li>"""
+    &"""<ol class="sources">{items}</ol>"""
+
+proc addSources*(nb: var Nb, sources: openArray[Source]) =
+  ## Call it after the texts that cite them: the cited ones come first, in their order, then the rest.
+  var entries: seq[Source]
+  for key in citedKeys:
+    for s in sources:
+      if s.key == key: entries.add s
+  let cited = entries.len
+  for s in sources:
+    if s.key notin citedKeys: entries.add s
+  nb.add newNbSources(entries = entries, cited = cited)
+
+template nbSources*(tsources: openArray[Source]) =
+  ## The numbered list of a page's sources, each with ↩ back to where the text first cites it.
+  nb.addSources(tsources)
 
 # ----------------------------------------------------------------------------------------- cards
 
@@ -1166,6 +1219,7 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## its `lang` and every version as `languages` (code and link, its own included, as for the
   ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
   ## and a first visit goes to the one in the browser's language.
+  citedKeys.setLen 0   # a new page cites its sources afresh (docs/all.nim builds every page in one run)
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &

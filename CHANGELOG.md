@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `tabellaPreview(moreRows = ...)` shows rows from the middle too (an index, a range, a set such as `{12, 40..42}`, or `where(...)`), with a shaded row for each run left out; a set of indices is now a row selector everywhere (#101).
 - `textTransform` on `loc.summaryStub()` and `loc.grandSummaryStub()` now changes the labels of summary rows (it did nothing): the Italian islands story's "total" and "all" (#101).
 - CI: `tools/setup.sh` installs libpcre3 from Ubuntu 24.04's .deb, kept in `tools/vendor/` (checked by sha256), before trying apt, so CI no longer needs an Ubuntu mirror (#100).
 - Book findings: every CSS colour name (148) for `dataColor` and the other colour helpers, and white text on a dark heading or column labels background given by name; `nbTable data: body`, a table in one step in a notebook; `tabelline/nanuq`, `tabella(df)` for a nanuq (Polars for Nim) DataFrame, an optional module (nanuq is in the `docs` feature); the clinical case study shapes its data with nanuq, and the chapters use what 0.2 gained (#86).
