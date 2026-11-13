@@ -48,6 +48,7 @@ var book = initBookWithToc:
     entry("Guide to table making, with table.glue", "contest/table_glue")
     entry("Euro NCAP Safety Ratings - 2023", "contest/euroncap")
     entry("Lemurs at Duke Lemur Center", "contest/lemurs")
+    entry("Mapping the Latin American Pharmaceutical Landscape", "contest/latam_pharma")
   entry("Find an example by feature", "features", numbered = false)
   entry("What the port found", "gaps.md", numbered = false)
   entry("Sources and licences", "licences.md", numbered = false)

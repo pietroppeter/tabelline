@@ -2027,9 +2027,10 @@
       "repo": "lukmanaj/latam-pharma-atc-analysis",
       "year": 2025,
       "title": "Mapping the Latin American Pharmaceutical Landscape",
-      "by": "",
+      "by": "Lukman Aliyu",
       "post": "https://github.com/rich-iannone/table-contest/discussions/33",
-      "prize": "Honourable mention"
+      "prize": "Honourable mention",
+      "book": "contest/latam_pharma.html"
      },
      {
       "repo": "ILIG-MESSINA/Migration-recommendeR",
