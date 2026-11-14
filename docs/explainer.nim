@@ -135,7 +135,7 @@ nbCode:
     Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns, nanoplot"),
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (164), 14 opt*"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (165), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, save, extractBody, extractCells, extractSummary"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
@@ -172,7 +172,7 @@ block:
 
 doAssert nFormats == 31, "the menu says 31 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
-doAssert nOptions == 164, "the menu says 164 options; there are " & $nOptions
+doAssert nOptions == 165, "the menu says 165 options; there are " & $nOptions
 
 
 nbText: """

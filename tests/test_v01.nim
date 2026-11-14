@@ -105,10 +105,11 @@ suite "0.1 fixes from the book":
       x: [0, 90]
     let h = tabella(d).dataColor("x", palette = @["#FFFFFF", "#000000"], domain = (90.0, 0.0)).toHtml
     check "background-color: #000000" in h and "background-color: #FFFFFF" in h
-  test "optStylize: white text on a dark heading":
+  test "optStylize: white text on dark column labels and a dark stub":
     for c in ["red", "blue", "pink", "green", "cyan", "gray"]:
       let h = tabella(tavolaPitagorica(2)).tabHeader("T").optStylize(2, c).toHtml
-      check "--tb-heading-color: #FFFFFF" in h
+      check "--tb-column-labels-color: #FFFFFF" in h
+    check "--tb-stub-color: #FFFFFF" in tabella(tavolaPitagorica(2)).optStylize(1).toHtml
   test "optCssTheme: the page's names, with fallbacks":
     let o = tabella(tavolaPitagorica(2)).optCssTheme().options
     check o.tableFontColor == "var(--ink, #1C1C1C)"

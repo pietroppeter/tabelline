@@ -25,7 +25,7 @@ write every table as `tabella(data): body`, one verb per line.
   from the middle too; the datasets `isole()` and `citta()`.
 - **More than one value**: lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`),
   formatted item by item, read with the dot (`v.hi`, `it.mass`), plotted as x and y.
-- **The tails**: a stub of several columns, groups as a column, 164 options (160 of gt's 196),
+- **The tails**: a stub of several columns, groups as a column, 165 options (160 of gt's 196),
   `localImage` and `webImage`, `systemFonts`, a colour for each nanoplot point, and gt's
   `gtcars`, `countrypops`, `illness` and `metro`.
 - **One stylesheet for every table**: `tabellaCss`, with each option a CSS variable, written once

@@ -241,11 +241,20 @@ func subtitle*(_: LocNs): Loc = Loc(kind: lkSubtitle)
 func stubhead*(_: LocNs): Loc = Loc(kind: lkStubhead)
 func columnLabels*(_: LocNs, cols: ColSel = everything()): Loc = Loc(kind: lkColumnLabels, cols: cols)
 func spanners*(_: LocNs, labels: varargs[string]): Loc = Loc(kind: lkSpanners, names: @labels)
-func stub*(_: LocNs, rows = allRows(), cols: ColSel = everything()): Loc =
-  Loc(kind: lkStub, rows: rows, cols: cols)
+func stub*(_: LocNs, rows = allRows(), cols: ColSel = everything(), labels: openArray[string] = []): Loc =
+  ## The stub's cells of `rows`; with `labels`, the rows whose stub reads one of them
+  ## (`loc.stub(labels = ["banana"])`), together with the `rows` given (`rows = [0], labels =
+  ## ["banana"]`), as Great Tables' `loc.stub(rows = [0, "banana"])`.
+  Loc(kind: lkStub, rows: rows, cols: cols, labels: @labels)
 func rowGroups*(_: LocNs, groups: varargs[string]): Loc = Loc(kind: lkRowGroups, names: @groups)
-func body*(_: LocNs, cols: ColSel = everything(), rows = allRows()): Loc =
-  Loc(kind: lkBody, cols: cols, rows: rows)
+func rowGroups*(_: LocNs, rows: RowSel): Loc =
+  ## The groups of these rows: `loc.rowGroups(rows = where(it.mass > 100))`, as Great Tables'
+  ## `loc.row_groups(rows = ...)`.
+  Loc(kind: lkRowGroups, rows: rows, labels: @["rows"])
+func body*(_: LocNs, cols: ColSel = everything(), rows = allRows(), mask: proc (v: Value): bool = nil): Loc =
+  ## The data cells of `cols` and `rows`; with `mask`, only those whose value passes it, one cell
+  ## at a time, as Great Tables' `loc.body(mask = ...)`: `mask = proc (v: Value): bool = v > 1`.
+  Loc(kind: lkBody, cols: cols, rows: rows, mask: mask)
 func sourceNotes*(_: LocNs): Loc = Loc(kind: lkSourceNotes)
 func header*(_: LocNs): Loc = Loc(kind: lkHeader)
   ## The title and the subtitle together.
@@ -278,11 +287,20 @@ proc resolve*(l: Loc, t: Tabella): Target =
   of lkSpanners:
     result.names = if l.names.len > 0: l.names else: t.spanners.mapIt(it.label.s)
   of lkRowGroups:
-    result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
+    if l.labels == @["rows"]:
+      for i in l.rows.resolve(t.data):
+        let g = t.rowGroups[i]
+        if g.len > 0 and g notin result.names: result.names.add g
+    else:
+      result.names = if l.names.len > 0: l.names else: toSeq(t.groupLabels.keys)
   of lkStub:
     let all = t.stubColumns
     let names = l.cols.resolve(t.data).filterIt(it in all)
-    for i in l.rows.resolve(t.data):
+    var ix = if l.labels.len > 0 and l.rows.kind == rsAll: newSeq[int]() else: l.rows.resolve(t.data)
+    if l.labels.len > 0 and t.rownameCol.len > 0:
+      for i in 0 ..< t.data.nrows:
+        if $t.data[t.rownameCol, i] in l.labels and i notin ix: ix.add i
+    for i in ix:
       for n in (if names.len > 0: names else: all): result.cells.add (i, n)
   of lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub:
     # the rows are found when the table is built, so the summary rows may come later
@@ -293,7 +311,8 @@ proc resolve*(l: Loc, t: Tabella): Target =
   of lkBody:   # the data cells: the stub columns are loc.stub, as in gt
     let names = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
     for i in l.rows.resolve(t.data):
-      for n in names: result.cells.add (i, n)
+      for n in names:
+        if l.mask == nil or l.mask(t.data[n, i]): result.cells.add (i, n)
   else: discard
 
 proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target)
@@ -656,9 +675,11 @@ proc dataColor*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(),
   ## Colours cells by value, each column on its own: a number column along `palette` from the low
   ## to the high end of `domain` (by default the range of its selected cells), any other column by
   ## category. A `domain` from high to low runs the palette the other way. `apply = "text"`
-  ## colours the text instead of the fill.
+  ## colours the text instead of the fill. The stub is left out, as in Great Tables;
+  ## `palette("great-tables")` is Great Tables' default palette.
   result = t
-  let names = columns.resolve(result.data)
+  # the stub is left out, as Great Tables does: its labels are not data to colour
+  let names = columns.resolve(result.data).filterIt(it notin result.stubColumns)
   let ix = rows.resolve(result.data)
   let pal = if reverse: palette.reversed else: palette
   for n in names:
@@ -713,17 +734,28 @@ proc optAlignTableHeader*(t: sink Tabella, align = "left"): Tabella =
   result = t
   result.options.headingAlign = align
 
-proc optAllCaps*(t: sink Tabella, on = true): Tabella =
-  ## Column labels, row group labels and the stubhead in small capitals.
+proc optAllCaps*(t: sink Tabella, on = true,
+                 locations: openArray[string] = ["column_labels", "stub", "row_group"]): Tabella =
+  ## Small capitals (upper case, smaller and bolder) in the column labels, the stub and the row
+  ## group labels, or only in the `locations` named, as gt's `opt_all_caps(locations = ...)`.
   result = t
-  if on:
-    result.options.columnLabelsTextTransform = "uppercase"
-    result.options.columnLabelsFontSize = "80%"
-    result.options.columnLabelsFontWeight = "bolder"
-  else:
-    result.options.columnLabelsTextTransform = "inherit"
-    result.options.columnLabelsFontSize = "100%"
-    result.options.columnLabelsFontWeight = "normal"
+  let (transform, size, weight) = if on: ("uppercase", "80%", "bolder") else: ("inherit", "100%", "normal")
+  for l in locations:
+    case l
+    of "column_labels":
+      result.options.columnLabelsTextTransform = transform
+      result.options.columnLabelsFontSize = size
+      result.options.columnLabelsFontWeight = weight
+    of "stub":
+      result.options.stubTextTransform = transform
+      result.options.stubFontSize = size
+      result.options.stubFontWeight = (if on: weight else: "initial")
+    of "row_group":
+      result.options.rowGroupTextTransform = transform
+      result.options.rowGroupFontSize = size
+      result.options.rowGroupFontWeight = (if on: weight else: "initial")
+    else: raise newException(ValueError, "optAllCaps: no location " & l.escape &
+                             " (column_labels, stub, row_group)")
 
 proc optTableFont*(t: sink Tabella, font: string): Tabella =
   ## The table's font, as a CSS font stack: `optTableFont(systemFonts("humanist"))`.
@@ -763,31 +795,6 @@ func defaultFonts*(): string =
   "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', " &
     "'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
 
-proc optStylize*(t: sink Tabella, style = 1, color = "blue"): Tabella =
-  ## A ready-made look, after gt's `opt_stylize()`: `style` 1 to 3, in one of `color`
-  ## "blue", "cyan", "pink", "green", "red", "gray".
-  const tints = {"blue": ("#004D80", "#D5E8F7"), "cyan": ("#00666B", "#D0F0EE"),
-                 "pink": ("#8C1D52", "#FADBEA"), "green": ("#1D5C2E", "#D9F0DE"),
-                 "red": ("#8A1C1C", "#F9DADA"), "gray": ("#333333", "#E5E5E5")}.toTable
-  let (dark, light) = tints.getOrDefault(color, tints["blue"])
-  result = t
-  result.options.tableBorderTopColor = dark
-  result.options.tableBorderBottomColor = dark
-  result.options.columnLabelsBorderBottomColor = dark
-  case style
-  of 1:
-    result.options.rowStriping = true
-    result.options.rowStripingBackgroundColor = light
-  of 2:
-    result.options.columnLabelsBackgroundColor = dark
-    result.options.headingBackgroundColor = dark
-    result.options.rowGroupBackgroundColor = light
-    result.options.stubBackgroundColor = light
-  else:
-    result.options.columnLabelsBackgroundColor = light
-    result.options.rowStriping = true
-    result.options.rowStripingBackgroundColor = light
-    result.options.tableBodyHlinesColor = "transparent"
 
 type CssTheme* = object
   ## Where a table takes its colours and font from (`optCssTheme`): for each, the name of a CSS
@@ -878,6 +885,85 @@ proc optTableOutline*(t: sink Tabella, style = "solid", width = "3px", color = "
   result.options.tableBorderRightStyle = style
   result.options.tableBorderRightWidth = width
   result.options.tableBorderRightColor = color
+
+# gt's and Great Tables' six styles in six colours (Great Tables' `_dict_styles_colors_params`,
+# MIT): table lines, location lines, column labels, stub, stub border style and colour, body
+# lines (style, colour), vertical lines (style, colour), summary, grand summary, stripes.
+const stylizeParams = {
+  "gray-1": ["#000000", "#5F5F5F", "#FFFFFF", "#5F5F5F", "solid", "#5F5F5F", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "blue-1": ["#004D80", "#0076BA", "#FFFFFF", "#0076BA", "solid", "#0076BA", "none", "#89D3FE", "none", "#89D3FE", "#FFFFFF", "#89D3FE", "#F4F4F4"],
+  "cyan-1": ["#016763", "#01837B", "#FFFFFF", "#01837B", "solid", "#01837B", "none", "#A5FEF2", "none", "#A5FEF2", "#FFFFFF", "#A5FEF2", "#F4F4F4"],
+  "pink-1": ["#99195F", "#CB2A7B", "#FFFFFF", "#CB2A7B", "solid", "#CB2A7B", "none", "#FFC6E3", "none", "#FFC6E3", "#FFFFFF", "#FFC6E3", "#F4F4F4"],
+  "green-1": ["#027101", "#038901", "#FFFFFF", "#038901", "solid", "#038901", "none", "#CAFFAF", "none", "#CAFFAF", "#FFFFFF", "#CAFFAF", "#F4F4F4"],
+  "red-1": ["#A81600", "#E4220C", "#FFFFFF", "#E4220C", "solid", "#E4220C", "none", "#FFCCC7", "none", "#FFCCC7", "#FFFFFF", "#FFCCC7", "#F4F4F4"],
+  "gray-2": ["#D5D5D5", "#D5D5D5", "#000000", "#FFFFFF", "solid", "#5F5F5F", "solid", "#D5D5D5", "solid", "#D5D5D5", "#D5D5D5", "#929292", "#F4F4F4"],
+  "blue-2": ["#D5D5D5", "#D5D5D5", "#004D80", "#FFFFFF", "solid", "#5F5F5F", "solid", "#89D3FE", "solid", "#89D3FE", "#89D3FE", "#00A1FF", "#F4F4F4"],
+  "cyan-2": ["#D5D5D5", "#D5D5D5", "#016763", "#FFFFFF", "solid", "#5F5F5F", "solid", "#A5FEF2", "solid", "#A5FEF2", "#A5FEF2", "#7FE9DB", "#F4F4F4"],
+  "pink-2": ["#D5D5D5", "#D5D5D5", "#99195F", "#FFFFFF", "solid", "#5F5F5F", "solid", "#FFC6E3", "solid", "#FFC6E3", "#FFC6E3", "#EF5FA7", "#F4F4F4"],
+  "green-2": ["#D5D5D5", "#D5D5D5", "#027101", "#FFFFFF", "solid", "#5F5F5F", "solid", "#CAFFAF", "solid", "#CAFFAF", "#CAFFAF", "#89FD61", "#F4F4F4"],
+  "red-2": ["#D5D5D5", "#D5D5D5", "#A81600", "#FFFFFF", "solid", "#5F5F5F", "solid", "#FFCCC7", "solid", "#FFCCC7", "#FFCCC7", "#FF644E", "#F4F4F4"],
+  "gray-3": ["#929292", "#929292", "#000000", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "blue-3": ["#929292", "#929292", "#004D80", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "cyan-3": ["#929292", "#929292", "#016763", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "pink-3": ["#929292", "#929292", "#99195F", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "green-3": ["#929292", "#929292", "#027101", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "red-3": ["#929292", "#929292", "#A81600", "#D5D5D5", "none", "#FFFFFF", "dashed", "#929292", "none", "#929292", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "gray-4": ["#D5D5D5", "#D5D5D5", "#5F5F5F", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#5F5F5F", "#F4F4F4"],
+  "blue-4": ["#D5D5D5", "#D5D5D5", "#0076BA", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#0076BA", "#F4F4F4"],
+  "cyan-4": ["#D5D5D5", "#D5D5D5", "#01837B", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#01837B", "#F4F4F4"],
+  "pink-4": ["#D5D5D5", "#D5D5D5", "#CB2A7B", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#CB2A7B", "#F4F4F4"],
+  "green-4": ["#D5D5D5", "#D5D5D5", "#038901", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#038901", "#F4F4F4"],
+  "red-4": ["#D5D5D5", "#D5D5D5", "#E4220C", "#929292", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "dashed", "#D5D5D5", "#FFFFFF", "#E4220C", "#F4F4F4"],
+  "gray-5": ["#D5D5D5", "#D5D5D5", "#000000", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "blue-5": ["#D5D5D5", "#D5D5D5", "#004D80", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "cyan-5": ["#D5D5D5", "#D5D5D5", "#016763", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "pink-5": ["#D5D5D5", "#D5D5D5", "#99195F", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "green-5": ["#D5D5D5", "#D5D5D5", "#027101", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "red-5": ["#D5D5D5", "#D5D5D5", "#A81600", "#929292", "solid", "#D5D5D5", "solid", "#D5D5D5", "solid", "#D5D5D5", "#5F5F5F", "#929292", "#F4F4F4"],
+  "gray-6": ["#5F5F5F", "#5F5F5F", "#5F5F5F", "#D5D5D5", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#F4F4F4"],
+  "blue-6": ["#5F5F5F", "#5F5F5F", "#0076BA", "#89D3FE", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#EDF7FC"],
+  "cyan-6": ["#5F5F5F", "#5F5F5F", "#01837B", "#A5FEF2", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#EBFBF9"],
+  "pink-6": ["#5F5F5F", "#5F5F5F", "#CB2A7B", "#FFC6E3", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#FCF2F7"],
+  "green-6": ["#5F5F5F", "#5F5F5F", "#038901", "#CAFFAF", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#EDF6E8"],
+  "red-6": ["#5F5F5F", "#5F5F5F", "#E4220C", "#FFCCC7", "solid", "#D5D5D5", "none", "#D5D5D5", "none", "#D5D5D5", "#FFFFFF", "#D5D5D5", "#FEEDEC"]}.toTable
+
+proc optStylize*(t: sink Tabella, style = 1, color = "blue", addRowStriping = true): Tabella =
+  ## A ready-made look, gt's and Great Tables' `opt_stylize()`: `style` 1 to 6, in one of `color`
+  ## "blue", "cyan", "pink", "green", "red", "gray", with stripes unless `addRowStriping = false`.
+  ## Styles 2, 4 and 5 draw a light outline around the table; a dark stub gets white text.
+  if style notin 1 .. 6: raise newException(ValueError, "style is 1 to 6, not " & $style)
+  let key = color & "-" & $style
+  if key notin stylizeParams:
+    raise newException(ValueError, "color is blue, cyan, pink, green, red or gray, not " & color.escape)
+  let p = stylizeParams[key]
+  result = t
+  result.options.tableBorderTopColor = p[0]
+  result.options.tableBorderBottomColor = p[0]
+  result.options.headingBorderBottomColor = p[1]
+  result.options.columnLabelsBorderTopColor = p[1]
+  result.options.columnLabelsBorderBottomColor = p[1]
+  result.options.rowGroupBorderTopColor = p[1]
+  result.options.rowGroupBorderBottomColor = p[1]
+  result.options.tableBodyBorderTopColor = p[1]
+  result.options.tableBodyBorderBottomColor = p[1]
+  result.options.summaryRowBorderColor = p[1]
+  result.options.grandSummaryRowBorderColor = p[1]
+  result.options.columnLabelsBackgroundColor = p[2]
+  result.options.stubBackgroundColor = p[3]
+  result.options.stubBorderStyle = p[4]
+  result.options.stubBorderColor = p[5]
+  result.options.tableBodyHlinesStyle = p[6]
+  result.options.tableBodyHlinesColor = p[7]
+  result.options.tableBodyVlinesStyle = p[8]
+  result.options.tableBodyVlinesColor = (if p[8] == "none": "" else: p[9])
+  result.options.summaryRowBackgroundColor = p[10]
+  result.options.grandSummaryRowBackgroundColor = p[11]
+  result.options.rowStripingBackgroundColor = p[12]
+  if addRowStriping:
+    result.options.rowStriping = true
+    result.options.rowStripingIncludeTableBody = true
+  if style in [2, 4, 5]:
+    result = optTableOutline(result, "solid", "3px", "#D5D5D5")
 
 proc optTableLines*(t: sink Tabella, extent = "default"): Tabella =
   ## The table's lines: `"all"` adds vertical lines between cells, `"none"` takes every line away,

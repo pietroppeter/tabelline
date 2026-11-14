@@ -12,6 +12,7 @@
 ## the spec, never the data.
 
 import std/[strutils, math, options, sequtils, tables]
+import colors
 export options
 
 {.experimental: "dotOperators".}
@@ -515,14 +516,27 @@ const
 
 func `&`*(a, b: CellStyle): CellStyle = CellStyle(css: a.css & b.css)
 
-func fill*(_: StyleNs, color: string): CellStyle =
-  CellStyle(css: @{"background-color": color})
+func fill*(_: StyleNs, color: string, alpha = 1.0): CellStyle =
+  ## A background colour (a hex value, a CSS or R colour name), with `alpha` from 0 (clear) to 1,
+  ## as gt's `cell_fill(color, alpha)`.
+  var c = cssColor(color)
+  if alpha < 1.0:
+    try:
+      let rgb = parseColor(c)
+      c = "rgba(" & $int(rgb.r) & ", " & $int(rgb.g) & ", " & $int(rgb.b) & ", " &
+          formatFloat(max(alpha, 0.0), ffDecimal, 3).strip(leading = false, chars = {'0'}).strip(leading = false, chars = {'.'}) & ")"
+    except ValueError:
+      c = "color-mix(in srgb, " & c & " " & $int(round(alpha * 100)) & "%, transparent)"
+  CellStyle(css: @{"background-color": c})
 
-func text*(_: StyleNs, color = "", font = "", size = "", align = "", weight = "", style = "",
-           decorate = "", transform = "", whitespace = ""): CellStyle =
-  for (k, v) in {"color": color, "font-family": font, "font-size": size, "text-align": align,
-                 "font-weight": weight, "font-style": style, "text-decoration": decorate,
-                 "text-transform": transform, "white-space": whitespace}:
+func text*(_: StyleNs, color = "", font = "", size = "", align = "", vAlign = "", weight = "",
+           style = "", decorate = "", transform = "", whitespace = "", indent = ""): CellStyle =
+  ## The text of the cells: `vAlign` is "top", "middle" or "bottom" (gt's `v_align`), `indent`
+  ## a CSS length, "1.5em" (gt's `indent`).
+  for (k, v) in {"color": cssColor(color), "font-family": font, "font-size": size, "text-align": align,
+                 "vertical-align": vAlign, "font-weight": weight, "font-style": style,
+                 "text-decoration": decorate, "text-transform": transform, "white-space": whitespace,
+                 "text-indent": indent}:
     if v.len > 0: result.css.add (k, v)
 
 type Side* = enum sTop = "top", sRight = "right", sBottom = "bottom", sLeft = "left"
@@ -530,7 +544,7 @@ type Side* = enum sTop = "top", sRight = "right", sBottom = "bottom", sLeft = "l
 func borders*(_: StyleNs, sides: set[Side] = {sTop, sRight, sBottom, sLeft}, color = "#000000",
               style = "solid", weight = "1px"): CellStyle =
   for s in sides:
-    result.css.add ("border-" & $s, weight & " " & style & " " & color)
+    result.css.add ("border-" & $s, weight & " " & style & " " & cssColor(color))
 
 func css*(_: StyleNs, declarations: string): CellStyle =
   ## Any CSS, as declarations: `style.css("letter-spacing: 0.1em; font-variant: small-caps")`.
@@ -601,7 +615,8 @@ type
     cols*: ColSel
     rows*: RowSel
     names*: seq[string]
-    labels*: seq[string]   ## summary rows, by label
+    labels*: seq[string]   ## summary rows, by label; stub rows, by their label
+    mask*: proc (v: Value): bool   ## `loc.body(mask = ...)`: the cells whose value passes
 
   StyleRule* = object
     target*: Target
@@ -681,6 +696,7 @@ type
     rowGroupBorderColor* = "#D3D3D3"
     stubBackgroundColor* = ""
     stubFontWeight* = "initial"
+    stubSticky* = false          ## the stub stays in view when a wide table scrolls sideways
     headingPadding* = "4px"
     headingPaddingHorizontal* = "5px"
     columnLabelsPadding* = "5px"

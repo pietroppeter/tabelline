@@ -109,3 +109,59 @@ suite "book gaps: formats and text":
     check markdownToHtml("- a\n- b") == "<ul><li>a</li><li>b</li></ul>"
     check markdownToHtml("1. a\n2. b") == "<ol><li>a</li><li>b</li></ol>"
     check textToPlain(md("- a\n- b")) == "a; b"
+
+suite "book gaps: options, styles, look":
+  test "optStylize: gt's six styles in six colours":
+    for s in 1 .. 6:
+      for c in ["blue", "cyan", "pink", "green", "red", "gray"]:
+        discard tabella(planets).optStylize(s, c).toHtml
+    let o = tabella(planets).optStylize(1).options
+    check o.stubBackgroundColor == "#0076BA"
+    check o.rowStriping
+    check not tabella(planets).optStylize(1, addRowStriping = false).options.rowStriping
+    check tabella(planets).optStylize(2).options.tableBorderLeftStyle == "solid"
+    expect ValueError: discard tabella(planets).optStylize(7)
+
+  test "optAllCaps: only the locations named":
+    let o = tabella(planets).optAllCaps(locations = ["stub"]).options
+    check o.stubTextTransform == "uppercase"
+    check o.columnLabelsTextTransform == "inherit"
+
+  test "R's colour names, as gt and Great Tables take them":
+    check rColor("sienna4") == "#8B4726"
+    check rColor("grey50") == "#7F7F7F"
+    check rColor("darkgreen") == ""
+    check parseColor("sienna4") == parseColor("#8B4726")
+    check "#8B4726" in tabella(planets).tabStyle(style.fill("sienna4"), loc.body()).toHtml
+    check palette("great-tables").len == 8
+
+  test "a fill with alpha, text aligned up and indented":
+    check "rgba(255, 0, 0, 0.5)" in tabella(planets).tabStyle(style.fill("red", alpha = 0.5), loc.body()).toHtml
+    let h = tabella(planets).tabStyle(style.text(vAlign = "top", indent = "2em"), loc.body()).toHtml
+    check "vertical-align: top" in h
+    check "text-indent: 2em" in h
+
+  test "the stub by its labels, groups by their rows, cells by a mask":
+    let a = tabella(planets, rownameCol = "planet").tabStyle(style.fill("#FFF3B0"), loc.stub(labels = ["Venus"])).toHtml
+    check a.count("#FFF3B0") == 1
+    check "Venus" in a.split("#FFF3B0")[1].split("</th>")[0]
+    let b = tabella(planets, groupnameCol = "rings")
+      .tabStyle(style.fill("#FFF3B0"), loc.rowGroups(rows = [2])).toHtml
+    check b.count("#FFF3B0") == 1
+    let c = tabella(planets).tabStyle(style.fill("#FFF3B0"),
+      loc.body(cols = "moons", mask = proc (v: Value): bool = v > 0)).toHtml
+    check c.count("#FFF3B0") == 1
+
+  test "dataColor leaves the stub alone":
+    let h = tabella(planets, rownameCol = "planet").dataColor(everything()).toHtml
+    let stub = h.split("<tbody")[1].split("tb_stub")[1].split("</th>")[0]
+    check "background-color" notin stub
+    check "background-color" in h.split("<tbody")[1]
+
+  test "numbers do not break; the stub can stay in view":
+    let t = tabella(planets)
+    check "td.tb_right { white-space: nowrap; }" in t.toHtml
+    check "class=\"tb_table\"" in t.toHtml
+    let s = tabella(planets, rownameCol = "planet"):
+      tabOptions(stubSticky = true)
+    check "class=\"tb_table tb_sticky_stub\"" in s.toHtml

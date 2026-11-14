@@ -49,10 +49,33 @@ const namedColors = {
   "tomato": "#FF6347", "turquoise": "#40E0D0", "violet": "#EE82EE", "wheat": "#F5DEB3",
   "white": "#FFFFFF", "whitesmoke": "#F5F5F5", "yellow": "#FFFF00", "yellowgreen": "#9ACD32"}.toTable
 
+func isCssColorName*(name: string): bool = name.toLowerAscii in namedColors
+  ## One of the 148 colour names of CSS.
+
+const rColorsTsv = staticRead("data/r-colors.tsv")
+
+func rColor*(name: string): string =
+  ## The hex value of one of R's colour names beyond CSS's, which gt and Great Tables take
+  ## (`sienna4` is "#8B4726", `grey50` "#7F7F7F"); "" for any other text.
+  let n = name.strip.toLowerAscii
+  if n.len == 0 or n[0] == '#' or n in namedColors: return ""
+  for line in rColorsTsv.splitLines:
+    if line.startsWith(n & "\t"): return line[n.len + 1 .. ^1]
+  ""
+
+func cssColor*(c: string): string =
+  ## A colour as CSS reads it: one of R's names becomes its hex value, anything else (a hex
+  ## value, a CSS name, `var(--x)`) is left as it is.
+  let r = rColor(c)
+  if r.len > 0: r else: c
+
 func parseColor*(c: string): Rgb =
-  ## `#rgb`, `#rrggbb` or any of the 148 CSS colour names (`darkgreen`, `rebeccapurple`).
+  ## `#rgb`, `#rrggbb`, any of the 148 CSS colour names (`darkgreen`, `rebeccapurple`) or of R's
+  ## (`sienna4`, `grey50`).
   var h = c.strip.toLowerAscii
   if h in namedColors: h = namedColors[h].toLowerAscii
+  let r = rColor(h)
+  if r.len > 0: h = r.toLowerAscii
   if h.startsWith("#"): h = h[1 .. ^1]
   if h.len == 3: h = h[0] & h[0] & h[1] & h[1] & h[2] & h[2]
   if h.len != 6 or not h.allCharsInSet(HexDigits): raise newException(ValueError, "not a colour: " & c)
@@ -97,7 +120,9 @@ const palettes* = {
   "rdbu": @["#2166AC", "#92C5DE", "#F7F7F7", "#F4A582", "#B2182B"],
   "rdylgn": @["#D73027", "#FC8D59", "#FEE08B", "#D9EF8B", "#91CF60", "#1A9850"],
   "quaderno": @["#FFFFFF", "#DCEBFA", "#A9CCF0", "#6FA3DB", "#3C6FB6"],
-  "matite": @["#E63946", "#F4A261", "#E9C46A", "#2A9D8F", "#457B9D", "#8E7DBE"]}.toTable
+  "matite": @["#E63946", "#F4A261", "#E9C46A", "#2A9D8F", "#457B9D", "#8E7DBE"],
+  # Great Tables' default (R's `palette()`), for `dataColor` as Great Tables draws it
+  "great-tables": @["#000000", "#DF536B", "#61D04F", "#2297E6", "#28E2E5", "#CD0BBC", "#F5C710", "#9E9E9E"]}.toTable
 
 func palette*(name: string): seq[string] =
   ## A named palette (see `palettes`), or a comma-separated list of colours.
