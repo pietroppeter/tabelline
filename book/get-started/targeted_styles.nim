@@ -178,10 +178,9 @@ A composite location sits *under* its parts, as in Great Tables: the fill of
 it. `loc.spannerLabels` takes the labels of the spanners (`loc.spanners` is the same), as
 tabelline's spanners have no ids.
 
-Compare the Nim and Python tabs: the same colours in the same places, but for two differences.
-A fill on a spanner colours the whole cell in Great Tables, only the label in tabelline; and the
-missing value of `char` shows as `None` in Great Tables, blank in tabelline (`subMissing`
-shows it as a dash).
+Compare the Nim and Python tabs: the same colours in the same places, a fill on a spanner
+colouring its whole cell in both, but for one difference: the missing value of `char` shows as
+`None` in Great Tables, blank in tabelline (`subMissing` shows it as a dash).
 """
 
 nbText: """

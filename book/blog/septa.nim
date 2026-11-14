@@ -315,12 +315,13 @@ transit_table
       if v == 1: "✓" else: ""
 
     # the columns of the trains: four digits, as `cs.matches(r"^[0-9]{4}$")`
-    let trains = stopTimes.columns.filterIt(it.len == 4 and it.allCharsInSet(Digits))
-    let center = [10, 11, 12]   # the stations of Center City, as rows -4 to -2
+    let trains = named(it.len == 4 and it.allCharsInSet(Digits))
+    let center = [-4, -3, -2]   # the stations of Center City
 
-    let transitTable = tabella(stopTimes, groupnameCol = "direction"):
+    let transitTable = tabella(stopTimes):
 
       # Create left-hand stub, top header, and hide extra cols --------
+      tabStub groupnameCol = "direction"
       tabHeader "Saturdays, Sundays, and Major Holidays"
       colsHide ["stop_url", "zone_id", "stop_desc", "stop_lat", "stop_lon", "stop_id"]
 
@@ -334,7 +335,7 @@ transit_table
         service_access: "A"
         service_cash: "C"
         service_park: "P"
-      colsLabel "fare_zone", html"Fare<br>Zone"
+        fare_zone: html"Fare<br>Zone"
       tabSpanner "Services", startsWith("service_")
       tabSpanner "Train Number", trains
 
@@ -363,26 +364,31 @@ transit_table
             """),
         loc.body(cols = everything() - trains, rows = center)
       tabStyle style.css("border-right: solid black 2px !important;"),
-        loc.body(cols = everything() - trains, rows = toSeq(0 ..< 10) & @[13])
+        loc.body(cols = everything() - trains, rows = toSeq(0 ..< 10) & @[-1])
       tabOptions(rowStripingBackgroundColor = "#A9A9A9", rowGroupAsColumn = true)
       optRowStriping()
       optTableOutline()
       optTableFont "\"IBM Plex Sans\", " & systemFonts("neo-grotesque")
     nbTable transitTable
 
-tabelline """
-tabelline has no `tab_stub()` (nor has gt): the group column is chosen in
-`tabella(groupnameCol = ...)`, and `rowGroupAsColumn` puts its label in a column of its own on
-the left. The columns of the trains are found by their names (four digits) in Nim, as tabelline
-has no selector by a regular expression, and the rows of Center City are counted from the top
-(10 to 12), as tabelline takes no negative rows. `everything() - trains` is `~cs.matches(...)`.
-A block of `colsLabel` takes plain texts, or only `md`/`html` ones: the HTML label of
-`fare_zone` gets a `colsLabel` of its own. The ticks are the character ✓, where the post writes the HTML entity `&check;`. The R tab
-writes the gt way: gt has no `tab_stub()` and takes `row_group_as_column` in `gt()`.
+    # on a phone: the stations as the stub, which stays in view while the trains scroll
+    let onAPhone = transitTable.tabStub("stop_name")
+      .tabOptions(stubSticky = true)
+    nbTable onAPhone
 
-On a phone the table is wider than the screen and scrolls inside its box, and the stations go
-with it: tabelline cannot yet keep the first columns in place while the rest scrolls, as a
-timetable on a phone would want.
+tabelline """
+`tabStub(groupnameCol = ...)` chooses the group column, as `tab_stub()`, and
+`rowGroupAsColumn` puts its label in a column of its own on the left. The columns of the trains
+are found by a test on their names (four digits), `named(...)`, as tabelline has no regular
+expressions, and the rows of Center City are counted from the end, as in Python (`-4` to
+`-2`, `-1` the last). `everything() - trains` is `~cs.matches(...)`. A block of `colsLabel`
+takes plain labels and `html`/`md` ones together. The ticks are the character ✓, where the post
+writes the HTML entity `&check;`. The R tab writes the gt way: gt has no `tab_stub()` and takes
+`row_group_as_column` in `gt()`.
+
+On a phone the table is wider than the screen and scrolls inside its box. A timetable on a
+phone wants the stations to stay in place while the trains scroll: in the second table they are the stub,
+and `stubSticky = true` keeps the stub in view. Neither gt nor Great Tables has this.
 """
 
 nbText: """

@@ -109,9 +109,9 @@ Notice that first table (blue) emphasizes the row labels with a solid background
 """
 
 tabelline """
-tabelline's styles are its own, after gt's: style 1 stripes the rows, style 2 fills the header
-and the column labels, style 3 tints the column labels and stripes the rows. Making them match
-gt's six is a gap.
+`optStylize` draws gt's and Great Tables' six styles, in the same six colours: the same lines,
+fills and stripes (`addRowStriping = false` leaves the stripes out), and the light outline of
+styles 2, 4 and 5.
 """
 
 nbText: """
@@ -140,7 +140,7 @@ htmltools::HTML(paste0("<div class='tb-styles'>", paste(cells, collapse = ""), "
 """:
   nbCode:
     var cells = ""
-    for ii in 1 .. 3:
+    for ii in 1 .. 6:
       cells.add "<div><div style='text-align:center;'>" & $ii & "</div>" &
                 nb.tableHtml(gtEx.optStylize(style = ii)) & "</div>"
     nbRawHtml "<div class='tb-styles'>" & cells & "</div>"
@@ -174,8 +174,8 @@ gt_ex |> opt_all_caps()
     nbTable gtEx.optAllCaps()
 
 tabelline """
-gt's `opt_all_caps()` puts the column labels, the stub and the row group labels in capitals;
-tabelline's, the column labels only, for now.
+`optAllCaps` puts the column labels, the stub and the row group labels in capitals, as gt's
+`opt_all_caps()`; `locations = ["column_labels"]` picks some of them.
 """
 
 nbText: """

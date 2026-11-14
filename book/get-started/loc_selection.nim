@@ -75,11 +75,11 @@ gt(data)
       ("boxhead", "loc.column_header()", "composite", "loc.columnHeader()"),
       ("", "loc.spanner_labels()", "columns", "loc.spannerLabels(labels)"),
       ("", "loc.column_labels()", "columns", "loc.columnLabels(cols)"),
-      ("row stub", "loc.stub()", "rows", "loc.stub(rows)"),
-      ("", "loc.row_groups()", "rows", "loc.rowGroups(names)"),
+      ("row stub", "loc.stub()", "rows", "loc.stub(rows, labels)"),
+      ("", "loc.row_groups()", "rows", "loc.rowGroups(names), loc.rowGroups(rows)"),
       ("", "", "", "loc.summaryStub(groups, rows)"),
       ("", "loc.grand_summary_stub()", "rows", "loc.grandSummaryStub(rows)"),
-      ("table body", "loc.body()", "columns and rows", "loc.body(cols, rows)"),
+      ("table body", "loc.body()", "columns and rows", "loc.body(cols, rows, mask)"),
       ("", "", "", "loc.summary(groups, columns, rows)"),
       ("", "loc.grand_summary_rows()", "columns and rows", "loc.grandSummary(columns, rows)"),
       ("footer", "loc.footer()", "composite", "loc.footer()"),
@@ -248,11 +248,8 @@ Reduce(
 )
 """:
   nbCode:
-    # no mask yet: a style for each text column, on the rows where it contains "p"
-    var t = tabella(plExibble)
-    for name in textual().resolve(plExibble):
-      t = t.tabStyle(style.fill("yellow"), loc.body(cols = name, rows = where("p" in $it[name])))
-    nbTable t
+    nbTable tabella(plExibble).tabStyle(style.fill("yellow"),
+      loc.body(cols = textual(), mask = proc (v: Value): bool = "p" in $v))
 
 nbText: """
 This is discussed in detail in [Styling the Table Body](basic_styling.html).
@@ -298,9 +295,10 @@ Row and group names in `loc.stub()` and `loc.row_groups()` may be specified thre
 """
 
 tabelline """
-tabelline's `loc.stub` takes rows (an index, indices, `where`), and `loc.rowGroups` takes group
-names. A row by its name, and a group by one of its rows, are gaps: `where` stands in for the
-first.
+tabelline's `loc.stub` takes rows (an index, indices, `where`) and `labels`, the rows by their
+name; `loc.rowGroups` takes group names, or `rows =`, the groups of those rows. A Nim list
+holds one kind of value, so names and indices go in two arguments: `loc.stub(rows = 2, labels =
+["apricot"])` is `loc.stub(["apricot", 2])`.
 """
 
 sideBySide()
@@ -328,7 +326,7 @@ gt.tab_style(style.fill("yellow"), loc.stub("banana"))
 gt_tbl |> tab_style(cell_fill("yellow"), cells_stub("banana"))
 """:
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.stub(where(it["char"] == "banana")))
+    nbTable gt.tabStyle(style.fill("yellow"), loc.stub(labels = ["banana"]))
 
 tabs """
 gt.tab_style(style.fill("yellow"), loc.stub(["apricot", 2]))
@@ -337,7 +335,7 @@ gt.tab_style(style.fill("yellow"), loc.stub(["apricot", 2]))
 gt_tbl |> tab_style(cell_fill("yellow"), cells_stub(c(1, 3)))
 """:
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.stub(where(it["char"] == "apricot")), loc.stub(2))
+    nbTable gt.tabStyle(style.fill("yellow"), loc.stub(rows = 2, labels = ["apricot"]))
 
 endSideBySide()
 
@@ -362,7 +360,7 @@ gt_tbl |>
   )
 """:
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.rowGroups($plExibble["group", 1]))
+    nbTable gt.tabStyle(style.fill("yellow"), loc.rowGroups(rows = 1))
 
 nbText: """
 Since the second row (starting with "banana") is in "grp_a", that is the group that gets styled.
@@ -377,7 +375,7 @@ gt.tab_style(
 )
 """, "":
   nbCode:
-    nbTable gt.tabStyle(style.fill("yellow"), loc.rowGroups("grp_b"))  # no conditions on groups yet
+    nbTable gt.tabStyle(style.fill("yellow"), loc.rowGroups(rows = where(it.group == "grp_b")))
 
 nbText: """
 You can also specify group names using a string (or list of strings).

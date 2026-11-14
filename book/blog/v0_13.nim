@@ -142,8 +142,7 @@ gt_tbl
       tabStubhead "Isotope"
       fmtScientific "half_life"
       fmtNumber "atomic_mass", decimals = 4, scaleBy = 1 / 1e6
-      subMissing "half_life", missingText = "STABLE"
-      tabStyle style.text(weight = "bold"), loc.body(cols = "half_life", rows = stable)
+      subMissing "half_life", missingText = md"**STABLE**"
       subMissing startsWith("decay")
       colsLabel:
         atomic_mass: "Atomic Mass"
@@ -160,9 +159,8 @@ gt_tbl
     nbTable gtTbl
 
 tabelline """
-`subMissing` takes plain text, not Markdown as `md("**STABLE**")`: the table writes STABLE and
-makes it bold with a style on the same cells. `where(it["half_life"].isNull)` picks the rows of
-the stable isotopes, the condition the post writes later as `pl.col("half_life").is_null()`;
+`subMissing` takes Markdown, `md"**STABLE**"`, as in Great Tables. `where(it["half_life"].isNull)` picks the rows of
+the stable isotopes (used further down), the condition the post writes later as `pl.col("half_life").is_null()`;
 `startsWith("decay") + "isospin"` adds a column to a selector, as the list does in Python. A font
 from Google Fonts is asked for by name, with a stack of the reader's own fonts after it: the book
 loads nothing from other sites (see [v0.12.0](v0_12.html)). The data steps are written with
@@ -357,13 +355,13 @@ gt_tbl <-
 gt_tbl
 """:
   nbCode:
-    gtTbl = gtTbl.tabStyle(style.css("vertical-align: middle") & style.fill("#EEEEEE"),
+    gtTbl = gtTbl.tabStyle(style.text(vAlign = "middle") & style.fill("#EEEEEE"),
                            loc.stubhead(), loc.columnHeader(), loc.footer())
     nbTable gtTbl
 
 tabelline """
-`style.text` has no `vAlign`: `style.css("vertical-align: middle")` says the same. gt has no
-combined locations, so the R tab lists the parts.
+`style.text(vAlign = "middle")` is Great Tables' `v_align`. gt has no combined locations, so the
+R tab lists the parts.
 """
 
 nbText: """

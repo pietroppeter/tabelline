@@ -142,7 +142,8 @@ proc buildTabellaCss(): (string, seq[string]) =
 [i] .tb_last_grand_summary_row_top { border-bottom: [v("grandSummaryRowBorderWidth")] [v("grandSummaryRowBorderStyle")] [v("grandSummaryRowBorderColor")]; }
 [i] .tb_left { text-align: left; } [i] .tb_center { text-align: center; } [i] .tb_right { text-align: right; font-variant-numeric: tabular-nums; }
 [i] td.tb_right { white-space: nowrap; }
-[i] .tb_sticky_stub .tb_stub, [i] .tb_sticky_stub .tb_stubhead { position: sticky; left: 0; z-index: 1; background-color: [v("stubBackgroundColor", v("tableBackgroundColor"))]; }
+[i] .tb_sticky_stub .tb_stub:not(.tb_stub_level), [i] .tb_sticky_stub .tb_stubhead { position: sticky; left: 0; z-index: 1; }
+[i] .tb_sticky_stub .tb_stub:not(.tb_stub_level):not(.tb_striped), [i] .tb_sticky_stub .tb_stubhead { background-color: [v("stubBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_footnotes { color: [v("tableFontColor")]; background-color: [v("footnotesBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_sourcenotes { color: [v("tableFontColor")]; background-color: [v("sourceNotesBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_footnote { font-size: [v("footnotesFontSize")]; padding: [v("footnotesPadding")] [v("footnotesPaddingHorizontal")]; text-align: left;

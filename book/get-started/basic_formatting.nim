@@ -146,9 +146,7 @@ Here are a number of examples that use `vals.fmt_number()`.
 tabelline """
 tabelline's `vals` are plain functions of one value, one for every format (`formatNumber`,
 `formatCompact`, `formatScientific`, `formatDate`, `formatTime`, ...), and `mapIt` applies them
-to a list. They take marks instead of a locale (`localeMarks("es")` gives them), and have no
-`pattern` (the verbs do: `fmtNumber(pattern = "[{x}]")`) or `expStyle`: arguments of the verbs
-that the functions lack are a gap.
+to a list. They take the arguments of their verbs: `pattern`, `locale`, `expStyle`.
 """
 
 tabs """
@@ -172,12 +170,11 @@ print(fmt_number_1); print(fmt_number_2); print(fmt_number_3); print(fmt_number_
     import std/sequtils
 
     let xs = @[1.64, 3.26, 3000.63, 236742.37]
-    let es = localeMarks("es")
     echo xs.mapIt(formatNumber(it))
     echo xs.mapIt(formatCompact(it, decimals = 2))
     echo xs.mapIt(formatNumber(it, decimals = 3))
-    echo xs.mapIt("[" & formatNumber(it) & "]")
-    echo xs.mapIt(formatNumber(it, sepMark = es.sep, decMark = es.dec))
+    echo xs.mapIt(formatNumber(it, pattern = "[{x}]"))
+    echo xs.mapIt(formatNumber(it, locale = "es"))
 
 nbText: """
 Scientific notation can be done with `vals.fmt_scientific()`.
@@ -201,8 +198,8 @@ print(fmt_sci_1); print(fmt_sci_2); print(fmt_sci_3); print(fmt_sci_4)
   nbCode:
     echo @[0.00064, 7.353, 863454.63].mapIt(formatScientific(it))
     echo @[1.64, 3.26, 3000.63].mapIt(formatScientific(it, decimals = 3))
-    # no exp_style = "E" yet
-    echo @[1.64, 3.26, 3000.63].mapIt(formatScientific(it, decMark = localeMarks("de").dec))
+    echo @[1.64, 3.26, 3000.63].mapIt(formatScientific(it, expStyle = "E"))
+    echo @[1.64, 3.26, 3000.63].mapIt(formatScientific(it, locale = "de"))
 
 nbText: """
 Dates and times are handled with `vals.fmt_date()` and `vals.fmt_time()`.

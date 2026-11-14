@@ -151,6 +151,16 @@ suite "book gaps: options, styles, look":
     let c = tabella(planets).tabStyle(style.fill("#FFF3B0"),
       loc.body(cols = "moons", mask = proc (v: Value): bool = v > 0)).toHtml
     check c.count("#FFF3B0") == 1
+    let top = tabella(planets).tabStyle(style.fill("#FFF3B0"),
+      loc.body(cols = ["moons", "y2020"], mask = proc (v: Value, col: Column): bool = v == agg.max.fn(col.values))).toHtml
+    check top.count("#FFF3B0") == 2
+
+  test "the format functions take a locale":
+    check formatScientific(1234.5, locale = "de") == "1,23 × 10³"
+    check formatPercent(0.5, locale = "fr").startsWith("50,0")
+    check formatCurrency(1234.5, "EUR", locale = "it").contains("1.234,50")
+    check formatInteger(1234.6, locale = "it") == "1.235"
+    check formatCompact(1234567, locale = "it") == "1,2M"
 
   test "dataColor leaves the stub alone":
     let h = tabella(planets, rownameCol = "planet").dataColor(everything()).toHtml

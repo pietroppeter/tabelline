@@ -616,7 +616,7 @@ type
     rows*: RowSel
     names*: seq[string]
     labels*: seq[string]   ## summary rows, by label; stub rows, by their label
-    mask*: proc (v: Value): bool   ## `loc.body(mask = ...)`: the cells whose value passes
+    mask*: proc (v: Value, col: Column): bool   ## `loc.body(mask = ...)`: the cells that pass
 
   StyleRule* = object
     target*: Target

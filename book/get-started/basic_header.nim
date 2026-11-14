@@ -82,15 +82,16 @@ gt_tbl
     # Make a display table with the `islands_tbl` table;
     # put a heading just above the column labels
     let gtTbl = tabella(islands().head(2)):
-      tabHeader title = md("Large Landmasses of the *World* 🌐"),
+      tabHeader title = md("Large Landmasses of the *World* &#x1F310;"),
                 subtitle = md("The top **ten** largest are presented")
 
     nbTable gtTbl
 
 tabelline """
-tabelline's `md()` is a small inline Markdown (emphasis, code, links, `~sub~`, `^sup^`), with
-no HTML entities: Nim strings are UTF-8, so the globe goes in as it is. The full Markdown of
-gt (lists, entities, and the rest of CommonMark) is a gap.
+tabelline's `md()` is the Markdown of a table's texts: emphasis (`*` and `_`), code, links and
+`<https://...>`, `~~struck~~`, `~sub~`, `^sup^`, HTML entities such as the globe's `&#x1F310;`,
+paragraphs and lists. Nim strings are UTF-8, so the globe may also go in as it is, 🌐. Headings,
+tables and the rest of CommonMark are not for a cell.
 """
 
 nbText: """

@@ -79,8 +79,12 @@ func formatNumber*(x: float, decimals = 2, useSeps = true, dropTrailingZeros = f
            groupDigits(ip, if useSeps: sepMark else: "")
   if fp.len > 0: result.add decMark & fp
 
-func formatCompact*(x: float, decimals = 1, decMark = ".", nSigfig = 0): string =
+func formatCompact*(x: float, decimals = 1, decMark = ".", nSigfig = 0, pattern = "{x}",
+                    locale = ""): string =
   ## Large numbers with a suffix: 1234567 is "1.2M"; with `nSigfig = 3`, "1.23M".
+  if locale.len > 0:
+    return formatCompact(x, decimals, localeMarks(locale).dec, nSigfig, pattern)
+  if pattern != "{x}": return pattern.replace("{x}", formatCompact(x, decimals, decMark, nSigfig))
   const suffixes = [(1e12, "T"), (1e9, "B"), (1e6, "M"), (1e3, "K")]
   for (scale, suffix) in suffixes:
     if abs(x) >= scale:
@@ -127,9 +131,14 @@ func toSubscript*(s: string): string =
   ## `toSubscript("2")` is "₂" (`_s` when a character has no subscript).
   script(s, subChars, "_")
 
-func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText, expStyle = "x10n"): string =
+func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText, expStyle = "x10n",
+                       pattern = "{x}", locale = ""): string =
   ## `formatScientific(5.97e24)` is "5.97 × 10²⁴"; `expStyle` "e" is "5.97e24" and "E"
-  ## "5.97E24", as gt's `exp_style`.
+  ## "5.97E24", as gt's `exp_style`; `locale` takes its decimal mark ("de": "5,97 × 10²⁴").
+  if locale.len > 0:
+    return formatScientific(x, decimals, localeMarks(locale).dec, ctx, expStyle, pattern)
+  if pattern != "{x}":
+    return pattern.replace("{x}", formatScientific(x, decimals, decMark, ctx, expStyle))
   if x == 0: return formatNumber(0, decimals, decMark = decMark)
   let e = floor(log10(abs(x)))
   var m = x / pow(10.0, e)
@@ -143,9 +152,14 @@ func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText, expS
   else: mant & " × 10" & superscript($ei)
 
 func formatPercent*(x: float, decimals = 1, scaleValues = true, decMark = ".", sepMark = ",",
-                    pattern = "#,##0%", percentSign = "%", accounting = false): string =
+                    pattern = "#,##0%", percentSign = "%", accounting = false, locale = ""): string =
   ## `formatPercent(0.123)` is "12.3%"; `pattern` is a locale's (`getLocale("fr").percentPattern`
-  ## is "#,##0 %", with a no-break space). `accounting` writes "(12.3%)" for −0.123.
+  ## is "#,##0 %", with a no-break space), which `locale = "fr"` takes, with its marks.
+  ## `accounting` writes "(12.3%)" for −0.123.
+  if locale.len > 0:
+    let m = localeMarks(locale)
+    return formatPercent(x, decimals, scaleValues, m.dec, m.sep, getLocale(locale).percentPattern,
+                         percentSign, accounting)
   let (pre, suf) = splitPattern(pattern)
   let n = formatNumber(if scaleValues: x * 100 else: x, decimals, sepMark = sepMark, decMark = decMark)
   let sign = if n.startsWith("−"): "−" else: ""
@@ -159,11 +173,16 @@ func currencySymbol*(code: string): string =
 
 func formatCurrency*(x: float, currency = "USD", decimals = -1, sepMark = ",", decMark = ".",
                      placement = "", pattern = "¤#,##0.00", accounting = false,
-                     useSubunits = true): string =
+                     useSubunits = true, locale = ""): string =
   ## `formatCurrency(49.95, "EUR")` is "€49.95". `decimals = -1` takes the currency's (0 for JPY,
   ## 3 for BHD, 2 for most); `useSubunits = false` drops them. The symbol goes where `pattern`
-  ## puts it (a locale's `currencyPattern`: "#,##0.00 ¤" in Italian), or `placement` "left" or
-  ## "right". `accounting` writes a negative amount in parentheses.
+  ## puts it (a locale's `currencyPattern`: "#,##0.00 ¤" in Italian, which `locale = "it"`
+  ## takes, with its marks), or `placement` "left" or "right". `accounting` writes a negative
+  ## amount in parentheses.
+  if locale.len > 0:
+    let m = localeMarks(locale)
+    return formatCurrency(x, currency, decimals, m.sep, m.dec, placement,
+                          getLocale(locale).currencyPattern, accounting, useSubunits)
   let info = currencyInfo(currency)
   let d = if not useSubunits: 0 elif decimals >= 0: decimals else: info.digits
   let n = formatNumber(abs(x), d, sepMark = sepMark, decMark = decMark)
@@ -224,9 +243,11 @@ proc formatDate*(s: string, dateStyle = "iso", locale = ""): string =
   try: dateTime(y, Month(m), MonthdayRange(d), zone = utc()).format(dateStyle)
   except CatchableError: s
 
-func formatInteger*(x: float, useSeps = true, sepMark = ",", accounting = false, pattern = "{x}"): string =
-  ## `formatInteger(1234.6)` is "1,235".
-  formatNumber(x, 0, useSeps, sepMark = sepMark, accounting = accounting, pattern = pattern)
+func formatInteger*(x: float, useSeps = true, sepMark = ",", accounting = false, pattern = "{x}",
+                    locale = ""): string =
+  ## `formatInteger(1234.6)` is "1,235"; `locale = "it"`, "1.235".
+  formatNumber(x, 0, useSeps, sepMark = sepMark, accounting = accounting, pattern = pattern,
+               locale = locale)
 
 func formatEngineering*(x: float, decimals = 2, decMark = ".", ctx = rcText): string =
   ## Scientific notation with exponents in steps of three: `formatEngineering(12345)` is

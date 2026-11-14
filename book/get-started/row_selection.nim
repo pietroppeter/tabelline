@@ -21,8 +21,8 @@ The following sections will use a subset of the `exibble` data, to demonstrate t
 """
 
 tabelline """
-A `RowSel` in tabelline is `allRows()` (the default), an index, an array or seq of indices, a
-range (`0..2`), or `where(cond)`, a condition on each row `it`.
+A `RowSel` in tabelline is `allRows()` (the default), an index (`-1` and `^1` the last), an array
+or seq of indices, a range (`0..2`), or `where(cond)`, a condition on each row `it`.
 """
 
 tabs """
@@ -70,12 +70,11 @@ gt_ex.fmt_currency("currency", rows=[0, -1], decimals=1)
 gt_ex |> fmt_currency(currency, rows = c(1, nrow(lil_exibble)), decimals = 1)
 """:
   nbCode:
-    # no negative indices yet: -1 is the last row, lilExibble.nrows - 1
-    nbTable gtEx.fmtCurrency("currency", rows = [0, lilExibble.nrows - 1], decimals = 1)
+    nbTable gtEx.fmtCurrency("currency", rows = [0, -1], decimals = 1)
 
 tabelline """
-Indices start from 0 in tabelline too. Negative ones are a gap (Nim writes the last as `^1`,
-which would be the way to say it).
+Indices start from 0 in tabelline too, and negative ones count from the end, as in Python: `-1`
+is the last row. Nim's own way to say it, `^1`, works too (`rows = ^1`).
 """
 
 nbText: """

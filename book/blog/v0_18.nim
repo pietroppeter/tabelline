@@ -62,7 +62,7 @@ towny_mini <-
 print(colnames(towny_mini))
 """:
   nbCode:
-    import std/[streams, times]
+    import std/streams
     import nanuq
     import tabelline, tabelline/nanuq, gtdata
 
@@ -315,8 +315,7 @@ gtcars_mini |>
               "Manual Transmission")
       .head(10)
 
-    let features = ["High Power", "Fuel Efficient", "All Wheel Drive", "Premium Price",
-                    "Manual Transmission"]
+    let features = ofKind(vkBool)
     let matrix = tabella(gtcarsMini):
       fmtTf features, tfStyle = "check-mark", colors = ["#2E8B57", "#DC143C"]
       colsLabelRotate features, dir = "sideways-lr"
@@ -327,8 +326,8 @@ gtcars_mini |>
     nbTable matrix
 
 tabelline """
-tabelline has no selector by the type of a column, as `cs.by_dtype(pl.Boolean)`: the table names
-the five columns. `gtcarsCsv` is the CSV of `gtcars` in `tabelline/datasets`, for nanuq's
+`ofKind(vkBool)` is `cs.by_dtype(pl.Boolean)`: the columns whose values are true or false.
+`gtcarsCsv` is the CSV of `gtcars` in `tabelline/datasets`, for nanuq's
 `readCsv`.
 """
 
@@ -423,8 +422,7 @@ gibraltar_mini |>
       .head(10)
 
     let weather = tabella(gibraltarMini):
-      fmt "datetime", proc (v: Value): string =
-        parse($v, "yyyy-MM-dd HH:mm:ss'.'ffffff").format("MMM dd yyyy (ddd) - hh:mm tt")
+      fmtDatetime "datetime", formatStr = "%b %d %Y (%a) - %I:%M %p"
       fmtNumber "temp", decimals = 1, pattern = "{x}°C"
       fmtPercent "humidity", scaleValues = false, decimals = 0
       colsLabel:
@@ -438,10 +436,9 @@ gibraltar_mini |>
     nbTable weather
 
 tabelline """
-`fmtDatetime` takes gt's named date and time styles but no format string, as `format_str=`
-(strftime's `%b %d %Y`): the table gives `fmt` a small format with Nim's own `std/times`, whose
-patterns are written `MMM dd yyyy (ddd) - hh:mm tt`. Polars gives a datetime to tabelline as its
-text, `2023-05-01 06:20:00.000000`, which `parse` reads back.
+`fmtDatetime(formatStr = ...)` takes the same strftime format as `format_str=` (`%b %d %Y`), and
+writes it in the table's language. Polars gives a datetime to tabelline as its text,
+`2023-05-01 06:20:00.000000`, which `fmtDatetime` reads.
 """
 
 nbText: """

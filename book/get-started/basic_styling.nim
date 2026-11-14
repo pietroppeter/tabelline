@@ -466,17 +466,16 @@ gt_air |>
   )
 """:
   nbCode:
-    var maxTemp = 0
-    for v in airHead["Temp"].values: maxTemp = max(maxTemp, v.i)
+    let maxTemp = agg.max.fn(airHead["Temp"].values)
 
     nbTable gtAir.tabStyle(
       style = style.fill(color = "yellow"),
-      locations = loc.body(cols = ["Ozone", "Solar_R", "Wind", "Temp"],
+      locations = loc.body(cols = everything() - ["Month", "Day"],
                            rows = where(it.Temp == maxTemp)))
 
 tabelline """
-tabelline has no `exclude` selector, nor a way to combine selectors (gaps): the columns are
-named. The maximum is computed first, in plain Nim.
+`everything() - ["Month", "Day"]` is `cs.exclude(...)`. `where` sees one row at a time, so the
+maximum of the column is computed first, with the aggregate `agg.max` of the summary rows.
 """
 
 nbText: """
@@ -507,20 +506,13 @@ Reduce(
 )
 """:
   nbCode:
-    # no mask yet: the cells with the maximum of their column, one column at a time
-    var tm = gtAir
-    for c in airHead.columns:
-      var top = -Inf
-      for v in c.values:
-        if v.isNumber: top = max(top, v.toFloat)
-      for i, v in c.values:
-        if v.isNumber and v.toFloat == top:
-          tm = tm.tabStyle(style.fill("yellow"), loc.body(cols = c.name, rows = i))
-    nbTable tm
+    nbTable gtAir.tabStyle(style.fill("yellow"),
+      loc.body(mask = proc (v: Value, col: Column): bool = v == agg.max.fn(col.values)))
 
 tabelline """
-`loc.body(mask = ...)`, a condition for each cell, is a gap. The loop above does by hand what
-a mask would do.
+`loc.body(mask = ...)` tests each cell, as Great Tables' mask: a proc of the cell's value and of
+its column, here the cells equal to the largest of their column. A mask of the value alone is
+`proc (v: Value): bool`.
 """
 
 nbText: """

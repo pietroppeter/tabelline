@@ -37,12 +37,14 @@ gt(islands_mini, rowname_col = "name")
 
     let islandsMini = islands().head(10)
 
-    nbTable tabella(islandsMini, rownameCol = "name")
+    let withStub = tabella(islandsMini):
+      tabStub "name"
+    nbTable withStub
 
 tabelline """
-tabelline has no `tabStub` verb yet: the stub is chosen when the table is made, with
-`tabella(data, rownameCol = ...)`, Great Tables' convenience arguments at the end of this
-page. A `tabStub` verb is a gap.
+`tabStub "name"` chooses the stub of a table already made, as Great Tables' `tab_stub()`; the
+stub can also be chosen when the table is made, with `tabella(data, rownameCol = ...)`, Great
+Tables' convenience arguments at the end of this page, and the only way in gt.
 """
 
 nbText: """
@@ -60,7 +62,8 @@ gt(islands_mini, rowname_col = "name") |>
   tab_stubhead(label = "landmass")
 """:
   nbCode:
-    let withStubhead = tabella(islandsMini, rownameCol = "name"):
+    let withStubhead = tabella(islandsMini):
+      tabStub "name"
       tabStubhead "landmass"
     nbTable withStubhead
 
@@ -92,7 +95,8 @@ gt(island_groups, rowname_col = "name", groupname_col = "group") |>
     islandGroups.addColumn("group", toValues(
       @["subregion", "subregion", "country", "country"] & newSeqWith(6, "continent")))
 
-    let grouped = tabella(islandGroups, rownameCol = "name", groupnameCol = "group"):
+    let grouped = tabella(islandGroups):
+      tabStub "name", groupnameCol = "group"
       tabStubhead "landmass"
     nbTable grouped
 

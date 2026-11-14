@@ -282,7 +282,7 @@ joint |>
     # Display -----
 
     let squares = tabella(joint, rownameCol = "final_digit"):
-      dataColor numeric() - "final_digit", domain = (0.0, 4.0), palette = @["red", "grey", "blue"]
+      dataColor domain = (0.0, 4.0), palette = @["red", "grey", "blue"]
       tabHeader "Super Bowl Squares | Final Score Probabilities",
         "Based on all NFL regular season and playoff games (2015-2023)"
       tabStubhead ""
@@ -294,8 +294,8 @@ joint |>
 tabelline """
 The source note leaves out the `<span>` that floats it to the right: a page of tabelline has no
 CSS in its Markdown (a style on `loc.sourceNotes()` would do it, with `text-align: right`).
-`dataColor` colours every numeric column, the stub's too, so the table leaves `final_digit`
-out (`numeric() - "final_digit"`); Great Tables never colours the stub. It takes the domain as a pair and the palette as a list of colours.
+`dataColor` colours the numeric columns and leaves the stub alone, as Great Tables does. It
+takes the domain as a pair and the palette as a list of colours.
 """
 
 nbText: """

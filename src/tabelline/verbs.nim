@@ -251,10 +251,18 @@ func rowGroups*(_: LocNs, rows: RowSel): Loc =
   ## The groups of these rows: `loc.rowGroups(rows = where(it.mass > 100))`, as Great Tables'
   ## `loc.row_groups(rows = ...)`.
   Loc(kind: lkRowGroups, rows: rows, labels: @["rows"])
-func body*(_: LocNs, cols: ColSel = everything(), rows = allRows(), mask: proc (v: Value): bool = nil): Loc =
-  ## The data cells of `cols` and `rows`; with `mask`, only those whose value passes it, one cell
-  ## at a time, as Great Tables' `loc.body(mask = ...)`: `mask = proc (v: Value): bool = v > 1`.
+func body*(_: LocNs, cols: ColSel = everything(), rows = allRows()): Loc =
+  ## The data cells of `cols` and `rows`.
+  Loc(kind: lkBody, cols: cols, rows: rows)
+func body*(_: LocNs, cols: ColSel = everything(), rows = allRows(), mask: proc (v: Value, col: Column): bool): Loc =
+  ## Only the cells that pass `mask`, one at a time, as Great Tables' `loc.body(mask = ...)`: the
+  ## cell's value and its column, so a cell can be compared with the rest of it. The largest of
+  ## each column: `mask = proc (v: Value, col: Column): bool = v == agg.max.fn(col.values)`.
   Loc(kind: lkBody, cols: cols, rows: rows, mask: mask)
+func body*(_: LocNs, cols: ColSel = everything(), rows = allRows(), mask: proc (v: Value): bool): Loc =
+  ## Only the cells whose value passes `mask`: `mask = proc (v: Value): bool = v > 1`.
+  Loc(kind: lkBody, cols: cols, rows: rows,
+      mask: proc (v: Value, col: Column): bool = mask(v))
 func sourceNotes*(_: LocNs): Loc = Loc(kind: lkSourceNotes)
 func header*(_: LocNs): Loc = Loc(kind: lkHeader)
   ## The title and the subtitle together.
@@ -312,7 +320,7 @@ proc resolve*(l: Loc, t: Tabella): Target =
     let names = l.cols.resolve(t.data).filterIt(it notin t.stubColumns)
     for i in l.rows.resolve(t.data):
       for n in names:
-        if l.mask == nil or l.mask(t.data[n, i]): result.cells.add (i, n)
+        if l.mask == nil or l.mask(t.data[n, i], t.data[n]): result.cells.add (i, n)
   else: discard
 
 proc tabStyleCells(t: var Tabella, st: CellStyle, target: Target)
