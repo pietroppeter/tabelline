@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Docs for agents: the Reference as plain text, `api.md` and `api.json`, a new `llms.txt` and an install line in the README (#108).
+
 ## 0.2.0 (14 Nov 2026)
 
 tabelline 0.2 is the big one: it brings most of the rest of gt and Great Tables. Tables can now sum
