@@ -385,14 +385,14 @@
   },
   {
     "group": "A thousand things at once",
-    "name": "Southern Italy and Sicily, south at the top",
+    "name": "Southern Italy and Sicily at night",
     "pick": false,
     "title": "Night view over southern Italy",
     "who": "NASA, Expedition 40",
     "when": "9 August 2014",
     "license": "Public domain (NASA)",
     "link": "https://images.nasa.gov/details/iss040e090718",
-    "about": "The boot and Sicily at night, photographed with south at the top of the picture.",
+    "about": "The boot and Sicily at night, photographed with south at the top of the picture; the story shows it turned, north at the top.",
     "why": "Upside down, as al-Idrisi drew the world for Roger II in Palermo (in To read more): an opening that asks the reader to look at the sea from the other shore."
   },
   {
@@ -504,7 +504,7 @@
     "why": "The author of the story's first quote, who wrote much of The Mediterranean as a prisoner of war: a face for To read more."
   },
   {
-    "name": "Luzzus in Marsaxlokk",
+    "name": "Luzzus in Marsaxlokk, Malta",
     "pick": true,
     "title": "Luzzu in Marsaxlokk 03",
     "who": "Kritzolina",

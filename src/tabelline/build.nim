@@ -254,7 +254,8 @@ proc addSummaryOf(ss: var seq[BuiltSummary], t: Tabella, rule: SummaryRule, rows
   ## The summary rows of `rule` over the data `rows`, one per aggregate, added to `ss`. A label
   ## already there is the same row: the rule fills its columns in it (as gt merges them).
   for (label, agg) in rule.fns:
-    let shown = if ctx == rcHtml: escapeHtml(label) else: label
+    let text = rule.shown.getOrDefault(label, label)
+    let shown = if ctx == rcHtml: escapeHtml(text) else: text
     var k = -1
     for n, s in ss:
       if s.label == shown: k = n

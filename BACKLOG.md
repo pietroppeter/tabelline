@@ -82,6 +82,12 @@ Rough size: S (hours), M (a day or two), L (more).
 
 ## Docs
 
+- **What the islands story cost** (S, Pietro, 13 Nov 2026). When the story of the islands of the
+  Mediterranean is done: an estimate of its effort, with the pages beside it (the story of the
+  data, the photos, the Italian page and its translation notes): the machine side (tokens,
+  runs, builds) and the review side (rounds, comments handled, conversations), and the features
+  it brought to tabelline (the shape nanoplot, `moreRows`, the citations).
+
 - **FOSDEM devroom picker** (M, Pietro, from the FOSDEM story): once the story is in Nim, a
   small widget (nimib JS block, data inlined) where a reader picks a devroom (its family, across
   renames) and sees its talks of the last three editions, plus the 2027 call for participation

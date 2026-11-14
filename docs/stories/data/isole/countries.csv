@@ -1,0 +1,24 @@
+# Every island of the Mediterranean, by country: OpenStreetMap's land polygons in the sea (© OpenStreetMap contributors, ODbL; not the Peloponnese and Kassandra, cut off by canals, nor islands in lakes), the country from Natural Earth (public domain), the area and people from Wikipedia's list for its 195 islands, and for the others the polygon's area and the people on Wikidata (P1082). islands: every polygon; hectare: those of 0.01 km² or more; listed and main: of the 195 and the 35; peopled: those with a count.
+code,islands,hectare,listed,main,km2,people,peopled
+IT,2854,198,27,3,50863.0,6840215,59
+GR,14653,871,101,18,25262.1,1633388,486
+CY,87,11,1,1,9251.4,1300936,3
+FR,1754,77,4,1,8713.9,322230,13
+ES,1992,118,5,3,5036.4,1051463,27
+HR,1229,604,41,6,3309.8,123952,74
+TN,201,76,4,1,732.4,139544,3
+TR,890,303,9,1,648.3,27886,30
+MT,36,7,2,1,316.4,446550,5
+EG,30,6,0,0,21.5,0,1
+AL,42,9,1,0,6.7,0,2
+LY,94,9,0,0,5.4,0,0
+DZ,328,28,0,0,2.0,0,0
+ME,40,5,0,0,0.9,0,3
+LB,37,8,0,0,0.5,0,0
+MA,39,3,0,0,0.3,0,0
+SY,13,2,0,0,0.2,0,0
+IL,29,2,0,0,0.1,0,0
+GI,3,0,0,0,0.0,0,0
+MC,3,0,0,0,0.0,0,0
+SI,1,0,0,0,0.0,0,0
+BA,3,0,0,0,0.0,0,0

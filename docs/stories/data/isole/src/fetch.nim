@@ -2,10 +2,11 @@
 ##
 ##   nim r -d:ssl fetch.nim <raw dir>
 ##
-## Hosts: en.wikipedia.org (wikitext, `action=raw`), query.wikidata.org (SPARQL, CSV) and
-## osmdata.openstreetmap.de (OpenStreetMap's land polygons). A file already in the folder is not downloaded
+## Hosts: en.wikipedia.org (wikitext, `action=raw`), query.wikidata.org (SPARQL, CSV),
+## osmdata.openstreetmap.de (OpenStreetMap's land polygons), www.marineregions.org (the IHO's
+## seas) and raw.githubusercontent.com (Natural Earth's countries). A file already in the folder is not downloaded
 ## again, so a run that stops can be started again. Standard library only.
-import std/[httpclient, uri, net, sequtils]
+import std/[httpclient, uri, net, sequtils, json]
 import common
 
 let raw = if paramCount() >= 1: paramStr(1) else: "raw"
@@ -108,6 +109,14 @@ SELECT ?title ?item ?coord ?elevation ?archipelagoLabel ?native WHERE {""" & isl
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }"""
 
+# Each island's highest point (P610) and its elevation: an island's own elevation (P2044) is
+# sometimes another height (Sardinia's is 384 m, its highest point 1,834 m).
+sparql "wd_peaks", """
+SELECT ?title ?peak ?peakLabel ?elevation WHERE {""" & island & """
+  ?item wdt:P610 ?peak . ?peak wdt:P2044 ?elevation .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}"""
+
 # The waters each island is in or next to (P206): the Aegean, the Tyrrhenian, a gulf, a strait.
 sparql "wd_waters", """
 SELECT ?title ?item ?water ?waterLabel ?parent ?parentLabel WHERE {""" & island & """
@@ -186,4 +195,34 @@ if not fileExists(raw / "osm" / "land_polygons.shp"):
     quit "unzip failed on " & zip
   removeFile(zip)
   echo "  land_polygons.shp ", getFileSize(raw / "osm" / "land_polygons.shp"), " bytes"
+# ------------------------------------------------------------- 5. every island, the seas
+
+# Every island around the sea that Wikidata knows (an island or a kind of island, with a place in
+# the box of the Mediterranean), with its people, to count every island by country.
+sparql "wd_all_islands", """
+SELECT ?item ?coord ?population WHERE {
+  SERVICE wikibase:box {
+    ?item wdt:P625 ?coord.
+    bd:serviceParam wikibase:cornerSouthWest "Point(-6 30)"^^geo:wktLiteral.
+    bd:serviceParam wikibase:cornerNorthEast "Point(37 46.5)"^^geo:wktLiteral.
+  }
+  ?item wdt:P31/wdt:P279* wd:Q23442.
+  OPTIONAL { ?item wdt:P1082 ?population. }
+}"""
+
+# The countries of Natural Earth (public domain), 1:10 million, as GeoJSON from its repository.
+createDir(raw / "ne")
+save(raw / "ne" / "ne_10m_admin_0_countries.geojson",
+     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson")
+
+# The seas of the Mediterranean as the IHO draws them (Limits of Oceans and Seas, 1953), from
+# Marine Regions (CC BY 4.0): each sea's record by its name, then its outline as WKT.
+createDir(raw / "iho")
+for sea in ihoSeas:
+  let rec = raw / "iho" / sea.replace(' ', '_') & ".json"
+  save(rec, "https://www.marineregions.org/rest/getGazetteerRecordsByName.json/" & encodeUrl(sea).replace("+", "%20") & "/?like=false")
+  for r in parseJson(readFile(rec)):
+    if r["placeType"].getStr == "IHO Sea Area":
+      save(raw / "iho" / sea.replace(' ', '_') & ".jsonld",
+           "https://www.marineregions.org/rest/getGazetteerGeometries.jsonld/" & $r["MRGID"].getInt & "/")
 echo "done"
