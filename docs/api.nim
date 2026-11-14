@@ -488,3 +488,81 @@ Each entry is one block, `nbApi` (in `docs/blocks.nim`), so the page has no HTML
 """
 
 nbSave
+
+# ------------------------------------------------------------------- the same reference, for agents
+# docs/api.md and docs/api.json: what this page holds, as Markdown (one file an agent reads, or
+# greps, in one go) and as JSON (for a tool). Built with the page, published with the site, linked
+# from llms.txt. Each entry links back to its place on this page.
+
+let version = block:
+  var v = ""
+  for l in readFile(docs.parentDir / "tabelline.nimble").splitLines:
+    if l.startsWith("version"): v = l.split('"')[1]
+  v
+
+func plainLinks(md: string): string =
+  ## Links of the page (`#anchor`, `../specs/`) as full URLs, so they work from anywhere.
+  md.replace("](#", "](" & siteUrl & "api/#").replace("](../", "](" & siteUrl)
+
+var mdOut = &"""# tabelline {version}: API reference
+
+Every name tabelline exports, generated from the source when the site is built: {total} names in
+{api.len} modules, each with its signatures, its doc comment, gt's and Great Tables' names for the
+same thing, and the shortest example of the specs that uses it, with what it prints.
+The same, as a page: {siteUrl}api/ (each `###` below links to its entry); as JSON: {siteUrl}api.json .
+
+How to read it: every verb takes the table first (`t: sink Tabella`) and returns the new one; in a
+`tabella(data): body` each line is a verb without its table (`tabHeader "Title"`). A `ColSel` is a
+column name, a list of names or a rule (`everything()`, `numeric()`, `startsWith("x")`); a `RowSel`
+is a row index of the data (not as shown), a list, a slice or `where(it["col"] > 1)`.
+
+"""
+# an index first: one line per name, so the head of the file is a map of the whole API
+mdOut.add "## Index\n\nOne line per name: its kind, gt's name when it has one, and the first sentence of its doc comment. The entries follow, module by module.\n\n"
+for (module, title, intro) in order:
+  let m = api.filterIt(it.name == module)[0]
+  mdOut.add &"- **{title}** (`{module}`): " & m.symbols.mapIt(it.name).deduplicate.len.`$` & " names\n"
+  for s in m.symbols:
+    var line = &"  - `{s.name}` {s.kind}"
+    let gt = counterparts(m, s).filterIt(it.label == "gt")
+    if gt.len > 0: line.add " · gt " & gt[0].text
+    let first = firstSentence(s.doc.strip).replace("\n", " ")
+    if first.len > 0: line.add ": " & (if first.len > 110: first[0 ..< 107] & "..." else: first)
+    mdOut.add line & "\n"
+mdOut.add "\n"
+var jsonOut = newJArray()
+for (module, title, intro) in order:
+  let m = api.filterIt(it.name == module)[0]
+  mdOut.add &"## {title} (`{module}`)\n\n"
+  if intro.len > 0: mdOut.add intro & "\n\n"
+  if m.doc.strip.len > 0: mdOut.add plainLinks(firstSentence(m.doc)) & "\n\n"
+  var jm = %*{"module": module, "title": title, "path": m.path, "doc": m.doc, "symbols": []}
+  for s in m.symbols:
+    let anchor = anchorOf(m, s)
+    mdOut.add &"### {s.name} ({s.kind}) · [#{anchor}]({siteUrl}api/#{anchor})\n\n"
+    mdOut.add "```nim\n" & s.signatures.join("\n") & "\n```\n\n"
+    if s.doc.strip.len > 0: mdOut.add plainLinks(s.doc.strip) & "\n\n"
+    let cps = counterparts(m, s)
+    var also: seq[string]
+    for c in cps:
+      if c.label == "gt" or c.label == "Great Tables": also.add c.label & ": " & c.text
+      else: also.add "tabelline's own (not in gt)"
+    if also.len > 0: mdOut.add also.join(" · ") & "\n\n"
+    var exampleJ = newJNull()
+    if s.kind in ["proc", "func", "template", "macro"]:
+      let k = exampleFor(s.name)
+      if k >= 0:
+        mdOut.add "Example (spec " & examples[k].capability & "):\n\n```nim\n" & examples[k].code.strip & "\n```\n\n"
+        if examples[k].hasExpected:
+          mdOut.add "```text\n" & examples[k].expected.strip(leading = false) & "\n```\n\n"
+        exampleJ = %*{"spec": examples[k].capability, "code": examples[k].code,
+                      "prints": (if examples[k].hasExpected: examples[k].expected else: "")}
+    jm["symbols"].add %*{"name": s.name, "kind": s.kind, "section": s.section,
+                         "signatures": s.signatures, "doc": s.doc, "line": s.lines[0],
+                         "url": siteUrl & "api/#" & anchor,
+                         "counterparts": cps.filterIt(it.label in ["gt", "Great Tables"]).mapIt(
+                           %*{"in": it.label, "name": it.text.strip(chars = {'`'})}),
+                         "example": exampleJ}
+  jsonOut.add jm
+writeFile(docs / "api.md", mdOut)
+writeFile(docs / "api.json", pretty(%*{"tabelline": version, "html": siteUrl & "api/", "modules": jsonOut}))
