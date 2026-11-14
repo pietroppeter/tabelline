@@ -1128,6 +1128,76 @@ in nimib, `nbTable data: body` makes the table and shows it, without naming it.
 """
 
 nbText: """
+## What it took
+
+How much work is in a release made by agents? We measured it the way we did for
+[nanuq](https://forum.nim-lang.org/t/14258) (from its first commit to 0.6, in a week), with the same
+sources, so the numbers compare.
+0.1 is what the tag v0.1.0 holds; 0.2 is everything merged after it, up to the release PR, on
+14 November. The islands story, with its Italian page and the Minoan look made for it, was built
+alongside 0.2 and has a column of its own. The column tabelline is the three together, from the
+first commit, to set next to nanuq.
+"""
+
+block:
+  type E = object
+    measure, nanuq, all, v01, v02, isole: string
+  let rows = @[
+    E(measure: "days", nanuq: "7", all: "7.5", v01: "3.3", v02: "4.3", isole: "2.9"),
+    E(measure: "pull requests", nanuq: "—", all: "84", v01: "41", v02: "42", isole: "1"),
+    E(measure: "threads", nanuq: "33", all: "31", v01: "18", v02: "13", isole: "2"),
+    E(measure: "token cost", nanuq: "$636", all: "$997", v01: "$374", v02: "$438", isole: "$185"),
+    E(measure: "tokens (billions)", nanuq: "1.72", all: "2.77", v01: "0.98", v02: "1.28", isole: "0.51"),
+    E(measure: "output (millions)", nanuq: "5.1", all: "7.7", v01: "2.9", v02: "3.4", isole: "1.4"),
+    E(measure: "agent hours", nanuq: "25–35", all: "45–66", v01: "17–29", v02: "20–27", isole: "8–10"),
+    E(measure: "CI hours", nanuq: "85", all: "13", v01: "3.5", v02: "7.7", isole: "1.6"),
+    E(measure: "lines (thousands)", nanuq: "62", all: "62", v01: "26", v02: "+28", isole: "+7.6"),
+    E(measure: "developer months", nanuq: "4–8", all: "5.5–10", v01: "2–3.5", v02: "2–4", isole: "1.5–2.5"),
+  ]
+  let t = tabella(rows, rownameCol = "measure"):
+    tabHeader "What it took", "both from nothing; then tabelline in parts"
+    colsLabel:
+      nanuq: "nanuq"
+      all: "tabelline"
+      v01: "0.1"
+      v02: "0.2"
+      isole: "islands"
+    tabStyle style.css("white-space: nowrap"), loc.stub()
+    tabStyle style.css("white-space: nowrap"), loc.body()
+    optCssTheme()
+  nbTable t
+
+nbText: """
+Where the numbers come from:
+
+- **Token cost** (at token-equivalent prices) and **tokens** are measured: the usage of each agent thread that committed to what the
+  release holds, from the Claude Code session API, at API list prices. A thread that worked on
+  both releases is split by its commits. Left out: the coordinator, threads about other
+  repositories, and the experiments that are not in 0.2 (PowerPoint, the Gantt chart). A thread
+  still open counts up to the day we measured.
+- **Agent hours** are a range: one end scales nanuq's hours by output tokens, the other sums the
+  time between each thread's commits.
+- **CI hours** are the wall time of the Pages workflow runs, from the GitHub Actions API. nanuq
+  builds a Rust library for six platforms; tabelline only builds its pages.
+- **Lines** are counted with `wc -l` by kind of file, without generated files (CLDR tables,
+  datasets, fonts, lock files): about 49 k lines of Nim (library 6.7 k, tests 1.7 k, tools 1.1 k,
+  the rest pages and the book) and 10 k of Markdown (mostly specs), against nanuq's 62 k with its book.
+- **Developer months** are a judgement, as for nanuq: the time one experienced developer who
+  knows Nim, gt and Great Tables would need. tabelline has no FFI or release pipeline, nanuq's
+  biggest piece, but it has more design (reimplementing gt's rendering, formats and CLDR locales)
+  and much more prose.
+- **The islands story** holds more than its pages: the data (195 islands from Wikidata, the
+  IHO's limits of the seas, two maps from OpenStreetMap, each with the scripts that make it), the
+  same story in Italian, the Minoan look designed for it over six rounds with its own devlog post,
+  and nearly thirty rounds of review.
+
+In all, 5.5 to 10 months of an experienced developer: a little more than nanuq.
+
+0.2 added more than 0.1, in about the same time; with the islands story, they took
+a little more than nanuq's six releases.
+"""
+
+nbText: """
 ## How it is built
 
 Everything above runs in one place, `build.nim`, the step every renderer shares. For each cell
