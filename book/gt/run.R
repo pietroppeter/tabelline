@@ -14,6 +14,9 @@
 #
 # Needs R with the packages gt (the book records its version), dplyr, tidyr and jsonlite:
 # install.packages(c("gt", "dplyr", "tidyr", "jsonlite", "knitr")).
+# text is UTF-8 even when the machine's locale is not (a sandbox's POSIX locale turned "’" into "<e2><80><99>")
+if (!isTRUE(l10n_info()[["UTF-8"]])) invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
+
 suppressPackageStartupMessages({
   library(jsonlite)
 })
@@ -26,6 +29,10 @@ shown <- function(value) {
   if (inherits(value, "gt_tbl")) {
     h <- as.character(gt::as_raw_html(value, inline_css = FALSE))
     return(gsub("@import url\\([^)]*\\);?", "", h))  # nothing remote in the book's pages
+  }
+  if (is.list(value) && !inherits(value, "gt_tbl") && length(value) > 0 &&
+      all(vapply(value, inherits, logical(1), "gt_tbl"))) {
+    return(paste(vapply(value, shown, character(1)), collapse = ""))  # tables one after the other
   }
   if (inherits(value, "html")) {  # HTML made by the cell (htmltools::HTML)
     return(gsub("@import url\\([^)]*\\);?", "", as.character(value)))

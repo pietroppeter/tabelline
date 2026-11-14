@@ -1,0 +1,18 @@
+Make,Model,Class,Url,Stars,Frontal Impact,Lateral Impact,Rear Impact,Rescue and Extrication,Crash Test Performance,Safety Features,CRS Installation Check,VRU Impact Protection,VRU Impact Mitigation,Speed Assistance,Occupant Status Monitoring,Lane Support,AEB Car-to-Car
+BMW,BMW 5 Series,Large Family Car,https://www.euroncap.com/en/results/bmw/5+series/50186,5,14.0,15.1,3.5,3.0,24.0,6.0,12,30.1,24.4,1.8,1.3,3.0,8.1
+BYD,BYD DOLPHIN,Small Family Car,https://www.euroncap.com/en/results/byd/dolphin/50011,5,13.1,15.7,4.0,3.0,24.0,7.0,12,29.4,24.5,2.7,1.3,3.0,7.5
+BYD,BYD SEAL,Large Family Car,https://www.euroncap.com/en/results/byd/seal/50012,5,13.5,16.0,3.7,2.5,24.0,7.0,12,27.9,23.9,2.6,1.3,2.8,7.2
+BYD,BYD SEAL-U,Small SUV,https://www.euroncap.com/en/results/byd/seal-u/50187,5,14.0,16.0,3.4,3.0,23.4,7.0,12,28.3,24.3,2.6,1.4,3.0,6.9
+BYD,BYD TANG,Large SUV,https://www.euroncap.com/en/results/byd/tang/50188,5,14.5,14.7,3.5,2.5,24.0,7.0,12,27.2,23.8,2.5,1.2,3.0,6.6
+Honda,Honda ZR-V,Small SUV,https://www.euroncap.com/en/results/honda/zr-v/50189,4,13.0,15.0,3.5,0.5,24.0,6.3,12,29.0,22.0,1.6,1.4,2.3,7.2
+Hyundai,Hyundai KONA,Small SUV,https://www.euroncap.com/en/results/hyundai/kona/50190,4,10.9,15.4,3.4,2.5,22.6,6.3,12,23.0,17.9,1.8,1.8,2.5,4.8
+Kia,Kia EV9,Large SUV,https://www.euroncap.com/en/results/kia/ev9/50191,5,12.7,15.3,3.1,2.5,24.0,7.3,12,26.9,21.5,2.3,2.5,3.0,7.3
+Lexus,Lexus RZ,Large SUV,https://www.euroncap.com/en/results/lexus/rz/49905,5,12.9,15.4,3.7,3.0,24.0,7.0,12,26.9,26.5,2.1,1.3,3.0,8.3
+Mercedes-Benz,Mercedes-EQ EQE SUV,Large SUV,https://www.euroncap.com/en/results/mercedes-benz/eqe+suv/50192,5,13.4,14.3,3.8,3.5,24.0,8.3,12,27.1,23.5,2.4,1.4,2.8,8.9
+NIO,NIO EL7,Large SUV,https://www.euroncap.com/en/results/nio/el7/49770,5,13.7,16.0,3.6,4.0,24.0,6.0,12,28.6,22.2,2.3,2.6,2.3,7.1
+NIO,NIO ET5,Large Family Car,https://www.euroncap.com/en/results/nio/et5/49769,5,14.7,16.0,3.8,4.0,24.0,6.0,12,29.7,22.9,2.3,2.6,2.8,7.1
+smart,smart #3,Small Family Car,https://www.euroncap.com/en/results/smart/%233/50193,5,15.0,14.1,3.7,3.5,23.3,7.0,12,29.7,23.3,2.3,2.4,3.0,7.8
+VinFast,VinFast VF8,Large SUV,https://www.euroncap.com/en/results/vinfast/vf8/50194,4,10.2,13.4,3.5,3.5,24.0,8.0,12,24.2,24.4,2.5,1.5,3.0,7.4
+Volkswagen,Volkswagen ID.7,Large Family Car,https://www.euroncap.com/en/results/vw/id.7/50196,5,14.8,15.9,3.7,4.0,24.0,7.3,12,32.4,20.3,2.6,1.3,3.0,7.6
+XPENG,XPENG G9,Large SUV,https://www.euroncap.com/en/results/xpeng/g9/50198,5,12.4,15.5,3.8,2.5,24.0,6.0,12,23.6,26.1,2.5,1.0,2.5,8.1
+XPENG,XPENG P7,Large Family Car,https://www.euroncap.com/en/results/xpeng/p7/50017,5,14.0,15.3,3.2,2.5,24.0,4.0,12,25.7,25.8,2.5,1.7,2.5,7.5
