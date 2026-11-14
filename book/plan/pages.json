@@ -1,6 +1,6 @@
 {
  "gt-getstarted": {
-  "commit": "0183503940ccb586f6cc491709a3e001fafb3cf8",
+  "commit": "ea4ceccb52cb9f4ff1b9ef7344e969754a39d315",
   "pages": [
    {
     "title": "Column Labels",
@@ -343,7 +343,7 @@
   ]
  },
  "gt-blog": {
-  "commit": "0183503940ccb586f6cc491709a3e001fafb3cf8",
+  "commit": "ea4ceccb52cb9f4ff1b9ef7344e969754a39d315",
   "pages": [
    {
     "title": "Great Tables is now BYODF (Bring Your Own DataFrame)",
@@ -361,6 +361,7 @@
    {
     "title": "The Design Philosophy of Great Tables",
     "path": "docs/blog/design-philosophy/index.qmd",
+    "book": "blog/design.html",
     "url": "https://posit-dev.github.io/great-tables/blog/design-philosophy/",
     "port": "port",
     "note": "",
@@ -389,6 +390,7 @@
    {
     "title": "Great Tables v0.12.0: Google Fonts and zebra stripes",
     "path": "docs/blog/introduction-0.12.0/index.qmd",
+    "book": "blog/v0_12.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.12.0/",
     "port": "port",
     "note": "",
@@ -412,6 +414,7 @@
    {
     "title": "Great Tables v0.13.0: Applying styles to all table locations",
     "path": "docs/blog/introduction-0.13.0/index.qmd",
+    "book": "blog/v0_13.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.13.0/",
     "port": "port",
     "note": "",
@@ -443,6 +446,7 @@
    {
     "title": "Great Tables v0.15.0: Flags, Icons, and Other Formatting Goodies",
     "path": "docs/blog/introduction-0.15.0/index.qmd",
+    "book": "blog/v0_15.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.15.0/",
     "port": "port",
     "note": "",
@@ -469,6 +473,7 @@
    {
     "title": "Great Tables v0.18.0: Easy Column Spanners and More!",
     "path": "docs/blog/introduction-0.18.0/index.qmd",
+    "book": "blog/v0_18.html",
     "url": "https://posit-dev.github.io/great-tables/blog/introduction-0.18.0/",
     "port": "port",
     "note": "",
@@ -765,6 +770,7 @@
    {
     "title": "Recreating Septa Transit Timetables in Python",
     "path": "docs/blog/septa-timetables/index.qmd",
+    "book": "blog/septa.html",
     "url": "https://posit-dev.github.io/great-tables/blog/septa-timetables/",
     "port": "port",
     "note": "",
@@ -796,6 +802,7 @@
    {
     "title": "Using Polars to Win at Super Bowl Squares",
     "path": "docs/blog/superbowl-squares/index.qmd",
+    "book": "blog/superbowl.html",
     "url": "https://posit-dev.github.io/great-tables/blog/superbowl-squares/",
     "port": "port",
     "note": "",
@@ -818,6 +825,7 @@
    {
     "title": "Great Tables for Scientific Publishing",
     "path": "docs/blog/tables-for-scientific-publishing/index.qmd",
+    "book": "blog/scientific.html",
     "url": "https://posit-dev.github.io/great-tables/blog/tables-for-scientific-publishing/",
     "port": "port",
     "note": "",
@@ -845,7 +853,7 @@
   ]
  },
  "gt-examples": {
-  "commit": "0183503940ccb586f6cc491709a3e001fafb3cf8",
+  "commit": "ea4ceccb52cb9f4ff1b9ef7344e969754a39d315",
   "pages": [
    {
     "title": "Gini coefficient (with gt-extras)",
@@ -6270,7 +6278,7 @@
   ]
  },
  "gt-reference": {
-  "commit": "0183503940ccb586f6cc491709a3e001fafb3cf8",
+  "commit": "ea4ceccb52cb9f4ff1b9ef7344e969754a39d315",
   "pages": [
    {
     "title": "GT()",

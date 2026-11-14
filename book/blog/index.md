@@ -7,6 +7,12 @@ examples in Python, R (the gt way to make the same table) and Nim; the book's ow
 boxes marked “× tabelline”.
 
 The posts come in the order they were written, from the first: the introduction, then data
-colouring, column widths, options and images, and nanoplots.
+colouring, a game of Super Bowl squares, column widths, options and images, nanoplots, the design
+philosophy of Great Tables, units and scientific notation for
+scientific publishing, Google Fonts and zebra stripes, styles in every location of the table,
+flags, icons and accounting notation, and spanners from column names, booleans and rotated
+labels, and last a train timetable. The data steps of the later posts are written with
+[nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim, as the posts write them with
+Polars.
 
 What tabelline lacks to do what these posts do is collected in [What the port found](../gaps.html).
