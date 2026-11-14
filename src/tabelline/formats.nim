@@ -598,7 +598,7 @@ func listItem(line: string): (string, string) =
   if j > 0 and j + 1 < t.len and t[j] in {'.', ')'} and t[j + 1] == ' ': return ("ol", t[j + 2 .. ^1])
   ("", "")
 
-func markdownToHtml*(s: string): string =
+func mdToHtml*(s: string): string =
   ## Markdown with paragraphs (a blank line between them) and lists (`- item`, `1. item`), each
   ## line inline Markdown. One paragraph is its inline HTML, with no `<p>` around it, so a label
   ## stays a label.
@@ -629,7 +629,7 @@ func markdownToHtml*(s: string): string =
 func textToHtml*(t: Text): string =
   case t.kind
   of tkPlain: escapeHtml(t.s)
-  of tkMarkdown: markdownToHtml(t.s)
+  of tkMarkdown: mdToHtml(t.s)
   of tkHtml: t.s
 
 const namedEntities = [("nbsp", "\u00A0"), ("mdash", "—"), ("ndash", "–"), ("hellip", "…"),
@@ -681,7 +681,7 @@ func textToPlain*(t: Text): string =
   case t.kind
   of tkPlain: t.s
   of tkMarkdown:
-    let h = markdownToHtml(t.s)
+    let h = mdToHtml(t.s)
     if not (h.startsWith("<p>") or h.startsWith("<ul>") or h.startsWith("<ol>")): stripTags(h)
     else: stripTags(h.multiReplace(("</li><li>", "; "), ("</p>", " "), ("<ul>", " "),
                                    ("<ol>", " "))).splitWhitespace.join(" ")

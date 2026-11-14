@@ -101,13 +101,13 @@ suite "book gaps: formats and text":
     check circleFlag("XX") == ""
 
   test "fuller Markdown: entities, underscores, struck text, autolinks, paragraphs, lists":
-    check markdownToHtml("A &mdash; B") == "A &mdash; B"
+    check mdToHtml("A &mdash; B") == "A &mdash; B"
     check textToPlain(md("A &mdash; B &#x2014; C")) == "A — B — C"
-    check markdownToHtml("_it_ __bold__ ~~old~~ snake_case") == "<em>it</em> <strong>bold</strong> <del>old</del> snake_case"
-    check markdownToHtml("<https://gt.rstudio.com>") == "<a href=\"https://gt.rstudio.com\">https://gt.rstudio.com</a>"
-    check markdownToHtml("One\n\nTwo") == "<p>One</p><p>Two</p>"
-    check markdownToHtml("- a\n- b") == "<ul><li>a</li><li>b</li></ul>"
-    check markdownToHtml("1. a\n2. b") == "<ol><li>a</li><li>b</li></ol>"
+    check mdToHtml("_it_ __bold__ ~~old~~ snake_case") == "<em>it</em> <strong>bold</strong> <del>old</del> snake_case"
+    check mdToHtml("<https://gt.rstudio.com>") == "<a href=\"https://gt.rstudio.com\">https://gt.rstudio.com</a>"
+    check mdToHtml("One\n\nTwo") == "<p>One</p><p>Two</p>"
+    check mdToHtml("- a\n- b") == "<ul><li>a</li><li>b</li></ul>"
+    check mdToHtml("1. a\n2. b") == "<ol><li>a</li><li>b</li></ol>"
     check textToPlain(md("- a\n- b")) == "a; b"
 
 suite "book gaps: options, styles, look":

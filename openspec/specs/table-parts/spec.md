@@ -1054,11 +1054,11 @@ echo t
 `md()` SHALL also read HTML entities (`&mdash;`, `&#x1F310;`), `_em_` and `__strong__` (not
 inside a word, so `snake_case` stays), `~~struck~~`, `<https://...>` links, paragraphs (a blank
 line) and lists (`- a`, `1. a`), as gt's Markdown does in a cell; one paragraph SHALL have no
-`<p>`. `markdownToHtml(text)` SHALL give the HTML.
+`<p>`. `mdToHtml(text)` SHALL give the HTML.
 
 ```nim
-echo markdownToHtml("A &mdash; _it_ ~~old~~ snake_case")
-echo markdownToHtml("- a\n- b")
+echo mdToHtml("A &mdash; _it_ ~~old~~ snake_case")
+echo mdToHtml("- a\n- b")
 echo textToPlain(md("A &#x2014; B"))
 ```
 
