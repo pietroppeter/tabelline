@@ -158,13 +158,41 @@ proc tabSourceNote*(t: sink Tabella, note: Text): Tabella =
   result = t
   result.sourceNotes.add note
 
-proc tabRowGroup*(t: sink Tabella, label: Text, rows: RowSel, id = ""): Tabella =
+proc tabRowGroup*(t: sink Tabella, label: Text, rows: RowSel = RowSel(kind: rsIndices), id = ""): Tabella =
   ## Puts `rows` in a group (made when it is new). Groups show in the order they are made, and
-  ## rows in no group come first.
+  ## rows in no group come first. With the `id` of a group already there (one made by
+  ## `groupnameCol` is named by its value), `label` is its new label: `tabRowGroup(md("[gt](...)"),
+  ## id = "gt")` makes a link of it, as gt's `tab_row_group(label = md(...))`.
   result = t
   let gid = if id.len > 0: id else: label.s
   for i in rows.resolve(result.data): result.rowGroups[i] = gid
-  if gid notin result.groupLabels: result.groupLabels[gid] = label
+  result.groupLabels[gid] = label
+
+proc takeStub(t: sink Tabella, fresh: Tabella, groupnameCol: string): Tabella =
+  result = t
+  result.rownameCol = fresh.rownameCol
+  result.stubCols = fresh.stubCols
+  for c in result.boxhead.mitems:
+    for f in fresh.boxhead:
+      if f.name == c.name: c.role = f.role
+  if groupnameCol.len > 0:
+    result.groupnameCol = fresh.groupnameCol
+    result.rowGroups = fresh.rowGroups
+    result.groupLabels = fresh.groupLabels
+
+proc tabStub*(t: sink Tabella, rownameCol = "", groupnameCol = ""): Tabella =
+  ## Chooses the stub (and the row groups) of a table already made, as Great Tables'
+  ## `tab_stub(rowname_col, groupname_col)`: the same as `tabella(data, rownameCol = ...,
+  ## groupnameCol = ...)`. Verbs called before it keep what they did to other columns.
+  let fresh = initTabella(t.data, rownameCol,
+                          (if groupnameCol.len > 0: groupnameCol else: t.groupnameCol), t.id, t.locale)
+  takeStub(t, fresh, groupnameCol)
+
+proc tabStub*(t: sink Tabella, rownameCol: openArray[string], groupnameCol = ""): Tabella =
+  ## A stub of several columns, the highest level first: `tabStub(["mfr", "model"])`.
+  let fresh = initTabella(t.data, rownameCol,
+                          (if groupnameCol.len > 0: groupnameCol else: t.groupnameCol), t.id, t.locale)
+  takeStub(t, fresh, groupnameCol)
 
 proc rmHeader*(t: sink Tabella): Tabella =
   ## Removes the title and the subtitle.
