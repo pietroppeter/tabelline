@@ -51,6 +51,7 @@ var book = initBookWithToc:
     entry("Mapping the Latin American Pharmaceutical Landscape", "contest/latam_pharma")
     entry("Titanic Challenge", "contest/titanic")
     entry("Basic gt Styling Reference", "contest/gt_styling")
+    entry("Periodic table of elements", "contest/periodic_table")
   entry("Find an example by feature", "features", numbered = false)
   entry("What the port found", "gaps.md", numbered = false)
   entry("Sources and licences", "licences.md", numbered = false)

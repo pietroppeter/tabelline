@@ -827,7 +827,8 @@
       "year": 2020,
       "title": "Reproducing the Periodic Table of Elements",
       "by": "bretauv",
-      "post": "https://forum.posit.co/t/reproducing-the-periodic-table-of-elements/85701"
+      "post": "https://forum.posit.co/t/reproducing-the-periodic-table-of-elements/85701",
+      "book": "contest/periodic_table.html"
      },
      {
       "repo": "bcjaeger/table.glue",
