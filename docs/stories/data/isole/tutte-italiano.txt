@@ -1,0 +1,337 @@
+# The texts of All 195 islands (isole_tutte.nim) in Italian, read by isole_tutte_it.nim as italiano.txt is by isole_it.nim.
+
+en: All 195 islands
+it: Tutte le 195 isole
+
+en: Islands of the Mediterranean
+it: Isole del Mediterraneo
+
+en: Balearic Sea
+it: Mar delle Baleari
+
+en: Western Basin
+it: Bacino occidentale
+
+en: Tyrrhenian Sea
+it: Mar Tirreno
+
+en: Adriatic Sea
+it: Mar Adriatico
+
+en: Ionian Sea
+it: Mar Ionio
+
+en: Aegean Sea
+it: Mar Egeo
+
+en: Eastern Basin
+it: Bacino orientale
+
+en: Sea of Marmara
+it: Mar di Marmara
+
+en: islands
+it: isole
+
+en: island
+it: isola
+
+
+en: length, km
+it: lunghezza, km
+
+en: people
+it: abitanti
+
+en: per {{km^2}}
+it: per {{km^2}}
+
+
+en: total
+it: totale
+
+en: Gymnesian Islands
+it: Gimnesie
+
+en: Îles d'Hyères
+it: Isole di Hyères
+
+en: Aeolian Islands
+it: Isole Eolie
+
+en: Maddalena archipelago
+it: Arcipelago di La Maddalena
+
+en: Dalmatian Archipelago
+it: Arcipelago dalmata
+
+en: Kornati Archipelago
+it: Isole Incoronate
+
+en: Elaphiti Islands
+it: Isole Elafiti
+
+en: Cyclades
+it: Cicladi
+
+en: Fournoi islands
+it: Isole Fourni
+
+en: Kerkennah
+it: Kerkenna
+
+en: Maltese Islands
+it: Arcipelago maltese
+
+en: Santorini archipelago
+it: Arcipelago di Santorini
+
+en:
+Every island of Wikipedia's list, sea by sea from west to east: where it is, its outline, how big it is, how many live there and how high it goes.
+it:
+Ogni isola della lista di Wikipedia, mare per mare da ovest a est: dove sta, il suo profilo, quanto è grande, quanti ci vivono e quanto è alta.
+
+en:
+The sea of the Balearic Islands, between them and Spain's coast; the IHO also calls it the Iberian Sea.
+it:
+Il mare delle Baleari, fra le isole e la costa spagnola; l'IHO lo chiama anche Mare Iberico.
+
+en:
+The longest straight line between two points of its coast: its diameter, in geometry, measured on the outline.
+it:
+La linea retta più lunga fra due punti della sua costa: il suo diametro, in geometria, misurato sul profilo.
+
+en:
+**Length.** An island's length here is the longest straight line between two points of its coast.
+Geometry calls it the *diameter* of a shape, whatever the shape; the study of particles and
+images calls it the *maximum Feret diameter*, or caliper diameter, the widest a caliper opens
+around it as it turns; geography just says length, as in Wikipedia's box of an island. It is
+measured on the simplified outline, so it can be a little short of the true one.
+it:
+**Lunghezza.** La lunghezza di un'isola, qui, è la linea retta più lunga fra due punti della sua
+costa. La geometria la chiama *diametro* di una figura, qualunque sia la figura; lo studio delle
+particelle e delle immagini la chiama *diametro di Feret massimo*, o diametro del calibro, la
+massima apertura di un calibro che le gira intorno; la geografia dice semplicemente lunghezza,
+come nel riquadro di un'isola su Wikipedia. È misurata sul profilo semplificato, quindi può essere
+un po' più corta di quella vera.
+
+en:
+What the IHO leaves of the west once its seas are named: the open water from Spain and Africa to Corsica, Sardinia and the line from Sicily to Cape Bon. The Sea of Sardinia is in it, a name with no limits of its own.
+it:
+Quello che l'IHO lascia dell'ovest, dopo aver dato un nome ai suoi mari: il mare aperto dalla Spagna e dall'Africa alla Corsica, alla Sardegna e alla linea fra la Sicilia e Capo Bon. Dentro c'è il Mare di Sardegna, un nome senza confini suoi.
+
+en:
+The sea of the Tyrrhenians, the Greeks' name for the Etruscans.
+it:
+Il mare dei Tirreni, il nome che i Greci davano agli Etruschi.
+
+en:
+Named after Adria, an Etruscan town near the mouth of the Po; the Romans also called it the upper sea, *Mare Superum*.
+it:
+Prende il nome da Adria, una città etrusca vicino alla foce del Po; i Romani lo chiamavano anche il mare di sopra, *Mare Superum*.
+
+en:
+Where the name comes from is not known; Aeschylus tied it to Io, who swam across it.
+it:
+Da dove venga il nome non si sa; Eschilo lo legava a Io, che lo attraversò a nuoto.
+
+en:
+The ancients explained the name in several ways: Aegeus, the father of Theseus, who threw himself into it, an Amazon queen, a sea god, Poseidon.
+it:
+Gli antichi spiegavano il nome in più modi: Egeo, il padre di Teseo, che vi si gettò, una regina delle Amazzoni, un dio del mare, Poseidone.
+
+en:
+The open sea of the east, from the line between Sicily and Cape Bon to the Levant. The Libyan Sea is in it, south of Crete, named after ancient Libya, North Africa west of the Nile; and the Levantine Sea, the sea where the sun rises.
+it:
+Il mare aperto dell'est, dalla linea fra la Sicilia e Capo Bon al Levante. Dentro c'è il Mar Libico, a sud di Creta, che prende il nome dall'antica Libia, l'Africa del Nord a ovest del Nilo; e il Mar di Levante, il mare dove sorge il sole.
+
+en:
+Named after its largest island, Marmara, rich in marble, *mármaron* in Greek.
+it:
+Prende il nome dalla sua isola più grande, Marmara, ricca di marmo, *mármaron* in greco.
+
+en:
+## Where it comes from
+
+The list and its areas and populations: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).
+The seas: the IHO's *Limits of Oceans and Seas* (1953), from [Marine Regions](https://www.marineregions.org/) (CC BY 4.0).
+The outlines and the maps: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+The archipelagos, the highest points, World Heritage and the airports: [Wikidata](https://www.wikidata.org/).
+The origins of the seas' names: their articles on Wikipedia. How the data is made is told in
+[The islands' data, made with nanuq](../isole-data/index.html).
+it:
+## Da dove vengono i dati
+
+La lista, le superfici e gli abitanti: Wikipedia, [List of islands in the Mediterranean](https://en.wikipedia.org/wiki/List_of_islands_in_the_Mediterranean).
+I mari: *Limits of Oceans and Seas* dell'IHO (1953), da [Marine Regions](https://www.marineregions.org/) (CC BY 4.0).
+I profili e le carte: © i contributori di [OpenStreetMap](https://www.openstreetmap.org/copyright) ([ODbL](https://opendatacommons.org/licenses/odbl/)).
+Gli arcipelaghi, le vette, il Patrimonio mondiale e gli aeroporti: [Wikidata](https://www.wikidata.org/).
+L'origine dei nomi dei mari: le loro voci di Wikipedia. Come sono fatti i dati lo racconta
+[I dati delle isole, fatti con nanuq](../isole-data/index.html) (in inglese).
+
+en: by the IHO's seas, from west to east
+it: per i mari dell'IHO, da ovest a est
+
+en: its own name
+it: nome locale
+
+en: country
+it: paese
+
+en: archipelago
+it: arcipelago
+
+en: where
+it: dove
+
+en: outline
+it: profilo
+
+en: area, {{km^2}}
+it: superficie, {{km^2}}
+
+en: coast, km
+it: costa, km
+
+en: highest, {{m}}
+it: vetta, {{m}}
+
+en: World Heritage
+it: Patrimonio mondiale
+
+en: airports
+it: aeroporti
+
+en: the island
+it: l'isola
+
+en: who lives there
+it: chi ci vive
+
+en: Spain
+it: Spagna
+
+en: France
+it: Francia
+
+en: Italy
+it: Italia
+
+en: Tunisia
+it: Tunisia
+
+en: Croatia
+it: Croazia
+
+en: Greece
+it: Grecia
+
+en: Albania
+it: Albania
+
+en: Türkiye
+it: Turchia
+
+en: Cyprus
+it: Cipro
+
+en: Malta
+it: Malta
+
+en:
+The green cards are about the code, as in the story: the table is one `tabella`, made from
+`islands.csv`.
+it:
+Le schede verdi parlano del codice, come nella storia: la tabella è una sola `tabella`, fatta da
+`islands.csv`.
+
+en:
+The length of the outline drawn from OpenStreetMap's coast, a little shorter than the true coast, which has every cove.
+it:
+La lunghezza del profilo disegnato dalla costa di OpenStreetMap, un po' più corta della costa vera, che ha ogni insenatura.
+
+en:
+The name in the island's own language, from Wikidata; · no one lives there, — a number nobody gave.
+it:
+Il nome nella lingua dell'isola, da Wikidata; · non ci vive nessuno, — un numero che nessuno ha dato.
+
+en: Pelagie Islands
+it: Isole Pelagie
+
+en: Egadi Islands
+it: Isole Egadi
+
+en: other islands
+it: altre isole
+
+en: one island
+it: un'isola
+
+en: Strait of Gibraltar
+it: Stretto di Gibilterra
+
+en: no island of the list
+it: nessuna isola della lista
+
+en: Alboran Sea
+it: Mare di Alboran
+
+en: islands of the list
+it: isole della lista
+
+en: Ligurian Sea
+it: Mar Ligure
+
+en:
+This is the long list behind the story [Islands of the Mediterranean](../isole/index.html): its 195
+islands, each in the sea around most of its coast, as the International Hydrographic Organization
+drew the seas in 1953. It is one big table, made for a large screen: the seas from west to east,
+each with its map and where its name comes from, and its islands from northwest to southeast, each
+with a small map of where it is in its sea and its outline at its own scale; then a row for the
+sea's other islands, the ones too small for the list.
+it:
+È la lista lunga dietro la storia [Isole del Mediterraneo](../isole-it/index.html): le sue 195
+isole, ognuna nel mare intorno alla maggior parte della sua costa, come l'Organizzazione
+idrografica internazionale ha tracciato i mari nel 1953. È una sola grande tabella, fatta per uno
+schermo grande: i mari da ovest a est, ognuno con la sua carta e l'origine del suo nome, e le sue
+isole da nord-ovest a sud-est, ognuna con una piccola carta di dove sta nel suo mare e il suo
+profilo alla sua scala; poi una riga per le altre isole del mare, quelle troppo piccole per la lista.
+
+en:
+One table, an island a row, grouped by sea with `tabRowGroup`, whose label can be any text: here
+`besidePicture`, a block of these pages, puts the sea's map before its name. In each sea the
+islands go from northwest to southeast: sorted by the kilometres east of the centroid of the
+outline less the kilometres north, so islands at the same latitude go from west to east, and at
+the same longitude from north to south. The row of the other islands is added to the data, with
+its count where the outline goes: `fmtNanoplot` and `fmtImage` take `rows`, and skip it. `fmtFlag` writes the
+country's code as its flag, and `fmtCountry` the same code as the country's name. The map of each
+island is a small picture of its sea, drawn by `map.nim`, shown with `fmtImage`, which reads the
+file and puts it in the page; the outline is a shape nanoplot, as in the story. `summaryRows` adds
+up each sea. The table sits in `nbWide`, wider than the text: it is made for a large screen.
+it:
+Una tabella, un'isola per riga, raggruppata per mare con `tabRowGroup`, la cui etichetta può
+essere qualunque testo: qui `besidePicture`, un blocco di queste pagine, mette la carta del mare
+prima del suo nome. In ogni mare le isole vanno da nord-ovest a sud-est: ordinate per i chilometri
+a est del baricentro del profilo meno i chilometri a nord, così le isole alla stessa latitudine
+vanno da ovest a est, e alla stessa longitudine da nord a sud. La riga delle altre isole è
+aggiunta ai dati, con il loro numero al posto del profilo: `fmtNanoplot` e `fmtImage` prendono
+`rows`, e la saltano. `fmtFlag` scrive il codice del paese come la sua bandiera, e `fmtCountry` lo
+stesso codice come il nome del paese. La carta di ogni isola è una piccola immagine del suo mare,
+disegnata da `map.nim`, mostrata con `fmtImage`, che legge il file e lo mette nella pagina; il
+profilo è un nanoplot shape, come nella storia. `summaryRows` somma ogni mare. La tabella sta in
+`nbWide`, più larga del testo: è fatta per uno schermo grande.
+
+en:
+Named after Gibraltar, *Jabal Ṭāriq* in Arabic, the mountain of Tariq, who landed under it in 711; the ancients called its two sides the Pillars of Hercules.
+it:
+Prende il nome da Gibilterra, *Jabal Ṭāriq* in arabo, il monte di Tariq, che sbarcò ai suoi piedi nel 711; gli antichi chiamavano le sue due sponde le Colonne d'Ercole.
+
+en:
+Named after Alborán, its one island far from the coasts, seven hectares of rock between Spain and Morocco; the name comes from Arabic.
+it:
+Prende il nome da Alborán, la sua sola isola lontana dalle coste, sette ettari di roccia fra la Spagna e il Marocco; il nome viene dall'arabo.
+
+en:
+The sea of the Ligurians, the people of the coast from the Rhône to the Arno before the Romans.
+it:
+Il mare dei Liguri, il popolo della costa dal Rodano all'Arno prima dei Romani.

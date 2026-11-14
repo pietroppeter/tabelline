@@ -1,6 +1,6 @@
 ## What fetch.nim and extract.nim share: the list of islands as Wikipedia has it, which of them
 ## are the story's main islands, wikitext as plain text, and CSV lines. Standard library only.
-import std/[re, strutils, os]
+import std/[re, strutils, os, json, algorithm, math]
 export re, strutils, os
 
 type ListRow* = object
@@ -24,11 +24,28 @@ proc listRows*(list: string): seq[ListRow] =
     result.add ListRow(title: links[0], label: labels[0], town: links[^1], km2: km2)
 
 proc isMain*(r: ListRow): bool =
-  ## The story's main islands: 400 km² or more, and Malta (246 km², the island of a country).
-  r.km2 >= 400 or r.title in ["Geography of Cyprus", "Malta (island)"]
+  ## The story's main islands: the 35 largest, down to Elba (224 km²), Pietro's pick, so the
+  ## story reaches the Tuscan islands. Cyprus has no area in the list.
+  r.km2 >= 224 or r.title == "Geography of Cyprus"
 
-const climateAlso* = [("Krk", "Rijeka"), ("Cres", "Mali Lošinj")]
-  ## Islands whose town and page have no weather box: the closest page with one.
+const climateAlso* = [("Krk", "Rijeka"), ("Cres", "Mali Lošinj"), ("Brač", "Split, Croatia"), ("Pag (island)", "Zadar"),
+                      ("Korčula", "Dubrovnik"), ("Andros, Greece", "Ermoupoli"), ("Ikaria", "Samos")]
+  ## Islands whose town and page have no weather box: the closest page with one (by the page
+  ## Wikidata knows: Pag (island), Ikaria).
+
+const ihoSeas* = ["Strait of Gibraltar", "Alboran Sea", "Balearic Sea", "Ligurian Sea", "Tyrrhenian Sea",
+                  "Mediterranean Sea - Western Basin", "Adriatic Sea", "Ionian Sea", "Aegean Sea",
+                  "Mediterranean Sea - Eastern Basin", "Sea of Marmara"]
+  ## The seas of the IHO's Limits of Oceans and Seas (1953) in the Mediterranean, west to east.
+
+proc wktRings*(wkt: string): seq[seq[(float, float)]] =
+  ## The rings of a WKT polygon or multipolygon (outer rings and holes alike), as (lon, lat).
+  for m in wkt.findAll(re"\([^()]+\)"):
+    var ring: seq[(float, float)]
+    for pair in m[1 .. ^2].split(','):
+      let xy = pair.splitWhitespace
+      if xy.len >= 2: ring.add (xy[0].parseFloat, xy[1].parseFloat)
+    if ring.len >= 3: result.add ring
 
 proc csvLine*(fields: openArray[string]): string =
   ## One CSV line: a field with a comma or a quote goes in quotes.
@@ -57,3 +74,39 @@ proc number*(s: string): string =
   var m: array[1, string]
   let t = s.replace(re"<[^>]+>.*", "").replace("−", "-").replace("&minus;", "-")
   if t.find(re"(-?[\d,]*\.?\d+)", m) >= 0: m[0].replace(",", "") else: ""
+
+type IhoGrid* = object
+  ## The IHO's seas painted on a grid of 0.02 degrees (about 2 km), from 6° W and 30° N: each
+  ## cell holds the index of its sea in `ihoSeas`, or -1 (land, or outside every sea).
+  cells*: seq[int8]
+const ihoStep* = 0.02
+const (ihoX0*, ihoY0*, ihoW*, ihoH*) = (-6.0, 30.0, 2150, 850)
+
+proc ihoGrid*(raw: string): IhoGrid =
+  ## The grid, from the seas' polygons fetch.nim downloads from Marine Regions (`raw/iho/`):
+  ## each row of cells is filled between the crossings of its middle with the polygons' edges.
+  result.cells = newSeq[int8](ihoW * ihoH)
+  for c in result.cells.mitems: c = -1
+  for s, sea in ihoSeas:
+    let doc = parseFile(raw / "iho" / sea.replace(' ', '_') & ".jsonld")
+    let seaRings = wktRings(doc["mr:hasGeometry"][0]["gsp:asWKT"].getStr)
+    var cross = newSeq[seq[float]](ihoH)
+    for ring in seaRings:
+      for i in 0 ..< ring.len:
+        let (x1, y1) = ring[i]
+        let (x2, y2) = ring[(i + 1) mod ring.len]
+        let lo = max(0, int(ceil((min(y1, y2) - ihoY0) / ihoStep - 0.5)))
+        let hi = min(ihoH - 1, int(floor((max(y1, y2) - ihoY0) / ihoStep - 0.5)))
+        for row in lo .. hi:
+          let y = ihoY0 + (row.float + 0.5) * ihoStep
+          if (y1 > y) != (y2 > y): cross[row].add x1 + (y - y1) * (x2 - x1) / (y2 - y1)
+    for row in 0 ..< ihoH:
+      cross[row].sort
+      for k in countup(0, cross[row].len - 2, 2):
+        let a = max(0, int(ceil((cross[row][k] - ihoX0) / ihoStep - 0.5)))
+        let b = min(ihoW - 1, int(floor((cross[row][k + 1] - ihoX0) / ihoStep - 0.5)))
+        for col in a .. b: result.cells[row * ihoW + col] = s.int8
+
+proc sea*(g: IhoGrid, row, col: int): int =
+  ## The sea of a cell (-1 for land, outside every sea, or outside the grid).
+  if row in 0 ..< ihoH and col in 0 ..< ihoW: g.cells[row * ihoW + col].int else: -1

@@ -1,11 +1,11 @@
 {
  "title": "gt coverage",
- "updated": "2026-11-11",
+ "updated": "2026-11-14",
  "gt": "gt 1.4 (R) and Great Tables 1.1 (Python), by their reference indexes and the methods of GT",
  "release": {
   "version": "0.2.0",
   "tag": "v0.2.0",
-  "date": "2026-11-11"
+  "date": "2026-11-14"
  },
  "plans": [
   {
@@ -40,7 +40,7 @@
      "feature": "Preview of a big table",
      "gt": "gt_preview()",
      "status": "done",
-     "note": "tabellaPreview(data, topN, bottomN, inclRownums): first and last rows, a shaded row naming the rows left out; tabella(preview): body adds verbs.",
+     "note": "tabellaPreview(data, topN, bottomN, inclRownums): first and last rows, and with moreRows rows from the middle too, a shaded row naming each run left out; tabella(preview): body adds verbs.",
      "size": "S",
      "where": "R"
     },
@@ -163,7 +163,7 @@
      "feature": "Numbers and integers",
      "gt": "fmt_number(), fmt_integer()",
      "status": "done",
-     "note": "Decimals, separators, scale, compact suffixes (1.2K), pattern, sign, locale marks."
+     "note": "Decimals, separators, scale, compact suffixes (1.2K), pattern, sign, locale marks. Not yet: significant figures (n_sigfig), accounting in fmtNumber and fmtInteger (fmtCurrency has it)."
     },
     {
      "feature": "Percent",
@@ -242,7 +242,7 @@
      "feature": "Times and datetimes",
      "gt": "fmt_time(), fmt_datetime()",
      "status": "done",
-     "note": "fmtTime, fmtDatetime, with named time styles; no time zones.",
+     "note": "fmtTime, fmtDatetime, with named time styles; no time zones, and no format string (format_str) yet.",
      "plan": "0.1",
      "size": "S"
     },
@@ -305,7 +305,7 @@
      "feature": "Flags",
      "gt": "fmt_flag()",
      "status": "done",
-     "note": "fmtFlag: two-letter codes as emoji (regional indicators), nothing to load.",
+     "note": "fmtFlag: two-letter codes as emoji (regional indicators), nothing to load. Not yet: the name on hover, round flags.",
      "plan": "0.1",
      "size": "S"
     },
@@ -521,7 +521,7 @@
      "feature": "Styles",
      "gt": "tab_style(), cell_fill(), cell_text(), cell_borders()",
      "status": "done",
-     "note": "style.fill, style.text, style.borders."
+     "note": "style.fill, style.text, style.borders. Not yet as arguments: cell_text(v_align, indent), cell_fill(alpha); style.css does them."
     },
     {
      "feature": "Any CSS",
@@ -693,7 +693,7 @@
      "feature": "Column selectors",
      "gt": "starts_with(), ends_with(), contains(), matches(), everything(), where()",
      "status": "done",
-     "note": "Plus numeric() and textual()."
+     "note": "Plus numeric() and textual(). Not yet: a selector by column type (where(is.logical), cs.by_dtype)."
     },
     {
      "feature": "Sizes",

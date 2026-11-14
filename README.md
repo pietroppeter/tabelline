@@ -86,6 +86,11 @@ the home page shows them as a gallery:
   them, what UNESCO keeps on them, how they live now, how many fly there and when to go. Also
   [in Italian](https://pietroppeter.github.io/tabelline/stories/isole-it/), *Isole del
   Mediterraneo* (`isole_it.nim`, the same story with its texts from `data/isole/italiano.txt`).
+  Its [translation notes](https://pietroppeter.github.io/tabelline/stories/isole-note/), in Italian
+  (`isole_note.nim`): the conventions, the choices with their options, and every text beside its English.
+  [All 195 islands](https://pietroppeter.github.io/tabelline/stories/isole-tutte/) (`isole_tutte.nim`,
+  [in Italian](https://pietroppeter.github.io/tabelline/stories/isole-tutte-it/)): the long list, one
+  table for each of the IHO's seas, every island with its map, outline, length, people and height.
 - [The islands' data, made with nanuq](https://pietroppeter.github.io/tabelline/stories/isole-data/)
   (tabelline 0.2): how the islands' tables were made from Wikipedia, Wikidata and OpenStreetMap,
   in three Nim programs (fetch, extract, and process with nanuq), and the checks behind them.

@@ -11,12 +11,14 @@
 ##   nbGallery "what it shows": (nbGalleryCard "Title": ...)
 ##   nbTabs python, r: (nbCode ...)            # Nim, next to Python and R
 ##   nbShowCode: (nbTable t)                   # the table, with its code folded under it
+##   nbWide: (nbTable t)                       # a big table, wider than the text
 ##   nbFoldCode "docs/review.nim"              # a source file, or a part of it, folded
 ##   nbShowR "gt(...)"; runR "story/gt.json"   # a gt table made in R, its code folded under it
 ##   nbParts t                                 # a table and its parts, with a switch
 ##   nbSwatches [("--primary", "primary", "sections")]
 ##   nbTournament "key", "what", [entry("A", ""), bye(), ...]   # a draw to tap through
 ##   nbPhotoHeading "Title", "data/photo.jpg", "credit"   # a section's heading over a photo
+##   citing(text, sources); nbSources sources              # [^key] in a text, a numbered list
 ##
 ## A block is made with `newNbBlock`; a container (`of NbContainer`) holds other blocks, opened
 ## with `nb.withContainer`. Template parameters are named apart from the fields they fill.
@@ -314,6 +316,58 @@ template nbNote*(ttext: string, tkind = nkPlain, ttitle = "") =
   ## A note beside the text, in Markdown, of a kind: `nbNote "The API will change.", nkWarning`.
   nb.addNote(ttext, tkind, ttitle)
 
+# --------------------------------------------------------------------------------------- sources
+
+type Source* = object
+  ## A source a page cites: `key` names it in the text (`[^key]`), `text` is its entry, Markdown.
+  key*, text*: string
+
+func source*(key, text: string): Source = Source(key: key, text: text)
+
+var citedKeys {.threadvar.}: seq[string]   # the sources cited so far, in the order the page cites them
+
+proc citing*(text: string, sources: openArray[Source]): string =
+  ## `text` with each `[^key]` as a small number that leads to the source's entry in
+  ## `nbSources`. Sources are numbered in the order the page first cites them, and only the first
+  ## citation is where the entry's ↩ goes back to. A key not in `sources` stops the build.
+  result = text
+  var at = result.find("[^")
+  while at >= 0:
+    let stop = result.find(']', at)
+    let key = result[at + 2 ..< stop]
+    doAssert sources.anyIt(it.key == key), "no source " & key
+    let first = key notin citedKeys
+    if first: citedKeys.add key
+    let back = if first: &" id=\"cite-{key}\"" else: ""
+    let mark = &"""<sup class="cite"><a href="#source-{key}"{back}>{citedKeys.find(key) + 1}</a></sup>"""
+    result = result[0 ..< at] & mark & result[stop + 1 .. ^1]
+    at = result.find("[^", at + mark.len)
+
+newNbBlock(NbSources):
+  entries: seq[Source]
+  cited: int
+  toHtml:
+    var items = ""
+    for i, s in blk.entries:
+      let back = if i < blk.cited: &""" <a class="cite-back" href="#cite-{s.key}" aria-label="back">↩</a>""" else: ""
+      items.add &"""<li id="source-{s.key}">{inline(s.text)}{back}</li>"""
+    &"""<ol class="sources">{items}</ol>"""
+
+proc addSources*(nb: var Nb, sources: openArray[Source]) =
+  ## Call it after the texts that cite them: the cited ones come first, in their order, then the rest.
+  var entries: seq[Source]
+  for key in citedKeys:
+    for s in sources:
+      if s.key == key: entries.add s
+  let cited = entries.len
+  for s in sources:
+    if s.key notin citedKeys: entries.add s
+  nb.add newNbSources(entries = entries, cited = cited)
+
+template nbSources*(tsources: openArray[Source]) =
+  ## The numbered list of a page's sources, each with ↩ back to where the text first cites it.
+  nb.addSources(tsources)
+
 # ----------------------------------------------------------------------------------------- cards
 
 newNbBlock(NbCards of NbContainer):
@@ -379,6 +433,23 @@ template nbBeside*(body: untyped) =
   nb.withContainer(accanto):
     body
   nb.add accanto
+
+proc besidePicture*(file, text: string, height = "3em", alt = ""): Text =
+  ## A label for a table (a row group's, a title) with a small picture before it, a local file
+  ## inlined as `localImage` does, and Markdown after it: each sea of the islands with its map.
+  html(localImage(file, height, alt).s & """<span class="beside-picture">""" & inline(text) & "</span>")
+
+newNbBlock(NbWide of NbContainer):
+  toHtml:
+    """<div class="wide">""" & nbContainerToHtml(blk, nb) & "</div>"
+
+template nbWide*(body: untyped) =
+  ## The blocks of `body` wider than the text, up to the width of the window: a big table made
+  ## for a large screen (it scrolls sideways on a small one).
+  let wide = newNbWide()
+  nb.withContainer(wide):
+    body
+  nb.add wide
 
 proc placeBeside*(c: NbContainer) =
   ## Puts tables that follow each other in `c` side by side (in an `NbBeside`).
@@ -992,6 +1063,20 @@ func temaHeadScript(offered: openArray[string], first: string): string =
 })();
 </script>"""
 
+func codeHeadScript(): string =
+  ## Before the page is drawn, for a page with the code switch: the code shown or not, from the
+  ## address (`?code=off`, `?code=on`), else the choice made last, else shown.
+  """<script>
+(function () {
+  var root = document.documentElement, key = 'tabelline-code';
+  try {
+    var q = new URLSearchParams(location.search).get('code');
+    if (q === 'on' || q === 'off') localStorage.setItem(key, q);
+    root.dataset.code = q === 'on' || q === 'off' ? q : (localStorage.getItem(key) || 'on');
+  } catch (e) { root.dataset.code = 'on'; }
+})();
+</script>"""
+
 # What the blocks do in the browser: the look switch, the language tabs, the parts switch, and
 # the filter of the specs page.
 const bodyScript = """<script>
@@ -999,17 +1084,44 @@ const bodyScript = """<script>
   var root = document.documentElement;
   function show() {
     var t = root.dataset.tema || 'munari';
-    document.querySelectorAll('.tema button').forEach(function (b) {
+    document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
       b.setAttribute('aria-pressed', b.dataset.tema === t ? 'true' : 'false');
     });
   }
-  document.querySelectorAll('.tema button').forEach(function (b) {
+  document.querySelectorAll('.tema button[data-tema]').forEach(function (b) {
     b.addEventListener('click', function () {
       root.dataset.tema = b.dataset.tema;
       try { localStorage.setItem(root.dataset.temaKey || 'tabelline-tema', b.dataset.tema); } catch (e) {}
       show();
     });
   });
+  // the code switch: the code blocks and the notes about the code, shown or not. It goes beside
+  // Review, under the lede, once the review script has put its line there.
+  var code = document.querySelector('button.code-toggle');
+  if (code) {
+    var label = function () {
+      var off = root.dataset.code === 'off';
+      code.textContent = off ? code.dataset.show : code.dataset.hide;
+      code.setAttribute('aria-pressed', off ? 'true' : 'false');
+    };
+    code.addEventListener('click', function () {
+      root.dataset.code = root.dataset.code === 'off' ? 'on' : 'off';
+      try { localStorage.setItem('tabelline-code', root.dataset.code); } catch (e) {}
+      label();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      var slot = document.querySelector('.rv-enter');
+      if (!slot) {
+        slot = document.createElement('p');
+        slot.className = 'rv-enter';
+        var after = document.querySelector('.lede') || document.querySelector('h1');
+        if (after) after.insertAdjacentElement('afterend', slot);
+      }
+      slot.appendChild(code);
+      code.hidden = false;
+      label();
+    });
+  }
   show();
   function choose(lang) {
     document.querySelectorAll('.lingue').forEach(function (box) {
@@ -1106,6 +1218,12 @@ func temaSwitch(offered: seq[string]): string =
     if key in offered:
       result.add &"""<button type="button" data-tema="{key}" title="{title}" aria-pressed="{key == "munari"}">{label}</button>"""
   result.add "</div>"
+func codeSwitch(lang: string): string =
+  ## The code switch, for a page that a reader may want without its code: one button, moved
+  ## beside **✎ Review** by the page's script (hidden without JavaScript), that hides the code and
+  ## the notes about it, or shows them again (`?code=off` in the address).
+  let (hide, show) = if lang == "it": ("Nascondi il codice", "Mostra il codice") else: ("Hide the code", "Show the code")
+  &"""<button type="button" class="code-toggle" data-hide="{hide}" data-show="{show}" aria-pressed="false" hidden>{hide}</button>"""
 const forme = """<div class="forme" aria-hidden="true"><i class="cerchio"></i><i class="quadrato"></i><i class="triangolo"></i></div>"""
 const motto = """<p class="motto">“Complicare è facile, semplificare è difficile.” <span>Bruno Munari</span></p>"""
 
@@ -1119,6 +1237,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
   let home = c{"home_href"}.getStr
   let backLabel = c{"back_label"}.getStr("tabelline")
   let back = if home.len > 0: &"""<a href="{home}">← {backLabel}</a>""" else: "<span></span>"
+  let switches = temaSwitch(offered) & (if c{"code_switch"}.getBool: codeSwitch(c{"lang"}.getStr("en")) else: "")
   var rows = ""
   # The masthead: the wordmark, the section and its cadence. The quaderno shows them as the label
   # of an exercise book, so each line keeps the label's word for it (Nome, Materia, Classe).
@@ -1130,7 +1249,7 @@ func pageHeader(blk: JsonNode, nb: Nb): string =
       rows.add &"""<div class="riga {cls}"><span>{label}</span><span>{shown}</span></div>"""
   &"""<header>
 <nav class="crumbs">{back}{langSwitch(c)}<a href="{repoUrl}">tabelline on GitHub ↗</a></nav>
-{temaSwitch(offered)}{forme}
+{switches}{forme}
 <div class="etichetta">{rows}</div>
 </header>"""
 
@@ -1152,7 +1271,7 @@ proc sharedReviewScript*(nb: Nb): string =
 proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", description = "",
                    homeHref = "", backLabel = "tabelline", wordmarkHref = "", review = true,
                    reviewPage = "", looks: openArray[string] = ["munari", "quaderno"], firstLook = "munari",
-                   lang = "en", languages: openArray[(string, string)] = []) =
+                   lang = "en", languages: openArray[(string, string)] = [], codeSwitch = false) =
   ## The page: both looks (Munari and the quaderno, `theme.nim`), the header with the switch and the
   ## masthead (the wordmark, then `section`, the part of the site the page belongs to, and
   ## `cadence`, how the page lives: kept up to date, one for every release, dated), and the footer. `homeHref` links back, with
@@ -1165,18 +1284,23 @@ proc useTabelline*(nb: var Nb, section = "", cadence = "", title = "", descripti
   ## reader chooses (with JavaScript off, always Munari). A page in more than one language gives
   ## its `lang` and every version as `languages` (code and link, its own included, as for the
   ## islands: `[("en", "../isole/"), ("it", "../isole-it/")]`): the crumbs switch between them,
-  ## and a first visit goes to the one in the browser's language.
+  ## and a first visit goes to the one in the browser's language. `codeSwitch` adds a switch that
+  ## hides the code and the notes about it (`?code=off` in the address), for a reader who wants
+  ## only the story.
+  citedKeys.setLen 0   # a new page cites its sources afresh (docs/all.nim builds every page in one run)
   let desc = if description.len > 0: "<meta name=\"description\" content=\"" & esc(description) & "\">\n" else: ""
   nb.doc.context["title"] = %(if title.len > 0: title else: "tabelline")
   nb.doc.context["stylesheet"] = %(desc &
     """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>✏️</text></svg>">""" &
     "\n" & temaHeadScript(looks, firstLook) & "\n" &
-    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
+    (if languages.len > 0: langHeadScript(lang, languages) & "\n" else: "") &
+    (if codeSwitch: codeHeadScript() & "\n" else: "") & siteCss(nb.doc.filename, extra = reviewCss))
   nb.doc.context["lang"] = %lang
   var versions = newJArray()
   for (code, href) in languages: versions.add %[code, href]
   nb.doc.context["languages"] = versions
   nb.doc.context["looks"] = %(@looks)
+  nb.doc.context["code_switch"] = %codeSwitch
   nb.doc.context["highlight"] = %""
   nb.doc.context["nb_style"] = %""
   nb.doc.context["disableHighlightJs"] = %true

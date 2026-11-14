@@ -9,7 +9,8 @@
 ## Artifacts pass only a plain `#name` to the page, so this is the one form a deep link can take.
 ## The router is added to the preview only, not to the site.
 ##
-## The files the pages share (`docs/assets/`: site.css, the fonts, review.js) are copied too. The
+## The files the pages share (`docs/assets/`: site.css, the fonts, review.js) are copied too, and
+## the pictures beside a page (`pictures/`). The
 ## book (docs/book/, built by `nim r book/bookbuild.nim`) is copied with the assets its pages use;
 ## a page of the book is `#book-` and its path with `/` as `-`, without `.html`: `#book` (its first
 ## page), `#book-get-started-intro`, `#book-gaps`.
@@ -65,6 +66,13 @@ for rel in pages:
     s = s.replace("</head>", js & "</head>")
   writeTo rel, s
   echo rel, (if rel != "index.html": " #" & route(rel) else: "")
+
+# the pictures a page shows from a folder beside it (`pictures/`, as nbPhotoHeading copies them)
+for rel in pages:
+  let dir = docs / rel.parentDir / "pictures"
+  if rel.extractFilename == "index.html" and dirExists(dir):
+    for f in walkDir(dir, relative = true):
+      if f.kind == pcFile: writeTo rel.parentDir / "pictures" / f.path, readFile(dir / f.path)
 
 # the files the pages share (not the fonts' licences, which artifacts may not serve)
 for f in walkDirRec(docs / "assets", relative = true):

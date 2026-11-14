@@ -1,15 +1,23 @@
 ## The maps of the story: the Mediterranean, its seas and its islands, as two SVG drawings, the
 ## west and the east, so the names can be read on a phone.
 ##
-##   nim r -d:release map.nim <raw> <folder>     (writes map-west.svg and map-east.svg)
+##   nim r -d:release map.nim <raw> <folder>     (writes map-west.svg and map-east.svg, and the
+##                                                Italian page's map-west-it.svg and map-east-it.svg,
+##                                                a small map of each sea, seas/<sea>.svg, and of
+##                                                each island in its sea, locators/<rank>.svg,
+##                                                Sicily and its islands, map-sicily(-it).svg, and
+##                                                every island as a dot, map-every.svg)
 ##
 ## The land is OpenStreetMap's (the land polygons fetch.nim downloads, © OpenStreetMap
 ## contributors, ODbL), cut to the box of each map and simplified; the islands are islands.csv's
 ## points, the main ones filled and named, the others a dot. Where each name of a sea or an
-## island goes was written by Claude, the AI that wrote the story. The drawing names its parts
-## (sea, land, main, dot, sea-name, name) and the page's theme colours them (`.map` in
+## island goes was written by Claude, the AI that wrote the story. The dashed lines are the
+## limits of the seas as the IHO draws them (Limits of Oceans and Seas, 1953; Marine Regions,
+## CC BY 4.0). The drawing names its parts (sea, land, main, dot, limit, sea-name, name) and the page's theme colours them (`.map` in
 ## docs/theme.nim), so the maps change with the look.
-import std/[math, strutils, strformat, sequtils, parsecsv, memfiles, os]
+import std/[math, strutils, strformat, sequtils, parsecsv, memfiles, os, tables, json]
+import common
+from ../../../../theme import minoanLook   # the colours of the locators, which a picture cannot take from the page
 
 let raw = paramStr(1)
 let output = paramStr(2)
@@ -17,9 +25,12 @@ let here = currentSourcePath().parentDir.parentDir
 
 # ------------------------------------------------------------------------------ the islands
 type Island = object
-  name: string
+  rank: int
+  name, italian: string
   lon, lat: float
   main: bool
+  sea: string   # the IHO's sea it is in
+  middle: (float, float)   # the centroid of its outline, or its point
 var islands: seq[Island]
 var csv: CsvParser
 csv.open(here / "islands.csv")
@@ -27,8 +38,11 @@ csv.readHeaderRow()   # the first line is the description
 csv.readHeaderRow()
 while csv.readRow():
   if csv.rowEntry("lat") == "": continue   # three islands have no place on Wikidata
-  islands.add Island(name: csv.rowEntry("island"), lon: csv.rowEntry("lon").parseFloat,
-                     lat: csv.rowEntry("lat").parseFloat, main: csv.rowEntry("main") == "true")
+  islands.add Island(rank: csv.rowEntry("rank").parseInt, name: csv.rowEntry("island"), italian: csv.rowEntry("italian"), lon: csv.rowEntry("lon").parseFloat,
+                     lat: csv.rowEntry("lat").parseFloat, main: csv.rowEntry("main") == "true",
+                     sea: csv.rowEntry("iho_sea"))
+  islands[^1].middle = if csv.rowEntry("clon") == "": (islands[^1].lon, islands[^1].lat)
+                       else: (csv.rowEntry("clon").parseFloat, csv.rowEntry("clat").parseFloat)
 csv.close
 
 # ------------------------------------------------------------------------------ the land
@@ -100,16 +114,62 @@ for r in 0 ..< (shx.size - 100) div 8:
     rings.add Ring(pts: ring, main: islands.anyIt(it.main and ring.contains((it.lon, it.lat))))
 shx.close; shp.close
 
+# ------------------------------------------------------------------------------ the seas' limits
+# Where two of the IHO's seas meet (Limits of Oceans and Seas, 1953, from Marine Regions): the
+# grid of common.nim, each edge between two cells of different seas, joined into lines from
+# corner to corner of the grid and simplified to a twentieth of a degree, so the steps of the
+# grid become the straight lines the IHO draws.
+type Corner = (int, int)   # a corner of the grid: column, row
+var limits: seq[seq[(float, float)]]
+block:
+  let g = ihoGrid(raw)
+  var links: Table[Corner, seq[Corner]]
+  proc link(a, b: Corner) =
+    links.mgetOrPut(a, @[]).add b
+    links.mgetOrPut(b, @[]).add a
+  for row in 0 ..< ihoH:
+    for col in 0 ..< ihoW:
+      let here = g.sea(row, col)
+      if here < 0: continue
+      let right = g.sea(row, col + 1)
+      if right >= 0 and right != here: link((col + 1, row), (col + 1, row + 1))
+      let up = g.sea(row + 1, col)
+      if up >= 0 and up != here: link((col, row + 1), (col + 1, row + 1))
+  var used: Table[(Corner, Corner), bool]
+  proc lonLat(c: Corner): (float, float) = (ihoX0 + c[0].float * ihoStep, ihoY0 + c[1].float * ihoStep)
+  proc walk(start, next: Corner): seq[(float, float)] =
+    var (a, b) = (start, next)
+    result.add lonLat(a)
+    while true:
+      used[(a, b)] = true; used[(b, a)] = true
+      result.add lonLat(b)
+      if links[b].len != 2: break
+      let c = if links[b][0] == a: links[b][1] else: links[b][0]
+      if used.hasKey((b, c)): break
+      (a, b) = (b, c)
+  for start, ends in links:   # lines from their ends (a corner where they meet or stop) first
+    if ends.len != 2:
+      for e in ends:
+        if not used.hasKey((start, e)): limits.add walk(start, e)
+  for start, ends in links:   # then the loops
+    for e in ends:
+      if not used.hasKey((start, e)): limits.add walk(start, e)
+  limits = limits.mapIt(douglasPeucker(it, 0.05)).filterIt(it.len >= 2 and
+    hypot(it[0][0] - it[^1][0], it[0][1] - it[^1][1]) + it.len.float * 0.01 > 0.15)   # not the crumbs
+
 # ------------------------------------------------------------------------------ the names
 # Where the names go, written by Claude: a sea's name by the longitude and latitude of its
 # middle, on one or two lines; a main island's from its point, moved by so many points of the
 # drawing (1000 wide) and running from there to the right (start), both ways (middle) or to
 # the left (end).
-const seas = [("Alboran Sea", -2.8, 36.1), ("Balearic|Sea", 5.2, 41.25), ("Sea of|Sardinia", 6.5, 38.6),
-              ("Ligurian Sea", 8.3, 43.65), ("Tyrrhenian|Sea", 12.4, 39.9), ("Adriatic|Sea", 17.6, 42.0),
-              ("Strait of|Sicily", 12.2, 36.3), ("the Mediterranean", 6.0, 37.3),
-              ("Ionian Sea", 19.2, 36.6), ("Aegean Sea", 25.0, 35.95), ("Libyan Sea", 24.0, 33.9),
-              ("Levantine Sea", 30.6, 33.6), ("Sea of Marmara", 28.4, 40.82)]
+# The Italian names of the seas are Claude's too, as in italiano.txt.
+const seas = [("Alboran Sea", "Mare di Alborán", -2.8, 36.1), ("Balearic|Sea", "Mare delle|Baleari", 5.2, 41.25),
+              ("Sea of|Sardinia", "Mare di|Sardegna", 6.5, 38.6), ("Ligurian Sea", "Mar Ligure", 8.3, 43.65),
+              ("Tyrrhenian|Sea", "Mar|Tirreno", 12.4, 39.9), ("Adriatic|Sea", "Mare|Adriatico", 17.3, 41.75),
+              ("Strait of|Sicily", "Canale di|Sicilia", 12.2, 36.3), ("Western|Basin", "Bacino|occidentale", 6.0, 37.3),
+              ("Eastern|Basin", "Bacino|orientale", 20.6, 34.4), ("Ionian Sea", "Mar Ionio", 19.0, 37.55), ("Aegean Sea", "Mar Egeo", 25.0, 35.95),
+              ("Libyan Sea", "Mar Libico", 24.0, 33.9), ("Levantine Sea", "Mar di Levante", 30.6, 33.6),
+              ("Sea of Marmara", "Mar di Marmara", 28.4, 40.82)]
 const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
                ("Corsica", 0.0, 0.0, "middle"), ("Cyprus", 0.0, 0.0, "middle"),
                ("Crete", 0.0, 0.0, "middle"), ("Mallorca", 0.0, -30.0, "middle"),
@@ -120,11 +180,23 @@ const names = [("Sicily", 0.0, 0.0, "middle"), ("Sardinia", 0.0, 0.0, "middle"),
                ("Krk", 14.0, -6.0, "start"), ("Euboea", -14.0, -20.0, "end"),
                ("Lemnos", 0.0, -24.0, "middle"), ("Lesbos", 16.0, 0.0, "start"),
                ("Chios", 16.0, 4.0, "start"), ("Samos", 16.0, 12.0, "start"),
-               ("Naxos", 0.0, 32.0, "middle"), ("Rhodes", 16.0, 10.0, "start")]
+               ("Naxos", 0.0, 32.0, "middle"), ("Rhodes", 16.0, 10.0, "start"),
+               ("Brač", -12.0, -16.0, "end"), ("Hvar", -14.0, 10.0, "end"), ("Korčula", -14.0, 36.0, "end"),
+               ("Pag", -14.0, 6.0, "end"), ("Elba", -14.0, 0.0, "end"), ("Lefkada", -14.0, 0.0, "end"),
+               ("Kythira", -14.0, 10.0, "end"), ("Andros", 14.0, -10.0, "start"), ("Icaria", 0.0, 28.0, "middle"),
+               ("Kos", 14.0, 6.0, "start"), ("Karpathos", 14.0, 10.0, "start"), ("Thasos", 0.0, -24.0, "middle"),
+               ("Gökçeada", 14.0, 0.0, "start")]
 
 # ------------------------------------------------------------------------------ the drawings
 # Equirectangular, east-west shrunk by the cosine of the map's middle latitude, 1000 wide.
-proc draw(file: string, w, e, s, n: float) =
+proc draw(file: string, w, e, s, n: float, italian = false, seaNames = @seas, islandNames = @names,
+          groups: seq[(string, string, float, float)] = @[], highlight: seq[string] = @[], fontSize = 27,
+          every = false) =
+  ## The land in the box, the main islands filled (or, with `highlight`, the islands named there),
+  ## the other islands of the list a dot, the names of the seas and islands given, and `groups`,
+  ## the names of groups of islands (English, Italian, longitude, latitude of their middle). With
+  ## `every`, no names, no limits and nothing filled: a dot for each island of the list and a
+  ## smaller one for each other island of a hectare or more (others.csv).
   let c = cos(((s + n) / 2).degToRad)
   let k = 1000 / ((e - w) * c)
   let height = round((n - s) * k).int
@@ -139,35 +211,169 @@ proc draw(file: string, w, e, s, n: float) =
       last = q
     result.add "Z"
   var land, mainLand: string
+  let lit = islands.filterIt(it.name in highlight)
   for r in rings:
     if r.pts.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
-    if r.main: mainLand.add r.pts.path else: land.add r.pts.path
-  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="27">
+    let mine = if every: false elif highlight.len == 0: r.main else: lit.anyIt(r.pts.contains(it.middle) or r.pts.contains((it.lon, it.lat)))
+    if mine: mainLand.add r.pts.path else: land.add r.pts.path
+  var svg = &"""<svg xmlns="http://www.w3.org/2000/svg" class="map" viewBox="0 0 1000 {height}" width="1000" height="{height}" font-size="{fontSize}">
 <rect class="sea" width="100%" height="100%"/>
 <path class="land" d="{land}"/>
 <path class="main" d="{mainLand}"/>
 """
+  if every:
+    var csvo: CsvParser
+    csvo.open(here / "others.csv")
+    csvo.readHeaderRow()   # the description
+    csvo.readHeaderRow()
+    while csvo.readRow():
+      let (x, y) = xy((csvo.rowEntry("lon").parseFloat, csvo.rowEntry("lat").parseFloat))
+      svg.add &"""<circle cx="{f x}" cy="{f y}" r="3.5" class="other"/>"""
+    csvo.close
+    svg.add "\n"
+    for i in islands:
+      let (x, y) = xy(i.middle)
+      svg.add &"""<circle cx="{f x}" cy="{f y}" r="6" class="listed"/>"""
+    svg.add "\n</svg>\n"
+    writeFile(output / file, svg)
+    echo file, ": ", svg.len div 1024, " kB"
+    return
+  var lines = ""
+  for l in limits:
+    if l.allIt(it[0] < w or it[0] > e or it[1] < s or it[1] > n): continue
+    let p = l.path
+    lines.add p[0 ..< ^1]   # an open line, not a ring
+  svg.add &"""<path class="limit" d="{lines}"/>""" & "\n"
   let inside = proc (i: Island): bool = i.lon in w .. e and i.lat in s .. n
   for i in islands:
-    if i.main or not inside(i): continue
+    if (i.main and highlight.len == 0) or i.name in highlight or not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
     svg.add &"""<circle cx="{f x}" cy="{f y}" r="5" class="dot"/>""" & "\n"
-  for (name, lon, lat) in seas:
+  for (english, italiano, lon, lat) in seaNames:
     if lon notin w .. e or lat notin s .. n: continue
     let (x, y) = xy((lon, lat))
-    let lines = name.split('|')
-    let size = if name == "Sea of Marmara": 22 else: 27   # a small sea between islands
+    let lines = (if italian: italiano else: english).split('|')
+    let size = if english == "Sea of Marmara": 22 else: fontSize   # a small sea between islands
     for i, line in lines:
-      let dy = (i.float - (lines.len - 1) / 2) * 32 + 9
+      let dy = (i.float - (lines.len - 1) / 2) * (size.float * 1.2) + size / 3
       svg.add &"""<text x="{f x}" y="{f y + dy}" text-anchor="middle" font-size="{size}" class="sea-name">{line}</text>""" & "\n"
-  for (name, dx, dy, anchor) in names:
+  for (english, italiano, lon, lat) in groups:
+    let (x, y) = xy((lon, lat))
+    svg.add &"""<text x="{f x}" y="{f y + fontSize / 3}" text-anchor="middle" class="name">{(if italian: italiano else: english)}</text>""" & "\n"
+  for (name, dx, dy, anchor) in islandNames:
     let i = islands.filterIt(it.name == name)[0]
     if not inside(i): continue
     let (x, y) = xy((i.lon, i.lat))
-    svg.add &"""<text x="{f x + dx}" y="{f y + dy + 9}" text-anchor="{anchor}" class="name">{name}</text>""" & "\n"
+    svg.add &"""<text x="{f x + dx}" y="{f y + dy + fontSize / 3}" text-anchor="{anchor}" class="name">{(if italian: i.italian else: i.name)}</text>""" & "\n"
   svg.add "</svg>\n"
   writeFile(output / file, svg)
   echo file, ": ", svg.len div 1024, " kB"
 
-draw("map-west.svg", -6.0, 18.9, 32.6, 46.0)
-draw("map-east.svg", 17.2, 36.3, 31.3, 41.5)
+# the south edge at 30° N, so the Gulf of Sidra, which reaches 30.2°, is on both
+draw("map-west.svg", -6.0, 18.9, 30.0, 46.0)
+draw("map-east.svg", 17.2, 36.3, 30.0, 41.5)
+draw("map-west-it.svg", -6.0, 18.9, 30.0, 46.0, italian = true)
+draw("map-east-it.svg", 17.2, 36.3, 30.0, 41.5, italian = true)
+# every island: the 195 and the others of a hectare or more, as dots (map-every.svg)
+draw("map-every.svg", -6.0, 36.5, 30.0, 46.5, every = true)
+
+# Sicily and its islands, the ones of the list filled, and Malta nearby (map-sicily.svg).
+const sicilyIslands = @["Sicily", "Pantelleria", "Lipari", "Salina", "Vulcano", "Lampedusa", "Favignana", "Stromboli",
+                        "Marettimo", "Filicudi", "Ustica", "Levanzo"]
+const sicilySeas = @[("Tyrrhenian|Sea", "Mar|Tirreno", 12.45, 38.65), ("Strait of|Sicily", "Canale di|Sicilia", 13.0, 36.5),
+                     ("Ionian|Sea", "Mar|Ionio", 15.3, 36.3)]
+const sicilyNames = @[("Sicily", 0.0, 0.0, "middle"), ("Ustica", 20.0, 0.0, "start"), ("Pantelleria", 22.0, 0.0, "start"),
+                      ("Lampedusa", 22.0, 0.0, "start"), ("Malta", 0.0, 46.0, "middle"), ("Gozo", -20.0, 0.0, "end")]
+const sicilyGroups = @[("Aeolian Islands", "Isole Eolie", 14.8, 39.0), ("Egadi Islands", "Isole Egadi", 12.32, 38.36)]
+for (file, italian) in [("map-sicily.svg", false), ("map-sicily-it.svg", true)]:
+  draw(file, 11.7, 15.8, 35.3, 39.1, italian, sicilySeas, sicilyNames, sicilyGroups, sicilyIslands, fontSize = 40)
+
+# ------------------------------------------------------------------------------ the locators
+# For the table of every island, by sea (stories/isole-tutte/): a small map of each of the IHO's
+# seas in the whole Mediterranean, the sea filled (seas/<sea>.svg), and for each island a map of
+# its sea's box with a dot where the island is (locators/<rank>.svg). The land is simplified to
+# a size that suits each drawing, in whole points of it, and the smallest rings are left out, so
+# a file is a kilobyte or two. A picture in a table does not take the page's colours, so they are
+# the Minoan look's, the first look of these pages: the paper for the sea, the ink mixed into the
+# paper for the land (a quarter of it), dolphin blue for the sea of the row, a terracotta dot.
+proc mix(a, b: string, share: float): string =
+  ## `a` mixed into `b`, `share` of `a` (like CSS `color-mix(in srgb, a share, b)`), as #RRGGBB.
+  result = "#"
+  for k in 0 .. 2:
+    let (x, y) = (parseHexInt(a[1 + 2 * k .. 2 + 2 * k]), parseHexInt(b[1 + 2 * k .. 2 + 2 * k]))
+    result.add toHex(int(round(x.float * share + y.float * (1 - share))), 2)
+
+block:
+  let (seaColour, landColour, mineColour, dotColour) = (minoanLook.paper,
+    mix(minoanLook.ink, minoanLook.paper, 0.25), mix(minoanLook.secondary, minoanLook.paper, 0.55),
+    minoanLook.primary)
+  type Frame = object
+    w, e, s, n, c, k: float   # the box, and the drawing's scale (equirectangular, as the maps)
+    width, height: int
+  proc frame(w, e, s, n: float, width: int): Frame =
+    result = Frame(w: w, e: e, s: s, n: n, c: cos(((s + n) / 2).degToRad), width: width)
+    result.k = width.float / ((e - w) * result.c)
+    result.height = round((n - s) * result.k).int
+  proc xy(f: Frame, p: (float, float)): (int, int) =
+    (round((p[0] - f.w) * f.c * f.k).int, round((f.n - p[1]) * f.k).int)
+  proc path(f: Frame, ring: seq[(float, float)]): string =
+    ## A ring simplified to about a point of the drawing, or nothing when it is under three.
+    let pts = douglasPeucker(ring, 1.5 / f.k)
+    var last = (-99999, -99999)
+    var n = 0
+    var d = ""
+    for p in pts:
+      let q = f.xy(p)
+      if q == last: continue
+      d.add (if n == 0: "M" else: "L") & $q[0] & " " & $q[1]
+      last = q
+      inc n
+    if n >= 3: d & "Z" else: ""
+  proc landOf(f: Frame): string =
+    ## The land in the box: the rings that reach into it and are larger than three points.
+    for r in rings:
+      let xs = r.pts.mapIt(it[0])
+      let ys = r.pts.mapIt(it[1])
+      if xs.max < f.w or xs.min > f.e or ys.max < f.s or ys.min > f.n: continue
+      if (xs.max - xs.min + ys.max - ys.min) * f.k < 4: continue
+      result.add f.path(r.pts)
+  proc svg(f: Frame, body: string): string =
+    &"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {f.width} {f.height}" width="{f.width}" height="{f.height}">""" &
+      &"""<rect width="100%" height="100%" fill="{seaColour}"/>{body}</svg>""" & "\n"
+
+  # each sea, filled, in the whole Mediterranean
+  let whole = frame(-6.0, 36.5, 30.0, 46.5, 160)
+  let land = whole.landOf
+  var boxes: Table[string, Frame]
+  createDir(output / "seas")
+  for sea in ihoSeas:
+    let doc = parseFile(raw / "iho" / sea.replace(' ', '_') & ".jsonld")
+    let seaRings = wktRings(doc["mr:hasGeometry"][0]["gsp:asWKT"].getStr)
+    var (w, e, s, n) = (180.0, -180.0, 90.0, -90.0)
+    var filled = ""
+    for ring in seaRings:
+      for p in ring: (w = min(w, p[0]); e = max(e, p[0]); s = min(s, p[1]); n = max(n, p[1]))
+      filled.add whole.path(ring)
+    writeFile(output / "seas" / (sea.replace(' ', '_') & ".svg"), whole.svg(
+      &"""<path d="{filled}" fill="{mineColour}" fill-rule="evenodd"/><path d="{land}" fill="{landColour}"/>"""))
+    # the sea's box, a little larger, and wider than high, for the islands' maps
+    let (mx, my) = (max(0.4, (e - w) * 0.08), max(0.4, (n - s) * 0.08))
+    (w, e, s, n) = (w - mx, e + mx, s - my, n + my)
+    let c = cos(((s + n) / 2).degToRad)
+    if (e - w) * c < (n - s) * 1.6:   # at least 1.6 times as wide as high
+      let grow = ((n - s) * 1.6 / c - (e - w)) / 2
+      (w, e) = (w - grow, e + grow)
+    boxes[sea] = frame(w, e, s, n, 120)
+  var seaLand: Table[string, string]
+  for sea, f in boxes: seaLand[sea] = f.landOf
+  createDir(output / "locators")
+  var largest = 0
+  for i in islands:
+    if i.sea notin boxes: continue
+    let f = boxes[i.sea]
+    let (x, y) = f.xy((i.lon, i.lat))
+    let text = f.svg(&"""<path d="{seaLand[i.sea]}" fill="{landColour}"/>""" &
+      &"""<circle cx="{x}" cy="{y}" r="5" fill="{dotColour}" stroke="{seaColour}" stroke-width="1.5"/>""")
+    largest = max(largest, text.len)
+    writeFile(output / "locators" / ($i.rank & ".svg"), text)
+  echo "seas: ", ihoSeas.len, " maps; locators: ", islands.len, ", the largest ", largest div 1024, " kB"

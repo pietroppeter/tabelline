@@ -4,7 +4,7 @@
 
 Reads `{"chapter": <name>, "cells": [<python code>, ...]}` and runs the cells in order, in one
 namespace, like the cells of a notebook. For each cell it writes what the cell printed and the
-HTML of its last expression, if it ends with one: a GT table as `as_raw_html()`, a DataFrame as
+HTML of its last expression, if it ends with one: a GT table (or a list of them) as `as_raw_html()`, a DataFrame as
 its `_repr_html_()`. The book's build (book/tabbook.nim) calls this only when a chapter's Python
 changed, and keeps the outputs in book/gt/outputs/<chapter>.json, which is committed: building
 the book needs no Python otherwise.
@@ -22,6 +22,8 @@ def shown(value):
         return ""
     if hasattr(value, "as_raw_html"):  # a GT table
         return value.as_raw_html()
+    if isinstance(value, (list, tuple)) and value and all(hasattr(v, "as_raw_html") for v in value):
+        return "".join(v.as_raw_html() for v in value)  # tables one after the other
     if hasattr(value, "_repr_html_"):
         h = value._repr_html_()
         if h:

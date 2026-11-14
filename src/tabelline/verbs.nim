@@ -313,7 +313,15 @@ proc mapLabels(t: var Tabella, l: Loc, fn: proc (s: string): string) =
       for n in t.sourceNotes.mitems: change n
     if l.kind != lkSourceNotes:
       for f in t.footnotes.mitems: change f.note
-  of lkBody, lkStub, lkSummary, lkSummaryStub, lkGrandSummary, lkGrandSummaryStub: discard
+  of lkSummaryStub, lkGrandSummaryStub:   # the labels of summary rows; their keys stay
+    for rule in t.summaries.mitems:
+      if rule.grand != (l.kind == lkGrandSummaryStub): continue
+      if not rule.grand and l.names.len > 0 and rule.groups.len > 0 and
+         not rule.groups.anyIt(it in l.names): continue
+      for (label, _) in rule.fns:
+        if l.labels.len == 0 or label in l.labels:
+          rule.shown[label] = fn(rule.shown.getOrDefault(label, label))
+  of lkBody, lkStub, lkSummary, lkGrandSummary: discard
 
 proc textTransform*(t: sink Tabella, fn: proc (s: string): string, locations: varargs[Loc]): Tabella =
   ## Changes the shown text at `locations` (by default the body) with a proc: for cells the proc
@@ -1248,33 +1256,47 @@ proc tabStyleBody*(t: sink Tabella, style: CellStyle, columns: ColSel = everythi
 
 # --------------------------------------------------------------------------------- preview
 
-proc initTabellaPreview*(data: TableData, topN = 5, bottomN = 1, inclRownums = true): Tabella =
-  ## A preview of a big table: its first `topN` rows, a row that says which rows are left out
-  ## ("6..99"), and its last `bottomN` rows, numbered from 1 in the stub (`inclRownums`), as
-  ## gt's `gt_preview()`. Written `tabellaPreview(data, topN = 3)`, with a body if you like.
+proc initTabellaPreview*(data: TableData, topN = 5, bottomN = 1, inclRownums = true,
+                         moreRows: RowSel = toRowSel(newSeq[int]())): Tabella =
+  ## A preview of a big table: its first `topN` rows, its last `bottomN` rows and the rows of
+  ## `moreRows` (not from gt: indices from 0, a range, a set such as `{12, 40..42}`, or
+  ## `where(...)`), in their order, with a shaded row for each run of rows left out ("6..99"), and
+  ## the rows numbered from 1 in the stub (`inclRownums`), as gt's `gt_preview()`. A run of one
+  ## row is shown, not left out. Written `tabellaPreview(data, topN = 3)`, with a body if you like.
   let n = data.nrows
-  var keep: seq[int]
-  if n <= topN + bottomN + 1:
-    for i in 0 ..< n: keep.add i
-  else:
-    for i in 0 ..< topN: keep.add i
-    keep.add -1
-    for i in n - bottomN ..< n: keep.add i
+  var shown = newSeq[bool](n)
+  for i in 0 ..< min(topN, n): shown[i] = true
+  for i in max(n - bottomN, 0) ..< n: shown[i] = true
+  for i in moreRows.resolve(data): shown[i] = true
+  for i in 0 ..< n:   # a single row left out is shown instead
+    if not shown[i] and (i == 0 or shown[i - 1]) and (i == n - 1 or shown[i + 1]): shown[i] = true
+  var keep: seq[int]          # a row's index, or -1 for a run left out
+  var runs: seq[string]       # the label of each run left out, "6..99"
+  var i = 0
+  while i < n:
+    if shown[i]: (keep.add i; inc i)
+    else:
+      var j = i
+      while j < n and not shown[j]: inc j
+      keep.add -1
+      runs.add $(i + 1) & ".." & $j
+      i = j
   const stub = "\x1Fpreview-row"
   var cols: seq[(string, seq[Value])]
-  if inclRownums or keep.contains(-1):
+  if inclRownums or runs.len > 0:
     var nums: seq[Value]
-    for i in keep:
-      nums.add(if i >= 0: (if inclRownums: toValue($(i + 1)) else: toValue(""))
-               else: toValue($(topN + 1) & ".." & $(n - bottomN)))
+    var r = 0
+    for k in keep:
+      if k >= 0: nums.add(if inclRownums: toValue($(k + 1)) else: toValue(""))
+      else: (nums.add toValue(runs[r]); inc r)
     cols.add (stub, nums)
   for c in data.columns:
     var vs: seq[Value]
-    for i in keep: vs.add(if i >= 0: c.values[i] else: null())
+    for k in keep: vs.add(if k >= 0: c.values[k] else: null())
     cols.add (c.name, vs)
   result = initTabella(toTableData(cols), rownameCol = if cols.len > 0 and cols[0][0] == stub: stub else: "")
-  let gap = keep.find(-1)
-  if gap >= 0:
+  for gap, k in keep:
+    if k >= 0: continue
     result.styles.add StyleRule(target: Target(kind: lkBody, cells: data.names.mapIt((gap, it))),
                                 style: style.fill("rgba(128, 128, 128, 0.12)"))
     result.styles.add StyleRule(target: Target(kind: lkStub, cells: @[(gap, stub)]),

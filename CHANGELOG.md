@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 0.2.0 (11 Nov 2026)
+## 0.2.0 (14 Nov 2026)
 
 tabelline 0.2 is the big one: it brings most of the rest of gt and Great Tables. Tables can now sum
 up, merge and add rows and columns, format in every CLDR locale, and hold pictures. The pages
@@ -21,7 +21,8 @@ write every table as `tabella(data): body`, one verb per line.
   inlined), `fmtNanoplot` and `colsNanoplot` (line, bar and box plots, a port of Great Tables', and
   shapes: an island's outline in a cell).
 - **Table tools**: `tabellaPreview`, `extractCells`/`extractBody`/`extractSummary`, `fromColumn`,
-  `tabStyle` with a proc of the row, `tabStyleBody`; the datasets `isole()` and `citta()`.
+  `tabStyle` with a proc of the row, `tabStyleBody`; `tabellaPreview(moreRows = ...)` shows rows
+  from the middle too; the datasets `isole()` and `citta()`.
 - **More than one value**: lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`),
   formatted item by item, read with the dot (`v.hi`, `it.mass`), plotted as x and y.
 - **The tails**: a stub of several columns, groups as a column, 164 options (160 of gt's 196),
@@ -35,11 +36,13 @@ write every table as `tabella(data): body`, one verb per line.
   `tabelline/nanuq`, a table straight from a nanuq (Polars for Nim) DataFrame.
 
 Docs: the Reference (every exported name), the Guide (with *Nim sugar* and *Pipes, methods and a
-recipe*), the stories *FOSDEM, twenty-six times*, written with 0.2, and *Islands of the
-Mediterranean* (in English and Italian, with its data post *The islands' data, made with nanuq*),
-the book's Get Started and the first posts of the Great Tables blog, three of gt's articles
-(summary lines, gtcars and clinical tables), and the posts *Designing tabelline 0.2*, *What the
-book found for 0.2* and *Designing a Mediterranean look*.
+recipe*), the feature map (with what tabelline has of its own, and what is worth porting back to gt
+and Great Tables), the stories *FOSDEM, twenty-six times*, written with 0.2, and *Islands of the
+Mediterranean* (in English and Italian, with its data post *The islands' data, made with nanuq*);
+in the book, Get Started, twelve posts of the Great Tables blog, four of gt's articles (summary
+lines, gtcars, clinical tables and the datasets), Great Tables' Examples and Sports earnings,
+gt-extras' NFL season and seven entries of the Table Contest; and the posts *Designing tabelline
+0.2*, *What the book found for 0.2* and *Designing a Mediterranean look*.
 
 Next comes *Out of the browser*: LaTeX, RTF and Word, images and PDF of a table, groups of
 tables, and tables from more data frames.
@@ -51,6 +54,8 @@ tables, and tables from more data frames.
 - The tails of 0.2: a stub of several columns (`tabella(data, rownameCol = ["mfr", "model"])`, a repeated value drawn once; `stubColumns`, `loc.stub(rows, cols)`); groups as a column of the stub (`rowGroupAsColumn`); 22 more options, 164 in all (hidden labels, a units pattern, a default group label, notes on one line, a no-data message, the stub's indent, rule and group column, stripes in the stub, which is no longer striped by default, as in gt); `localImage` and `webImage`; `systemFonts`, `fontStackNames`, `defaultFonts`; per-point nanoplot options and dates on x; `gtcars()`, `countrypops()`, `illness()` and `metro()` in `tabelline/datasets`, which the book now reads; and what the book found: `positions(...)`, `a + b` and `a - b` for columns, several parts in `startsWith`/`endsWith`/`containing`, `tabSpanner` gathers its columns (as gt), summary rows of the same label make one row (as gt), `extractSummary(values = true)`, hard line breaks in `md` (#78).
 - What the book found: every CSS colour name (148) for `dataColor` and the other colour helpers, and white text on a dark heading or column labels background given by name; `nbTable data: body`, a table in one step in a notebook; `tabelline/nanuq`, `tabella(df)` for a nanuq (Polars for Nim) DataFrame, an optional module (nanuq is in the `docs` feature); the clinical case study shapes its data with nanuq, and the chapters use what 0.2 gained (#86).
 - Shape nanoplots: `fmtNanoplot(plotType = "shape")` draws an outline from a record of x and y, in its own order, closed, with holes, and at one scale with `autoscale`; line plots on a shared x axis line up, and `referenceX` marks places on it with vertical lines (and `colsNanoplot` takes `xVals`, a year for each column, to use it); `colsLabelRotate(dir = "slanted")`; two stories on the islands of the Mediterranean, *Islands of the Mediterranean* and *The islands' data, made with nanuq* (#88).
+- `tabellaPreview(moreRows = ...)` shows rows from the middle too (an index, a range, a set such as `{12, 40..42}`, or `where(...)`), with a shaded row for each run left out; a set of indices is now a row selector everywhere (#101).
+- `textTransform` on `loc.summaryStub()` and `loc.grandSummaryStub()` now changes the labels of summary rows (it did nothing): the Italian islands story's "total" and "all" (#101).
 - Docs: the Guide's *Nim sugar* opens with a list of all of tabelline's sugar, and two new sections: *Pipes, methods and a recipe* (the same table as R's pipe, Python's methods, Nim's dot and the `tabella` block, and what each language does underneath) and *Small words* (`where`, `&`, the namespaces, the converters) (#75).
 - Docs: the Guide and the specs write every table as `tabella(data): body`, one verb per line, with the pair verbs and `tabOptions` as blocks, instead of a chain of dots (#74).
 - Icons, images and nanoplots: `fmtIcon` (every Font Awesome Free icon, 2,163, as inline SVG; `icon`, `hasIcon`, `iconSvg`), `fmtImage` (local files inlined as data URLs; `imageDataUrl`), `fmtNanoplot` (line, bar and box plots in a cell, a port of Great Tables' nanoplots, sparklines in text; `nanoplotOptions`, `nanoplotSvg`), `colsNanoplot` (#63).
@@ -70,6 +75,8 @@ tables, and tables from more data frames.
 - The Reference: every name tabelline exports, with its signature, doc comment, links to gt and Great Tables and the shortest spec example that uses it, built from `nim jsondoc` and the source (`tools/apidoc.nim`); the post *A reference in our own style* (#65).
 - The book follows 0.2: Get Started complete, with the Nanoplots chapter and no workarounds left for what 0.2 added (#67); a new section, *Great Tables: the blog*, ports the first four posts of the Great Tables blog (#70).
 - Docs: the roadmap has three releases, with *Out of the browser* next; the feature map and the Guide follow it (#66, #73).
+- The book ports eight more posts of the Great Tables blog, gt's Datasets article, Great Tables' Examples and Sports earnings, gt-extras' NFL season and six Table Contest entries (the first one in Polars among them), with their gaps in `book/gaps.md` (#105).
+- The feature map splits *Not from gt* into *Nim's own* and *Worth porting back* (#107).
 - CI: `tools/setup.sh` installs libpcre3 from Ubuntu 24.04's .deb, kept in `tools/vendor/` (checked by sha256), before trying apt, so CI no longer needs an Ubuntu mirror (#100).
 
 ## 0.1.0 (10 Nov 2026)

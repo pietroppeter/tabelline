@@ -90,3 +90,17 @@ suite "row groups (0.1.0 fix)":
     let b = tabella(d, groupnameCol = "g").build(rcText)
     check b.groups.mapIt(it.id) == @["", "a", "b"]
     check b.groups.mapIt(it.rows.mapIt(it.cells[0])) == @[@["3"], @["1"], @["2"]]
+
+suite "summary labels":
+  let base = tabella(planets(), rownameCol = "planet", groupnameCol = "type")
+    .colsHide(["mass", "diameter", "density", "gravity", "day_length", "distance", "orbital_period", "mean_temp", "rings"])
+  test "textTransform changes the label shown, not the row's key":
+    let t = base.summaryRows(fns = {"total": agg.sum})
+      .grandSummaryRows(fns = {"total": agg.sum})
+      .tabStyle(style.text(weight = "bold"), loc.grandSummary())
+      .textTransform(proc (s: string): string = (if s == "total": "totale" else: s),
+                     loc.summaryStub(), loc.grandSummaryStub())
+    let html = t.toHtml
+    check "totale" in html
+    check ">total<" notin html
+    check "font-weight: bold" in html

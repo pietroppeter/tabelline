@@ -432,6 +432,9 @@ converter toRowSel*(i: int): RowSel = RowSel(kind: rsIndices, indices: @[i])
 converter toRowSel*[N: static int](ix: array[N, int]): RowSel = RowSel(kind: rsIndices, indices: @ix)
 converter toRowSel*(ix: seq[int]): RowSel = RowSel(kind: rsIndices, indices: ix)
 converter toRowSel*(s: HSlice[int, int]): RowSel = RowSel(kind: rsIndices, indices: toSeq(s))
+converter toRowSel*[T: Ordinal](s: set[T]): RowSel =
+  ## A set of rows, indices and ranges together: `{0, 5..7}` (as nimiSlides' `animateCode`).
+  RowSel(kind: rsIndices, indices: toSeq(s).mapIt(it.int))
 
 template where*(cond: untyped): RowSel =
   ## Rows where `cond` holds, with `it` the row: `where(it["type"] == "Gas giant")`.
@@ -579,6 +582,7 @@ type
     groups*: seq[string]       ## the groups summarised (empty: all of them)
     columns*: seq[string]      ## the columns summarised; the others show `missingText`
     fns*: seq[(string, Aggregate)]   ## (label, aggregate): one row each
+    shown*: Table[string, string]   ## label -> the text shown in the stub, when `textTransform` changed it
     top*: bool                 ## above the group (or the table) instead of below
     fmt*: FormatFn             ## nil: the column's format
     missingText*: string
