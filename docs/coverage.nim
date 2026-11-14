@@ -148,8 +148,13 @@ nbText: """
 ## Not from gt
 
 tabelline follows gt and Great Tables. What it has that neither of them has is listed here, with
-why it is there and the closest thing in gt or Great Tables. Anything new that is not from gt
-gets a line in this table.
+why it is there and the closest thing in gt or Great Tables, in two tables. The first holds what
+belongs to Nim: its data, its notebooks, its syntax, and the data steps that gt and Great Tables
+leave to other tools (dplyr, Polars, pandas). Those are not worth porting back. The second holds
+what might be: things a table could do in R or Python too. Each of them was checked against gt 1.4
+and Great Tables 1.1. Anything new that is not from gt gets a line in one of the two tables.
+
+### Nim's own
 """
 
 block:
@@ -160,9 +165,6 @@ block:
     N(what: "a table from a seq of objects or tuples", why: "Nim data as it is, one column per field", closest: "a data frame"),
     N(what: "`parseCsv`, `readCsv`, `addColumn`, `toTableData`", why: "the core uses only Nim's standard library, so it reads its own data", closest: "readr, Polars or pandas, before `gt()` / `GT()`"),
     N(what: "`rowOrder`", why: "sorts the rows shown and leaves the data as it is; Nim has no dplyr", closest: "`dplyr::arrange()` or `df.sort()` before the table"),
-    N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
-    N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
-    N(what: "`tabellaCss`: one stylesheet for every table, options as CSS variables; `toHtml(withStyle = false)`", why: "a page with many tables writes the rules once (the Reference has 152 tables); a page can set an option for all its tables", closest: "a style element per table, scoped to its id; `as_raw_html(inline_css = TRUE)` writes styles on every element"),
     N(what: "`nbTable` (nimib)", why: "a table in a nimib notebook, with its Markdown for the notebook's text output", closest: "a table printed in Quarto, R Markdown or Jupyter"),
     N(what: "`nbTable data: body` (nimib)", why: "a table in one step, without naming it, when its code need not be shown", closest: "R and Python notebooks show the last value of a cell"),
     N(what: "`tabelline/nanuq`: `tabella(df)` for a nanuq DataFrame", why: "the data steps (group, summarise, pivot) happen in nanuq, Polars for Nim; the core keeps needing only the standard library", closest: "`gt(df)` for a tibble, `GT(df)` for a Polars or pandas DataFrame"),
@@ -170,17 +172,43 @@ block:
     N(what: "blocks for lists of pairs (`summaryRows:` then `total: agg.sum`)", why: "inside `tabella(data): body`, a verb's pairs and named arguments one per line, as Nim writes a body", closest: "named lists (`fns = list(total = \"sum\")`) and dicts (`fns={\"total\": ...}`)"),
     N(what: "lists and records in a cell (`@[1, 4, 2]`, `(lo: 0.8, hi: 1.6)`), formatted item by item, and the dot (`v.hi`, `it.mass`)", why: "a cell that holds several values feeds nanoplots, icons and flags as it is, and the dot reads like Nim", closest: "Great Tables reads Polars list columns for nanoplots; `cols_merge` puts several columns in one cell"),
     N(what: "record fields in a merge pattern (`colsMerge([\"span\"], pattern = \"{lo}–{hi}\")`)", why: "a record shows as a range, a value with its unit, without splitting it into columns", closest: "`cols_merge` patterns name columns only (`{1}`, `{2}`)"),
+  ]
+  let t = tabella(rows):
+    tabHeader "Nim's own", "data, notebooks and syntax: not worth porting back"
+    colsLabel:
+      what: "in tabelline"
+      why: "why"
+      closest: "closest in gt or Great Tables"
+    fmtMarkdown everything()
+    tabOptions(tableWidth = "100%", tableFontSize = "14px")
+    optCssTheme()
+  nbTable t
+
+nbText: """
+### Worth porting back
+"""
+
+block:
+  type N = object
+    what, why, closest: string
+  let rows = @[
+    N(what: "the text and Markdown renderers (`echo t`, `toMarkdown`)", why: "tables in the terminal, in tests and in the specs' examples", closest: "none; gt and Great Tables write HTML (and LaTeX, RTF, Word in gt)"),
+    N(what: "`optCssTheme()`", why: "every colour and the font of the table come from the page's CSS variables, so the table follows the page's look", closest: "`opt_stylize()` / `tab_options()`, with fixed colours"),
+    N(what: "`tabellaCss`: one stylesheet for every table, options as CSS variables; `toHtml(withStyle = false)`", why: "a page with many tables writes the rules once (the Reference has 152 tables); a page can set an option for all its tables", closest: "a style element per table, scoped to its id; `as_raw_html(inline_css = TRUE)` writes styles on every element"),
     N(what: "nanoplots in text: sparklines (`▁▃▅█`), bars beside a zero line, the five numbers of a box plot", why: "a nanoplot says something in the terminal and the specs too", closest: "nothing: gt and Great Tables draw nanoplots only in HTML"),
-    N(what: "shape nanoplots: `fmtNanoplot(plotType = \"shape\")` on a record of x and y", why: "an outline drawn in its cell, points in their order, closed, with holes; `autoscale` draws every shape at one scale (the islands of the Mediterranean)", closest: "nothing: nanoplots are lines, bars and box plots; a shape needs an image in the cell (`text_transform`, `fmt_image`)"),
-    N(what: "`fmtNanoplot(referenceX = @[\"2020-03-11\"])`: dashed vertical lines at places on the x axis", why: "a date that matters to every row (a pandemic, a law, a release) marked on lines of x and y; on a shared axis the plots have one width, so the marks line up", closest: "`reference_line` and `reference_area`, both horizontal"),
+    N(what: "shape nanoplots: `fmtNanoplot(plotType = \"shape\")` on a record of x and y", why: "an outline drawn in its cell, points in their order, closed, with holes; `autoscale` draws every shape at one scale (the islands of the Mediterranean)", closest: "nothing: `plot_type` is line or bar in Great Tables 1.1 (box plots are on its main branch, not released), line, bar or box plot in gt; a line of x and y sorts the points by x and fills down to its base, so a square becomes a wide band; today a shape is an SVG written by hand in `fmt()`"),
+    N(what: "`fmtNanoplot(referenceX = @[\"2020-03-11\"])`: dashed vertical lines at places on the x axis", why: "a date that matters to every row (a pandemic, a law, a release) marked on lines of x and y; on a shared axis the plots have one width, so the marks line up", closest: "`reference_line` and `reference_area`, both horizontal; the vertical guides show only on hover"),
     N(what: "`colsNanoplot(xVals = ...)`: a place on the x axis for each column, the same in every row", why: "columns named by year (y2006 ... y2025) drawn on an axis of years, so `referenceX` can mark one", closest: "`cols_nanoplot(columns_x_vals = ...)`, which reads the places from other columns, row by row"),
-    N(what: "`tabellaPreview(moreRows = ...)`: rows from the middle too, chosen by index, range, set or `where`", why: "a story that talks about rows in the middle of a long table (Sicily, Cres and Krk among the islands by people per km²) can show them beside the two ends", closest: "`gt_preview(top_n, bottom_n)`, the two ends only"),
-    N(what: "`colsLabelRotate(dir = \"slanted\")`", why: "labels at 45 degrees: a month's name over a column as narrow as two digits", closest: "`cols_label_rotate()`, sideways only"),
+    N(what: "`tabellaPreview(moreRows = ...)`: rows from the middle too, chosen by index, range, set or `where`", why: "a story that talks about rows in the middle of a long table (Sicily, Cres and Krk among the islands by people per km²) can show them beside the two ends", closest: "gt's `gt_preview(top_n, bottom_n)`, the two ends only; Great Tables has no preview"),
+    N(what: "`colsLabelRotate(dir = \"slanted\")`", why: "labels at 45 degrees: a month's name over a column as narrow as two digits", closest: "Great Tables' `cols_label_rotate()` turns labels sideways or vertical (`sideways-lr`, `sideways-rl`, `vertical-lr`), never slanted; gt has no `cols_label_rotate()`"),
     N(what: "`toSuperscript`, `toSubscript`, and units, formulas and fractions in Unicode", why: "the text and Markdown outputs show `kg/m³` and `H₂O` too", closest: "gt's plain-text output, which keeps the notation as written"),
   ]
   let t = tabella(rows):
-    tabHeader "Not from gt", "what tabelline has that gt and Great Tables do not"
-    colsLabel {"what": "in tabelline", "why": "why", "closest": "closest in gt or Great Tables"}
+    tabHeader "Worth porting back", "what a table could do in gt and Great Tables too"
+    colsLabel:
+      what: "in tabelline"
+      why: "why"
+      closest: "in gt 1.4 and Great Tables 1.1"
     fmtMarkdown everything()
     tabOptions(tableWidth = "100%", tableFontSize = "14px")
     optCssTheme()
