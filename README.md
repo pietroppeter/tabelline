@@ -65,6 +65,22 @@ In a nimib notebook, `import tabelline/nimib` and `nbTable t`, or in one step
 [nanuq](https://github.com/pietroppeter/nanuq) (Polars for Nim), `import tabelline/nanuq` and
 `tabella(df)`.
 
+**Install.** tabelline is not in nimble's package list yet, so install it from GitHub, from a
+folder that is not a nimble project (inside one, nimble installs that project's dependencies
+instead):
+
+```sh
+nimble install "https://github.com/pietroppeter/tabelline@#v0.2.0"
+```
+
+In a `.nimble` file, `requires "https://github.com/pietroppeter/tabelline >= 0.2.0"`; with atlas,
+`atlas use https://github.com/pietroppeter/tabelline`. The library needs only Nim 2.2 or later.
+
+**For coding agents** using tabelline: [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt)
+lists the docs as plain text, with the whole API in one Markdown file,
+[api.md](https://pietroppeter.github.io/tabelline/api.md) (and as JSON,
+[api.json](https://pietroppeter.github.io/tabelline/api.json)).
+
 ## Stories
 
 Real subjects told in tables made with tabelline, at least one for every release, kept up to date

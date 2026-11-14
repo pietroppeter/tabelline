@@ -2,7 +2,7 @@
 ## needs to work on tabelline: setup, the commands, where things are, and the working rules, read
 ## from AGENTS.md when the page builds so the two never disagree. Kept up to date. It also
 ## writes docs/llms.txt, a short map of the site for language models (llmstxt.org).
-import std/[os, strformat, strutils]
+import std/[os, strformat, strutils, algorithm]
 import nimib
 import tabelline, tabelline/nimib
 import blocks
@@ -21,8 +21,9 @@ What a coding agent needs to change tabelline: how to set up, the commands it wi
 nbText: """
 The rules below are read from [AGENTS.md](https://github.com/pietroppeter/tabelline/blob/main/AGENTS.md)
 when this page is built, so they are always the ones in the repository. A short map of the site
-for language models is at [llms.txt](../llms.txt). Skills for tabelline will be listed here when
-there are some.
+for language models is at [llms.txt](../llms.txt). An agent *using* tabelline (not changing it)
+reads the whole API in one Markdown file, [api.md](../api.md), or as data, [api.json](../api.json):
+the Reference, as plain text. Skills for tabelline will be listed here when there are some.
 """
 nbToc
 
@@ -97,7 +98,7 @@ let pages = [
   ("Guide", "explainer/", "gt and Great Tables from zero, and tabelline step by step"),
   ("Stories", "stories/", "real subjects told in tables made with tabelline, one for every release"),
   ("Book", "book/", "the Great Tables and gt guides ported to tabelline, with what the book will port and what the port found"),
-  ("Reference", "api/", "every name tabelline exports: signatures, doc comments, gt and Great Tables names, examples; `nim r tools/apidoc.nim` prints it as JSON"),
+  ("Reference", "api/", "every name tabelline exports: signatures, doc comments, gt and Great Tables names, examples (as Markdown: api.md, as JSON: api.json)"),
   ("Feature map", "coverage/", "what of gt and Great Tables tabelline has"),
   ("Roadmap", "roadmap/", "the releases, from 0.1 to 0.3"),
   ("Devlog", "devlog/", "dated posts on how tabelline is made, newest first"),
@@ -105,17 +106,40 @@ let pages = [
   ("Design guide", "design/", "the look of the pages and every component"),
   ("For coding agents", "agents/", "setup, commands and the working rules"),
 ]
-var llms = """# tabelline
+let tag = block:
+  var v = ""
+  for l in readFile(repo / "tabelline.nimble").splitLines:
+    if l.startsWith("version"): v = "v" & l.split('"')[1]
+  v
+let raw = "https://raw.githubusercontent.com/pietroppeter/tabelline/" & tag & "/"
+var llms = &"""# tabelline
 
 > Display tables for Nim, after R's gt and Python's Great Tables: a header, a stub, groups,
 > spanners, formatted numbers, colours and notes, rendered to HTML, text and Markdown.
 
-Source: https://github.com/pietroppeter/tabelline . Verbs are gt's in camelCase (`tab_header` is
-`tabHeader`); a table is a `Tabella` value and every verb returns a new one.
+Source: https://github.com/pietroppeter/tabelline ({tag}). Verbs are gt's in camelCase
+(`tab_header` is `tabHeader`); a table is a `Tabella` value and every verb returns a new one.
+Install (not in nimble's package list): `nimble install "https://github.com/pietroppeter/tabelline@#{tag}"`,
+run outside a nimble project; it needs only Nim 2.2 and its standard library.
 
-## Docs
+## For a model: plain text first
 
+- [API reference, Markdown]({siteUrl}api.md): every exported name with its signatures, doc
+  comment, gt's and Great Tables' names and a spec example with what it prints; an index of one
+  line per name at the top. Grep it for a gt name (`fmt_number`) to find tabelline's.
+- [API reference, JSON]({siteUrl}api.json): the same as data.
+- [Feature map, JSON]({siteUrl}coverage/gt.json): every feature of gt and Great Tables, done,
+  partial, missing (with the release planned) or not planned.
+- Specs, Markdown: every behaviour as a requirement with an example and its output:
 """
+var specDirs: seq[string]
+for f in walkDirs(repo / "openspec" / "specs" / "*"): specDirs.add f
+specDirs.sort()
+for f in specDirs:
+  if f.lastPathPart != "way-of-working" and f.lastPathPart != "review-mode":
+    llms.add &"  - [{f.lastPathPart}]({raw}openspec/specs/{f.lastPathPart}/spec.md)\n"
+llms.add &"- [README]({raw}README.md): the simplest example, and where everything is.\n"
+llms.add "\n## Pages\n\n"
 for (title, path, what) in pages:
   llms.add &"- [{title}]({siteUrl}{path}): {what}\n"
 writeFile(docs / "llms.txt", llms)
