@@ -103,7 +103,7 @@ proc buildTabellaCss(): (string, seq[string]) =
 [i] .tb_spanner { display: inline-block; width: 100%; padding-bottom: 4px;
   border-bottom: 2px solid [v("columnLabelsBorderBottomColor")]; }
 [i] .tb_spanner_empty { border-bottom: none; }
-[i] .tb_group_heading { background-color: [v("rowGroupBackgroundColor", v("tableBackgroundColor"))]; font-weight: [v("rowGroupFontWeight")];
+[i] .tb_group_heading { background-color: [v("rowGroupBackgroundColor", v("tableBackgroundColor"))]; color: [w("row-group-color", "inherit")]; font-weight: [v("rowGroupFontWeight")];
   font-size: [v("rowGroupFontSize")]; text-transform: [v("rowGroupTextTransform")];
   padding: [v("rowGroupPadding")] [v("rowGroupPaddingHorizontal")]; text-align: left;
   border-top: [v("rowGroupBorderTopWidth")] [v("rowGroupBorderTopStyle")] [v("rowGroupBorderTopColor", v("rowGroupBorderColor"))];
@@ -114,7 +114,7 @@ proc buildTabellaCss(): (string, seq[string]) =
   border-top: [v("tableBodyHlinesWidth")] [v("tableBodyHlinesStyle")] [v("tableBodyHlinesColor")]; vertical-align: middle; overflow-x: hidden; }
 [i] tbody { border-top: [v("tableBodyBorderTopWidth")] [v("tableBodyBorderTopStyle")] [v("tableBodyBorderTopColor")];
   border-bottom: [v("tableBodyBorderBottomWidth")] [v("tableBodyBorderBottomStyle")] [v("tableBodyBorderBottomColor")]; }
-[i] .tb_stub { background-color: [v("stubBackgroundColor", "transparent")]; font-weight: [v("stubFontWeight")]; text-align: left;
+[i] .tb_stub { background-color: [v("stubBackgroundColor", "transparent")]; color: [w("stub-color", "inherit")]; font-weight: [v("stubFontWeight")]; text-align: left;
   font-size: [v("stubFontSize")]; text-transform: [v("stubTextTransform")];
   border-right: [v("stubBorderWidth")] [v("stubBorderStyle")] [v("stubBorderColor", v("tableBodyHlinesColor"))]; }
 [i] tbody tr:first-child .tb_row { border-top: none; }
@@ -132,15 +132,18 @@ proc buildTabellaCss(): (string, seq[string]) =
 [i] .tb_supsub sup, [i] .tb_supsub sub { font-size: inherit; vertical-align: baseline; line-height: inherit; }
 [i] .tb_frac { white-space: nowrap; } [i] .tb_frac sup, [i] .tb_frac sub { font-size: 70%; }
 [i] .tb_striped { background-color: [v("rowStripingBackgroundColor")]; }
-[i] .tb_summary_row { background-color: [v("summaryRowBackgroundColor", "transparent")]; text-transform: [v("summaryRowTextTransform")];
+[i] .tb_summary_row { background-color: [v("summaryRowBackgroundColor", "transparent")]; color: [w("summary-row-color", "inherit")]; text-transform: [v("summaryRowTextTransform")];
   padding: [v("summaryRowPadding")] [v("summaryRowPaddingHorizontal")]; vertical-align: middle; }
 [i] .tb_first_summary_row { border-top: [v("summaryRowBorderWidth")] [v("summaryRowBorderStyle")] [v("summaryRowBorderColor")]; }
 [i] .tb_last_summary_row_top { border-bottom: [v("summaryRowBorderWidth")] [v("summaryRowBorderStyle")] [v("summaryRowBorderColor")]; }
-[i] .tb_grand_summary_row { background-color: [v("grandSummaryRowBackgroundColor", "transparent")]; text-transform: [v("grandSummaryRowTextTransform")];
+[i] .tb_grand_summary_row { background-color: [v("grandSummaryRowBackgroundColor", "transparent")]; color: [w("grand-summary-row-color", "inherit")]; text-transform: [v("grandSummaryRowTextTransform")];
   padding: [v("grandSummaryRowPadding")] [v("grandSummaryRowPaddingHorizontal")]; vertical-align: middle; }
 [i] .tb_first_grand_summary_row { border-top: [v("grandSummaryRowBorderWidth")] [v("grandSummaryRowBorderStyle")] [v("grandSummaryRowBorderColor")]; }
 [i] .tb_last_grand_summary_row_top { border-bottom: [v("grandSummaryRowBorderWidth")] [v("grandSummaryRowBorderStyle")] [v("grandSummaryRowBorderColor")]; }
 [i] .tb_left { text-align: left; } [i] .tb_center { text-align: center; } [i] .tb_right { text-align: right; font-variant-numeric: tabular-nums; }
+[i] td.tb_right { white-space: nowrap; }
+[i] .tb_sticky_stub .tb_stub:not(.tb_stub_level), [i] .tb_sticky_stub .tb_stubhead { position: sticky; left: 0; z-index: 1; }
+[i] .tb_sticky_stub .tb_stub:not(.tb_stub_level):not(.tb_striped), [i] .tb_sticky_stub .tb_stubhead { background-color: [v("stubBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_footnotes { color: [v("tableFontColor")]; background-color: [v("footnotesBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_sourcenotes { color: [v("tableFontColor")]; background-color: [v("sourceNotesBackgroundColor", v("tableBackgroundColor"))]; }
 [i] .tb_footnote { font-size: [v("footnotesFontSize")]; padding: [v("footnotesPadding")] [v("footnotesPaddingHorizontal")]; text-align: left;
@@ -198,13 +201,17 @@ proc styleVars*(o: TabOptions): string =
   var parts: seq[string]
   for (name, value) in stringOptions(o):
     if name in cssOptions and value != base[name]:
-      parts.add "--tb-" & kebab(name) & ": " & value
+      parts.add "--tb-" & kebab(name) & ": " & (if name.endsWith("Color"): cssColor(value) else: value)
   func onDark(bg: string): bool =
     ## A background that white text reads better on (by contrast, not by one channel): a hex
     ## value or a CSS colour name; anything else (a `var(--x)`, `transparent`) is left alone.
     try: idealTextColor(bg) == "#FFFFFF" except ValueError: false
   if onDark(o.headingBackgroundColor): parts.add "--tb-heading-color: " & o.tableFontColorLight
   if onDark(o.columnLabelsBackgroundColor): parts.add "--tb-column-labels-color: " & o.tableFontColorLight
+  if onDark(o.stubBackgroundColor): parts.add "--tb-stub-color: " & o.tableFontColorLight
+  if onDark(o.rowGroupBackgroundColor): parts.add "--tb-row-group-color: " & o.tableFontColorLight
+  if onDark(o.summaryRowBackgroundColor): parts.add "--tb-summary-row-color: " & o.tableFontColorLight
+  if onDark(o.grandSummaryRowBackgroundColor): parts.add "--tb-grand-summary-row-color: " & o.tableFontColorLight
   # where the table sits, unless its margins are given
   if o.tableAlign == "left" and o.tableMarginLeft == "auto": parts.add "--tb-table-margin-left: 0"
   if o.tableAlign == "right" and o.tableMarginRight == "auto": parts.add "--tb-table-margin-right: 0"
@@ -328,7 +335,8 @@ proc columnLabelsHtml(t: Tabella, b: Built): string =
       if k >= 0:
         let s = t.spanners[k]
         let key = spannerKey(s.label.s)
-        result.add &"""<th class="tb_center tb_spanner_col" colspan="{span}" scope="colgroup"><span class="tb_spanner"{b.styleAttr(key)}>{s.label.renderLabel(rcHtml)}{b.marksHtml(key, m)}</span></th>"""
+        # the style goes on the cell, so a fill colours all of it, not only the label
+        result.add &"""<th class="tb_center tb_spanner_col" colspan="{span}" scope="colgroup"{b.styleAttr(key)}><span class="tb_spanner">{s.label.renderLabel(rcHtml)}{b.marksHtml(key, m)}</span></th>"""
       else:
         result.add &"""<th class="tb_spanner_col" colspan="{span}"></th>"""
       j += span
@@ -378,12 +386,13 @@ proc tableHtml(t: Tabella, withStyle: bool): string =
   let vars = styleVars(t.options)
   let style = if vars.len > 0: &" style=\"{vars}\"" else: ""
   let cls = if t.options.isThemed: "tabella tb_css_theme" else: "tabella"
+  let sticky = if t.options.stubSticky: " tb_sticky_stub" else: ""
   var css = ""
   if withStyle: css.add tabellaStyle & "\n"
   let own = ownCss(id, t.options)
   if own.len > 0: css.add "<style>\n" & own & "</style>\n"
   &"""<div id="{id}" class="{cls}"{style}>
-{css}<table class="tb_table"{aria}>
+{css}<table class="tb_table{sticky}"{aria}>
 {caption}<thead>
 {head}{labels}</thead>
 {body}{foot}</table>

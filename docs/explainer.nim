@@ -135,7 +135,7 @@ nbCode:
     Verb(family: "Columns", verbs: "cols_label, cols_align, cols_width, cols_hide, cols_move, cols_merge, cols_nanoplot, … (17)", does: "change columns", tabelline: "label, label rotate, units, align, align decimal, width, hide, unhide, move, reorder, merge (4), add, summary columns, nanoplot"),
     Verb(family: "Rows", verbs: "summary_rows, grand_summary_rows, rows_add, row_group_order", does: "add or order rows", tabelline: "rowGroupOrder, rowOrder, summaryRows, grandSummaryRows, rowsAdd, rowsHide"),
     Verb(family: "Style", verbs: "tab_style + cell_fill, cell_text, cell_borders, from_column; tab_style_body; data_color; text_transform", does: "style cells by location or by value", tabelline: "tabStyle (with fromColumn or a proc of the row), tabStyleBody, dataColor, textTransform"),
-    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (164), 14 opt*"),
+    Verb(family: "Options", verbs: "tab_options (about 200 settings), opt_stylize, opt_row_striping, opt_all_caps, opt_interactive, …", does: "change the whole table", tabelline: "tabOptions (165), 14 opt*"),
     Verb(family: "Output", verbs: "as_raw_html, gtsave (html, png, pdf, rtf, docx, tex), as_latex, as_rtf, as_word, extract_body, extract_cells, extract_summary", does: "render, or get the built table back", tabelline: "toHtml, toText, toMarkdown, save, extractBody, extractCells, extractSummary"),
   ]
   let menuTable = tabella(menu, rownameCol = "family"):
@@ -172,7 +172,7 @@ block:
 
 doAssert nFormats == 31, "the menu says 31 formats; there are " & $nFormats
 doAssert nOpts == 14, "the menu says 14 opt* presets; there are " & $nOpts
-doAssert nOptions == 164, "the menu says 164 options; there are " & $nOptions
+doAssert nOptions == 165, "the menu says 165 options; there are " & $nOptions
 
 
 nbText: """
@@ -372,9 +372,10 @@ nbText: """
 - `Text` is plain text, Markdown (`md("**bold**")`) or HTML (`html("<b>")`); a converter turns a
   `string` into plain `Text`, so most calls just take strings.
 - `ColSel` selects columns: a name, an array of names, or a rule (`everything()`, `numeric()`,
-  `startsWith("pop")`, ...). It is resolved when the verb is called, so a typo fails at once,
-  with the list of the columns there are.
-- `RowSel` selects rows: indices (`[0, 2]`, `0..3`) or a predicate,
+  `startsWith("pop")`, `ofKind(vkBool)`, `positions(0, -1)`, `named(it.len == 4)`, ...), and
+  rules join with `+`, `-` and `&`. It is resolved when the verb is called, so a typo fails at
+  once, with the list of the columns there are.
+- `RowSel` selects rows: indices (`[0, 2]`, `0..3`, `-1` or `^1` for the last) or a predicate,
   `where(it["type"] == "Gas giant")`. `it` is a Nim idiom: in `filterIt`, `mapIt` and the
   other `...It` templates of `std/sequtils`, the template names the current element `it` for
   the code you write. `where` does the same: it turns the condition into a proc of one row,
@@ -563,8 +564,8 @@ nbTable t
 
 nbText: """
 Step 4: colour by value, style a row, and add the notes. A palette is a list of colours,
-each a hex value or one of the 148 CSS colour names (`"darkgreen"`, `"rebeccapurple"`), or the
-name of one of tabelline's palettes, as `"rdbu"` here. The footnote marks are numbered in
+each a hex value, one of the 148 CSS colour names (`"darkgreen"`, `"rebeccapurple"`) or of R's
+(`"sienna4"`, as gt takes them), or the name of one of tabelline's palettes, as `"rdbu"` here. The footnote marks are numbered in
 reading order, wherever they were added.
 """
 nbCode:

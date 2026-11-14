@@ -257,6 +257,12 @@ proc featureTitle*(feature: string): string =
 type FoundRow = object
   source, page: string
 
+proc langMark(s: JsonNode): string =
+  case s["lang"].getStr
+  of "R": " 🏴‍☠️"
+  of "Python": " 🐍"
+  else: " 🏆"
+
 proc featurePages*(feature: string): Tabella =
   ## Every page that uses `feature`, by source (in the order of sources.json), the help pages of
   ## the feature's own functions first, then from the smallest: what to port with it. Under each
@@ -267,10 +273,7 @@ proc featurePages*(feature: string): Tabella =
   for s in sources["sources"]:
     let id = s["id"].getStr
     if id notin bySource: continue
-    let emoji = (case s["lang"].getStr
-                 of "R": " 🏴‍☠️"
-                 of "Python": " 🐍"
-                 else: " 🏆")
+    let emoji = langMark(s)
     for sh in bySource[id]:
       let p = sh.page
       var ready = whenLabel(p["ready"].getStr).capitalizeAscii
@@ -280,7 +283,12 @@ proc featurePages*(feature: string): Tabella =
         (if calls == 1: "1 call" else: $calls & " calls") & "*"
       if p{"book"}.getStr != "": page.add " · **[In this book](" & p["book"].getStr & ")**"
       rows.add FoundRow(source: s["title"].getStr & emoji, page: page)
-  tabella(rows, rownameCol = "", groupnameCol = "source"):
+  result = tabella(rows, rownameCol = "", groupnameCol = "source"):
     colsLabel {"page": "Page"}
     fmtMarkdown ["page"]
     optCssTheme()
+  for s in sources["sources"]:   # each source's label a link to it, as gt's tab_row_group(md(...))
+    let id = s["id"].getStr
+    if id notin bySource: continue
+    let (title, mark) = (s["title"].getStr, langMark(s))
+    result = result.tabRowGroup(md(mdLink(title, s["url"].getStr) & mark), id = title & mark)

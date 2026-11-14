@@ -200,8 +200,8 @@ gt_ex |>
     nbTable purple
 
 tabelline """
-On a dark background (a `#rrggbb` colour) tabelline writes the heading in white; with a colour
-name, as here, it does not, a gap: Great Tables picks the text colour for any background.
+On a dark background tabelline writes the heading in white, as Great Tables does: the colour
+may be a name, as here, or a value.
 """
 
 nbText: """
@@ -430,10 +430,9 @@ gt(exibble, rowname_col = "row", groupname_col = "group") |>
     nbTable blue
 
 tabelline """
-Great Tables writes the stub in white on its dark blue fill; tabelline keeps the dark text,
-which is hard to read. In tabelline only the heading and the column labels switch to white, on
-a `#rrggbb` background, and `dataColor` picks the text colour for each fill
-(`autoColorText`). Picking the text colour for every background option is a gap.
+The stub is written in white on its dark blue fill, as in Great Tables: tabelline picks the
+text colour for the background of the heading, the column labels, the stub, the row groups
+and the summary rows, and `dataColor` for each fill (`autoColorText`).
 """
 
 bookSave()

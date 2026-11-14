@@ -416,21 +416,22 @@ exibble_f
     # Common formatting parameters, in a tuple
     const formats = (decimals: 3, locale: "fr_BE", currency: "EUR")
 
-    # Without a `fmt`, the summary cells take the
-    # format of their column, locale included
     let exibbleF = tabella(exibbleA):
       fmtScientific "num", decimals = formats.decimals, locale = formats.locale
       fmtCurrency "currency", currency = formats.currency, locale = formats.locale
-      summaryRows fnsLabels, columns = "num"
+      summaryRows fnsLabels, columns = "num",
+        fmt = proc (x: float): string =
+          formatScientific(x, decimals = formats.decimals, locale = formats.locale)
       summaryRows fnsLabels & @{"min": agg.min, "max": agg.max},
-        groups = ["grp_a"], columns = "currency"
+        groups = ["grp_a"], columns = "currency",
+        fmt = proc (x: float): string =
+          formatCurrency(x, currency = formats.currency, locale = formats.locale)
     nbTable exibbleF
 
 tabelline """
-Here the Nim leaves `fmt` out: a summary cell takes the format of its column, with its locale.
-The format functions (`formatScientific`, `formatCurrency`) take marks, not a locale, so a
-`fmt` in Belgian French would spell out `decMark = ","` (a gap in the book's
-[list](../gaps.html)).
+The format functions take the arguments of their verbs, `locale` too, so the `fmt` of each
+summary is written as in R. Without a `fmt`, a summary cell takes the format of its column,
+with its locale, which here gives the same table.
 """
 
 nbText: """

@@ -325,16 +325,16 @@ c_text %>%
       purple = "#786895"
       roboto = "Roboto, " & systemFonts("system-ui")
 
-    # tabelline's arguments of style.text, and the CSS of what it has no argument for
+    # tabelline's arguments of style.text
     let cText = tableData:
-      a: ["color =", "font =", "size =", "align =", "style.css(\"vertical-align: ...\")",
-          "style =", "weight =", "decorate =", "transform =", "style.css(\"text-indent: ...\")"]
-      b: ["\"wheat\"", "\"Merriweather\"", "\"8px\"", "\"center\"", "middle", "\"normal\"",
-          "\"bold\"", "\"line-through\"", "\"uppercase\"", "15px"]
-      c: ["\"#9fd28d\"", "\"Garamond\"", "\"14px\"", "\"left\"", "top", "\"italic\"",
-          "\"lighter\"", "\"underline\"", "\"lowercase\"", "25px"]
-      d: ["peach", "\"sans-serif\"", "\"xx-small\"", "\"right\"", "bottom", "\"oblique\"",
-          "\"bolder\"", "\"overline\"", "\"capitalize\"", "10%"]
+      a: ["color =", "font =", "size =", "align =", "vAlign =",
+          "style =", "weight =", "decorate =", "transform =", "indent ="]
+      b: ["\"wheat\"", "\"Merriweather\"", "\"8px\"", "\"center\"", "\"middle\"", "\"normal\"",
+          "\"bold\"", "\"line-through\"", "\"uppercase\"", "\"15px\""]
+      c: ["\"#9fd28d\"", "\"Garamond\"", "\"14px\"", "\"left\"", "\"top\"", "\"italic\"",
+          "\"lighter\"", "\"underline\"", "\"lowercase\"", "\"25px\""]
+      d: ["peach", "\"sans-serif\"", "\"xx-small\"", "\"right\"", "\"bottom\"", "\"oblique\"",
+          "\"bolder\"", "\"overline\"", "\"capitalize\"", "\"10%\""]
       e: ["", "systemFonts(\"system-ui\")", "\"x-large\"", "\"justify\"", "", "", "\"800\"",
           "\"underline overline\"", "", ""]
 
@@ -354,9 +354,9 @@ c_text %>%
       (3, "c", style.text(align = "left")),
       (3, "d", style.text(align = "right")),
       (3, "e", style.text(align = "justify")),
-      (4, "b", style.css("vertical-align: middle")),
-      (4, "c", style.css("vertical-align: top")),
-      (4, "d", style.css("vertical-align: bottom")),
+      (4, "b", style.text(vAlign = "middle")),
+      (4, "c", style.text(vAlign = "top")),
+      (4, "d", style.text(vAlign = "bottom")),
       (5, "b", style.text(style = "normal")),
       (5, "c", style.text(style = "italic")),
       (5, "d", style.text(style = "oblique")),
@@ -371,9 +371,9 @@ c_text %>%
       (8, "b", style.text(transform = "uppercase")),
       (8, "c", style.text(transform = "lowercase")),
       (8, "d", style.text(transform = "capitalize")),
-      (9, "b", style.css("text-indent: 15px")),
-      (9, "c", style.css("text-indent: 25px")),
-      (9, "d", style.css("text-indent: 10%"))]
+      (9, "b", style.text(indent = "15px")),
+      (9, "c", style.text(indent = "25px")),
+      (9, "d", style.text(indent = "10%"))]
 
     let cTextTable = tabella(cText, rownameCol = "a"):
       tabOptions(columnLabelsHidden = true, tableBodyHlinesColor = peach,
@@ -400,9 +400,8 @@ c_text %>%
 tabelline """
 The 👑 table is the same reference for tabelline: its cells name the arguments of tabelline's
 `style.text`, and each cell is styled as it says, by a loop over a list of (row, column,
-style). `style.text` has no `vAlign` and no `indent`: `style.css("vertical-align: top")` and
-`style.css("text-indent: 15px")` do it, and `font` takes a CSS font stack, with
-`systemFonts(...)` for gt's `default_fonts()`. Fonts are not loaded from Google Fonts, so
+style). `style.text` has gt's `v_align` as `vAlign` and its `indent`, and `font` takes a CSS
+font stack, with `systemFonts(...)` for gt's `default_fonts()`. Fonts are not loaded from Google Fonts, so
 Merriweather and Roboto show only where the reader has them. Great Tables has `v_align` but no
 `indent`, and no footnotes yet.
 """
@@ -705,11 +704,10 @@ cfill %>%
   as_raw_html()
 """:
   nbCode:
-    # tabelline's style.fill has a colour only: a colour with an alpha is CSS
     let cFill = tableData:
-      a: ["color =", "with an alpha"]
-      b: ["\"wheat\"", "\"rgb(254 239 143 / 0.5)\""]
-      c: ["\"#9fd28d\"", "\"#feef8fcc\""]
+      a: ["color =", "alpha ="]
+      b: ["\"wheat\"", ".5"]
+      c: ["\"#9fd28d\"", ".8"]
 
     let cFillTable = tabella(cFill, rownameCol = "a"):
       tabOptions(columnLabelsHidden = true, tableBodyHlinesColor = peach, stubBorderColor = green,
@@ -719,8 +717,8 @@ cfill %>%
       tabStyle style.text(align = "right"), loc.stub()
       tabStyle style.fill("wheat"), loc.body(cols = "b", rows = 0)
       tabStyle style.fill("#9fd28d"), loc.body(cols = "c", rows = 0)
-      tabStyle style.fill("rgb(254 239 143 / 0.5)"), loc.body(cols = "b", rows = 1)
-      tabStyle style.fill(yellow & "cc"), loc.body(cols = "c", rows = 1)
+      tabStyle style.fill(yellow, alpha = 0.5), loc.body(cols = "b", rows = 1)
+      tabStyle style.fill(yellow, alpha = 0.8), loc.body(cols = "c", rows = 1)
       tabStyle style.text(align = "center"), loc.body()
     nbTable cFillTable
 nbText: """

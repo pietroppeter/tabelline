@@ -70,8 +70,9 @@ islands_mini |>
       .sort("size", descending = true)
       .head(10)
 
-    let islandsTbl = tabella(islandsMini, rownameCol = "name"):
+    let islandsTbl = tabella(islandsMini):
       tabHeader "Large Landmasses of the World", "The top ten largest are presented"
+      tabStub "name"
       tabSourceNote "Source: The World Almanac and Book of Facts, 1975, page 406."
       tabSourceNote md"Reference: McNeil, D. R. (1977) *Interactive Data Analysis*. Wiley."
       tabStubhead "landmass"
@@ -81,8 +82,8 @@ islands_mini |>
 tabelline """
 The data steps are written with [nanuq](https://github.com/pietroppeter/nanuq), Polars for Nim,
 as the examples write them with Polars; `import tabelline/nanuq` lets `tabella` take its data
-frames. tabelline has no `tabStub`: the stub is named when the table is made, with `rownameCol`
-(and `groupnameCol`), as in gt.
+frames. `tabStub` chooses the stub, as Great Tables' `tab_stub`; gt names it when the table is
+made, which tabelline does too, with `tabella(data, rownameCol = "name")`.
 """
 
 tabs """
@@ -618,23 +619,16 @@ power_cie_prepared_tbl |>
     let shares = ["Hydro", "Nuclear", "Wind", "Solar", "Geothermal", "Biomass", "Gas", "Coal",
                   "Oil", "Unknown", "Hydro Discharge", "Battery Discharge"]
 
-    # R's numbered colour names, which CSS does not have
-    const
-      sienna4 = "#8B4726"
-      tomato4 = "#8B3626"
-      chartreuse3 = "#66CD00"
-      chartreuse4 = "#458B00"
-
     let powerTbl = tabella(powerCie):
       fmtPercent shares, decimals = 1
       fmtNumber "CO2 Intensity", decimals = 0
       dataColor "CO2 Intensity", domain = (0.0, 900.0), palette = @["#00A600", "#E6E600",
-        "#E8C32E", "#D69C4E", "#Dc863B", "sienna", sienna4, tomato4, "brown"]
+        "#E8C32E", "#D69C4E", "#Dc863B", "sienna", "sienna4", "tomato4", "brown"]
       dataColor ["Hydro", "Nuclear", "Wind", "Solar", "Geothermal"], domain = (0.0, 1.0),
-        palette = @["snow", chartreuse4, chartreuse3, "#00A600"]
+        palette = @["snow", "chartreuse4", "chartreuse3", "#00A600"]
       dataColor "Biomass", domain = (0.0, 0.3), palette = @["snow", "#EEC900", "#E8C32E", "#D69C4E"]
       dataColor ["Gas", "Coal", "Oil"], domain = (0.0, 1.0),
-        palette = @["snow", "#Dc863B", "#D69C4E", sienna4, tomato4]
+        palette = @["snow", "#Dc863B", "#D69C4E", "sienna4", "tomato4"]
       dataColor ["Zone", "Unknown", "Hydro Discharge", "Battery Discharge"],
         palette = @["snow", "snow", "snow", "snow"]
       colsWidth widths
@@ -655,8 +649,9 @@ power_cie_prepared_tbl |>
     nbTable powerTbl
 
 tabelline """
-CSS names 148 colours, R 657: tabelline knows the CSS ones, so R's numbered shades (`sienna4`,
-`chartreuse3`) are written as hex values here. The source note is Markdown with its line breaks
+CSS names 148 colours, R 657: tabelline knows them all, as gt and Great Tables do, so R's
+numbered shades (`sienna4`, `chartreuse3`) are written as they are; in a table they become
+hex values, which CSS reads. The source note is Markdown with its line breaks
 and left alignment left out: the notes of a tabelline table are already aligned to the left.
 """
 
@@ -773,8 +768,6 @@ coffee_sales |>
 """:
   nbCode:
     let coffeeSales = readNdjson(newStringStream(coffeeSalesNdjson))
-      # a list column as a text of numbers, which a tabelline table takes
-      .withColumns(col("monthly_sales").list.eval(element().`cast`(String)).list.join(" "))
 
     let selRev = startsWith("revenue")
     let selProf = startsWith("profit")
@@ -792,7 +785,7 @@ coffee_sales |>
         icon: ""
         product: "Product"
       # formatting ----
-      fmtNumber endsWith("dollars"), compact = true, pattern = "${x}", decimals = 1
+      fmtNumber endsWith("dollars"), compact = true, pattern = "${x}", nSigfig = 3
       fmtPercent endsWith("pct"), decimals = 0
       # style ----
       tabStyle style.fill("aliceblue"), loc.body(cols = selRev)
@@ -804,10 +797,9 @@ coffee_sales |>
     nbTable coffeeTable
 
 tabelline """
-tabelline's `fmtNumber` has no significant figures (`n_sigfig`): `decimals = 1` with
-`compact = true` gives $904.5K where Great Tables gives $904K and $2.05M where tabelline gives
-$2.0M. The monthly sales are a list in each row; `tabella` cannot take a list column from a nanuq data
-frame yet, so they become a text of numbers first, which a nanoplot reads as well. gt's nanoplots take their values from
+`nSigfig = 3` keeps three significant figures, as Great Tables' `n_sigfig`: $904K and $2.05M.
+The monthly sales are a list in each row, and a list column of a nanuq data frame becomes a
+list in tabelline, which the nanoplot draws. gt's nanoplots take their values from
 columns, so the R tab spreads the twelve months over twelve columns first.
 """
 

@@ -89,7 +89,7 @@ peeps_mini |>
 
     let contacts = tabella(peepsMini):
       tabHeader "Our Contacts (Born in 1988)"
-      fmtFlag "country"
+      fmtFlag "country", round = true
       optVerticalPadding 0.5
       colsLabel:
         country: ""
@@ -106,10 +106,11 @@ as the post writes them with Polars; `import tabelline/nanuq` makes `tabella(df)
 frames. The CSV is read with every column as text (`inferSchemaLength = 0`), as the `peeps` of
 Great Tables has them, so the postcodes keep their leading zeros.
 
-`fmtFlag` takes two-letter and three-letter codes, as `fmt_flag()` does, but shows each flag as
-its emoji, not as Great Tables' round picture: nothing is added to the page, and the flag looks
-as the reader's system draws it (Windows draws the two letters instead). Hovering a flag shows its
-code, where Great Tables shows the name of the country.
+`fmtFlag` takes two-letter and three-letter codes, as `fmt_flag()` does. With `round = true` it
+draws Great Tables' round flags (from the same circle-flags set, shipped with tabelline);
+without it, each flag is its emoji, which adds nothing to the page and looks as the reader's
+system draws it (Windows draws the two letters instead). Hovering a flag shows the name of the
+country, as in Great Tables.
 """
 
 nbText: """
@@ -162,7 +163,7 @@ films_mini |>
       .select("title", "run_time", "countries_of_origin")
 
     let haneke = tabella(filmsMini):
-      fmtFlag "countries_of_origin"
+      fmtFlag "countries_of_origin", round = true
       tabHeader "In Competition Films by Michael Haneke"
       optStylize()
       tabOptions(columnLabelsHidden = true)
@@ -354,20 +355,14 @@ df |>
       col("number").alias("number_acc"), col("integer").alias("integer_acc"),
       col("currency").alias("currency_acc"), col("percent").alias("percent_acc"))
 
-    proc accounting(f: proc (x: float): string): proc (v: Value): string =
-      ## A format in accounting notation: a negative value in parentheses, with no minus sign.
-      result = proc (v: Value): string =
-        let x = v.toFloat
-        if x < 0: "(" & f(-x) & ")" else: f(x)
-
     let acc = tabella(accounts, rownameCol = "number_type"):
       fmtNumber "number"
       fmtPercent "percent"
       fmtInteger "integer"
       fmtCurrency "currency"
-      fmt "number_acc", accounting(proc (x: float): string = formatNumber(x))
-      fmt "percent_acc", accounting(proc (x: float): string = formatPercent(x))
-      fmt "integer_acc", accounting(proc (x: float): string = formatInteger(x))
+      fmtNumber "number_acc", accounting = true
+      fmtPercent "percent_acc", accounting = true
+      fmtInteger "integer_acc", accounting = true
       fmtCurrency "currency_acc", accounting = true
       tabSpanner "default formatting", positions(1, 2, 3, 4)
       tabSpanner "with accounting notation", positions(5, 6, 7, 8)
@@ -379,9 +374,9 @@ df |>
     nbTable acc
 
 tabelline """
-Only `fmtCurrency` has `accounting` in tabelline. For the other three, the table writes a small
-format that puts a negative value in parentheses and gives it `fmt`, with tabelline's
-`formatNumber`, `formatPercent` and `formatInteger`. `positions` counts the columns of the data
+`accounting = true` puts a negative value in parentheses, in the four formats as in Great Tables.
+A formatted number never breaks inside its cell, so on a phone `−$24,334.23` keeps its minus
+on the same line. `positions` counts the columns of the data
 from 0, the stub included, as `columns=[1, 2, 3, 4]` does.
 """
 

@@ -52,7 +52,9 @@ proc blockArgs(verb: string, blk: NimNode): seq[NimNode] =
   for line in blk:
     if line.kind in {nnkCall, nnkCommand} and line.len == 2 and line[1].kind == nnkStmtList and
         verb in pairVerbs:
-      let value = if line[1].len == 1: line[1][0] else: line[1]
+      var value = if line[1].len == 1: line[1][0] else: line[1]
+      # a colsLabel block may mix plain labels and md/html ones: make every label a Text
+      if verb == "colsLabel": value = newCall(ident("toText"), value)
       pairs.add newColonExpr(pairLabel(line[0]), value)
     elif line.kind == nnkAsgn:
       result.add newNimNode(nnkExprEqExpr).add(line[0], line[1])

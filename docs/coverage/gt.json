@@ -1,11 +1,11 @@
 {
  "title": "gt coverage",
- "updated": "2026-11-11",
+ "updated": "2026-11-14",
  "gt": "gt 1.4 (R) and Great Tables 1.1 (Python), by their reference indexes and the methods of GT",
  "release": {
   "version": "0.2.0",
   "tag": "v0.2.0",
-  "date": "2026-11-11"
+  "date": "2026-11-14"
  },
  "plans": [
   {
@@ -21,7 +21,7 @@
   {
    "version": "0.3",
    "title": "Out of the browser",
-   "plan": "LaTeX, RTF and Word, images and PDF, groups of tables; tables from data frames."
+   "plan": "LaTeX, RTF and Word, images and PDF, groups of tables; tables from more data frames."
   }
  ],
  "areas": [
@@ -40,7 +40,7 @@
      "feature": "Preview of a big table",
      "gt": "gt_preview()",
      "status": "done",
-     "note": "tabellaPreview(data, topN, bottomN, inclRownums): first and last rows, a shaded row naming the rows left out; tabella(preview): body adds verbs.",
+     "note": "tabellaPreview(data, topN, bottomN, inclRownums): first and last rows, and with moreRows rows from the middle too, a shaded row naming each run left out; tabella(preview): body adds verbs.",
      "size": "S",
      "where": "R"
     },
@@ -91,7 +91,7 @@
      "feature": "Stub and stub head",
      "gt": "rowname_col, tab_stubhead()",
      "status": "done",
-     "note": ""
+     "note": "rownameCol, or tabStub(\"name\") on a table already made (Great Tables' tab_stub()); tabStubhead; stubSticky keeps the stub in view as a wide table scrolls."
     },
     {
      "feature": "Stub indent, multi-column stub",
@@ -163,7 +163,7 @@
      "feature": "Numbers and integers",
      "gt": "fmt_number(), fmt_integer()",
      "status": "done",
-     "note": "Decimals, separators, scale, compact suffixes (1.2K), pattern, sign, locale marks."
+     "note": "Decimals or significant figures (nSigfig), separators, scale, compact suffixes (1.2K), pattern, sign, accounting, locale marks."
     },
     {
      "feature": "Percent",
@@ -242,7 +242,7 @@
      "feature": "Times and datetimes",
      "gt": "fmt_time(), fmt_datetime()",
      "status": "done",
-     "note": "fmtTime, fmtDatetime, with named time styles; no time zones.",
+     "note": "fmtTime, fmtDatetime, with named time styles or a strftime format (formatStr); no time zones.",
      "plan": "0.1",
      "size": "S"
     },
@@ -305,7 +305,7 @@
      "feature": "Flags",
      "gt": "fmt_flag()",
      "status": "done",
-     "note": "fmtFlag: two-letter codes as emoji (regional indicators), nothing to load.",
+     "note": "fmtFlag: two- and three-letter codes as emoji (nothing to load), or Great Tables' round flags (round = true, circle-flags, shipped); the country's name on hover.",
      "plan": "0.1",
      "size": "S"
     },
@@ -521,7 +521,7 @@
      "feature": "Styles",
      "gt": "tab_style(), cell_fill(), cell_text(), cell_borders()",
      "status": "done",
-     "note": "style.fill, style.text, style.borders."
+     "note": "style.fill (with alpha), style.text (with vAlign and indent), style.borders; R's colour names too (sienna4)."
     },
     {
      "feature": "Any CSS",
@@ -544,7 +544,7 @@
      "feature": "Colour by value",
      "gt": "data_color()",
      "status": "done",
-     "note": "Palettes (viridis, rdbu, ...), domain, reverse, text colour that stays readable, fill or text."
+     "note": "Palettes (viridis, rdbu, great-tables, ...), domain, reverse, text colour that stays readable, fill or text; the stub is left alone."
     },
     {
      "feature": "Body styles from a column",
@@ -564,14 +564,14 @@
      "feature": "Table options",
      "gt": "tab_options()",
      "status": "done",
-     "note": "164 options: 160 of gt's 196 (container, fonts, widths, every rule of the heading, labels, groups, body, stub and footer, padding, striping, summary rows, hidden labels, groups as a column, notes on one line, the no-data message), and 4 of tabelline's own. Not yet: the options of interactive tables, pages, LaTeX and Quarto, which come with those outputs.",
+     "note": "165 options: 160 of gt's 196 (container, fonts, widths, every rule of the heading, labels, groups, body, stub and footer, padding, striping, summary rows, hidden labels, groups as a column, notes on one line, the no-data message), and 5 of tabelline's own (stubSticky among them). Not yet: the options of interactive tables, pages, LaTeX and Quarto, which come with those outputs.",
      "size": "M"
     },
     {
      "feature": "Presets",
      "gt": "opt_stylize(), opt_row_striping(), opt_align_table_header(), opt_all_caps(), opt_table_font()",
      "status": "done",
-     "note": "Plus optCssTheme and optCss, tabelline's own: a table that follows the page's CSS."
+     "note": "optStylize with gt's six styles in its six colours; optAllCaps(locations); plus optCssTheme and optCss, tabelline's own: a table that follows the page's CSS."
     },
     {
      "feature": "Padding, outline, lines",
@@ -685,7 +685,7 @@
      "feature": "Text helpers",
      "gt": "md(), html()",
      "status": "done",
-     "note": "md() and html().",
+     "note": "md() (emphasis, code, links, entities, struck text, paragraphs and lists) and html().",
      "plan": "0.1",
      "size": "S"
     },
@@ -693,7 +693,7 @@
      "feature": "Column selectors",
      "gt": "starts_with(), ends_with(), contains(), matches(), everything(), where()",
      "status": "done",
-     "note": "Plus numeric() and textual()."
+     "note": "Plus numeric(), textual(), ofKind(vkBool) (where(is.logical), cs.by_dtype), positions(...), named(cond) and matches(proc) for any test of the name (gt's matches() takes a regular expression), and a + b, a - b, a & b."
     },
     {
      "feature": "Sizes",

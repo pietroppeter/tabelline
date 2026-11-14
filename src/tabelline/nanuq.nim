@@ -23,10 +23,16 @@ proc column[T](df: nq.DataFrame, name: string, _: typedesc[T]): seq[Value] =
   for v in nq.toList(df, name, Option[T]):
     result.add(if v.isSome: toValue(v.get) else: null())
 
+proc listColumn[T](df: nq.DataFrame, name: string, _: typedesc[T]): seq[Value] =
+  ## A list column as lists (`toValue` of a seq), with `null()` for a null row.
+  for v in nq.toList(df, name, Option[seq[T]]):
+    result.add(if v.isSome: toValue(v.get) else: null())
+
 proc toTableData*(df: nq.DataFrame): TableData =
   ## Copies every column of `df`, in order: integers become ints, floats floats, booleans bools,
-  ## strings strings, and any other type (dates, durations, categories, lists) the text Polars
-  ## writes for it. A null becomes a missing value.
+  ## strings strings, a list of numbers, booleans or strings a list (a nanoplot's values), and
+  ## any other type (dates, durations, categories, structs) the text Polars writes for it. A null
+  ## becomes a missing value.
   result = TableData()
   for name in nq.columns(df):
     let dt = nq.dtype(df, name)
@@ -34,6 +40,12 @@ proc toTableData*(df: nq.DataFrame): TableData =
       if nq.isInteger(dt): column(df, name, int)
       elif nq.isFloat(dt): column(df, name, float)
       elif dt.kind == nq.DataTypeKind.Boolean: column(df, name, bool)
+      elif dt.kind == nq.DataTypeKind.List and nq.isInteger(nq.inner(dt)): listColumn(df, name, int)
+      elif dt.kind == nq.DataTypeKind.List and nq.isFloat(nq.inner(dt)): listColumn(df, name, float)
+      elif dt.kind == nq.DataTypeKind.List and nq.inner(dt).kind == nq.DataTypeKind.Boolean:
+        listColumn(df, name, bool)
+      elif dt.kind == nq.DataTypeKind.List and nq.inner(dt).kind == nq.DataTypeKind.String:
+        listColumn(df, name, string)
       else: column(df, name, string)
     result.addColumn(name, values)
 

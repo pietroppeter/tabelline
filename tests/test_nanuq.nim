@@ -34,3 +34,13 @@ suite "nanuq":
     let h = t.toHtml
     check "Two planets" in h
     check "tb_stub\">Venus" in h
+
+  test "a list column becomes lists":
+    let df = newDataFrame:
+      product: ["tea", "coffee"]
+      sales: [@[1.0, 2.5, 3.0], @[4.0, 5.0]]
+      counts: [@[1, 2], @[3]]
+    let d = df.toTableData
+    check d["sales", 0].kind == vkList
+    check d["sales", 0].items.len == 3
+    check d["counts", 1].kind == vkList

@@ -517,7 +517,7 @@ lemur_table %>%
       tabHeader "LEMURS AT DUKE LEMUR CENTER", html(st1)
       tabStyle style.text(font = "Bangers, " & oswald, size = "xx-large", align = "left"), loc.title()
       tabStyle style.text(font = oswald, size = "medium", color = "#8a8d8f", align = "left"), loc.subtitle()
-      tabStyle style.text(font = oswald) & style.css("vertical-align: middle"),
+      tabStyle style.text(font = oswald, vAlign = "middle"),
         loc.columnLabels(cols = ["bars", "lines"])
       tabStyle style.text(font = oswald), loc.body(cols = "species")
       tabSourceNote html(cap1 & "<br>" & cap2 & "<br>" & cap3)

@@ -12,7 +12,6 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Stub that does not wrap** (S). An option (or a `colsWidth` setting) to keep the stub on one
   line: "600 BCE" broke in two in diagrammari's era tables, fixed there with page CSS
   (`td.tb_stub{white-space:nowrap}`).
-- **Multi-column stubs** (S). `rownameCol` with several columns (`tabStubIndent` is in 0.2).
 
 ## Formats
 
@@ -104,24 +103,9 @@ Rough size: S (hours), M (a day or two), L (more).
 - **A gallery** (M). Rebuild well-known gt tables and Table Contest entries with tabelline.
 - **API reference** (S). `nim doc` for `src/tabelline.nim`, published with the pages.
 - **A Table Contest entry** (M). For the next Posit Table Contest.
+
 ## From the tabelline book (0.1 port thread, book/gaps.md in PR #11)
 
-- **Full Markdown in `md()`**: today `md()` reads inline marks only (bold, italic, code, links,
-  sub- and superscripts), with no lists, paragraphs or HTML entities; the book expected full
-  Markdown. Great Tables uses a Markdown library; tabelline would need a small block parser in the
-  core, or an optional module.
-- **`pattern`, `locale` and `expStyle` in the value functions**: the `formatX` functions lack
-  arguments their `fmtX` verbs or gt's `vec_fmt_*` have.
-
-- **Selectors** (S-M). Columns by position (also negative) and by a proc; combining rules
-  (`|`, `&`, exclude); `matches()`; negative row indices; `loc.body(mask = ...)`; `loc.stub` by row
-  label; `loc.rowGroups` by row index or condition.
-- **Stub and spanners** (S). A `tabStub` verb; `tabSpanner` gathering its columns in the given
-  order; the spanner's fill covering the whole cell.
-- **Colours** (S). `dataColor` with a high-to-low domain (`(90, 0)` gives 0.5 for all); gt's
-  `dataColor` defaults (palette, NA grey); white text on a dark stub background set by options.
-- **Presets** (S). `optStylize` with gt's six styles; `optAllCaps` on the stub and row groups.
-- **CSV** (S). `readCsv` reads "0400" as 400: keep leading zeros as text.
 - **Summary cells in a column with no format** (S, from the 0.2 book port). tabelline formats
   them as numbers (5,552.33); Great Tables shows the raw value (5552.3331). Keep ours, but say so
   in the summary rows spec and its list of differences.

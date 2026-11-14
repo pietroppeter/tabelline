@@ -12,6 +12,7 @@
 ## the spec, never the data.
 
 import std/[strutils, math, options, sequtils, tables]
+import colors
 export options
 
 {.experimental: "dotOperators".}
@@ -281,14 +282,22 @@ func parseCsvLine(line: string, sep: char): seq[string] =
     inc i
   result.add cur
 
+func leadingZero(s: string): bool =
+  ## `"0400"`, `"-012"`: a number written with a zero in front, as a code or a postcode is.
+  var t = s.strip
+  if t.len > 0 and t[0] in {'+', '-'}: t = t[1 .. ^1]
+  t.len > 1 and t[0] == '0' and t[1] in {'0'..'9'} and t.allCharsInSet({'0'..'9'})
+
 proc parseCsv*(text: string, sep = ',', comment = ""): TableData =
   ## A CSV text with a header line. Each value is read as an int, a float, a bool, a missing value
-  ## (empty, NA) or else a string; a column mixing ints and floats is a float column. With a
+  ## (empty, NA) or else a string; a column mixing ints and floats is a float column. A column
+  ## with a number written with a zero in front (`"0400"`, a code) stays text, as written. With a
   ## `comment` such as `"#"`, a line that starts with it (after any spaces) is skipped, so a file
   ## can say where its data comes from.
   result = TableData()
   var header: seq[string]
   var cols: seq[seq[Value]]
+  var raw: seq[seq[string]]
   for line in text.splitLines:
     if line.strip.len == 0: continue
     if comment.len > 0 and line.strip(trailing = false).startsWith(comment): continue
@@ -296,11 +305,17 @@ proc parseCsv*(text: string, sep = ',', comment = ""): TableData =
     if header.len == 0:
       header = fields
       cols.setLen header.len
+      raw.setLen header.len
     else:
       for k in 0 ..< header.len:
-        cols[k].add inferValue(if k < fields.len: fields[k] else: "")
+        let f = if k < fields.len: fields[k] else: ""
+        cols[k].add inferValue(f)
+        raw[k].add f
   for k, h in header:
     var vs = cols[k]
+    if raw[k].anyIt(it.leadingZero):
+      for i, f in raw[k]:
+        if vs[i].kind != vkNull: vs[i] = toValue(f)
     if Column(values: vs).kindOf == vkFloat:
       for v in vs.mitems:
         if v.kind == vkInt: v = toValue(float(v.i))
@@ -337,6 +352,8 @@ func md*(s: string): Text = Text(kind: tkMarkdown, s: s)
 func html*(s: string): Text = Text(kind: tkHtml, s: s)
   ## Raw HTML text, used as is.
 converter toText*(s: string): Text = Text(kind: tkPlain, s: s)
+func toText*(t: Text): Text = t
+  ## A Text is already one (so a `colsLabel` block can mix `"Mass"` and `md("...")`).
 func isEmpty*(t: Text): bool = t.s.len == 0
 
 # --------------------------------------------------------------------------------------- selectors
@@ -344,18 +361,21 @@ func isEmpty*(t: Text): bool = t.s.len == 0
 type
   ColSelKind* = enum
     csNames, csAll, csStartsWith, csEndsWith, csContains, csNumeric, csTextual, csPositions,
-    csUnion, csMinus
+    csUnion, csMinus, csBoth, csKinds, csMatches
   ColSel* = object
     ## Which columns a verb applies to. A string or an array of strings converts to one, and
     ## `everything()`, `startsWith(...)`, `endsWith(...)`, `containing(...)`, `numeric()`,
-    ## `textual()`, `positions(...)` select by rule; `a + b` is the columns of either (in the
-    ## order of the data), `a - b` those of `a` that are not in `b`. Resolved against the data
-    ## when the verb is called.
+    ## `textual()`, `positions(...)`, `ofKind(...)` (by the kind of the values), `matches(...)`
+    ## and `named(...)` (any rule on the name) select by rule; `a + b` is the columns of either
+    ## (in the order of the data), `a - b` those of `a` that are not in `b`, `a & b` those of
+    ## both. Resolved against the data when the verb is called.
     case kind*: ColSelKind
     of csNames: names*: seq[string]
     of csStartsWith, csEndsWith, csContains: parts*: seq[string]
     of csPositions: positions*: seq[int]
-    of csUnion, csMinus: sels*: seq[ColSel]
+    of csUnion, csMinus, csBoth: sels*: seq[ColSel]
+    of csKinds: kinds*: set[ValueKind]
+    of csMatches: test*: proc (name: string): bool
     else: discard
 
 converter toColSel*(name: string): ColSel = ColSel(kind: csNames, names: @[name])
@@ -379,6 +399,20 @@ func `+`*(a, b: ColSel): ColSel = ColSel(kind: csUnion, sels: @[a, b])
   ## The columns of `a` or `b`: `startsWith("pop") + "year"`.
 func `-`*(a, b: ColSel): ColSel = ColSel(kind: csMinus, sels: @[a, b])
   ## The columns of `a` that are not in `b`: `numeric() - "year"`.
+func `&`*(a, b: ColSel): ColSel = ColSel(kind: csBoth, sels: @[a, b])
+  ## The columns of both `a` and `b`: `startsWith("pop") & numeric()`.
+func ofKind*(kinds: varargs[ValueKind]): ColSel =
+  ## The columns whose values are of these kinds (a missing value counts as any kind), as gt's
+  ## `where(is.logical)` and Great Tables' `cs.by_dtype(pl.Boolean)`: `ofKind(vkBool)`.
+  var ks: set[ValueKind]
+  for k in kinds: ks.incl k
+  ColSel(kind: csKinds, kinds: ks)
+func matches*(test: proc (name: string): bool): ColSel = ColSel(kind: csMatches, test: test)
+  ## The columns whose name passes `test`, any proc of a string, as gt's `matches()` (which takes
+  ## a regular expression): `matches(proc (n: string): bool = n.len == 4)`.
+template named*(cond: untyped): ColSel =
+  ## The columns whose name, `it`, makes `cond` true: `named(it.len == 4 and it[0] == 'y')`.
+  matches(proc (it {.inject.}: string): bool = cond)
 
 func resolve*(sel: ColSel, d: TableData): seq[string] =
   case sel.kind
@@ -415,12 +449,23 @@ func resolve*(sel: ColSel, d: TableData): seq[string] =
   of csMinus:
     let b = sel.sels[1].resolve(d)
     sel.sels[0].resolve(d).filterIt(it notin b)
+  of csBoth:
+    let b = sel.sels[1].resolve(d)
+    sel.sels[0].resolve(d).filterIt(it in b)
+  of csKinds:
+    d.columns.filterIt((block:
+      let c = it
+      c.values.len > 0 and c.values.allIt(it.kind == vkNull or it.kind in sel.kinds) and
+        c.values.anyIt(it.kind != vkNull))).mapIt(it.name)
+  of csMatches:
+    {.cast(noSideEffect).}:
+      d.names.filterIt(sel.test(it))
 
 type
   RowSelKind* = enum
     rsAll, rsIndices, rsWhere
   RowSel* = object
-    ## Which rows a verb applies to: all of them (the default), indices (`[0, 2]`, `0..3`, 0-based)
+    ## Which rows a verb applies to: all of them (the default), indices (`[0, 2]`, `0..3`, 0-based; `-1` or `^1` is the last row)
     ## or a predicate (`where(it.mass > 1)`).
     case kind*: RowSelKind
     of rsIndices: indices*: seq[int]
@@ -429,6 +474,8 @@ type
 
 func allRows*(): RowSel = RowSel(kind: rsAll)
 converter toRowSel*(i: int): RowSel = RowSel(kind: rsIndices, indices: @[i])
+converter toRowSel*(i: BackwardsIndex): RowSel = RowSel(kind: rsIndices, indices: @[-int(i)])
+  ## `^1` is the last row, as `-1` is.
 converter toRowSel*[N: static int](ix: array[N, int]): RowSel = RowSel(kind: rsIndices, indices: @ix)
 converter toRowSel*(ix: seq[int]): RowSel = RowSel(kind: rsIndices, indices: ix)
 converter toRowSel*(s: HSlice[int, int]): RowSel = RowSel(kind: rsIndices, indices: toSeq(s))
@@ -444,9 +491,12 @@ proc resolve*(sel: RowSel, d: TableData): seq[int] =
   case sel.kind
   of rsAll: toSeq(0 ..< d.nrows)
   of rsIndices:
+    var res: seq[int]
     for i in sel.indices:
-      if i < 0 or i >= d.nrows: raise newException(IndexDefect, "row " & $i & " out of 0..<" & $d.nrows)
-    sel.indices
+      let k = if i < 0: d.nrows + i else: i   # -1 (or ^1) is the last row
+      if k < 0 or k >= d.nrows: raise newException(IndexDefect, "row " & $i & " out of 0..<" & $d.nrows)
+      res.add k
+    res
   of rsWhere: toSeq(0 ..< d.nrows).filterIt(sel.pred(Row(data: d, index: it)))
 
 # ------------------------------------------------------------------------------------------ styles
@@ -466,14 +516,27 @@ const
 
 func `&`*(a, b: CellStyle): CellStyle = CellStyle(css: a.css & b.css)
 
-func fill*(_: StyleNs, color: string): CellStyle =
-  CellStyle(css: @{"background-color": color})
+func fill*(_: StyleNs, color: string, alpha = 1.0): CellStyle =
+  ## A background colour (a hex value, a CSS or R colour name), with `alpha` from 0 (clear) to 1,
+  ## as gt's `cell_fill(color, alpha)`.
+  var c = cssColor(color)
+  if alpha < 1.0:
+    try:
+      let rgb = parseColor(c)
+      c = "rgba(" & $int(rgb.r) & ", " & $int(rgb.g) & ", " & $int(rgb.b) & ", " &
+          formatFloat(max(alpha, 0.0), ffDecimal, 3).strip(leading = false, chars = {'0'}).strip(leading = false, chars = {'.'}) & ")"
+    except ValueError:
+      c = "color-mix(in srgb, " & c & " " & $int(round(alpha * 100)) & "%, transparent)"
+  CellStyle(css: @{"background-color": c})
 
-func text*(_: StyleNs, color = "", font = "", size = "", align = "", weight = "", style = "",
-           decorate = "", transform = "", whitespace = ""): CellStyle =
-  for (k, v) in {"color": color, "font-family": font, "font-size": size, "text-align": align,
-                 "font-weight": weight, "font-style": style, "text-decoration": decorate,
-                 "text-transform": transform, "white-space": whitespace}:
+func text*(_: StyleNs, color = "", font = "", size = "", align = "", vAlign = "", weight = "",
+           style = "", decorate = "", transform = "", whitespace = "", indent = ""): CellStyle =
+  ## The text of the cells: `vAlign` is "top", "middle" or "bottom" (gt's `v_align`), `indent`
+  ## a CSS length, "1.5em" (gt's `indent`).
+  for (k, v) in {"color": cssColor(color), "font-family": font, "font-size": size, "text-align": align,
+                 "vertical-align": vAlign, "font-weight": weight, "font-style": style,
+                 "text-decoration": decorate, "text-transform": transform, "white-space": whitespace,
+                 "text-indent": indent}:
     if v.len > 0: result.css.add (k, v)
 
 type Side* = enum sTop = "top", sRight = "right", sBottom = "bottom", sLeft = "left"
@@ -481,7 +544,7 @@ type Side* = enum sTop = "top", sRight = "right", sBottom = "bottom", sLeft = "l
 func borders*(_: StyleNs, sides: set[Side] = {sTop, sRight, sBottom, sLeft}, color = "#000000",
               style = "solid", weight = "1px"): CellStyle =
   for s in sides:
-    result.css.add ("border-" & $s, weight & " " & style & " " & color)
+    result.css.add ("border-" & $s, weight & " " & style & " " & cssColor(color))
 
 func css*(_: StyleNs, declarations: string): CellStyle =
   ## Any CSS, as declarations: `style.css("letter-spacing: 0.1em; font-variant: small-caps")`.
@@ -552,7 +615,8 @@ type
     cols*: ColSel
     rows*: RowSel
     names*: seq[string]
-    labels*: seq[string]   ## summary rows, by label
+    labels*: seq[string]   ## summary rows, by label; stub rows, by their label
+    mask*: proc (v: Value, col: Column): bool   ## `loc.body(mask = ...)`: the cells that pass
 
   StyleRule* = object
     target*: Target
@@ -632,6 +696,7 @@ type
     rowGroupBorderColor* = "#D3D3D3"
     stubBackgroundColor* = ""
     stubFontWeight* = "initial"
+    stubSticky* = false          ## the stub stays in view when a wide table scrolls sideways
     headingPadding* = "4px"
     headingPaddingHorizontal* = "5px"
     columnLabelsPadding* = "5px"

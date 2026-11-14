@@ -22,9 +22,11 @@ The simplest approach is just a list of strings with the exact column names. How
 
 tabelline """
 A `ColSel` in tabelline is a column name, an array or seq of names, or a rule: `everything()`,
-`startsWith(...)`, `endsWith(...)`, `containing(...)`, `numeric()` and `textual()`. Positions,
-functions, and rules combined (`|`, `&`, `exclude`) are gaps. gt's `matches()` (a regular
-expression) is missing too.
+`startsWith(...)`, `endsWith(...)`, `containing(...)`, `numeric()`, `textual()`,
+`ofKind(vkBool)` (Polars' `cs.by_dtype`), `positions(...)` from 0, and `named(cond)`, any test
+of the name `it` (Great Tables' function; `matches(proc)` takes a proc). Rules join: `a + b`
+(Polars' `|`), `a - b` (`exclude`), `a & b` (the columns of both). gt's `matches()` takes a
+regular expression; tabelline has none, and `named` does the same with a test.
 """
 
 tabs """
@@ -65,7 +67,8 @@ gt_ex.cols_move_to_start(columns=["date", 1, -1])
 gt_ex |> cols_move_to_start(columns = c(date, 2, last_col()))
 """:
   nbCode:
-    nbTable gtEx.colsMoveToStart(["date", "char", "time"])  # no positions yet: 1 and -1 by name
+    # a Nim list holds one kind of value: "date" is position 3
+    nbTable gtEx.colsMoveToStart(positions(3, 1, -1))
 
 nbText: """
 Note the code above moved the following columns:
@@ -92,15 +95,11 @@ GT(pl_df).cols_move_to_start(columns=cs.starts_with("c") | cs.starts_with("f"))
 gt_ex |> cols_move_to_start(columns = starts_with("c") | starts_with("f"))
 """:
   nbCode:
-    # no `|` of rules yet: the names they would select
-    let both = startsWith("c").resolve(lilExibble) & startsWith("f").resolve(lilExibble)
-    echo both
-    nbTable gtEx.colsMoveToStart(both)
+    nbTable gtEx.colsMoveToStart(startsWith("c") + startsWith("f"))
 
 tabelline """
-A rule resolves to the names it selects (`resolve`), and names make a selection again, so rules
-combine by hand. The order differs from Polars', which keeps the order of the data
-(`char, fctr`); here it is the order of the rules, which is the same in this case.
+`+` is Polars' `|`: the columns of either rule, in the order of the data (`char, fctr`), as in
+Polars. A rule resolves to the names it selects with `resolve(data)`.
 """
 
 nbText: """
@@ -128,6 +127,7 @@ gt_ex.cols_move_to_start(columns=lambda x: "c" in x)
 gt_ex |> cols_move_to_start(columns = contains("c"))
 """:
   nbCode:
-    nbTable gtEx.colsMoveToStart(containing("c"))
+    import std/strutils   # `in` for texts
+    nbTable gtEx.colsMoveToStart(named("c" in it))
 
 bookSave()

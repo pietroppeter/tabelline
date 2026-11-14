@@ -196,8 +196,8 @@ gt_tbl |> opt_all_caps()
     nbTable allCaps
 
 tabelline """
-tabelline's `optAllCaps` sets only the column labels: the stub and the row group labels keep
-their case (a gap, in the book's [list](../gaps.html)).
+`optAllCaps` puts the column labels, the stub and the row group labels in capitals, as in
+Great Tables.
 """
 
 nbText: """

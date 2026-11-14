@@ -34,13 +34,41 @@ func groupDigits(intPart, sep: string): string =
     result.add intPart[i ..< i + 3]
     i += 3
 
+func sigfigDecimals*(x: float, nSigfig: int): int =
+  ## How many decimals show `nSigfig` significant figures of `x`: 3 for 0.01234 and 3 figures,
+  ## 0 for 12345 (which shows as 12,300: the figures after the third are rounded to zeros).
+  if x == 0 or x.isNaN or x.classify in {fcInf, fcNegInf}: return max(nSigfig - 1, 0)
+  max(nSigfig - 1 - int(floor(log10(abs(x)))), 0)
+
+func roundSigfig(x: float, nSigfig: int): float =
+  if x == 0 or x.isNaN or x.classify in {fcInf, fcNegInf}: return x
+  let e = int(floor(log10(abs(x)))) - nSigfig + 1
+  if e > 0: round(x / pow(10.0, e.float)) * pow(10.0, e.float) else: round(x, -e)
+
 func formatNumber*(x: float, decimals = 2, useSeps = true, dropTrailingZeros = false,
-                   sepMark = ",", decMark = ".", forceSign = false): string =
+                   sepMark = ",", decMark = ".", forceSign = false, nSigfig = 0,
+                   accounting = false, pattern = "{x}", locale = ""): string =
   ## `formatNumber(1234.5678)` is "1,234.57"; `formatNumber(1234.5, 1, sepMark = ".", decMark = ",")`
-  ## is "1.234,5".
+  ## is "1.234,5". `nSigfig` shows that many significant figures instead of `decimals` (gt's
+  ## `n_sigfig`): `formatNumber(0.012345, nSigfig = 3)` is "0.0123". `accounting` writes a
+  ## negative number in parentheses, "(12.50)"; `pattern` puts the number in a text, "{x} kg";
+  ## `locale` takes its marks ("it": "1.234,57"), as `fmtNumber` does.
+  if locale.len > 0:
+    let m = localeMarks(locale)
+    return formatNumber(x, decimals, useSeps, dropTrailingZeros, m.sep, m.dec, forceSign, nSigfig,
+                        accounting, pattern)
+  if pattern != "{x}":
+    return pattern.replace("{x}", formatNumber(x, decimals, useSeps, dropTrailingZeros, sepMark,
+                                               decMark, forceSign, nSigfig, accounting))
+  if accounting and x < 0:
+    let inner = formatNumber(-x, decimals, useSeps, dropTrailingZeros, sepMark, decMark, false, nSigfig)
+    return if inner.anyIt(it in {'1'..'9'}): "(" & inner & ")" else: inner
   if x.isNaN: return "NaN"
   if x.classify == fcInf: return "∞"
   if x.classify == fcNegInf: return "−∞"
+  if nSigfig > 0:
+    let r = roundSigfig(x, nSigfig)
+    return formatNumber(r, sigfigDecimals(r, nSigfig), useSeps, dropTrailingZeros, sepMark, decMark, forceSign)
   let s = formatFloat(abs(x), ffDecimal, decimals)
   var (ip, fp) = (s, "")
   let dot = s.find('.')
@@ -51,13 +79,18 @@ func formatNumber*(x: float, decimals = 2, useSeps = true, dropTrailingZeros = f
            groupDigits(ip, if useSeps: sepMark else: "")
   if fp.len > 0: result.add decMark & fp
 
-func formatCompact*(x: float, decimals = 1, decMark = "."): string =
-  ## Large numbers with a suffix: 1234567 is "1.2M".
+func formatCompact*(x: float, decimals = 1, decMark = ".", nSigfig = 0, pattern = "{x}",
+                    locale = ""): string =
+  ## Large numbers with a suffix: 1234567 is "1.2M"; with `nSigfig = 3`, "1.23M".
+  if locale.len > 0:
+    return formatCompact(x, decimals, localeMarks(locale).dec, nSigfig, pattern)
+  if pattern != "{x}": return pattern.replace("{x}", formatCompact(x, decimals, decMark, nSigfig))
   const suffixes = [(1e12, "T"), (1e9, "B"), (1e6, "M"), (1e3, "K")]
   for (scale, suffix) in suffixes:
     if abs(x) >= scale:
-      return formatNumber(x / scale, decimals, dropTrailingZeros = true, decMark = decMark) & suffix
-  formatNumber(x, decimals, dropTrailingZeros = true, decMark = decMark)
+      return formatNumber(x / scale, decimals, dropTrailingZeros = nSigfig == 0, decMark = decMark,
+                          nSigfig = nSigfig) & suffix
+  formatNumber(x, decimals, dropTrailingZeros = nSigfig == 0, decMark = decMark, nSigfig = nSigfig)
 
 func superscript(s: string): string =
   const digits = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
@@ -98,26 +131,40 @@ func toSubscript*(s: string): string =
   ## `toSubscript("2")` is "₂" (`_s` when a character has no subscript).
   script(s, subChars, "_")
 
-func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText): string =
-  ## `formatScientific(5.97e24)` is "5.97 × 10²⁴".
+func formatScientific*(x: float, decimals = 2, decMark = ".", ctx = rcText, expStyle = "x10n",
+                       pattern = "{x}", locale = ""): string =
+  ## `formatScientific(5.97e24)` is "5.97 × 10²⁴"; `expStyle` "e" is "5.97e24" and "E"
+  ## "5.97E24", as gt's `exp_style`; `locale` takes its decimal mark ("de": "5,97 × 10²⁴").
+  if locale.len > 0:
+    return formatScientific(x, decimals, localeMarks(locale).dec, ctx, expStyle, pattern)
+  if pattern != "{x}":
+    return pattern.replace("{x}", formatScientific(x, decimals, decMark, ctx, expStyle))
   if x == 0: return formatNumber(0, decimals, decMark = decMark)
   let e = floor(log10(abs(x)))
   var m = x / pow(10.0, e)
   var ei = int(e)
   if round(abs(m), decimals) >= 10: (m /= 10; inc ei)
   let mant = formatNumber(m, decimals, decMark = decMark)
+  if expStyle in ["e", "E"]:
+    return mant & expStyle & (if ei < 0: "−" & $(-ei) else: $ei)
   if ei == 0: return mant
   if ctx == rcHtml: mant & " × 10<sup>" & (if ei < 0: "−" & $(-ei) else: $ei) & "</sup>"
   else: mant & " × 10" & superscript($ei)
 
 func formatPercent*(x: float, decimals = 1, scaleValues = true, decMark = ".", sepMark = ",",
-                    pattern = "#,##0%", percentSign = "%"): string =
+                    pattern = "#,##0%", percentSign = "%", accounting = false, locale = ""): string =
   ## `formatPercent(0.123)` is "12.3%"; `pattern` is a locale's (`getLocale("fr").percentPattern`
-  ## is "#,##0 %", with a no-break space).
+  ## is "#,##0 %", with a no-break space), which `locale = "fr"` takes, with its marks.
+  ## `accounting` writes "(12.3%)" for −0.123.
+  if locale.len > 0:
+    let m = localeMarks(locale)
+    return formatPercent(x, decimals, scaleValues, m.dec, m.sep, getLocale(locale).percentPattern,
+                         percentSign, accounting)
   let (pre, suf) = splitPattern(pattern)
   let n = formatNumber(if scaleValues: x * 100 else: x, decimals, sepMark = sepMark, decMark = decMark)
   let sign = if n.startsWith("−"): "−" else: ""
-  sign & pre.replace("%", percentSign) & n[sign.len .. ^1] & suf.replace("%", percentSign)
+  let body = pre.replace("%", percentSign) & n[sign.len .. ^1] & suf.replace("%", percentSign)
+  if accounting and sign.len > 0: "(" & body & ")" else: sign & body
 
 func currencySymbol*(code: string): string =
   ## The symbol of an ISO 4217 code, from CLDR (English): "EUR" is "€", "CHF" is "CHF", "CAD"
@@ -126,11 +173,16 @@ func currencySymbol*(code: string): string =
 
 func formatCurrency*(x: float, currency = "USD", decimals = -1, sepMark = ",", decMark = ".",
                      placement = "", pattern = "¤#,##0.00", accounting = false,
-                     useSubunits = true): string =
+                     useSubunits = true, locale = ""): string =
   ## `formatCurrency(49.95, "EUR")` is "€49.95". `decimals = -1` takes the currency's (0 for JPY,
   ## 3 for BHD, 2 for most); `useSubunits = false` drops them. The symbol goes where `pattern`
-  ## puts it (a locale's `currencyPattern`: "#,##0.00 ¤" in Italian), or `placement` "left" or
-  ## "right". `accounting` writes a negative amount in parentheses.
+  ## puts it (a locale's `currencyPattern`: "#,##0.00 ¤" in Italian, which `locale = "it"`
+  ## takes, with its marks), or `placement` "left" or "right". `accounting` writes a negative
+  ## amount in parentheses.
+  if locale.len > 0:
+    let m = localeMarks(locale)
+    return formatCurrency(x, currency, decimals, m.sep, m.dec, placement,
+                          getLocale(locale).currencyPattern, accounting, useSubunits)
   let info = currencyInfo(currency)
   let d = if not useSubunits: 0 elif decimals >= 0: decimals else: info.digits
   let n = formatNumber(abs(x), d, sepMark = sepMark, decMark = decMark)
@@ -191,9 +243,11 @@ proc formatDate*(s: string, dateStyle = "iso", locale = ""): string =
   try: dateTime(y, Month(m), MonthdayRange(d), zone = utc()).format(dateStyle)
   except CatchableError: s
 
-func formatInteger*(x: float, useSeps = true, sepMark = ","): string =
-  ## `formatInteger(1234.6)` is "1,235".
-  formatNumber(x, 0, useSeps, sepMark = sepMark)
+func formatInteger*(x: float, useSeps = true, sepMark = ",", accounting = false, pattern = "{x}",
+                    locale = ""): string =
+  ## `formatInteger(1234.6)` is "1,235"; `locale = "it"`, "1.235".
+  formatNumber(x, 0, useSeps, sepMark = sepMark, accounting = accounting, pattern = pattern,
+               locale = locale)
 
 func formatEngineering*(x: float, decimals = 2, decMark = ".", ctx = rcText): string =
   ## Scientific notation with exponents in steps of three: `formatEngineering(12345)` is
@@ -317,11 +371,58 @@ func formatTime*(s: string, timeStyle = "iso", locale = ""): string =
     if p.len == 0: raise newException(ValueError, "unknown time style " & timeStyle.escape)
     formatPattern(l, p, hour = h, minute = m, second = sec)
 
-proc formatDatetime*(s: string, dateStyle = "iso", timeStyle = "iso", sep = " ", locale = ""): string =
+func strftimeToCldr*(f: string): string =
+  ## A strftime format (`"%Y-%m-%d %H:%M"`, as Python's and Great Tables' `format_str`) as a CLDR
+  ## pattern: %Y %y %m %d %e %B %b %A %a %H %I %M %S %p and %%; other text is kept as it is.
+  var lit = ""
+  template flush() =
+    if lit.len > 0:
+      result.add "'" & lit.replace("'", "''") & "'"
+      lit = ""
+  var i = 0
+  while i < f.len:
+    if f[i] == '%' and i + 1 < f.len:
+      let code = case f[i + 1]
+        of 'Y': "y"
+        of 'y': "yy"
+        of 'm': "MM"
+        of 'd': "dd"
+        of 'e': "d"
+        of 'B': "MMMM"
+        of 'b', 'h': "MMM"
+        of 'A': "EEEE"
+        of 'a': "EEE"
+        of 'H': "HH"
+        of 'I': "hh"
+        of 'M': "mm"
+        of 'S': "ss"
+        of 'p': "a"
+        else: ""
+      if f[i + 1] == '%': lit.add '%'
+      elif code.len > 0: (flush(); result.add code)
+      else: lit.add f[i .. i + 1]
+      i += 2
+    else:
+      lit.add f[i]
+      inc i
+  flush()
+
+proc formatDatetime*(s: string, dateStyle = "iso", timeStyle = "iso", sep = " ", locale = "",
+                     formatStr = ""): string =
   ## An ISO datetime ("2026-11-07T14:35:00" or "2026-11-07 14:35") as a date and a time, in the
-  ## date and time styles; a date without a time shows only the date.
+  ## date and time styles; a date without a time shows only the date. `formatStr` writes it with
+  ## a strftime format instead, as Great Tables' `format_str`: `"%d %B %Y, %H:%M"` is
+  ## "07 November 2026, 14:35", in the locale's language.
   let (d, t) = splitDatetime(s)
-  if d.len == 0: return s
+  if d.len == 0 and formatStr.len == 0: return s
+  if formatStr.len > 0:
+    let (y, m, dd, ok) = parseIsoDate(d)
+    let (h, mi, sec, okT) = parseClock(t)
+    if not ok and not okT: return s
+    let weekday = if ok: (ord(getDayOfWeek(MonthdayRange(dd), Month(m), y)) + 1) mod 7 else: -1
+    return formatPattern(getLocale(locale), strftimeToCldr(formatStr), (if ok: y else: 0),
+                         (if ok: m else: 0), (if ok: dd else: 0), weekday,
+                         (if okT: h else: -1), mi, sec)
   result = formatDate(d, dateStyle, locale)
   if t.len > 0 and parseClock(t)[3]: result.add sep & formatTime(t, timeStyle, locale)
 
@@ -416,10 +517,22 @@ func splitLink(s: string): (string, string) =
 
 # --------------------------------------------------------------------------- inline markdown
 
+func isEntity(s: string, i: int): int =
+  ## The length of an HTML entity at `i` (`&mdash;`, `&#8212;`, `&#x2014;`), or 0.
+  if s[i] != '&': return 0
+  var j = i + 1
+  while j < s.len and j - i < 33 and (s[j].isAlphaNumeric or s[j] == '#'): inc j
+  if j < s.len and s[j] == ';' and j > i + 1: j - i + 1 else: 0
+
+func wordEdge(s: string, i: int): bool =
+  ## Before the start or after the end of the text, or a space or a punctuation mark there.
+  i < 0 or i >= s.len or s[i] in Whitespace + PunctuationChars
+
 func inlineMarkdown*(s: string): string =
-  ## A small inline Markdown: `**bold**`, `*italic*`, `` `code` ``, `[text](url)`, `~sub~`, `^sup^`,
+  ## Inline Markdown: `**bold**` and `__bold__`, `*italic*` and `_italic_`, `~~struck~~`,
+  ## `` `code` ``, `[text](url)` and `<https://...>`, `~sub~`, `^sup^`, HTML entities (`&mdash;`),
   ## and `<br>`, two spaces before a newline or a backslash before it for a line break.
-  ## Enough for labels and notes, with no dependency (nimib's full Markdown is not needed here).
+  ## With no dependency (nimib's Markdown is not needed here); `md()` adds paragraphs and lists.
   var i = 0
   var open: seq[string]
   template toggle(tag: string) =
@@ -435,8 +548,26 @@ func inlineMarkdown*(s: string): string =
       if j < s.len and s[j] == '\n': (result.add "<br>"; i = j + 1; continue)
     if c == '\\' and s.continuesWith("\\\n", i): (result.add "<br>"; i += 2; continue)
     if c == '\\' and i + 1 < s.len: (result.add escapeHtml($s[i + 1]); i += 2; continue)
+    let ent = isEntity(s, i)
+    if ent > 0: (result.add s[i ..< i + ent]; i += ent; continue)
+    if c == '<' and (s.continuesWith("<http://", i) or s.continuesWith("<https://", i) or
+                     s.continuesWith("<mailto:", i)):
+      let j = s.find('>', i)
+      if j > i:
+        let url = s[i + 1 ..< j]
+        result.add "<a href=\"" & escapeHtml(url) & "\">" & escapeHtml(url.replace("mailto:", "")) & "</a>"
+        i = j + 1; continue
+    if c == '~' and i + 1 < s.len and s[i + 1] == '~': (toggle("del"); i += 2; continue)
     if c == '*' and i + 1 < s.len and s[i + 1] == '*': (toggle("strong"); i += 2; continue)
     if c == '*': (toggle("em"); inc i; continue)
+    if c == '_':
+      let double = i + 1 < s.len and s[i + 1] == '_'
+      let tag = if double: "strong" else: "em"
+      let w = if double: 2 else: 1
+      let closing = open.len > 0 and open[^1] == tag and wordEdge(s, i + w)
+      let opening = wordEdge(s, i - 1) and i + w < s.len and s[i + w] notin Whitespace and
+                    s.find(if double: "__" else: "_", i + w) > 0
+      if closing or opening: (toggle(tag); i += w; continue)
     if c in {'~', '^'}:   # H~2~O, 10^24^: only when closed with no space between, as in Pandoc
       let tag = if c == '~': "sub" else: "sup"
       if open.len > 0 and open[^1] == tag: (toggle(tag); inc i; continue)
@@ -458,11 +589,75 @@ func inlineMarkdown*(s: string): string =
     inc i
   while open.len > 0: result.add "</" & open.pop & ">"
 
+func listItem(line: string): (string, string) =
+  ## ("ul", text) for "- text", "* text" or "+ text"; ("ol", text) for "1. text"; ("", "") else.
+  let t = line.strip(trailing = false)
+  if t.len > 2 and t[0] in {'-', '*', '+'} and t[1] == ' ': return ("ul", t[2 .. ^1])
+  var j = 0
+  while j < t.len and t[j] in {'0'..'9'}: inc j
+  if j > 0 and j + 1 < t.len and t[j] in {'.', ')'} and t[j + 1] == ' ': return ("ol", t[j + 2 .. ^1])
+  ("", "")
+
+func mdToHtml*(s: string): string =
+  ## Markdown with paragraphs (a blank line between them) and lists (`- item`, `1. item`), each
+  ## line inline Markdown. One paragraph is its inline HTML, with no `<p>` around it, so a label
+  ## stays a label.
+  var blocks: seq[string]
+  var para: seq[string]
+  var list = ""
+  var items: seq[string]
+  proc flushPara() =
+    if para.len > 0: (blocks.add inlineMarkdown(para.join("\n")); para = @[])
+  proc flushList() =
+    if items.len > 0:
+      blocks.add "<" & list & ">" & items.mapIt("<li>" & inlineMarkdown(it) & "</li>").join & "</" & list & ">"
+      items = @[]
+  for line in s.splitLines:
+    let (kind, text) = listItem(line)
+    if line.strip.len == 0: (flushPara(); flushList())
+    elif kind.len > 0:
+      flushPara()
+      if kind != list: flushList()
+      list = kind
+      items.add text
+    elif items.len > 0 and line.startsWith("  "): items[^1].add " " & line.strip
+    else: (flushList(); para.add line)
+  flushPara(); flushList()
+  if blocks.len == 1 and not blocks[0].startsWith("<ul>") and not blocks[0].startsWith("<ol>"): blocks[0]
+  else: blocks.mapIt(if it.startsWith("<ul>") or it.startsWith("<ol>"): it else: "<p>" & it & "</p>").join
+
 func textToHtml*(t: Text): string =
   case t.kind
   of tkPlain: escapeHtml(t.s)
-  of tkMarkdown: inlineMarkdown(t.s)
+  of tkMarkdown: mdToHtml(t.s)
   of tkHtml: t.s
+
+const namedEntities = [("nbsp", "\u00A0"), ("mdash", "—"), ("ndash", "–"), ("hellip", "…"),
+  ("copy", "©"), ("reg", "®"), ("trade", "™"), ("deg", "°"), ("times", "×"), ("plusmn", "±"),
+  ("euro", "€"), ("pound", "£"), ("laquo", "«"), ("raquo", "»"), ("lsquo", "‘"), ("rsquo", "’"),
+  ("ldquo", "“"), ("rdquo", "”"), ("middot", "·"), ("minus", "−"), ("micro", "µ"), ("para", "¶"),
+  ("sect", "§"), ("larr", "←"), ("rarr", "→"), ("uarr", "↑"), ("darr", "↓"), ("lt", "<"),
+  ("gt", ">"), ("quot", "\""), ("apos", "'"), ("amp", "&")]
+
+func decodeEntities*(s: string): string =
+  ## The text of HTML entities: `&mdash;` is "—", `&#8212;` and `&#x2014;` too (for text and
+  ## Markdown output); an entity it does not know is left as it is.
+  var i = 0
+  while i < s.len:
+    let n = isEntity(s, i)
+    if n == 0: (result.add s[i]; inc i; continue)
+    let name = s[i + 1 ..< i + n - 1]
+    var done = false
+    if name.startsWith("#"):
+      try:
+        let code = if name.len > 1 and name[1] in {'x', 'X'}: parseHexInt(name[2 .. ^1]) else: parseInt(name[1 .. ^1])
+        result.add $Rune(code); done = true
+      except ValueError: discard
+    else:
+      for (e, v) in namedEntities:
+        if e == name: (result.add v; done = true; break)
+    if not done: result.add s[i ..< i + n]
+    i += n
 
 func stripTags(s: string): string =
   ## The text of some HTML: tags dropped, an image read as its `alt`.
@@ -480,12 +675,16 @@ func stripTags(s: string): string =
           if e > a: result.add tag[a + 5 ..< e]
     elif inTag: tag.add c
     else: result.add c
-  result.multiReplace(("&lt;", "<"), ("&gt;", ">"), ("&quot;", "\""), ("&amp;", "&"))
+  result = decodeEntities(result)
 
 func textToPlain*(t: Text): string =
   case t.kind
   of tkPlain: t.s
-  of tkMarkdown: stripTags(inlineMarkdown(t.s))
+  of tkMarkdown:
+    let h = mdToHtml(t.s)
+    if not (h.startsWith("<p>") or h.startsWith("<ul>") or h.startsWith("<ol>")): stripTags(h)
+    else: stripTags(h.multiReplace(("</li><li>", "; "), ("</p>", " "), ("<ul>", " "),
+                                   ("<ol>", " "))).splitWhitespace.join(" ")
   of tkHtml: stripTags(t.s)
 
 # ------------------------------------------------------------------------------------- verbs
@@ -513,31 +712,38 @@ func withPattern(s, pattern: string): string =
   if pattern == "{x}": s else: pattern.replace("{x}", s)
 
 proc fmtNumber*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), decimals = 2,
-                dropTrailingZeros = false, useSeps = true, scaleBy = 1.0, compact = false,
-                pattern = "{x}", forceSign = false, locale = "", sepMark = "", decMark = ""): Tabella =
+                nSigfig = 0, dropTrailingZeros = false, useSeps = true, accounting = false,
+                scaleBy = 1.0, compact = false, pattern = "{x}", forceSign = false, locale = "",
+                sepMark = "", decMark = ""): Tabella =
   ## Numbers with a fixed number of decimals and digit grouping: `fmtNumber("mass", decimals = 1)`.
+  ## `nSigfig = 3` shows three significant figures instead (gt's `n_sigfig`, also with
+  ## `compact`); `accounting` writes negative numbers in parentheses.
   let m = t.marksFor(locale, sepMark, decMark)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if not v.isNumber: return escapeHtml($v)
     let x = v.toFloat * scaleBy
-    let s = if compact: formatCompact(x, decimals, m.dec)
-            else: formatNumber(x, decimals, useSeps, dropTrailingZeros, m.sep, m.dec, forceSign)
+    var s = if compact: formatCompact(abs(x), decimals, m.dec, nSigfig)
+            else: formatNumber(abs(x), decimals, useSeps, dropTrailingZeros, m.sep, m.dec, nSigfig = nSigfig)
+    if x < 0 and s.anyIt(it in {'1'..'9'}): s = (if accounting: "(" & s & ")" else: "−" & s)
+    elif forceSign and x > 0: s = "+" & s
     s.withPattern(pattern), rows)
 
 proc fmtInteger*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), useSeps = true,
-                 scaleBy = 1.0, pattern = "{x}", locale = "", sepMark = ""): Tabella =
-  fmtNumber(t, columns, rows, decimals = 0, useSeps = useSeps, scaleBy = scaleBy, pattern = pattern,
-            locale = locale, sepMark = sepMark)
+                 accounting = false, scaleBy = 1.0, pattern = "{x}", forceSign = false, locale = "",
+                 sepMark = ""): Tabella =
+  fmtNumber(t, columns, rows, decimals = 0, useSeps = useSeps, accounting = accounting,
+            scaleBy = scaleBy, pattern = pattern, forceSign = forceSign, locale = locale, sepMark = sepMark)
 
 proc fmtPercent*(t: sink Tabella, columns: ColSel, rows = allRows(), decimals = 1, scaleValues = true,
-                 locale = ""): Tabella =
+                 accounting = false, locale = ""): Tabella =
   ## Fractions as percentages: 0.123 is "12.3%" (`scaleValues = false` for values already in %),
-  ## "12,3 %" in French.
+  ## "12,3 %" in French; `accounting` writes "(12.3%)" for −0.123.
   let m = t.marksFor(locale, "", "")
   let l = getLocale(if locale.len > 0: locale else: t.locale)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if not v.isNumber: return escapeHtml($v)
-    formatPercent(v.toFloat, decimals, scaleValues, m.dec, m.sep, l.percentPattern, l.percentSign), rows)
+    formatPercent(v.toFloat, decimals, scaleValues, m.dec, m.sep, l.percentPattern, l.percentSign,
+                  accounting), rows)
 
 proc fmtCurrency*(t: sink Tabella, columns: ColSel, rows = allRows(), currency = "USD", decimals = -1,
                   placement = "", accounting = false, useSubunits = true, locale = ""): Tabella =
@@ -553,11 +759,13 @@ proc fmtCurrency*(t: sink Tabella, columns: ColSel, rows = allRows(), currency =
     escapeHtml(formatCurrency(v.toFloat, currency, decimals, m.sep, m.dec, placement,
                               l.currencyPattern, accounting, useSubunits)), rows)
 
-proc fmtScientific*(t: sink Tabella, columns: ColSel, rows = allRows(), decimals = 2, locale = ""): Tabella =
+proc fmtScientific*(t: sink Tabella, columns: ColSel, rows = allRows(), decimals = 2, expStyle = "x10n",
+                    locale = ""): Tabella =
+  ## Scientific notation: 5.97e24 is "5.97 × 10²⁴"; `expStyle` "e" or "E" writes "5.97e24".
   let m = t.marksFor(locale, "", "")
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if not v.isNumber: return escapeHtml($v)
-    formatScientific(v.toFloat, decimals, m.dec, ctx), rows)
+    formatScientific(v.toFloat, decimals, m.dec, ctx, expStyle), rows)
 
 proc fmtRoman*(t: sink Tabella, columns: ColSel, rows = allRows(), upper = true): Tabella =
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
@@ -576,13 +784,15 @@ proc fmtMarkdown*(t: sink Tabella, columns: ColSel, rows = allRows()): Tabella =
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
     if ctx == rcHtml: inlineMarkdown($v) else: $v, rows)
 
-proc subMissing*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(), missingText = "—"): Tabella =
-  ## Shows missing values as `missingText` (by default they are blank).
+proc subMissing*(t: sink Tabella, columns: ColSel = everything(), rows = allRows(),
+                 missingText: Text = toText("—")): Tabella =
+  ## Shows missing values as `missingText` (by default they are blank): a text, or Markdown,
+  ## `md("**STABLE**")`, as gt's `missing_text = md(...)`.
   result = t
   let txt = missingText
   result.substitutions.add FormatRule(columns: columns.resolve(result.data), rows: result.targetRows(rows),
     nullsToo: true, fn: proc (v: Value, ctx: RenderContext): string =
-      (if ctx == rcHtml: escapeHtml(txt) else: txt))
+      (if ctx == rcHtml: textToHtml(txt) else: textToPlain(txt)))
 
 proc subZero*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), zeroText = "nil"): Tabella =
   ## Shows zeros as `zeroText`.
@@ -647,12 +857,13 @@ proc fmtTime*(t: sink Tabella, columns: ColSel, rows = allRows(), timeStyle = "i
     escapeHtml(formatTime($v, timeStyle, loc)), rows)
 
 proc fmtDatetime*(t: sink Tabella, columns: ColSel, rows = allRows(), dateStyle = "iso", timeStyle = "iso",
-                  sep = " ", locale = ""): Tabella =
-  ## ISO datetimes as a date and a time, each in its style.
+                  sep = " ", formatStr = "", locale = ""): Tabella =
+  ## ISO datetimes as a date and a time, each in its style, or with a strftime `formatStr`
+  ## (`"%Y/%m/%d %H:%M"`), as Great Tables' `format_str`.
   let loc = if locale.len > 0: locale else: t.locale
   discard formatTime("00:00", timeStyle)
   fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    escapeHtml(formatDatetime($v, dateStyle, timeStyle, sep, loc)), rows)
+    escapeHtml(formatDatetime($v, dateStyle, timeStyle, sep, loc, formatStr)), rows)
 
 proc fmtDuration*(t: sink Tabella, columns: ColSel = numeric(), rows = allRows(), inputUnits = "seconds",
                   outputUnits: openArray[string] = [], durationStyle = "narrow", trimZeroUnits = true,
@@ -694,14 +905,49 @@ proc fmtEmail*(t: sink Tabella, columns: ColSel, rows = allRows(), label = "", a
   ## Email addresses as `mailto:` links, as `fmtUrl` does for web addresses.
   linkFormat(t, columns, rows, "mailto:", label, asButton, color, target, showUnderline)
 
-proc fmtFlag*(t: sink Tabella, columns: ColSel, rows = allRows(), sep = " ", useTitle = true): Tabella =
-  ## Two-letter country codes as flag emoji (nothing is loaded), one or several (a list, or
-  ## separated by commas); with `useTitle` the code is the HTML title, shown on hover.
+func countryName*(code: string): string =
+  ## The English name of a country or territory by its two- or three-letter code (ISO 3166-1),
+  ## from Unicode CLDR: `countryName("IT")` and `countryName("ITA")` are "Italy". Other text
+  ## is returned as it is.
+  var c = code.strip.toUpperAscii
+  if c.len == 3:
+    for (a3, a2) in countryAlpha3:
+      if a3 == c: (c = a2; break)
+  for (a2, name) in countryNames:
+    if a2 == c: return name
+  code.strip
+
+const circleFlagsTsv = staticRead("data/circle-flags.tsv")
+
+func circleFlag*(code: string, height = "1em"): string =
+  ## The round flag of a two- or three-letter country code, as inline SVG (HatScripts'
+  ## circle-flags, MIT, which Great Tables draws too); "" when there is none.
+  var c = code.strip.toUpperAscii
+  if c.len == 3:
+    for (a3, a2) in countryAlpha3:
+      if a3 == c: (c = a2; break)
+  if c.len != 2: return ""
+  for line in circleFlagsTsv.splitLines:
+    if line.startsWith(c & "\t"):
+      return line[3 .. ^1].replace("<svg ", "<svg style=\"height: " & height &
+        "; width: auto; vertical-align: -0.125em\" role=\"img\" ")
+  ""
+
+proc fmtFlag*(t: sink Tabella, columns: ColSel, rows = allRows(), sep = " ", useTitle = true,
+              round = false, height = "1em"): Tabella =
+  ## Two-letter (or three-letter) country codes as flags, one or several (a list, or separated by
+  ## commas). The flags are emoji, which load nothing but are drawn by the reader's system (as
+  ## two letters on Windows); `round = true` draws Great Tables' round flags instead, as inline
+  ## SVG of `height`. With `useTitle` the country's name is the HTML title, shown on hover.
   result = fmt(t, columns, proc (v: Value, ctx: RenderContext): string =
-    let codes = cellNames(v).join(",")
-    let f = formatFlag(codes, sep)
-    if ctx == rcText or not useTitle: escapeHtml(f)
-    else: "<span title=\"" & escapeHtml(cellNames(v).join(", ")) & "\">" & escapeHtml(f) & "</span>", rows)
+    let names = cellNames(v)
+    if ctx == rcText: return formatFlag(names.join(","), sep)
+    var parts: seq[string]
+    for code in names:
+      let svg = if round: circleFlag(code, height) else: ""
+      let f = if svg.len > 0: svg else: escapeHtml(formatFlag(code))
+      parts.add(if useTitle: "<span title=\"" & escapeHtml(countryName(code)) & "\">" & f & "</span>" else: f)
+    parts.join(escapeHtml(sep)), rows)
   result.formats[^1].wholeValue = true
 
 # ------------------------------------------------------------------------------ substitutions
@@ -827,17 +1073,6 @@ proc formatBins*(s: string, sep = "--", fmt: proc (x: float): string = nil): str
       except ValueError: discard
   ends.join(sep.replace("--", "–"))
 
-func countryName*(code: string): string =
-  ## The English name of a country or territory by its two- or three-letter code (ISO 3166-1),
-  ## from Unicode CLDR: `countryName("IT")` and `countryName("ITA")` are "Italy". Other text
-  ## is returned as it is.
-  var c = code.strip.toUpperAscii
-  if c.len == 3:
-    for (a3, a2) in countryAlpha3:
-      if a3 == c: (c = a2; break)
-  for (a2, name) in countryNames:
-    if a2 == c: return name
-  code.strip
 
 func formatCountry*(codes: string, sep = ", "): string =
   ## Country codes (comma or space separated) as names: `formatCountry("IT, FR")` is

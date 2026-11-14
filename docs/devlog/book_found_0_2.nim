@@ -1,8 +1,8 @@
-## devlog: 11 Nov 2026 C | What the book found for 0.2 | For 0.2 the tabelline book ported nanoplots, four Great Tables release posts and three of gt's articles, two of them whole case studies. Fifteen findings, each told: what the book could not write, what gt and Great Tables do, and what tabelline does now. Thirteen went into 0.2, data frames among them; two stay as differences.
-## A dated post: it tells what the book's port for 0.2 found, and is not updated afterwards.
-import std/os
+## devlog: 11 Nov 2026 C | What the book found for 0.2 | The tabelline book ported 25 chapters for 0.2: release posts, gt's articles, Great Tables' examples, entries of the Table Contest. They found 47 things tabelline could not do yet, in two rounds: 15 while 0.2 was built, 29 more before the tag, 3 left for later. Each told: what the book could not write, what gt and Great Tables do, and what tabelline does now.
+## A dated post (11 Nov 2026), brought up to date on 14 Nov, before the tag, with the second round: Pietro asked for it.
+import std/[os, strutils]
 import nimib
-import tabelline, tabelline/nimib
+import tabelline, tabelline/[nimib, datasets]
 import ../blocks
 
 let docs = currentSourcePath().parentDir.parentDir
@@ -10,11 +10,13 @@ nbInit
 nb.doc.filename = docs / "devlog" / "book-found-0-2" / "index.html"
 nb.useTabelline(title = "What the book found for 0.2", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
-nbTitle "11 November 2026", "What the book found for 0.2", """
-For 0.2 the tabelline book ported nanoplots, four Great Tables release posts and three of gt's
-articles, two of them whole case studies. Fifteen findings, each told: what the book could not
-write, what gt and Great Tables do, and what tabelline does now.
+nbTitle "11 November 2026, brought up to date on 14 November", "What the book found for 0.2", """
+The tabelline book ported 25 chapters for 0.2: release posts, gt's articles, Great Tables'
+examples, entries of the Table Contest. They found 47 things tabelline could not do yet, in two
+rounds: 15 while 0.2 was built, 29 more before the tag, 3 left for later.
 """
+
+nbToc()
 
 nbText: """
 [The tabelline book](../../book/) takes pages written for gt and Great Tables and makes every
@@ -22,13 +24,22 @@ table again in Nim, next to the original R and Python. Each page asks tabelline 
 asks, in the order a user meets it, so the book is the test that no spec writes. For 0.1 it
 found two bugs and a dozen gaps ([What the book found for 0.1](../book-found/)). For 0.2 it went
 further: from a guide to release posts, then to articles that build a whole table, as someone
-would at work. The release waited for it.
+would at work, and last to tables other people made, for the Table Contest. The release waited
+for it.
 
-This post goes from the simplest to the most complex: what the book ported, the list of what it
-found, then each finding told on its own, in the order a table is made, and last how the work
-was done.
+It came in two rounds. The first, on 11 November, ported eight chapters while 0.2 was built, and
+its fifteen findings went into 0.2 as they were found. The second, on 13 November, ported
+seventeen more; its findings were first written down as gaps for a later release, and Pietro
+answered: *that is indeed why we update the book before release*. So 0.2 waited again, and 29 of
+the 32 were built before the tag. This post was first written after the first round; it now
+tells both.
+
+It goes from the simplest to the most complex: what the book ported, the list of what it found,
+then each finding told on its own, in the order a table is made, and last how the work was done.
 
 ## What the book ported
+
+### The first round: eight chapters
 
 Eight new chapters in three sections, each with R, Python and Nim.
 """
@@ -68,7 +79,68 @@ page: the clinical tables case study builds three tables, each in a dozen steps,
 first counts, groups and pivots. The Python tab is written for the book, the way Great Tables
 would make the same table.
 
+### Before the tag: seventeen more
+
+The second round finished the Great Tables blog, added Great Tables' own examples, one page of
+gt-extras, gt's article on its datasets, and six entries of the
+[Table Contest](../../book/contest.html): tables people made with gt and Great Tables for a
+contest, with data and choices of their own.
+"""
+
+nbShowCode:
+  type Ported = object
+    section, chapter, shows: string
+  let later = @[
+    Ported(section: "Great Tables: the blog", chapter: "[Using Polars to Win at Super Bowl Squares](../../book/blog/superbowl.html)",
+           shows: "a grid of chances coloured by value"),
+    Ported(section: "Great Tables: the blog", chapter: "[The Design Philosophy of Great Tables](../../book/blog/design.html)",
+           shows: "the parts of a table, one at a time"),
+    Ported(section: "Great Tables: the blog", chapter: "[Great Tables for Scientific Publishing](../../book/blog/scientific.html)",
+           shows: "units, scientific notation, nanoplots"),
+    Ported(section: "Great Tables: the blog", chapter: "[v0.12.0: Google Fonts and zebra stripes](../../book/blog/v0_12.html)",
+           shows: "font stacks and stripes"),
+    Ported(section: "Great Tables: the blog", chapter: "[v0.13.0: Applying styles to all table locations](../../book/blog/v0_13.html)",
+           shows: "styles on every part, Markdown for missing values"),
+    Ported(section: "Great Tables: the blog", chapter: "[v0.15.0: Flags, Icons, and Other Formatting Goodies](../../book/blog/v0_15.html)",
+           shows: "flags, icons, accounting"),
+    Ported(section: "Great Tables: the blog", chapter: "[v0.18.0: Easy Column Spanners and More!](../../book/blog/v0_18.html)",
+           shows: "spanners from names, columns by kind, datetimes"),
+    Ported(section: "Great Tables: the blog", chapter: "[Recreating Septa Transit Timetables in Python](../../book/blog/septa.html)",
+           shows: "a timetable as wide as a wall"),
+    Ported(section: "Great Tables: examples", chapter: "[Examples](../../book/examples/examples.html)",
+           shows: "the gallery of Great Tables' home page"),
+    Ported(section: "Great Tables: examples", chapter: "[Sports earnings](../../book/examples/sports_earnings.html)",
+           shows: "a ranking with images and HTML"),
+    Ported(section: "gt-extras", chapter: "[An NFL season](../../book/extras/nfl_season.html)",
+           shows: "bars, ratings and logos made with plain formats"),
+    Ported(section: "gt: articles", chapter: "[gt Datasets](../../book/vignettes/gt_datasets.html)",
+           shows: "every dataset of gt, as a table"),
+    Ported(section: "The Table Contest", chapter: "[Euro NCAP Safety Ratings - 2023](../../book/contest/euroncap.html)",
+           shows: "ratings as stars and bars"),
+    Ported(section: "The Table Contest", chapter: "[Lemurs at Duke Lemur Center](../../book/contest/lemurs.html)",
+           shows: "pictures, groups, aligned text"),
+    Ported(section: "The Table Contest", chapter: "[Mapping the Latin American Pharmaceutical Landscape](../../book/contest/latam_pharma.html)",
+           shows: "flags and colour by value"),
+    Ported(section: "The Table Contest", chapter: "[Titanic Challenge](../../book/contest/titanic.html)",
+           shows: "counts and percents side by side"),
+    Ported(section: "The Table Contest", chapter: "[Basic gt Styling Reference](../../book/contest/gt_styling.html)",
+           shows: "every style of a cell, one per row"),
+    Ported(section: "The Table Contest", chapter: "[Periodic table of elements](../../book/contest/periodic_table.html)",
+           shows: "a table laid out as a picture")]
+  let second = tabella(later, rownameCol = "chapter", groupnameCol = "section"):
+    colsLabel:
+      shows: "What it shows"
+    fmtMarkdown ["chapter", "shows"]
+    optCssTheme()
+  nbTable second
+
+nbText: """
+With the first round, that is 25 chapters, 12 of them posts of the Great Tables blog, and the
+book has [a page that finds an example by feature](../../book/features.html).
+
 ## What the book found
+
+### The first round: fifteen
 
 Every line the book could not write in tabelline became a finding, sent to the build of 0.2 as
 it was found. Thirteen went into 0.2. Three of those were still open when this post was first
@@ -140,7 +212,42 @@ and spanners that gather their columns. The 0.1 port had found them in small exa
 them for later. The case studies needed each of them, and wrote a line of Nim around it. A gap
 that a real table works around is worth more than one a guide mentions, so 0.2 closed them.
 
-## The findings, one by one
+### Before the tag: twenty-nine more
+
+The second round found 32 more. Pietro chose to build all but three before the tag. Here are the
+29, in the order of the [list of gaps](../../book/gaps.html), which this table reads, and
+*Where it shows* is the chapter that uses it now.
+"""
+
+nbShowCode:
+  type Gap = object
+    step, what, where: string
+  var gaps: seq[Gap]
+  var inRound = false
+  for line in readFile(docs.parentDir / "book" / "gaps.md").splitLines:
+    if "Text with a zero in front" in line: inRound = true
+    if inRound and line.startsWith("| "):
+      let cells = line.strip(chars = {'|', ' '}).split(" | ")
+      gaps.add Gap(step: cells[0], what: cells[1],
+                   where: cells[2].replace("](", "](../../book/"))
+    if "stubSticky" in line: inRound = false
+  let round2 = tabella(gaps, rownameCol = "what", groupnameCol = "step"):
+    colsLabel:
+      where: "Where it shows"
+    fmtMarkdown ["what", "where"]
+    optCssTheme()
+  nbTable round2
+
+nbText: """
+Most are small: an argument gt has and tabelline did not, a name that Great Tables takes. They
+are the kind a guide never meets, because each page of a guide shows one thing; a real table
+meets them all at once. Three stay open, by Pietro's choice: saving a table as an image (gt's
+`gtsave()`), which is the next release, *Out of the browser*; a small chart in each row drawn
+from other data (gt's `ggplot_image()`, gt-extras' plots), which a proc of your own already
+draws through `fmt`; and the book's own helpers for pandas' `head`, `select` and `loc`, which
+nanuq has and the chapters will move to.
+
+## The first round, one by one
 
 Each finding in three parts: what the book wanted to write, what gt and Great Tables do, and
 what tabelline does now.
@@ -385,6 +492,135 @@ as it is. tabelline formats it as its column, with the column's locale: one
 `summaryRows` still says otherwise. It saves a line in almost every summary of the book, and a
 table whose totals look like its rows reads as one.
 
+## Before the tag, one by one
+
+Seven of the 29, from the simplest step to the most complex. Each is a small table, made here
+with what 0.2 has now.
+
+### A zero in front stays text
+
+[Colorizing with Data](../../book/get-started/colorizing_with_data.html) reads a CSV with true
+solar times, `0530` and `1200`. tabelline read them as numbers, so `0530` lost its zero. pandas
+and Polars keep a column like that as text, because a number is never written with a zero in
+front: codes, times and postcodes are. tabelline does too now.
+"""
+
+nbCode:
+  let sza = parseCsv("tst,sza\n0530,84.9\n1200,\n")
+  echo sza["tst", 0], " is ", sza["tst", 0].kind
+  echo sza["sza", 0], " is ", sza["sza", 0].kind
+
+nbText: """
+### The stub of a table already made
+
+Great Tables writes `GT(df).tab_stub(rowname_col="name")`, and the stub can be set after the
+table is made. tabelline took the stub only when the table was made, so the
+[Stub](../../book/get-started/basic_stub.html) chapter and [SEPTA](../../book/blog/septa.html)
+made the table again. Now `tabStub` sets it, with the groups too:
+"""
+
+nbCode:
+  let lunch = tableData:
+    fruit: ["apple", "banana", "cherry"]
+    kind: ["tree", "herb", "tree"]
+    price: [0.5, 0.25, 3.0]
+  let fruits = tabella(lunch):
+    tabStub "fruit", groupnameCol = "kind"
+    fmtCurrency "price"
+    optCssTheme()
+  nbTable fruits
+
+nbText: """
+### Columns by kind, by a test of the name, and rows from the end
+
+Great Tables picks columns by their type (`cs.by_dtype(pl.Boolean)`) and gt by a test
+(`where(is.logical)`, `matches()`); the [v0.18.0](../../book/blog/v0_18.html) post and
+[Column Selection](../../book/get-started/column_selection.html) use them. A row from the end is
+`-1` in Python and `n()` in gt. tabelline has all three now, and `&` for the columns two rules
+share:
+"""
+
+nbCode:
+  let ringed = tabella(planets(), rownameCol = "planet"):
+    colsHide named(it notin ["moons", "rings"])
+    tabStyle style.text(weight = "bold"),
+      loc.body(ofKind(vkBool), rows = -1)
+    optCssTheme()
+  nbTable ringed
+
+nbNote("""
+`ofKind(vkBool)` is the columns of Booleans, `named(cond)` the columns whose name `it` passes `cond`, and `-1` the last row (Nim's `^1` too).
+""", nkCode)
+
+nbText: """
+### Three figures, and the minus in parentheses
+
+The [Examples](../../book/examples/examples.html) show three significant figures (gt's
+`n_sigfig`), and [v0.15.0](../../book/blog/v0_15.html) shows money as an accountant writes it,
+a loss in parentheses. Both are arguments of `fmtNumber` now, and `accounting` of `fmtInteger`,
+`fmtPercent` and `fmtCurrency` too:
+"""
+
+nbCode:
+  let books = tableData:
+    item: ["sales", "costs", "a fee"]
+    amount: [24334.2345, -18110.5, -0.01632]
+  let ledger = tabella(books, rownameCol = "item"):
+    fmtNumber "amount", nSigfig = 3, accounting = true
+    optCssTheme()
+  nbTable ledger
+
+nbText: """
+### gt's six styles
+
+`optStylize` had one style. gt has six, each in six colours, and
+[Premade Themes](../../book/get-started/table_theme_premade.html) shows them all. tabelline
+has them now, with gt's colours: a premade look for a table that is not on a page of its own
+style.
+"""
+
+nbCode:
+  let styled = tabella(planets(), rownameCol = "planet", groupnameCol = "type"):
+    colsHide named(it notin ["moons", "mass"])
+    optStylize style = 6
+  nbTable styled
+
+nbText: """
+### A test for each cell
+
+Great Tables' `loc.body(mask=...)` styles the cells that pass a Polars expression, column by
+column: the largest of each column, in
+[Styling the Table Body](../../book/get-started/basic_styling.html). gt has no mask; it needs one
+`tab_style()` for each column. In tabelline a mask is a proc of the cell's value and of its
+column:
+"""
+
+nbCode:
+  let largest = tabella(planets(), rownameCol = "planet"):
+    colsHide named(it notin ["moons", "mass", "diameter"])
+    tabStyle style.text(weight = "bold"),
+      loc.body(mask = proc (v: Value, col: Column): bool =
+        v == agg.max.fn(col.values))
+    optCssTheme()
+  nbTable largest
+
+nbText: """
+### A stub that stays in view
+
+[SEPTA](../../book/blog/septa.html) is a timetable with a column for each train. On a phone it is
+wider than the screen and scrolls inside its box, and the stations scroll away with the trains.
+`stubSticky = true` keeps the stub in view. Neither gt nor Great Tables has it: it is in the
+feature map's list of what is worth porting back. Scroll this table sideways:
+"""
+
+nbCode:
+  let wide = tabella(planets(), rownameCol = "planet"):
+    tabOptions:
+      stubSticky = true
+    optCssTheme()
+  nbTable wide
+
+nbText: """
 ## How it worked
 
 As for 0.1, a thread ported the pages while another built 0.2, and every finding went from one
@@ -398,12 +634,16 @@ to the other as it was found. Four things were new.
   and their fixes. A finding in the last chapter could still change 0.2.
 - **The open findings were built too.** This post first ended with three findings still open;
   reading it, Pietro asked for all three, and they went into 0.2 the same day.
+- **A second round, before the tag.** The second round's findings were first written as gaps
+  for a later release. Pietro read them and asked for them in 0.2: the book is updated before a
+  release so that what it finds goes in. In one day 29 were built, each with its spec, a test
+  and the chapter that needed it rewritten without its workaround; three stay open by his
+  choice, and [the list of gaps](../../book/gaps.html) says why.
 - **The book is a test.** Every change to tabelline rebuilds every chapter, so lists and records,
   the dot for rows and the blocks of pairs reached every page as soon as they were built, and a
   chapter that broke showed up in the pull request that broke it.
 
-The next sources are the later Great Tables release posts, gt's own user guide and the Table
-Contest, and the [plan](../../book/next.html) lists them.
+What the book will port next is in [its plan](../../book/next.html).
 """
 
 nbSave

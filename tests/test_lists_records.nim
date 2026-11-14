@@ -62,7 +62,7 @@ suite "lists and records":
       fmtFlag "flag"
     let html = t.toHtml
     check html.count("class=\"tb_icon\"") == 2
-    check "🇮🇹 🇫🇷" in html
+    check "<span title=\"Italy\">🇮🇹</span> <span title=\"France\">🇫🇷</span>" in html
     check "star, circle-check" in t.toText
 
 suite "nanoplots of lists and records":

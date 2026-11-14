@@ -54,7 +54,9 @@ tabelline """
 them all: `dataColor(everything())` does what Great Tables does by default, each column on its
 own, numbers along the palette and text by category. Missing values are a light grey in
 tabelline, a darker one in Great Tables, which also writes them as `None`. The default palettes
-differ: Great Tables' is a red-to-green ramp, tabelline's is `palette("blues")`.
+differ: tabelline's is `palette("blues")`, a ramp that reads as more or less; Great Tables' is
+R's eight colours from black to grey, which tabelline has as `palette("great-tables")`, for a
+table that must look the same.
 """
 
 nbText: """
@@ -195,16 +197,16 @@ gt(sza_pivot, rowname_col = "month") |>
   )
 """:
   nbCode:
-    import std/[tables, algorithm, strutils]
+    import std/[tables, algorithm]
 
     # the pivot, by hand: a row per month, a column per time (hhmm) up to noon
     let s = sza()
     var months: seq[string]
-    var times: seq[int]
-    var angle: Table[(string, int), Value]
+    var times: seq[string]
+    var angle: Table[(string, string), Value]
     for i in 0 ..< s.nrows:
-      let (lat, month, tst, a) = (s["latitude", i], $s["month", i], s["tst", i].i, s["sza", i])
-      if lat == 20 and tst <= 1200 and not a.isNull:
+      let (lat, month, tst, a) = (s["latitude", i], $s["month", i], $s["tst", i], s["sza", i])
+      if lat == 20 and tst <= "1200" and not a.isNull:
         if month notin months: months.add month
         if tst notin times: times.add tst
         angle[(month, tst)] = a
@@ -215,7 +217,7 @@ gt(sza_pivot, rowname_col = "month") |>
     for t in times:
       var col: seq[Value]
       for m in months: col.add angle.getOrDefault((m, t), null())
-      szaPivot.addColumn(align($t, 4, '0'), col)
+      szaPivot.addColumn(t, col)
 
     let zenith = tabella(szaPivot, rownameCol = "month"):
       dataColor domain = (90.0, 0.0),
@@ -227,8 +229,9 @@ gt(sza_pivot, rowname_col = "month") |>
 
 tabelline """
 tabelline knows every CSS colour name, `rebeccapurple` too (R does not know it, so the R tab
-gives it in hex). One difference: tabelline's CSV reader reads `tst` (`"0400"`) and `latitude` as numbers,
-where pandas keeps them as text, so the filter compares numbers. A `domain` from high to
+gives it in hex). tabelline's CSV reader keeps `tst` as text, as pandas does, because its
+times start with a zero (`"0530"`), so the filter compares text, as Great Tables'; it reads
+`latitude` as numbers, where pandas keeps them as text. A `domain` from high to
 low, `(90.0, 0.0)`, runs the palette the other way, as in Great Tables.
 """
 

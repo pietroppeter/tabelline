@@ -96,13 +96,6 @@ proc preview*(slug: string): Option[Tabella] =
     some t
   else: none(Tabella)
 
-proc next*(): string =
-  ## The next story on the roadmap: the first *use it* thread not done yet, with its release.
-  for r in releases:
-    for th in r.threads:
-      if th.kind == "use" and th.status != "done":
-        return th.title.replace("Use it: ", "") & " (tabelline " & r.version & ")"
-
 template nbStorie*(base: string) =
   ## The gallery of the stories: one card for each, linked (`base` is the path to docs/stories/
   ## from the page), and a last card for the stories to come.
@@ -113,4 +106,4 @@ template nbStorie*(base: string) =
         let t = preview(s.slug)
         if t.isSome: nbTable t.get
     nbGalleryCard("More stories will come", "next"):
-      nbText "One for every release, on real data. Next: " & next() & "."
+      nbText "One for every release, on real data."
