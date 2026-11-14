@@ -14,8 +14,10 @@ working rules that are easy to miss.
 - Every requirement about the API has an example: a ```nim block followed by a ```text block with
   what it prints (`echo t` prints a table as text). `nim r tools/specexamples.nim` runs them all;
   `--update` rewrites the outputs after a change is built; `--changes` includes open changes.
-- Anything new that is not from gt or Great Tables gets a line in the table *Not from gt* of the
-  coverage map (`docs/coverage.nim`): what it is, why, and the closest thing in gt or Great Tables.
+- Anything new that is not from gt or Great Tables gets a line in *Not from gt* in the
+  coverage map (`docs/coverage.nim`): what it is, why, and the closest thing in gt or Great Tables,
+  in *Nim's own* or, when gt and Great Tables could use it too (check that they lack it),
+  *Worth porting back*.
 - Name verbs after gt in camelCase (`tab_header` is `tabHeader`), and list differences from gt and
   Great Tables in every proposal.
 
