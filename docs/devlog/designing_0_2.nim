@@ -1,5 +1,5 @@
-## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells with more than one value. Each group from zero, simplest first, with the choices behind it and how it is built.
-## A dated post, written while 0.2 is built: each group is added when its PR is ready for review.
+## devlog: 10 Nov 2026 A | Designing tabelline 0.2 | tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells with more than one value, the tails, and what the stories and the book asked for before the tag. Each group from zero, simplest first, with the choices behind it and how it is built.
+## A dated post, written while 0.2 was built (each group added when its PR was ready for review), and brought up to date on 14 Nov, before the tag, with the eighth group: Pietro asked for it.
 import std/[os, sugar, strutils, sequtils, tables, algorithm]
 import nimib
 import tabelline, tabelline/[nimib, datasets]
@@ -10,28 +10,33 @@ nbInit
 nb.doc.filename = docs / "devlog" / "designing-0-2" / "index.html"
 nb.useTabelline(title = "Designing tabelline 0.2", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
-nbTitle "10 November 2026", "Designing tabelline 0.2", """
-tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells with more than one value. Each group from zero, simplest first, with the choices behind it and how it is built.
+nbTitle "10 November 2026, brought up to date on 14 November", "Designing tabelline 0.2", """
+tabelline 0.2: summing up, rows and columns, more formats, every locale, pictures in cells, cells
+with more than one value, the tails, and what the stories and the book asked for before the tag.
+Each group from zero, simplest first, with the choices behind it and how it is built.
 """
 
 nbText: """
 0.1 had the parts of a table, from the title to the footer, and the formats for single values.
 0.2 was going to add rows and merges; on the day 0.1 shipped, it grew to hold every format,
-every locale and pictures in cells too, then cells that hold more than one value, and last the
-tails of what was still partial. That is seven groups of features, each built in its own pull request and explained here when it is ready,
-from the simplest idea up. Every name they add is in the [Reference](../../api/), and
+every locale and pictures in cells too, then cells that hold more than one value, and the
+tails of what was still partial. Last, before the tag, came what two stories and the book could
+not write yet: shapes in a cell, a preview that picks its rows, summary labels in Italian, and 29
+things the book's chapters had worked around. That is eight groups of features, each built in
+its own pull request and explained here, from the simplest idea up. Every name they add is in the [Reference](../../api/), and
 [A reference in our own style](../reference/) tells how that page was made.
 """
 
 nbToc()
 
 nbText: """
-## Seven groups
+## Eight groups
 
 Each group needs the ones before it: summing up comes first because summary columns, in the
-second group, reuse its aggregates; pictures come last because nanoplots need the formats and
+second group, reuse its aggregates; pictures come late because nanoplots need the formats and
 the options of the groups before them, and lists and records come after them because they feed
-the pictures. The tails come last: they finish what the others began.
+the pictures. The tails finish what the others began. The last group is what using 0.2 found:
+a story and a book are written with the release, and what they need goes in before the tag.
 """
 
 block:
@@ -45,9 +50,10 @@ block:
     G(group: "5 · Pictures in cells", what: "icons, images and nanoplots, all inlined", status: "built"),
     G(group: "6 · More than one value", what: "lists and records in a cell, the dot (v.x, it.mass), nanoplots of x and y", status: "built"),
     G(group: "7 · The tails", what: "a stub of several columns, groups as a column, the other options, images anywhere, font stacks, gt's datasets", status: "built"),
+    G(group: "8 · What the stories and the book asked for", what: "shapes in a cell, rows from the middle in a preview, summary labels in another language, the book's 29 gaps", status: "built"),
   ]
   let t = tabella(rows, rownameCol = "group"):
-    tabHeader "0.2 in seven groups"
+    tabHeader "0.2 in eight groups"
     colsLabel:
       what: "what it adds"
       status: "now"
@@ -893,7 +899,7 @@ nbNote("""
 nbText: """
 ### The other options, images and fonts
 
-`tabOptions` now has 164 options, 160 of gt's 196: hidden column labels, a units pattern for all
+`tabOptions` now has 164 options (165 with the one of group 8), 160 of gt's 196: hidden column labels, a units pattern for all
 columns, a label for the rows outside any group, notes on one line, a message for a table with
 no rows, the indent of a level, stripes in the stub. An image can go in a title or a label
 (`localImage`, `webImage`), a font stack has a name (`systemFonts("old-style")`), and a nanoplot
@@ -907,7 +913,7 @@ can give each point its own colour. gt's `gtcars`, `countrypops`, `illness` and 
   `rowname_col=["maker", "model"]`.
 - **Repeats are drawn once.** A level spans the rows that repeat it, under the same higher
   levels and in the same group. *gt:* the same idea.
-- **Options that mean nothing in HTML wait.** The 36 options left are for interactive tables,
+- **Options that mean nothing in HTML wait.** The 36 options of gt left are for interactive tables,
   pages, LaTeX and Quarto: they come with those outputs. *gt:* all 196 in `tab_options()`.
 - **Stripes leave the stub alone.** As in gt, `rowStripingIncludeStub` is off: the stub is no
   longer striped by default. *Great Tables:* the same.
@@ -915,12 +921,107 @@ can give each point its own colour. gt's `gtcars`, `countrypops`, `illness` and 
   *gt* and *Great Tables:* `google_font()` links Google's servers.
 - **A list of options repeats.** `dataPointFillColor = @["red", "blue"]` colours the points
   red, blue, red, ... *Great Tables:* a list must have one value or one per point.
+
+
+## 8 · What the stories and the book asked for
+
+Two stories were written with 0.2, [FOSDEM, twenty-six times](../../stories/fosdem/) and
+[Islands of the Mediterranean](../../stories/isole/), and the [book](../../book/) ported 25
+chapters of gt and Great Tables. What they could not write yet went into 0.2 before the tag.
+
+### A label in the reader's language
+
+The islands story is in English and in Italian. Its tables sum up a sea with a row named
+`total`, and the Italian page wants *totale*. `textTransform` changes the text of any part, but
+on the label of a summary row it did nothing. Now it does:
+"""
+
+nbCode:
+  let three = tableData:
+    island: ["Sicily", "Sardinia", "Cyprus"]
+    km2: [25834, 24100, 9251]
+  let inItalian = {"total": "totale"}.toTable
+  let sums = tabella(three, rownameCol = "island"):
+    grandSummaryRows:
+      total: agg.sum
+    textTransform (s: string) => inItalian.getOrDefault(s, s), loc.grandSummaryStub()
+    optCssTheme()
+  nbTable sums
+
+nbNote("""
+The label changes as shown text only: a location that names the row, `loc.grandSummary(rows = "total")`, still finds it.
+""", nkCode)
+
+nbText: """
+### Rows from the middle
+
+`tabellaPreview` shows the first rows and the last, as gt's `gt_preview()` does. The islands
+of `isole()` are 194, from the largest down, and the story wanted Malta, in the middle. `moreRows` adds any
+rows, by index, range or condition, and a shaded row stands for each run left out:
+"""
+
+nbCode:
+  let peek = tabellaPreview(isole(), topN = 2, bottomN = 1,
+                            moreRows = where(it.island == "Malta")):
+    colsHide ["population", "city"]
+    optCssTheme()
+  nbTable peek
+
+nbText: """
+### An island's outline
+
+The islands story wanted each island's shape beside its name, as small as a word. A nanoplot
+draws numbers, and a shape is numbers too: the corners of its outline, *x* east and *y* north.
+`plotType = "shape"` joins them in their order and closes the line; with `autoscale` every shape
+of the column is at the scale of the largest, so a small island looks small:
+"""
+
+nbCode:
+  let plots = tableData:
+    field: ["square", "strip", "corner"]
+    outline: [toValue((x: @[0, 2, 2, 0], y: @[0, 0, 2, 2])),
+              toValue((x: @[0, 4, 4, 0], y: @[0, 0, 1, 1])),
+              toValue((x: @[0, 3, 3, 1, 1, 0], y: @[0, 0, 1, 1, 3, 3]))]
+  let shapes = tabella(plots, rownameCol = "field"):
+    fmtNanoplot "outline", plotType = "shape", autoscale = true
+    optCssTheme()
+  nbTable shapes
+
+nbText: """
+The story draws every island this way, with their holes (a lake is a ring of its own), and
+lines up the nanoplots of a column of years on one *x* axis, with `referenceX` marking the
+places on it.
+
+### What the book still found
+
+The book ported its second round of chapters, 17 of them, two days before the tag. They needed 29 more things,
+each small: `tabStub` for a table already made, columns by kind (`ofKind(vkBool)`) or by a test
+of the name (`named(...)`), rows from the end (`-1`), significant figures and accounting, gt's
+six `optStylize` styles, R's colour names, a `mask` for each cell, and a stub that stays in view
+while a wide table scrolls (`stubSticky`). Each is told, with a table, in
+[What the book found for 0.2](../book-found-0-2/).
+
+### Choices
+
+- **A shape is data.** The outline is a record of *x* and *y* in the cell, so it is filtered,
+  sorted and printed like any value; in text it is "◆ shape of 4 points". *gt* and *Great
+  Tables:* no shapes; gt draws a plot per row with `ggplot_image()`.
+- **A preview picks its rows.** `moreRows` takes any row selector. *gt:* `gt_preview()` shows
+  the top and the bottom only. *Great Tables:* no preview.
+- **A summary label is changed where it is shown.** `textTransform` rewrites the label when the
+  table is rendered, so the verbs that name the row by its label still find it. *gt:* the label
+  is the name given in `fns`; to translate it, name it in that language.
+- **The stub can stay in view.** `stubSticky` is CSS only, and in neither gt nor Great Tables:
+  it is in the feature map's list of what is worth porting back.
+- **gt's look, tabelline's colours.** `optStylize` has gt's six styles in gt's colours, and
+  `palette("great-tables")` is Great Tables' palette, but `dataColor` keeps `blues` as its own
+  default, as Pietro chose.
 """
 
 nbText: """
 ## Next to gt and Great Tables
 
-tabelline began on a Saturday night, four days before this release, as a port of gt and Great
+tabelline began on a Saturday night, a week before this release, as a port of gt and Great
 Tables. With 0.2 it is worth counting again, against the newest of each: Great Tables 1.1 and
 gt 1.4, by their references. The [feature map](../../coverage/) has every group.
 
@@ -931,8 +1032,8 @@ block:
   type Side = object
     side, what: string
   let rows = @[
-    Side(side: "only tabelline", what: "rowsAdd, rowsHide, rowOrder, colsAdd, summaryColumns; fmtSpelledNum, fmtBins, fmtAuto, fmtCountry (31 formats to 28); tabellaPreview, tabCaption, extractCells, optTableLines; 657 CLDR locales to 574; text and Markdown output, nimib"),
-    Side(side: "both", what: "summary rows, nanoplots, icons, images, units, chemistry, fractions, merged columns, stub indent, a stub of several columns, body styles, colour by value, every location, about as many options (164 to 175), tables from a data frame (nanuq's in tabelline, Pandas and Polars in Great Tables)"),
+    Side(side: "only tabelline", what: "rowsAdd, rowsHide, rowOrder, colsAdd, summaryColumns; fmtSpelledNum, fmtBins, fmtAuto, fmtCountry (31 formats to 28); shape nanoplots; tabellaPreview with rows from the middle, tabCaption, extractCells, optTableLines; a stub that stays in view; 657 CLDR locales to 574; text and Markdown output, nimib"),
+    Side(side: "both", what: "summary rows, nanoplots, icons, images, units, chemistry, fractions, merged columns, stub indent, a stub of several columns, body styles, colour by value, every location, gt's six premade styles, a mask for each cell, about as many options (165 to 175), tables from a data frame (nanuq's in tabelline, Pandas and Polars in Great Tables)"),
     Side(side: "only Great Tables", what: "interactive tables, LaTeX, PNG and PDF, Google fonts, Shiny, 16 datasets (tabelline has 9, four of them gt's)"),
   ]
   let t = tabella(rows, rownameCol = "side"):
@@ -1093,6 +1194,19 @@ compiler calls it only when a name is neither a field nor a proc, and it turns `
 step 1: `formatCell` gives each item (or field) to the format and joins the results, unless the
 format takes the list whole (`wholeValue`, set by the pictures). A nanoplot reads `y` and `x` from
 the record, sorts the pairs by `x`, and places each point at its share of the x axis.
+
+Group 8 adds little to the steps, and most of it when a verb is called. A shape is drawn by
+`shapePlot` (`nanoplots.nim`): the side of its square is its width or its height, the larger
+(`shapeSide`, or the column's largest with `autoscale`), so across and up have one scale; the
+points become one path, a missing value starting a new ring, filled with the even-odd rule so
+that a ring inside another is a hole. `tabellaPreview` marks the rows to show (the top, the
+bottom and `moreRows`, resolved like any row selector) and adds a shaded row for each run of
+rows left out. A summary label goes through `textTransform` when the verb is called, like
+every label, but into a shown label kept beside it (`shown`), so the label itself stays the
+key that the locations find. A `mask` is a location: it is resolved when its verb
+is called, by calling the proc on every cell of its columns and rows. The sticky stub is only
+CSS: the stub's cells are `position: sticky` at the left edge, with the stub's background, so
+the cells that scroll go under them.
 
 How the HTML of every table shares one stylesheet, also in 0.2, has a post of its own:
 [One stylesheet for every table](../sharing-styles/).
