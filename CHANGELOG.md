@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Docs for agents: the Reference as plain text, `api.md` and `api.json`, a new `llms.txt` and an install line in the README (#108).
+- Docs for agents: the Reference as plain text, `api.md` and `api.json`, a new `llms.txt` and an install line in the README (#108); the site now serves them, with the feature map's `gt.json`.
 
 ## 0.2.0 (14 Nov 2026)
 
