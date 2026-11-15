@@ -1,6 +1,6 @@
 ---
 name: tabelline
-description: Read this first, before writing any code, whenever a task names tabelline or asks for a display table in Nim (a table for people to read, with a title, a stub, row groups, spanners, formatted numbers, colours, summary rows or nanoplots) in a program, a README or a nimib page, or when porting a gt (R) or Great Tables (Python) table to Nim, even if the user never says "tabelline".
+description: Makes display tables in Nim with tabelline (titles, stubs, row groups, spanners, formats, colours, summary rows, nanoplots) and checks them on a phone; says where its docs are and which traps agents met. Read it before writing any code whenever a task names tabelline, asks for a display table in Nim (in a program, a README or a nimib page), or ports a gt (R) or Great Tables (Python) table to Nim, even if the user never says "tabelline".
 metadata:
   status: draft
 ---

@@ -2,7 +2,7 @@
 ## A dated post: the result of the skills in skills/ first, then the rounds of tests behind them,
 ## told from zero. The skills are kept up to date; the numbers here are those of the runs, 10 to
 ## 15 November 2026.
-import std/os
+import std/[os, strutils]
 import nimib
 import tabelline, tabelline/nimib
 import ../blocks
@@ -75,21 +75,35 @@ block:
   let res = tableData:
     what: ["The table is right", "The agent read the skill", "It looked at a picture of its page",
            "It checked the page at a phone's width", "Every check passes", "Tokens of a run, mean",
-           "Cost of a run, mean", "Time of a run, mean"]
-    none: ["15 of 15", "", "1 of 15", "0 of 15", "9 of 15", "455,000", "$0.24", "80 s"]
-    skill: ["15 of 15", "15 of 15", "15 of 15", "15 of 15", "13 of 15", "401,000", "$0.17", "67 s"]
+           "Cost of a run, mean"]
+    none: ["15 of 15", "", "1 of 15", "0 of 15", "9 of 15", "455,000", "$0.24"]
+    skill: ["15 of 15", "15 of 15", "15 of 15", "15 of 15", "13 of 15", "401,000", "$0.17"]
+    change: ["", "", "", "", "", "−12%", "−29%"]
   let t = tabella(res, rownameCol = "what"):
     tabHeader "With the skills and without", "Sonnet 5.5, five tasks, three runs each"
     colsLabel:
       none: "without"
-      skill: "with the two skills"
-    colsAlign alRight, ["none", "skill"]
+      skill: "with"
+      change: "change"
+    colsAlign alRight, ["none", "skill", "change"]
     tabSourceNote "15 November 2026, tabelline 0.2.0, Claude Sonnet 5.5 (claude-sonnet-5-5), medium effort. Picture: the agent opened a screenshot of its page. Phone: its reply says what the page shows at a phone's width. Cost: what Claude Code reports for the run."
     optCssTheme()
   nbTable t
 
 nbText: """
-Task by task, tokens and cost, and how much they change with the skills:
+Tokens and cost do not fall by the same amount because tokens are not all priced alike. Nine
+tenths of the tokens of a run are the conversation read again at each step, from a cache, at a
+tenth of the price. What costs is what is new: files the agent reads for the first time, written
+to the cache at more than the full price, and what the model writes. With the skills the reads
+from the cache fall by 9%, but the new text falls by 39% and the model's writing by 20%: the
+agent opens fewer of tabelline's sources, because the skill says where the answer is. So the
+bill falls more than the count.
+
+Time is left out of the table on purpose. The runs share four processors, six to ten at a time,
+so a run's seconds depend on its neighbours. For what it is worth, the runs with the skills took
+17% less time on average.
+
+Task by task:
 """
 
 block:
@@ -130,11 +144,8 @@ What the skills buy:
 - **Fewer pages that break.** Of the three NFL pages made without the skills, one is 758 pixels
   wide on a phone and scrolls sideways; none of the three made with them does.
 - **Less money.** A run costs 29% less over all fifteen runs, and a third less on three of the
-  five tasks. It reads 12% fewer tokens: the skill says where the answer is, and the agent stops
-  searching for it. On the Great Tables plots the cost is the same and on the NFL port the agent
-  reads more, because it looks at its pages, but it still costs less.
-- **Less time**, 17% on average, mostly on the sort, where the agents without the skills spent
-  close to two minutes reading tabelline's sources.
+  five tasks. On the Great Tables plots the cost is the same, and on the NFL port the agent reads
+  more tokens, because it looks at its pages, but it still costs less.
 
 What they do not buy:
 
@@ -146,6 +157,48 @@ What they do not buy:
 
 The limits: one task of each kind, three runs each. The numbers say the direction, not the size.
 
+## The five tasks
+
+Each task as the agent got it, with the table made without the skills and with them, at the
+width of a phone, and the two programs: the first run of each, Sonnet 5.5. Swipe for the next
+task. The two tables of the plots task are the same to the pixel, from two programs that differ only
+in how they write the data.
+"""
+
+let tasks = docs / "devlog" / "data" / "skills" / "tasks"
+nbGallery "the five tasks":
+  nbGalleryCard "A gt table with summary rows":
+    nbText: "**The prompt**\n\n" & readFile(tasks / "port-gt-summary" / "prompt.md").strip.indent(1, "> ")
+    nbScreenshot tasks / "port-gt-summary" / "none.jpg", tasks / "nopoints.json", "Without the skills"
+    nbScreenshot tasks / "port-gt-summary" / "skill.jpg", tasks / "nopoints.json", "With the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-gt-summary/none.nim", title = "`port.nim` without the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-gt-summary/skill.nim", title = "`port.nim` with the skills"
+  nbGalleryCard "A Great Tables table with small plots":
+    nbText: "**The prompt**\n\n" & readFile(tasks / "port-great-tables-nanoplot" / "prompt.md").strip.indent(1, "> ")
+    nbScreenshot tasks / "port-great-tables-nanoplot" / "none.jpg", tasks / "nopoints.json", "Without the skills"
+    nbScreenshot tasks / "port-great-tables-nanoplot" / "skill.jpg", tasks / "nopoints.json", "With the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-great-tables-nanoplot/none.nim", title = "`temps.nim` without the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-great-tables-nanoplot/skill.nim", title = "`temps.nim` with the skills"
+  nbGalleryCard "Sort, then shade the top three rows":
+    nbText: "**The prompt**\n\n" & readFile(tasks / "sorted-top-rows" / "prompt.md").strip.indent(1, "> ")
+    nbScreenshot tasks / "sorted-top-rows" / "none.jpg", tasks / "nopoints.json", "Without the skills"
+    nbScreenshot tasks / "sorted-top-rows" / "skill.jpg", tasks / "nopoints.json", "With the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/sorted-top-rows/none.nim", title = "`moons.nim` without the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/sorted-top-rows/skill.nim", title = "`moons.nim` with the skills"
+  nbGalleryCard "An NFL season, with drawings in the cells":
+    nbText: "**The prompt**\n\n" & readFile(tasks / "port-gt-extras" / "prompt.md").strip.indent(1, "> ")
+    nbScreenshot tasks / "port-gt-extras" / "none.jpg", tasks / "nopoints.json", "Without the skills"
+    nbScreenshot tasks / "port-gt-extras" / "skill.jpg", tasks / "nopoints.json", "With the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-gt-extras/none.nim", title = "`table.nim` without the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/port-gt-extras/skill.nim", title = "`table.nim` with the skills"
+  nbGalleryCard "A brief: one table for a yearly report":
+    nbText: "**The prompt**\n\n" & readFile(tasks / "report-from-brief" / "prompt.md").strip.indent(1, "> ")
+    nbScreenshot tasks / "report-from-brief" / "none.jpg", tasks / "nopoints.json", "Without the skills"
+    nbScreenshot tasks / "report-from-brief" / "skill.jpg", tasks / "nopoints.json", "With the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/report-from-brief/none.nim", title = "`report.nim` without the skills"
+    nbFoldCode "docs/devlog/data/skills/tasks/report-from-brief/skill.nim", title = "`report.nim` with the skills"
+
+nbText: """
 ### The checks
 
 Each task has six to eight checks, run on the files the agent leaves and on its last message.
@@ -193,15 +246,17 @@ block:
   let res = tableData:
     what: ["The table is right", "The agent read the skill", "It looked at a picture of its page",
            "It checked the page at a phone's width", "Every check passes", "Tokens of a run, mean",
-           "Cost of a run, mean", "Time of a run, mean"]
-    none: ["14 of 15", "", "3 of 15", "0 of 15", "8 of 15", "1,779,000", "$0.11", "146 s"]
-    skill: ["15 of 15", "15 of 15", "5 of 15", "10 of 15", "13 of 15", "1,444,000", "$0.09", "137 s"]
+           "Cost of a run, mean"]
+    none: ["14 of 15", "", "3 of 15", "0 of 15", "8 of 15", "1,779,000", "$0.11"]
+    skill: ["15 of 15", "15 of 15", "5 of 15", "10 of 15", "13 of 15", "1,444,000", "$0.09"]
+    change: ["", "", "", "", "", "−19%", "−17%"]
   let t = tabella(res, rownameCol = "what"):
     tabHeader "Haiku, with the skills and without", "Haiku 5.5, five tasks, three runs each"
     colsLabel:
       none: "without"
-      skill: "with the two skills"
-    colsAlign alRight, ["none", "skill"]
+      skill: "with"
+      change: "change"
+    colsAlign alRight, ["none", "skill", "change"]
     tabSourceNote "15 November 2026, tabelline 0.2.0, Claude Haiku 5.5 (claude-haiku-5-5), medium effort."
     optCssTheme()
   nbTable t
@@ -255,9 +310,8 @@ the skill every time, and still took the screenshots in only five runs of fiftee
 replies say something about the phone. A small model follows the first steps of a skill and
 drops the later ones.
 
-The skill `table-building` says it is for any library. That was not tested until Pietro asked.
-The brief went to Sonnet in Python with Great Tables and in R with gt, three runs each way, with
-the skill installed and not named.
+The skill `table-building` says it is for any library. The brief went to Sonnet in Python with
+Great Tables and in R with gt, three runs each way, with the skill installed and not named.
 """
 
 block:
@@ -283,11 +337,12 @@ block:
   nbTable t
 
 nbText: """
-Here the agents look without being told: in Python and in R every agent without the skill took
-a screenshot of its page. What the skill adds is the phone, five runs of six, at about a cent
-more. One Python run did not load the skill at all: its first sentence, unlike `tabelline`'s,
-is still a description. All twelve tables are right and look alike. Models know gt and Great
-Tables well, and the skill does not make their tables better on a task this easy.
+**For Python and R the skill is not useful, on this evidence.** The agents look without being
+told: every agent without the skill took a screenshot of its page. The skill adds a look at a
+phone's width, five runs of six, for about a cent more, and none of the twelve pages, with it or
+without, breaks on a phone. All twelve tables are right and look alike. Models know gt and Great
+Tables well; what `table-building` brings to an agent that uses tabelline (the screenshot
+script, the habit of looking) it does not bring to one that already knows its library.
 
 ## What I make of it
 
@@ -316,8 +371,12 @@ may well have one more. The direction is credible; the percentages are not preci
 
 In this order, each with what it would change:
 
-1. **Make `table-building`'s first sentence an order** (S). One Python run did not load it. The
-   same change took `tabelline` from five skipped runs of fifteen to one, on Haiku.
+1. **Decide what `table-building` is for** (S). Alone, in Python and R, it did not help; with
+   tabelline, what made the difference (look at the page, at a phone's width, with `look.js`)
+   is now a step of `tabelline`, and `table-building` loads in only some runs. Either fold the
+   rest of it into `tabelline` and keep one skill, or keep it and find a task where it changes
+   the result (a design task, below). Not worth making its first sentence stronger first: the
+   one Python run that did not load it made a table as good as the others.
 2. **Make the look step stick on a small model** (S). Haiku took the screenshots in five runs of
    fifteen with the skills. Try the step as the skill's first instruction, before any code, and
    run the Haiku cases again.
