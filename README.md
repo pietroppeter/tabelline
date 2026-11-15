@@ -138,7 +138,7 @@ tabelline changes; dated posts are in the devlog.
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
 - [Toward a dark tabelline](https://pietroppeter.github.io/tabelline/devlog/dark/)
-  (13 Nov 2026 A): research for a dark look: white or light today, how a reader asks for dark and
+  (13 Nov 2026 A): research for a dark look: where tabelline starts, how a reader asks for dark and
   how Dark Reader decides a page is dark already, what a dark look has to change, three ways to
   build it, and nine sources (from the Matrix to the Bloomberg Terminal) with a table in each.
 - [Designing a Mediterranean look](https://pietroppeter.github.io/tabelline/devlog/mediterranean/)

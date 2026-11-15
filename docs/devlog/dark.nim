@@ -1,4 +1,4 @@
-## devlog: 13 Nov 2026 A | Toward a dark tabelline | tabelline's tables are white and its pages are light, so a reader who asks for dark gets a guess from the browser or an extension. Is it white or light? How a reader asks for dark, and how Dark Reader decides that a page is dark already; what a dark tabelline has to change; three ways to build it; and nine sources to draw from, from the Matrix to the Bloomberg Terminal, each with a table in its colours.
+## devlog: 13 Nov 2026 A | Toward a dark tabelline | tabelline's tables are white and its pages are light, so a reader who asks for dark gets a guess from the browser or an extension. How a reader asks for dark, and how Dark Reader decides that a page is dark already; what a dark tabelline has to change; three ways to build it; and nine sources to draw from, from the Matrix to the Bloomberg Terminal, each with a table in its colours.
 ## A dated post: research for a dark look (BACKLOG "A dark look"), with options to choose from; it is not rewritten afterwards.
 import std/[os, strutils]
 import nimib
@@ -21,19 +21,19 @@ has to change, three ways to build it, and nine sources to draw from. Research, 
 nbToc
 
 nbText: """
-Pietro: "this is not as easy as it sounds, I think natively tabelline work in white mode (is it
-white? or light? mmh). This is important for those who use a dark reader that automatically tries
-to fit a dark mode", as Hugo, nimib's co-maintainer, does. "I guess if we have a dark mode and mark
-it as such it should pick it up." And: "maybe the dark theme could be more sci fi related".
+tabelline has only a light mode. Some readers ask every page for a dark one: Hugo, nimib's
+co-maintainer, reads with Dark Reader in Firefox, an extension that darkens every light page it
+meets. A page that has a dark mode of its own, and says so, gets shown as it was designed instead
+of as an extension guesses it. This post looks at how that works, what tabelline would have to
+change, and where to find a dark look, sci-fi included. It is lighter than
+[the Mediterranean look](../mediterranean/): no tournament.
 
-This post answers the first question, checks the guess, and lays out the options. It is lighter
-than [the Mediterranean look](../mediterranean/): no rounds yet, and no tournament.
+## Where tabelline starts
 
-## White or light?
-
-Both, in two places. tabelline's own defaults are gt's: a white table with dark grey text and light
-grey rules (the table below has their values). A table that takes `optCssTheme()` takes the page's colours
-instead, and the pages are light, not white: Haru's white silk, a warm off-white, under sumi ink.
+Light everywhere, and nothing on the site tells a browser that a dark version could exist: no page
+sets `color-scheme` or reads `prefers-color-scheme`. A table on its own takes gt's defaults, white
+with dark grey text; a table with `optCssTheme()` takes the page's colours, and every look of the
+pages has a light paper.
 """
 
 type Ground = object
@@ -70,12 +70,10 @@ var groundsTable = tabella(grounds, rownameCol = "where"):
 for i, g in grounds:
   groundsTable = groundsTable.tabStyle(style.fill(g.paper) & style.text(color = g.ink), loc.body(cols = "paper", rows = [i]))
   groundsTable = groundsTable.tabStyle(style.fill(g.ink) & style.text(color = g.paper), loc.body(cols = "ink", rows = [i]))
-nbTable groundsTable
+nbFold "The paper and the ink of each, and how light the paper is":
+  nbTable groundsTable
 
 nbText: """
-So the guess is right on both counts: everything is light, and nothing tells a browser that a dark
-version exists. Nothing on the site sets `color-scheme` or reads `prefers-color-scheme` today.
-
 ## How a reader asks for dark
 
 Five ways, from the simplest:
@@ -114,7 +112,7 @@ theme* is on by default, and then it steps aside on a page it finds dark. In thi
 A page can also tell it to stand down with `<meta name="darkreader-lock">`. Not for us while the
 pages are light: Hugo would lose his dark.
 
-So Pietro's guess holds, with one detail: *marking* the dark look is not enough, it has to be on.
+So a page with a dark mode of its own is picked up, with one detail: *marking* the dark look is not enough, it has to be on.
 A dark look that sets `color-scheme: dark` on `<html>` when it is shown passes check 3 at once.
 A reader whose system is dark gets it through `prefers-color-scheme`, and Dark Reader steps aside;
 a reader whose system is light but who runs Dark Reader everywhere still gets Dark Reader's
