@@ -154,6 +154,28 @@ working rules that are easy to miss.
   The Table Contest entries are collected by `nim r book/plan/contest.nim` (forum and winners
   posts, cached; `--offline`) into the source `table-contest`; run it, then `plan.nim`.
 
+## Skills
+
+- `skills/` holds the skills for agents that *use* tabelline (the ones for working on this
+  repository are in `.claude/skills/`): `tabelline`, its specifics, and `table-building`, true of
+  any table with any library. `.claude-plugin/` makes the repository a Claude Code plugin and its
+  own marketplace; its version is tabelline's.
+- A skill holds only what the docs do not say: how to work, the traps agents met, recipes. It
+  does not copy the API (api.md has it) or the book (it links chapters at the release's tag).
+  Every rule says what to do, not only what to avoid: agents follow a skill to the letter.
+- Every ```nim block of a skill that imports tabelline runs, and prints the ```text block after
+  it: `nim r tools/skillexamples.nim` (in CI). When tabelline fixes a trap, remove it from the
+  skill in the same PR.
+- A rule enters a skill with evidence: an agent that lost time or got it wrong, and an eval case
+  in `skills/<skill>/evals/` (the format of `claude plugin eval`) that fails without the rule.
+  `nim r tools/skillevals.nim <case> <run folder> --final:<reply>` grades what an agent made.
+  Test with agents that cannot read the answer (the book has most of the hard tables) and that
+  know nothing else: a new `claude -p` process in an empty folder outside any repository
+  (`--setting-sources local`, the skills given with `--plugin-dir` and not named in the prompt,
+  and the project memory left out: unset `CLAUDE_MEMORY_STORES` and
+  `CLAUDE_COWORK_MEMORY_PATH_OVERRIDE`), not a subagent, which carries this file. A skill does not rely on a pointer to another skill:
+  agents do not follow it.
+
 ## Previews and PRs
 
 - Show Pietro a published preview of the pages before asking to merge; he reviews on his phone.
@@ -167,5 +189,7 @@ working rules that are easy to miss.
   to Pietro, and only the after shots of what changed in the PR description. To show them in the
   PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
   in the next commit.
+- A change to CI comes with an estimate of the tradeoff, in the PR description: what it costs on
+  every run (seconds, measured), what it catches, and the cheaper ways that were weighed.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.

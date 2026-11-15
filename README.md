@@ -79,7 +79,18 @@ In a `.nimble` file, `requires "https://github.com/pietroppeter/tabelline >= 0.2
 **For coding agents** using tabelline: [llms.txt](https://pietroppeter.github.io/tabelline/llms.txt)
 lists the docs as plain text, with the whole API in one Markdown file,
 [api.md](https://pietroppeter.github.io/tabelline/api.md) (and as JSON,
-[api.json](https://pietroppeter.github.io/tabelline/api.json)).
+[api.json](https://pietroppeter.github.io/tabelline/api.json)). Two skills come with the
+repository, in `skills/`: [tabelline](skills/tabelline/SKILL.md), with what the docs do not say
+(how to work, the traps, recipes for hard tables), and
+[table-building](skills/table-building/SKILL.md), for any table with any library: in what order
+to build it, and to look at it before saying it is done. In Claude Code:
+
+```
+/plugin marketplace add pietroppeter/tabelline
+/plugin install tabelline@tabelline
+```
+
+Any other agent can read the two `SKILL.md` files as they are.
 
 ## Stories
 
@@ -158,6 +169,12 @@ tabelline changes; dated posts are in the devlog.
 
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
+- [Skills for tabelline](https://pietroppeter.github.io/tabelline/devlog/skills/) (15 Nov 2026 A):
+  the two skills for coding agents, `tabelline` and `table-building`, and what they are worth,
+  measured on five tasks with and without them, on Sonnet and Haiku, and with Great Tables and gt
+  (the tables are right either way; with the skills the agent checks its page on a phone, fewer
+  pages break, and a run costs a fifth to a third less); then the four rounds of tests that got
+  there, and why the skills live here.
 - [Designing a Mediterranean look](https://pietroppeter.github.io/tabelline/devlog/mediterranean/)
   (11 Nov 2026 D): a look of its own for the islands story, in place of the quaderno, designed in
   rounds; round 1 has nine sources (who they are, what they made, why they fit, what a page could

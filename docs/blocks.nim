@@ -706,25 +706,27 @@ newNbBlock(NbScreenshot):
   src: string
   alt: string
   punti: seq[(int, float, float)]
+  wide: bool
   toHtml:
     var marks = ""
     for (n, x, y) in blk.punti:
       marks.add &"""<span class="punto" style="left:{x:.1f}%;top:{y:.1f}%" aria-hidden="true">{n}</span>"""
-    &"""<figure class="schermata"><div><img src="{blk.src}" alt="{esc(blk.alt)}">{marks}</div>""" &
+    &"""<figure class="schermata{(if blk.wide: " wide" else: "")}"><div><img src="{blk.src}" alt="{esc(blk.alt)}">{marks}</div>""" &
       &"""<figcaption>{inline(blk.alt)}</figcaption></figure>"""
 
-proc addScreenshot*(nb: var Nb, image, points, alt: string) =
+proc addScreenshot*(nb: var Nb, image, points, alt: string, wide = false) =
   let j = parseJson(readFile(points))
   var punti: seq[(int, float, float)]
   for p in j["points"]: punti.add (p["n"].getInt, p["x"].getFloat, p["y"].getFloat)
   let mime = if image.endsWith(".png"): "image/png" else: "image/jpeg"
-  nb.add newNbScreenshot(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti)
+  nb.add newNbScreenshot(src = "data:" & mime & ";base64," & encode(readFile(image)), alt = alt, punti = punti, wide = wide)
 
-template nbScreenshot*(timage, tpoints, talt: string) =
+template nbScreenshot*(timage, tpoints, talt: string, twide = false) =
   ## A screenshot with numbered circles on it, to name its pieces in the text or a table: the
   ## image (inlined), a JSON of points (`{"points": [{"n": 1, "x": 12.5, "y": 40}]}`, in % of the
-  ## width and height) and a caption in Markdown. Put two side by side with `nbBeside`.
-  nb.addScreenshot(timage, tpoints, talt)
+  ## width and height) and a caption in Markdown. Put two side by side with `nbBeside`. A phone's
+  ## screen by default, narrow; `twide = true` for the screenshot of a wide page, as wide as the text.
+  nb.addScreenshot(timage, tpoints, talt, twide)
 
 newNbBlock(NbDrawing):
   svg: string

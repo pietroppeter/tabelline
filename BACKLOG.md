@@ -113,8 +113,8 @@ Rough size: S (hours), M (a day or two), L (more).
 ## From agents building hard tables (skills thread, 15 Nov 2026)
 
 Six hard tables of the book were given to coding agents, twice each; their notes say where they
-lost time ([Hard tables: nobody looked](https://github.com/pietroppeter/skills/pull/6), the
-skills devlog). What tabelline itself could do:
+lost time ([Skills for tabelline](https://pietroppeter.github.io/tabelline/devlog/skills/)). What
+tabelline itself could do:
 
 - **An unknown palette name fails when the verb is called** (S). `palette("oranges")` is accepted
   and fails only when the table is drawn, with `not a colour: oranges`. Check the name in

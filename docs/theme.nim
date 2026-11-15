@@ -510,6 +510,7 @@ details.source summary { cursor: pointer; }
 details.source pre { overflow-x: auto; }   /* the whole source, top to bottom: it is opened on purpose */
 /* a screenshot with numbered circles (nbScreenshot): the circle is a place */
 .schermata { margin: 1rem 0; width: min(47%, 15rem); }
+.schermata.wide { width: 100%; left: auto; transform: none; }   /* the screenshot of a wide page: the text's width */
 .schermata > div { position: relative; }
 .schermata img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
 .schermata .punto { position: absolute; transform: translate(-50%, -50%); width: 1.25rem; height: 1.25rem; border-radius: 50%;

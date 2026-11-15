@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: tabelline-port-great-tables-nanoplot
+expected_outcome: |
+  temps.nim rebuilds table.py with tabelline 0.2: a line nanoplot with a mean reference line, a bar
+  nanoplot, Markdown in the subtitle and a label, a source note and optStylize(3, "green"); it
+  prints the table and writes temps.html.

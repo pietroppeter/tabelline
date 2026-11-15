@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: tabelline-port-gt-extras
+expected_outcome: |
+  table.nim rebuilds the NFL season table with tabelline 0.2: the strips of wins and losses, the
+  dumbbells and the coloured boxes are drawn in the cells (SVG or HTML from a fmt proc, not
+  escaped), with numbers and not markup in the text output, drawings of a fixed size, and the
+  page was looked at before the reply.
