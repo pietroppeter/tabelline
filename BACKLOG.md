@@ -109,3 +109,26 @@ Rough size: S (hours), M (a day or two), L (more).
 - **Summary cells in a column with no format** (S, from the 0.2 book port). tabelline formats
   them as numbers (5,552.33); Great Tables shows the raw value (5552.3331). Keep ours, but say so
   in the summary rows spec and its list of differences.
+
+## From agents building hard tables (skills thread, 15 Nov 2026)
+
+Six hard tables of the book were given to coding agents, twice each; their notes say where they
+lost time ([Hard tables: nobody looked](https://github.com/pietroppeter/skills/pull/6), the
+skills devlog). What tabelline itself could do:
+
+- **An unknown palette name fails when the verb is called** (S). `palette("oranges")` is accepted
+  and fails only when the table is drawn, with `not a colour: oranges`. Check the name in
+  `dataColor` and list the names in the error.
+- **A format that sees its row** (M). A `fmt` proc gets one cell. A drawing made of two columns
+  (points for and against) needs both packed in one column first. gt's `fmt` has the same limit;
+  gt-extras works around it the same way.
+- **`fmt` for a whole list** (S). A cell that holds a list is formatted item by item, so a chart of
+  the list needs the values written as text first. An option to give the proc the whole value.
+- **A page of several tables** (S). `savePage(tables, "t.html")`, or `save` taking a list: today
+  it is `tabellaStyle` once and `toHtml(withStyle = false)` for each, written by hand.
+- **`optCss` says when it drops a rule** (S). An `@import` in the CSS is dropped without a word.
+- **api.md for agents** (S). A shorter index (it is 37 KB, more than one tool read), entries filed
+  under their full name (`style.text` is under `### text`), and an example for `fmt` with a proc
+  that returns HTML and for `dataColor` with a palette.
+- **A clearer error for a block of pairs** (S). In `colsLabel:` a name with a space and no quotes
+  gives a macro error that does not say to quote it.
