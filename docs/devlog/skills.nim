@@ -139,6 +139,15 @@ block:
   nbTable t
 
 nbText: """
+Task by task, tokens and cost can even move in opposite directions, and caching is the reason.
+Take the NFL season. With the skills, the agent took more steps: it ran the screenshots and
+looked at them. At every step the model reads the whole conversation again from the cache, so
+cached reads grew by a quarter (787,000 to 984,000 tokens) and the token count went up 19%. But
+it opened fewer of tabelline's sources, so the new text written to the cache fell by a third
+(75,000 to 49,000). A token written to the cache costs about twelve times one read from it, so
+the bill fell 18%. Tokens count how long the conversation ran; cost mostly counts how much new
+text came into it.
+
 What the skills buy:
 
 - **The agent checks its page on a phone.** With the skills, every agent took a screenshot at
