@@ -27,6 +27,42 @@ what they are worth, and tells afterwards how they were found.
 nbToc()
 
 nbText: """
+## What a skill is
+
+A **coding agent** is a language model that works in a folder on a computer: it reads files,
+runs commands, writes code, and runs it again until it works. Claude Code is one; there are
+others. Ask it "make me a table of these sales" and it writes the program and the page.
+
+A **skill** is a note for such an agent, written ahead of time by someone who knows the job. It
+is a folder with one Markdown file, `SKILL.md`, which starts like this:
+
+```
+---
+name: tabelline
+description: Read this first, before
+  writing any code, whenever a task
+  names tabelline or asks for a
+  display table in Nim ...
+---
+```
+
+What follows is the note itself: how to work, the mistakes to avoid, a recipe or two. Three
+things make a skill different from documentation:
+
+- **It is read only when it is needed.** The agent always sees every skill's name and its
+  `description`, one sentence each. When a task matches a sentence, the agent reads that skill's
+  file, and only then. So a skill costs almost nothing until it is used, and then its length,
+  every time: it has to be short.
+- **It is read as an order.** An agent follows a skill more closely than anything it finds by
+  itself, so every sentence in it must say what to do. A true sentence that stops halfway can do
+  harm, as round two shows.
+- **It can bring tools.** The folder can hold more pages, opened only when `SKILL.md` sends the
+  agent there, and scripts the agent runs. The skill `table-building` brings one that takes
+  screenshots of a page.
+
+Skills are installed, not sent: in Claude Code, a repository with skills can be added as a
+plugin, and from then on its skills are there in every task, waiting for one that matches.
+
 ## The result
 
 Five tasks, each given three times to an agent with the two skills installed and three times to
@@ -325,12 +361,6 @@ nbText: """
    same cases, both models, the same isolation, and the numbers next to these.
 
 ## What the two skills are
-
-A skill is a folder with a Markdown file, `SKILL.md`. The file starts with a name and one
-sentence that says when to use it. An agent keeps that sentence in mind all the time. When a task
-matches it, the agent reads the rest of the file, and only then. So a skill costs almost nothing
-until it is needed, and then it costs its length, every time. A skill can also hold other files
-(a page on one subject, a script) that the agent opens only if `SKILL.md` sends it there.
 
 - **`tabelline`** holds what is specific to tabelline and is not in its docs: where the docs are
   and how to search them, how to work (one verb per line, print the table as text, write the
