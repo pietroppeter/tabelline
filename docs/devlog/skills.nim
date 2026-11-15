@@ -253,6 +253,77 @@ more. One Python run did not load the skill at all: its first sentence, unlike `
 is still a description. All twelve tables are right and look alike. Models know gt and Great
 Tables well, and the skill does not make their tables better on a task this easy.
 
+## What I make of it
+
+Useful, but modest, and worth less than the work that went into them. Keep them, keep them
+small, and put the next effort into tabelline itself.
+
+**What they do well.** They make the agent check its page at a phone's width, which without
+them it almost never does. That is the one thing good docs cannot give: it is a habit, not a
+fact, and it is what caught real defects (three of six NFL pages without the skills scroll
+sideways, none of six with them). And they cut the cost of a run by a fifth to a third, by
+telling the agent where the answer is instead of letting it search the sources.
+
+**What they do not do.** They do not make tables more correct: on these tasks the agents got
+the table right anyway, Haiku too. The credit goes to tabelline: gt's names, a doc comment with
+an example on every verb, in the installed sources. That is the strongest finding of the whole
+exercise, and it is about the library, not the skills. They do not make tables better looking,
+as far as I could see. And on a small model they half work: Haiku reads the skill every time and
+drops the step that looks.
+
+**How much to trust the numbers.** Moderately. Five tasks, three runs each, two models. Every
+measurement found a fault in the one before (the repository's notes leaking into the agents,
+then the project's memory, a wrong count of "looked", a wrong install command), and this round
+may well have one more. The direction is credible; the percentages are not precise.
+
+### What next
+
+In this order, each with what it would change:
+
+1. **Make `table-building`'s first sentence an order** (S). One Python run did not load it. The
+   same change took `tabelline` from five skipped runs of fifteen to one, on Haiku.
+2. **Make the look step stick on a small model** (S). Haiku took the screenshots in five runs of
+   fifteen with the skills. Try the step as the skill's first instruction, before any code, and
+   run the Haiku cases again.
+3. **No new rule without an agent that fails without it.** The tasks are now too easy to tell the
+   two groups apart on correctness. A harder case needs a design task with no original to port:
+   the brief is the only one, and it is a plain cross table. Candidates: a timetable from raw
+   departures, a ranking with a chart per row from a long table, a report table from a messy
+   spreadsheet.
+4. **Fix in tabelline the seven traps from round three**, now in the
+   [backlog](https://github.com/pietroppeter/tabelline/blob/main/BACKLOG.md), so the skill can
+   lose the lines that work around them:
+"""
+
+block:
+  let next = tableData:
+    fix: ["An unknown palette name fails when the verb is called", "A format that sees its row",
+          "`fmt` for a whole list", "A page of several tables", "`optCss` says when it drops a rule",
+          "api.md for agents", "A clearer error for a block of pairs"]
+    size: ["S", "M", "S", "S", "S", "S", "S"]
+    today: ["`palette(\"oranges\")` is accepted and fails only when the table is drawn. The skill says which names exist.",
+            "A drawing of two columns needs both packed in one cell as text first. The page on drawings shows how.",
+            "A cell with a list is formatted item by item, so a chart of the list gets one number. The page on drawings says to write the list as text.",
+            "`tabellaStyle` once, then `toHtml(withStyle = false)` for each table, by hand. The skill gives the recipe.",
+            "An `@import` in the CSS (a web font, say) is dropped without a word. The skill does not cover it yet.",
+            "The index is 37 KB, more than one read, and `style.text` is under `### text`. The skill says how to grep it.",
+            "In `colsLabel:` a name with a space and no quotes gives a macro error that does not say to quote it. The skill says to."]
+  let t = tabella(next, rownameCol = "fix"):
+    tabHeader "Seven traps for tabelline to fix", "size, and what agents (and the skill) do today"
+    colsLabel:
+      size: "size"
+      today: "today"
+    fmtMarkdown columns = ["fix", "today"]
+    colsWidth:
+      today: "60%"
+    tabSourceNote "From the agents' notes in round three. S: a small change, M: a medium one."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+5. **Run the eval at every release**, as a check that nothing got worse, not as research: the
+   same cases, both models, the same isolation, and the numbers next to these.
+
 ## What the two skills are
 
 A skill is a folder with a Markdown file, `SKILL.md`. The file starts with a name and one
