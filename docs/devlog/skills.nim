@@ -63,6 +63,9 @@ things make a skill different from documentation:
 Skills are installed, not sent: in Claude Code, a repository with skills can be added as a
 plugin, and from then on its skills are there in every task, waiting for one that matches.
 
+Anthropic's own pages on skills are listed under [further reading](#further-reading), at the
+end.
+
 ## The result
 
 Five tasks, each given three times to an agent with the two skills installed and three times to
@@ -779,6 +782,33 @@ of the faults here were found that way.**
 9. Measure with agents that know nothing: a new process, an empty folder, no memory, skills
    that load by themselves. A helper of the working session knows too much.
 10. Count what the agent did, from its transcript, not what it left behind.
+
+## Further reading
+
+For a first skill, in the order I would read them:
+
+- [Equipping agents for the real world with Agent
+  Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills),
+  Anthropic's post that introduced skills: what they are and why an agent reads them in three
+  steps (the name and description always, the file when a task matches, the other files only when
+  sent there). Short, no code.
+- [Agent Skills: overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview):
+  the same ideas as reference, with the layout of a skill's folder.
+- [Skill authoring best
+  practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices):
+  how to write one. The description says what the skill does and when to use it, in the third
+  person, with the words a user would say; keep the file short and let it point to the rest;
+  test it with the models that will use it. The most useful page of the four.
+- [Skills in Claude Code](https://code.claude.com/docs/en/skills): where skills live, how
+  plugins bring them, and what to do when a skill is not loaded when it should be, or is loaded
+  when it should not.
+- [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator), in
+  Anthropic's repository of example skills: a skill for writing skills, with a loop of test
+  prompts and evals like the one in this post. It is where the advice to make a description "a
+  little bit pushy" comes from, because models tend to skip skills they would need.
+
+What this post adds to them is mostly about testing: measure with agents that know nothing,
+count what they did from their transcripts, and keep a rule only when an agent fails without it.
 
 ## How it is built
 
