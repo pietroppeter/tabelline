@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: tabelline-port-gt-summary
+expected_outcome: |
+  port.nim rebuilds table.R with tabelline 0.2: the rows filtered to Germany and Italy, groups,
+  merged MPG range, currency, summary rows with Average per group formatted without decimals, a
+  grand summary Max in dollars, and the viridis colour on hp; it prints the table and writes port.html.

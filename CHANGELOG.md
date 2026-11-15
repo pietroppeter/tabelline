@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Skills for agents that use tabelline, in `skills/`: `tabelline` (how to work, the traps, recipes for hard tables) and `table-building` (any table: build in order, look at it), installable as a Claude Code plugin; their examples run in CI (`tools/skillexamples.nim`), their eval cases are graded by `tools/skillevals.nim` (#110).
 - Docs for agents: the Reference as plain text, `api.md` and `api.json`, a new `llms.txt` and an install line in the README (#108); the site now serves them, with the feature map's `gt.json`.
 
 ## 0.2.0 (14 Nov 2026)

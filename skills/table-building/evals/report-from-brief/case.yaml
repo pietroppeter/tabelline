@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: table-building-report-from-brief
+expected_outcome: |
+  report.nim counts the pizzas by type and size and shows them in one table with a title, labels a
+  reader knows, formatted numbers, totals and a source note; the agent took screenshots of
+  report.html, wide and at phone width, read them, and says so in its reply.

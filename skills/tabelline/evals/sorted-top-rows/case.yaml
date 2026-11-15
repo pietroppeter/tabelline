@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: tabelline-sorted-top-rows
+expected_outcome: |
+  moons.nim is a nimib page whose table of the planets is sorted by moons, most first, with the
+  three planets shown at the top (Saturn, Jupiter, Uranus) shaded, a title with a bold word made
+  with Markdown, and the table shown with nbTable; it builds into moons.html.

@@ -1,0 +1,12 @@
+{
+  "name": "tabelline",
+  "version": "0.2.0",
+  "description": "Skills for coding agents that make display tables: tabelline's specifics (great tables for Nim, after gt and Great Tables), and how to build and check any table.",
+  "author": {
+    "name": "Pietro Peterlongo",
+    "url": "https://github.com/pietroppeter"
+  },
+  "homepage": "https://pietroppeter.github.io/tabelline/",
+  "repository": "https://github.com/pietroppeter/tabelline",
+  "license": "MIT"
+}

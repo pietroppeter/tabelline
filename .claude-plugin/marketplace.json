@@ -1,0 +1,17 @@
+{
+  "name": "tabelline",
+  "owner": {
+    "name": "Pietro Peterlongo",
+    "url": "https://github.com/pietroppeter"
+  },
+  "metadata": {
+    "description": "The skills that ship with tabelline, great tables for Nim."
+  },
+  "plugins": [
+    {
+      "name": "tabelline",
+      "source": "./",
+      "description": "Skills for making display tables in Nim with tabelline, and for building and checking any table."
+    }
+  ]
+}

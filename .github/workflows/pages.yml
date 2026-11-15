@@ -66,6 +66,10 @@ jobs:
       - name: Spec examples
         run: nim r tools/specexamples.nim
 
+      # the Nim examples of the skills for agents (skills/) print what the skills say they print
+      - name: Skill examples
+        run: nim r tools/skillexamples.nim
+
       - name: No new HTML, styles or colours in the pages
         run: nim r tools/drift.nim
 

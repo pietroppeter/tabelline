@@ -23,7 +23,7 @@ The rules below are read from [AGENTS.md](https://github.com/pietroppeter/tabell
 when this page is built, so they are always the ones in the repository. A short map of the site
 for language models is at [llms.txt](../llms.txt). An agent *using* tabelline (not changing it)
 reads the whole API in one Markdown file, [api.md](../api.md), or as data, [api.json](../api.json):
-the Reference, as plain text. Skills for tabelline will be listed here when there are some.
+the Reference, as plain text. Two [skills](#skills-for-agents-that-use-tabelline) come with the repository.
 """
 nbToc
 
@@ -84,6 +84,31 @@ rules = rules.replace("\n## ", "\n### ")
 nbText: rules
 
 nbText: """
+## Skills, for agents that use tabelline
+
+A skill is a short Markdown file an agent reads before a task. Two are in the repository, in
+`skills/`, and the post [Skills for tabelline](../devlog/skills/) tells how they were made and
+tested.
+
+- [tabelline](https://github.com/pietroppeter/tabelline/blob/main/skills/tabelline/SKILL.md):
+  what tabelline's docs do not say. Where the plain-text docs are and how to search them, how to
+  work (a recipe, `echo t`, then the page), the traps agents met, and two pages for hard tables:
+  data made in code, and drawings in cells.
+- [table-building](https://github.com/pietroppeter/tabelline/blob/main/skills/table-building/SKILL.md):
+  for any table, with any library. What to decide first, in what order to build, and to look at
+  the page, wide and on a phone, before saying it is done. It comes with a script that takes the
+  two screenshots.
+
+In Claude Code they install as a plugin:
+
+```
+/plugin install tabelline --marketplace pietroppeter/tabelline
+```
+
+Any other agent can be pointed at the two files. Their Nim examples run against the code
+(`nim r tools/skillexamples.nim`, in CI), and each skill has eval cases in `evals/`, graded by
+`nim r tools/skillevals.nim <case> <run folder>`.
+
 ## How it is built
 
 `docs/agents.nim` reads `AGENTS.md` from the repository when the pages are built, drops its
@@ -139,6 +164,18 @@ for f in specDirs:
   if f.lastPathPart != "way-of-working" and f.lastPathPart != "review-mode":
     llms.add &"  - [{f.lastPathPart}]({raw}openspec/specs/{f.lastPathPart}/spec.md)\n"
 llms.add &"- [README]({raw}README.md): the simplest example, and where everything is.\n"
+# the skills are read from main: they are newer than the release's tag
+let skillsRaw = "https://raw.githubusercontent.com/pietroppeter/tabelline/main/skills/"
+llms.add &"""
+## Skills
+
+Short instructions for an agent that makes a table, tested with agents. Read them before a task.
+
+- [tabelline]({skillsRaw}tabelline/SKILL.md): how to work with tabelline, the traps agents met,
+  and where to read for hard tables (data made in code, drawings in cells).
+- [table-building]({skillsRaw}table-building/SKILL.md): for any table with any library: what to
+  decide first, in what order to build, and how to look at the page before saying it is done.
+"""
 llms.add "\n## Pages\n\n"
 for (title, path, what) in pages:
   llms.add &"- [{title}]({siteUrl}{path}): {what}\n"
