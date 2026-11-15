@@ -169,9 +169,10 @@ tabelline changes; dated posts are in the devlog.
 Posts, dated, and not rewritten afterwards, though they take edits (posts of the same day take a letter, A, B, C, ...):
 
 - [Skills for tabelline](https://pietroppeter.github.io/tabelline/devlog/skills/) (15 Nov 2026 A):
-  what a skill for coding agents is worth, in three rounds of tests with agents: a skill that
-  copied the docs, a small one with one rule that did harm, and hard tables that no agent looked
-  at; the two skills that came out, `tabelline` and `table-building`, and why they live here.
+  the two skills for coding agents, `tabelline` and `table-building`, and what they are worth,
+  measured on five tasks with and without them (the agent looks at its table, one wrong table
+  fewer, a hard port at half the cost); then the four rounds of tests that got there, and why
+  the skills live here.
 - [Designing a Mediterranean look](https://pietroppeter.github.io/tabelline/devlog/mediterranean/)
   (11 Nov 2026 D): a look of its own for the islands story, in place of the quaderno, designed in
   rounds; round 1 has nine sources (who they are, what they made, why they fit, what a page could

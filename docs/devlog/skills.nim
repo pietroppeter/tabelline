@@ -1,6 +1,7 @@
-## devlog: 15 Nov 2026 A | Skills for tabelline | A skill is a page an agent reads before a task. Three rounds of tests on what a skill for tabelline is worth: one that copied the docs and added little, a small one that sent agents to the docs and held one rule that did harm, and a round on hard tables where every program ran and no agent looked at its table. What came out: two skills, one for tabelline and one for any table, and why they now live in this repository.
-## A dated post: the three rounds of tests behind the skills in skills/, told from zero. The skills
-## are kept up to date; the numbers here are those of the runs, 10 to 15 November 2026.
+## devlog: 15 Nov 2026 A | Skills for tabelline | Two skills for agents that make tables with tabelline, measured on five tasks, three runs each, with and without them. Without the skills 14 tables of 15 were right and no agent looked at its page. With them 15 of 15 were right, every agent looked, and the hardest port cost half. Then how four rounds of tests got there, and why the skills live in this repository.
+## A dated post: the result of the skills in skills/ first, then the rounds of tests behind them,
+## told from zero. The skills are kept up to date; the numbers here are those of the runs, 10 to
+## 15 November 2026.
 import std/os
 import nimib
 import tabelline, tabelline/nimib
@@ -13,21 +14,102 @@ nb.doc.filename = docs / "devlog" / "skills" / "index.html"
 nb.useTabelline(title = "Skills for tabelline", homeHref = "../", backLabel = "Devlog", wordmarkHref = "../../")
 
 nbTitle "15 November 2026", "Skills for tabelline", """
-A skill is a page an agent reads before a task. Three rounds of tests on what a skill for tabelline is worth, the two skills that came out of them, and why they now live in this repository.
+Two skills for agents that make tables with tabelline. What they are worth, measured: an agent that looks at its table, one wrong table fewer, and a hard port at half the cost. Then how four rounds of tests got there.
 """
 
 nbText: """
 More and more tables are written by a coding agent: someone asks for a table, and a model writes
 the Nim. tabelline is new, so no model has seen it. What should an agent read before it makes a
-table with it? This post tells how the answer was found, in three rounds, each with agents doing
-real tasks. The skills began in Pietro's [personal skills
-repository](https://github.com/pietroppeter/skills) and move here with this post.
+table with it? The answer is two skills, in `skills/` in this repository. This post starts from
+what they are worth, and tells afterwards how they were found.
 """
 
 nbToc()
 
 nbText: """
-## What a skill is
+## The result
+
+Five tasks, each given three times to an agent with the two skills installed and three times to
+an agent without. The agent is Sonnet, a mid-sized model, in an empty folder, with tabelline
+installed and nothing else.
+"""
+
+block:
+  let res = tableData:
+    what: ["The table is right", "The agent looked at its page", "Every check passes",
+           "Cost of a run, mean", "Time of a run, mean"]
+    none: ["14 of 15", "0 of 15", "8 of 15", "$0.28", "71 s"]
+    skill: ["15 of 15", "15 of 15", "13 of 15", "$0.22", "60 s"]
+  let t = tabella(res, rownameCol = "what"):
+    tabHeader "With the skills and without", "five tasks, three runs each"
+    colsLabel:
+      none: "without"
+      skill: "with the two skills"
+    colsAlign alRight, ["none", "skill"]
+    tabSourceNote "15 November 2026, tabelline 0.2.0, Sonnet. Looked: the agent took screenshots of its page and read them. Cost: what Claude Code reports for the run."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+Task by task, the cost and the time of a run:
+"""
+
+block:
+  let res = tableData:
+    task: ["A gt table with summary rows", "A Great Tables table with small plots",
+           "Sort, then shade the top three rows", "An NFL season, with drawings in the cells",
+           "A brief: one table for a yearly report"]
+    noneC: [0.21, 0.16, 0.18, 0.86, 0.21]
+    noneS: [56, 38, 51, 200, 51]
+    skillC: [0.18, 0.20, 0.12, 0.42, 0.20]
+    skillS: [38, 48, 39, 120, 57]
+  let t = tabella(res, rownameCol = "task"):
+    tabHeader "Task by task", "means of three runs"
+    tabSpanner "without", ["noneC", "noneS"]
+    tabSpanner "with", ["skillC", "skillS"]
+    colsLabel:
+      noneC: "$"
+      noneS: "s"
+      skillC: "$"
+      skillS: "s"
+    fmtNumber ["noneC", "skillC"], decimals = 2
+    tabSourceNote "One run of the NFL task without the skills lost its report: that cell is the mean of two."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+What the skills buy:
+
+- **The agent looks at its table.** Fifteen runs of fifteen took a screenshot at the width of a
+  screen and one at the width of a phone, read them, and said what the phone shows. Without the
+  skills, none did.
+- **One wrong table fewer.** Without the skills one agent wrote the three planets to shade by
+  hand, so the shading no longer follows the sort. With them, all three took the rows as they
+  are shown.
+- **The hard port costs half.** The NFL table took $0.42 and two minutes, not $0.86 and more
+  than three. The skill says where the answer is; without it the agent reads its way there.
+- **Fewer pages that break.** One of the three NFL pages made without the skills is 1470 pixels
+  wide and scrolls sideways on any screen. None of the three made with them does.
+
+What they do not buy:
+
+- **The easy tables.** Without the skills, 14 tables of 15 were right. The names follow gt, the
+  sources have doc comments, and [llms.txt](../../llms.txt) and [api.md](../../api.md) are easy
+  to find: agents found them alone, every time.
+- **A better looking table**, as far as I can tell. I put the pages side by side: apart from the
+  page that scrolls, I could not tell the two groups apart.
+- **Time on small tasks.** A small table takes a few seconds more with the skills, because of
+  the screenshots, or a few less. The differences are inside what three runs can show.
+
+Counting every check of every task, and not only whether the table is right, 13 runs of 15 pass
+with the skills and 8 without. With the skills, one run put its table in the page as raw HTML and
+not with `nbTable`, and one looked at its pictures and did not keep them. Without, six runs have
+no pictures and one wrote the rows by hand.
+
+The limits: one model, three runs for each task, five tasks. The numbers say the direction, not
+the size.
+
+## What the two skills are
 
 A skill is a folder with a Markdown file, `SKILL.md`. The file starts with a name and one
 sentence that says when to use it. An agent keeps that sentence in mind all the time. When a task
@@ -35,20 +117,39 @@ matches it, the agent reads the rest of the file, and only then. So a skill cost
 until it is needed, and then it costs its length, every time. A skill can also hold other files
 (a page on one subject, a script) that the agent opens only if `SKILL.md` sends it there.
 
-A skill is written for a reader who is clever, in a hurry, and takes every sentence as an order.
-That last part matters most, as the second round shows.
+- **`tabelline`** holds what is specific to tabelline and is not in its docs: where the docs are
+  and how to search them, how to work (one verb per line, print the table as text, write the
+  page, look at it), the traps agents met, and two pages for hard tables, one on data made in
+  code and one on drawings in cells.
+- **`table-building`** holds what is true of any table, with any library: say what the table is
+  for, shape the data first, build in the order of the parts, look at it, say what you checked.
+  It comes with `look.js`, the script that takes the two screenshots and measures what a program
+  can measure.
 
-## How a skill is tested
+Both are at the end of this post, as an agent reads them.
 
-The same task goes to two agents, each in an empty folder. One is told to read the skill. The
-other is not. Both have tabelline installed, and nothing else. When they finish, checks run on
-the files they made: the page exists, it has a summary row, the top three rows are shaded. A
-check is a file in the skill's `evals/` folder, so the same task can be given again after the
-skill changes.
+## How it was measured
 
-A skill is worth keeping when the agent that read it does better, or does the same with less
-time and fewer tokens. All the runs here used Sonnet, a mid-sized model: a skill that only helps
-the largest model helps few people.
+Each task is a folder in a skill's `evals/`: the prompt, the files the agent finds, and one small
+file per check. A check is that a file exists, or that a pattern is, or is not, in a file or in
+the agent's reply: the page has a summary row, the code takes the rows from the display order,
+no drawing has a size that ends in a dot, the screenshots exist.
+
+Every run is a new agent process in an empty folder, outside any repository, so it reads no
+project instructions. In the runs with the skills, the two skills are installed as a plugin and
+nobody tells the agent to read them: it loads a skill when its sentence matches the task, as it
+would for a user. The book is held out in both groups, because it holds the answer to the NFL
+task. When a run ends, `tools/skillevals.nim` grades its folder.
+
+A skill is worth keeping when the agent that has it does better, or does the same with less time
+and money.
+
+## How we got there
+
+It took four rounds. The first three were measured in a simpler way, which the fourth shows was
+not good enough: the agent was told to read the skill, and it was a helper of the session that
+was working on tabelline, so it also carried this repository's notes for agents. Their numbers
+are kept as they were found.
 
 ## Round one: a skill that copied the docs
 
@@ -279,6 +380,28 @@ HTML and not escaped, that no size ends in a dot, and that the screenshots exist
 pizza brief. The runs of the first half of this round fail them, and the runs of the second half
 pass.
 
+## Round four: measure it properly
+
+Pietro asked what the final skills are worth, in numbers. Measuring it showed two faults, one
+in the method and one in the skills.
+
+**The method.** In the first three rounds the agent "without the skill" was a helper started
+from the session that was working on tabelline. It had been given this repository's notes for
+agents, which say how tabelline's examples are written and where its docs are. So it was not
+without. And the agent "with the skill" was told to read it, which is not how a skill is used:
+a user installs it and the agent decides. The result at the top of this post comes from new
+agent processes, in a folder outside any repository, with the skills installed and not named.
+
+**The skills.** In the first proper run, the skill `tabelline` loaded in all fifteen runs with
+the skills. The skill `table-building` loaded only for the brief. For the other twelve, the
+agent had read in `tabelline` a sentence that sent it to `table-building` for the look step,
+and did not follow it: twelve agents of twelve did not look at their page. The step is now in
+`tabelline` itself, as the third step of its way of working, with the command to run. The twelve
+runs were made again: twelve of twelve looked.
+
+**An agent does what the skill it is reading says, not what another skill would say. Put the
+step where the agent already is.**
+
 ## Why the skills live here
 
 The skills began in another repository because they were an experiment. They move here for three
@@ -294,7 +417,7 @@ reasons.
   drawn, a format that cannot see its row, an index of api.md that is too long. When tabelline
   fixes one, the trap leaves the skill.
 
-## What three rounds say
+## What four rounds say
 
 1. Names that follow gt, and docs in the source, do most of the work. Put effort there first.
 2. A skill holds what the docs do not: how to work, the traps, a few recipes. It links the rest.
@@ -302,6 +425,9 @@ reasons.
 4. Checks read the code and the page, and the hardest task is the only one that tests anything.
 5. Agents do not look at what they make, unless a skill gives them the tool and tells them to.
 6. Choose what goes in a skill from what agents wrote down, not from what seems useful.
+7. A pointer from one skill to another is not followed. Each skill holds its own steps.
+8. Measure with agents that know nothing: a new process, an empty folder, skills that load by
+   themselves. A helper of the working session knows too much.
 
 ## How it is built
 

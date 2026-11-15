@@ -46,6 +46,11 @@ nimble install -y "https://github.com/pietroppeter/tabelline@#v0.2.0"
    nanoplots (as sparklines); not styles, colours or superscripts.
 2. Then write what was asked: `t.save "t.html"` (a page), `t.toHtml`, `t.toMarkdown`, or
    `nbTable t` in nimib, and grep the HTML for the colours and styles you set.
+3. Then look at the page, every time, also for a small table. From this skill's folder:
+   `node ../table-building/scripts/look.js t.html` writes `t-wide.png` (1100px) and
+   `t-phone.png` (390px) and lists what it can measure. Read both pictures: a title shown twice,
+   a column that should be hidden, a drawing too big, a table cut at the edge of a phone. Fix
+   and look again. In your reply say what the phone shows, or that you could not look.
 
 ```nim
 import tabelline, tabelline/datasets
@@ -115,7 +120,8 @@ data with nanuq, which you can replace with plain Nim:
 | a ranking with pictures, links and a heavy style | `contest/euroncap.nim` |
 | every style and option, one by one | `contest/gt_styling.nim` |
 
-Whatever you make, look at it before you say it is done: the skill `table-building` says how.
+For the order to build a table in, and what to look for in the pictures, read the skill
+`table-building`.
 
 ## Traps agents met
 
@@ -155,6 +161,6 @@ Whatever you make, look at it before you say it is done: the skill `table-buildi
 ## Before you finish
 
 The program ran and you read `echo t`; the output asked for exists and holds the styles you set;
-you looked at the page as a reader will (`table-building`), or said that you could not;
+you ran `look.js` and read the wide and the phone picture (step 3), or said that you could not;
 every feature of a gt or Great Tables table you could not port is named in your reply, after a
 grep of api.md for its gt name.

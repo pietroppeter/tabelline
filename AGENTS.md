@@ -169,7 +169,11 @@ working rules that are easy to miss.
 - A rule enters a skill with evidence: an agent that lost time or got it wrong, and an eval case
   in `skills/<skill>/evals/` (the format of `claude plugin eval`) that fails without the rule.
   `nim r tools/skillevals.nim <case> <run folder> --final:<reply>` grades what an agent made.
-  Test with agents that cannot read the answer: the book has most of the hard tables.
+  Test with agents that cannot read the answer (the book has most of the hard tables) and that
+  know nothing else: a new `claude -p` process in an empty folder outside any repository
+  (`--setting-sources local`, the skills given with `--plugin-dir` and not named in the prompt),
+  not a subagent, which carries this file. A skill does not rely on a pointer to another skill:
+  agents do not follow it.
 
 ## Previews and PRs
 
