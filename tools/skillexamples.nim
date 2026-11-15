@@ -7,6 +7,11 @@
 ##
 ##   nim r tools/skillexamples.nim            # run them, exit 1 if one fails
 ##   nim r tools/skillexamples.nim --verbose  # also print what each one printed
+##
+## What it costs in CI (measured 15 Nov 2026, three examples): 14 s when the library changed, 2 s
+## when it did not, since each example is a program of its own in Nim's cache. One program for all
+## of them, as for the specs, would take about 5 s, but an example in a skill is a whole program
+## an agent copies, with its own imports and names, and must run as it is written.
 
 import std/[os, osproc, strutils, sequtils, algorithm]
 
@@ -62,10 +67,11 @@ for md in files:
       echo "skip  ", label
       continue
     inc n
-    let file = work / ("snippet" & $n & ".nim")
+    let file = work / ("skillexample" & $n & ".nim")
     writeFile(file, f.code)
-    let (output, code) = execCmdEx("nim r --hints:off --warnings:off --nimcache:" &
-      quoteShell(work / ("cache" & $n)) & " " & quoteShell(file), workingDir = work)
+    # Nim's own cache (~/.cache/nim, which CI keeps between runs): an example that did not
+    # change, on code that did not change, is not compiled again
+    let (output, code) = execCmdEx("nim r --hints:off --warnings:off " & quoteShell(file), workingDir = work)
     if code != 0:
       report(false, label & " compiles and runs", output)
     elif k + 1 < fs.len and fs[k + 1].lang == "text":

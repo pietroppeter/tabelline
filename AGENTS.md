@@ -184,5 +184,7 @@ working rules that are easy to miss.
   to Pietro, and only the after shots of what changed in the PR description. To show them in the
   PR without adding them to `main`, commit them, link them by that commit's sha, and remove them
   in the next commit.
+- A change to CI comes with an estimate of the tradeoff, in the PR description: what it costs on
+  every run (seconds, measured), what it catches, and the cheaper ways that were weighed.
 - Nothing goes to `main` without his go. One clean PR per change; keep the PR description in sync
   with the branch.
