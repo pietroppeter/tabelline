@@ -171,7 +171,7 @@ Posts, dated, and not rewritten afterwards, though they take edits (posts of the
 - [Skills for tabelline](https://pietroppeter.github.io/tabelline/devlog/skills/) (15 Nov 2026 A):
   the two skills for coding agents, `tabelline` and `table-building`, and what they are worth,
   measured on five tasks with and without them (the agent looks at its table, one wrong table
-  fewer, a hard port at half the cost); then the four rounds of tests that got there, and why
+  fewer, a hard port at half the cost), also on a smaller model and with Great Tables and gt; then the four rounds of tests that got there, and why
   the skills live here.
 - [Designing a Mediterranean look](https://pietroppeter.github.io/tabelline/devlog/mediterranean/)
   (11 Nov 2026 D): a look of its own for the islands story, in place of the quaderno, designed in

@@ -1,6 +1,6 @@
 ---
 name: tabelline
-description: Use when making a display table in Nim (a table for people to read, with a title, a stub, row groups, spanners, formatted numbers, colours, summary rows or nanoplots) in a program, a README or a nimib page, or when porting a gt (R) or Great Tables (Python) table to Nim, even if the user never says "tabelline".
+description: Read this first, before writing any code, whenever a task names tabelline or asks for a display table in Nim (a table for people to read, with a title, a stub, row groups, spanners, formatted numbers, colours, summary rows or nanoplots) in a program, a README or a nimib page, or when porting a gt (R) or Great Tables (Python) table to Nim, even if the user never says "tabelline".
 metadata:
   status: draft
 ---

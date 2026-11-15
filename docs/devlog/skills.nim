@@ -30,7 +30,7 @@ nbText: """
 ## The result
 
 Five tasks, each given three times to an agent with the two skills installed and three times to
-an agent without. The agent is Sonnet, a mid-sized model, in an empty folder, with tabelline
+an agent without. The agent is Claude Sonnet 5.5, a mid-sized model, in an empty folder, with tabelline
 installed and nothing else.
 """
 
@@ -46,7 +46,7 @@ block:
       none: "without"
       skill: "with the two skills"
     colsAlign alRight, ["none", "skill"]
-    tabSourceNote "15 November 2026, tabelline 0.2.0, Sonnet. Looked: the agent took screenshots of its page and read them. Cost: what Claude Code reports for the run."
+    tabSourceNote "15 November 2026, tabelline 0.2.0, Claude Sonnet 5.5 (claude-sonnet-5-5). Looked: the agent took screenshots of its page and read them. Cost: what Claude Code reports for the run."
     optCssTheme()
   nbTable t
 
@@ -106,8 +106,71 @@ with the skills and 8 without. With the skills, one run put its table in the pag
 not with `nbTable`, and one looked at its pictures and did not keep them. Without, six runs have
 no pictures and one wrote the rows by hand.
 
-The limits: one model, three runs for each task, five tasks. The numbers say the direction, not
-the size.
+The limits: three runs for each task, five tasks. The numbers say the direction, not the size.
+
+## A smaller model, and other libraries
+
+A skill has no model of its own: it is read by the model of whoever uses it. So the same five
+tasks went to Claude Haiku 5.5, the small model, three runs each way.
+"""
+
+block:
+  let res = tableData:
+    what: ["The table is right", "The agent read the skill", "The agent looked at its page",
+           "Cost of a run, mean", "Time of a run, mean"]
+    none: ["15 of 15", "", "0 of 15", "$0.13", "140 s"]
+    skill: ["15 of 15", "14 of 15", "12 of 15", "$0.10", "144 s"]
+  let t = tabella(res, rownameCol = "what"):
+    tabHeader "Haiku, with the skills and without", "five tasks, three runs each"
+    colsLabel:
+      none: "without"
+      skill: "with the two skills"
+    colsAlign alRight, ["none", "skill"]
+    tabSourceNote "15 November 2026, tabelline 0.2.0, Claude Haiku 5.5 (claude-haiku-5-5)."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+Haiku got every table right, with the skills and without, the NFL season too. What changes with
+a small model is that it does not always read the skill: one run of fifteen never opened it, and
+two opened it and did not look. The first time it was worse, five of fifteen did not open it,
+because the sentence that says when to use the skill was a description. It is now an order:
+"Read this first, before writing any code, whenever a task names tabelline". The table has the
+runs made after that change.
+
+The skill `table-building` says it is for any library. That was not tested until Pietro asked.
+The brief (one table for the owner's yearly report, from 5,000 pizza orders) went to Sonnet in
+Python with Great Tables and in R with gt, three runs each way, with the skill installed and not
+named.
+"""
+
+block:
+  let res = tableData:
+    what: ["The agent read the skill", "The agent looked at its page", "Cost of a run, mean", "Time of a run, mean"]
+    pyNone: ["", "0 of 3", "$0.08", "24 s"]
+    pySkill: ["3 of 3", "3 of 3", "$0.13", "36 s"]
+    rNone: ["", "0 of 3", "$0.12", "53 s"]
+    rSkill: ["3 of 3", "3 of 3", "$0.10", "43 s"]
+  let t = tabella(res, rownameCol = "what"):
+    tabHeader "The brief in Python and in R", "Great Tables 1.1 and gt 1.4, three runs each"
+    tabSpanner "Python", ["pyNone", "pySkill"]
+    tabSpanner "R", ["rNone", "rSkill"]
+    colsLabel:
+      pyNone: "without"
+      pySkill: "with"
+      rNone: "without"
+      rSkill: "with"
+    colsAlign alRight, ["pyNone", "pySkill", "rNone", "rSkill"]
+    tabSourceNote "15 November 2026, Claude Sonnet 5.5."
+    optCssTheme()
+  nbTable t
+
+nbText: """
+The skill loads by itself, and the agent looks and says what the phone shows, as with tabelline.
+All twelve tables are right, and side by side I could not tell the two groups apart, but for one
+R page made without the skill, with white numbers on pale orange cells. Models know gt and Great
+Tables well: on a task this easy the skill buys the look, for a few cents, and not a better
+table.
 
 ## What the two skills are
 
@@ -349,7 +412,8 @@ five steps:
 4. Look at it.
 5. Say what you checked.
 
-It works for gt and Great Tables too, and it does not change when tabelline does.
+It does not change when tabelline does, and it was written to work for gt and Great Tables too
+(tested later: see the result).
 
 ## Look at it
 
@@ -399,6 +463,10 @@ and did not follow it: twelve agents of twelve did not look at their page. The s
 `tabelline` itself, as the third step of its way of working, with the command to run. The twelve
 runs were made again: twelve of twelve looked.
 
+The same tasks on Haiku, the small model, found one more: five runs of fifteen never opened the
+skill. Its first sentence now starts with "Read this first, before writing any code". Of nine
+new runs on the three tasks where it had been skipped, eight opened it.
+
 **An agent does what the skill it is reading says, not what another skill would say. Put the
 step where the agent already is.**
 
@@ -426,7 +494,9 @@ reasons.
 5. Agents do not look at what they make, unless a skill gives them the tool and tells them to.
 6. Choose what goes in a skill from what agents wrote down, not from what seems useful.
 7. A pointer from one skill to another is not followed. Each skill holds its own steps.
-8. Measure with agents that know nothing: a new process, an empty folder, skills that load by
+8. The sentence that says when to use a skill is an order, not a description: a small model
+   skips a description.
+9. Measure with agents that know nothing: a new process, an empty folder, skills that load by
    themselves. A helper of the working session knows too much.
 
 ## How it is built
