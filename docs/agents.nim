@@ -99,10 +99,12 @@ tested.
   the page, wide and on a phone, before saying it is done. It comes with a script that takes the
   two screenshots.
 
-In Claude Code they install as a plugin:
+In Claude Code they install as one plugin: add this repository as a marketplace, then install
+the plugin from it.
 
 ```
-/plugin install tabelline --marketplace pietroppeter/tabelline
+/plugin marketplace add pietroppeter/tabelline
+/plugin install tabelline@tabelline
 ```
 
 Any other agent can be pointed at the two files. Their Nim examples run against the code
