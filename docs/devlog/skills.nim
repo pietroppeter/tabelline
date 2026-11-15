@@ -39,10 +39,11 @@ is a folder with one Markdown file, `SKILL.md`, which starts like this:
 ```
 ---
 name: tabelline
-description: Read this first, before
-  writing any code, whenever a task
-  names tabelline or asks for a
-  display table in Nim ...
+description: Makes display tables
+  in Nim with tabelline ... and
+  checks them on a phone. Read it
+  before writing any code whenever
+  a task names tabelline ...
 ---
 ```
 
@@ -308,10 +309,13 @@ what the agents without the skills did:
 
 What the skills change on Haiku: a fifth less money and tokens, the one wrong table, and two
 of the three NFL pages without the skills that scroll sideways on any screen (1,344 and 1,286
-pixels), against none with them. What they change less than on Sonnet is looking: Haiku read
-the skill every time, and still took the screenshots in only five runs of fifteen, though ten
-replies say something about the phone. A small model follows the first steps of a skill and
-drops the later ones.
+pixels), against none with them. What they changed less than on Sonnet, at first, was looking: Haiku
+read the skill every time, and still looked at its screenshots in only five runs of fifteen. A
+small model follows the first steps of a skill and drops the later ones. Then the skill's
+description changed (see Round four): it now says first what the skill does, "makes display
+tables ... and checks them on a phone". Fifteen new Haiku runs with it looked in eleven, and
+thirteen passed every check, against twelve. They also cost a little more, $0.107 a run against
+$0.092: looking is work. Fifteen runs is a hint, not proof.
 
 The skill `table-building` says it is for any library. The brief went to Sonnet in Python with
 Great Tables and in R with gt, three runs each way, with the skill installed and not named.
@@ -362,8 +366,9 @@ telling the agent where the answer is instead of letting it search the sources.
 the table right anyway, Haiku too. The credit goes to tabelline: gt's names, a doc comment with
 an example on every verb, in the installed sources. That is the strongest finding of the whole
 exercise, and it is about the library, not the skills. They do not make tables better looking,
-as far as I could see. And on a small model they half work: Haiku reads the skill every time and
-drops the step that looks.
+as far as I could see. And on a small model they work less well: Haiku reads the skill every
+time, and dropped the step that looks in two runs of three, until the description named it
+(one run in four since).
 
 **How much to trust the numbers.** Moderately. Five tasks, three runs each, two models. Every
 measurement found a fault in the one before (the repository's notes leaking into the agents,
@@ -380,9 +385,10 @@ In this order, each with what it would change:
    rest of it into `tabelline` and keep one skill, or keep it and find a task where it changes
    the result (a design task, below). Not worth making its first sentence stronger first: the
    one Python run that did not load it made a table as good as the others.
-2. **Make the look step stick on a small model** (S). Haiku took the screenshots in five runs of
-   fifteen with the skills. Try the step as the skill's first instruction, before any code, and
-   run the Haiku cases again.
+2. **Make the look step stick on a small model** (S). Naming the phone check in the description
+   took Haiku from five runs of fifteen that looked to eleven. Try the step as the skill's first
+   instruction too, and run the Haiku cases again, three runs more each to tell a real gain from
+   luck.
 3. **No new rule without an agent that fails without it.** The tasks are now too easy to tell the
    two groups apart on correctness. A harder case needs a design task with no original to port:
    the brief is the only one, and it is a plain cross table. Candidates: a timetable from raw
@@ -751,6 +757,13 @@ runs were made again: twelve of twelve looked.
 The same tasks on Haiku, the small model, found one more: five runs of fifteen never opened the
 skill. Its first sentence now starts with "Read this first, before writing any code". Of nine
 new runs on the three tasks where it had been skipped, eight opened it.
+
+Pietro asked whether a description that starts with an order is normal. It is common:
+Anthropic's guidance asks for what a skill does and when to use it, and its skill-creator for a
+description "a little bit pushy", because models skip skills more often than they read one too
+many. Ours gave the when and never the what, so it became "Makes display tables in Nim with
+tabelline ... and checks them on a phone", then the when. Fifteen Haiku runs with it: every one
+read the skill, and eleven looked at their page, against five.
 
 **An agent does what the skill it is reading says, not what another skill would say. Put the
 step where the agent already is.**
