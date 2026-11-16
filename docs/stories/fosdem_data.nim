@@ -442,6 +442,10 @@ data. To make the data again, from the raw files:
 sh src/fetch.sh raw                   # about 200 MB from archive.fosdem.org and friends
 sh src/build.sh raw <nanuq checkout>  # Nim flattens, nanuq makes the tables
 ```
+
+The README of the data says where each table comes from and what is complete for each year:
 """
+
+nbFoldCode fosdem / "README.md", title = "`README.md`", lang = "text"
 
 nbSave

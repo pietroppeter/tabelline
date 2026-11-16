@@ -134,6 +134,9 @@ nbShowCode:
   nbTable t
 
 nbNote("""
+`story("dates.csv")` reads one of this story's small tables: `story/dates.csv` in the data folder,
+the dates of every edition, made from FOSDEM's own schedules (see *Where the numbers come from*, below; the file itself is folded in *How this story is built*).
+`story` is this story's own helper, `readCsv` with `comment = "#"`.
 `colsMergeRange` puts the two dates in one column, "30 Jan–31 Jan", and hides the second:
 merged columns are new in tabelline 0.2. `rowsHide` keeps only 2027 of the 27 rows, and `colsAdd`
 adds the two numbers of the news. `optCssTheme()` gives the table the page's colours and font.
@@ -178,7 +181,8 @@ nbText: """
 FOSDEM publishes its schedule, and keeps every past one at archive.fosdem.org: since 2012 as an
 XML file of every event, before that as web pages. Its website's source keeps the calls for
 participation of each devroom, and its mailing list has been archived since 2006. From these,
-ten tables, in `docs/stories/data/fosdem/`:
+ten tables, in `docs/stories/data/fosdem/`, made with nanuq: how, and the checks they pass, is
+a story of its own, [FOSDEM's data, made with nanuq](../fosdem-data/).
 """
 
 nbShowCode:
@@ -202,7 +206,7 @@ nbNote("""
 Every file starts with a line naming its sources, so `readCsv(path, comment = "#")` skips it; its
 first sentence is the column *about*. The table is made from Nim values: a sequence of named tuples, one
 field per column. The story's own small tables are in `story/`, made from these by
-`src/insights.nim`.
+`src/insights.nim`: `dates.csv`, the first, from `editions.csv`.
 """, nkCode)
 
 nbText: """
@@ -781,23 +785,53 @@ of FOSDEM's website on GitHub, the fosdem@ mailing list archive (only senders, d
 subjects), and fosdem.org's news of 2027. `src/fetch.sh` downloads them, about 200 MB, which
 are not committed.
 
-**2. The tables** are made in two steps. Short Nim scripts (standard library only) flatten
-each raw format into staging CSV files; then `src/process.nim`, written with nanuq (Polars for
-Nim), cleans, joins and counts them into the ten tables of `docs/stories/data/fosdem/`. Its
-README says what is complete for each year. Two runs give the same files, byte for byte.
+**2. The tables** are made in two steps, both run by `src/build.sh`. Short Nim scripts
+(standard library only) flatten each raw format into staging CSV files; then `src/process.nim`,
+written with nanuq (Polars for Nim), cleans, joins and counts them into the ten tables of
+`docs/stories/data/fosdem/`. Its README says what is complete for each year. Two runs give the
+same files, byte for byte. These two layers belong to the data story, which folds every script.
 
+The next two layers are this story's own, and every file they name is folded under them.
+"""
+
+template fold(file: string, language = "") =
+  ## A file of this story's data, folded under its path from the data's folder (short, for a phone).
+  nbFoldCode "docs/stories/data/fosdem/" & file, title = "`" & file & "`", lang = language
+
+nbText: """
 **3. The story's small tables** come from those ten with nanuq again, in `src/insights.nim`:
 the dates, the sizes, the online years, the devroom families (a folded name plus 49 renames
 typed by hand), the opening talks, the speakers. Each is a CSV in `story/`, with a `#` line
 saying what it is made from. The two series of the nanoplots are counted on the page itself,
-with Nim's standard library, from `tracks.csv` and `event_speakers.csv`.
+with Nim's standard library, from `tracks.csv` and `event_speakers.csv` (two of the ten
+tables, too long to fold here: their columns are in the data's own story).
+"""
 
+fold "src/insights.nim"
+for csv in ["dates", "sizes", "online", "devroom_renames", "devroom_flow", "devrooms_2027",
+            "devrooms_longest", "keynotes", "newcomers", "nim", "speakers_top", "stands_by_year",
+            "stands_top"]:
+  fold "story/" & csv & ".csv", language = "text"
+
+nbText: """
 **4. The tables on this page** are tabelline 0.2: `nbShowCode` (in `docs/blocks.nim`) runs a
 cell of Nim and shows the table it makes, with the code folded under it. Before 0.2 was built,
 every table was written in R with gt, which already had what they needed, in cells that ran in
-one R session; their R code and their HTML are kept in `story/fosdem-gt.json`, with the gt
-version. The port is a table-by-table translation, verb by verb.
+one R session (`docs/stories/r/run.R`, with the helpers of `tabelline.R`); their R code and
+their HTML are kept in `story/fosdem-gt.json`, with the gt version: its sixteen cells of R
+are folded below, after the R files (the HTML they made is 440 KB, not shown). The port is a
+table-by-table translation, verb by verb.
+"""
 
+nbFoldCode "docs/blocks.nim", start = "newNbBlock(NbShowCode", stop = "# ----", title = "`nbShowCode`, in `docs/blocks.nim`"
+nbFoldCode "docs/stories/r/run.R", title = "`r/run.R`"
+nbFoldCode "docs/stories/r/tabelline.R", title = "`r/tabelline.R`"
+for i, cell in parseFile(data / "story" / "fosdem-gt.json")["cells"].getElems:
+  # a cell of R kept in the JSON file, not a file of its own: the block itself, for its title
+  nb.add newNbFoldCode(title = &"R, cell {i + 1}",
+                       path = "", lang = "r", code = cell.getStr.strip(chars = {'\n'}))
+
+nbText: """
 ## From gt to tabelline
 
 The gt functions the R version used, and what each became in the port:
