@@ -110,6 +110,9 @@ nbTitle tr"A story · tabelline 0.2", tr"Islands of the Mediterranean", tr"""
 The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
 Sicily down to islands of 5.5 km². This is a tour of them in tables: their shapes and
 sizes, who ruled them, how they live now, how people get there, and when to go.
+
+*Written by Claude, an AI, at Pietro's request: he directed, reviewed, chose, corrected and
+validated it.*
 """
 
 nbNote(tr"""
