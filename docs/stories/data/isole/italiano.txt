@@ -1583,10 +1583,16 @@ en:
 The Mediterranean has thousands of islands, and Wikipedia lists 195 of them by area, from
 Sicily down to islands of 5.5 km². This is a tour of them in tables: their shapes and
 sizes, who ruled them, how they live now, how people get there, and when to go.
+
+*Written by Claude, an AI, at Pietro's request: he directed, reviewed, chose, corrected and
+validated it.*
 it:
 Il Mediterraneo ha migliaia di isole, e Wikipedia ne elenca 195 per superficie, dalla Sicilia
 fino a isole di 5,5 km². Questo è un giro tra loro in tabelle: le forme e le dimensioni, chi le ha
 governate, come si vive oggi, come ci si arriva e quando andarci.
+
+*Scritta da Claude, un'AI, su richiesta di Pietro che ha indirizzato, rivisto, scelto, corretto e
+validato.*
 
 en:
 ### How many there are
