@@ -134,6 +134,9 @@ nbShowCode:
   nbTable t
 
 nbNote("""
+`story("dates.csv")` reads one of this story's small tables: `docs/stories/data/fosdem/story/dates.csv`,
+the dates of every edition, made from FOSDEM's own schedules (see *Where the numbers come from*,
+below). `story` is this story's own helper, `readCsv` with `comment = "#"`.
 `colsMergeRange` puts the two dates in one column, "30 Jan–31 Jan", and hides the second:
 merged columns are new in tabelline 0.2. `rowsHide` keeps only 2027 of the 27 rows, and `colsAdd`
 adds the two numbers of the news. `optCssTheme()` gives the table the page's colours and font.
@@ -178,7 +181,8 @@ nbText: """
 FOSDEM publishes its schedule, and keeps every past one at archive.fosdem.org: since 2012 as an
 XML file of every event, before that as web pages. Its website's source keeps the calls for
 participation of each devroom, and its mailing list has been archived since 2006. From these,
-ten tables, in `docs/stories/data/fosdem/`:
+ten tables, in `docs/stories/data/fosdem/`, made with nanuq: how, and the checks they pass, is
+a story of its own, [FOSDEM's data, made with nanuq](../fosdem-data/).
 """
 
 nbShowCode:
@@ -202,7 +206,7 @@ nbNote("""
 Every file starts with a line naming its sources, so `readCsv(path, comment = "#")` skips it; its
 first sentence is the column *about*. The table is made from Nim values: a sequence of named tuples, one
 field per column. The story's own small tables are in `story/`, made from these by
-`src/insights.nim`.
+`src/insights.nim`: `dates.csv`, the first, from `editions.csv`.
 """, nkCode)
 
 nbText: """
