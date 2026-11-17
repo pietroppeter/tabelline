@@ -1,6 +1,6 @@
 ---
 name: nimib-review
-description: Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/5`), to apply each comment to the page's source and close the review round.
+description: "Use when a review export from a nimib page is pasted in the chat (Markdown with a YAML block or front matter holding `format: nimib-review/1` to `/5`), to apply each comment to the page's source and close the review round."
 metadata:
   status: draft
 ---
